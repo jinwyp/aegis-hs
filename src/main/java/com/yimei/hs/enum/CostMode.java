@@ -1,7 +1,7 @@
 /**
  * 费用科目
  */
-public  enum CostMold{
+public  enum CostMode{
 
     HELP_RECIVE_PAY_FEE("代收代垫运费"),
     TAX_MOTRO_FREIGHT("含税汽运运费"),

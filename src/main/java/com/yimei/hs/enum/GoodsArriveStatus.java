@@ -1,4 +1,6 @@
-import com.yimei.hs.enum;
+/**
+ *   货物到场状态
+ */
 public enum GoodsArriveStatus{
 
     ARRIVE("已到场"),
