@@ -46,7 +46,6 @@ create table hs_yin_fayun (
   id bigint(20)                   not null auto_increment,
   orderId bigint(20)              not null comment '订单id, 业务线id',
   hsId bigint(20)                 not null comment '核算月id',
-  hsMonth char(6)                 not null comment '核算月份 yyyymm',
   fyDate datetime                 not null comment '发运日期', 
   fyAmount  decimal(10, 2)        not null comment '发运吨数',     -- 
   arriveStatus varchar(32)                 comment '到场状态',
@@ -70,7 +69,6 @@ create table hs_yin_fukuan (
   id bigint(20)                  not null auto_increment,
   orderId bigint(20)             not null comment '订单id, 业务线id',
   hsId bigint(20)                not null comment '核算月id',
-  hsMonth char(6)                not null comment '核算月YYYYMM',
   payDate datetime               not null comment '付款日期yyyy-mm-dd',
   recieveCompanyId bigint(20)    not null comment '收款单位id',
   payFor varchar(32)             not null comment '付款用途: 货款,贸易差价, 尾款, 运费',
@@ -88,7 +86,6 @@ create table hs_yin_huikuan (
    id bigint(20)                    not null auto_increment,
    orderId bigint(20)               not null comment '订单id, 业务线id',
    hsId bigint(20)                  not null comment '核算月id',
-   hsMonth char(6)                  not null comment '核算月YYYYMM',
    huikuanCompanyId bigint(20)           not null comment '回款公司-谁回的款',
    huikuanDate datetime                  not null comment '回款日期',
    huikuanAmount decimal(10,2)           not null comment '回款总额',
@@ -146,7 +143,6 @@ create table hs_yin_settle_upstream (
    id bigint(20)             not null auto_increment,
    orderId bigint(20)        not null comment '订单id, 业务线id',
    hsId bigint(20)           not null comment '核算月id',
-   hsMonth char(6)            not null comment '核算月',
 
    settleDate date           not null comment '结算日期',
    amount decimal(10, 2)     not null comment '结算数量(吨)',
@@ -166,7 +162,6 @@ create table hs_yin_settle_downstream (
    id bigint(20)             not null auto_increment,
    orderId bigint(20)        not null comment '订单id, 业务线id',
    hsId bigint(20)           not null comment '核算月id',
-   hsMonth char(6)           not null comment '核算月',
 
    settleDate date           not null comment '结算日期',
    amount decimal(10, 2)     not null comment '结算数量(吨)',
@@ -190,9 +185,9 @@ create table hs_yin_settle_downstream_map (
 
 -- 应收订单 - 运输方结算
 create table hs_yin_settle_traffic (
-  id bigint(20)               not null auto_increment,
-  orderId bigint(20)          not null comment '订单id, 业务线id',
-  hsMonth char(6)             not null comment '核算月',
+  id bigint(20)              not null auto_increment,
+  orderId bigint(20)         not null comment '订单id, 业务线id',
+  hsId bigint(20)            not null comment '核算月id',
 
   settleDate date             not null comment '结算日期',
   amount decimal(10, 2)       not null comment '结算数量(吨)',
@@ -208,7 +203,6 @@ create table hs_yin_fee (
   id bigint(20)              not null auto_increment,
   orderId bigint(20)         not null comment '订单id, 业务线id',
   hsId bigint(20)            not null comment '核算月id',
-  hsMonth char(6)            not null comment '核算月yyyymm',
 
   name varchar(64)           not null comment '费用科目',
   amount decimal(10, 2)      not null comment '金额',
@@ -221,7 +215,6 @@ create table hs_yin_invoice (
   id bigint(20)                 not null auto_increment,
   orderId bigint(20)            not null comment '订单id, 业务线id',
   hsId bigint(20)               not null comment '核算月id',
-  hsMonth char(6)               not null comment '核算月yyyymm',
 
   invoiceDirection varchar(32)  not null comment '进项 or 销项',
   invoiceType varchar(32)       not null comment '货款发票 or 运输发票',
