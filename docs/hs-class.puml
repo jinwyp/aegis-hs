@@ -1,0 +1,119 @@
+@startuml
+
+class User {
+  long id;
+  long deptId;
+  String phone;
+}
+
+class Department {
+  long id
+}
+
+class Team {
+  long id
+}
+
+class Party {
+  long id
+}
+
+
+class YinOrder {
+  +long id;
+  +long deptId; // 所属事业部',
+  +long teamId; // '所属团队',
+  +long mainAccounting; // '主账务公司 - 与下有接触的',
+  +String   line; // '业务线名称: 由参与方公司简称组成',
+  +String   cargoType; // '货物种类d',
+  +long   upstreamId; //'上游id',
+  +String   upstreamSettleMode ; //'上游结算方式',
+  +long   downstreamId; //  '下游id',
+  +String   downstreamSettleMode; //'下游结算方式',
+}
+
+class YinOrderParty {
+   +long id;
+   +long orderId; // '订单id, 业务线id',
+   +String custType; // '客户类型: 上游, 贸易商, 下游, 资金方, 运输公司, 账务公司'
+   +long customerId; // '业务线(订单)关联的其他账务公司'
+}
+
+class YinOrderConfig {
+     +long id;
+     +long orderId // '订单id, 业务线id',
+     +long hsMonth // '核算月',
+     +BigDecimal maxPrepayRate // '最高预付款比例',
+     +BigDecimal unInvoicedRate // '未开票款付款比例',
+     +BigDecimal contractBaseInterest // '合同基准利率',
+     +int expectHKDays // '预计回款天数',
+     +BigDecimal tradeAddPrice // '贸易公司加价: 单位: 元/吨',
+     +BigDecimal wPrice  // '加权单价',
+}
+
+class YinFayun {
+  long id
+}
+
+class YinFukuan {
+  long id
+}
+
+class YinHuikuan {
+  long id
+}
+
+class YinHuikuanMap {
+}
+
+YinFukuan "1" --> "many" YinHuikuanMap : aggregation
+YinHuikuan "1" --> "many" YinHuikuanMap : aggregation
+
+
+class YinHuankuan {
+  long id
+}
+
+class YinHuankuanMap {
+  long id
+}
+
+YinFukuan "1" --> "many" YinHuankuanMap : aggregation
+YinHuankuan "1" --> "many" YinHuankuanMap : aggregation
+
+
+class YinSettleUpstream {
+  long id
+}
+
+class YinSettleDownstream {
+  long id
+}
+
+YinFukuan "1" --> "many" YinSettleDownstreamMap : aggregation
+YinSettleDownstream "1" --> "many" YinSettleDownstreamMap : aggregation
+
+class YinSettleDownstreamMap {
+  long id
+}
+
+class YinSettleTraffic {
+  long id
+}
+
+class YinFee {
+  long id;
+}
+
+class YinInvoice {
+  long id;
+}
+
+YinInvoice "1" --> "many" YinInvoiceDetail: aggregation
+
+class YinInvoiceDetail {
+  long id;
+}
+
+
+@enduml
