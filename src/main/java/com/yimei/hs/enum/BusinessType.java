@@ -1,7 +1,7 @@
 /**
  * 业务类型
  */
-public enum BusinessMode{
+public enum BusinessType {
 
 
     YINGSHOU("应收帐款保理"),
