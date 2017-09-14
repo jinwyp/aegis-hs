@@ -1,3 +1,5 @@
+use hsdb;
+
 -- 用户表
 create table hs_user (
   id bigint(20)            not null auto_increment,
@@ -11,26 +13,29 @@ create table hs_user (
   isActive tinyint(1) default '1'   comment '1 可用 0 禁用',
   PRIMARY KEY (id),
   UNIQUE KEY name_UNIQUE (securePhone)
-)engine=InnoDB DEFAULT charset=utf8;
+)engine=InnoDB default charset=utf8;
 
 -- 部门表
 create table hs_dept (
-  id bigint(20)   not null auto_increment,
-   name varchar(64) not null comment '部门名称'
-)engine=InnoDB DEFAULT charset=utf8;
+  id bigint(20)    not null auto_increment,
+  name varchar(64) not null comment '部门名称',
+  PRIMARY KEY (id)
+)engine=InnoDB default charset=utf8;
 
 -- 团队表
 create table hs_team (
-  id bigint(20)    not null auto_increment,
-   name varchar(64)  not null comment '团队名称',
-   deptId bigint(20) not null comment '所属部门'
-)engine=InnoDB DEFAULT charset=utf8;
+  id bigint(20)     not null auto_increment,
+  name varchar(64)  not null comment '团队名称',
+  deptId bigint(20) not null comment '所属部门',
+  PRIMARY KEY (id)
+)engine=InnoDB default charset=utf8;
 
 -- 外部客户: 上游、下游、贸易商, 运输方, 资金方, ccs账务公司
 create table hs_party (
   id bigint(20)        not null auto_increment,
   custType tinyint       not null comment '1: ccs账务公司, 2: 资金方, 3: 外部',
   name varchar(128)      not null comment '客户名称',
-  shortName varchar(128) not null comment '客户简称'
-)engine=InnoDB DEFAULT charset=utf8;
+  shortName varchar(128) not null comment '客户简称',
+  PRIMARY KEY (id)
+)engine=InnoDB default charset=utf8;
 

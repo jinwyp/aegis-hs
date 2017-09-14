@@ -1,3 +1,5 @@
+use hsdb;
+
 -- 应收订单表
 create table hs_yin_order (
    id bigint(20)                    not null auto_increment,
@@ -10,16 +12,18 @@ create table hs_yin_order (
    upstreamSettleMode varchar(20)   not null comment '上游结算方式',
    downstreamId  bigint(20)         not null comment '下游id',
    downstreamSettleMode varchar(20) not null comment '下游结算方式',
-   tsc timestamp                    not null default current_timestamp
+   tsc timestamp                    not null default current_timestamp,
+   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 业务订单-其他参与方
 create table hs_yin_order_party (
-   id bigint(20)       not null auto_increment,
-   orderId bigint(20)  not null comment '订单id, 业务线id',
-   custType varchar(32)         comment '客户类型: 上游, 贸易商, 下游, 资金方, 运输公司, 账务公司',
-   customerId          not null comment '业务线(订单)关联的其他账务公司',
-   tsc timestamp       not null default current_timestamp
+   id bigint(20)         not null auto_increment,
+   orderId bigint(20)    not null comment '订单id, 业务线id',
+   custType varchar(32)           comment '客户类型: 上游, 贸易商, 下游, 资金方, 运输公司, 账务公司',
+   customerId bigint(20) not null comment '业务线(订单)关联的其他账务公司',
+   tsc timestamp         not null default current_timestamp,
+   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 业务线(订单)核算月全局配置
@@ -32,12 +36,13 @@ create table hs_yin_order_config (
    contractBaseInterest decimal(10, 2) not null comment '合同基准利率',
    expectHKDays int                    not null comment '预计回款天数',
    wPrice  decimal(10, 2)              not null comment '加权单价',
-   tsc timestamp                       not null default current_timestamp
+   tsc timestamp                       not null default current_timestamp,
+   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 发运
 create table hs_yin_fayun (
-  id bigint(20) not null auto_increment,
+  id bigint(20)                   not null auto_increment,
   orderId bigint(20)              not null comment '订单id, 业务线id',
   hsMonth char(6)                 not null comment '核算月份 yyyymm',
   fyDate datetime                 not null comment '发运日期', 
@@ -52,7 +57,8 @@ create table hs_yin_fayun (
   downstreamCars int                       comment '上游汽运情况下的车数',
   downstreamJHH varchar(64)                comment '上游火运情况下的计划号',
   downstreamShip varchar(64)               comment '上游船运情况下的船号',
-  tsc timestamp not null default current_timestamp
+  tsc timestamp                   not null default current_timestamp,
+  PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 付款:(主账务公司付给上游)
@@ -65,10 +71,11 @@ create table hs_yin_fukuan (
   payType varchar(32)            not null comment '付款类型',
   payAmount decimal(10, 2)       not null comment '付款金额',
   payMode varchar(32)            not null comment '付款方式',
-  capitalId bigint(20)           not null comment '资金方id'  
+  capitalId bigint(20)           not null comment '资金方id',
   useInterest decimal(10, 4)              comment '当资金方为非自由资金时: 外部资金使用利率',
   useDays int                             comment '当资金方为非自由资金时: 外部资金使用利率',
-  tsc timestamp not null default current_timestamp
+  tsc timestamp                  not null default current_timestamp,
+  PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 回款
@@ -83,7 +90,8 @@ create table hs_yin_huikuan (
    hkDiscount tinyint                        comment '是否贴息, 如果回款方式是银行承兑, 此字段有效',
    hkDiscountRate decimal(10, 2)             comment '如果回款方式是银行承兑, 贴息率',
    hkPaperExpire datetime                    comment '票据到期日',
-   tsc timestamp                    not null default current_timestamp
+   tsc timestamp                    not null default current_timestamp,
+   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 回款-付款mapping
@@ -93,7 +101,8 @@ create table hs_yin_huikuan_map (
    hkId bigint(20)       not null comment '回款id',
    fkId bigint(20)       not null comment '付款id',
    amount decimal(10,2)  not null comment '回款-付款 对应金额',
-   tsc timestamp         not null default current_timestamp
+   tsc timestamp         not null default current_timestamp,
+   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 还款
@@ -103,7 +112,8 @@ create table hs_yin_huankuan (
    hkDate datetime         not null comment '还款日期',
    skCompanyId bigint(20)  not null comment '收款单位(资金方), 只有外部资金的情况, 才存在还款',
    hkAmount decimal(10,2)  not null comment '还款总额',
-   tsc timestamp           not null default current_timestamp
+   tsc timestamp           not null default current_timestamp,
+   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 还款 - 付款mapping
@@ -116,14 +126,15 @@ create table hs_yin_huankuan_map (
   fkId  bigint(20)         not null comment '还款对应的付款id',
   principal decimal(10, 2) not null comment '本金', 
   amount decimal(10, 2)    not null comment '本金+利息',
-  tsc timestamp            not null default current_timestamp
+  tsc timestamp            not null default current_timestamp,
+  PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 上游结算
 create table hs_yin_settle_upstream (
    id bigint(20)             not null auto_increment,
    orderId bigint(20)        not null comment '订单id, 业务线id',
-  hsMonth char(6)             not null comment '核算月',
+   hsMonth char(6)             not null comment '核算月',
 
    settleDate date           not null comment '结算日期',
    amount decimal(10, 2)     not null comment '结算数量(吨)',
@@ -134,7 +145,8 @@ create table hs_yin_settle_upstream (
    discountDays int                   comment '利率折扣天数',
    discountAmount decimal(10, 2)      comment '金额折扣',
 
-   tsc timestamp             not null default current_timestamp
+   tsc timestamp             not null default current_timestamp,
+   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 下游结算
@@ -149,7 +161,8 @@ create table hs_yin_settle_downstream (
 
    settleGap decimal(10, 2)  not null comment '结算扣吨',
 
-   tsc timestamp             not null default current_timestamp
+   tsc timestamp             not null default current_timestamp,
+   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 下游结算-发运map
@@ -158,7 +171,8 @@ create table hs_yin_settle_downstream_map (
    settleId bigint(20)       not null comment '下游结算id',
    fyId bigint(20)           not null comment '对应发运id',
    deduction decimal(10,2)   not null comment '抵扣发运吨数',
-   tsc timestamp             not null default current_timestamp
+   tsc timestamp             not null default current_timestamp,
+   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 运输方结算
@@ -172,7 +186,8 @@ create table hs_yin_settle_traffic (
   money decimal(10, 2)        not null comment '结算金额', 
   trafficCompanyId bigint(20) not null comment '与哪个运输方结算',
 
-  tsc timestamp               not null default current_timestamp
+  tsc timestamp               not null default current_timestamp,
+  PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 费用
@@ -182,7 +197,8 @@ create table hs_yin_fee (
   hsMonth char(6)            not null comment '核算月yyyymm',
   name varchar(64)           not null comment '费用科目',
   amount decimal(10, 2)      not null comment '金额',
-  tsc timestamp              not null default current_timestamp
+  tsc timestamp              not null default current_timestamp,
+  PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 发票
@@ -195,7 +211,8 @@ create table hs_yin_invoice (
   openDate  datetime            not null comment '开票日期', 
   openCompanyId  bigint(20)     not null comment '开票单位', 
   recieverId  bigint(20)        not null comment '收票单位',
-  tsc timestamp                 not null default current_timestamp
+  tsc timestamp                 not null default current_timestamp,
+  PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 发票明细
@@ -205,7 +222,8 @@ create table hs_yin_invoice_detail (
   invoiceNumber varchar(128) not null comment '发票号',
   cargoAmount decimal(10,2)  not null comment '发票对应的货物数量(吨)',
   taxRate decimal(10,2)      not null comment '税率', 
-  tsc timestamp              not null default current_timestamp
+  tsc timestamp              not null default current_timestamp,
+  PRIMARY KEY (id)
 );
 
 
