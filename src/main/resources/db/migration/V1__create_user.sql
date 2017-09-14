@@ -14,6 +14,7 @@ create table hs_user (
   PRIMARY KEY (id),
   UNIQUE KEY name_UNIQUE (securePhone)
 )engine=InnoDB default charset=utf8;
+-- insert into hs_dept() values();
 
 -- 部门表
 create table hs_dept (
@@ -21,6 +22,7 @@ create table hs_dept (
   name varchar(64) not null comment '部门名称',
   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
+insert into hs_dept(name) values('金融产品事业部');
 
 -- 团队表
 create table hs_team (
@@ -29,6 +31,22 @@ create table hs_team (
   deptId bigint(20) not null comment '所属部门',
   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
+insert into hs_party(name, deptId) values
+('赵善文团队', 1),
+('张培栓团队', 1),
+('魏靖团队',1),
+('卢昆团队', 1),
+('赵悝团队', 1),
+('余东升团队', 1),
+('孔光明团队', 1),
+('张超超团队', 1),
+('宁夏自营分公司', 1),
+('钢材金融分公司',1),
+('赵孟晓团队', 1),
+('陈璐团队', 1),
+('杨邓团队', 1),
+('田雪冬团队', 1),
+('冷链团队', 1);
 
 -- 外部客户: 上游、下游、贸易商, 运输方, 资金方, ccs账务公司
 create table hs_party (
@@ -38,4 +56,6 @@ create table hs_party (
   shortName varchar(128) not null comment '客户简称',
   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
+insert into hs_party(custType, name, shortName) values
+  (1, 'ccs', 'short');
 
