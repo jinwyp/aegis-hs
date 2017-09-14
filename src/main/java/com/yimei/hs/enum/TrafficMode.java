@@ -1,7 +1,7 @@
 /**
  * 运输方式
  */
-public enum UpStreamTrafficMode{
+public enum TrafficMode {
 
 
     MOTOR("汽运"),
