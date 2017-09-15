@@ -1,7 +1,7 @@
 /**
  * 付款方式
  */
-public  enum PayMold{
+public  enum PayMode{
 
     ELEC_REMITTANCE("电子汇款"),
     BANK_ACCEPTANCE("银行承兑"),
