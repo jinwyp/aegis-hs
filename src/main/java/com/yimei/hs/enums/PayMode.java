@@ -3,7 +3,7 @@ package com.yimei.hs.enums;
 /**
  * 付款方式
  */
-public  enum PayMode{
+public enum PayMode {
 
     ELEC_REMITTANCE("电子汇款"),
     BANK_ACCEPTANCE("银行承兑"),
@@ -11,6 +11,7 @@ public  enum PayMode{
     CASH("现金");
 
     public String status;
+
     PayMode(String status) {
         this.status = status;
     }

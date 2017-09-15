@@ -3,7 +3,7 @@ package com.yimei.hs.enums;
 /**
  * 费用科目
  */
-public  enum FeeClass {
+public enum FeeClass {
 
     HELP_RECIVE_PAY_FEE("代收代垫运费"),
     TAX_MOTRO_FREIGHT("含税汽运运费"),
@@ -13,6 +13,7 @@ public  enum FeeClass {
     SERVICE_FEE("服务费"),
     BUSINESS_FEE("业务费");
     public String status;
+
     FeeClass(String status) {
         this.status = status;
     }

@@ -1,6 +1,6 @@
 package com.yimei.hs.enums;
 
-public enum PaymentPurpose{
+public enum PaymentPurpose {
 
     PAYMENT_FOR_GOODS("货款"),
     TRADE_DEFICIT("贸易逆差"),
@@ -9,6 +9,7 @@ public enum PaymentPurpose{
     FREIGNHT("运费");
 
     public String status;
+
     PaymentPurpose(String status) {
         this.status = status;
     }
