@@ -1,7 +1,6 @@
-package com.yimei.hs.mapper;
+package hs;
 
-
-import com.yimei.hs.entity.User;
+import hs.User;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Long id);
@@ -15,6 +14,4 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-
-    User loadByPhone(String securePhone);
 }

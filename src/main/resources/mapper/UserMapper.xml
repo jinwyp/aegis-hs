@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yimei.hs.mapper.UserMapper">
+
     <resultMap id="BaseResultMap" type="com.yimei.hs.entity.User">
-        <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="personalName" jdbcType="VARCHAR" property="personalName"/>
-        <result column="securePhone" jdbcType="VARCHAR" property="securePhone"/>
-        <result column="isActive" jdbcType="BIT" property="isActive"/>
-        <result column="password" jdbcType="VARCHAR" property="password"/>
-        <result column="passwordSalt" jdbcType="VARCHAR" property="passwordSalt"/>
-        <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="deptId" jdbcType="BIGINT" property="deptId" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="passwordSalt" jdbcType="VARCHAR" property="passwordSalt" />
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="createBy" jdbcType="VARCHAR" property="createBy" />
+        <result column="isAdmin" jdbcType="TINYINT" property="isAdmin" />
+        <result column="isActive" jdbcType="TINYINT" property="isActive" />
     </resultMap>
     <sql id="Base_Column_List">
-        id, personalName, securePhone, isActive, password, passwordSalt, createDate
+        id, deptId, phone, password, passwordSalt, createDate, createBy, isAdmin, isActive
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from hs_user
         where id = #{id,jdbcType=BIGINT}
     </select>
@@ -24,12 +27,14 @@
         where id = #{id,jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="com.yimei.hs.entity.User">
-        insert into hs_user (id, personalName, securePhone,
-        isActive, password, passwordSalt,
-        createDate)
-        values (#{id,jdbcType=BIGINT}, #{personalName,jdbcType=VARCHAR}, #{securePhone,jdbcType=VARCHAR},
-        #{isActive,jdbcType=BIT}, #{password,jdbcType=VARCHAR}, #{passwordSalt,jdbcType=VARCHAR},
-        #{createDate,jdbcType=TIMESTAMP})
+        insert into hs_user (id, deptId, phone,
+        password, passwordSalt, createDate,
+        createBy, isAdmin, isActive
+        )
+        values (#{id,jdbcType=BIGINT}, #{deptId,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR}, #{passwordSalt,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR}, #{isAdmin,jdbcType=TINYINT}, #{isActive,jdbcType=BIT}
+        )
     </insert>
     <insert id="insertSelective" parameterType="com.yimei.hs.entity.User">
         insert into hs_user
@@ -37,14 +42,11 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="personalName != null">
-                personalName,
+            <if test="deptId != null">
+                deptId,
             </if>
-            <if test="securePhone != null">
-                securePhone,
-            </if>
-            <if test="isActive != null">
-                isActive,
+            <if test="phone != null">
+                phone,
             </if>
             <if test="password != null">
                 password,
@@ -55,19 +57,25 @@
             <if test="createDate != null">
                 createDate,
             </if>
+            <if test="createBy != null">
+                createBy,
+            </if>
+            <if test="isAdmin != null">
+                isAdmin,
+            </if>
+            <if test="isActive != null">
+                isActive,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 #{id,jdbcType=BIGINT},
             </if>
-            <if test="personalName != null">
-                #{personalName,jdbcType=VARCHAR},
+            <if test="deptId != null">
+                #{deptId,jdbcType=BIGINT},
             </if>
-            <if test="securePhone != null">
-                #{securePhone,jdbcType=VARCHAR},
-            </if>
-            <if test="isActive != null">
-                #{isActive,jdbcType=BIT},
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
                 #{password,jdbcType=VARCHAR},
@@ -78,19 +86,25 @@
             <if test="createDate != null">
                 #{createDate,jdbcType=TIMESTAMP},
             </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="isAdmin != null">
+                #{isAdmin,jdbcType=TINYINT},
+            </if>
+            <if test="isActive != null">
+                #{isActive,jdbcType=BIT},
+            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.User">
         update hs_user
         <set>
-            <if test="personalName != null">
-                personalName = #{personalName,jdbcType=VARCHAR},
+            <if test="deptId != null">
+                deptId = #{deptId,jdbcType=BIGINT},
             </if>
-            <if test="securePhone != null">
-                securePhone = #{securePhone,jdbcType=VARCHAR},
-            </if>
-            <if test="isActive != null">
-                isActive = #{isActive,jdbcType=BIT},
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
                 password = #{password,jdbcType=VARCHAR},
@@ -101,21 +115,32 @@
             <if test="createDate != null">
                 createDate = #{createDate,jdbcType=TIMESTAMP},
             </if>
+            <if test="createBy != null">
+                createBy = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="isAdmin != null">
+                isAdmin = #{isAdmin,jdbcType=TINYINT},
+            </if>
+            <if test="isActive != null">
+                isActive = #{isActive,jdbcType=BIT},
+            </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.User">
         update hs_user
-        set personalName = #{personalName,jdbcType=VARCHAR},
-        securePhone = #{securePhone,jdbcType=VARCHAR},
-        isActive = #{isActive,jdbcType=BIT},
+        set deptId = #{deptId,jdbcType=BIGINT},
+        phone = #{phone,jdbcType=VARCHAR},
         password = #{password,jdbcType=VARCHAR},
         passwordSalt = #{passwordSalt,jdbcType=VARCHAR},
-        createDate = #{createDate,jdbcType=TIMESTAMP}
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+        createBy = #{createBy,jdbcType=VARCHAR},
+        isAdmin = #{isAdmin,jdbcType=TINYINT},
+        isActive = #{isActive,jdbcType=BIT}
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="loadBySecurePhone" resultType="com.yimei.hs.entity.User">
-        select <include refid="Base_Column_List"/> from hs_user where securePhone = #{value,jdbcType=VARCHAR}
+    <select id="loadByPhone" resultType="com.yimei.hs.entity.User">
+        select <include refid="Base_Column_List"/> from hs_user where phone= #{value,jdbcType=VARCHAR}
     </select>
 </mapper>
