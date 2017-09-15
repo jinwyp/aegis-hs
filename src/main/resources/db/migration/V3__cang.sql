@@ -287,7 +287,7 @@ create table hs_cang_invoice_detail (
 )engine=InnoDB default charset=utf8;;
 alter table hs_cang_invoice_detail add foreign key(invoiceId) references hs_cang_invoice(id);
 
--- 订单转移
+-- 苍押订单-转移记录
 create table hs_cang_transfer (
   id bigint(20)         not null auto_increment,
   orderId bigint(20)    not null,
