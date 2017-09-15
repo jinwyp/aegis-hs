@@ -81,7 +81,7 @@ create table hs_yin_fukuan (
 
   payDate datetime               not null comment '付款日期yyyy-mm-dd',
   recieveCompanyId bigint(20)    not null comment '收款单位id',
-  payFor varchar(32)             not null comment '付款用途: 货款,贸易差价, 尾款, 运费',
+  payFor varchar(32)             not null comment '付款用途: 货款,贸易差价, 尾款, 运费, 保证金',
   payAmount decimal(10, 2)       not null comment '付款金额',
   payMode varchar(32)            not null comment '付款方式: 电汇, 银行承兑, 商业承兑, 现金',
   capitalId bigint(20)           not null comment '资金方id',
@@ -104,6 +104,7 @@ create table hs_yin_huikuan (
    huikuanCompanyId bigint(20)           not null comment '回款公司-谁回的款',
    huikuanDate datetime                  not null comment '回款日期',
    huikuanAmount decimal(10,2)           not null comment '回款总额',
+   huikuanUsage varchar(32)              not null comment '回款用途: 货款, 保证金',
    huikuanMode varchar(32)               not null comment '回款方式: 电汇, 银行承兑, 商业承兑, 现金',
 
    huikuanPaper tinyint                           comment '是否收到票据, 如果回款方式是银行承兑, 此字段有效',
@@ -269,18 +270,20 @@ create table hs_yin_invoice_detail (
   invoiceNumber varchar(128) not null comment '发票号',
   cargoAmount decimal(10,2)  not null comment '发票对应的货物数量(吨)',
   taxRate decimal(10,2)      not null comment '税率',
+  priceAndTax decimal(10,2)  not null comment '价税合计',
   tsc timestamp              not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;;
 alter table hs_yin_invoice_detail add foreign key(invoiceId) references hs_yin_invoice(id);
 
 -- 订单转移
-create table hs_yin_transfer(
+create table hs_yin_transfer (
   id bigint(20)         not null auto_increment,
   orderId bigint(20)    not null,
   fromUserId bigint(20) not null,
   toUserId bigint(20)   not null,
-  tsc timestamp         not null default current_timestamp
-)engine=InnoDB default charset=utf8;;
-
+  tsc timestamp         not null default current_timestamp,
+  primary key (id)
+)engine=InnoDB default charset=utf8;
+alter table hs_yin_transfer add foreign key(orderId) references hs_yin_order(id);
 
