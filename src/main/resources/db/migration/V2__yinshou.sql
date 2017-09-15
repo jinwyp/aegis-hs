@@ -5,6 +5,7 @@ create table hs_yin_order (
    id bigint(20)                    not null auto_increment,
    deptId bigint(20)                not null comment '所属事业部',
    teamId bigint(20)                not null comment '所属团队',
+   createOwnerId bigint(20)         not null comment '创建人id',
    mainAccounting bigint            not null comment '主账务公司 - 与下有接触的',
    line varchar(256)                not null comment '业务线名称: 由参与方公司简称组成',
    cargoType varchar(32)            not null comment '货物种类d',
@@ -18,7 +19,7 @@ create table hs_yin_order (
 alter table hs_yin_order add foreign key(upstreamId)     references hs_party(id);
 alter table hs_yin_order add foreign key(downstreamId)   references hs_party(id);
 alter table hs_yin_order add foreign key(mainAccounting) references hs_party(id);
-
+alter table hs_yin_order add foreign key(createOwnerId)  references hs_user(id);
 -- 业务订单-其他参与方
 create table hs_yin_order_party (
    id bigint(20)         not null auto_increment,
