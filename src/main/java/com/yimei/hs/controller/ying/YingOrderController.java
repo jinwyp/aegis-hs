@@ -1,11 +1,14 @@
 package com.yimei.hs.controller.ying;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by hary on 2017/9/15.
  */
-@Controller
+@RequestMapping("/api")
+@RestController
 public class YingOrderController {
     // hs_yin_order
     // hs_yin_order_config
