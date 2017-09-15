@@ -1,7 +1,7 @@
 use hsdb;
 
 -- 应收订单表
-create table hs_yin_order (
+create table hs_ying_order (
    id bigint(20)                    not null auto_increment,
    deptId bigint(20)                not null comment '所属事业部',
    teamId bigint(20)                not null comment '所属团队',
@@ -17,14 +17,14 @@ create table hs_yin_order (
    tsc timestamp                    not null default current_timestamp,
    primary key (id)
 ) engine=InnoDB default charset=utf8;
-alter table hs_yin_order add foreign key(upstreamId)     references hs_party(id);
-alter table hs_yin_order add foreign key(downstreamId)   references hs_party(id);
-alter table hs_yin_order add foreign key(mainAccounting) references hs_party(id);
-alter table hs_yin_order add foreign key(creatorId)      references hs_user(id);
-alter table hs_yin_order add foreign key(ownerId)        references hs_user(id);
+alter table hs_ying_order add foreign key(upstreamId)     references hs_party(id);
+alter table hs_ying_order add foreign key(downstreamId)   references hs_party(id);
+alter table hs_ying_order add foreign key(mainAccounting) references hs_party(id);
+alter table hs_ying_order add foreign key(creatorId)      references hs_user(id);
+alter table hs_ying_order add foreign key(ownerId)        references hs_user(id);
 
 -- 业务订单-其他参与方
-create table hs_yin_order_party (
+create table hs_ying_order_party (
    id bigint(20)         not null auto_increment,
    orderId bigint(20)    not null comment '订单id, 业务线id',
 
@@ -33,11 +33,11 @@ create table hs_yin_order_party (
    tsc timestamp         not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_order_party add foreign key(orderId)    references hs_yin_order(id);
-alter table hs_yin_order_party add foreign key(customerId) references hs_party(id);
+alter table hs_ying_order_party add foreign key(orderId)    references hs_ying_order(id);
+alter table hs_ying_order_party add foreign key(customerId) references hs_party(id);
 
 -- 业务线(订单)核算月全局配置
-create table hs_yin_order_config (
+create table hs_ying_order_config (
    id bigint(20)                       not null auto_increment,
    orderId bigint(20)                  not null comment '订单id, 业务线id',
    hsMonth char(6)                     not null comment '核算月',
@@ -50,10 +50,10 @@ create table hs_yin_order_config (
    tsc timestamp                       not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_order_party add foreign key(orderId) references hs_yin_order(id);
+alter table hs_ying_order_party add foreign key(orderId) references hs_ying_order(id);
 
 -- 应收订单 - 发运
-create table hs_yin_fayun (
+create table hs_ying_fayun (
   id bigint(20)                   not null auto_increment,
   orderId bigint(20)              not null comment '订单id, 业务线id',
   hsId bigint(20)                 not null comment '核算月id',
@@ -74,11 +74,11 @@ create table hs_yin_fayun (
   tsc timestamp                   not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_fayun add foreign key(orderId) references hs_yin_order(id);
-alter table hs_yin_fayun add foreign key(hsId)    references hs_yin_order_config(id);
+alter table hs_ying_fayun add foreign key(orderId) references hs_ying_order(id);
+alter table hs_ying_fayun add foreign key(hsId)    references hs_ying_order_config(id);
 
 -- 应收订单 - 付款:(主账务公司付给上游)
-create table hs_yin_fukuan (
+create table hs_ying_fukuan (
   id bigint(20)                  not null auto_increment,
   orderId bigint(20)             not null comment '订单id, 业务线id',
   hsId bigint(20)                not null comment '核算月id',
@@ -94,13 +94,13 @@ create table hs_yin_fukuan (
   tsc timestamp                  not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_fukuan add foreign key(orderId)   references hs_yin_order(id);
-alter table hs_yin_fukuan add foreign key(hsId)      references hs_yin_order_config(id);
-alter table hs_yin_fukuan add foreign key(capitalId) references hs_party(id);
-alter table hs_yin_fukuan add foreign key(recieveCompanyId) references hs_party(id);
+alter table hs_ying_fukuan add foreign key(orderId)   references hs_ying_order(id);
+alter table hs_ying_fukuan add foreign key(hsId)      references hs_ying_order_config(id);
+alter table hs_ying_fukuan add foreign key(capitalId) references hs_party(id);
+alter table hs_ying_fukuan add foreign key(recieveCompanyId) references hs_party(id);
 
 -- 应收订单 - 回款
-create table hs_yin_huikuan (
+create table hs_ying_huikuan (
    id bigint(20)                    not null auto_increment,
    orderId bigint(20)               not null comment '订单id, 业务线id',
    hsId bigint(20)                  not null comment '核算月id',
@@ -120,12 +120,12 @@ create table hs_yin_huikuan (
    tsc timestamp                    not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_huikuan add foreign key(orderId) references hs_yin_order(id);
-alter table hs_yin_huikuan add foreign key(hsId) references hs_yin_order_config(id);
-alter table hs_yin_huikuan add foreign key(huikuanCompanyId) references hs_party(id);
+alter table hs_ying_huikuan add foreign key(orderId) references hs_ying_order(id);
+alter table hs_ying_huikuan add foreign key(hsId) references hs_ying_order_config(id);
+alter table hs_ying_huikuan add foreign key(huikuanCompanyId) references hs_party(id);
 
 -- 应收订单 - 回款-付款mapping
-create table hs_yin_huikuan_map (
+create table hs_ying_huikuan_map (
    id bigint(20)         not null auto_increment,
    huikuanId bigint(20)  not null comment '回款id',
    fukuanId bigint(20)   not null comment '付款id',
@@ -133,11 +133,11 @@ create table hs_yin_huikuan_map (
    tsc timestamp         not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_huikuan_map add foreign key(huikuanId) references hs_yin_huikuan(id);
-alter table hs_yin_huikuan_map add foreign key(fukuanId) references hs_yin_fukuan(id);
+alter table hs_ying_huikuan_map add foreign key(huikuanId) references hs_ying_huikuan(id);
+alter table hs_ying_huikuan_map add foreign key(fukuanId) references hs_ying_fukuan(id);
 
 -- 应收订单 - 还款
-create table hs_yin_huankuan (
+create table hs_ying_huankuan (
    id bigint(20)           not null auto_increment,
    orderId bigint(20)      not null comment '订单id, 业务线id',
    hsId bigint(20)         not null comment '核算月id',
@@ -148,12 +148,12 @@ create table hs_yin_huankuan (
    tsc timestamp           not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_huankuan add foreign key(orderId) references hs_yin_order(id);
-alter table hs_yin_huankuan add foreign key(hsId)    references hs_yin_order_config(id);
-alter table hs_yin_huankuan add foreign key(skCompanyId) references hs_party(id);
+alter table hs_ying_huankuan add foreign key(orderId) references hs_ying_order(id);
+alter table hs_ying_huankuan add foreign key(hsId)    references hs_ying_order_config(id);
+alter table hs_ying_huankuan add foreign key(skCompanyId) references hs_party(id);
 
 -- 应收订单 - 还款-付款mapping
-create table hs_yin_huankuan_map (
+create table hs_ying_huankuan_map (
   id bigint(20)            not null auto_increment,
 
   huankuanId bigint(20)    not null comment '还款id',
@@ -163,11 +163,11 @@ create table hs_yin_huankuan_map (
   tsc timestamp            not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_huankuan_map add foreign key(huankuanId) references hs_yin_huankuan(id);
-alter table hs_yin_huankuan_map add foreign key(fukuanId)   references hs_yin_fukuan(id);
+alter table hs_ying_huankuan_map add foreign key(huankuanId) references hs_ying_huankuan(id);
+alter table hs_ying_huankuan_map add foreign key(fukuanId)   references hs_ying_fukuan(id);
 
 -- 应收订单 - 上游结算
-create table hs_yin_settle_upstream (
+create table hs_ying_settle_upstream (
    id bigint(20)             not null auto_increment,
    orderId bigint(20)        not null comment '订单id, 业务线id',
    hsId bigint(20)           not null comment '核算月id',
@@ -184,11 +184,11 @@ create table hs_yin_settle_upstream (
    tsc timestamp             not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_settle_upstream add foreign key(orderId) references hs_yin_order(id);
-alter table hs_yin_settle_upstream add foreign key(hsId)    references hs_yin_order_config(id);
+alter table hs_ying_settle_upstream add foreign key(orderId) references hs_ying_order(id);
+alter table hs_ying_settle_upstream add foreign key(hsId)    references hs_ying_order_config(id);
 
 -- 应收订单 - 下游结算
-create table hs_yin_settle_downstream (
+create table hs_ying_settle_downstream (
    id bigint(20)             not null auto_increment,
    orderId bigint(20)        not null comment '订单id, 业务线id',
    hsId bigint(20)           not null comment '核算月id',
@@ -202,11 +202,11 @@ create table hs_yin_settle_downstream (
    tsc timestamp             not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_settle_downstream add foreign key(orderId) references hs_yin_order(id);
-alter table hs_yin_settle_downstream add foreign key(hsId)    references hs_yin_order_config(id);
+alter table hs_ying_settle_downstream add foreign key(orderId) references hs_ying_order(id);
+alter table hs_ying_settle_downstream add foreign key(hsId)    references hs_ying_order_config(id);
 
 -- 应收订单 - 下游结算-发运map
-create table hs_yin_settle_downstream_map (
+create table hs_ying_settle_downstream_map (
    id bigint(20)             not null auto_increment,
    settleId bigint(20)       not null comment '下游结算id',
    fyId bigint(20)           not null comment '对应发运id',
@@ -215,11 +215,11 @@ create table hs_yin_settle_downstream_map (
 
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_settle_downstream_map add foreign key(settleId) references hs_yin_settle_downstream(id);
-alter table hs_yin_settle_downstream_map add foreign key(fyId) references hs_yin_fayun(id);
+alter table hs_ying_settle_downstream_map add foreign key(settleId) references hs_ying_settle_downstream(id);
+alter table hs_ying_settle_downstream_map add foreign key(fyId) references hs_ying_fayun(id);
 
 -- 应收订单 - 运输方结算
-create table hs_yin_settle_traffic (
+create table hs_ying_settle_traffic (
   id bigint(20)              not null auto_increment,
   orderId bigint(20)         not null comment '订单id, 业务线id',
   hsId bigint(20)            not null comment '核算月id',
@@ -231,12 +231,12 @@ create table hs_yin_settle_traffic (
   tsc timestamp               not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_settle_traffic add foreign key(orderId) references hs_yin_order(id);
-alter table hs_yin_settle_traffic add foreign key(hsId)    references hs_yin_order_config(id);
-alter table hs_yin_settle_traffic add foreign key(trafficCompanyId) references hs_party(id);
+alter table hs_ying_settle_traffic add foreign key(orderId) references hs_ying_order(id);
+alter table hs_ying_settle_traffic add foreign key(hsId)    references hs_ying_order_config(id);
+alter table hs_ying_settle_traffic add foreign key(trafficCompanyId) references hs_party(id);
 
 -- 应收订单 - 费用
-create table hs_yin_fee (
+create table hs_ying_fee (
   id bigint(20)              not null auto_increment,
   orderId bigint(20)         not null comment '订单id, 业务线id',
   hsId bigint(20)            not null comment '核算月id',
@@ -246,11 +246,11 @@ create table hs_yin_fee (
   tsc timestamp              not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_fee add foreign key(orderId) references hs_yin_order(id);
-alter table hs_yin_fee add foreign key(hsId)    references hs_yin_order_config(id);
+alter table hs_ying_fee add foreign key(orderId) references hs_ying_order(id);
+alter table hs_ying_fee add foreign key(hsId)    references hs_ying_order_config(id);
 
 -- 应收订单 - 发票
-create table hs_yin_invoice (
+create table hs_ying_invoice (
   id bigint(20)                 not null auto_increment,
   orderId bigint(20)            not null comment '订单id, 业务线id',
   hsId bigint(20)               not null comment '核算月id',
@@ -263,12 +263,12 @@ create table hs_yin_invoice (
   tsc timestamp                 not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_invoice add foreign key(orderId)       references hs_yin_order(id);
-alter table hs_yin_invoice add foreign key(hsId)          references hs_yin_order_config(id);
-alter table hs_yin_invoice add foreign key(openCompanyId) references hs_party(id);
+alter table hs_ying_invoice add foreign key(orderId)       references hs_ying_order(id);
+alter table hs_ying_invoice add foreign key(hsId)          references hs_ying_order_config(id);
+alter table hs_ying_invoice add foreign key(openCompanyId) references hs_party(id);
 
 -- 应收订单 - 发票明细
-create table hs_yin_invoice_detail (
+create table hs_ying_invoice_detail (
   id bigint(20)              not null auto_increment,
   invoiceId bigint(20)       not null comment '发票记录id',
   invoiceNumber varchar(128) not null comment '发票号',
@@ -278,10 +278,10 @@ create table hs_yin_invoice_detail (
   tsc timestamp              not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;;
-alter table hs_yin_invoice_detail add foreign key(invoiceId) references hs_yin_invoice(id);
+alter table hs_ying_invoice_detail add foreign key(invoiceId) references hs_ying_invoice(id);
 
 -- 订单转移
-create table hs_yin_transfer (
+create table hs_ying_transfer (
   id bigint(20)         not null auto_increment,
   orderId bigint(20)    not null,
   fromUserId bigint(20) not null,
@@ -289,5 +289,5 @@ create table hs_yin_transfer (
   tsc timestamp         not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_yin_transfer add foreign key(orderId) references hs_yin_order(id);
+alter table hs_ying_transfer add foreign key(orderId) references hs_ying_order(id);
 

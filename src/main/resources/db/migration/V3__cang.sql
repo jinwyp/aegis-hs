@@ -20,8 +20,8 @@ create table hs_cang_order (
 alter table hs_cang_order add foreign key(upstreamId)     references hs_party(id);
 alter table hs_cang_order add foreign key(downstreamId)   references hs_party(id);
 alter table hs_cang_order add foreign key(mainAccounting) references hs_party(id);
-alter table hs_yin_order add foreign key(creatorId)      references hs_user(id);
-alter table hs_yin_order add foreign key(ownerId)        references hs_user(id);
+alter table hs_cang_order add foreign key(creatorId)      references hs_user(id);
+alter table hs_cang_order add foreign key(ownerId)        references hs_user(id);
 
 -- 业务订单-其他参与方
 create table hs_cang_order_party (

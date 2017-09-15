@@ -1,4 +1,4 @@
-package com.yimei.hs.service.yin;
+package com.yimei.hs.service.ying;
 
 import org.springframework.stereotype.Service;
 
