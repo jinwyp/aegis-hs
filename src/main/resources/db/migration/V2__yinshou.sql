@@ -7,7 +7,7 @@ create table hs_yin_order (
    teamId bigint(20)                not null comment '所属团队',
    mainAccounting bigint            not null comment '主账务公司 - 与下有接触的',
    line varchar(256)                not null comment '业务线名称: 由参与方公司简称组成',
-   cargoType varchar(32)            not null comment '货物种类d', 
+   cargoType varchar(32)            not null comment '货物种类d',
    upstreamId  bigint(20)           not null comment '上游id',
    upstreamSettleMode varchar(20)   not null comment '上游结算方式',
    downstreamId  bigint(20)         not null comment '下游id',
@@ -53,8 +53,8 @@ create table hs_yin_fayun (
   id bigint(20)                   not null auto_increment,
   orderId bigint(20)              not null comment '订单id, 业务线id',
   hsId bigint(20)                 not null comment '核算月id',
-  fyDate datetime                 not null comment '发运日期', 
-  fyAmount  decimal(10, 2)        not null comment '发运吨数',     -- 
+  fyDate datetime                 not null comment '发运日期',
+  fyAmount  decimal(10, 2)        not null comment '发运吨数',     --
   arriveStatus varchar(32)                 comment '到场状态',
 
   upstreamTrafficMode varchar(32) not null comment '上游运输方式',
@@ -153,7 +153,7 @@ create table hs_yin_huankuan_map (
 
   huankuanId bigint(20)    not null comment '还款id',
   fukuanId  bigint(20)     not null comment '还款对应的付款id',
-  principal decimal(10, 2) not null comment '本金', 
+  principal decimal(10, 2) not null comment '本金',
   amount decimal(10, 2)    not null comment '本金+利息',
   tsc timestamp            not null default current_timestamp,
   primary key (id)
@@ -169,7 +169,7 @@ create table hs_yin_settle_upstream (
 
    settleDate date           not null comment '结算日期',
    amount decimal(10, 2)     not null comment '结算数量(吨)',
-   money decimal(10, 2)      not null comment '结算金额', 
+   money decimal(10, 2)      not null comment '结算金额',
 
    discountType varchar(32)  not null comment '折扣类型: 利率折扣, 金额折扣, 无折扣',
    discountInterest decimal(10, 4)    comment '利率折扣',
@@ -190,7 +190,7 @@ create table hs_yin_settle_downstream (
 
    settleDate datetime       not null comment '结算日期',
    amount decimal(10, 2)     not null comment '结算数量(吨)',
-   money decimal(10, 2)      not null comment '结算金额', 
+   money decimal(10, 2)      not null comment '结算金额',
 
    settleGap decimal(10, 2)  not null comment '结算扣吨',
 
@@ -221,7 +221,7 @@ create table hs_yin_settle_traffic (
 
   settleDate date             not null comment '结算日期',
   amount decimal(10, 2)       not null comment '结算数量(吨)',
-  money decimal(10, 2)        not null comment '结算金额', 
+  money decimal(10, 2)        not null comment '结算金额',
   trafficCompanyId bigint(20) not null comment '与哪个运输方结算',
   tsc timestamp               not null default current_timestamp,
   primary key (id)
@@ -252,8 +252,8 @@ create table hs_yin_invoice (
 
   invoiceDirection varchar(32)  not null comment '进项 or 销项',
   invoiceType varchar(32)       not null comment '货款发票 or 运输发票',
-  openDate  datetime            not null comment '开票日期', 
-  openCompanyId  bigint(20)     not null comment '开票单位', 
+  openDate  datetime            not null comment '开票日期',
+  openCompanyId  bigint(20)     not null comment '开票单位',
   recieverId  bigint(20)        not null comment '收票单位',
   tsc timestamp                 not null default current_timestamp,
   primary key (id)
@@ -268,9 +268,19 @@ create table hs_yin_invoice_detail (
   invoiceId bigint(20)       not null comment '发票记录id',
   invoiceNumber varchar(128) not null comment '发票号',
   cargoAmount decimal(10,2)  not null comment '发票对应的货物数量(吨)',
-  taxRate decimal(10,2)      not null comment '税率', 
+  taxRate decimal(10,2)      not null comment '税率',
   tsc timestamp              not null default current_timestamp,
   primary key (id)
-);
+)engine=InnoDB default charset=utf8;;
 alter table hs_yin_invoice_detail add foreign key(invoiceId) references hs_yin_invoice(id);
+
+-- 订单转移
+create table hs_yin_transfer(
+  id bigint(20)         not null auto_increment,
+  orderId bigint(20)    not null,
+  fromUserId bigint(20) not null,
+  toUserId bigint(20)   not null,
+  tsc timestamp         not null default current_timestamp
+)engine=InnoDB default charset=utf8;;
+
 
