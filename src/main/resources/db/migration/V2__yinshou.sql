@@ -55,7 +55,7 @@ create table hs_yin_fayun (
   orderId bigint(20)              not null comment '订单id, 业务线id',
   hsId bigint(20)                 not null comment '核算月id',
   fyDate datetime                 not null comment '发运日期',
-  fyAmount  decimal(10, 2)        not null comment '发运吨数',     --
+  fyAmount  decimal(10, 2)        not null comment '发运吨数',
   arriveStatus varchar(32)                 comment '到场状态',
 
   upstreamTrafficMode varchar(32) not null comment '上游运输方式',
