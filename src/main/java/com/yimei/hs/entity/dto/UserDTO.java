@@ -15,14 +15,21 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class UserDTO {
 
-    private long id;
+    private Long id;
+
+    @NotNull
+    private Long deptId;
 
     @NotEmpty
-    private String personalName;
+    private String phone;
 
-    @NotEmpty
-    private String securePhone;
+    @NotNull
+    private Boolean isAdmin;
 
     @NotEmpty
     private String plainPassword;
+
+    private Boolean isActive;
+
+
 }

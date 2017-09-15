@@ -3,6 +3,7 @@ package com.yimei.hs.service;
 import com.yimei.hs.entity.User;
 import com.yimei.hs.entity.dto.UserDTO;
 import com.yimei.hs.mapper.UserMapper;
+import com.yimei.hs.util.BeanMapper;
 import com.yimei.hs.util.Digests;
 import com.yimei.hs.util.Encodes;
 import com.yimei.hs.util.JsonMapper;
@@ -47,20 +48,19 @@ public class UserService {
     public User registerUser(UserDTO userDTO) {
         byte[] passwordSalt = Digests.generateSalt(SALT_SIZE);
         byte[] hashPassword = Digests.sha1(userDTO.getPlainPassword().getBytes(), passwordSalt, HASH_INTERATIONS);
-        User user = new User();
-        user.setPersonalName(userDTO.getPersonalName());
-        user.setSecurePhone(userDTO.getSecurePhone());
-        user.setActive(true);
+        User user= BeanMapper.map(userDTO,User.class);
+        user.setIsActive(true);
         user.setPassword(Encodes.encodeHex(hashPassword));
         user.setPasswordSalt(Encodes.encodeHex(passwordSalt));
         user.setCreateDate(LocalDateTime.now());
+        user.setCreateBy("register");
         userMapper.insertSelective(user);
         return user;
 
     }
 
     public boolean validPasswordEquals(String phone, String plainPassword) {
-        User user = userMapper.loadBySecurePhone(phone);
+        User user = userMapper.loadByPhone(phone);
         Assert.notNull(user);
         String credentials = Encodes.encodeHex(Digests.sha1(plainPassword.getBytes(), Encodes.decodeHex(user.getPasswordSalt()), HASH_INTERATIONS));
         return user.getPassword().equals(credentials);
@@ -68,7 +68,7 @@ public class UserService {
 
 
     public User loadBySecurePhone(String phone) {
-        return userMapper.loadBySecurePhone(phone);
+        return userMapper.loadByPhone(phone);
     }
 
 

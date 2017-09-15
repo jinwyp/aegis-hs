@@ -36,14 +36,15 @@ public class UserController {
         return new ResponseEntity<Object>("OK", HttpStatus.OK);
     }
 
+
     @PostMapping(value = "/login")
-    public ResponseEntity<?> login(@RequestParam("securePhone") String securePhone, @RequestParam("plainPassword") String plainPassword) {
+    public ResponseEntity<?> login(@RequestParam("phone") String securePhone, @RequestParam("plainPassword") String plainPassword) {
         User user = userService.loadBySecurePhone(StringUtils.trim(securePhone));
         if (user == null) {
             return new ResponseEntity("userNotExists", HttpStatus.OK);
-        } else if (!userService.validPasswordEquals(user.getSecurePhone(), plainPassword)) {
+        } else if (!userService.validPasswordEquals(user.getPhone(), plainPassword)) {
             return new ResponseEntity("passwordError", HttpStatus.OK);
-        } else if (!user.isActive()) {
+        } else if (!user.getIsActive()) {
             return new ResponseEntity("accountLocked", HttpStatus.OK);
         } else {
             UserDTO userDTO = BeanMapper.map(user, UserDTO.class);
@@ -52,9 +53,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/authorization")
-    @ResponseBody
-    public UserDTO authorization(@CurrentUser UserDTO userDTO) {
-        System.out.println(userDTO);
-        return userDTO;
+    public ResponseEntity authorization(@CurrentUser UserDTO userDTO) {
+        return new ResponseEntity(userDTO, HttpStatus.OK);
     }
 }
