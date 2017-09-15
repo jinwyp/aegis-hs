@@ -14,7 +14,8 @@ create table hs_user (
   PRIMARY KEY (id),
   UNIQUE KEY name_UNIQUE (phone)
 )engine=InnoDB default charset=utf8;
--- insert into hs_dept() values();
+insert into hs_user(deptId, phone, password, passwordSalt, createDate, createBy, isAdmin) values
+  (1, '13022117050', '12345678', 'salt', '2017-01-01', 'hary', 1);
 
 -- 部门表
 create table hs_dept (
@@ -22,7 +23,8 @@ create table hs_dept (
   name varchar(64) not null comment '部门名称',
   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
-insert into hs_dept(name) values('金融产品事业部') -- 1
+insert into hs_dept(name) values('管理部');       -- 1
+insert into hs_dept(name) values('金融产品事业部') -- 2
 ;
 
 -- 团队表
@@ -35,21 +37,21 @@ create table hs_team (
 alter table hs_team add foreign key(deptId) references hs_dept(id);
 
 insert into hs_team(name, deptId) values
-('赵善文团队', 1),     -- 1
-('张培栓团队', 1),     -- 2
-('魏靖团队',1),        -- 3
-('卢昆团队', 1),       -- 4
-('赵悝团队', 1),       -- 5
-('余东升团队', 1),     -- 6
-('孔光明团队', 1),     -- 7
-('张超超团队', 1),     -- 8
-('宁夏自营分公司', 1), -- 9
-('钢材金融分公司',1),  -- 10
-('赵孟晓团队', 1),     -- 11
-('陈璐团队', 1),      -- 12
-('杨邓团队', 1),     -- 13
-('田雪冬团队', 1),   -- 14
-('冷链团队', 1);     -- 15
+('赵善文团队', 2),     -- 1
+('张培栓团队', 2),     -- 2
+('魏靖团队',2),        -- 3
+('卢昆团队', 2),       -- 4
+('赵悝团队', 2),       -- 5
+('余东升团队', 2),     -- 6
+('孔光明团队', 2),     -- 7
+('张超超团队', 2),     -- 8
+('宁夏自营分公司', 2), -- 9
+('钢材金融分公司',2),  -- 10
+('赵孟晓团队', 2),     -- 11
+('陈璐团队', 2),      -- 12
+('杨邓团队', 2),     -- 13
+('田雪冬团队', 2),   -- 14
+('冷链团队', 2);     -- 15
 
 -- 外部客户: 上游、下游、贸易商, 运输方, 资金方, ccs账务公司
 create table hs_party (
