@@ -10,6 +10,12 @@ public enum SettleObject{
 
     DOWNSTREAM_SETTLE("下游结算"),
 
-    TRAFFICT_SETTLE("运输方结算")
+    TRAFFICT_SETTLE("运输方结算");
+
+
+    public String status;
+    SettleObject(String status) {
+        this.status = status;
+    }
 
 }

@@ -10,6 +10,10 @@ public enum BusinessType {
 
     PURCHASE_ORDER_FINACING("订单融资"),
 
-    CABIN_BISINESS("仓抵押业务"),
+    CABIN_BISINESS("仓抵押业务");
 
+    public String status;
+    BusinessType(String status) {
+        this.status = status;
+    }
 }

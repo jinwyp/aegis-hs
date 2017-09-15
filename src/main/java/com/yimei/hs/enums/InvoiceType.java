@@ -6,6 +6,11 @@ package com.yimei.hs.enums;
 public enum InvoiceType{
 
     GOODS_INVOICE("货款发票"),
-    FRIGHT_INVOICE("运费发票")
+    FRIGHT_INVOICE("运费发票");
+
+    public String status;
+    InvoiceType(String status) {
+        this.status = status;
+    }
 
 }

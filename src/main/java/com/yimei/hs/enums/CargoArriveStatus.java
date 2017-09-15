@@ -8,7 +8,7 @@ public enum CargoArriveStatus {
     ARRIVE("已到场"),
     UNARRIVE("未到场");
 
-    private String status;
+    public String status;
     CargoArriveStatus(String status) {
         this.status = status;
     }

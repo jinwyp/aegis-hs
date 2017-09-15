@@ -10,6 +10,12 @@ public enum TrafficMode {
 
     SHIP("船运"),
 
-    RAIL("火运")
+    RAIL("火运");
+
+
+    public String status;
+    TrafficMode(String status) {
+        this.status = status;
+    }
 
 }

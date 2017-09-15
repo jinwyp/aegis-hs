@@ -11,5 +11,9 @@ public  enum FeeClass {
     TAX_RAIL_FREIGHT("含税火运运费"),
     SUPERVISE_FEE("监管费"),
     SERVICE_FEE("服务费"),
-    BUSINESS_FEE("业务费")
+    BUSINESS_FEE("业务费");
+    public String status;
+    FeeClass(String status) {
+        this.status = status;
+    }
 }
