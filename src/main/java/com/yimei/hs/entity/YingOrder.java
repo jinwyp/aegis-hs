@@ -2,7 +2,6 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.LocalDateTime;
 
 public class YingOrder implements Serializable {
     private Long id;

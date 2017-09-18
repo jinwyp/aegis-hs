@@ -77,6 +77,7 @@ public class UserService {
 
 
     public User loadBySecurePhone(String phone) {
+        userMapper.xxxx(10);
         return userMapper.loadByPhone(phone);
     }
 
