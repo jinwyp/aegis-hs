@@ -24,13 +24,13 @@ const sourcePath = {
 
 const distPath = {
     'htmlTemplate'                     : '../../backend/src/views/dist/',
-    'jsLibs'                           : '../dist/js/',
-    'fonts'                            : '../dist/css/fonts/',
-    'images'                           : '../dist/css/images/',
+    'jsLibs'                           : '../dist/static/js/',
+    'fonts'                            : '../dist/static/css/fonts/',
+    'images'                           : '../dist/static/css/images/',
     'imagesSprites'                    : 'css/images/sprite/auto-sprite.png',
     'imagesSpritesScssOutput'          : 'css/scss/helpers/_auto_sprite.scss',
     'imagesSpritesOutputReferringPath' : '/static/css/images/sprite/auto-sprite.png',
-    'css'                              : '../dist/css/stylesheets/',
+    'css'                              : '../dist/static/css/stylesheets/',
     'manifest'                         : '../dist/rev-manifest/'
 };
 
@@ -90,7 +90,7 @@ gulp.task('sass', [ 'images' ], function() {
 
 
 
-gulp.task('sass-production', [ 'htmlTemplate', 'images'], function(done) {
+gulp.task('sass-production', [  'images'], function(done) {
 
     return gulp.src(sourcePath.scss)
         .pipe(sass({

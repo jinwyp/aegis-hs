@@ -49,11 +49,11 @@ module.exports = function (env) {
                     "secure" : false
                 },
                 "/web"    : {
-                    "target" : "http://localhost:3000",
+                    "target" : "http://localhost:8080",
                     "secure" : false
                 },
                 "/static" : {
-                    "target" : "http://localhost:3000",
+                    "target" : "http://localhost:8080",
                     "secure" : false
                 }
             }

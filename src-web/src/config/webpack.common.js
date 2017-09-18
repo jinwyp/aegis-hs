@@ -53,7 +53,7 @@ module.exports = function (env) {
              *
              * See: http://webpack.github.io/docs/configuration.html#output-path
              */
-            path: path.join(process.cwd(), "../dist/js"),
+            path: path.join(process.cwd(), "../dist/static/js"),
 
             /**
              * Specifies the name of each output file on disk.

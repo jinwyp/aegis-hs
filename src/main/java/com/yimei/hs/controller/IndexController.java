@@ -12,7 +12,7 @@ public class IndexController {
 
     @GetMapping("/web/index")
     public String hello(Model model) {
-        return "index";
+        return "/index";
     }
 
 
