@@ -1,0 +1,40 @@
+$assetPath : "/static";
+
+
+// default color
+$color-white:#ffffff;
+$color-green:#18aa6b;
+$color-web-blue:#00b7ec;
+
+
+
+
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin box-shadow($shadow) {
+    -moz-box-shadow:$shadow;
+    -webkit-box-shadow:$shadow;
+    box-shadow:$shadow;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+
+
+
+$color_bg_body : #F6F8F8;
+$color_form_error : #a94442;
+

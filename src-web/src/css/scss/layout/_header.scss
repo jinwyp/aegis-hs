@@ -1,0 +1,113 @@
+$color_header_bg : #FFF;
+$color_header_bg_angel : #23b7e5;
+
+
+$color_header_button : #8A8686;
+$color_header_button_hover : #393d40;
+$color_header_button_active : #393d40;
+$color_header_button_active_angel : #117391;
+
+
+.navbar-theme1 {
+    padding: 4px 1rem;
+    background-color : $color_header_bg;
+
+    .navbar-brand {
+        padding-top: 0px;
+
+        img {
+            height: 1.5625rem;
+        }
+    }
+
+    .navbar-nav {
+        .nav-link {
+            color: $color_header_button;
+        }
+
+
+        .open > .nav-link,
+        .active > .nav-link,
+        .nav-link.open,
+        .nav-link.active {
+            color: $color_header_button_active;
+        }
+
+
+        .menu {
+            font-size: 18px;
+        }
+
+        .user-info {
+            margin-top:2px;
+            .dropdown-toggle {
+                font-size: 16px;
+            }
+
+        }
+    }
+
+
+    .btn-login {
+        border-radius: 0px;
+        margin-top: 4px;
+        margin-right: 15px;
+    }
+
+}
+
+
+
+
+.navbar-theme_angel {
+    padding: 8px 1rem;
+    background-color : $color_header_bg_angel;
+
+    background-image: -webkit-linear-gradient(left,#23b7e5,#51c6ea);
+    background-image: linear-gradient(90deg,#23b7e5 0,#51c6ea);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff23b7e5',endColorstr='#ff51c6ea',GradientType=1);
+
+    box-shadow: 0 1px 2px rgba(0,0,0,.15);
+    z-index: 10;
+
+    .navbar-brand {
+        padding-top: 0px;
+        margin: 0px 60px;
+    }
+
+    .navbar-nav {
+        .nav-link {
+            color: #FFF;
+
+            padding: 0px 12px;
+
+            &:focus,
+            &:hover {
+                color: $color_header_button_active_angel;
+            }
+        }
+
+
+        .open > .nav-link,
+        .active > .nav-link,
+        .nav-link.open,
+        .nav-link.active {
+            color: $color_header_button_active_angel;
+        }
+
+
+        .menu {
+            font-size: 18px;
+        }
+
+        .user-info {
+            margin-top:2px;
+            .dropdown-toggle {
+                font-size: 16px;
+            }
+
+        }
+    }
+
+}

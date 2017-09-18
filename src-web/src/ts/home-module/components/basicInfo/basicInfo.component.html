@@ -1,0 +1,56 @@
+
+
+
+        <H2 class="mb-4"> 基本信息 - {{currentUser?.username}} - {{currentUser?.mobilePhone}}</H2>
+
+        <form [formGroup]="userInfoForm" (ngSubmit)="userInfoFormSubmit()" (keydown.enter)="$event.preventDefault()">
+
+            <div class="form-group row">
+                <label class="col-2 col-form-label">用户名:</label>
+                <div class="col-6">
+                    <input type="text" readonly class="form-control-plaintext form-input-readonly" value="{{currentUser?.username}}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-2 col-form-label">手机号:</label>
+                <div class="col-6">
+                    <input type="text" readonly class="form-control-plaintext form-input-readonly" value="{{currentUser?.mobilePhone}}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-2 col-form-label">邮箱:</label>
+                <div class="col-6">
+                    <input type="text" readonly class="form-control-plaintext form-input-readonly" value="{{currentUser?.email || '暂无'}}">
+                </div>
+            </div>
+
+
+            <bs-text-input formControlName="lastName" [fc]="userInfoForm.get('lastName')" [type]="'text'" [label]="'姓:'" [dirty]="ignoreDirty" [error]="userInfoFormError.lastName"></bs-text-input>
+            <bs-text-input formControlName="firstName" [fc]="userInfoForm.get('firstName')" [type]="'text'" [label]="'名字:'" [dirty]="ignoreDirty" [error]="userInfoFormError.firstName"></bs-text-input>
+            <bs-text-input formControlName="nickname" [fc]="userInfoForm.get('nickname')" [type]="'text'" [label]="'昵称:'" [dirty]="ignoreDirty" [error]="userInfoFormError.nickname"></bs-text-input>
+
+            <bs-select formControlName ="gender" [fc]="userInfoForm.get('gender')" [label]="'性别:'"  [options]="genderDataList" [error]="userInfoFormError.gender" ></bs-select>
+
+            <bs-datepicker formControlName="birthday" [fc]="userInfoForm.get('birthday')" [label]="'生日:'" [error]="userInfoFormError.birthday"></bs-datepicker>
+            <bs-radio formControlName ="marriage" [fc]="userInfoForm.get('marriage')" [label]="'婚姻状况:'" [sourceList]="marryDataList" [error]="userInfoFormError.marriage" ></bs-radio>
+
+
+<!--
+
+            <div formGroupName="birthday">
+                <bs-text-input formControlName="year" [fc]="userInfoForm.get('birthday.year')" [type]="'text'" [label]="'年:'" [dirty]="ignoreDirty" [error]="userInfoFormError.birthday?.year"></bs-text-input>
+                <bs-text-input formControlName="month" [fc]="userInfoForm.get('birthday.month')" [type]="'text'" [label]="'月:'" [dirty]="ignoreDirty" [error]="userInfoFormError.birthday?.month"></bs-text-input>
+                <bs-text-input formControlName="day" [fc]="userInfoForm.get('birthday.day')" [type]="'text'" [label]="'日:'" [dirty]="ignoreDirty" [error]="userInfoFormError.birthday?.day"></bs-text-input>
+            </div>
+-->
+
+
+
+            <div class="form-group row">
+                <div class="col-10 ml-auto">
+                    <button type="submit" class="btn btn-info" >保存</button>
+                </div>
+            </div>
+        </form>

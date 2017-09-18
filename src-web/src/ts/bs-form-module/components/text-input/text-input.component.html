@@ -1,0 +1,44 @@
+<div class="form-group row" >
+    <label class="{{labelClass}} col-form-label" for="{{labelId}}">{{label}}</label>
+
+    <div class="{{inputClass}}">
+
+        <div class="form-password-security-info" *ngIf="type ==='password' && passwordTip && showTip">
+            <div class="arrow"></div>
+            <h6>密码安全</h6>
+            <ul>
+                <li [ngClass]="{'fail':!showPasswordValidation1, 'success': showPasswordValidation1}">不少于6个字符</li>
+                <li [ngClass]="{'fail':!showPasswordValidation2, 'success': showPasswordValidation2}">包含1个大写字母</li>
+                <li [ngClass]="{'fail':!showPasswordValidation3, 'success': showPasswordValidation3}">包含1个小写字母</li>
+                <li [ngClass]="{'fail':!showPasswordValidation4, 'success': showPasswordValidation4}">包含1个数字</li>
+            </ul>
+        </div>
+
+        <input *ngIf="type==='text'" type="text" class="form-control" id="{{labelId}}" [value]="value" [readonly]="readOnly" (keyup)="inputOnChange($event.target.value)" [class.is-valid]="currentFormControl.valid&&currentFormControl.dirty" [class.is-invalid]="(currentFormControl.invalid || error) && (currentFormControl.dirty || dirty) " >
+        <input *ngIf="type==='number'" type="number" class="form-control" id="{{labelId}}" [value]="value" [readonly]="readOnly" (keyup)="inputOnChange($event.target.value)" [class.is-valid]="currentFormControl.valid&&currentFormControl.dirty" [class.is-invalid]="(currentFormControl.invalid || error) && (currentFormControl.dirty || dirty)" >
+        <input *ngIf="type==='email'" type="email" class="form-control" id="{{labelId}}" [value]="value" [readonly]="readOnly" (keyup)="inputOnChange($event.target.value)" [class.is-valid]="currentFormControl.valid&&currentFormControl.dirty" [class.is-invalid]="(currentFormControl.invalid || error) && (currentFormControl.dirty || dirty)" >
+        <input *ngIf="type==='password'" type="password" class="form-control" id="{{labelId}}" [value]="value" [readonly]="readOnly" (keyup)="inputOnChange($event.target.value)" (blur)="inputOnBlue($event.target.value)" [class.is-valid]="currentFormControl.valid&&currentFormControl.dirty" [class.is-invalid]="(currentFormControl.invalid || error) && (currentFormControl.dirty || dirty)" >
+        <input *ngIf="type==='url'" type="url" class="form-control" id="{{labelId}}" [value]="value" [readonly]="readOnly" (keyup)="inputOnChange($event.target.value)" [class.is-valid]="currentFormControl.valid&&currentFormControl.dirty" [class.is-invalid]="(currentFormControl.invalid || error) && (currentFormControl.dirty || dirty)" >
+        <input *ngIf="type==='tel'" type="tel" class="form-control" id="{{labelId}}" [value]="value" [readonly]="readOnly" (keyup)="inputOnChange($event.target.value)" [class.is-valid]="currentFormControl.valid&&currentFormControl.dirty" [class.is-invalid]="(currentFormControl.invalid || error) && (currentFormControl.dirty || dirty)" >
+
+        <div class="invalid-feedback" *ngIf="(currentFormControl.invalid || error) && (currentFormControl.dirty || currentFormControl.touched || dirty)">
+            <span *ngIf="error"> {{error}} </span>
+
+            <span *ngIf="!error">
+                <span *ngIf="currentFormControl.hasError('required')"> 该项是必填项！</span>
+                <span *ngIf="currentFormControl.hasError('email')"> 邮箱格式不正确！</span>
+                <span *ngIf="currentFormControl.hasError('minlength')"> 字符长度不能少于{{ currentFormControl.errors.minlength.requiredLength }}位！</span>
+                <span *ngIf="currentFormControl.hasError('maxlength')"> 字符长度不能多于{{ currentFormControl.errors.maxlength.requiredLength }}位！</span>
+
+                <span *ngIf="currentFormControl.hasError('min')"> 数字不能小于等于{{ currentFormControl.errors.min.min }}！</span>
+                <span *ngIf="currentFormControl.hasError('max')"> 数字不能大于等于{{ currentFormControl.errors.max.max }}！</span>
+            </span>
+        </div>
+
+        <small class="form-text text-muted" *ngIf="hint">{{hint}}</small>
+    </div>
+
+    <div class="{{additionalClass}}">
+        <ng-content></ng-content>
+    </div>
+</div>

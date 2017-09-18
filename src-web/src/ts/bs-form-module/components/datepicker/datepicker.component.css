@@ -1,0 +1,10 @@
+.ngb-date-picker  {
+    position: absolute;
+    z-index: 99;
+    background-color: white;
+}
+
+.ngb-error {
+    font-size: .875rem;
+    color: #dc3545;
+}

@@ -1,0 +1,86 @@
+
+
+.form-password-security-info{
+    position: absolute;
+    top: -57px;
+    left: -147px;
+
+    padding-top: 10px;
+    color : #787878;
+    border: 1px solid #ccc;
+    background: #fff;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    z-index:2;
+
+
+    h6 {
+        padding-left: 27px;
+    }
+
+    ul{
+        padding-left: 27px;
+        margin-right: 13px;
+        margin-bottom: 8px;
+
+        li {
+
+            padding: 3px 0;
+            list-style: none;
+
+            &.fail {
+                list-style-type: disc;
+            }
+
+            &.success:before {
+                font-family: FontAwesome;
+                content: "\f00c";
+                color: #2db276;
+                margin-left: -19px;
+                margin-right: 5px;
+            }
+        }
+
+    }
+
+
+    .arrow {
+        position: absolute;
+        top: 50%;
+        right: -11px;
+        margin-top: -11px;
+
+        width: 0;
+        height: 0;
+        border-width: 11px;
+        border-color: transparent;
+        border-style: solid;
+
+        border-right-width: 0;
+        border-left-color: #999;
+        border-left-color: rgba(0,0,0,0.25);
+
+
+        &:after {
+            content: " ";
+            position: absolute;
+            display: block;
+            right:1px;
+            bottom: -10px;
+
+            width: 0;
+            height: 0;
+
+            border-width: 10px;
+            border-style: solid;
+            border-color: transparent;
+
+            border-right-width: 0;
+            border-left-color: #fff;
+        }
+
+    }
+}
+
+.form-input-readonly {
+    background-color: $color_bg_body;
+}

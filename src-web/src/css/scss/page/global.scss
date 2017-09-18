@@ -1,0 +1,30 @@
+@import "../helpers/_variables";
+
+//@import "../base/_reset";
+//@import "../base/_normalize";
+//@import "../base/_ie";
+
+
+//@import "../helpers/_auto_sprite";
+
+
+@import "../layout/_header";
+@import "../layout/_bsform";
+@import "../layout/_leftmenu";
+
+
+
+body {
+    font: 14px "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+    background-color: $color_bg_body;
+}
+
+
+
+
+.mainbox {
+    min-width: 1300px;
+}
+
+
+

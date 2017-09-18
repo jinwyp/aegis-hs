@@ -1,0 +1,15 @@
+.selectOption{
+    transition: all 0.5s;
+}
+.selectOption li:hover{
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+.active{
+    background-color: #03b7f1!important;
+    border: none;
+}
+.optionHide{
+    display: none;
+    transition: all 0.5s;
+}

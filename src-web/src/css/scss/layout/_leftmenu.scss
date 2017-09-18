@@ -1,0 +1,181 @@
+$color_bg : #FFF;
+$color_list_menu : #515253;
+$color_list_menu_active : #23b7e5;
+
+$color_header_button_active_angel : #117391;
+
+
+
+.aside {
+    position: absolute;
+    top: 55px;
+    left: 0;
+    bottom: 0;
+    z-index: 99;
+
+    width: 220px;
+    height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    -webkit-transition: width .2s cubic-bezier(.35,0,.25,1),translate .2s cubic-bezier(.35,0,.25,1);
+    transition: width .2s cubic-bezier(.35,0,.25,1),translate .2s cubic-bezier(.35,0,.25,1);
+
+    background-color: $color_bg;
+
+    &:after {
+        content: "";
+        background: rgba(0,0,0,.15);
+        position: absolute;
+        display: block;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 1px;
+        -webkit-transform: translateZ(0);
+    }
+
+
+    a {
+        color: $color_list_menu;
+        letter-spacing: .025em;
+        font-weight: 400;
+        cursor: pointer;
+
+        position: relative;
+        display: block;
+
+        text-decoration : none;
+        outline: none;
+        list-style: none;
+
+        -webkit-animation: fadeInLeft .5s;
+        animation: fadeInLeft .5s;
+
+        &:hover {
+            color: $color_list_menu_active;
+        }
+    }
+
+    .active {
+        a {
+            color: $color_list_menu_active;
+        }
+    }
+
+    .card {
+        padding-left: 22px;
+        border-width: 0px;
+        border-left: 3px solid transparent;
+        border-radius : 0px;
+
+        a {
+            padding: 20px 0px 10px 0px;
+        }
+        span {
+            -webkit-animation: fadeIn 1s;
+            animation: fadeIn 1s;
+        }
+    }
+
+    .list-group {
+        padding-left: 27px;
+
+        li {
+
+            list-style: none;
+
+            a {
+                color: $color_list_menu;
+
+                padding: 10px 0px;
+
+                &:hover {
+                    color: $color_list_menu_active;
+                }
+            }
+
+        }
+
+        .active {
+            a {
+                color: $color_list_menu_active;
+            }
+        }
+    }
+}
+
+.aside-collapsed {
+
+    width: 70px;
+    padding-top: 2px;
+
+
+    .list-group {
+        display: none!important;
+    }
+
+    .card {
+        a {
+            padding: 20px 0px;
+
+            i {
+                font-size: 1.6em;
+                width: auto;
+            }
+
+            span {
+                display: none!important;
+            }
+        }
+
+    }
+
+    .active {
+        border-left-color: $color_list_menu_active;
+    }
+
+}
+
+
+.right-content-box {
+    margin-left: 220px;
+}
+
+
+@-webkit-keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(-20px,0,0);
+        transform: translate3d(-20px,0,0)
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none
+    }
+}
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(-20px,0,0);
+        transform: translate3d(-20px,0,0)
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none
+    }
+}
+
+.fadeInLeft {
+    -webkit-animation-name: fadeInLeft;
+    animation-name: fadeInLeft
+}

@@ -1,0 +1,16 @@
+
+//page-navigation
+.paginationWrap{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 30px 0;
+}
+.page-item.active .page-link {
+    background-color: $main-blue;
+    border-color: $main-blue;
+}
+.page-link {
+    color: $main-blue;
+}
