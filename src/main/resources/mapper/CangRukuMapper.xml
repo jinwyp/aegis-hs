@@ -6,7 +6,7 @@
     <result column="orderId" jdbcType="BIGINT" property="orderId" />
     <result column="hsId" jdbcType="BIGINT" property="hsId" />
     <result column="rukuDate" jdbcType="TIMESTAMP" property="rukuDate" />
-    <result column="rukuStatus" jdbcType="INTEGER" property="rukuStatus" />
+    <result column="rukuStatus" jdbcType="TINYINT" property="rukuStatus" />
     <result column="rukuAmount" jdbcType="DECIMAL" property="rukuAmount" />
     <result column="rukuPrice" jdbcType="DECIMAL" property="rukuPrice" />
     <result column="locality" jdbcType="VARCHAR" property="locality" />
@@ -37,7 +37,7 @@
       cars, jhh, ship, tsc
       )
     values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT}, 
-      #{rukuDate,jdbcType=TIMESTAMP}, #{rukuStatus,jdbcType=INTEGER}, #{rukuAmount,jdbcType=DECIMAL}, 
+      #{rukuDate,jdbcType=TIMESTAMP}, #{rukuStatus,jdbcType=TINYINT}, #{rukuAmount,jdbcType=DECIMAL}, 
       #{rukuPrice,jdbcType=DECIMAL}, #{locality,jdbcType=VARCHAR}, #{trafficMode,jdbcType=VARCHAR}, 
       #{cars,jdbcType=INTEGER}, #{jhh,jdbcType=VARCHAR}, #{ship,jdbcType=VARCHAR}, #{tsc,jdbcType=TIMESTAMP}
       )
@@ -99,7 +99,7 @@
         #{rukuDate,jdbcType=TIMESTAMP},
       </if>
       <if test="rukuStatus != null">
-        #{rukuStatus,jdbcType=INTEGER},
+        #{rukuStatus,jdbcType=TINYINT},
       </if>
       <if test="rukuAmount != null">
         #{rukuAmount,jdbcType=DECIMAL},
@@ -140,7 +140,7 @@
         rukuDate = #{rukuDate,jdbcType=TIMESTAMP},
       </if>
       <if test="rukuStatus != null">
-        rukuStatus = #{rukuStatus,jdbcType=INTEGER},
+        rukuStatus = #{rukuStatus,jdbcType=TINYINT},
       </if>
       <if test="rukuAmount != null">
         rukuAmount = #{rukuAmount,jdbcType=DECIMAL},
@@ -174,7 +174,7 @@
     set orderId = #{orderId,jdbcType=BIGINT},
       hsId = #{hsId,jdbcType=BIGINT},
       rukuDate = #{rukuDate,jdbcType=TIMESTAMP},
-      rukuStatus = #{rukuStatus,jdbcType=INTEGER},
+      rukuStatus = #{rukuStatus,jdbcType=TINYINT},
       rukuAmount = #{rukuAmount,jdbcType=DECIMAL},
       rukuPrice = #{rukuPrice,jdbcType=DECIMAL},
       locality = #{locality,jdbcType=VARCHAR},

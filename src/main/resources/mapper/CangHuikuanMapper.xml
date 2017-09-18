@@ -10,9 +10,9 @@
     <result column="huikuanAmount" jdbcType="DECIMAL" property="huikuanAmount" />
     <result column="huikuanUsage" jdbcType="VARCHAR" property="huikuanUsage" />
     <result column="huikuanMode" jdbcType="VARCHAR" property="huikuanMode" />
-    <result column="huikuanPaper" jdbcType="BIT" property="huikuanPaper" />
+    <result column="huikuanPaper" jdbcType="TINYINT" property="huikuanPaper" />
     <result column="huikuanPaperDate" jdbcType="TIMESTAMP" property="huikuanPaperDate" />
-    <result column="huikuanDiscount" jdbcType="BIT" property="huikuanDiscount" />
+    <result column="huikuanDiscount" jdbcType="TINYINT" property="huikuanDiscount" />
     <result column="huikuanDiscountRate" jdbcType="DECIMAL" property="huikuanDiscountRate" />
     <result column="huikuanPaperExpire" jdbcType="TIMESTAMP" property="huikuanPaperExpire" />
     <result column="tsc" jdbcType="TIMESTAMP" property="tsc" />
@@ -40,8 +40,8 @@
       huikuanPaperExpire, tsc)
     values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT}, 
       #{huikuanCompanyId,jdbcType=BIGINT}, #{huikuanDate,jdbcType=TIMESTAMP}, #{huikuanAmount,jdbcType=DECIMAL}, 
-      #{huikuanUsage,jdbcType=VARCHAR}, #{huikuanMode,jdbcType=VARCHAR}, #{huikuanPaper,jdbcType=BIT}, 
-      #{huikuanPaperDate,jdbcType=TIMESTAMP}, #{huikuanDiscount,jdbcType=BIT}, #{huikuanDiscountRate,jdbcType=DECIMAL}, 
+      #{huikuanUsage,jdbcType=VARCHAR}, #{huikuanMode,jdbcType=VARCHAR}, #{huikuanPaper,jdbcType=TINYINT}, 
+      #{huikuanPaperDate,jdbcType=TIMESTAMP}, #{huikuanDiscount,jdbcType=TINYINT}, #{huikuanDiscountRate,jdbcType=DECIMAL}, 
       #{huikuanPaperExpire,jdbcType=TIMESTAMP}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.yimei.hs.entity.CangHuikuan">
@@ -116,13 +116,13 @@
         #{huikuanMode,jdbcType=VARCHAR},
       </if>
       <if test="huikuanPaper != null">
-        #{huikuanPaper,jdbcType=BIT},
+        #{huikuanPaper,jdbcType=TINYINT},
       </if>
       <if test="huikuanPaperDate != null">
         #{huikuanPaperDate,jdbcType=TIMESTAMP},
       </if>
       <if test="huikuanDiscount != null">
-        #{huikuanDiscount,jdbcType=BIT},
+        #{huikuanDiscount,jdbcType=TINYINT},
       </if>
       <if test="huikuanDiscountRate != null">
         #{huikuanDiscountRate,jdbcType=DECIMAL},
@@ -160,13 +160,13 @@
         huikuanMode = #{huikuanMode,jdbcType=VARCHAR},
       </if>
       <if test="huikuanPaper != null">
-        huikuanPaper = #{huikuanPaper,jdbcType=BIT},
+        huikuanPaper = #{huikuanPaper,jdbcType=TINYINT},
       </if>
       <if test="huikuanPaperDate != null">
         huikuanPaperDate = #{huikuanPaperDate,jdbcType=TIMESTAMP},
       </if>
       <if test="huikuanDiscount != null">
-        huikuanDiscount = #{huikuanDiscount,jdbcType=BIT},
+        huikuanDiscount = #{huikuanDiscount,jdbcType=TINYINT},
       </if>
       <if test="huikuanDiscountRate != null">
         huikuanDiscountRate = #{huikuanDiscountRate,jdbcType=DECIMAL},
@@ -189,9 +189,9 @@
       huikuanAmount = #{huikuanAmount,jdbcType=DECIMAL},
       huikuanUsage = #{huikuanUsage,jdbcType=VARCHAR},
       huikuanMode = #{huikuanMode,jdbcType=VARCHAR},
-      huikuanPaper = #{huikuanPaper,jdbcType=BIT},
+      huikuanPaper = #{huikuanPaper,jdbcType=TINYINT},
       huikuanPaperDate = #{huikuanPaperDate,jdbcType=TIMESTAMP},
-      huikuanDiscount = #{huikuanDiscount,jdbcType=BIT},
+      huikuanDiscount = #{huikuanDiscount,jdbcType=TINYINT},
       huikuanDiscountRate = #{huikuanDiscountRate,jdbcType=DECIMAL},
       huikuanPaperExpire = #{huikuanPaperExpire,jdbcType=TIMESTAMP},
       tsc = #{tsc,jdbcType=TIMESTAMP}
