@@ -2,7 +2,7 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class CangHuikuan implements Serializable {
     private Long id;
@@ -13,7 +13,7 @@ public class CangHuikuan implements Serializable {
 
     private Long huikuanCompanyId;
 
-    private Date huikuanDate;
+    private LocalDateTime huikuanDate;
 
     private BigDecimal huikuanAmount;
 
@@ -23,15 +23,15 @@ public class CangHuikuan implements Serializable {
 
     private Byte huikuanPaper;
 
-    private Date huikuanPaperDate;
+    private LocalDateTime huikuanPaperDate;
 
     private Byte huikuanDiscount;
 
     private BigDecimal huikuanDiscountRate;
 
-    private Date huikuanPaperExpire;
+    private LocalDateTime huikuanPaperExpire;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -67,11 +67,11 @@ public class CangHuikuan implements Serializable {
         this.huikuanCompanyId = huikuanCompanyId;
     }
 
-    public Date getHuikuanDate() {
+    public LocalDateTime getHuikuanDate() {
         return huikuanDate;
     }
 
-    public void setHuikuanDate(Date huikuanDate) {
+    public void setHuikuanDate(LocalDateTime huikuanDate) {
         this.huikuanDate = huikuanDate;
     }
 
@@ -107,11 +107,11 @@ public class CangHuikuan implements Serializable {
         this.huikuanPaper = huikuanPaper;
     }
 
-    public Date getHuikuanPaperDate() {
+    public LocalDateTime getHuikuanPaperDate() {
         return huikuanPaperDate;
     }
 
-    public void setHuikuanPaperDate(Date huikuanPaperDate) {
+    public void setHuikuanPaperDate(LocalDateTime huikuanPaperDate) {
         this.huikuanPaperDate = huikuanPaperDate;
     }
 
@@ -131,19 +131,19 @@ public class CangHuikuan implements Serializable {
         this.huikuanDiscountRate = huikuanDiscountRate;
     }
 
-    public Date getHuikuanPaperExpire() {
+    public LocalDateTime getHuikuanPaperExpire() {
         return huikuanPaperExpire;
     }
 
-    public void setHuikuanPaperExpire(Date huikuanPaperExpire) {
+    public void setHuikuanPaperExpire(LocalDateTime huikuanPaperExpire) {
         this.huikuanPaperExpire = huikuanPaperExpire;
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

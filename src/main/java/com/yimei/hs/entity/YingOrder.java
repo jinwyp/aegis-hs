@@ -1,7 +1,8 @@
 package com.yimei.hs.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 public class YingOrder implements Serializable {
     private Long id;
@@ -28,7 +29,7 @@ public class YingOrder implements Serializable {
 
     private String downstreamSettleMode;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -128,11 +129,11 @@ public class YingOrder implements Serializable {
         this.downstreamSettleMode = downstreamSettleMode == null ? null : downstreamSettleMode.trim();
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

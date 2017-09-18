@@ -2,7 +2,8 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 public class YingOrderConfig implements Serializable {
     private Long id;
@@ -23,7 +24,7 @@ public class YingOrderConfig implements Serializable {
 
     private BigDecimal wPrice;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -99,11 +100,11 @@ public class YingOrderConfig implements Serializable {
         this.wPrice = wPrice;
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

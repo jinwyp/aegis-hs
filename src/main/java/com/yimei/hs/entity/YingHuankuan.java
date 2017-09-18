@@ -2,7 +2,7 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class YingHuankuan implements Serializable {
     private Long id;
@@ -13,11 +13,11 @@ public class YingHuankuan implements Serializable {
 
     private Long skCompanyId;
 
-    private Date huankuankDate;
+    private LocalDateTime huankuankDate;
 
     private BigDecimal huankuanAmount;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -53,11 +53,11 @@ public class YingHuankuan implements Serializable {
         this.skCompanyId = skCompanyId;
     }
 
-    public Date getHuankuankDate() {
+    public LocalDateTime getHuankuankDate() {
         return huankuankDate;
     }
 
-    public void setHuankuankDate(Date huankuankDate) {
+    public void setHuankuankDate(LocalDateTime huankuankDate) {
         this.huankuankDate = huankuankDate;
     }
 
@@ -69,11 +69,11 @@ public class YingHuankuan implements Serializable {
         this.huankuanAmount = huankuanAmount;
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

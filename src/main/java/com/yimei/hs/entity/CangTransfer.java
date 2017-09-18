@@ -1,7 +1,7 @@
 package com.yimei.hs.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class CangTransfer implements Serializable {
     private Long id;
@@ -12,7 +12,7 @@ public class CangTransfer implements Serializable {
 
     private Long toUserId;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -48,11 +48,11 @@ public class CangTransfer implements Serializable {
         this.toUserId = toUserId;
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

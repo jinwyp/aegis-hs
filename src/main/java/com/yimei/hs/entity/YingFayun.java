@@ -2,7 +2,7 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class YingFayun implements Serializable {
     private Long id;
@@ -11,7 +11,7 @@ public class YingFayun implements Serializable {
 
     private Long hsId;
 
-    private Date fyDate;
+    private LocalDateTime fyDate;
 
     private BigDecimal fyAmount;
 
@@ -33,7 +33,7 @@ public class YingFayun implements Serializable {
 
     private String downstreamShip;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -61,11 +61,11 @@ public class YingFayun implements Serializable {
         this.hsId = hsId;
     }
 
-    public Date getFyDate() {
+    public LocalDateTime getFyDate() {
         return fyDate;
     }
 
-    public void setFyDate(Date fyDate) {
+    public void setFyDate(LocalDateTime fyDate) {
         this.fyDate = fyDate;
     }
 
@@ -149,11 +149,11 @@ public class YingFayun implements Serializable {
         this.downstreamShip = downstreamShip == null ? null : downstreamShip.trim();
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

@@ -2,7 +2,7 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class CangInvoiceDetail implements Serializable {
     private Long id;
@@ -17,7 +17,7 @@ public class CangInvoiceDetail implements Serializable {
 
     private BigDecimal priceAndTax;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -69,11 +69,11 @@ public class CangInvoiceDetail implements Serializable {
         this.priceAndTax = priceAndTax;
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

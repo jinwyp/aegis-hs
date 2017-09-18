@@ -2,7 +2,7 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class CangOrderConfig implements Serializable {
     private Long id;
@@ -21,7 +21,7 @@ public class CangOrderConfig implements Serializable {
 
     private BigDecimal tradeAddPrice;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -89,11 +89,11 @@ public class CangOrderConfig implements Serializable {
         this.tradeAddPrice = tradeAddPrice;
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

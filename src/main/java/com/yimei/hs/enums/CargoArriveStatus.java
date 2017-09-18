@@ -3,13 +3,13 @@ package com.yimei.hs.enums;
 /**
  *   货物到场状态
  */
-public enum CargoArrivevalue {
+public enum CargoArriveStatus {
 
     ARRIVE("已到场"),
     UNARRIVE("未到场");
 
     public String value;
-    CargoArrivevalue(String value) {
+    CargoArriveStatus(String value) {
         this.value = value;
     }
 }

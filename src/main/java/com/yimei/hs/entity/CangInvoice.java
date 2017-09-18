@@ -1,7 +1,7 @@
 package com.yimei.hs.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class CangInvoice implements Serializable {
     private Long id;
@@ -14,13 +14,13 @@ public class CangInvoice implements Serializable {
 
     private String invoiceType;
 
-    private Date openDate;
+    private LocalDateTime openDate;
 
     private Long openCompanyId;
 
     private Long recieverId;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -64,11 +64,11 @@ public class CangInvoice implements Serializable {
         this.invoiceType = invoiceType == null ? null : invoiceType.trim();
     }
 
-    public Date getOpenDate() {
+    public LocalDateTime getOpenDate() {
         return openDate;
     }
 
-    public void setOpenDate(Date openDate) {
+    public void setOpenDate(LocalDateTime openDate) {
         this.openDate = openDate;
     }
 
@@ -88,11 +88,11 @@ public class CangInvoice implements Serializable {
         this.recieverId = recieverId;
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

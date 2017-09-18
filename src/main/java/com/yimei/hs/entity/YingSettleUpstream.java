@@ -2,7 +2,8 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 public class YingSettleUpstream implements Serializable {
     private Long id;
@@ -11,7 +12,7 @@ public class YingSettleUpstream implements Serializable {
 
     private Long hsId;
 
-    private Date settleDate;
+    private LocalDateTime settleDate;
 
     private BigDecimal amount;
 
@@ -25,7 +26,7 @@ public class YingSettleUpstream implements Serializable {
 
     private BigDecimal discountAmount;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -53,11 +54,11 @@ public class YingSettleUpstream implements Serializable {
         this.hsId = hsId;
     }
 
-    public Date getSettleDate() {
+    public LocalDateTime getSettleDate() {
         return settleDate;
     }
 
-    public void setSettleDate(Date settleDate) {
+    public void setSettleDate(LocalDateTime settleDate) {
         this.settleDate = settleDate;
     }
 
@@ -109,11 +110,11 @@ public class YingSettleUpstream implements Serializable {
         this.discountAmount = discountAmount;
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

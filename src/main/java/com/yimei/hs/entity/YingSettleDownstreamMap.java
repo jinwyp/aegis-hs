@@ -2,7 +2,8 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 public class YingSettleDownstreamMap implements Serializable {
     private Long id;
@@ -13,7 +14,7 @@ public class YingSettleDownstreamMap implements Serializable {
 
     private BigDecimal deduction;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -49,11 +50,11 @@ public class YingSettleDownstreamMap implements Serializable {
         this.deduction = deduction;
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

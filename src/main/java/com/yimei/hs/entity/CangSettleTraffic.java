@@ -2,7 +2,7 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class CangSettleTraffic implements Serializable {
     private Long id;
@@ -11,7 +11,7 @@ public class CangSettleTraffic implements Serializable {
 
     private Long hsId;
 
-    private Date settleDate;
+    private LocalDateTime settleDate;
 
     private BigDecimal amount;
 
@@ -19,7 +19,7 @@ public class CangSettleTraffic implements Serializable {
 
     private Long trafficCompanyId;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -47,11 +47,11 @@ public class CangSettleTraffic implements Serializable {
         this.hsId = hsId;
     }
 
-    public Date getSettleDate() {
+    public LocalDateTime getSettleDate() {
         return settleDate;
     }
 
-    public void setSettleDate(Date settleDate) {
+    public void setSettleDate(LocalDateTime settleDate) {
         this.settleDate = settleDate;
     }
 
@@ -79,11 +79,11 @@ public class CangSettleTraffic implements Serializable {
         this.trafficCompanyId = trafficCompanyId;
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

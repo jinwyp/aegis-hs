@@ -2,7 +2,7 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class CangRuku implements Serializable {
     private Long id;
@@ -11,7 +11,7 @@ public class CangRuku implements Serializable {
 
     private Long hsId;
 
-    private Date rukuDate;
+    private LocalDateTime rukuDate;
 
     private Byte rukuStatus;
 
@@ -29,7 +29,7 @@ public class CangRuku implements Serializable {
 
     private String ship;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -57,11 +57,11 @@ public class CangRuku implements Serializable {
         this.hsId = hsId;
     }
 
-    public Date getRukuDate() {
+    public LocalDateTime getRukuDate() {
         return rukuDate;
     }
 
-    public void setRukuDate(Date rukuDate) {
+    public void setRukuDate(LocalDateTime rukuDate) {
         this.rukuDate = rukuDate;
     }
 
@@ -129,11 +129,11 @@ public class CangRuku implements Serializable {
         this.ship = ship == null ? null : ship.trim();
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

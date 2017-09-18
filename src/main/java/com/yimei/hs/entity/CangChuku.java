@@ -2,7 +2,8 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 public class CangChuku implements Serializable {
     private Long id;
@@ -11,7 +12,7 @@ public class CangChuku implements Serializable {
 
     private Long hsId;
 
-    private Date chukuDate;
+    private LocalDateTime chukuDate;
 
     private String locality;
 
@@ -19,7 +20,7 @@ public class CangChuku implements Serializable {
 
     private BigDecimal chukuPrice;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -47,11 +48,11 @@ public class CangChuku implements Serializable {
         this.hsId = hsId;
     }
 
-    public Date getChukuDate() {
+    public LocalDateTime getChukuDate() {
         return chukuDate;
     }
 
-    public void setChukuDate(Date chukuDate) {
+    public void setChukuDate(LocalDateTime chukuDate) {
         this.chukuDate = chukuDate;
     }
 
@@ -79,11 +80,11 @@ public class CangChuku implements Serializable {
         this.chukuPrice = chukuPrice;
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }

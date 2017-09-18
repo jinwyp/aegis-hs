@@ -2,7 +2,7 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class YingFukuan implements Serializable {
     private Long id;
@@ -11,7 +11,7 @@ public class YingFukuan implements Serializable {
 
     private Long hsId;
 
-    private Date payDate;
+    private LocalDateTime payDate;
 
     private Long recieveCompanyId;
 
@@ -27,7 +27,7 @@ public class YingFukuan implements Serializable {
 
     private Integer useDays;
 
-    private Date tsc;
+    private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
 
@@ -55,11 +55,11 @@ public class YingFukuan implements Serializable {
         this.hsId = hsId;
     }
 
-    public Date getPayDate() {
+    public LocalDateTime getPayDate() {
         return payDate;
     }
 
-    public void setPayDate(Date payDate) {
+    public void setPayDate(LocalDateTime payDate) {
         this.payDate = payDate;
     }
 
@@ -119,11 +119,11 @@ public class YingFukuan implements Serializable {
         this.useDays = useDays;
     }
 
-    public Date getTsc() {
+    public LocalDateTime getTsc() {
         return tsc;
     }
 
-    public void setTsc(Date tsc) {
+    public void setTsc(LocalDateTime tsc) {
         this.tsc = tsc;
     }
 }
