@@ -21,11 +21,11 @@ public class CangHuikuan implements Serializable {
 
     private String huikuanMode;
 
-    private Byte huikuanPaper;
+    private Boolean huikuanPaper;
 
     private LocalDateTime huikuanPaperDate;
 
-    private Byte huikuanDiscount;
+    private Boolean huikuanDiscount;
 
     private BigDecimal huikuanDiscountRate;
 
@@ -99,11 +99,11 @@ public class CangHuikuan implements Serializable {
         this.huikuanMode = huikuanMode == null ? null : huikuanMode.trim();
     }
 
-    public Byte getHuikuanPaper() {
+    public Boolean getHuikuanPaper() {
         return huikuanPaper;
     }
 
-    public void setHuikuanPaper(Byte huikuanPaper) {
+    public void setHuikuanPaper(Boolean huikuanPaper) {
         this.huikuanPaper = huikuanPaper;
     }
 
@@ -115,11 +115,11 @@ public class CangHuikuan implements Serializable {
         this.huikuanPaperDate = huikuanPaperDate;
     }
 
-    public Byte getHuikuanDiscount() {
+    public Boolean getHuikuanDiscount() {
         return huikuanDiscount;
     }
 
-    public void setHuikuanDiscount(Byte huikuanDiscount) {
+    public void setHuikuanDiscount(Boolean huikuanDiscount) {
         this.huikuanDiscount = huikuanDiscount;
     }
 

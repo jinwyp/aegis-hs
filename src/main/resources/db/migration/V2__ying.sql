@@ -14,6 +14,7 @@ create table hs_ying_order (
    upstreamSettleMode varchar(20)   not null comment '上游结算方式',
    downstreamId  bigint(20)         not null comment '下游id',
    downstreamSettleMode varchar(20) not null comment '下游结算方式',
+   status varchar(32)               not null comment '订单状态: 完结, 未完结',
    tsc timestamp                    not null default current_timestamp,
    primary key (id)
 ) engine=InnoDB default charset=utf8;
@@ -111,17 +112,17 @@ create table hs_ying_huikuan (
    huikuanUsage varchar(32)              not null comment '回款用途: 货款, 保证金',
    huikuanMode varchar(32)               not null comment '回款方式: 电汇, 银行承兑, 商业承兑, 现金',
 
-   huikuanBankPaper tinyint                           comment '是否收到票据, 如果回款方式是银行承兑, 此字段有效',
+   huikuanBankPaper tinyint(1)                        comment '是否收到票据, 如果回款方式是银行承兑, 此字段有效',
    huikuanBankPaperDate datetime                      comment '收到票据原件日期, 如果收到票据',
-   huikuanBankDiscount tinyint                        comment '是否贴息, 如果回款方式是银行承兑, 此字段有效',
+   huikuanBankDiscount tinyint(1)                     comment '是否贴息, 如果回款方式是银行承兑, 此字段有效',
    huikuanBankDiscountRate decimal(10, 2)             comment '如果回款方式是银行承兑, 贴息率',
    huikuanBankPaperExpire datetime                    comment '票据到期日',
 
-   huikuanBusinessPaper tinyint                           comment '是否收到票据, 如果回款方式是商业承兑, 此字段有效',
-   huikuanBusinessPaperDate datetime                      comment '收到票据原件日期, 如果收到票据',
-   huikuanBusinessDiscount tinyint                        comment '是否贴息, 如果回款方式是商业承兑, 此字段有效',
-   huikuanBusinessDiscountRate decimal(10, 2)             comment '如果回款方式是商业承兑, 贴息率',
-   huikuanBusinessPaperExpire datetime                    comment '票据到期日 如果回款方式是商业承兑 ,此字段有效',
+   huikuanBusinessPaper tinyint(1)                    comment '是否收到票据, 如果回款方式是商业承兑, 此字段有效',
+   huikuanBusinessPaperDate datetime                  comment '收到票据原件日期, 如果收到票据',
+   huikuanBusinessDiscount tinyint(1)                 comment '是否贴息, 如果回款方式是商业承兑, 此字段有效',
+   huikuanBusinessDiscountRate decimal(10, 2)         comment '如果回款方式是商业承兑, 贴息率',
+   huikuanBusinessPaperExpire datetime                comment '票据到期日 如果回款方式是商业承兑 ,此字段有效',
 
    tsc timestamp                    not null default current_timestamp,
    primary key (id)
@@ -296,4 +297,20 @@ create table hs_ying_transfer (
   primary key (id)
 )engine=InnoDB default charset=utf8;
 alter table hs_ying_transfer add foreign key(orderId) references hs_ying_order(id);
+
+-- 修改记录
+create table hs_ying_log (
+  id bigint(20)           not null auto_increment,
+  orderId bigint(20)      not null comment '订单编号',
+  hsId bigint(20)         not null comment '核算月id',
+  entityId bigint(20)     not null comment '实体id',
+  entityType varchar(32)  not null comment '实体类型',
+  memo varchar(128)       not null comment '修改日志',
+  tsc timestamp           not null default current_timestamp,
+  primary key (id)
+)engine=InnoDB default charset=utf8;
+alter table hs_ying_log add foreign key(orderId) references hs_ying_order(id);
+alter table hs_ying_log add foreign key(hsId) references hs_ying_order_config(id);
+
+
 

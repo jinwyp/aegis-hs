@@ -21,15 +21,25 @@ public class YingHuikuan implements Serializable {
 
     private String huikuanMode;
 
-    private Byte huikuanPaper;
+    private Boolean huikuanBankPaper;
 
-    private LocalDateTime huikuanPaperDate;
+    private LocalDateTime huikuanBankPaperDate;
 
-    private Byte huikuanDiscount;
+    private Boolean huikuanBankDiscount;
 
-    private BigDecimal huikuanDiscountRate;
+    private BigDecimal huikuanBankDiscountRate;
 
-    private LocalDateTime huikuanPaperExpire;
+    private LocalDateTime huikuanBankPaperExpire;
+
+    private Boolean huikuanBusinessPaper;
+
+    private LocalDateTime huikuanBusinessPaperDate;
+
+    private Boolean huikuanBusinessDiscount;
+
+    private BigDecimal huikuanBusinessDiscountRate;
+
+    private LocalDateTime huikuanBusinessPaperExpire;
 
     private LocalDateTime tsc;
 
@@ -99,44 +109,84 @@ public class YingHuikuan implements Serializable {
         this.huikuanMode = huikuanMode == null ? null : huikuanMode.trim();
     }
 
-    public Byte getHuikuanPaper() {
-        return huikuanPaper;
+    public Boolean getHuikuanBankPaper() {
+        return huikuanBankPaper;
     }
 
-    public void setHuikuanPaper(Byte huikuanPaper) {
-        this.huikuanPaper = huikuanPaper;
+    public void setHuikuanBankPaper(Boolean huikuanBankPaper) {
+        this.huikuanBankPaper = huikuanBankPaper;
     }
 
-    public LocalDateTime getHuikuanPaperDate() {
-        return huikuanPaperDate;
+    public LocalDateTime getHuikuanBankPaperDate() {
+        return huikuanBankPaperDate;
     }
 
-    public void setHuikuanPaperDate(LocalDateTime huikuanPaperDate) {
-        this.huikuanPaperDate = huikuanPaperDate;
+    public void setHuikuanBankPaperDate(LocalDateTime huikuanBankPaperDate) {
+        this.huikuanBankPaperDate = huikuanBankPaperDate;
     }
 
-    public Byte getHuikuanDiscount() {
-        return huikuanDiscount;
+    public Boolean getHuikuanBankDiscount() {
+        return huikuanBankDiscount;
     }
 
-    public void setHuikuanDiscount(Byte huikuanDiscount) {
-        this.huikuanDiscount = huikuanDiscount;
+    public void setHuikuanBankDiscount(Boolean huikuanBankDiscount) {
+        this.huikuanBankDiscount = huikuanBankDiscount;
     }
 
-    public BigDecimal getHuikuanDiscountRate() {
-        return huikuanDiscountRate;
+    public BigDecimal getHuikuanBankDiscountRate() {
+        return huikuanBankDiscountRate;
     }
 
-    public void setHuikuanDiscountRate(BigDecimal huikuanDiscountRate) {
-        this.huikuanDiscountRate = huikuanDiscountRate;
+    public void setHuikuanBankDiscountRate(BigDecimal huikuanBankDiscountRate) {
+        this.huikuanBankDiscountRate = huikuanBankDiscountRate;
     }
 
-    public LocalDateTime getHuikuanPaperExpire() {
-        return huikuanPaperExpire;
+    public LocalDateTime getHuikuanBankPaperExpire() {
+        return huikuanBankPaperExpire;
     }
 
-    public void setHuikuanPaperExpire(LocalDateTime huikuanPaperExpire) {
-        this.huikuanPaperExpire = huikuanPaperExpire;
+    public void setHuikuanBankPaperExpire(LocalDateTime huikuanBankPaperExpire) {
+        this.huikuanBankPaperExpire = huikuanBankPaperExpire;
+    }
+
+    public Boolean getHuikuanBusinessPaper() {
+        return huikuanBusinessPaper;
+    }
+
+    public void setHuikuanBusinessPaper(Boolean huikuanBusinessPaper) {
+        this.huikuanBusinessPaper = huikuanBusinessPaper;
+    }
+
+    public LocalDateTime getHuikuanBusinessPaperDate() {
+        return huikuanBusinessPaperDate;
+    }
+
+    public void setHuikuanBusinessPaperDate(LocalDateTime huikuanBusinessPaperDate) {
+        this.huikuanBusinessPaperDate = huikuanBusinessPaperDate;
+    }
+
+    public Boolean getHuikuanBusinessDiscount() {
+        return huikuanBusinessDiscount;
+    }
+
+    public void setHuikuanBusinessDiscount(Boolean huikuanBusinessDiscount) {
+        this.huikuanBusinessDiscount = huikuanBusinessDiscount;
+    }
+
+    public BigDecimal getHuikuanBusinessDiscountRate() {
+        return huikuanBusinessDiscountRate;
+    }
+
+    public void setHuikuanBusinessDiscountRate(BigDecimal huikuanBusinessDiscountRate) {
+        this.huikuanBusinessDiscountRate = huikuanBusinessDiscountRate;
+    }
+
+    public LocalDateTime getHuikuanBusinessPaperExpire() {
+        return huikuanBusinessPaperExpire;
+    }
+
+    public void setHuikuanBusinessPaperExpire(LocalDateTime huikuanBusinessPaperExpire) {
+        this.huikuanBusinessPaperExpire = huikuanBusinessPaperExpire;
     }
 
     public LocalDateTime getTsc() {
