@@ -70,7 +70,6 @@ public class UserService {
 //        User user = userMapper.(phone);
 //        Assert.notNull(user);
 //        String credentials = Encodes.encodeHex(Digests.sha1(plainPassword.getBytes(), Encodes.decodeHex(user.getPasswordSalt()), HASH_INTERATIONS));
-
         // return user.getPassword().equals(credentials);
         return true;
     }

@@ -28,6 +28,8 @@ public class CangOrder implements Serializable {
 
     private String downstreamSettleMode;
 
+    private String status;
+
     private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
@@ -126,6 +128,14 @@ public class CangOrder implements Serializable {
 
     public void setDownstreamSettleMode(String downstreamSettleMode) {
         this.downstreamSettleMode = downstreamSettleMode == null ? null : downstreamSettleMode.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
     public LocalDateTime getTsc() {

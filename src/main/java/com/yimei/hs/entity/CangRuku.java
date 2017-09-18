@@ -13,7 +13,7 @@ public class CangRuku implements Serializable {
 
     private LocalDateTime rukuDate;
 
-    private Byte rukuStatus;
+    private Integer rukuStatus;
 
     private BigDecimal rukuAmount;
 
@@ -65,11 +65,11 @@ public class CangRuku implements Serializable {
         this.rukuDate = rukuDate;
     }
 
-    public Byte getRukuStatus() {
+    public Integer getRukuStatus() {
         return rukuStatus;
     }
 
-    public void setRukuStatus(Byte rukuStatus) {
+    public void setRukuStatus(Integer rukuStatus) {
         this.rukuStatus = rukuStatus;
     }
 

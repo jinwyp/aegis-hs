@@ -1,7 +1,10 @@
 package com.yimei.hs.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
 public class Team implements Serializable {
     private Long id;
 

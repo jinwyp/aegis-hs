@@ -14,11 +14,12 @@
     <result column="upstreamSettleMode" jdbcType="VARCHAR" property="upstreamSettleMode" />
     <result column="downstreamId" jdbcType="BIGINT" property="downstreamId" />
     <result column="downstreamSettleMode" jdbcType="VARCHAR" property="downstreamSettleMode" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="tsc" jdbcType="TIMESTAMP" property="tsc" />
   </resultMap>
   <sql id="Base_Column_List">
     id, deptId, teamId, creatorId, ownerId, mainAccounting, line, cargoType, upstreamId, 
-    upstreamSettleMode, downstreamId, downstreamSettleMode, tsc
+    upstreamSettleMode, downstreamId, downstreamSettleMode, status, tsc
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -35,12 +36,12 @@
       creatorId, ownerId, mainAccounting, 
       line, cargoType, upstreamId, 
       upstreamSettleMode, downstreamId, downstreamSettleMode, 
-      tsc)
+      status, tsc)
     values (#{id,jdbcType=BIGINT}, #{deptId,jdbcType=BIGINT}, #{teamId,jdbcType=BIGINT}, 
       #{creatorId,jdbcType=BIGINT}, #{ownerId,jdbcType=BIGINT}, #{mainAccounting,jdbcType=BIGINT}, 
       #{line,jdbcType=VARCHAR}, #{cargoType,jdbcType=VARCHAR}, #{upstreamId,jdbcType=BIGINT}, 
       #{upstreamSettleMode,jdbcType=VARCHAR}, #{downstreamId,jdbcType=BIGINT}, #{downstreamSettleMode,jdbcType=VARCHAR}, 
-      #{tsc,jdbcType=TIMESTAMP})
+      #{status,jdbcType=VARCHAR}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingOrder">
     insert into hs_ying_order
@@ -80,6 +81,9 @@
       </if>
       <if test="downstreamSettleMode != null">
         downstreamSettleMode,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="tsc != null">
         tsc,
@@ -122,6 +126,9 @@
       <if test="downstreamSettleMode != null">
         #{downstreamSettleMode,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
       <if test="tsc != null">
         #{tsc,jdbcType=TIMESTAMP},
       </if>
@@ -163,6 +170,9 @@
       <if test="downstreamSettleMode != null">
         downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
       <if test="tsc != null">
         tsc = #{tsc,jdbcType=TIMESTAMP},
       </if>
@@ -182,6 +192,7 @@
       upstreamSettleMode = #{upstreamSettleMode,jdbcType=VARCHAR},
       downstreamId = #{downstreamId,jdbcType=BIGINT},
       downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
       tsc = #{tsc,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>

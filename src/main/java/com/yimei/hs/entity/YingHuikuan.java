@@ -21,21 +21,21 @@ public class YingHuikuan implements Serializable {
 
     private String huikuanMode;
 
-    private Byte huikuanBankPaper;
+    private Boolean huikuanBankPaper;
 
     private LocalDateTime huikuanBankPaperDate;
 
-    private Byte huikuanBankDiscount;
+    private Boolean huikuanBankDiscount;
 
     private BigDecimal huikuanBankDiscountRate;
 
     private LocalDateTime huikuanBankPaperExpire;
 
-    private Byte huikuanBusinessPaper;
+    private Boolean huikuanBusinessPaper;
 
     private LocalDateTime huikuanBusinessPaperDate;
 
-    private Byte huikuanBusinessDiscount;
+    private Boolean huikuanBusinessDiscount;
 
     private BigDecimal huikuanBusinessDiscountRate;
 
@@ -109,11 +109,11 @@ public class YingHuikuan implements Serializable {
         this.huikuanMode = huikuanMode == null ? null : huikuanMode.trim();
     }
 
-    public Byte getHuikuanBankPaper() {
+    public Boolean getHuikuanBankPaper() {
         return huikuanBankPaper;
     }
 
-    public void setHuikuanBankPaper(Byte huikuanBankPaper) {
+    public void setHuikuanBankPaper(Boolean huikuanBankPaper) {
         this.huikuanBankPaper = huikuanBankPaper;
     }
 
@@ -125,11 +125,11 @@ public class YingHuikuan implements Serializable {
         this.huikuanBankPaperDate = huikuanBankPaperDate;
     }
 
-    public Byte getHuikuanBankDiscount() {
+    public Boolean getHuikuanBankDiscount() {
         return huikuanBankDiscount;
     }
 
-    public void setHuikuanBankDiscount(Byte huikuanBankDiscount) {
+    public void setHuikuanBankDiscount(Boolean huikuanBankDiscount) {
         this.huikuanBankDiscount = huikuanBankDiscount;
     }
 
@@ -149,11 +149,11 @@ public class YingHuikuan implements Serializable {
         this.huikuanBankPaperExpire = huikuanBankPaperExpire;
     }
 
-    public Byte getHuikuanBusinessPaper() {
+    public Boolean getHuikuanBusinessPaper() {
         return huikuanBusinessPaper;
     }
 
-    public void setHuikuanBusinessPaper(Byte huikuanBusinessPaper) {
+    public void setHuikuanBusinessPaper(Boolean huikuanBusinessPaper) {
         this.huikuanBusinessPaper = huikuanBusinessPaper;
     }
 
@@ -165,11 +165,11 @@ public class YingHuikuan implements Serializable {
         this.huikuanBusinessPaperDate = huikuanBusinessPaperDate;
     }
 
-    public Byte getHuikuanBusinessDiscount() {
+    public Boolean getHuikuanBusinessDiscount() {
         return huikuanBusinessDiscount;
     }
 
-    public void setHuikuanBusinessDiscount(Byte huikuanBusinessDiscount) {
+    public void setHuikuanBusinessDiscount(Boolean huikuanBusinessDiscount) {
         this.huikuanBusinessDiscount = huikuanBusinessDiscount;
     }
 
