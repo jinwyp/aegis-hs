@@ -8,9 +8,9 @@ public enum SettleMode {
     ONE_PAPER_SETTLE("一票结算"),
     TWO_PAPER_SETTLE("两票结算");
 
-    public String status;
+    public String value;
 
-    SettleMode(String status) {
-        this.status = status;
+    SettleMode(String value) {
+        this.value = value;
     }
 }

@@ -12,9 +12,9 @@ public enum FeeClass {
     SUPERVISE_FEE("监管费"),
     SERVICE_FEE("服务费"),
     BUSINESS_FEE("业务费");
-    public String status;
+    public String value;
 
-    FeeClass(String status) {
-        this.status = status;
+    FeeClass(String value) {
+        this.value = value;
     }
 }

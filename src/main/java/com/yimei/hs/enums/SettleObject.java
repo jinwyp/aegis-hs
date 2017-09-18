@@ -13,10 +13,10 @@ public enum SettleObject {
     TRAFFICT_SETTLE("运输方结算");
 
 
-    public String status;
+    public String value;
 
-    SettleObject(String status) {
-        this.status = status;
+    SettleObject(String value) {
+        this.value = value;
     }
 
 }

@@ -13,9 +13,9 @@ public enum TrafficMode {
     RAIL("火运");
 
 
-    public String status;
-    TrafficMode(String status) {
-        this.status = status;
+    public String value;
+    TrafficMode(String value) {
+        this.value = value;
     }
 
 }

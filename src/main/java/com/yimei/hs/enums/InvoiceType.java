@@ -8,10 +8,10 @@ public enum InvoiceType {
     GOODS_INVOICE("货款发票"),
     FRIGHT_INVOICE("运费发票");
 
-    public String status;
+    public String value;
 
-    InvoiceType(String status) {
-        this.status = status;
+    InvoiceType(String value) {
+        this.value = value;
     }
 
 }

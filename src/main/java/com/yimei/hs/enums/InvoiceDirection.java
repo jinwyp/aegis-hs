@@ -7,10 +7,10 @@ public enum InvoiceDirection {
 
     INCOME("进项发票"),
     OUTOUT("销项发票");
-    public String status;
+    public String value;
 
-    InvoiceDirection(String status) {
-        this.status = status;
+    InvoiceDirection(String value) {
+        this.value = value;
     }
 
 }

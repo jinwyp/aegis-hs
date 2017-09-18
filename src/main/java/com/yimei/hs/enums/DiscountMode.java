@@ -10,8 +10,8 @@ public enum DiscountMode{
     CASH_DISCOUNT("现金折扣");
 
 
-    public String status;
-    DiscountMode(String status) {
-        this.status = status;
+    public String value;
+    DiscountMode(String value) {
+        this.value = value;
     }
 }

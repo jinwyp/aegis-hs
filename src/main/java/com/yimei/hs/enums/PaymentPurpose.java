@@ -8,10 +8,10 @@ public enum PaymentPurpose {
     DEPOSITECASH("保证金"),
     FREIGNHT("运费");
 
-    public String status;
+    public String value;
 
-    PaymentPurpose(String status) {
-        this.status = status;
+    PaymentPurpose(String value) {
+        this.value = value;
     }
 
 }

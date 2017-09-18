@@ -12,8 +12,8 @@ public enum BusinessType {
 
     CABIN_BISINESS("仓抵押业务");
 
-    public String status;
-    BusinessType(String status) {
-        this.status = status;
+    public String value;
+    BusinessType(String value) {
+        this.value = value;
     }
 }

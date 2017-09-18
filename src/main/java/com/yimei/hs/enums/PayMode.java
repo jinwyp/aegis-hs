@@ -10,9 +10,9 @@ public enum PayMode {
     BUSINESS_ACCEPTANCE("商业承兑"),
     CASH("现金");
 
-    public String status;
+    public String value;
 
-    PayMode(String status) {
-        this.status = status;
+    PayMode(String value) {
+        this.value = value;
     }
 }
