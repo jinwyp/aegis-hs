@@ -302,3 +302,18 @@ create table hs_cang_transfer (
 )engine=InnoDB default charset=utf8;
 alter table hs_cang_transfer add foreign key(orderId) references hs_cang_order(id);
 
+
+-- 修改记录
+create table hs_cang_log (
+  id bigint(20)           not null auto_increment,
+  orderId bigint(20)      not null comment '订单编号',
+  hsId bigint(20)         not null comment '核算月id',
+  entityId bigint(20)     not null comment '实体id',
+  entityType varchar(32)  not null comment '实体类型',
+  memo varchar(128)       not null comment '修改日志',
+  tsc timestamp           not null default current_timestamp,
+  primary key (id)
+)engine=InnoDB default charset=utf8;
+alter table hs_cang_log add foreign key(orderId) references hs_cang_order(id);
+alter table hs_cang_log add foreign key(hsId) references hs_cang_order_config(id);
+

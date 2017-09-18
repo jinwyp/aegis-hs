@@ -27,8 +27,8 @@
   
         <!-- generate Model -->  
         <javaModelGenerator targetPackage="com.yimei.hs.entity"  targetProject="src/main/java">
-            <property name="enableSubPackages" value="true" />  
-            <property name="trimStrings" value="true" />  
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
         </javaModelGenerator>  
   
         <!-- generate xml -->  
@@ -58,6 +58,8 @@
         <table tableName="hs_cang_settle_upstream" domainObjectName="CangSettleUpstream" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
         <table tableName="hs_cang_settle_upstream_map" domainObjectName="CangSettleUpstreamMap" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
         <table tableName="hs_cang_transfer" domainObjectName="CangTransfer" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
+        <table tableName="hs_cang_log" domainObjectName="CangLog" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
+
         <table tableName="hs_dept" domainObjectName="Dept" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
         <table tableName="hs_party" domainObjectName="Party" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
         <table tableName="hs_team" domainObjectName="Team" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
@@ -79,6 +81,7 @@
         <table tableName="hs_ying_settle_traffic" domainObjectName="YingSettleTraffic" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
         <table tableName="hs_ying_settle_upstream" domainObjectName="YingSettleUpstream" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
         <table tableName="hs_ying_transfer" domainObjectName="YingTransfer" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
+        <table tableName="hs_ying_log" domainObjectName="YingLog" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
 
 
     </context>  
