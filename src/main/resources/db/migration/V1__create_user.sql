@@ -9,7 +9,7 @@ create table hs_user (
   passwordSalt varchar(40) not null comment '密码盐',
   createDate datetime      not null comment '创建时间',
   createBy varchar(45)     not null comment '创建人',
-  isAdmin tinyint          not null comment '是否为管理员',
+  isAdmin tinyint(1)       not null comment '是否为管理员',
   isActive tinyint(1) default '1'   comment '1 可用 0 禁用',
   PRIMARY KEY (id),
   UNIQUE KEY name_UNIQUE (phone)

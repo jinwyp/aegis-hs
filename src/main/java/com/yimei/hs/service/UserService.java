@@ -59,6 +59,12 @@ public class UserService {
 
     }
 
+    /**
+     * 验证密码
+     * @param phone
+     * @param plainPassword
+     * @return
+     */
     public boolean validPasswordEquals(String phone, String plainPassword) {
 
 //        User user = userMapper.(phone);
@@ -71,7 +77,7 @@ public class UserService {
 
 
     public User loadBySecurePhone(String phone) {
-        // return userMapper.loadByPhone(phone);
+        return userMapper.loadByPhone(phone);
         return null;
     }
 

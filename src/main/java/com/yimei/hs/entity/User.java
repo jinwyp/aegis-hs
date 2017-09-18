@@ -18,7 +18,7 @@ public class User implements Serializable {
 
     private String createBy;
 
-    private Byte isAdmin;
+    private Boolean isAdmin;
 
     private Boolean isActive;
 
@@ -80,11 +80,11 @@ public class User implements Serializable {
         this.createBy = createBy == null ? null : createBy.trim();
     }
 
-    public Byte getIsAdmin() {
+    public Boolean getIsAdmin() {
         return isAdmin;
     }
 
-    public void setIsAdmin(Byte isAdmin) {
+    public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 

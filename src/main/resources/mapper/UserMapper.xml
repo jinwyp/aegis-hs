@@ -10,7 +10,7 @@
     <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
     <result column="createBy" jdbcType="VARCHAR" property="createBy" />
     <result column="isAdmin" jdbcType="TINYINT" property="isAdmin" />
-    <result column="isActive" jdbcType="BIT" property="isActive" />
+    <result column="isActive" jdbcType="TINYINT" property="isActive" />
   </resultMap>
   <sql id="Base_Column_List">
     id, deptId, phone, password, passwordSalt, createDate, createBy, isAdmin, isActive
