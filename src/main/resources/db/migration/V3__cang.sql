@@ -58,7 +58,7 @@ create table hs_cang_ruku (
   hsId bigint(20)                 not null comment '核算月id',
 
   rukuDate datetime               not null comment '入库日期',
-  rukuStatus tinyint              not null comment '入库状态, 在途,已入库',
+  rukuStatus int              not null comment '入库状态, 在途,已入库',
   rukuAmount decimal(10,2)        not null comment '入库吨数',
   rukuPrice decimal(10,2)         not null comment '入库单价: 元/吨',
   locality varchar(128)           not null comment '场库',
@@ -124,9 +124,9 @@ create table hs_cang_huikuan (
    huikuanUsage varchar(32)              not null comment '回款用途: 货款, 保证金',
    huikuanMode varchar(32)               not null comment '回款方式: 电汇, 银行承兑, 商业承兑, 现金',
 
-   huikuanPaper tinyint                           comment '是否收到票据, 如果回款方式是银行承兑, 此字段有效',
+   huikuanPaper tinyint(1)                        comment '是否收到票据, 如果回款方式是银行承兑, 此字段有效',
    huikuanPaperDate datetime                      comment '收到票据原件日期, 如果收到票据',
-   huikuanDiscount tinyint                        comment '是否贴息, 如果回款方式是银行承兑, 此字段有效',
+   huikuanDiscount tinyint(1)                     comment '是否贴息, 如果回款方式是银行承兑, 此字段有效',
    huikuanDiscountRate decimal(10, 2)             comment '如果回款方式是银行承兑, 贴息率',
    huikuanPaperExpire datetime                    comment '票据到期日',
 
