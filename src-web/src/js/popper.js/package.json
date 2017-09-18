@@ -1,0 +1,120 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "popper.js",
+        "scope": null,
+        "escapedName": "popper.js",
+        "name": "popper.js",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/jin/Documents/github/koa-user/frontend/src"
+    ]
+  ],
+  "_cnpm_publish_time": 1501420827319,
+  "_from": "popper.js@latest",
+  "_hasShrinkwrap": false,
+  "_id": "popper.js@1.11.1",
+  "_inCache": true,
+  "_location": "/popper.js",
+  "_nodeVersion": "8.1.2",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/popper.js-1.11.1.tgz_1501420825817_0.8391906942706555"
+  },
+  "_npmUser": {
+    "name": "fezvrasta",
+    "email": "federico.zivolo@gmail.com"
+  },
+  "_npmVersion": "5.3.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "popper.js",
+    "scope": null,
+    "escapedName": "popper.js",
+    "name": "popper.js",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npm.taobao.org/popper.js/download/popper.js-1.11.1.tgz",
+  "_shasum": "f5aca9a73bca1ce1fdbd9be8b1ba68677cbdd8e0",
+  "_shrinkwrap": null,
+  "_spec": "popper.js",
+  "_where": "/Users/jin/Documents/github/koa-user/frontend/src",
+  "author": {
+    "name": "Federico Zivolo",
+    "email": "federico.zivolo@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/FezVrasta/popper.js/issues"
+  },
+  "contributors": [
+    {
+      "name": "Contributors",
+      "url": "https://github.com/FezVrasta/popper.js/graphs/contributors"
+    }
+  ],
+  "dependencies": {},
+  "description": "A kickass library to manage your poppers",
+  "devDependencies": {
+    "@popperjs/bundle": "^1.0.0",
+    "@popperjs/eslint-config-popper": "^1.0.0",
+    "@popperjs/test": "^1.0.0",
+    "@popperjs/test-utils": "^1.0.0",
+    "eslint": "^4.1.1",
+    "nuget-publish": "^1.0.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "f5aca9a73bca1ce1fdbd9be8b1ba68677cbdd8e0",
+    "size": 412318,
+    "noattachment": false,
+    "tarball": "http://registry.npm.taobao.org/popper.js/download/popper.js-1.11.1.tgz"
+  },
+  "homepage": "https://popper.js.org",
+  "keywords": [
+    "popperjs",
+    "component",
+    "drop",
+    "tooltip",
+    "popover",
+    "position",
+    "attached"
+  ],
+  "license": "MIT",
+  "main": "dist/umd/popper.js",
+  "maintainers": [
+    {
+      "name": "fezvrasta",
+      "email": "info@mywebexpression.com"
+    }
+  ],
+  "module": "dist/esm/popper.js",
+  "name": "popper.js",
+  "optionalDependencies": {},
+  "publish_time": 1501420827319,
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FezVrasta/popper.js.git"
+  },
+  "scripts": {
+    "build": "node bundle.js",
+    "coverage": "NODE_ENV=coverage npm run test",
+    "lint": "eslint .",
+    "postpublish": "nuget-publish",
+    "prebuild": "npm run lint",
+    "prepare": "npm run build",
+    "pretest": "npm run lint",
+    "test": "popper-karma",
+    "test:dev": "BROWSERS=Chrome NODE_ENV=development npm run test"
+  },
+  "types": "index.d.ts",
+  "version": "1.11.1"
+}

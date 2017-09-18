@@ -1,0 +1,37 @@
+
+<nav >
+    <ul class="pagination" [class.pagination-lg]="size === 'lg'" [class.pagination-sm]="size === 'sm'"
+        [class.justify-content-center]="alignment === 'center'" [class.justify-content-end]="alignment === 'right'">
+
+        <li class="page-item" [class.disabled]="page===1">
+            <a class="page-link"  aria-label="Previous" (click)="changePage($event, page - 1, 'prev')">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+
+
+        <li class="page-item" *ngFor="let page of _pageArrayLeft"><a class="page-link" (click)="changePage($event, page)" >{{page}}</a></li>
+
+        <li class="page-item" *ngIf="_ellipsisLeft"> <a class="page-link">...</a> </li>
+
+
+        <li class="page-item" *ngFor="let page of _pageArrayMiddle"><a class="page-link" (click)="changePage($event, page)">{{page}}</a></li>
+
+
+        <li class="page-item" *ngIf="_ellipsisRight"> <a class="page-link">...</a> </li>
+
+        <li class="page-item" *ngFor="let page of _pageArrayRight"><a class="page-link" (click)="changePage($event, page)">{{page}}</a></li>
+
+
+        <li class="page-item" [class.disabled]="page===_totalPageCount">
+            <a class="page-link"  aria-label="Next" (click)="changePage($event, page + 1, 'next')">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+
+    </ul>
+</nav>
+
+

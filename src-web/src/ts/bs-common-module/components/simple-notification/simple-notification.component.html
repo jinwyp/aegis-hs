@@ -1,0 +1,28 @@
+<div class="simple-notification"
+     [@enterLeave]="item.state"
+     (click)="onClick($event)"
+     [class]="theClass"
+     [ngClass]="{
+                'alert': item.type === 'alert',
+                'error': item.type === 'error',
+                'warn': item.type === 'warn',
+                'success': item.type === 'success',
+                'info': item.type === 'info',
+                'bare': item.type === 'bare',
+                'rtl-mode': rtl
+            }"
+     (mouseenter)="onEnter()"
+     (mouseleave)="onLeave()">
+
+    <div *ngIf="!item.html">
+        <div class="sn-title">{{item.title}} </div>
+        <div class="sn-content">{{item.content | max:maxLength}}</div>
+        <div class="icon" *ngIf="item.icon !== 'bare'" [innerHTML]="safeSvg"></div>
+    </div>
+
+    <div *ngIf="item.html" [innerHTML]="item.html"></div>
+
+    <div class="sn-progress-loader" *ngIf="showProgressBar">
+        <span [ngStyle]="{'width': progressWidth + '%'}"></span>
+    </div>
+</div>

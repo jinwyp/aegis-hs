@@ -1,0 +1,98 @@
+
+<div class="row justify-content-center mt-4">
+
+
+    <div class="col-10 col-lg-6" *ngIf="formType ==='normal' ">
+
+        <H1> 注册 </H1>
+        <form [formGroup]="registerForm" (ngSubmit)="registerFormSubmit()">
+
+            <bs-text-input formControlName="username" [fc]="registerForm.get('username')" [type]="'text'" [label]="'用户名:'" [dirty]="ignoreDirty" [error]="registerFormError.username || (registerForm.get('username').hasError('isExist') ? registerFormValidationMessages.username.isExist : '') "></bs-text-input>
+            <bs-text-input formControlName="mobilePhone" [fc]="registerForm.get('mobilePhone')" [type]="'text'" [label]="'手机号:'" [dirty]="ignoreDirty" [error]="registerFormError.mobilePhone || (registerForm.get('mobilePhone').hasError('isExist') ? registerFormValidationMessages.mobilePhone.isExist : '') "></bs-text-input>
+            <bs-text-input formControlName="password" [fc]="registerForm.get('password')" [type]="'password'" [label]="'密码:'" [passwordTip]="true" [dirty]="ignoreDirty" [error]="registerFormError.password"></bs-text-input>
+            <bs-text-input formControlName="password2" [fc]="registerForm.get('password2')" [type]="'text'" [label]="'确认密码:'" [dirty]="ignoreDirty" [error]="registerFormError.password2"></bs-text-input>
+
+            <bs-text-input formControlName="captcha" [fc]="registerForm.get('captcha')" [type]="'text'" [label]="'验证码:'" [dirty]="ignoreDirty" [error]="registerFormError.captcha || (registerForm.get('captcha').hasError('wrong') ? registerFormValidationMessages.captcha.wrong : '')">
+                <img [src]="imageSrcCaptcha"  class="img-fluid" (click)="changeCaptchaImage($event)" >
+            </bs-text-input>
+
+
+            <div class="form-group row">
+                <div class="col-10 ml-auto">
+                    <button type="submit" class="btn btn-info" >注册</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+    <div class="col-10 col-lg-6" *ngIf="formType ==='mobilePhone'">
+
+        <H1> 注册 </H1>
+        <form [formGroup]="registerFormWithMobilePhone" *ngIf="registerProcessStep === 'step1'">
+
+            <bs-text-input formControlName="mobilePhone" [fc]="registerFormWithMobilePhone.get('mobilePhone')" [type]="'text'" [label]="'手机号:'" [dirty]="ignoreDirty" [error]="registerFormError.mobilePhone || (registerFormWithMobilePhone.get('mobilePhone').hasError('isExist') ? registerFormValidationMessages.mobilePhone.isExist : '') "></bs-text-input>
+            <bs-text-input formControlName="captcha" [fc]="registerFormWithMobilePhone.get('captcha')" [type]="'text'" [label]="'图片验证码:'" [dirty]="ignoreDirty" [error]="(registerFormWithMobilePhone.get('captcha').hasError('wrong') ? registerFormValidationMessages.captcha.wrong : '') || registerFormError.captcha">
+                <img [src]="imageSrcCaptcha"  class="img-fluid" (click)="changeCaptchaImage($event)" >
+            </bs-text-input>
+
+            <div class="form-group row">
+                <div class="col-10 ml-auto">
+                    <button type="submit" class="btn btn-info" [disabled]="sendSMSTimer" (click)="registerFormWithMobilePhoneSubmitStep1()"  > 发送短信验证码 </button>
+                </div>
+            </div>
+        </form>
+
+
+        <form [formGroup]="registerFormWithMobilePhoneStep2" *ngIf="registerProcessStep === 'step2'">
+
+            <bs-text-input formControlName="mobilePhone" [fc]="registerFormWithMobilePhoneStep2.get('mobilePhone')" [type]="'text'" [label]="'手机号:'" [dirty]="ignoreDirty" [readOnly]="registerProcessStep === 'step2'" [error]="registerFormError.mobilePhone || (registerFormWithMobilePhoneStep2.get('mobilePhone').hasError('isExist') ? registerFormValidationMessages.mobilePhone.isExist : '') "></bs-text-input>
+
+            <bs-text-input formControlName="smsCode" [fc]="registerFormWithMobilePhoneStep2.get('smsCode')" [type]="'text'" [label]="'短信验证码:'" [hint]="'校验码已发送至你的手机，请查收!'" [dirty]="ignoreDirty" [error]="registerFormError.captcha || (registerFormWithMobilePhoneStep2.get('smsCode').hasError('wrong') ? registerFormValidationMessages.smsCode.wrong : '') " >
+                <button type="submit" class="btn btn-outline-info" [disabled]="sendSMSTimer" (click)="registerFormWithMobilePhoneSubmitStep1()"  >
+                    <span *ngIf="sendSMSFirstTime">发送短信验证码</span>
+                    <span *ngIf="!sendSMSFirstTime">{{ sendSMSTimer ? sendSMSTimer + 's后重新发送验证码' : '获取短信验证码' }}</span>
+                </button>
+            </bs-text-input>
+
+            <bs-text-input formControlName="username" [fc]="registerFormWithMobilePhoneStep2.get('username')" [type]="'text'" [label]="'用户名:'" [dirty]="ignoreDirty" [error]="registerFormError.username || (registerFormWithMobilePhoneStep2.get('username').hasError('isExist') ? registerFormValidationMessages.username.isExist : '') "></bs-text-input>
+            <bs-text-input formControlName="password" [fc]="registerFormWithMobilePhoneStep2.get('password')" [type]="'password'" [label]="'密码:'" [passwordTip]="true" [dirty]="ignoreDirty" [error]="registerFormError.password"></bs-text-input>
+            <bs-text-input formControlName="password2" [fc]="registerFormWithMobilePhoneStep2.get('password2')" [type]="'password'" [label]="'确认密码:'" [dirty]="ignoreDirty" [error]="registerFormError.password2"></bs-text-input>
+
+
+            <!--
+                        <div class="form-group row" >
+                            <label class="col-2 col-form-label" for="captcha">验证码</label>
+                            <div class="col-6">
+                                <input type="text" class="form-control" id="captcha" formControlName="captcha" [class.is-valid]="registerForm.get('captcha').valid&&registerForm.get('captcha').dirty" [class.is-invalid]="(registerForm.get('captcha').invalid || registerFormError.captcha) && registerForm.get('captcha').dirty">
+
+                                <div class="invalid-feedback" *ngIf="registerForm.get('captcha').hasError('wrong') || registerFormError.captcha">
+                                    {{registerFormError.captcha}}
+                                    {{ registerForm.get('captcha').hasError('wrong') ? registerFormValidationMessages.captcha.wrong : '' }}
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <img [src]="imageSrcCaptcha"  class="CaptchaImage" (click)="changeCaptchaImage($event)" >
+                            </div>
+                        </div>
+            -->
+
+            <div class="form-group row">
+                <div class="col-10 ml-auto">
+                    <button type="submit" class="btn btn-info" (click)="registerFormWithMobilePhoneSubmitStep2()">注册</button>
+                </div>
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+<app-bs-modal></app-bs-modal>
+<simple-notifications></simple-notifications>

@@ -1,0 +1,72 @@
+<div class="form-group row" >
+    <label class="{{labelClass}} col-form-label">{{label}}</label>
+    <div class="{{inputClass}} positionR" #optionsListEl>
+        <i class="fa fa-angle-down select_input_arrow" aria-hidden="true" [class.arrow_up]="isShowDropdownList"></i>
+        <input type="text" class="form-control select_input" readonly [class.is-invalid]="error" (click)="showOptions()"  [value]="currentProvince.name + '/' + currentCity.name + '/'+ currentDistrict.name">
+
+        <div class="list-group boxShadow"  [class.d-none]="!isShowDropdownList">
+            <!--<li *ngFor="let option of optionList; let i = index" class="list-group-item selectOptions" [class.active]="i === currentSelectByKeyboard" (click)="getCurrentOption(option)">{{option.name}}</li>-->
+            <div class="tab-nav" >
+                <a class="list-group-item-action" [class.active]="currentTab === 'province'" data-toggle="list" (click)="tabChange('province')" role="tab">省份</a>
+                <a class="list-group-item-action" [class.active]="currentTab ===  'city'" data-toggle="list"    (click)="tabChange('city')" role="tab">城市</a>
+                <a class="list-group-item-action" [class.active]="currentTab === 'district'" data-toggle="list"  (click)="tabChange('district')" role="tab">县区</a>
+                <!--<a class="list-group-item-action" [class.active]="street" data-toggle="list"  (click)="tabChange('street')" role="tab">街道</a>-->
+            </div>
+
+            <div class="tab-content">
+
+                <div class="tab-pane" [class.active]="currentTab === 'province'" >
+                    <div class="row">
+                        <div class="col-3">直辖市</div>
+                        <div class="col-9">
+                            <span class="item" *ngFor="let provinceItem of dataSource | filterArray:{isCity : true};trackBy: trackByFn" (click)="getCurrentProvince(provinceItem)">{{provinceItem.name}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">A-G</div>
+                        <div class="col-9">
+                            <span class="item" *ngFor="let item of dataSource | filterArray:{pinyin : 'AG'};trackBy: trackByFn" (click)="getCurrentProvince(item)">{{item.name}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">H-K</div>
+                        <div class="col-9">
+                            <span class="item" *ngFor="let item of dataSource | filterArray:{pinyin : 'HK'};trackBy: trackByFn" (click)="getCurrentProvince(item)">{{item.name}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">L-S</div>
+                        <div class="col-9">
+                            <span class="item" *ngFor="let item of dataSource | filterArray:{pinyin : 'LS'};trackBy: trackByFn" (click)="getCurrentProvince(item)">{{item.name}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">T-Z</div>
+                        <div class="col-9">
+                            <span class="item" *ngFor="let item of dataSource | filterArray:{pinyin : 'TZ'};trackBy: trackByFn" (click)="getCurrentProvince(item)">{{item.name}}</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="tab-pane" [class.active]="currentTab === 'city'" >
+                    <span class="item" *ngFor="let city of cityList;trackBy: trackByFn"  (click)="getCurrentCity(city)" >{{city.name}}</span>
+                </div>
+
+
+                <div class="tab-pane" [class.active]="currentTab === 'district'"  >
+                    <span class="item" *ngFor="let district of districtList;trackBy: trackByFn"  (click)="getCurrentDistrict(district)">{{district.name}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="invalid-feedback" *ngIf="error">
+            <span *ngIf="error"> {{error}} </span>
+            <span *ngIf="!error">
+                <span *ngIf="currentFormControl.hasError('required')"> 该项是必填项！</span>
+            </span>
+        </div>
+
+    </div>
+
+</div>

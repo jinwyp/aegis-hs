@@ -1,0 +1,22 @@
+<div class="form-group row" >
+    <label class="{{labelClass}} col-form-label" *ngIf="showLabel">{{label}} </label>
+    <div class="{{inputClass}}" #datepicker>
+
+        <div class="input-group">
+            <input type="text" class="form-control" (input)="onKeyChange($event.target.value)" (click)="showDatePicker()"  [value]="inputDisplayValue">
+            <span class="input-group-addon" (click)="showDatePicker()"><i class="fa fa-calendar"></i></span>
+        </div>
+
+        <p class="ngb-error" *ngIf="errorFormatInfo"> {{errorFormatInfo}}</p>
+
+        <ngb-datepicker *ngIf="isShowDatePicker" [(ngModel)]="interValueDate" (ngModelChange)="getDate($event)"> </ngb-datepicker>
+
+        <div class="invalid-feedback d-block" *ngIf="error">
+            <span *ngIf="error"> {{error}} </span>
+            <span *ngIf="!error">
+                <span *ngIf="currentFormControl.hasError('required')"> 该项是必填项！</span>
+            </span>
+        </div>
+    </div>
+
+</div>

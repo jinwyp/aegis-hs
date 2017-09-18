@@ -12,6 +12,6 @@ public class LoginController {
 
     @GetMapping("/web/login")
     public String hello(Model model) {
-        return "index";
+        return "/login";
     }
 }

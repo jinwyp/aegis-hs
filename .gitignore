@@ -33,6 +33,7 @@ target
 
 # css sprite
 
+auto-sprite.png
 _auto_sprite.scss
 .sass-cache
 *auto-sprite*
@@ -40,32 +41,12 @@ _auto_sprite.scss
 
 
 
-
-src/main/resources/templates/dist
-frontend/dist
-frontend/src/jsoutput
-frontend/src/css/stylesheets
-
-src/main/resources/templates/site/dist
-frontend-site/dist
-frontend-site/src/css/stylesheets
-frontend-site/src/js/page2
-frontend-site/src/js/page-temp-bundle
-
-src/main/resources/templates/admin/dist
-frontend-admin/dist
-frontend-admin/src/tssource-temp-prodution
-frontend-admin/src/jsoutput-temp-prodution
-frontend-admin/src/jsoutput
-frontend-admin/src/css/stylesheets
-
-frontend-admin/src/testing/report
+src-web/src/aotCompiled
+src-web/dist
 
 
-frontend-cangya/dist
-frontend-cangya/src/css/stylesheets
-frontend-cangya/src/js/page-temp-bundle
-mockserver
+
+
 
 .tmp/
 files
@@ -85,7 +66,6 @@ backend/config/self.js
 
 # Ignore Windows desktop setting file
 desktop.ini
-*.iml
 
 
 

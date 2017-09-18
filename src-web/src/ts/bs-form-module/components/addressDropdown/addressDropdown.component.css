@@ -1,0 +1,55 @@
+.select_input {
+    padding-right: 20px;
+}
+.select_input_arrow {
+    position: absolute;
+    top : 5px;
+    right: 18px;
+    font-size: 2em;
+    transition: transform 0.2s linear;
+}
+
+.arrow_up {
+    transform: rotate(180deg);
+}
+.positionR{
+    position: relative;
+}
+.list-group{
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+.boxShadow{
+    width: 375px;
+    margin-left: 10px;
+    position: absolute;
+    top: 36px;
+    left: 0;
+    z-index: 2;
+}
+.tab-nav a{
+    float: left;
+    width: 33.3%;
+    text-align: center;
+    background-color: #f0f0f0;
+    line-height: 46px;
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.tab-nav a:last-child{
+    border-right:none;
+}
+.tab-nav a.active{
+    background-color: #ffffff;
+    color: #f97030;
+    border-bottom:1px solid #ffffff;
+}
+.tab-content .tab-pane{
+    background-color: #ffffff;
+    padding: 20px;
+    line-height: 30px;
+}
+.tab-content .tab-pane .item{
+    display: inline-block;
+    padding-right: 15px;
+    cursor: pointer;
+}
