@@ -30,6 +30,11 @@ public class UserController {
         return "/index";
     }
 
+    /**
+     * 注册， 当做添加用户的接口
+     * @param user
+     * @return
+     */
     @PostMapping(value = "/register")
     public ResponseEntity<?> register(@RequestBody @Validated UserDTO user) {
         userService.registerUser(user);
@@ -37,6 +42,13 @@ public class UserController {
     }
 
 
+    /**
+     * jwt
+     * 登录，下发Authorization Bearer
+     * @param securePhone
+     * @param plainPassword
+     * @return
+     */
     @PostMapping(value = "/login")
     public ResponseEntity<?> login(@RequestParam("phone") String securePhone, @RequestParam("plainPassword") String plainPassword) {
         User user = userService.loadBySecurePhone(StringUtils.trim(securePhone));
@@ -52,6 +64,11 @@ public class UserController {
         }
     }
 
+    /**
+     * jwt example
+     * @param userDTO
+     * @return
+     */
     @GetMapping(value = "/authorization")
     public ResponseEntity authorization(@CurrentUser UserDTO userDTO) {
         return new ResponseEntity(userDTO, HttpStatus.OK);
