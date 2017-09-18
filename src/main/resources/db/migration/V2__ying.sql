@@ -14,6 +14,7 @@ create table hs_ying_order (
    upstreamSettleMode varchar(20)   not null comment '上游结算方式',
    downstreamId  bigint(20)         not null comment '下游id',
    downstreamSettleMode varchar(20) not null comment '下游结算方式',
+   status varchar(32)               not null comment '订单状态: 完结, 未完结',
    tsc timestamp                    not null default current_timestamp,
    primary key (id)
 ) engine=InnoDB default charset=utf8;
