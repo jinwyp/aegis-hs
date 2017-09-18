@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yimei.hs.mapper.CangSettleUpstreamMapper">
+  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.CangSettleUpstream">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="orderId" jdbcType="BIGINT" property="orderId" />
+    <result column="hsId" jdbcType="BIGINT" property="hsId" />
+    <result column="settleDate" jdbcType="TIMESTAMP" property="settleDate" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="settleGap" jdbcType="DECIMAL" property="settleGap" />
+    <result column="tsc" jdbcType="TIMESTAMP" property="tsc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, orderId, hsId, settleDate, amount, money, settleGap, tsc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hs_cang_settle_upstream
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from hs_cang_settle_upstream
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yimei.hs.entity.CangSettleUpstream">
+    insert into hs_cang_settle_upstream (id, orderId, hsId, 
+      settleDate, amount, money, 
+      settleGap, tsc)
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT}, 
+      #{settleDate,jdbcType=TIMESTAMP}, #{amount,jdbcType=DECIMAL}, #{money,jdbcType=DECIMAL}, 
+      #{settleGap,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yimei.hs.entity.CangSettleUpstream">
+    insert into hs_cang_settle_upstream
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderId != null">
+        orderId,
+      </if>
+      <if test="hsId != null">
+        hsId,
+      </if>
+      <if test="settleDate != null">
+        settleDate,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="settleGap != null">
+        settleGap,
+      </if>
+      <if test="tsc != null">
+        tsc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="hsId != null">
+        #{hsId,jdbcType=BIGINT},
+      </if>
+      <if test="settleDate != null">
+        #{settleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="settleGap != null">
+        #{settleGap,jdbcType=DECIMAL},
+      </if>
+      <if test="tsc != null">
+        #{tsc,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.CangSettleUpstream">
+    update hs_cang_settle_upstream
+    <set>
+      <if test="orderId != null">
+        orderId = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="hsId != null">
+        hsId = #{hsId,jdbcType=BIGINT},
+      </if>
+      <if test="settleDate != null">
+        settleDate = #{settleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="settleGap != null">
+        settleGap = #{settleGap,jdbcType=DECIMAL},
+      </if>
+      <if test="tsc != null">
+        tsc = #{tsc,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.CangSettleUpstream">
+    update hs_cang_settle_upstream
+    set orderId = #{orderId,jdbcType=BIGINT},
+      hsId = #{hsId,jdbcType=BIGINT},
+      settleDate = #{settleDate,jdbcType=TIMESTAMP},
+      amount = #{amount,jdbcType=DECIMAL},
+      money = #{money,jdbcType=DECIMAL},
+      settleGap = #{settleGap,jdbcType=DECIMAL},
+      tsc = #{tsc,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
