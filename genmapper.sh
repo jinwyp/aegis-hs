@@ -1,5 +1,7 @@
 #!/bin/bash
 
+./initdb.sh;
+
 rm -fr src/main/java/com/yimei/hs/entity/*.java
 rm -fr src/main/java/com/yimei/hs/mapper/*.java
 rm -fr src/main/resources/mapper/*.xml
@@ -13,4 +15,5 @@ mvn mybatis-generator:generate
   perl -i -pe 's/ Date / LocalDateTime /g' *.java;
 );
 
+./createdb.sh;
 
