@@ -17,8 +17,8 @@ public class TeamService {
     TeamMapper mTeamMapper;
     //获得所有tean
     public ArrayList<Team> getAllTeams(){
-        mTeamMapper.getAllTeams();
-        return null;
+        ArrayList<Team> teams= mTeamMapper.getAllTeams();
+        return teams;
     }
 
     /**
@@ -29,5 +29,15 @@ public class TeamService {
    public Team findTeamByid(Long tid) {
        Team team = mTeamMapper.selectByPrimaryKey(tid);
        return team;
+    }
+
+    /**
+     * 分页
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public ArrayList<Team> getTeamPage(int pageNum,int pageSize) {
+      return   mTeamMapper.getPageTeam((pageNum-1)*pageSize, pageNum);
     }
 }

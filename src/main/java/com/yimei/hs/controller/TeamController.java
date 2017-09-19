@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -26,17 +23,19 @@ public class TeamController {
 
     /**
      * 获取所有team
+     *
      * @return
      */
     @GetMapping("/teams")
     public ResponseEntity list() {
         ArrayList<Team> allTeams = service.getAllTeams();
 
-        return  new ResponseEntity(allTeams, HttpStatus.OK);
+        return new ResponseEntity(allTeams, HttpStatus.OK);
     }
 
     /**
      * 获取team
+     *
      * @param id
      * @return
      */
@@ -47,6 +46,7 @@ public class TeamController {
 
     /**
      * 创建team
+     *
      * @return
      */
     @PostMapping("/teams")
@@ -55,12 +55,19 @@ public class TeamController {
     }
 
     /**
-     *  更新team
+     * 更新team
+     *
      * @return
      */
     @PutMapping("/team/:id")
     public String update() {
         return "team";
+    }
+
+    @RequestMapping( value = "/team/page",method = RequestMethod.GET)
+    public ResponseEntity getTeamPage(@RequestParam("pageSize") int pageSize, @RequestParam("pageNum") int pageNum) {
+        ArrayList<Team> allTeams = service.getTeamPage(pageSize, pageNum);
+        return new ResponseEntity(allTeams,HttpStatus.OK);
     }
 
 }
