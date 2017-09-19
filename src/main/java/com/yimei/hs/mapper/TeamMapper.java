@@ -1,6 +1,7 @@
 package com.yimei.hs.mapper;
 
 import com.yimei.hs.entity.Team;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 
@@ -18,4 +19,6 @@ public interface TeamMapper {
     int updateByPrimaryKey(Team record);
 
     ArrayList<Team> getAllTeams();
+
+    ArrayList<Team> getPageTeam(@Param("pageSize") int pageSize,  @Param("pageNum") int pageNum);
 }

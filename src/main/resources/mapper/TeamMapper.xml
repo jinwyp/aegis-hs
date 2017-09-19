@@ -15,9 +15,12 @@
         from hs_team
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <select id="getAllTeams" resultType="com.yimei.hs.entity.Team">
+    <select id="getAllTeams" resultType="Map">
                   SELECT * from hs_team
   </select>
+    <select id="getPageTeam" resultType="Map">
+        SELECT * from hs_team limit ({pageNum,jdbcType=INT} -1) *{pageSize,jdbcType=INT},{pageSize,jdbcType=INT}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from hs_team
     where id = #{id,jdbcType=BIGINT}
