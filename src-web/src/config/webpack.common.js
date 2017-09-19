@@ -61,7 +61,7 @@ module.exports = function (env) {
              *
              * See: http://webpack.github.io/docs/configuration.html#output-filename
              */
-            filename: isDev ? "[name].bundle.js" : "[name].[chunkhash].bundle.js",
+            filename: isDev ? "[name].bundle.js" : "[name].bundle.js",
 
             /**
              * The filename of the SourceMaps for the JavaScript files.
@@ -76,7 +76,7 @@ module.exports = function (env) {
              *
              * See: http://webpack.github.io/docs/configuration.html#output-chunkfilename
              */
-            chunkFilename: isDev ?  "[id].chunk.js" : "[name].[chunkhash].chunk.js"
+            chunkFilename: isDev ?  "[id].chunk.js" : "[name].chunk.js"
         },
 
         resolve : {

@@ -103,10 +103,10 @@ gulp.task('sass-production', [  'images'], function(done) {
         //     cascade: false
         // }))
         .pipe(cleanMinifyCSS({debug: true, compatibility: 'ie8'}))
-        .pipe(rev())
+        // .pipe(rev())
         .pipe(gulp.dest(distPath.css))
-        .pipe(rev.manifest('rev-manifest-css.json'))
-        .pipe(gulp.dest(distPath.manifest))
+        // .pipe(rev.manifest('rev-manifest-css.json'))
+        // .pipe(gulp.dest(distPath.manifest))
 
 });
 
