@@ -1,6 +1,10 @@
 package com.yimei.hs.controller.ying;
 
+import com.yimei.hs.entity.YingOrder;
+import com.yimei.hs.service.ying.YingOrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -13,13 +17,18 @@ public class YingOrderController {
     // hs_yin_order_config
 
 
+    @Autowired
+    YingOrderService mYingOrderService;
     /**
      * 获取所有order
      *
      * @return
      */
     @GetMapping("/orders")
-    public String list() {
+    public String list()
+    {
+
+        mYingOrderService.quaryAllOrder();
         return "order";
     }
 
@@ -31,6 +40,7 @@ public class YingOrderController {
      */
     @GetMapping("/order/:id")
     public String read(long id) {
+        mYingOrderService.quaryOrderbyId(id);
         return "order";
     }
 
@@ -40,7 +50,10 @@ public class YingOrderController {
      * @return
      */
     @PostMapping("/orders")
-    public String create() {
+    @Transactional(readOnly = false)
+    public String create()
+    {
+        mYingOrderService.createOrder(new YingOrder());
         return "order";
     }
 
@@ -51,6 +64,7 @@ public class YingOrderController {
      */
     @PutMapping("/order/:id")
     public String update() {
+        mYingOrderService.updateOrder(new YingOrder());
         return "order";
     }
 }

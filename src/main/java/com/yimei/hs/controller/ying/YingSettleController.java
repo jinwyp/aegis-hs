@@ -1,5 +1,7 @@
 package com.yimei.hs.controller.ying;
 
+import com.yimei.hs.service.ying.YingSettleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -9,13 +11,20 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class YingSettleController {
 
+
+
+    @Autowired
+    YingSettleService mYingSettleService;
+
     /**
-     * 获取所有settle
+     * 获取上游所有settle
      *
      * @return
      */
     @GetMapping("/settles")
-    public String list() {
+    public String upStreamlist(@RequestParam Long orderId) {
+
+        mYingSettleService.getAllUpStreamSettles(orderId);
         return "settle";
     }
 
@@ -26,7 +35,7 @@ public class YingSettleController {
      * @return
      */
     @GetMapping("/settle/:id")
-    public String read(long id) {
+    public String upStreamlread(long id) {
         return "settle";
     }
 
@@ -36,7 +45,7 @@ public class YingSettleController {
      * @return
      */
     @PostMapping("/settles")
-    public String create() {
+    public String upStreamlcreate() {
         return "settle";
     }
 
@@ -46,7 +55,47 @@ public class YingSettleController {
      * @return
      */
     @PutMapping("/settle/:id")
-    public String update() {
+    public String upStreamUpdate() {
+        return "settle";
+    }
+
+
+    @GetMapping("/downsettle/list")
+    public String downStreamlist()
+    {
+
+//        mYingSettleService.getAllSettles
+        return "settle";
+    }
+
+    /**
+     * 获取settle
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/dwonsettle/:id")
+    public String downStreamread(long id) {
+        return "settle";
+    }
+
+    /**
+     * 创建settle
+     *
+     * @return
+     */
+    @PostMapping("/dwonsettles")
+    public String downStreamcreate() {
+        return "settle";
+    }
+
+    /**
+     * 更新settle
+     *
+     * @return
+     */
+    @PutMapping("/downStreamettle/:id")
+    public String downStreamUpdate() {
         return "settle";
     }
 }
