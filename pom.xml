@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>com.yimei</groupId>
-    <artifactId>aegis-hs</artifactId>：
+    <artifactId>aegis-hs</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -23,7 +23,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <start-class>com.yimei.hs.HsApplication</start-class>
         <java.version>1.8</java.version>
 
         <thymeleaf.version>3.0.7.RELEASE</thymeleaf.version>
