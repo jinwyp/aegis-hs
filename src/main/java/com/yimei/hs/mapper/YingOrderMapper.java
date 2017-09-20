@@ -2,6 +2,8 @@ package com.yimei.hs.mapper;
 
 import com.yimei.hs.entity.YingOrder;
 
+import java.util.List;
+
 public interface YingOrderMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,6 @@ public interface YingOrderMapper {
     int updateByPrimaryKeySelective(YingOrder record);
 
     int updateByPrimaryKey(YingOrder record);
+
+    List<YingOrder> selectAllOrder();
 }

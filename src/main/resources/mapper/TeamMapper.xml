@@ -7,30 +7,30 @@
         <result column="deptId" jdbcType="BIGINT" property="deptId"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, deptId
-  </sql>
+        id, name, deptId
+    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from hs_team
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <select id="getAllTeams" resultType="Map">
-                  SELECT * from hs_team
-  </select>
-    <select id="getPageTeam" resultType="Map">
+    <select id="getAllTeams" resultType="com.yimei.hs.entity.Team">
+        SELECT * from hs_team
+    </select>
+    <select id="getPageTeam" resultType="com.yimei.hs.entity.Team">
         SELECT * from hs_team limit ({pageNum,jdbcType=INT} -1) *{pageSize,jdbcType=INT},{pageSize,jdbcType=INT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from hs_team
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
+        delete from hs_team
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
     <insert id="insert" parameterType="com.yimei.hs.entity.Team">
-    insert into hs_team (id, name, deptId
-      )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{deptId,jdbcType=BIGINT}
-      )
-  </insert>
+        insert into hs_team (id, name, deptId
+        )
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{deptId,jdbcType=BIGINT}
+        )
+    </insert>
     <insert id="insertSelective" parameterType="com.yimei.hs.entity.Team">
         insert into hs_team
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -69,9 +69,9 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.Team">
-    update hs_team
-    set name = #{name,jdbcType=VARCHAR},
-      deptId = #{deptId,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+        update hs_team
+        set name = #{name,jdbcType=VARCHAR},
+        deptId = #{deptId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

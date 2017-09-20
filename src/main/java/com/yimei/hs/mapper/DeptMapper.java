@@ -2,6 +2,8 @@ package com.yimei.hs.mapper;
 
 import com.yimei.hs.entity.Dept;
 
+import java.util.List;
+
 public interface DeptMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,8 @@ public interface DeptMapper {
     int updateByPrimaryKeySelective(Dept record);
 
     int updateByPrimaryKey(Dept record);
+
+    List<Dept> selectAll();
+
+    boolean checkDepayIsExist(Long id);
 }

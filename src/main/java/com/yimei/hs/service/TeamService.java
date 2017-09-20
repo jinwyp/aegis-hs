@@ -31,6 +31,18 @@ public class TeamService {
        return team;
     }
 
+    public int createTeams(Team team){
+        return mTeamMapper.insert(team);
+    }
+
+    public int deleteTeamById(long id){
+        return mTeamMapper.deleteByPrimaryKey(id);
+    }
+
+    public int updateTeam(Team team){
+
+        return mTeamMapper.updateByPrimaryKey(team);
+    }
     /**
      * 分页
      * @param pageNum
