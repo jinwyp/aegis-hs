@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import sun.security.tools.policytool.Resources_de;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
@@ -36,7 +37,10 @@ public class DepartmentController {
      * @return
      */
     @GetMapping("/departments")
-    public ResponseEntity<ResponseData> list(HttpServletRequest request) {
+    public ResponseEntity<ResponseData> list(
+            @RequestParam("pageSize") int pageSize,
+            @RequestParam("pageNum") int pageNum
+    ) {
 
         ResponseData responseData = new ResponseData();
         ArrayList<Dept> depts = (ArrayList<Dept>) mDepartmentService.selectAllDept();
@@ -51,9 +55,8 @@ public class DepartmentController {
      * @return
      */
     @GetMapping("/departments/id")
-    public ResponseEntity<ResponseData> read( @RequestParam  long id) {
+    public ResponseEntity<ResponseData> read(@RequestParam long id) {
         ResponseData responseData = new ResponseData();
-
         if (mDepartmentService.checkDepatIsExit(id)) {
             responseData.setData(mDepartmentService.selectDeptById(id));
             return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
@@ -74,13 +77,13 @@ public class DepartmentController {
     public ResponseEntity<ResponseData> create(@RequestBody Dept dept) {
 
         ResponseData responseData = new ResponseData();
-        mDepartmentService.createDept(new Dept());
+        mDepartmentService.createDept(dept);
         if (dept.getId() != null) {
             responseData.setData(dept);
         } else {
             responseData.setRmg("添加部门失败");
         }
-        return new ResponseEntity<ResponseData>(responseData,HttpStatus.OK);
+        return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
     }
 
     /**
@@ -90,12 +93,13 @@ public class DepartmentController {
      */
     @PutMapping("/departments/id")
     @Transactional(readOnly = false)
-    public ResponseEntity<ResponseData> update(@RequestParam(value = "id") long id,@RequestParam(value = "deptName") String name) {
+    public ResponseEntity<ResponseData> update(@RequestParam(value = "id") String id, @RequestParam(value = "deptName") String name) {
         ResponseData responseData = new ResponseData();
-        if (mDepartmentService.checkDepatIsExit(id)) {
-            Dept dept = mDepartmentService.selectDeptById(id);
+        Long Lid = Long.parseLong(id);
+        if (mDepartmentService.checkDepatIsExit(Lid)) {
+            Dept dept = mDepartmentService.selectDeptById(Lid);
             dept.setName(name);
-           int success= mDepartmentService.update(dept);
+            int success = mDepartmentService.update(dept);
             if (success == 1) {
                 responseData.setRmg("操作成功");
                 responseData.setStatus(1);
@@ -107,11 +111,16 @@ public class DepartmentController {
 
         }
 
-        return new ResponseEntity<ResponseData>(responseData,HttpStatus.OK);
+        return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
     }
 
     /**
-     *  delete
+     * delete
      */
-    public 
+    @DeleteMapping("/departments/id")
+    public ResponseEntity<ResponseData> delete(@RequestParam("pid") String pid) {
+        ResponseData responseData = new ResponseData();
+        responseData.setStatus(mDepartmentService.deleteDeptById(Long.parseLong(pid)));
+        return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
+    }
 }

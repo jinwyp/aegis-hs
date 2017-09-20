@@ -15,7 +15,7 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
     <select id="selectAll" resultType="com.yimei.hs.entity.Dept">
-      <include refid="Base_Column_List" />
+      SELECT <include refid="Base_Column_List" />
       from hs_dept
     </select>
   <select id="checkDepayIsExist" resultType="java.lang.Boolean">
