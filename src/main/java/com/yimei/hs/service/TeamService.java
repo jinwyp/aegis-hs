@@ -5,6 +5,8 @@ import com.yimei.hs.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 
 /**
@@ -15,11 +17,11 @@ public class TeamService {
 
     @Autowired
     TeamMapper mTeamMapper;
-    //获得所有tean
-    public ArrayList<Team> getAllTeams(){
-        ArrayList<Team> teams= mTeamMapper.getAllTeams();
-        return teams;
-    }
+//    //获得所有tean
+//    public ArrayList<Team> getAllTeams(@NotNull int pageSize, @NotNull int paseNum, @Null Long deptId){
+////        ArrayList<Team> teams= mTeamMapper.getAllTeams(pageSize,paseNum,deptId);
+//        return teams;
+//    }
 
     /**
      * 根据id查 团队
@@ -49,7 +51,12 @@ public class TeamService {
      * @param pageSize
      * @return
      */
-    public ArrayList<Team> getTeamPage(int pageNum,int pageSize) {
-      return   mTeamMapper.getPageTeam((pageNum-1)*pageSize, pageNum);
+    public ArrayList<Team> getTeamPage(int pageSize,int pageNum ,Long deptID) {
+        pageNum = (pageNum - 1) * pageSize;
+      return   mTeamMapper.getPageTeam(pageNum,pageSize,deptID);
+    }
+
+    public boolean checkTeamExist(long tid) {
+        return mTeamMapper.checkTeamExsit(tid);
     }
 }

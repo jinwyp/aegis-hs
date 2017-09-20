@@ -25,9 +25,9 @@
     delete from hs_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.User">
+  <insert id="insert" parameterType="com.yimei.hs.entity.User" useGeneratedKeys="true" keyProperty="id">
     insert into hs_user (id, deptId, phone, 
-      password, passwordSalt, createDate, 
+      password, passwordSalt, createDate,
       createBy, isAdmin, isActive
       )
     values (#{id,jdbcType=BIGINT}, #{deptId,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, 

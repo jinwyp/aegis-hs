@@ -2,14 +2,17 @@ package com.yimei.hs.entity;
 
 import lombok.Data;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
 public class Team implements Serializable {
+    @Max(23)
     private Long id;
-
+    @NotNull
     private String name;
-
+    @Max(20)
     private Long deptId;
 
     private static final long serialVersionUID = 1L;

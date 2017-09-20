@@ -1,10 +1,20 @@
 package com.yimei.hs.entity;
 
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+@Data
 public class Dept implements Serializable {
-    private Long id;
 
+    @Max(20)
+    private Long id;
+    @NotEmpty
+    @Size(min = 1, max = 20)
     private String name;
 
     private static final long serialVersionUID = 1L;

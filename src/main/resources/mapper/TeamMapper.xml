@@ -19,13 +19,25 @@
         SELECT * from hs_team
     </select>
     <select id="getPageTeam" resultType="com.yimei.hs.entity.Team">
-        SELECT * from hs_team limit ({pageNum,jdbcType=INT} -1) *{pageSize,jdbcType=INT},{pageSize,jdbcType=INT}
+        SELECT * from hs_team
+        <where>
+            <if test="deptId !=null">
+                deptId=#{deptId,jdbcType=BIGINT}
+            </if>
+        </where>
+        limit #{pageNum},#{pageSize}
+    </select>
+    <select id="checkTeamExsit" resultType="java.lang.Boolean">
+        select
+        count(id)
+        from hs_team
+        where id = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from hs_team
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.yimei.hs.entity.Team">
+    <insert id="insert" parameterType="com.yimei.hs.entity.Team" useGeneratedKeys="true" keyProperty="id">
         insert into hs_team (id, name, deptId
         )
         values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{deptId,jdbcType=BIGINT}

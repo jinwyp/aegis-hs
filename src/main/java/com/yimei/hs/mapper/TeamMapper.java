@@ -20,5 +20,7 @@ public interface TeamMapper {
 
     ArrayList<Team> getAllTeams();
 
-    ArrayList<Team> getPageTeam(@Param("pageSize") int pageSize,  @Param("pageNum") int pageNum);
+    ArrayList<Team> getPageTeam( @Param("pageNum") int pageNum,@Param("pageSize") int pageSize, @Param("deptId") Long deptId);
+
+    boolean checkTeamExsit(long tid);
 }

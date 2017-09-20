@@ -25,7 +25,7 @@
     delete from hs_dept
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.Dept">
+  <insert id="insert" parameterType="com.yimei.hs.entity.Dept" keyProperty="id" useGeneratedKeys="true">
     insert into hs_dept (id, name)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR})
   </insert>
