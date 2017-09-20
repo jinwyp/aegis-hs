@@ -23,23 +23,31 @@ public class TeamController {
 
     /**
      * 获取所有team
+     * 分页参数
+     * page=10
+     * pageSize=20
+     *
+     * 查询条件参数
+     * name   :  模糊查询
      *
      * @return
      */
     @GetMapping("/teams")
-    public ResponseEntity list() {
-        ArrayList<Team> allTeams = service.getAllTeams();
-
-        return new ResponseEntity(allTeams, HttpStatus.OK);
+    public ResponseEntity<List<Team>> list(
+        @QueryParam("page") int page, 
+        @QueryParam("pageSize") int pageSize
+    ) {
+        ArrayList<Team> allTeams = service.getAllTeams(page, pageSize);
+        return new ResponseEntity<>(allTeams, HttpStatus.OK);
     }
 
     /**
-     * 获取team
+     * 获取指定id的team
      *
      * @param id
      * @return
      */
-    @GetMapping("/team/:id")
+    @GetMapping("/teams/:id")
     public String read(long id) {
         return "team";
     }
@@ -50,7 +58,7 @@ public class TeamController {
      * @return
      */
     @PostMapping("/teams")
-    public String create() {
+    public String create(@RequestBody Team team) {
         return "team";
     }
 
@@ -59,7 +67,7 @@ public class TeamController {
      *
      * @return
      */
-    @PutMapping("/team/:id")
+    @PutMapping("/teams/:id")
     public String update() {
         return "team";
     }
