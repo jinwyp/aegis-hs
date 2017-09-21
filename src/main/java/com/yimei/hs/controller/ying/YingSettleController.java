@@ -14,7 +14,7 @@ public class YingSettleController {
 
 
     @Autowired
-    YingSettleService mYingSettleService;
+    YingSettleService yingSettleService;
 
     /**
      * 获取上游所有settle
@@ -24,7 +24,7 @@ public class YingSettleController {
     @GetMapping("/settles")
     public String upStreamlist(@RequestParam Long orderId) {
 
-        mYingSettleService.getAllUpStreamSettles(orderId);
+        yingSettleService.getAllUpStreamSettles(orderId);
         return "settle";
     }
 
@@ -64,7 +64,7 @@ public class YingSettleController {
     public String downStreamlist()
     {
 
-//        mYingSettleService.getAllSettles
+//        yingSettleService.getAllSettles
         return "settle";
     }
 

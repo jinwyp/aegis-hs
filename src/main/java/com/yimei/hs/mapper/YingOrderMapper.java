@@ -1,5 +1,6 @@
 package com.yimei.hs.mapper;
 
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.YingOrder;
 
 import java.util.List;
@@ -17,5 +18,5 @@ public interface YingOrderMapper {
 
     int updateByPrimaryKey(YingOrder record);
 
-    List<YingOrder> selectAllOrder();
+    Page<YingOrder> selectAllOrder();
 }

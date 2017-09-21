@@ -1,11 +1,15 @@
 package com.yimei.hs.controller.ying;
 
+import com.yimei.hs.entity.YingHuikuan;
+import com.yimei.hs.entity.dto.PageResult;
+import com.yimei.hs.entity.dto.Result;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by hary on 2017/9/15.
  */
-@RequestMapping("/api")
+@RequestMapping("/api/ying")
 @RestController
 public class YingHuikuanController {
 
@@ -14,9 +18,9 @@ public class YingHuikuanController {
      *
      * @return
      */
-    @GetMapping("/huikuans")
-    public String list() {
-        return "huikuan";
+    @GetMapping("/{orderId}/huikuans")
+    public ResponseEntity<PageResult<YingHuikuan>> list() {
+        return PageResult.ok(null);
     }
 
     /**
@@ -25,9 +29,12 @@ public class YingHuikuanController {
      * @param id
      * @return
      */
-    @GetMapping("/huikuan/:id")
-    public String read(long id) {
-        return "huikuan";
+    @GetMapping("/{orderId}/huikuans/:id")
+    public ResponseEntity<Result<YingHuikuan>> read(
+            @PathVariable("orderId") long orderId,
+            @PathVariable("id") long id
+    ) {
+        return Result.ok(null);
     }
 
     /**
@@ -35,9 +42,9 @@ public class YingHuikuanController {
      *
      * @return
      */
-    @PostMapping("/huikuans")
-    public String create() {
-        return "huikuan";
+    @PostMapping("/{orderId}/huikuans")
+    public ResponseEntity<Result<YingHuikuan>> create(@PathVariable("orderId") long orderId) {
+        return Result.ok(null);
     }
 
     /**
@@ -45,8 +52,11 @@ public class YingHuikuanController {
      *
      * @return
      */
-    @PutMapping("/huikuan/:id")
-    public String update() {
-        return "huikuan";
+    @PutMapping("/{orderId}/huikuans/:id")
+    public ResponseEntity<Result<Integer>> update(
+            @PathVariable("orderId") long orderId,
+            @PathVariable("id") long id
+    ) {
+        return Result.ok(1);
     }
 }

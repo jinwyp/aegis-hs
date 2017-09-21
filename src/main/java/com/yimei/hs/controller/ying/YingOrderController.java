@@ -1,9 +1,11 @@
 package com.yimei.hs.controller.ying;
 
 import com.yimei.hs.entity.YingOrder;
+import com.yimei.hs.entity.dto.PageResult;
+import com.yimei.hs.entity.dto.Result;
 import com.yimei.hs.service.ying.YingOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,18 +20,16 @@ public class YingOrderController {
 
 
     @Autowired
-    YingOrderService mYingOrderService;
+    YingOrderService yingOrderService;
+
     /**
      * 获取所有order
      *
      * @return
      */
     @GetMapping("/orders")
-    public String list()
-    {
-
-        mYingOrderService.quaryAllOrder();
-        return "order";
+    public ResponseEntity<PageResult<YingOrder>> list() {
+        return PageResult.ok(yingOrderService.quaryAllOrder());
     }
 
     /**
@@ -38,10 +38,9 @@ public class YingOrderController {
      * @param id
      * @return
      */
-    @GetMapping("/order/:id")
-    public String read(long id) {
-        mYingOrderService.quaryOrderbyId(id);
-        return "order";
+    @GetMapping("/orders/:id")
+    public ResponseEntity<Result<YingOrder>> read( @PathVariable("id") long id ) {
+        return Result.ok(yingOrderService.quaryOrderbyId(id));
     }
 
     /**
@@ -50,11 +49,9 @@ public class YingOrderController {
      * @return
      */
     @PostMapping("/orders")
-    @Transactional(readOnly = false)
-    public String create()
-    {
-        mYingOrderService.createOrder(new YingOrder());
-        return "order";
+    public ResponseEntity<Result<YingOrder>> create(@RequestBody YingOrder order) {
+        yingOrderService.createOrder(order);
+        return Result.ok(order);
     }
 
     /**
@@ -63,8 +60,11 @@ public class YingOrderController {
      * @return
      */
     @PutMapping("/order/:id")
-    public String update() {
-        mYingOrderService.updateOrder(new YingOrder());
-        return "order";
+    public ResponseEntity<Result<Integer>> update(
+            @PathVariable("orderId") long orderId,
+            @PathVariable("id") long id
+    ) {
+        yingOrderService.updateOrder(new YingOrder());
+        return Result.ok(1);
     }
 }

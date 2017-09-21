@@ -1,11 +1,18 @@
 package com.yimei.hs.controller.ying;
 
+import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.entity.YingFayun;
+import com.yimei.hs.entity.dto.PageResult;
+import com.yimei.hs.entity.dto.Result;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.xml.ws.Response;
 
 /**
  * Created by hary on 2017/9/15.
  */
-@RequestMapping("/api")
+@RequestMapping("/api/ying")
 @RestController
 public class YingFayunController {
 
@@ -14,9 +21,13 @@ public class YingFayunController {
      *
      * @return
      */
-    @GetMapping("/fayuns")
-    public String list() {
-        return "fayun";
+    @GetMapping("/{orderId}/fayuns")
+    public ResponseEntity<PageResult<YingFayun>> list(
+            @PathVariable("orderId") Long orderId,
+            @RequestParam("pageNum") int pageNum,
+            @RequestParam("pageSize") int pageSize) {
+        Page<YingFayun> page = null;
+        return PageResult.ok(page);
     }
 
     /**
@@ -25,9 +36,12 @@ public class YingFayunController {
      * @param id
      * @return
      */
-    @GetMapping("/fayun/:id")
-    public String read(long id) {
-        return "fayun";
+    @GetMapping("/{orderId}fayuns/:id")
+    public ResponseEntity<Result<YingFayun>> read(
+            @PathVariable("orderId") Long orderId,
+            @PathVariable("id") long id) {
+        YingFayun fayun = null;
+        return Result.ok(fayun);
     }
 
     /**
@@ -35,9 +49,10 @@ public class YingFayunController {
      *
      * @return
      */
-    @PostMapping("/fayuns")
-    public String create() {
-        return "fayun";
+    @PostMapping("/{orderId}/fayuns")
+    public ResponseEntity<Result<YingFayun>> create(@PathVariable("orderId") long orderId) {
+        YingFayun fayun = null;
+        return Result.ok(fayun);
     }
 
     /**
@@ -45,8 +60,12 @@ public class YingFayunController {
      *
      * @return
      */
-    @PutMapping("/fayun/:id")
-    public String update() {
-        return "fayun";
+    @PutMapping("/{orderId}/fayuns/:id")
+    public ResponseEntity<Result<YingFayun>> update(
+            @PathVariable("orderId") long orderId,
+            @PathVariable("id") long id
+    ) {
+        YingFayun fayun = null;
+        return Result.ok(fayun);
     }
 }
