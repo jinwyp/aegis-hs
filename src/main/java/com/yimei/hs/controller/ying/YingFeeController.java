@@ -3,8 +3,10 @@ package com.yimei.hs.controller.ying;
 import com.yimei.hs.entity.YingFee;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.service.ying.YingFeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,9 @@ public class YingFeeController {
 
 
     private static final Logger logger = LoggerFactory.getLogger(YingFeeController.class);
+
+    @Autowired
+    YingFeeService yingFeeService;
 
 
     /**
