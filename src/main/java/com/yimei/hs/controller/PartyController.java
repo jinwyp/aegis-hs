@@ -19,7 +19,10 @@ public class PartyController {
      * @return
      */
     @GetMapping("/partys")
-    public ResponseEntity<PageResult<Party>> list() {
+    public ResponseEntity<PageResult<Party>> list(
+           @RequestParam("pageNum")  int pageNum,
+           @RequestParam("pageSize") int pageSize
+    ) {
         return PageResult.ok(null);
     }
 
