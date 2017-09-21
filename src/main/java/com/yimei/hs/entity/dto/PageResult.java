@@ -20,15 +20,15 @@ public class PageResult<T> {
     private Error error;
 
     public static final <T> ResponseEntity<PageResult<T>> ok(Page<T> page) {
-        return new ResponseEntity<PageResult<T>>(new PageResult<>(true, page, null), HttpStatus.OK);
+        return new ResponseEntity<>(new PageResult<>(true, page, null), HttpStatus.OK);
     }
 
 
     public static final <M> ResponseEntity<PageResult<M>> error(int code, String message) {
-        return new ResponseEntity<PageResult<M>>(new PageResult<M>(false, null, new Error(code, message)), HttpStatus.OK);
+        return new ResponseEntity<>(new PageResult<M>(false, null, new Error(code, message)), HttpStatus.OK);
     }
 
     public static final <M> ResponseEntity<PageResult<M>> error(int code, String message, HttpStatus httpCode) {
-        return new ResponseEntity<PageResult<M>>(new PageResult<M>(false, null, new Error(code, message)), httpCode);
+        return new ResponseEntity<>(new PageResult<M>(false, null, new Error(code, message)), httpCode);
     }
 }

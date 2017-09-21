@@ -23,15 +23,15 @@ public class Result<T> {
     private Error error;
 
     public static final <M> ResponseEntity<Result<M>> error(int code, String message) {
-        return new ResponseEntity<Result<M>>(new Result<M>(false, null, new Error(code, message)), HttpStatus.OK);
+        return new ResponseEntity<>(new Result<M>(false, null, new Error(code, message)), HttpStatus.OK);
     }
 
     public static final <M> ResponseEntity<Result<M>> error(int code, String message, HttpStatus httpStatus) {
-        return new ResponseEntity<Result<M>>(new Result<M>(false, null, new Error(code, message)), httpStatus);
+        return new ResponseEntity<>(new Result<M>(false, null, new Error(code, message)), httpStatus);
     }
 
-    public static final <T> ResponseEntity<Result<T>> ok(T t) {
-        return new ResponseEntity<Result<T>>(new Result<T>(true, t, null), HttpStatus.OK);
+    public static final <M> ResponseEntity<Result<M>> ok(M m {
+        return new ResponseEntity<>(new Result<>(true, m, null), HttpStatus.OK);
     }
 }
 
