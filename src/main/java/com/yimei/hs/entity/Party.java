@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Party implements Serializable {
     private Long id;
 
-    private Byte custType;
+    private Integer custType;
 
     private String name;
 
@@ -21,11 +21,11 @@ public class Party implements Serializable {
         this.id = id;
     }
 
-    public Byte getCustType() {
+    public Integer getCustType() {
         return custType;
     }
 
-    public void setCustType(Byte custType) {
+    public void setCustType(Integer custType) {
         this.custType = custType;
     }
 

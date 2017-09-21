@@ -25,7 +25,6 @@
                 deptId=#{deptId,jdbcType=BIGINT}
             </if>
         </where>
-        limit #{pageNum},#{pageSize}
     </select>
     <select id="checkTeamExsit" resultType="java.lang.Boolean">
         select
