@@ -3,8 +3,10 @@ package com.yimei.hs.controller.ying;
 import com.yimei.hs.entity.YingSettleUpstream;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.service.ying.YingSettleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 public class YingSettleUpstreamController {
 
     private static final Logger logger = LoggerFactory.getLogger(YingSettleUpstreamController.class);
+
+
+    @Autowired
+    private YingSettleService yingSettleService;
 
     /**
      * 获取所有huikuan
