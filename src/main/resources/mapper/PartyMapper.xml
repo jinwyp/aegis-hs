@@ -1,93 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yimei.hs.mapper.PartyMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.Party">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="custType" jdbcType="TINYINT" property="custType" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="shortName" jdbcType="VARCHAR" property="shortName" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.Party">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="custType" jdbcType="TINYINT" property="custType"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="shortName" jdbcType="VARCHAR" property="shortName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, custType, name, shortName
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from hs_party
-    where id = #{id,jdbcType=BIGINT}
-  </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_party
+        where id = #{id,jdbcType=BIGINT}
+    </select>
     <select id="selectParty" resultType="com.yimei.hs.entity.Party">
-      select
-      <include refid="Base_Column_List" />
-      from hs_party
-      <where>
-        <if test="custType !=null">
-          custType=#{custType}
-        </if>
+        select
+        <include refid="Base_Column_List"/>
+        from hs_party
+        <where>
+            <if test="custType !=null">
+                custType=#{custType}
+            </if>
 
-      </where>
+        </where>
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from hs_party
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.Party" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insert" parameterType="com.yimei.hs.entity.Party" keyProperty="id" useGeneratedKeys="true">
     insert into hs_party (id, custType, name, 
       shortName)
     values (#{id,jdbcType=BIGINT}, #{custType,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, 
       #{shortName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.entity.Party">
-    insert into hs_party
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="custType != null">
-        custType,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="shortName != null">
-        shortName,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="custType != null">
-        #{custType,jdbcType=TINYINT},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="shortName != null">
-        #{shortName,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.Party">
-    update hs_party
-    <set>
-      <if test="custType != null">
-        custType = #{custType,jdbcType=TINYINT},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="shortName != null">
-        shortName = #{shortName,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.Party">
-    update hs_party
-    set custType = #{custType,jdbcType=TINYINT},
-      name = #{name,jdbcType=VARCHAR},
-      shortName = #{shortName,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <insert id="insertSelective" parameterType="com.yimei.hs.entity.Party">
+        insert into hs_party
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="custType != null">
+                custType,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="shortName != null">
+                shortName,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="custType != null">
+                #{custType,jdbcType=TINYINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="shortName != null">
+                #{shortName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.Party">
+        update hs_party
+        <set>
+            <if test="custType != null">
+                custType = #{custType,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="shortName != null">
+                shortName = #{shortName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.Party">
+        update hs_party
+        <set>
+            <if test="custType !=null">
+                custType = #{custType,jdbcType=INTEGER},
+            </if>
+            <if test="shortName !=null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="name !=null">
+                shortName = #{shortName,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

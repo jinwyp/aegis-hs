@@ -5,6 +5,7 @@ import com.yimei.hs.entity.Dept;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
 import com.yimei.hs.entity.dto.UserDTO;
+import com.yimei.hs.entity.dto.ying.PageDeptDTO;
 import com.yimei.hs.service.DepartmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,24 +27,10 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    /**
-     * 获取所有dept
-     * 分页参数
-     * page=10
-     * pageSize=20
-     * <p>
-     * 查询条件参数
-     * name   :  模糊查询
-     *
-     * @return
-     */
     @GetMapping("/departments")
-    public ResponseEntity<PageResult<Dept>> list(
-            @CurrentUser UserDTO userDTO,     // 登录用户
-            @RequestParam("pageSize") int pageSize,
-            @RequestParam("pageNum") int pageNum
+    public ResponseEntity<PageResult<Dept>> list(PageDeptDTO pageDeptDTO
     ) {
-        return PageResult.ok(departmentService.selectAllDept());
+        return PageResult.ok(departmentService.selectAllDept(pageDeptDTO));
     }
 
     /**

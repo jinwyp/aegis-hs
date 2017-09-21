@@ -1,7 +1,9 @@
 package com.yimei.hs.service;
 
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.User;
 import com.yimei.hs.entity.dto.UserDTO;
+import com.yimei.hs.entity.dto.ying.PageUserDTO;
 import com.yimei.hs.mapper.UserMapper;
 import com.yimei.hs.util.BeanMapper;
 import com.yimei.hs.util.Digests;
@@ -77,9 +79,15 @@ public class UserService {
 
 
     public User loadBySecurePhone(String phone) {
-        // return userMapper.loadByPhone(phone);
-        return null;
+         return userMapper.loadByPhone(phone);
     }
 
 
+    public Page<User> loadAllUser(PageUserDTO pageUserDTO ) {
+        return userMapper.loadAllUser(pageUserDTO);
+    }
+
+    public int createUser(User user) {
+        return userMapper.insert(user);
+    }
 }

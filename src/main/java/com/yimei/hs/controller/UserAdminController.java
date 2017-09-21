@@ -3,6 +3,8 @@ package com.yimei.hs.controller;
 import com.yimei.hs.entity.User;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.entity.dto.UserDTO;
+import com.yimei.hs.entity.dto.ying.PageUserDTO;
 import com.yimei.hs.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,22 +30,21 @@ public class UserAdminController {
      * @return
      */
     @GetMapping("/users")
-    public ResponseEntity<PageResult<User>> list(
-            @RequestParam("pageSize") int pageSize,
-            @RequestParam("pageNum") int pageNum
+    public ResponseEntity<PageResult<User>> list(PageUserDTO pageUserDTO
     ) {
-        return PageResult.ok(null);
+        return PageResult.ok(userService.loadAllUser(pageUserDTO));
     }
 
     /**
      * 获取用户信息
      *
-     * @param id
+     * @param phone
      * @return
      */
-    @GetMapping("/users/:id")
-    public ResponseEntity<Result<User>> read( @PathVariable("id") long id) {
-        return Result.ok(null);
+    @GetMapping("/users/{phone}")
+    public ResponseEntity<Result<User>> read( @PathVariable("phone") String phone) {
+
+        return Result.ok(userService.loadBySecurePhone(phone));
     }
 
     /**
@@ -51,7 +52,8 @@ public class UserAdminController {
      */
     @PostMapping("/users")
     public ResponseEntity<Result<User>> create(@RequestBody User user) {
-        return Result.ok(null);
+        userService.createUser(user);
+        return Result.ok(user);
     }
 
     /**
@@ -59,7 +61,8 @@ public class UserAdminController {
      * @return
      */
     @PutMapping("/users/:id")
-    public ResponseEntity<Result<Integer>> update( @PathVariable("id") long id ) {
+    public ResponseEntity<Result<Integer>> update( @PathVariable("id") long id )
+    {
         return Result.ok(1);
     }
 

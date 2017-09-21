@@ -1,6 +1,8 @@
 package com.yimei.hs.mapper;
 
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.User;
+import com.yimei.hs.entity.dto.ying.PageUserDTO;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Long id);
@@ -15,5 +17,7 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
+    Page<User> loadAllUser(PageUserDTO pageUserDTO);
 
+    User loadByPhone(String phone);
 }

@@ -2,6 +2,7 @@ package com.yimei.hs.service;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.Dept;
+import com.yimei.hs.entity.dto.ying.PageDeptDTO;
 import com.yimei.hs.mapper.DeptMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +20,9 @@ public class DepartmentService {
     @Autowired
     private DeptMapper deptMapper;
 
-    public Page<Dept> selectAllDept() {
+    public Page<Dept> selectAllDept(PageDeptDTO pageDeptDTO) {
 
-        return deptMapper.selectAll();
+        return deptMapper.selectAll(pageDeptDTO);
     }
 
     public Dept selectDeptById(long id) {

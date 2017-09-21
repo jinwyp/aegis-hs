@@ -30,17 +30,6 @@ public class TeamController {
     private DepartmentService departmentService;
 
 
-    /**
-     * 获取所有team
-     * 分页参数
-     * page=10
-     * pageSize=20
-     * <p>
-     * 查询条件参数
-     * name   :  模糊查询
-     *
-     * @return
-     */
     @GetMapping("/teams")
     public ResponseEntity<PageResult<Team>> list(TeamPageDTO teamPageDTO
     ) {

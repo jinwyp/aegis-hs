@@ -2,11 +2,14 @@ package com.yimei.hs.controller;
 
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.controller.ying.YingFeeController;
 import com.yimei.hs.entity.Party;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.PartyPageDTO;
 import com.yimei.hs.entity.dto.Result;
 import com.yimei.hs.service.PartyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.yimei.hs.entity.Party;
 import com.yimei.hs.entity.dto.PageResult;
@@ -21,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class PartyController {
-
+    private static final Logger logger = LoggerFactory.getLogger(PartyController.class);
     @Autowired
     PartyService partyService;
 
@@ -33,7 +36,7 @@ public class PartyController {
     @GetMapping("/partys")
     public ResponseEntity<PageResult<Party>> list(PartyPageDTO partyPageDTO) {
 
-        return PageResult.ok(partyService.selectPart(partyPageDTO));
+        return PageResult.ok(partyService.selectParty(partyPageDTO));
     }
 
     /**
@@ -55,7 +58,7 @@ public class PartyController {
      */
     @PostMapping("/partys")
     public ResponseEntity<Result<Party>> create(@RequestBody Party party) {
-
+        logger.warn(party.getName()+"简称"+party.getShortName());
         partyService.create(party);
         return Result.ok(party);
     }
