@@ -69,8 +69,8 @@ public class DepartmentController {
     @PostMapping("/departments")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Dept>> create(@RequestBody Dept dept) {
-        Long deptId = departmentService.createDept(dept);
-        Result.ok(dept);
+       departmentService.createDept(dept);
+       return Result.ok(dept);
     }
 
     /**
@@ -82,12 +82,13 @@ public class DepartmentController {
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(@PathVariable(value = "id") Long id, @RequestParam(value = "deptName") String name) {
         Dept dept = new Dept();
+        dept.setId(id);
         dept.setName(name);
         int success = departmentService.update(dept);
         if (success == 1) {
             return Result.ok(1);
         } else {
-            return Result.error(5005, "共享错误");
+            return Result.error(5003, "更新失败");
         }
     }
 
@@ -96,6 +97,6 @@ public class DepartmentController {
      */
     @DeleteMapping("/departments/{id}")
     public ResponseEntity<Result<Integer>> delete(@PathVariable("id") String pid) {
-       result.ok(departmentService.deleteDeptById(Long.parseLong(pid)));
+        return Result.ok(departmentService.deleteDeptById(Long.parseLong(pid)));
     }
 }

@@ -1,13 +1,16 @@
 package com.yimei.hs.controller;
 
+import com.yimei.hs.entity.Dept;
 import com.yimei.hs.entity.Team;
 import com.yimei.hs.entity.dto.PageResult;
+import com.yimei.hs.entity.dto.Result;
 import com.yimei.hs.service.DepartmentService;
 import com.yimei.hs.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -55,12 +58,13 @@ public class TeamController {
      * @return
      */
     @PostMapping("/teams")
-    public ResponseEntity<Team> create(@RequestBody Team team) {
+    public ResponseEntity<Result<Team>> create(@RequestBody Team team) {
         ResponseEntity teamResponseEntity;
 
         if (departmentService.checkDepatIsExit(team.getDeptId())) {
             teamService.createTeams(team);
             teamResponseEntity = new ResponseEntity<Team>(team, HttpStatus.OK);
+            return Result.ok(team);
         } else {
             teamResponseEntity = new ResponseEntity("添加失败", HttpStatus.OK);
         }
@@ -74,8 +78,8 @@ public class TeamController {
      * @return
      */
     @GetMapping("/teams/{id}")
-    public ResponseEntity<Team> read(@PathVariable("id") long id) {
-        return new ResponseEntity(teamService.findTeamByid(id), HttpStatus.OK);
+    public ResponseEntity<Result<Team>> read(@PathVariable("id") long id) {
+        return Result.ok(teamService.findTeamByid(id));
     }
 
     /**
@@ -83,20 +87,20 @@ public class TeamController {
      *
      * @return
      */
-    @PutMapping("/teams/id")
-    public ResponseEntity<ResponseData> update(@RequestParam(value = "id", required = true) long id, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "deptId", required = false) long deptId) {
-        ResponseData responseData = new ResponseData();
-        if (teamService.checkTeamExist(id)) {
-            Team team = teamService.findTeamByid(id);
-            team.setDeptId(deptId);
-            team.setName(name);
-            teamService.updateTeam(team);
-            responseData.setRmg("更新成功");
-            responseData.setData(team);
+    @PutMapping("/teams/{id}")
+    @Transactional(readOnly = false)
+    public ResponseEntity<Result<Integer>> update(@PathVariable(value = "id") long id, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "deptId", required = false) long deptId) {
+
+        Team team = new Team();
+        team.setDeptId(deptId);
+        team.setName(name);
+
+        int status = teamService.updateTeam(team);
+        if (status == 1) {
+            return Result.ok(1);
         } else {
-            responseData.setRmg("数据不存在");
+            return Result.error(5003, "更新失败");
         }
-        return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
     }
 
 
