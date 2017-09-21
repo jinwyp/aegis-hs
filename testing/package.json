@@ -1,0 +1,21 @@
+{
+  "name": "apitest",
+  "version": "1.0.0",
+  "description": "api testing",
+  "scripts": {
+    "start": "npm run apitest",
+    "unittest": "NODE_ENV=unittest node_modules/.bin/mocha --recursive test/unit",
+    "apitest": "NODE_ENV=apitest node_modules/.bin/mocha --recursive api",
+    "cover": "nyc npm test"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3",
+    "nyc": "^11.2.1",
+    "supertest": "^3.0.0"
+  }
+}
