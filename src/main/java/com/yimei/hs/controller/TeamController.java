@@ -4,6 +4,7 @@ import com.yimei.hs.entity.Dept;
 import com.yimei.hs.entity.Team;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.entity.dto.TeamPageDTO;
 import com.yimei.hs.service.DepartmentService;
 import com.yimei.hs.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +42,10 @@ public class TeamController {
      * @return
      */
     @GetMapping("/teams")
-    public ResponseEntity<PageResult<Team>> list(
-            @RequestParam(value = "pageNum", defaultValue = "1", required = false) int pageNum,
-            @RequestParam(value = "pageSize", defaultValue = "999", required = false) int pageSize,
-            @RequestParam(value = "deptId", required = false) Long deptId
+    public ResponseEntity<PageResult<Team>> list(TeamPageDTO teamPageDTO
     ) {
-        ArrayList<Team> allTeams = teamService.getTeamPage(pageSize, pageNum, deptId);
-        PageResult<Team> page = new PageResult<Team>();
-        return new ResponseEntity<PageResult<Team>>(page, HttpStatus.OK);
+
+        return PageResult.ok(teamService.getTeamPage(teamPageDTO));
     }
 
 
@@ -63,12 +60,10 @@ public class TeamController {
 
         if (departmentService.checkDepatIsExit(team.getDeptId())) {
             teamService.createTeams(team);
-            teamResponseEntity = new ResponseEntity<Team>(team, HttpStatus.OK);
             return Result.ok(team);
         } else {
-            teamResponseEntity = new ResponseEntity("添加失败", HttpStatus.OK);
+            return Result.error(5001, "添加失败");
         }
-        return teamResponseEntity;
     }
 
     /**

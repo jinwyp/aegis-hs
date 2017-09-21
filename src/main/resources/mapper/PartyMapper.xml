@@ -16,11 +16,22 @@
     from hs_party
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <select id="selectParty" resultType="com.yimei.hs.entity.Party">
+      select
+      <include refid="Base_Column_List" />
+      from hs_party
+      <where>
+        <if test="custType !=null">
+          custType=#{custType}
+        </if>
+
+      </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from hs_party
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.Party">
+  <insert id="insert" parameterType="com.yimei.hs.entity.Party" keyProperty="id" useGeneratedKeys="true">
     insert into hs_party (id, custType, name, 
       shortName)
     values (#{id,jdbcType=BIGINT}, #{custType,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, 

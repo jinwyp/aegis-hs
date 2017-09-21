@@ -1,6 +1,8 @@
 package com.yimei.hs.service;
 
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.Team;
+import com.yimei.hs.entity.dto.TeamPageDTO;
 import com.yimei.hs.mapper.TeamMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,15 +46,9 @@ public class TeamService {
 
         return mTeamMapper.updateByPrimaryKey(team);
     }
-    /**
-     * 分页
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
-    public ArrayList<Team> getTeamPage(int pageSize,int pageNum ,Long deptID) {
-        pageNum = (pageNum - 1) * pageSize;
-      return   mTeamMapper.getPageTeam(pageNum,pageSize,deptID);
+
+    public Page<Team> getTeamPage(TeamPageDTO teamPageDTO) {
+      return   mTeamMapper.getPageTeam(teamPageDTO);
     }
 
     public boolean checkTeamExist(long tid) {

@@ -13,6 +13,7 @@ public class Team implements Serializable {
     @NotNull
     private String name;
     @Max(20)
+    @NotNull
     private Long deptId;
 
     private static final long serialVersionUID = 1L;

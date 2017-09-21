@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -51,8 +52,9 @@ public class DepartmentController {
      * @param id
      * @return
      */
-    @GetMapping("/departments/id")
-    public ResponseEntity<Result<Dept>> read(@RequestParam long id) {
+    @GetMapping("/departments/{id}")
+    public ResponseEntity<Result<Dept>> read(@PathVariable(value = "id") long id) {
+        logger.warn(""+id);
         if (departmentService.checkDepatIsExit(id)) {
             return Result.ok(departmentService.selectDeptById(id));
         } else {
