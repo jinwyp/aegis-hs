@@ -58,7 +58,7 @@ public class UserAdminController {
      * 更新用户
      * @return
      */
-    @PutMapping("/invoice/:id")
+    @PutMapping("/users/:id")
     public ResponseEntity<Result<Integer>> update( @PathVariable("id") long id ) {
         return Result.ok(1);
     }
