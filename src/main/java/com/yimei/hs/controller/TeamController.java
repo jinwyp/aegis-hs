@@ -1,8 +1,7 @@
 package com.yimei.hs.controller;
 
 import com.yimei.hs.entity.Team;
-import com.yimei.hs.entity.dto.PageDTO;
-import com.yimei.hs.entity.dto.ResponseData;
+import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.service.DepartmentService;
 import com.yimei.hs.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,9 @@ public class TeamController {
 
 
     @Autowired
-    private TeamService service;
+    private TeamService teamService;
     @Autowired
-    private DepartmentService mDepartmentService;
+    private DepartmentService departmentService;
 
 
     /**
@@ -39,17 +38,14 @@ public class TeamController {
      * @return
      */
     @GetMapping("/teams")
-    public ResponseEntity<PageDTO> list(
+    public ResponseEntity<PageResult<Team>> list(
             @RequestParam(value = "pageNum", defaultValue = "1", required = false) int pageNum,
             @RequestParam(value = "pageSize", defaultValue = "999", required = false) int pageSize,
             @RequestParam(value = "deptId", required = false) Long deptId
     ) {
-        ArrayList<Team> allTeams = service.getTeamPage(pageSize, pageNum, deptId);
-        PageDTO page = new PageDTO();
-        page.setPageNum(pageNum);
-        page.setPageSize(pageSize);
-        page.setResponsedata(allTeams);
-        return new ResponseEntity<PageDTO>(page, HttpStatus.OK);
+        ArrayList<Team> allTeams = teamService.getTeamPage(pageSize, pageNum, deptId);
+        PageResult<Team> page = new PageResult<Team>();
+        return new ResponseEntity<PageResult<Team>>(page, HttpStatus.OK);
     }
 
 
@@ -62,8 +58,8 @@ public class TeamController {
     public ResponseEntity<Team> create(@RequestBody Team team) {
         ResponseEntity teamResponseEntity;
 
-        if (mDepartmentService.checkDepatIsExit(team.getDeptId())) {
-            service.createTeams(team);
+        if (departmentService.checkDepatIsExit(team.getDeptId())) {
+            teamService.createTeams(team);
             teamResponseEntity = new ResponseEntity<Team>(team, HttpStatus.OK);
         } else {
             teamResponseEntity = new ResponseEntity("添加失败", HttpStatus.OK);
@@ -79,7 +75,7 @@ public class TeamController {
      */
     @GetMapping("/teams/{id}")
     public ResponseEntity<Team> read(@PathVariable("id") long id) {
-        return new ResponseEntity(service.findTeamByid(id), HttpStatus.OK);
+        return new ResponseEntity(teamService.findTeamByid(id), HttpStatus.OK);
     }
 
     /**
@@ -90,11 +86,11 @@ public class TeamController {
     @PutMapping("/teams/id")
     public ResponseEntity<ResponseData> update(@RequestParam(value = "id", required = true) long id, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "deptId", required = false) long deptId) {
         ResponseData responseData = new ResponseData();
-        if (service.checkTeamExist(id)) {
-            Team team = service.findTeamByid(id);
+        if (teamService.checkTeamExist(id)) {
+            Team team = teamService.findTeamByid(id);
             team.setDeptId(deptId);
             team.setName(name);
-            service.updateTeam(team);
+            teamService.updateTeam(team);
             responseData.setRmg("更新成功");
             responseData.setData(team);
         } else {
@@ -109,7 +105,7 @@ public class TeamController {
      */
     @DeleteMapping("/teams/{id}")
     public String delete(@PathVariable("id") long id) {
-        service.deleteTeamById(id);
+        teamService.deleteTeamById(id);
         return "Team";
     }
 

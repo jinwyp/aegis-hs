@@ -1,21 +1,15 @@
 package com.yimei.hs.controller;
 
 import com.yimei.hs.entity.Dept;
-import com.yimei.hs.entity.dto.ResponseData;
+import com.yimei.hs.entity.dto.PageResult;
+import com.yimei.hs.entity.dto.Result;
 import com.yimei.hs.service.DepartmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import sun.security.tools.policytool.Resources_de;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 
 /**
  * Created by hary on 2017/9/15.
@@ -27,7 +21,7 @@ public class DepartmentController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private DepartmentService mDepartmentService;
+    private DepartmentService departmentService;
 
     /**
      * 获取所有dept
@@ -41,15 +35,11 @@ public class DepartmentController {
      * @return
      */
     @GetMapping("/departments")
-    public ResponseEntity<ResponseData> list(
+    public ResponseEntity<PageResult<Dept>> list(
             @RequestParam("pageSize") int pageSize,
             @RequestParam("pageNum") int pageNum
     ) {
-
-        ResponseData responseData = new ResponseData();
-        ArrayList<Dept> depts = (ArrayList<Dept>) mDepartmentService.selectAllDept();
-        responseData.setData(depts);
-        return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
+        return PageResult.ok(departmentService.selectAllDept());
     }
 
     /**
@@ -59,14 +49,11 @@ public class DepartmentController {
      * @return
      */
     @GetMapping("/departments/id")
-    public ResponseEntity<ResponseData> read(@RequestParam long id) {
-        ResponseData responseData = new ResponseData();
-        if (mDepartmentService.checkDepatIsExit(id)) {
-            responseData.setData(mDepartmentService.selectDeptById(id));
-            return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
+    public ResponseEntity<Result<Dept>> read(@RequestParam long id) {
+        if (departmentService.checkDepatIsExit(id)) {
+            return Result.ok(departmentService.selectDeptById(id));
         } else {
-            responseData.setRmg("部门不存在");
-            return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
+            return Result.error(5003, "部门不存在");
         }
 
     }
@@ -78,16 +65,9 @@ public class DepartmentController {
      */
     @PostMapping("/departments")
     @Transactional(readOnly = false)
-    public ResponseEntity<ResponseData> create(@RequestBody Dept dept) {
-
-        ResponseData responseData = new ResponseData();
-        mDepartmentService.createDept(dept);
-        if (dept.getId() != null) {
-            responseData.setData(dept);
-        } else {
-            responseData.setRmg("添加部门失败");
-        }
-        return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
+    public ResponseEntity<Result<Dept>> create(@RequestBody Dept dept) {
+        Long deptId = departmentService.createDept(dept);
+        Result.ok(dept);
     }
 
     /**
@@ -97,34 +77,22 @@ public class DepartmentController {
      */
     @PutMapping("/departments/{id}")
     @Transactional(readOnly = false)
-    public ResponseEntity<ResponseData> update(@PathVariable(value = "id") String id, @RequestParam(value = "deptName") String name) {
-        ResponseData responseData = new ResponseData();
-        Long Lid = Long.parseLong(id);
-        if (mDepartmentService.checkDepatIsExit(Lid)) {
-            Dept dept = mDepartmentService.selectDeptById(Lid);
-            dept.setName(name);
-            int success = mDepartmentService.update(dept);
-            if (success == 1) {
-                responseData.setRmg("操作成功");
-                responseData.setStatus(1);
-            } else {
-                responseData.setRmg("操作失败");
-                responseData.setStatus(-1);
-            }
+    public ResponseEntity<Result<Integer>> update(@PathVariable(value = "id") Long id, @RequestParam(value = "deptName") String name) {
+        Dept dept = new Dept();
+        dept.setName(name);
+        int success = departmentService.update(dept);
+        if (success == 1) {
+            return Result.ok(1);
         } else {
-
+            return Result.error(5005, "共享错误");
         }
-
-        return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
     }
 
     /**
      * delete
      */
     @DeleteMapping("/departments/{id}")
-    public ResponseEntity<ResponseData> delete(@PathVariable("id") String pid) {
-        ResponseData responseData = new ResponseData();
-        responseData.setStatus(mDepartmentService.deleteDeptById(Long.parseLong(pid)));
-        return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
+    public ResponseEntity<Result<Integer>> delete(@PathVariable("id") String pid) {
+       result.ok(departmentService.deleteDeptById(Long.parseLong(pid)));
     }
 }

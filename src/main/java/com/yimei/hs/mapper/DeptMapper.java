@@ -1,5 +1,6 @@
 package com.yimei.hs.mapper;
 
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.Dept;
 
 import java.util.List;
@@ -7,9 +8,9 @@ import java.util.List;
 public interface DeptMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(Dept record);
+    Long insert(Dept record);
 
-    int insertSelective(Dept record);
+    Long insertSelective(Dept record);
 
     Dept selectByPrimaryKey(Long id);
 
@@ -17,7 +18,7 @@ public interface DeptMapper {
 
     int updateByPrimaryKey(Dept record);
 
-    List<Dept> selectAll();
+    Page<Dept> selectAll();
 
     boolean checkDepayIsExist(Long id);
 }

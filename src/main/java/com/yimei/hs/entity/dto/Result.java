@@ -3,6 +3,8 @@ package com.yimei.hs.entity.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
@@ -22,10 +24,13 @@ public class Result<T> {
     private T data;
     private Error error;
 
-    public static Result<Integer> error(int code, String message) {
-        return new Result<Integer>(false, null, new Error(code, message));
+    public static final <M> ResponseEntity<Result<M>> error(int code, String message ) {
+        return new ResponseEntity<Result<M>>(new Result<M>(false, null, new Error(code, message)), HttpStatus.OK);
     }
 
+    public static final <T> ResponseEntity<Result<T>> ok(T t) {
+        return new ResponseEntity<Result<T>>(new Result<T>(true, t, null), HttpStatus.OK);
+    }
 }
 
 
