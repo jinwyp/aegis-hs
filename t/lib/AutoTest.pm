@@ -159,23 +159,7 @@ EOF
 #        });
 #}
 
-sub login {
-  my $self = shift;
-  my ($username, $password) = @_;
-  warn "-----------------------------------------------\n";
-  warn "登录...\n";
-  warn "-----------------------------------------------\n";
-  my $u000 = $self->get("0. 打开登录页面", "/web/login");
-  $self->cookie(); # 设置cookie
-  my $u001 = $self->pos("1. 登录", "/api/login", {
-      jwt  => undef, # 不需要jwt
-      data => {
-        username => $username,
-        password => $password,
-      }
-    });
-  $self->jwt($u001); # 保存jwt到agent中
-}
+
 
 
 sub dump {
