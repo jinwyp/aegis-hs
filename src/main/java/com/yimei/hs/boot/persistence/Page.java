@@ -27,7 +27,7 @@ public class Page<T> {
 
     private List<T> results;
 
-    private Map<String, Object> params = new HashMap<String, Object>();
+//     private Map<String, Object> params = new HashMap<String, Object>();
 
 
     public void setTotalRecord(int totalRecord) {
