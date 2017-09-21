@@ -2,6 +2,7 @@ package com.yimei.hs.boot.exception;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yimei.hs.entity.dto.Result;
 import com.yimei.hs.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,15 +46,10 @@ public class GlobalHandlerExceptionResolver {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void process400Error(HttpServletRequest request, HttpServletResponse response, Exception ex) throws IOException {
         logger.error("400Exception:", ex);
-
-//        if (WebUtils.isAjaxRequest(request)) {
-//            response.setStatus(400);
-//        } else if (WebUtils.isFromAdminRequest(request)) {
-//            response.sendRedirect("/admin/400");
-//        } else {
-//            response.sendRedirect("/400");
-//        }
-
+        if (WebUtils.isAjaxRequest(request)) {
+            response.setStatus(400);
+            response.sendRedirect("/400");
+        }
     }
 
     //户登录异常处理
@@ -64,17 +60,7 @@ public class GlobalHandlerExceptionResolver {
         if (!WebUtils.isAjaxRequest(request)) {
             if (ex instanceof NoJwtTokenException) {
                 response.sendRedirect("/login");
-            } else {
-                response.sendRedirect("/admin/login");
             }
-        } else {
-
-//            if (ex instanceof NoJwtTokenException) {
-//                om.writeValue(response.getOutputStream(), Response.error(userUnAuth_flag));
-//            } else {
-//                om.writeValue(response.getOutputStream(), Response.error(adminUnAuth_flag));
-//            }
-
         }
     }
 
@@ -84,18 +70,13 @@ public class GlobalHandlerExceptionResolver {
     @ResponseStatus(HttpStatus.CONFLICT)
     public void process409Error(HttpServletRequest request, HttpServletResponse response, Exception ex) throws IOException, ServletException {
         response.setStatus(409);
+        response.setContentType("application/json; charset=UTF-8");
 
-//        if (WebUtils.isAjaxRequest(request)) {
-//            response.setContentType("application/json; charset=UTF-8");
-//            om.writeValue(response.getOutputStream(), Result<>);
-//        } else if (WebUtils.isFromAdminRequest(request)) {
-//            request.setAttribute("errMsg", ex.getMessage());
-//            request.getRequestDispatcher("/admin/409").forward(request, response);
-//        } else {
-//            request.setAttribute("errMsg", ex.getMessage());
-//            request.getRequestDispatcher("/409").forward(request, response);
-//        }
-
+        String errMsg = ex.getMessage();
+        if (errMsg == null) {
+            errMsg = "系统错误";
+        }
+        om.writeValue(response.getOutputStream(), Result.error(5000, errMsg));
     }
 
 

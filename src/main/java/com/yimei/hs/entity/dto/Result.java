@@ -19,8 +19,12 @@ public class Result<T> {
 //    private Optional<T> data;
 //    private Optional<Error> error;
 
-    private Optional<T> data;
-    private Optional<Error> error;
+    private T data;
+    private Error error;
+
+    public static Result<Integer> error(int code, String message) {
+        return new Result<Integer>(false, null, new Error(code, message));
+    }
 
 }
 
