@@ -23,7 +23,8 @@ public class YingHuikuanService {
     @Autowired
     private YingHuikuanMapper yingHuikuanMapper;
 
-
+    @Autowired
+    private YingLogService yingLogService;
 
 
 }

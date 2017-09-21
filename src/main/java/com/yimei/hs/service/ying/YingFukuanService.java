@@ -16,4 +16,7 @@ public class YingFukuanService {
 
     @Autowired
     private YingFukuanMapper yingFukuanMapper;
+
+    @Autowired
+    private YingLogService yingLogService;
 }

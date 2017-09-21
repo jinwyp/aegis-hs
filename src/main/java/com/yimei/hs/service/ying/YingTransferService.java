@@ -14,7 +14,11 @@ public class YingTransferService {
 
     private static final Logger logger = LoggerFactory.getLogger(YingTransferService.class);
 
-
     @Autowired
     private YingTransferMapper yingTransferMapper;
+
+
+    @Autowired
+    private YingLogService yingLogService;
+
 }

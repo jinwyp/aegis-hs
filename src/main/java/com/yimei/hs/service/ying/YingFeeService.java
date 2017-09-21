@@ -18,4 +18,7 @@ public class YingFeeService {
     @Autowired
     private YingFeeMapper yingFeeMapper;
 
+    @Autowired
+    private YingLogService yingLogService;
+
 }

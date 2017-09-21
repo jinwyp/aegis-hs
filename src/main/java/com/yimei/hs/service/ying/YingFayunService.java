@@ -12,4 +12,8 @@ public class YingFayunService {
 
     @Autowired
     private YingFayunMapper yingFayunMapper;
+
+    @Autowired
+    private YingLogService yingLogService;
+
 }

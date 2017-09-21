@@ -22,4 +22,6 @@ public class YingInvoiceService {
     @Autowired
     private YingInvoiceDetailMapper yingInvoiceDetailMapper;
 
+    @Autowired
+    private YingLogService yingLogService;
 }
