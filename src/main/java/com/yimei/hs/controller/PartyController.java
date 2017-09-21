@@ -1,5 +1,9 @@
 package com.yimei.hs.controller;
 
+import com.yimei.hs.entity.Party;
+import com.yimei.hs.entity.dto.PageResult;
+import com.yimei.hs.entity.dto.Result;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +19,8 @@ public class PartyController {
      * @return
      */
     @GetMapping("/partys")
-    public String list() {
-        return "party";
+    public ResponseEntity<PageResult<Party>> list() {
+        return PageResult.ok(null);
     }
 
     /**
@@ -24,9 +28,9 @@ public class PartyController {
      * @param id
      * @return
      */
-    @GetMapping("/party/:id")
-    public String read(long id) {
-        return "party";
+    @GetMapping("/partys/{id}")
+    public  ResponseEntity<Result<Party>> read(@PathVariable("id") long id) {
+        return Result.ok(null);
     }
 
     /**
@@ -34,17 +38,17 @@ public class PartyController {
      * @return
      */
     @PostMapping("/partys")
-    public String create() {
-        return "party";
+    public ResponseEntity<Result<Party>> create(@RequestBody Party party) {
+        return Result.ok(null);
     }
 
     /**
      *  更新party
      * @return
      */
-    @PutMapping("/party/:id")
-    public String update() {
-        return "party";
+    @PutMapping("/partys/{id}")
+    public ResponseEntity<Result<Integer>> update(@PathVariable("id" long id)) {
+        return Result.ok(1);
     }
 
 }
