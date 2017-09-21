@@ -1,5 +1,8 @@
 package com.yimei.hs.service.ying;
 
+import com.yimei.hs.mapper.YingInvoiceDetailMapper;
+import com.yimei.hs.mapper.YingInvoiceMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -7,4 +10,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class YingInvoiceService {
+
+    @Autowired
+    private YingInvoiceMapper yingInvoiceMapper;
+
+    @Autowired
+    private YingInvoiceDetailMapper yingInvoiceDetailMapper;
+
 }

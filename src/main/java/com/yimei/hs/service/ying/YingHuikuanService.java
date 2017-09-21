@@ -1,5 +1,9 @@
 package com.yimei.hs.service.ying;
 
+import com.yimei.hs.entity.YingHuikuan;
+import com.yimei.hs.mapper.YingHuikuanMapMapper;
+import com.yimei.hs.mapper.YingHuikuanMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -7,4 +11,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class YingHuikuanService {
+
+    @Autowired
+    private YingHuikuanMapMapper yingHuikuanMapMapper;
+
+    @Autowired
+    private YingHuikuanMapper yingHuikuanMapper;
+
+
+
+
 }

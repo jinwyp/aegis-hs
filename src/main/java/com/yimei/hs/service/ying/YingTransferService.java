@@ -1,5 +1,7 @@
 package com.yimei.hs.service.ying;
 
+import com.yimei.hs.mapper.YingTransferMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -7,4 +9,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class YingTransferService {
+
+    @Autowired
+    private YingTransferMapper yingTransferMapper;
 }
