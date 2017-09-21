@@ -30,7 +30,7 @@ public class Result<T> {
         return new ResponseEntity<>(new Result<M>(false, null, new Error(code, message)), httpStatus);
     }
 
-    public static final <M> ResponseEntity<Result<M>> ok(M m {
+    public static final <M> ResponseEntity<Result<M>> ok(M m) {
         return new ResponseEntity<>(new Result<>(true, m, null), HttpStatus.OK);
     }
 }
