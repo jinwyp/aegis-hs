@@ -1,8 +1,10 @@
 package com.yimei.hs.controller;
 
+import com.yimei.hs.boot.annotation.CurrentUser;
 import com.yimei.hs.entity.Dept;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.entity.dto.UserDTO;
 import com.yimei.hs.service.DepartmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,7 @@ public class DepartmentController {
      */
     @GetMapping("/departments")
     public ResponseEntity<PageResult<Dept>> list(
+            @CurrentUser UserDTO userDTO,     // 登录用户
             @RequestParam("pageSize") int pageSize,
             @RequestParam("pageNum") int pageNum
     ) {
