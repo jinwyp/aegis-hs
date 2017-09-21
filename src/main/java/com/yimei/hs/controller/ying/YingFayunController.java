@@ -4,6 +4,7 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.YingFayun;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -71,4 +72,21 @@ public class YingFayunController {
         YingFayun fayun = null;
         return Result.ok(fayun);
     }
+
+
+    // 发运统计
+    @Data
+    private static class FayunStat {
+    }
+
+    /**
+     *  发运统计
+     */
+    @GetMapping("/{orderId}/fayuns-stat")
+    public ResponseEntity<Result<FayunStat>> stat(
+            @PathVariable("orderId") long orderId
+    ) {
+        return Result.ok(null);
+    }
+
 }
