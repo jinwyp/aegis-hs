@@ -1,14 +1,12 @@
 package com.yimei.hs.boot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yimei.hs.ACLInterceptor;
 import com.yimei.hs.boot.support.Java8TimeModule;
 import com.yimei.hs.boot.web.CurrentUserMethodArgumentHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
