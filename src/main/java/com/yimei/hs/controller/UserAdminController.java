@@ -50,7 +50,7 @@ public class UserAdminController {
      * @return
      */
     @PostMapping("/users")
-    public ResponseEntity<Result<User>> create(User user) {
+    public ResponseEntity<Result<User>> create(@RequestBody User user) {
         return Result.ok(null);
     }
 
