@@ -34,11 +34,11 @@ public class RestTemplateConfiguration {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Value("${pg.organizationId}")
-    private String organizationId;
+    // @Value("${pg.organizationId}")
+    private String organizationId = "test";
 
-    @Value("${pg.secretKey}")
-    private String secretKey;
+    // @Value("${pg.secretKey}")
+    private String secretKey = "test";
 
     @Bean
     public RestTemplate createRestTemplate() {
