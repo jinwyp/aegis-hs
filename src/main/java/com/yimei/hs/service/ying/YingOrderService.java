@@ -42,4 +42,7 @@ public class YingOrderService {
     public int updateOrder(YingOrder record) {
         return yingOrderMapper.updateByPrimaryKey(record);
     }
+
+    @Autowired
+    private YingLogService yingLogService;
 }

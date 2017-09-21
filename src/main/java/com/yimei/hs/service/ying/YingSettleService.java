@@ -41,4 +41,7 @@ public class YingSettleService {
     public List<YingSettleUpstream> getAllUpStreamSettles(Long orderId) {
         return yingSettleUpstreamMapper.selectByOrderId(orderId);
     }
+
+    @Autowired
+    private YingLogService yingLogService;
 }

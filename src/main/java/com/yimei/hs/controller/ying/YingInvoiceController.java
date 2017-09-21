@@ -3,13 +3,12 @@ package com.yimei.hs.controller.ying;
 import com.yimei.hs.entity.YingInvoice;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.service.ying.YingInvoiceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.xml.ws.Response;
 
 /**
  * Created by hary on 2017/9/15.
@@ -20,6 +19,8 @@ public class YingInvoiceController {
 
     private static final Logger logger = LoggerFactory.getLogger(YingInvoiceController.class);
 
+    @Autowired
+    private YingInvoiceService yingInvoiceService;
 
     /**
      * 获取所有invoice

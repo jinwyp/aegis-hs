@@ -4,6 +4,8 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.Team;
 import com.yimei.hs.entity.dto.TeamPageDTO;
 import com.yimei.hs.mapper.TeamMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +19,10 @@ import java.util.ArrayList;
 @Service
 public class TeamService {
 
+    private static final Logger logger = LoggerFactory.getLogger(TeamService.class);
+
     @Autowired
-    TeamMapper mTeamMapper;
-//    //获得所有tean
-//    public ArrayList<Team> getAllTeams(@NotNull int pageSize, @NotNull int paseNum, @Null Long deptId){
-////        ArrayList<Team> teams= mTeamMapper.getAllTeams(pageSize,paseNum,deptId);
-//        return teams;
-//    }
+    private TeamMapper mTeamMapper;
 
     /**
      * 根据id查 团队

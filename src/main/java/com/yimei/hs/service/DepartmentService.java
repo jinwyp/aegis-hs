@@ -3,6 +3,8 @@ package com.yimei.hs.service;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.Dept;
 import com.yimei.hs.mapper.DeptMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DepartmentService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DepartmentService.class);
 
     @Autowired
     private DeptMapper deptMapper;

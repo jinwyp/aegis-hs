@@ -3,7 +3,7 @@ package com.yimei.hs.enums;
 /**
  * 结算对象
  */
-public enum SettleObject {
+public enum SettleTarget {
 
 
     UPSTREAM_SETTLE("上游结算"),
@@ -15,7 +15,7 @@ public enum SettleObject {
 
     public String value;
 
-    SettleObject(String value) {
+    SettleTarget(String value) {
         this.value = value;
     }
 

@@ -1,5 +1,6 @@
 package com.yimei.hs.service;
 
+
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.Party;
 import com.yimei.hs.entity.dto.PartyPageDTO;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PartyService {
+
     @Autowired
     PartyMapper partyMapper;
 

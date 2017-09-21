@@ -1,5 +1,6 @@
 package com.yimei.hs.controller;
 
+
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.Party;
 import com.yimei.hs.entity.dto.PageResult;
@@ -7,6 +8,9 @@ import com.yimei.hs.entity.dto.PartyPageDTO;
 import com.yimei.hs.entity.dto.Result;
 import com.yimei.hs.service.PartyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.yimei.hs.entity.Party;
+import com.yimei.hs.entity.dto.PageResult;
+import com.yimei.hs.entity.dto.Result;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -79,5 +83,4 @@ public class PartyController {
             return Result.error(5003, "更新失败");
         }
     }
-
 }
