@@ -2,6 +2,8 @@ package com.yimei.hs.service.ying;
 
 import com.yimei.hs.mapper.YingInvoiceDetailMapper;
 import com.yimei.hs.mapper.YingInvoiceMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class YingInvoiceService {
+
+    private static final Logger logger = LoggerFactory.getLogger(YingSettleService.class);
+
 
     @Autowired
     private YingInvoiceMapper yingInvoiceMapper;

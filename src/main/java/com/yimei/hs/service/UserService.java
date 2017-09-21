@@ -48,7 +48,7 @@ public class UserService {
     public User registerUser(UserDTO userDTO) {
         byte[] passwordSalt = Digests.generateSalt(SALT_SIZE);
         byte[] hashPassword = Digests.sha1(userDTO.getPlainPassword().getBytes(), passwordSalt, HASH_INTERATIONS);
-        User user= BeanMapper.map(userDTO,User.class);
+        User user = BeanMapper.map(userDTO, User.class);
         user.setIsActive(true);
         user.setPassword(Encodes.encodeHex(hashPassword));
         user.setPasswordSalt(Encodes.encodeHex(passwordSalt));
@@ -61,6 +61,7 @@ public class UserService {
 
     /**
      * 验证密码
+     *
      * @param phone
      * @param plainPassword
      * @return
