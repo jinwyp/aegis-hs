@@ -1,12 +1,10 @@
 package com.yimei.hs.service.ying;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.YingOrder;
 import com.yimei.hs.mapper.YingOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Created by hary on 2017/9/15.
@@ -15,22 +13,21 @@ import java.util.List;
 public class YingOrderService {
 
     @Autowired
-    private YingOrderMapper mYingOrderMapper;
+    private YingOrderMapper yingOrderMapper;
 
-    public List<YingOrder> quaryAllOrder() {
-
-        return mYingOrderMapper.selectAllOrder();
+    public Page<YingOrder> quaryAllOrder() {
+        return yingOrderMapper.selectAllOrder();
     }
 
     public YingOrder quaryOrderbyId(long id) {
-        return mYingOrderMapper.selectByPrimaryKey(id);
+        return yingOrderMapper.selectByPrimaryKey(id);
     }
 
     public int createOrder(YingOrder order) {
-        return mYingOrderMapper.insert(order);
+        return yingOrderMapper.insert(order);
     }
 
     public int updateOrder(YingOrder record) {
-        return mYingOrderMapper.updateByPrimaryKey(record);
+        return yingOrderMapper.updateByPrimaryKey(record);
     }
 }

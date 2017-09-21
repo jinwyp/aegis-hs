@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class DepartmentController {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(DepartmentController.class);
 
     @Autowired
     private DepartmentService departmentService;

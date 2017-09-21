@@ -1,11 +1,15 @@
 package com.yimei.hs.controller.ying;
 
+import com.yimei.hs.entity.YingFee;
+import com.yimei.hs.entity.dto.PageResult;
+import com.yimei.hs.entity.dto.Result;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by hary on 2017/9/15.
  */
-@RequestMapping("/api")
+@RequestMapping("/api/ying")
 @RestController
 public class YingFeeController {
 
@@ -14,9 +18,11 @@ public class YingFeeController {
      *
      * @return
      */
-    @GetMapping("/fees")
-    public String list() {
-        return "fee";
+    @GetMapping("/{orderId}/fees")
+    public ResponseEntity<PageResult<YingFee>> list(
+            @PathVariable("orderId") long orderId
+    ) {
+        return PageResult.ok(null);
     }
 
     /**
@@ -25,9 +31,12 @@ public class YingFeeController {
      * @param id
      * @return
      */
-    @GetMapping("/fee/:id")
-    public String read(long id) {
-        return "fee";
+    @GetMapping("/{orderId}/fees/:id")
+    public ResponseEntity<Result<YingFee>> read(
+            @PathVariable("orderId") long orderId,
+            @PathVariable("id") long id
+    ) {
+        return Result.ok(null);
     }
 
     /**
@@ -35,9 +44,9 @@ public class YingFeeController {
      *
      * @return
      */
-    @PostMapping("/fees")
-    public String create() {
-        return "fee";
+    @PostMapping("/{orderId}/fees")
+    public ResponseEntity<Result<YingFee>> create( @PathVariable("orderId") long orderId) {
+        return Result.ok(null);
     }
 
     /**
@@ -45,8 +54,11 @@ public class YingFeeController {
      *
      * @return
      */
-    @PutMapping("/fee/:id")
-    public String update() {
-        return "fee";
+    @PutMapping("/{orderId}/fees/:id")
+    public ResponseEntity<Result<Integer>> update(
+            @PathVariable("orderId") long orderId,
+            @PathVariable("id") long id
+    ) {
+        return Result.ok(1);
     }
 }
