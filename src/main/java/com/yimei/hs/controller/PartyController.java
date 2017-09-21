@@ -47,7 +47,7 @@ public class PartyController {
      * @return
      */
     @PutMapping("/partys/{id}")
-    public ResponseEntity<Result<Integer>> update(@PathVariable("id" long id)) {
+    public ResponseEntity<Result<Integer>> update(@PathVariable("id") long id) {
         return Result.ok(1);
     }
 
