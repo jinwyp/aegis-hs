@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -26,6 +27,7 @@ import java.util.List;
 /**
  * Created by hary on 2017/9/21.
  */
+@Configuration
 public class RestTemplateConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(RestTemplateConfiguration.class);
 

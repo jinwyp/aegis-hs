@@ -3,16 +3,19 @@ package com.yimei.hs.controller.ying;
 import com.yimei.hs.entity.YingSettleUpstream;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by hary on 2017/9/21.
  */
-@Controller
-@RestController("/api/ying")
+@RestController
+@RequestMapping("/api/ying")
 public class YingSettleUpstreamController {
+
+    private static final Logger logger = LoggerFactory.getLogger(YingSettleUpstreamController.class);
 
     /**
      * 获取所有huikuan

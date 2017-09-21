@@ -4,6 +4,8 @@ import com.yimei.hs.entity.YingOrder;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
 import com.yimei.hs.service.ying.YingOrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,9 +17,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @RestController
 public class YingOrderController {
-    // hs_yin_order
-    // hs_yin_order_config
 
+    private static final Logger logger = LoggerFactory.getLogger(YingOrderController.class);
 
     @Autowired
     YingOrderService yingOrderService;
