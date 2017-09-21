@@ -3,6 +3,8 @@ package com.yimei.hs.controller;
 import com.yimei.hs.entity.Dept;
 import com.yimei.hs.entity.dto.ResponseData;
 import com.yimei.hs.service.DepartmentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,8 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api")
 public class DepartmentController {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private DepartmentService mDepartmentService;
@@ -91,9 +95,9 @@ public class DepartmentController {
      *
      * @return
      */
-    @PutMapping("/departments/id")
+    @PutMapping("/departments/{id}")
     @Transactional(readOnly = false)
-    public ResponseEntity<ResponseData> update(@RequestParam(value = "id") String id, @RequestParam(value = "deptName") String name) {
+    public ResponseEntity<ResponseData> update(@PathVariable(value = "id") String id, @RequestParam(value = "deptName") String name) {
         ResponseData responseData = new ResponseData();
         Long Lid = Long.parseLong(id);
         if (mDepartmentService.checkDepatIsExit(Lid)) {
@@ -117,8 +121,8 @@ public class DepartmentController {
     /**
      * delete
      */
-    @DeleteMapping("/departments/id")
-    public ResponseEntity<ResponseData> delete(@RequestParam("pid") String pid) {
+    @DeleteMapping("/departments/{id}")
+    public ResponseEntity<ResponseData> delete(@PathVariable("id") String pid) {
         ResponseData responseData = new ResponseData();
         responseData.setStatus(mDepartmentService.deleteDeptById(Long.parseLong(pid)));
         return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
