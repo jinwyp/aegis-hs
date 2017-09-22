@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PageController {
 
     @GetMapping("/web/index")
-    public String index(@CurrentUser User user) {
+    public String index() {
         return "/index";
     }
 
