@@ -1,6 +1,8 @@
 package com.yimei.hs.mapper;
 
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.YingInvoice;
+import com.yimei.hs.entity.dto.ying.PageYingInvoiceDTO;
 
 public interface YingInvoiceMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +16,6 @@ public interface YingInvoiceMapper {
     int updateByPrimaryKeySelective(YingInvoice record);
 
     int updateByPrimaryKey(YingInvoice record);
+
+    Page<YingInvoice> getPage(PageYingInvoiceDTO pageYingInvoiceDTO);
 }

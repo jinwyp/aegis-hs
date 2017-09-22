@@ -9,4 +9,5 @@ import lombok.Data;
 
 @Data
 public class PageYingSettleUpstreamDTO extends BaseFilter<PageYingSettleUpstreamDTO>{
+    private Long orderId;
 }

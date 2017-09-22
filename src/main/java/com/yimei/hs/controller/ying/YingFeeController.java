@@ -3,6 +3,7 @@ package com.yimei.hs.controller.ying;
 import com.yimei.hs.entity.YingFee;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.entity.dto.ying.PageYingFeeDTO;
 import com.yimei.hs.service.ying.YingFeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,15 +26,13 @@ public class YingFeeController {
 
 
     /**
-     * 获取所有fee
+     * 获取分页数据fee
      *
      * @return
      */
     @GetMapping("/{orderId}/fees")
-    public ResponseEntity<PageResult<YingFee>> list(
-            @PathVariable("orderId") long orderId
-    ) {
-        return PageResult.ok(null);
+    public ResponseEntity<PageResult<YingFee>> list(PageYingFeeDTO pageYingFeeDTO) {
+        return PageResult.ok(yingFeeService.getPage(pageYingFeeDTO));
     }
 
     /**
@@ -42,12 +41,12 @@ public class YingFeeController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/fees/:id")
+    @GetMapping("/{orderId}/fees/{id}")
     public ResponseEntity<Result<YingFee>> read(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
     ) {
-        return Result.ok(null);
+        return Result.ok(yingFeeService.findOne(id));
     }
 
     /**
@@ -56,8 +55,9 @@ public class YingFeeController {
      * @return
      */
     @PostMapping("/{orderId}/fees")
-    public ResponseEntity<Result<YingFee>> create( @PathVariable("orderId") long orderId) {
-        return Result.ok(null);
+    public ResponseEntity<Result<YingFee>> create(@RequestBody YingFee yingFee) {
+        yingFeeService.create(yingFee);
+        return Result.ok(yingFee);
     }
 
     /**
@@ -65,11 +65,9 @@ public class YingFeeController {
      *
      * @return
      */
-    @PutMapping("/{orderId}/fees/:id")
-    public ResponseEntity<Result<Integer>> update(
-            @PathVariable("orderId") long orderId,
-            @PathVariable("id") long id
-    ) {
+    @PutMapping("/{orderId}/fees/{id}")
+    public ResponseEntity<Result<Integer>> update(YingFee yingFee) {
+        yingFeeService.update(yingFee);
         return Result.ok(1);
     }
 }

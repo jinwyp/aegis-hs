@@ -42,6 +42,6 @@ public class DepartmentService {
     }
 
     public boolean checkDeptExist(Long id){
-        return deptMapper.checkDepptExist(id);
+        return deptMapper.checkDeptExist(id);
     }
 }

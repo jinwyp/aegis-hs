@@ -19,5 +19,5 @@ public interface DeptMapper {
 
     Page<Dept> selectAll(PageDeptDTO pageDeptDTO);
 
-    boolean checkDepptExist(Long id);
+    boolean checkDeptExist(Long id);
 }

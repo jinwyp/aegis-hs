@@ -1,5 +1,8 @@
 package com.yimei.hs.service.ying;
 
+import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.entity.YingFee;
+import com.yimei.hs.entity.dto.ying.PageYingFeeDTO;
 import com.yimei.hs.mapper.YingFeeMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,5 +23,41 @@ public class YingFeeService {
 
     @Autowired
     private YingLogService yingLogService;
+
+    /**
+     * 获取一页数据
+     * @param pageYingFeeDTO
+     * @return
+     */
+    public Page<YingFee> getPage(PageYingFeeDTO pageYingFeeDTO) {
+        return yingFeeMapper.getPage(pageYingFeeDTO);
+    }
+
+    /**
+     * 获取指定id数据
+     * @param id
+     * @return
+     */
+    public YingFee findOne(long id) {
+        return yingFeeMapper.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 创建费用记录
+     * @param yingFee
+     * @return
+     */
+    public int create(YingFee yingFee) {
+        return yingFeeMapper.insert(yingFee);
+    }
+
+    /**
+     * 更新费用记录
+     * @param yingFee
+     * @return
+     */
+    public int update(YingFee yingFee) {
+        return yingFeeMapper.updateByPrimaryKeySelective(yingFee);
+    }
 
 }
