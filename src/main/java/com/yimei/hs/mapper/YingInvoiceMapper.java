@@ -17,5 +17,10 @@ public interface YingInvoiceMapper {
 
     int updateByPrimaryKey(YingInvoice record);
 
+    /**
+     * 获取一页发票数据， 并取得这页数据对应的发票明细
+     * @param pageYingInvoiceDTO
+     * @return
+     */
     Page<YingInvoice> getPage(PageYingInvoiceDTO pageYingInvoiceDTO);
 }
