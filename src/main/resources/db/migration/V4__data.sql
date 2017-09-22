@@ -1,7 +1,8 @@
 use hsdb;
 
 -- 部门
-insert into hs_dept(name) values('管理部'),
+insert into hs_dept(name) values
+  ('管理部'),
   ('金融产品事业部');
 
 -- 团队
