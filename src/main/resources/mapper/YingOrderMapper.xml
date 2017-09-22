@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yimei.hs.mapper.YingOrderMapper">
+
     <resultMap id="BaseResultMap" type="com.yimei.hs.entity.YingOrder">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="deptId" jdbcType="BIGINT" property="deptId"/>
@@ -21,18 +22,19 @@
 
     <!-- 一个订单记录: 包含的多个核算月配置， 以及多个参与方-->
     <resultMap id="YingOrderResultMap" type="com.yimei.hs.entity.YingOrder" autoMapping="true">
-        <result property="id" column="t1Id"/>
+        <result property="id" column="t1id"/>
 
         <collection property="orderConfigList" javaType="ArrayList" ofType="com.yimei.hs.entity.YingOrderConfig"
                     autoMapping="true">
-            <id property="id" column="t2Id"/>
+            <id property="id" column="t2id"/>
             <id property="tsc" column="t2tsc"/>
         </collection>
 
         <collection property="orderPartyList" javaType="ArrayList" ofType="com.yimei.hs.entity.YingOrderParty"
                     autoMapping="true">
-            <id property="id" column="t3Id"/>
+            <id property="id" column="t3id"/>
             <id property="tsc" column="t3tsc"/>
+            <id property="orderId" column="t3orderId"/>
         </collection>
 
     </resultMap>
@@ -42,17 +44,85 @@
         id, deptId, teamId, creatorId, ownerId, mainAccounting, line, cargoType, upstreamId,
         upstreamSettleMode, downstreamId, downstreamSettleMode, status, tsc
     </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from hs_ying_order
-        where id = #{id,jdbcType=BIGINT}
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="YingOrderResultMap">
+        SELECT
+            t1.id as t1id,
+            t1.deptId,
+            t1.teamId,
+            t1.creatorId,
+            t1.ownerId,
+            t1.mainAccounting,
+            t1.line,
+            t1.cargoType,
+            t1.upstreamId,
+            t1.upstreamSettleMode,
+            t1.downstreamId,
+            t1.downstreamSettleMode,
+            t1.status,
+            t1.tsc,
+
+            t2.id  AS t2id,
+            t2.orderId,
+            t2.hsMonth,
+            t2.maxPrepayRate,
+            t2.unInvoicedRate,
+            t2.contractBaseInterest,
+            t2.expectHKDays,
+            t2.tradeAddPrice,
+            t2.wPrice,
+            t2.tsc AS t2tsc,
+
+            t3.id as t3id,
+            t3.orderId as t3orderId,
+            t3.custType,
+            t3.customerId,
+            t3.tsc as t3tsc
+
+        FROM hs_ying_order t1
+            LEFT JOIN hs_ying_order_config t2 ON t1.id = t2.id
+            LEFT JOIN hs_ying_order_party t3 ON t1.id = t3.id
+        where t1.id = #{id, jdbcType=BIGINT}
     </select>
 
-    <select id="getPage" resultType="com.yimei.hs.entity.YingOrder">
-        select
-        <include refid="Base_Column_List"/>
-        from hs_ying_order
+    <select id="getPage" resultMap="YingOrderResultMap">
+        SELECT
+            t1.id as t1id,
+            t1.deptId,
+            t1.teamId,
+            t1.creatorId,
+            t1.ownerId,
+            t1.mainAccounting,
+            t1.line,
+            t1.cargoType,
+            t1.upstreamId,
+            t1.upstreamSettleMode,
+            t1.downstreamId,
+            t1.downstreamSettleMode,
+            t1.status,
+            t1.tsc,
+
+            t2.id  AS t2id,
+            t2.orderId,
+            t2.hsMonth,
+            t2.maxPrepayRate,
+            t2.unInvoicedRate,
+            t2.contractBaseInterest,
+            t2.expectHKDays,
+            t2.tradeAddPrice,
+            t2.wPrice,
+            t2.tsc AS t2tsc,
+
+            t3.id as t3id,
+            t3.orderId as t3orderId,
+            t3.custType,
+            t3.customerId,
+            t3.tsc as t3tsc
+
+        FROM hs_ying_order t1
+            LEFT JOIN hs_ying_order_config t2 ON t1.id = t2.id
+            LEFT JOIN hs_ying_order_party t3 ON t1.id = t3.id
+
     </select>
 
 
@@ -76,9 +146,9 @@
             #{cargoType,jdbcType=VARCHAR},
             #{upstreamId,jdbcType=BIGINT},
             #{upstreamSettleMode,jdbcType=VARCHAR}, #{downstreamId,jdbcType=BIGINT},
-            #{downstreamSettleMode,jdbcType=VARCHAR},
-            #{status,jdbcType=VARCHAR},
-            #{tsc,jdbcType=TIMESTAMP})
+                #{downstreamSettleMode,jdbcType=VARCHAR},
+                #{status,jdbcType=VARCHAR},
+                #{tsc,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingOrder" useGeneratedKeys="true" keyProperty="id">
         insert into hs_ying_order
