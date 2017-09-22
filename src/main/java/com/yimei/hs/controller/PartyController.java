@@ -40,8 +40,12 @@ public class PartyController {
      */
     @GetMapping("/parties/{id}")
     public ResponseEntity<Result<Party>> read(@PathVariable long id) {
-
-        return Result.ok(partyService.selectPartByid(id));
+        Party party = partyService.selectOne(id);
+        if (party == null) {
+            return Result.error(4001, "记录不存在");
+        } else {
+            return Result.ok(party);
+        }
     }
 
     /**

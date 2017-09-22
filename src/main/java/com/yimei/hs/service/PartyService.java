@@ -21,7 +21,7 @@ public class PartyService {
         return partyMapper.getPage(pagePartyDTO);
     }
 
-    public Party selectPartByid(long id) {
+    public Party selectOne(long id) {
         return partyMapper.selectByPrimaryKey(id);
     }
 

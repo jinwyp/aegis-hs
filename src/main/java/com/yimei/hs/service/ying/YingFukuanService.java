@@ -40,4 +40,8 @@ public class YingFukuanService {
     public int create(YingFukuan yingFukuan) {
         return yingFukuanMapper.insert(yingFukuan);
     }
+
+    public YingFukuan findOne(long id) {
+        return yingFukuanMapper.selectByPrimaryKey(id);
+    }
 }
