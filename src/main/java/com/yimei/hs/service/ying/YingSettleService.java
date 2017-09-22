@@ -74,4 +74,24 @@ public class YingSettleService {
     public Page<YingSettleDownstream> getPageDownstream(PageYingSettleDownstreamDTO pageYingSettleDownstreamDTO) {
         return yingSettleDownstreamMapper.getPage(pageYingSettleDownstreamDTO);
     }
+
+    public YingSettleTraffic findTraffic(long id) {
+        return yingSettleTrafficMapper.selectByPrimaryKey(id);
+    }
+
+    public int createTraffic(YingSettleTraffic yingSettleTraffic) {
+        return yingSettleTrafficMapper.insert(yingSettleTraffic);
+    }
+
+    public int createUpstream(YingSettleUpstream yingSettleUpstream) {
+        return yingSettleUpstreamMapper.insert(yingSettleUpstream);
+    }
+
+    public int createDownstream(YingSettleDownstream yingSettleDownstream) {
+        return yingSettleDownstreamMapper.insert(yingSettleDownstream);
+    }
+
+    public YingSettleDownstream findDownstream(long id) {
+        return yingSettleDownstreamMapper.selectByPrimaryKey(id);
+    }
 }

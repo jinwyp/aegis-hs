@@ -47,7 +47,7 @@ public class YingSettleDownstreamController {
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
     ) {
-        return Result.ok(null);
+        return Result.ok(yingSettleService.findDownstream(id));
     }
 
     /**
@@ -56,8 +56,9 @@ public class YingSettleDownstreamController {
      * @return
      */
     @PostMapping("/{orderId}/settledownstream")
-    public ResponseEntity<Result<YingSettleDownstream>> create(@PathVariable("orderId") long orderId) {
-        return Result.ok(null);
+    public ResponseEntity<Result<YingSettleDownstream>> create(YingSettleDownstream yingSettleDownstream) {
+        yingSettleService.createDownstream(yingSettleDownstream);
+        return Result.ok(yingSettleDownstream);
     }
 
     /**

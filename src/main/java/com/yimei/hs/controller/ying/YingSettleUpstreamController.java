@@ -54,8 +54,9 @@ public class YingSettleUpstreamController {
      * @return
      */
     @PostMapping("/{orderId}/settleupstream")
-    public ResponseEntity<Result<YingSettleUpstream>> create(@PathVariable("orderId") long orderId) {
-        return Result.ok(null);
+    public ResponseEntity<Result<YingSettleUpstream>> create(YingSettleUpstream yingSettleUpstream) {
+        yingSettleService.createUpstream(yingSettleUpstream);
+        return Result.ok(yingSettleUpstream);
     }
 
     /**

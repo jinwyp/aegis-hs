@@ -48,7 +48,7 @@ public class YingSettleTrafficController {
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
     ) {
-        return Result.ok(null);
+        return Result.ok(yingSettleService.findTraffic(id));
     }
 
     /**
@@ -57,8 +57,9 @@ public class YingSettleTrafficController {
      * @return
      */
     @PostMapping("/{orderId}/settletraffic")
-    public ResponseEntity<Result<YingSettleTraffic>> create(@PathVariable("orderId") long orderId) {
-        return Result.ok(null);
+    public ResponseEntity<Result<YingSettleTraffic>> create(YingSettleTraffic yingSettleTraffic) {
+        yingSettleService.createTraffic(yingSettleTraffic);
+        return Result.ok(yingSettleTraffic);
     }
 
     /**
