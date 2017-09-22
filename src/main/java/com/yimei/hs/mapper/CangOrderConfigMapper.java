@@ -5,7 +5,7 @@ import com.yimei.hs.entity.CangOrderConfig;
 public interface CangOrderConfigMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(CangOrderConfig record);
+    long insert(CangOrderConfig record);
 
     int insertSelective(CangOrderConfig record);
 

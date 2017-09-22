@@ -7,7 +7,7 @@ import com.yimei.hs.entity.dto.PageUserDTO;
 public interface UserMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(User record);
+    long insert(User record);
 
     int insertSelective(User record);
 

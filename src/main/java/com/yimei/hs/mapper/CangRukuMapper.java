@@ -5,7 +5,7 @@ import com.yimei.hs.entity.CangRuku;
 public interface CangRukuMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(CangRuku record);
+    long insert(CangRuku record);
 
     int insertSelective(CangRuku record);
 

@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 public interface PartyMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(Party record);
+    long insert(Party record);
 
     int insertSelective(Party record);
 

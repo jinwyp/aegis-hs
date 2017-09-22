@@ -5,7 +5,7 @@ import com.yimei.hs.entity.CangTransfer;
 public interface CangTransferMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(CangTransfer record);
+    long insert(CangTransfer record);
 
     int insertSelective(CangTransfer record);
 

@@ -5,7 +5,7 @@ import com.yimei.hs.entity.YingSettleTraffic;
 public interface YingSettleTrafficMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(YingSettleTraffic record);
+    long insert(YingSettleTraffic record);
 
     int insertSelective(YingSettleTraffic record);
 

@@ -5,7 +5,7 @@ import com.yimei.hs.entity.CangInvoice;
 public interface CangInvoiceMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(CangInvoice record);
+    long insert(CangInvoice record);
 
     int insertSelective(CangInvoice record);
 

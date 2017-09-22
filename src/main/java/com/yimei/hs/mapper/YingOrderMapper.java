@@ -8,7 +8,7 @@ import java.util.List;
 public interface YingOrderMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(YingOrder record);
+    long insert(YingOrder record);
 
     int insertSelective(YingOrder record);
 

@@ -5,7 +5,7 @@ import com.yimei.hs.entity.YingFayun;
 public interface YingFayunMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(YingFayun record);
+    long insert(YingFayun record);
 
     int insertSelective(YingFayun record);
 

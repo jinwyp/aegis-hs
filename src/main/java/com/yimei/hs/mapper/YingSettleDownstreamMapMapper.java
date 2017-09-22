@@ -5,7 +5,7 @@ import com.yimei.hs.entity.YingSettleDownstreamMap;
 public interface YingSettleDownstreamMapMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(YingSettleDownstreamMap record);
+    long insert(YingSettleDownstreamMap record);
 
     int insertSelective(YingSettleDownstreamMap record);
 

@@ -5,7 +5,7 @@ import com.yimei.hs.entity.YingInvoiceDetail;
 public interface YingInvoiceDetailMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(YingInvoiceDetail record);
+    long insert(YingInvoiceDetail record);
 
     int insertSelective(YingInvoiceDetail record);
 

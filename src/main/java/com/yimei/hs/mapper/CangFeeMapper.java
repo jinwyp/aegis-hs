@@ -5,7 +5,7 @@ import com.yimei.hs.entity.CangFee;
 public interface CangFeeMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(CangFee record);
+    long insert(CangFee record);
 
     int insertSelective(CangFee record);
 
