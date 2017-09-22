@@ -1,5 +1,8 @@
 package com.yimei.hs.entity;
 
+import com.yimei.hs.enums.InvoiceDirection;
+import com.yimei.hs.enums.InvoiceType;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,9 +14,9 @@ public class YingInvoice implements Serializable {
 
     private Long hsId;
 
-    private String invoiceDirection;
+    private InvoiceDirection invoiceDirection;
 
-    private String invoiceType;
+    private InvoiceType invoiceType;
 
     private LocalDateTime openDate;
 
@@ -59,20 +62,20 @@ public class YingInvoice implements Serializable {
         this.hsId = hsId;
     }
 
-    public String getInvoiceDirection() {
+    public InvoiceDirection getInvoiceDirection() {
         return invoiceDirection;
     }
 
-    public void setInvoiceDirection(String invoiceDirection) {
-        this.invoiceDirection = invoiceDirection == null ? null : invoiceDirection.trim();
+    public void setInvoiceDirection(InvoiceDirection invoiceDirection) {
+        this.invoiceDirection = invoiceDirection == null ? null : invoiceDirection;
     }
 
-    public String getInvoiceType() {
+    public InvoiceType getInvoiceType() {
         return invoiceType;
     }
 
-    public void setInvoiceType(String invoiceType) {
-        this.invoiceType = invoiceType == null ? null : invoiceType.trim();
+    public void setInvoiceType(InvoiceType invoiceType) {
+        this.invoiceType = invoiceType == null ? null : invoiceType;
     }
 
     public LocalDateTime getOpenDate() {

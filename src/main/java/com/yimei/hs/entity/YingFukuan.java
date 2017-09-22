@@ -1,5 +1,8 @@
 package com.yimei.hs.entity;
 
+import com.yimei.hs.enums.PayMode;
+import com.yimei.hs.enums.PaymentPurpose;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,11 +18,11 @@ public class YingFukuan implements Serializable {
 
     private Long recieveCompanyId;
 
-    private String payUsage;
+    private PaymentPurpose payUsage;
 
     private BigDecimal payAmount;
 
-    private String payMode;
+    private PayMode payMode;
 
     private Long capitalId;
 
@@ -71,12 +74,12 @@ public class YingFukuan implements Serializable {
         this.recieveCompanyId = recieveCompanyId;
     }
 
-    public String getPayUsage() {
+    public PaymentPurpose getPayUsage() {
         return payUsage;
     }
 
-    public void setPayUsage(String payUsage) {
-        this.payUsage = payUsage == null ? null : payUsage.trim();
+    public void setPayUsage(PaymentPurpose payUsage) {
+        this.payUsage = payUsage == null ? null : payUsage;
     }
 
     public BigDecimal getPayAmount() {
@@ -87,12 +90,12 @@ public class YingFukuan implements Serializable {
         this.payAmount = payAmount;
     }
 
-    public String getPayMode() {
+    public PayMode getPayMode() {
         return payMode;
     }
 
-    public void setPayMode(String payMode) {
-        this.payMode = payMode == null ? null : payMode.trim();
+    public void setPayMode(PayMode payMode) {
+        this.payMode = payMode == null ? null : payMode;
     }
 
     public Long getCapitalId() {

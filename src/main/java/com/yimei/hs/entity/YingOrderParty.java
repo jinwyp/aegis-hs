@@ -1,14 +1,17 @@
 package com.yimei.hs.entity;
 
+import com.yimei.hs.enums.CustomerType;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
+@Data
 public class YingOrderParty implements Serializable {
     private Long id;
 
     private Long orderId;
 
-    private String custType;
+    private CustomerType custType;
 
     private Long customerId;
 
@@ -32,12 +35,12 @@ public class YingOrderParty implements Serializable {
         this.orderId = orderId;
     }
 
-    public String getCustType() {
+    public CustomerType getCustType() {
         return custType;
     }
 
-    public void setCustType(String custType) {
-        this.custType = custType == null ? null : custType.trim();
+    public void setCustType(CustomerType custType) {
+        this.custType = custType == null ? null : custType;
     }
 
     public Long getCustomerId() {
