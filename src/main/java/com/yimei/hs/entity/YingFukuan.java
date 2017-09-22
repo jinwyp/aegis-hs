@@ -38,6 +38,8 @@ public class YingFukuan implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // for hs_ying_huikuan_map
+    // for hs_ying_huankuan_map
+    //
     private BigDecimal amount;
 }
 
