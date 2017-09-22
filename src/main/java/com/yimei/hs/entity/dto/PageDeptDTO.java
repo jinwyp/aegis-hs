@@ -1,4 +1,4 @@
-package com.yimei.hs.entity.dto.ying;
+package com.yimei.hs.entity.dto;
 
 import com.yimei.hs.boot.persistence.BaseFilter;
 

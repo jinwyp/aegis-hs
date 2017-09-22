@@ -3,7 +3,7 @@ package com.yimei.hs.service;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.User;
 import com.yimei.hs.entity.dto.UserDTO;
-import com.yimei.hs.entity.dto.ying.PageUserDTO;
+import com.yimei.hs.entity.dto.PageUserDTO;
 import com.yimei.hs.mapper.UserMapper;
 import com.yimei.hs.util.BeanMapper;
 import com.yimei.hs.util.Digests;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 
