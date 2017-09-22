@@ -6,6 +6,7 @@ import javax.validation.constraints.Max;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class YingHuankuan implements Serializable {
@@ -22,6 +23,16 @@ public class YingHuankuan implements Serializable {
     private BigDecimal huankuanAmount;
 
     private LocalDateTime tsc;
+
+    private List<YingFukuan> fukuanList;
+
+    public List<YingFukuan> getFukuanList() {
+        return fukuanList;
+    }
+
+    public void setFukuanList(List<YingFukuan> fukuanList) {
+        this.fukuanList = fukuanList;
+    }
 
     private static final long serialVersionUID = 1L;
 
