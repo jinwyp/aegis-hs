@@ -1,10 +1,12 @@
 package com.yimei.hs.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-
+@Data
 public class YingSettleDownstream implements Serializable {
     private Long id;
 
@@ -24,67 +26,4 @@ public class YingSettleDownstream implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Long getHsId() {
-        return hsId;
-    }
-
-    public void setHsId(Long hsId) {
-        this.hsId = hsId;
-    }
-
-    public LocalDateTime getSettleDate() {
-        return settleDate;
-    }
-
-    public void setSettleDate(LocalDateTime settleDate) {
-        this.settleDate = settleDate;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public BigDecimal getMoney() {
-        return money;
-    }
-
-    public void setMoney(BigDecimal money) {
-        this.money = money;
-    }
-
-    public BigDecimal getSettleGap() {
-        return settleGap;
-    }
-
-    public void setSettleGap(BigDecimal settleGap) {
-        this.settleGap = settleGap;
-    }
-
-    public LocalDateTime getTsc() {
-        return tsc;
-    }
-
-    public void setTsc(LocalDateTime tsc) {
-        this.tsc = tsc;
-    }
 }
