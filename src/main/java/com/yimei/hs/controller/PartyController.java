@@ -1,21 +1,15 @@
 package com.yimei.hs.controller;
 
 
-import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.controller.ying.YingFeeController;
 import com.yimei.hs.entity.Party;
 import com.yimei.hs.entity.dto.PageResult;
-import com.yimei.hs.entity.dto.PartyPageDTO;
+import com.yimei.hs.entity.dto.PagePartyDTO;
 import com.yimei.hs.entity.dto.Result;
 import com.yimei.hs.service.PartyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.yimei.hs.entity.Party;
-import com.yimei.hs.entity.dto.PageResult;
-import com.yimei.hs.entity.dto.Result;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -34,9 +28,9 @@ public class PartyController {
      * @return
      */
     @GetMapping("/partys")
-    public ResponseEntity<PageResult<Party>> list(PartyPageDTO partyPageDTO) {
+    public ResponseEntity<PageResult<Party>> list(PagePartyDTO pagePartyDTO) {
 
-        return PageResult.ok(partyService.selectParty(partyPageDTO));
+        return PageResult.ok(partyService.selectParty(pagePartyDTO));
     }
 
     /**

@@ -4,6 +4,6 @@ import com.yimei.hs.boot.persistence.BaseFilter;
 import lombok.Data;
 
 @Data
-public class TeamPageDTO extends BaseFilter<TeamPageDTO> {
-    private long deptId;
+public class PagePartyDTO extends BaseFilter<PagePartyDTO> {
+    private Integer custType;
 }

@@ -3,7 +3,7 @@ package com.yimei.hs.controller;
 import com.yimei.hs.entity.Team;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
-import com.yimei.hs.entity.dto.TeamPageDTO;
+import com.yimei.hs.entity.dto.PageTeamDTO;
 import com.yimei.hs.service.DepartmentService;
 import com.yimei.hs.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +27,10 @@ public class TeamController {
 
 
     @GetMapping("/teams")
-    public ResponseEntity<PageResult<Team>> list(TeamPageDTO teamPageDTO
+    public ResponseEntity<PageResult<Team>> list(PageTeamDTO pageTeamDTO
     ) {
 
-        return PageResult.ok(teamService.getTeamPage(teamPageDTO));
+        return PageResult.ok(teamService.getTeamPage(pageTeamDTO));
     }
 
 
