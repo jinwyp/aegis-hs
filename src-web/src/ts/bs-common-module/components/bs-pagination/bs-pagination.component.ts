@@ -81,7 +81,7 @@ export class BSPaginationComponent implements OnInit, OnChanges {
                 if (currentChangeObject.currentValue && currentChangeObject.isFirstChange) {
                     // console.log('currentChangeObject firstChange: ', currentChangeObject)
                 }else {
-                    console.log('currentChangeObject secondChange: ', currentChangeObject)
+                    // console.log('currentChangeObject secondChange: ', currentChangeObject)
                 }
 
             }
@@ -93,7 +93,7 @@ export class BSPaginationComponent implements OnInit, OnChanges {
 
     showPages () {
 
-        console.log(this.collectionSize, this.page, this.pageSize)
+        // console.log(this.collectionSize, this.page, this.pageSize)
 
 
         if (this.collectionSize) {

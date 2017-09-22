@@ -3,7 +3,7 @@
     <div class="pt-1 {{inputClass}}" [class.custom-controls-stacked]="stacked">
 
         <label class="custom-control custom-radio" *ngFor="let option of sourceList; let i = index">
-            <input id="radio_id{{i}}" name="bs-radio" type="radio" class="custom-control-input" [checked]="value.id === option.id" [class.is-invalid]="error"  (click)="chooseRadio(option)">
+            <input id="radio_id{{i}}" name="bs-radio_{{radioId}}" type="radio" class="custom-control-input" [checked]="value.id === option.id" [class.is-invalid]="error"  (click)="chooseRadio(option)">
             <span class="custom-control-indicator"></span>
             <span class="custom-control-description">{{option.name}}</span>
         </label>

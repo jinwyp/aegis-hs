@@ -30,7 +30,7 @@ export class UserInfoService {
     }
 
 
-    getUserInfo(): Observable<any> {
+    sessionUserInfo(): Observable<any> {
         return this.behaviorSubject.asObservable()
     }
 
@@ -39,11 +39,12 @@ export class UserInfoService {
     }
 
 
-
-    getUserInfoHttp(): Observable<any> {
+    getSessionUserInfoHttp(): Observable<any> {
 
         return this.http.get(apiPath.getUserInfo)
     }
+
+
 
     saveUserInfo(user : any): Observable<any> {
 
@@ -74,11 +75,6 @@ export class UserInfoService {
     }
 
 
-
-    getUserList(): Observable<any> {
-
-        return this.http.get(apiPath.getUserList)
-    }
 
 
 }

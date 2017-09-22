@@ -86,8 +86,24 @@
             <div id="collapse3" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
                 <ul class="list-group">
                     <li routerLinkActive="active" > <a routerLink="/users" (click)="clickMenu('31')">用户管理</a> </li>
-                    <li routerLinkActive="active"> <a (click)="clickMenu('32')">事业部门管理</a> </li>
-                    <li routerLinkActive="active"> <a (click)="clickMenu('33')">业务团队管理</a> </li>
+                    <li routerLinkActive="active"> <a routerLink="/departments" (click)="clickMenu('32')">事业部门管理</a> </li>
+                    <li routerLinkActive="active"> <a routerLink="/teams" (click)="clickMenu('33')">业务团队管理</a> </li>
+                    <li routerLinkActive="active"> <a routerLink="/companies" (click)="clickMenu('34')">外部公司管理</a> </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="card" [class.active] = "currentMenu.substr(0,1).indexOf('4') > -1">
+
+            <a data-toggle="collapse" href="#collapse3" role="tab" aria-expanded="true" aria-controls="collapseOne">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                <span class="ml-2">核算单管理</span>
+            </a>
+
+            <div id="collapse4" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                <ul class="list-group">
+                    <li routerLinkActive="active" > <a routerLink="/users" (click)="clickMenu('41')">核算单管理</a> </li>
                 </ul>
             </div>
         </div>
@@ -98,7 +114,7 @@
 
 
     <div class="right-content-box">
-        <div class="row justify-content-center mt-4 ml-4 mr-4">
+        <div class="row justify-content-center mt-2 ml-4 mr-4">
             <div class="col-12">
 
                 <router-outlet></router-outlet>

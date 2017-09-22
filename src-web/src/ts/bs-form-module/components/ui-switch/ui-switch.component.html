@@ -1,0 +1,22 @@
+<div class="form-group row" >
+    <label class="{{labelClass}} col-form-label">{{label}}</label>
+
+    <div class="pt-1 {{inputClass}}" >
+
+        <span class="switch" [class.checked]="checked" [class.disabled]="disabled"
+              [class.switch-large]="size === 'large'"  [class.switch-medium]="size === 'medium'"  [class.switch-small]="size === 'small'"
+              [style.background-color]="getColor()"  [style.border-color]="getColor('borderColor')" >
+            <small [style.background]="getColor('switchColor')"></small>
+        </span>
+
+    </div>
+
+
+    <div class="invalid-feedback d-block" *ngIf="error">
+        <span *ngIf="error"> {{error}} </span>
+        <span *ngIf="!error">
+            <span *ngIf="currentFormControl.hasError('required')"> 该项是必填项！</span>
+        </span>
+    </div>
+
+</div>

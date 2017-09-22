@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule, Routes } from '@angular/router'
+import { HTTP_INTERCEPTORS } from '@angular/common/http'
+
 
 import { BSFormModule } from '../bs-form-module/bs-form.module'
 import { BSCommonModule } from '../bs-common-module/bs-common.module'
@@ -14,6 +16,8 @@ import { ModifyPasswordComponent } from './components/modifyPassword/modifyPassw
 import { UserManagementComponent } from './components/userManagement/userManagement.component'
 
 import { UserInfoService } from '../services/userInfo.service'
+import { HSUserService } from '../services/hsUser.service'
+import { AuthInterceptor } from '../services/headerHttpInterceptor'
 
 
 const userHomeRoutes: Routes = [
@@ -22,6 +26,9 @@ const userHomeRoutes: Routes = [
     {path : 'info/password', component : ModifyPasswordComponent},
 
     {path : 'users', component : UserManagementComponent},
+    {path : 'departments', component : UserManagementComponent},
+    {path : 'teams', component : UserManagementComponent},
+    {path : 'companies', component : UserManagementComponent},
     {path : '**', redirectTo : '/info/basic', pathMatch : 'full'},
 ]
 
@@ -46,7 +53,10 @@ const userHomeRoutes: Routes = [
 
     ],
     providers    : [
-        UserInfoService
+        UserInfoService,
+        HSUserService,
+
+        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
     ],
     bootstrap    : [AdminHomeComponent]
 })

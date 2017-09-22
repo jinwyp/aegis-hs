@@ -1,20 +1,27 @@
+<div class="form-group row" >
+    <label class="{{labelClass}} col-form-label">{{label}}</label>
 
-
-<div class="form-group row " >
-
-    <label class="col-sm-2" >{{label}}</label>
-    <div class="col-sm-4">
-        <div class="form-check " >
+    <div class="pt-1 {{inputClass}}" *ngIf="checkbox">
+        <div class="form-check form-check-inline" >
             <label class="form-check-label" [attr.title]="label" >
-                <input class="form-check-input " type="checkbox" value="newsletter" [checked]="value" (click)="switch()"> Check me out
+                <input class="form-check-input " type="checkbox"  [checked]="value" (click)="switch()"> {{prompt}}
             </label>
         </div>
     </div>
 
-    <div  class="col-sm-1 switch" [ngClass]="{ 'checked': value }" (click)="switch()">
-        <input type="checkbox" class="switch-input" [value]="value" [attr.checked]="value" >
-        <span class="switch-label" data-on="On" data-off="Off"></span>
-        <span class="switch-handle"></span>
+    <div class="{{inputClass}}" *ngIf="!checkbox">
+        <div class="switch" [ngClass]="{ 'checked': value }" (click)="switch()" >
+            <input type="checkbox" class="switch-input" [value]="value" [attr.checked]="value" >
+            <span class="switch-label" data-on="On" data-off="Off"></span>
+            <span class="switch-handle"></span>
+        </div>
+    </div>
+
+    <div class="invalid-feedback d-block" *ngIf="error">
+        <span *ngIf="error"> {{error}} </span>
+        <span *ngIf="!error">
+            <span *ngIf="currentFormControl.hasError('required')"> 该项是必填项！</span>
+        </span>
     </div>
 
 </div>
