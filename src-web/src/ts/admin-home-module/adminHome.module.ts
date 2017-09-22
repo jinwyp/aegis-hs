@@ -16,6 +16,9 @@ import { ModifyPasswordComponent } from './components/modifyPassword/modifyPassw
 import { UserManagementComponent } from './components/userManagement/userManagement.component'
 import { DepartmentManagementComponent } from './components/departmentManagement/departmentManagement.component'
 import { TeamManagementComponent } from './components/teamManagement/teamManagement.component'
+import { PartyManagementComponent } from './components/partyManagement/partyManagement.component'
+
+
 
 import { UserInfoService } from '../services/userInfo.service'
 import { HSUserService } from '../services/hsUser.service'
@@ -30,7 +33,7 @@ const userHomeRoutes: Routes = [
     {path : 'users', component : UserManagementComponent},
     {path : 'departments', component : DepartmentManagementComponent},
     {path : 'teams', component : TeamManagementComponent},
-    {path : 'companies', component : UserManagementComponent},
+    {path : 'companies', component : PartyManagementComponent},
     {path : '**', redirectTo : '/info/basic', pathMatch : 'full'},
 ]
 
@@ -43,7 +46,8 @@ const userHomeRoutes: Routes = [
 
         UserManagementComponent,
         DepartmentManagementComponent,
-        TeamManagementComponent
+        TeamManagementComponent,
+        PartyManagementComponent
     ],
     imports      : [
         BrowserModule,

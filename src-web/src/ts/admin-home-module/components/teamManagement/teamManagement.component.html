@@ -23,25 +23,27 @@
 
 
 
-
-
-        <table class="table table-bordered table-hover table-responsive" *ngIf="!isShowForm">
-            <thead>
+        <div *ngIf="!isShowForm">
+            <table class="table table-bordered table-hover table-responsive" >
+                <thead>
                 <tr>
                     <th>ID</th>
                     <th>团队名称</th>
                     <th>部门ID</th>
                     <th></th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr *ngFor="let team of teamList; trackBy: trackByFn">
                     <td> {{team.id}}</td>
                     <td> {{team.name}}</td>
                     <td> {{team.deptId}}</td>
                     <td> <button class="btn btn-info btn-sm" (click)="showForm(false, team)"> 修改 </button></td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
-        <bs-pagination [collectionSize]="pagination.total" [pageSize]="pagination.pageSize" [(page)]="pagination.pageNo" (pageChange)="getUserList($event)"></bs-pagination>
+            <bs-pagination [collectionSize]="pagination.total" [pageSize]="pagination.pageSize" [(page)]="pagination.pageNo" (pageChange)="getUserList($event)"></bs-pagination>
+
+        </div>
+

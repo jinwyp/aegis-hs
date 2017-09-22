@@ -51,7 +51,7 @@ export class TeamManagementComponent implements OnInit {
     ngOnInit(): void {
         this.getDepartmentList()
         this.getSessionUserInfo()
-        this.createteamForm()
+        this.createTeamForm()
         this.getTeamList()
     }
 
@@ -116,7 +116,7 @@ export class TeamManagementComponent implements OnInit {
         this.teamFormError = formErrorHandler(formInputData, this.teamForm, this.teamFormValidationMessages, ignoreDirty)
     }
 
-    createteamForm(user: any = {}): void {
+    createTeamForm(): void {
 
         this.teamForm = this.fb.group({
             'name'    : ['', [Validators.required] ],
@@ -171,7 +171,7 @@ export class TeamManagementComponent implements OnInit {
     }
 
 
-    showForm(isAddNew : boolean = true, user?: any ) {
+    showForm(isAddNew : boolean = true, team?: any ) {
 
         if (isAddNew) {
             this.isAddNew = true
@@ -183,9 +183,9 @@ export class TeamManagementComponent implements OnInit {
 
         } else {
             this.isAddNew = false
-            this.currentTeamId = user.id
+            this.currentTeamId = team.id
 
-            this.teamForm.patchValue(user)
+            this.teamForm.patchValue(team)
         }
 
 

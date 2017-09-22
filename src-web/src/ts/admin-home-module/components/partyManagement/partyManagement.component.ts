@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core'
+import { Component, OnInit} from '@angular/core'
 import { FormBuilder, FormGroup, Validators} from '@angular/forms'
 
 import { HttpService } from '../../../bs-form-module/services/http.service'
@@ -11,22 +11,28 @@ import { HSUserService } from '../../../services/hsUser.service'
 
 
 @Component({
-  selector: 'app-department-management',
-  templateUrl: './departmentManagement.component.html',
-  styleUrls: ['./departmentManagement.component.css']
+  selector: 'app-party-management',
+  templateUrl: './partyManagement.component.html',
+  styleUrls: ['./partyManagement.component.css']
 })
-export class DepartmentManagementComponent implements OnInit {
+export class PartyManagementComponent implements OnInit {
 
     sessionUser : any
-    currentDepartmentId : any
+    currentPartyId : any
 
-    departmentForm: FormGroup
+    partyForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
 
-    departmentList : any[] = []
+    partyList : any[] = []
+
+    partyType : any [] = [
+        { id : 1 , name : 'ccs账务公司'},
+        { id : 2 , name : '资金方'},
+        { id : 3 , name : '外部'}
+    ]
 
     pagination: any = {
         pageSize : 20,
@@ -48,9 +54,9 @@ export class DepartmentManagementComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.getDepartmentList()
         this.getSessionUserInfo()
-        this.createUserForm()
+        this.createPartyForm()
+        this.getPartyList()
     }
 
     trackByFn(index: any, item: any) {
@@ -69,16 +75,16 @@ export class DepartmentManagementComponent implements OnInit {
         )
     }
 
+    getPartyList () {
 
-    getDepartmentList () {
         const query : any = {
             pageSize: this.pagination.pageSize,
             pageNo: this.pagination.pageNo
         }
 
-        this.hsUserService.getDepartmentList(query).subscribe(
+        this.hsUserService.getPartyList(query).subscribe(
             data => {
-                this.departmentList = data.data.results
+                this.partyList = data.data.results
 
                 this.pagination.pageSize = data.data.pageSize
                 this.pagination.pageNo = data.data.pageNo
@@ -90,61 +96,69 @@ export class DepartmentManagementComponent implements OnInit {
     }
 
 
-    departmentFormError : any = {}
-    departmentFormValidationMessages: any = {
+    partyFormError : any = {}
+    partyFormValidationMessages: any = {
         'name'  : {
-            'required'      : '请填写部门名称!'
+            'required'      : '请填写名称!'
+        },
+        'shortName'  : {
+            'required'      : '请填写简称!'
+        },
+        'partyType'  : {
+            'required'      : '请填写类型!'
         }
     }
 
-    departmentFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.departmentFormError = formErrorHandler(formInputData, this.departmentForm, this.departmentFormValidationMessages, ignoreDirty)
+    partyFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
+        this.partyFormError = formErrorHandler(formInputData, this.partyForm, this.partyFormValidationMessages, ignoreDirty)
     }
 
-    createUserForm(user: any = {}): void {
+    createPartyForm(user: any = {}): void {
 
-        this.departmentForm = this.fb.group({
-            'name'    : ['', [Validators.required] ]
+        this.partyForm = this.fb.group({
+            'name'    : ['', [Validators.required] ],
+            'shortName'    : ['', [Validators.required] ],
+            'partyType'    : ['', [Validators.required ] ]
         } )
 
-        this.departmentForm.valueChanges.subscribe(data => {
+        this.partyForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
-            this.departmentFormInputChange(data)
+            this.partyFormInputChange(data)
         })
     }
 
 
-    departmentFormSubmit() {
+    partyFormSubmit() {
 
-        if (this.departmentForm.invalid) {
-            this.departmentFormInputChange(this.departmentForm.value, true)
+        if (this.partyForm.invalid) {
+            this.partyFormInputChange(this.partyForm.value, true)
             this.ignoreDirty = true
 
-            console.log('当前信息: ', this.departmentForm, this.departmentFormError)
+            console.log('当前信息: ', this.partyForm, this.partyFormError)
             return
         }
 
-        const postData = this.departmentForm.value
+        const postData = this.partyForm.value
 
         if (this.isAddNew) {
-            this.hsUserService.createNewDepartment(postData).subscribe(
+            this.hsUserService.createNewParty(postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getDepartmentList()
+                    this.getPartyList()
                     this.showForm()
 
                 },
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
-            this.hsUserService.modifyDepartment(this.currentDepartmentId, postData).subscribe(
+            this.hsUserService.modifyParty(this.currentPartyId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getDepartmentList()
+                    this.getPartyList()
                     this.showForm()
 
                 },
@@ -155,20 +169,22 @@ export class DepartmentManagementComponent implements OnInit {
     }
 
 
-    showForm(isAddNew : boolean = true, department?: any ) {
+    showForm(isAddNew : boolean = true, party?: any ) {
 
         if (isAddNew) {
             this.isAddNew = true
 
-            this.departmentForm.patchValue({
-                'name'    : ''
+            this.partyForm.patchValue({
+                'name'    : '',
+                'shortName'    : '',
+                'partyType'    : ''
             })
 
         } else {
             this.isAddNew = false
-            this.currentDepartmentId = department.id
+            this.currentPartyId = party.id
 
-            this.departmentForm.patchValue(department)
+            this.partyForm.patchValue(party)
         }
 
 
