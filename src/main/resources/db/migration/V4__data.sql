@@ -25,7 +25,7 @@ insert into hs_team(name, deptId) values
 
 -- 用户
 insert into hs_user(deptId, phone, password, passwordSalt, createDate, createBy, isAdmin) values
-  (1, '13022117050', '12345678', 'salt', '2017-01-01', 'hary', 1);
+  (1, '13022117050', '12345678', 'salt', '2017-01-01', 'hary', 2);
 
 
 -- 参与方
