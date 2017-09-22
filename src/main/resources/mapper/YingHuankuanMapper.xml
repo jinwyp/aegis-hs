@@ -32,7 +32,7 @@
 
 
     <!--获取一页数据-->
-    <select id="getPage" resultType="com.yimei.hs.entity.YingFukuan"></select>
+    <select id="getPage" resultType="com.yimei.hs.entity.YingHuankuan"></select>
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

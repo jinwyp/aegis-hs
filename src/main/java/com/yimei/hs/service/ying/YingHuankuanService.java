@@ -1,5 +1,8 @@
 package com.yimei.hs.service.ying;
 
+import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.entity.YingHuankuan;
+import com.yimei.hs.entity.dto.ying.PageYingHuankuanDTO;
 import com.yimei.hs.mapper.YingHuankuanMapper;
 import com.yimei.hs.mapper.YingHuikuanMapMapper;
 import org.slf4j.Logger;
@@ -20,8 +23,9 @@ public class YingHuankuanService {
     private YingHuankuanMapper yingHuankuanMapper;
 
     @Autowired
-    private YingHuikuanMapMapper yingHuikuanMapMapper;
-
-    @Autowired
     private YingLogService yingLogService;
+
+    public Page<YingHuankuan> getPage(PageYingHuankuanDTO pageYingHuankuanDTO) {
+        return yingHuankuanMapper.getPage(pageYingHuankuanDTO);
+    }
 }

@@ -23,6 +23,11 @@ public class YingFukuanService {
     @Autowired
     private YingLogService yingLogService;
 
+    /**
+     *  获取一页付款记录
+     * @param pageYingFukuanDTO
+     * @return
+     */
     public Page<YingFukuan> getPage(PageYingFukuanDTO pageYingFukuanDTO) {
         return yingFukuanMapper.getPage(pageYingFukuanDTO);
     }

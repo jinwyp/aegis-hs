@@ -19,18 +19,38 @@ public class YingFayunService {
     @Autowired
     private YingLogService yingLogService;
 
+    /**
+     *  获取一页分页数据
+     * @param pageYingFayunDTO
+     * @return
+     */
     public Page<YingFayun> getPage(PageYingFayunDTO pageYingFayunDTO) {
         return yingFayunMapper.getPage(pageYingFayunDTO);
     }
 
+    /**
+     * 查询发运
+     * @param id
+     * @return
+     */
     public YingFayun findOne(long id) {
         return yingFayunMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     * 创建一条发运记录
+     * @param yingFayun
+     * @return
+     */
     public int create(YingFayun yingFayun) {
         return yingFayunMapper.insert(yingFayun);
     }
 
+    /**
+     * 更新发运记录
+     * @param yingFayun
+     * @return
+     */
     public int update(YingFayun yingFayun) {
         return yingFayunMapper.updateByPrimaryKeySelective(yingFayun);
     }

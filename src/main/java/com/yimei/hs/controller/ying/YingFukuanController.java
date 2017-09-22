@@ -30,7 +30,7 @@ public class YingFukuanController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/huankuans")
+    @GetMapping("/{orderId}/fukuans")
     public ResponseEntity<PageResult<YingFukuan>> list(PageYingFukuanDTO pageYingFukuanDTO) {
         return PageResult.ok(yingFukuanService.getPage(pageYingFukuanDTO));
     }
@@ -41,7 +41,7 @@ public class YingFukuanController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/huankuans/:id")
+    @GetMapping("/{orderId}/fukuans/:id")
     public ResponseEntity<Result<YingFukuan>> read(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
@@ -54,7 +54,7 @@ public class YingFukuanController {
      *
      * @return
      */
-    @PostMapping("/{orderId}/huankuans")
+    @PostMapping("/{orderId}/fukuans")
     public ResponseEntity<Result<YingFukuan>> create(@PathVariable("orderId") long orderId) {
         return Result.ok(null);
     }
@@ -64,7 +64,7 @@ public class YingFukuanController {
      *
      * @return
      */
-    @PutMapping("/{orderId}/huankuan/:id")
+    @PutMapping("/{orderId}/fukuans/:id")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id

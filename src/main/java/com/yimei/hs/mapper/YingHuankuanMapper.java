@@ -1,7 +1,6 @@
 package com.yimei.hs.mapper;
 
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.entity.YingFukuan;
 import com.yimei.hs.entity.YingHuankuan;
 import com.yimei.hs.entity.dto.ying.PageYingHuankuanDTO;
 
@@ -18,5 +17,5 @@ public interface YingHuankuanMapper {
 
     int updateByPrimaryKey(YingHuankuan record);
 
-    Page<YingFukuan> getPage(PageYingHuankuanDTO pageYingHuankuanDTO);
+    Page<YingHuankuan> getPage(PageYingHuankuanDTO pageYingHuankuanDTO);
 }
