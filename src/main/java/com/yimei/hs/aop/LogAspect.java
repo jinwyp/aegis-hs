@@ -20,21 +20,35 @@ public class LogAspect {
     private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
     @Pointcut("execution(* com.yimei.hs.service..*.*(..))")
+    public void service() {
+    }
+
+    @Pointcut("execution(* com.yimei.hs.controller..*.*(..))")
     public void controller() {
     }
 
+//    @Around("service()")
+//    public Object doAroundService(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+//        return doLog(proceedingJoinPoint, "service");
+//    }
+
     @Around("controller()")
-    public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    public Object doAroundController(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        return doLog(proceedingJoinPoint, "controller");
+    }
+
+    private Object doLog(ProceedingJoinPoint proceedingJoinPoint, String name) throws Throwable {
+
         Signature sigature = proceedingJoinPoint.getSignature();
-
-
-        logger.info("service {} called with following args", sigature.toShortString());
+        logger.info("{} {} called with following args", name, sigature.toShortString());
         Object[] args = proceedingJoinPoint.getArgs();
         for (Object arg : args) {
             logger.info("{}", arg);
         }
         Object o = proceedingJoinPoint.proceed();
-        logger.info("service {} return with {}", sigature.toShortString(), o);
+        logger.info("{} {} return with {}", name, sigature.toShortString(), o);
         return o;
     }
+
 }
+
