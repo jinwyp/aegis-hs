@@ -9,7 +9,7 @@ create table hs_ying_order (
    ownerId bigint(20)               not null comment '当前所有者id',
    mainAccounting bigint            not null comment '主账务公司 - 与下有接触的',
    line varchar(256)                not null comment '业务线名称: 由参与方公司简称组成',
-   cargoType varchar(32)            not null comment '货物种类d',
+   cargoType varchar(32)            not null comment '货物种类: 煤炭、钢材',
    upstreamId  bigint(20)           not null comment '上游id',
    upstreamSettleMode varchar(20)   not null comment '上游结算方式',
    downstreamId  bigint(20)         not null comment '下游id',
