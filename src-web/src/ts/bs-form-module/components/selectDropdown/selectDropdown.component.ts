@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, forwardRef, ElementRef, ViewChild} from '@angular/core'
+import {Component, OnInit, Input, forwardRef, ElementRef, ViewChild, OnChanges, SimpleChange} from '@angular/core'
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
 
 @Component({
@@ -17,7 +17,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
         }
     ]
 })
-export class SelectDropdownComponent implements OnInit, ControlValueAccessor {
+export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueAccessor {
 
     @Input('fc') currentFormControl: FormControl = new FormControl()
     @Input() label: string
@@ -44,8 +44,32 @@ export class SelectDropdownComponent implements OnInit, ControlValueAccessor {
     }
 
     ngOnInit(): void {
-        // console.log('ngOnInit', this.el.nativeElement)
+        console.log('ngOnInit', this.el.nativeElement)
     }
+
+
+    ngOnChanges (changes: {[propKey: string]: SimpleChange}) {
+        // console.log('ngOnChanges')
+
+        for (const propertyName in changes) {
+
+            if (changes.hasOwnProperty(propertyName)) {
+                const currentChangeObject = changes[propertyName]
+
+                // if (currentChangeObject.currentValue && currentChangeObject.isFirstChange) {
+                //     console.log('currentChangeObject firstChange: ', propertyName, currentChangeObject)
+                // }else {
+                //     console.log('currentChangeObject secondChange: ', propertyName, currentChangeObject)
+                // }
+
+                if (propertyName === 'optionList' && currentChangeObject.currentValue && Array.isArray(currentChangeObject.currentValue)) {
+                    this.writeValue(this.interValueCurrentSelected.id)
+                }
+            }
+
+        }
+    }
+
 
     showOptions() {
         this.isShowSelectOptionList = !this.isShowSelectOptionList

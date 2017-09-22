@@ -23,7 +23,7 @@ export class HSUserService {
 
 
 
-    getUserList(query: any = {pageSize: 100, pageNo: 1}): Observable<any> {
+    getUserList(query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
@@ -40,7 +40,7 @@ export class HSUserService {
     }
 
 
-    getDepartmentList(query: any = {pageSize: 100, pageNo: 1}): Observable<any> {
+    getDepartmentList(query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
@@ -57,10 +57,39 @@ export class HSUserService {
     }
 
 
+    getTeamList(query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+        const params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
 
-
-    getTeamList(): Observable<any> {
-
-        return this.http.get(apiPath.hsGetTeamList)
+        return this.http.get(apiPath.hsGetTeamList, {params: params})
     }
+    createNewTeam(team: any): Observable<any> {
+
+        return this.http.post(apiPath.hsGetTeamList, team)
+    }
+    modifyTeam(teamId: number, team: any): Observable<any> {
+
+        return this.http.put(apiPath.hsGetTeamList + '/' + teamId, team)
+    }
+
+
+    getPartyList(query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+        const params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
+
+        return this.http.get(apiPath.hsGetPartyList, {params: params})
+    }
+    createNewParty(team: any): Observable<any> {
+
+        return this.http.post(apiPath.hsGetPartyList, team)
+    }
+    modifyParty(teamId: number, team: any): Observable<any> {
+
+        return this.http.put(apiPath.hsGetPartyList + '/' + teamId, team)
+    }
+
+
+
 }
