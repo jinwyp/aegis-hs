@@ -23,8 +23,20 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
 
+  <resultMap id="YingInvoiceResultMap" type="com.yimei.hs.entity.YingInvoice" autoMapping="true">
+    <result property="id" column="t1Id"/>
+    <collection property="details" javaType="ArrayList" ofType="com.yimei.hs.entity.YingInvoiceDetail" autoMapping="true">
+      <id property="id" column="t2Id"/>
+      <id property="tsc" column="t2tsc"/>
+    </collection>
+  </resultMap>
 
-    <select id="getPage" resultType="com.yimei.hs.entity.YingInvoice">
+
+  <select id="getPage" resultMap="YingInvoiceResultMap">
+      select t1.id t1Id, t2.id t2Id,
+      t1.orderId , t1.hsId, t1.invoiceDirection, t1.invoiceType, t1.openDate, t1.openCompanyId, t1.recieverId, t1.tsc,
+      t2.invoiceId, t2.invoiceNumber, t2.cargoAmount, t2.taxRate, t2.priceAndTax, t2.tsc  t2tsc
+        from hs_ying_invoice  t1 left join  hs_ying_invoice_detail t2 on t1.id=t2.invoiceId
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
