@@ -3,6 +3,7 @@ package com.yimei.hs.controller.ying;
 import com.yimei.hs.entity.YingHuikuan;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.entity.dto.ying.PageYingHuikuanDTO;
 import com.yimei.hs.service.ying.YingHuikuanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +29,8 @@ public class YingHuikuanController {
      * @return
      */
     @GetMapping("/{orderId}/huikuans")
-    public ResponseEntity<PageResult<YingHuikuan>> list() {
-        return PageResult.ok(null);
+    public ResponseEntity<PageResult<YingHuikuan>> list(PageYingHuikuanDTO pageYingHuikuanDTO) {
+        return PageResult.ok(yingHuikuanService.getPage(pageYingHuikuanDTO));
     }
 
     /**

@@ -3,6 +3,7 @@ package com.yimei.hs.controller.ying;
 import com.yimei.hs.entity.YingSettleDownstream;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.entity.dto.ying.PageYingSettleDownstreamDTO;
 import com.yimei.hs.service.ying.YingSettleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +32,8 @@ public class YingSettleDownstreamController {
      * @return
      */
     @GetMapping("/{orderId}/settledownstream")
-    public ResponseEntity<PageResult<YingSettleDownstream>> list() {
-        return PageResult.ok(null);
+    public ResponseEntity<PageResult<YingSettleDownstream>> list(PageYingSettleDownstreamDTO pageYingSettleDownstreamDTO) {
+        return PageResult.ok(yingSettleService.getPageDownstream(pageYingSettleDownstreamDTO));
     }
 
     /**
@@ -41,12 +42,12 @@ public class YingSettleDownstreamController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/settledownstream/:id")
+    @GetMapping("/{orderId}/settledownstream/{id}")
     public ResponseEntity<Result<YingSettleDownstream>> read(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
     ) {
-        return Result.ok(null);
+        return Result.ok(yingSettleService.findDownstream(id));
     }
 
     /**
@@ -55,8 +56,9 @@ public class YingSettleDownstreamController {
      * @return
      */
     @PostMapping("/{orderId}/settledownstream")
-    public ResponseEntity<Result<YingSettleDownstream>> create(@PathVariable("orderId") long orderId) {
-        return Result.ok(null);
+    public ResponseEntity<Result<YingSettleDownstream>> create(YingSettleDownstream yingSettleDownstream) {
+        yingSettleService.createDownstream(yingSettleDownstream);
+        return Result.ok(yingSettleDownstream);
     }
 
     /**
@@ -64,7 +66,7 @@ public class YingSettleDownstreamController {
      *
      * @return
      */
-    @PutMapping("/{orderId}/settledownstream/:id")
+    @PutMapping("/{orderId}/settledownstream/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id

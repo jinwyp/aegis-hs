@@ -53,7 +53,7 @@ export class BasicInfoComponent implements OnInit {
     }
 
     getCurrentUserInfo () {
-        this.userService.getUserInfoHttp().subscribe(
+        this.userService.getSessionUserInfoHttp().subscribe(
             data => {
                 this.currentUser = data.data
 

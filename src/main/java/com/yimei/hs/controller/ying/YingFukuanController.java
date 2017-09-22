@@ -3,6 +3,7 @@ package com.yimei.hs.controller.ying;
 import com.yimei.hs.entity.YingFukuan;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.entity.dto.ying.PageYingFukuanDTO;
 import com.yimei.hs.service.ying.YingFukuanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +30,9 @@ public class YingFukuanController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/huankuans")
-    public ResponseEntity<PageResult<YingFukuan>> list(@PathVariable("orderId") long orderId) {
-        return PageResult.ok(null);
+    @GetMapping("/{orderId}/fukuans")
+    public ResponseEntity<PageResult<YingFukuan>> list(PageYingFukuanDTO pageYingFukuanDTO) {
+        return PageResult.ok(yingFukuanService.getPage(pageYingFukuanDTO));
     }
 
     /**
@@ -40,7 +41,7 @@ public class YingFukuanController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/huankuans/:id")
+    @GetMapping("/{orderId}/fukuans/:id")
     public ResponseEntity<Result<YingFukuan>> read(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
@@ -53,9 +54,10 @@ public class YingFukuanController {
      *
      * @return
      */
-    @PostMapping("/{orderId}/huankuans")
-    public ResponseEntity<Result<YingFukuan>> create(@PathVariable("orderId") long orderId) {
-        return Result.ok(null);
+    @PostMapping("/{orderId}/fukuans")
+    public ResponseEntity<Result<YingFukuan>> create(YingFukuan yingFukuan) {
+        yingFukuanService.create(yingFukuan);
+        return Result.ok(yingFukuan);
     }
 
     /**
@@ -63,7 +65,7 @@ public class YingFukuanController {
      *
      * @return
      */
-    @PutMapping("/{orderId}/huankuan/:id")
+    @PutMapping("/{orderId}/fukuans/:id")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id

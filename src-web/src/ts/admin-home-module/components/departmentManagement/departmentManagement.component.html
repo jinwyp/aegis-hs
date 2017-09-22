@@ -1,0 +1,42 @@
+
+
+        <h3>
+            事业部门管理
+            <button type="button" class="btn btn-outline-info btn-sm float-right" *ngIf="!isShowForm" (click)="showForm(true)">添加</button>
+        </h3>
+
+
+        <form [formGroup]="departmentForm" (ngSubmit)="departmentFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+
+            <bs-text-input formControlName="name" [fc]="departmentForm.get('name')" [type]="'text'" [label]="'部门名称:'" [dirty]="ignoreDirty" [error]="departmentFormError.name"></bs-text-input>
+
+            <div class="form-group row">
+                <div class="col-10 ml-auto">
+                    <button type="submit" class="btn btn-info" >保存</button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
+                </div>
+            </div>
+        </form>
+
+
+
+
+
+        <table class="table table-bordered table-hover table-responsive" *ngIf="!isShowForm">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>名称</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let department of departmentList; trackBy: trackByFn">
+                    <td> {{department.id}}</td>
+                    <td> {{department.name}}</td>
+                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, department)"> 修改 </button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <bs-pagination [collectionSize]="pagination.total" [pageSize]="pagination.pageSize" [(page)]="pagination.pageNo" (pageChange)="getUserList($event)"></bs-pagination>

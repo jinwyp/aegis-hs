@@ -3,6 +3,7 @@ package com.yimei.hs.mapper;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.YingInvoice;
 import com.yimei.hs.entity.dto.ying.PageYingInvoiceDTO;
+import org.apache.ibatis.annotations.Param;
 
 public interface YingInvoiceMapper {
     int deleteByPrimaryKey(Long id);
@@ -11,11 +12,21 @@ public interface YingInvoiceMapper {
 
     int insertSelective(YingInvoice record);
 
-    YingInvoice selectByPrimaryKey(Long id);
+    /**
+     * 取得一条发票记录， 以及发票记录的发票明细
+     * @param id
+     * @return
+     */
+    YingInvoice selectByPrimaryKey(@Param("id") Long id);
 
     int updateByPrimaryKeySelective(YingInvoice record);
 
     int updateByPrimaryKey(YingInvoice record);
 
+    /**
+     * 获取一页发票数据， 并取得这页数据对应的发票明细
+     * @param pageYingInvoiceDTO
+     * @return
+     */
     Page<YingInvoice> getPage(PageYingInvoiceDTO pageYingInvoiceDTO);
 }

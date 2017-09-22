@@ -3,6 +3,7 @@ package com.yimei.hs.controller.ying;
 import com.yimei.hs.entity.YingSettleUpstream;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.entity.dto.ying.PageYingSettleUpstreamDTO;
 import com.yimei.hs.service.ying.YingSettleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +30,8 @@ public class YingSettleUpstreamController {
      * @return
      */
     @GetMapping("/{orderId}/settleupstream")
-    public ResponseEntity<PageResult<YingSettleUpstream>> list() {
-        return PageResult.ok(null);
+    public ResponseEntity<PageResult<YingSettleUpstream>> list(PageYingSettleUpstreamDTO pageYingSettleUpstreamDTO) {
+        return PageResult.ok(yingSettleService.getPageUpstream(pageYingSettleUpstreamDTO));
     }
 
     /**
@@ -39,7 +40,7 @@ public class YingSettleUpstreamController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/settleupstream/:id")
+    @GetMapping("/{orderId}/settleupstream/{id}")
     public ResponseEntity<Result<YingSettleUpstream>> read(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
@@ -53,8 +54,9 @@ public class YingSettleUpstreamController {
      * @return
      */
     @PostMapping("/{orderId}/settleupstream")
-    public ResponseEntity<Result<YingSettleUpstream>> create(@PathVariable("orderId") long orderId) {
-        return Result.ok(null);
+    public ResponseEntity<Result<YingSettleUpstream>> create(YingSettleUpstream yingSettleUpstream) {
+        yingSettleService.createUpstream(yingSettleUpstream);
+        return Result.ok(yingSettleUpstream);
     }
 
     /**
@@ -62,7 +64,7 @@ public class YingSettleUpstreamController {
      *
      * @return
      */
-    @PutMapping("/{orderId}/settleupstream/:id")
+    @PutMapping("/{orderId}/settleupstream/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id

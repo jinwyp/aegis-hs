@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class YingOrder implements Serializable {
@@ -37,5 +38,16 @@ public class YingOrder implements Serializable {
     private String status;
 
     private LocalDateTime tsc;
+
+
+    private List<YingOrderConfig> orderConfigList;   // 关联的核算月配置
+
+
+
+    private List<YingOrderParty> orderPartyList; // 关联的参与方
+
+
+
+    private static final long serialVersionUID = 1L;
 
 }

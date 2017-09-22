@@ -3,6 +3,7 @@ package com.yimei.hs.controller.ying;
 import com.yimei.hs.entity.YingSettleTraffic;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.entity.dto.ying.PageYingSettleTrafficDTO;
 import com.yimei.hs.service.ying.YingSettleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +33,8 @@ public class YingSettleTrafficController {
      * @return
      */
     @GetMapping("/{orderId}/settletraffic")
-    public ResponseEntity<PageResult<YingSettleTraffic>> list() {
-        return PageResult.ok(null);
+    public ResponseEntity<PageResult<YingSettleTraffic>> list(PageYingSettleTrafficDTO pageYingSettleTrafficDTO) {
+        return PageResult.ok(yingSettleService.getPageTraffic(pageYingSettleTrafficDTO));
     }
 
     /**
@@ -42,12 +43,12 @@ public class YingSettleTrafficController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/settletraffic/:id")
+    @GetMapping("/{orderId}/settletraffic/{id}")
     public ResponseEntity<Result<YingSettleTraffic>> read(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
     ) {
-        return Result.ok(null);
+        return Result.ok(yingSettleService.findTraffic(id));
     }
 
     /**
@@ -56,8 +57,9 @@ public class YingSettleTrafficController {
      * @return
      */
     @PostMapping("/{orderId}/settletraffic")
-    public ResponseEntity<Result<YingSettleTraffic>> create(@PathVariable("orderId") long orderId) {
-        return Result.ok(null);
+    public ResponseEntity<Result<YingSettleTraffic>> create(YingSettleTraffic yingSettleTraffic) {
+        yingSettleService.createTraffic(yingSettleTraffic);
+        return Result.ok(yingSettleTraffic);
     }
 
     /**
@@ -65,7 +67,7 @@ public class YingSettleTrafficController {
      *
      * @return
      */
-    @PutMapping("/{orderId}/settletraffic/:id")
+    @PutMapping("/{orderId}/settletraffic/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id

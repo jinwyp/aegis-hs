@@ -21,6 +21,7 @@ describe('First test', () => {
     });
 });
 
+/*
 
 describe('用户登陆', function () {
 
@@ -59,3 +60,5 @@ describe('用户登陆', function () {
 
 
 })
+
+*/

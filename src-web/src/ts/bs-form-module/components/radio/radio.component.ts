@@ -29,6 +29,7 @@ export class RadioComponent implements OnInit, ControlValueAccessor {
 
     interValueCurrentRadio : any = { id : -1 , name : '请选择'}
 
+    radioId : number = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000
 
     constructor() {
         // console.log('constructor')
@@ -81,7 +82,7 @@ export class RadioComponent implements OnInit, ControlValueAccessor {
                     tempValue = option
                 }
             })
-            
+
 
             this.value = tempValue
             // console.log('value: ', this.value)

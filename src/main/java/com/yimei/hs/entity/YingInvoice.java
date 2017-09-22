@@ -5,6 +5,7 @@ import com.yimei.hs.enums.InvoiceType;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class YingInvoice implements Serializable {
     private Long id;
@@ -24,6 +25,16 @@ public class YingInvoice implements Serializable {
     private Long recieverId;
 
     private LocalDateTime tsc;
+
+    List<YingInvoiceDetail> details;
+
+    public List<YingInvoiceDetail> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<YingInvoiceDetail> details) {
+        this.details = details;
+    }
 
     private static final long serialVersionUID = 1L;
 

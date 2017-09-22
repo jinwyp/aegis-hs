@@ -1,6 +1,8 @@
 package com.yimei.hs.mapper;
 
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.YingFukuan;
+import com.yimei.hs.entity.dto.ying.PageYingFukuanDTO;
 
 public interface YingFukuanMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +16,6 @@ public interface YingFukuanMapper {
     int updateByPrimaryKeySelective(YingFukuan record);
 
     int updateByPrimaryKey(YingFukuan record);
+
+    Page<YingFukuan> getPage(PageYingFukuanDTO pageYingFukuanDTO);
 }

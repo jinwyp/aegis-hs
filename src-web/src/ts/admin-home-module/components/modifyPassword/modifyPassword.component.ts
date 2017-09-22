@@ -33,11 +33,11 @@ export class ModifyPasswordComponent implements OnInit {
 
     ngOnInit(): void {
         this.createUserInfoForm()
-        this.getCurrentUserInfo()
+        this.getSessionUserInfo()
     }
 
-    getCurrentUserInfo () {
-        this.userService.getUserInfo().subscribe(
+    getSessionUserInfo () {
+        this.userService.sessionUserInfo().subscribe(
             data => {
                 this.currentUser = data
 

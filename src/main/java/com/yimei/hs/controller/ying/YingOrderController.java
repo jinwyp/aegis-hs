@@ -3,6 +3,7 @@ package com.yimei.hs.controller.ying;
 import com.yimei.hs.entity.YingOrder;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.entity.dto.ying.PageYingOrderDTO;
 import com.yimei.hs.service.ying.YingOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +29,8 @@ public class YingOrderController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<PageResult<YingOrder>> list() {
-        return PageResult.ok(yingOrderService.quaryAllOrder());
+    public ResponseEntity<PageResult<YingOrder>> list(PageYingOrderDTO pageYingOrderDTO) {
+        return PageResult.ok(yingOrderService.getPage(pageYingOrderDTO));
     }
 
     /**
@@ -38,9 +39,9 @@ public class YingOrderController {
      * @param id
      * @return
      */
-    @GetMapping("/:id")
+    @GetMapping("/{id}")
     public ResponseEntity<Result<YingOrder>> read( @PathVariable("id") long id ) {
-        return Result.ok(yingOrderService.quaryOrderbyId(id));
+        return Result.ok(yingOrderService.findOne(id));
     }
 
     /**
@@ -50,7 +51,7 @@ public class YingOrderController {
      */
     @PostMapping
     public ResponseEntity<Result<YingOrder>> create(@RequestBody YingOrder order) {
-        yingOrderService.createOrder(order);
+        yingOrderService.create(order);
         return Result.ok(order);
     }
 
@@ -64,7 +65,7 @@ public class YingOrderController {
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
     ) {
-        yingOrderService.updateOrder(new YingOrder());
+        yingOrderService.update(new YingOrder());
         return Result.ok(1);
     }
 }

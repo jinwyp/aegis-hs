@@ -5,10 +5,11 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 
 import { BSCommonModule } from '../bs-common-module/bs-common.module'
-import { NgbDatepickerModule } from './components/ngb-datepicker/datepicker.module';
+import { NgbDatepickerModule } from './components/ngb-datepicker/datepicker.module'
 
 
 
+import { UiSwitchComponent } from './components/ui-switch/ui-switch.component'
 import { SwitchComponent } from './components/switch/switch.component'
 import { TextInputComponent } from './components/text-input/text-input.component'
 import { SelectDropdownComponent } from './components/selectDropdown/selectDropdown.component'
@@ -30,7 +31,7 @@ import {HttpService} from './services/http.service'
     declarations : [
         FilterArrayPipe,
 
-
+        UiSwitchComponent,
         SwitchComponent,
         TextInputComponent,
         SelectDropdownComponent,
@@ -61,6 +62,7 @@ import {HttpService} from './services/http.service'
         NgbDatepickerModule,
 
         TextInputComponent,
+        UiSwitchComponent,
         SwitchComponent,
         SelectDropdownComponent,
         RadioComponent,
