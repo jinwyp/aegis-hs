@@ -27,7 +27,7 @@ public class PartyController {
      *
      * @return
      */
-    @GetMapping("/partys")
+    @GetMapping("/parties")
     public ResponseEntity<PageResult<Party>> list(PagePartyDTO pagePartyDTO) {
         return PageResult.ok(partyService.getPage(pagePartyDTO));
     }
@@ -38,7 +38,7 @@ public class PartyController {
      * @param id
      * @return
      */
-    @GetMapping("/partys/{id}")
+    @GetMapping("/parties/{id}")
     public ResponseEntity<Result<Party>> read(@PathVariable long id) {
 
         return Result.ok(partyService.selectPartByid(id));
@@ -49,7 +49,7 @@ public class PartyController {
      *
      * @return
      */
-    @PostMapping("/partys")
+    @PostMapping("/parties")
     public ResponseEntity<Result<Party>> create(@RequestBody Party party) {
         logger.warn(party.getName()+"简称"+party.getShortName());
         partyService.create(party);
@@ -61,7 +61,7 @@ public class PartyController {
      *
      * @return
      */
-    @PutMapping("/partys/{id}")
+    @PutMapping("/parties/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("id") long id,
             @RequestParam("shortName") String shotName,

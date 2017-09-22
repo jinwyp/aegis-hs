@@ -11,28 +11,23 @@ import { HSUserService } from '../../../services/hsUser.service'
 
 
 @Component({
-  selector: 'app-user-management',
-  templateUrl: './userManagement.component.html',
-  styleUrls: ['./userManagement.component.css']
+  selector: 'app-team-management',
+  templateUrl: './teamManagement.component.html',
+  styleUrls: ['./teamManagement.component.css']
 })
-export class UserManagementComponent implements OnInit {
+export class TeamManagementComponent implements OnInit {
 
     sessionUser : any
-    currentUserId : any
+    currentTeamId : any
 
-    userForm: FormGroup
+    teamForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
 
-    userList : any[] = []
+    teamList : any[] = []
     departmentList : any[] = []
-
-    dataIsAdmin : any [] = [
-        { id : 2 , name : '是'},
-        { id : 1 , name : '否'}
-    ]
 
     pagination: any = {
         pageSize : 20,
@@ -56,8 +51,8 @@ export class UserManagementComponent implements OnInit {
     ngOnInit(): void {
         this.getDepartmentList()
         this.getSessionUserInfo()
-        this.createUserForm()
-        this.getUserList()
+        this.createTeamForm()
+        this.getTeamList()
     }
 
     trackByFn(index: any, item: any) {
@@ -76,20 +71,20 @@ export class UserManagementComponent implements OnInit {
         )
     }
 
-    getUserList () {
+    getTeamList () {
 
         const query : any = {
             pageSize: this.pagination.pageSize,
             pageNo: this.pagination.pageNo
         }
 
-
-        this.hsUserService.getUserList(query).subscribe(
+        this.hsUserService.getTeamList(query).subscribe(
             data => {
-                this.userList = data.data
+                this.teamList = data.data.results
 
-                // this.pagination.total = data.meta.total
-                // this.pagination.pageNo = data.meta.pageNo
+                this.pagination.pageSize = data.data.pageSize
+                this.pagination.pageNo = data.data.pageNo
+                this.pagination.total = data.data.totalRecord
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -99,7 +94,7 @@ export class UserManagementComponent implements OnInit {
     getDepartmentList () {
         this.hsUserService.getDepartmentList().subscribe(
             data => {
-                this.departmentList = data.data
+                this.departmentList = data.data.results
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -107,79 +102,65 @@ export class UserManagementComponent implements OnInit {
     }
 
 
-    userFormError : any = {}
-    userFormValidationMessages: any = {
-        'phone'  : {
-            'required'      : '请填写手机号!',
-            'mobilePhone' : '手机号格式不正确!',
-            'isExist'     : '手机号已经存在!'
-        },
-        'password'  : {
-            'required'      : '请填写密码!'
+    teamFormError : any = {}
+    teamFormValidationMessages: any = {
+        'name'  : {
+            'required'      : '请填写名称!'
         },
         'deptId'  : {
-            'required'      : '请填写事业部门!'
-        },
-        'isAdmin' : {
-            'required'    : '必填项!'
-        },
-        'isActive' : {
-            'required'    : '必填项!'
+            'required'      : '请选择事业部门!'
         }
     }
 
-    userFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.userFormError = formErrorHandler(formInputData, this.userForm, this.userFormValidationMessages, ignoreDirty)
+    teamFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
+        this.teamFormError = formErrorHandler(formInputData, this.teamForm, this.teamFormValidationMessages, ignoreDirty)
     }
 
-    createUserForm(user: any = {}): void {
+    createTeamForm(): void {
 
-        this.userForm = this.fb.group({
-            'phone'    : ['', [Validators.required, isMobilePhone()] ],
-            'password'    : ['', [Validators.required] ],
-            'deptId'    : ['', [Validators.required ] ],
-            'isAdmin'    : [1, [Validators.required] ],
-            'isActive'    : [1, [Validators.required ]]
+        this.teamForm = this.fb.group({
+            'name'    : ['', [Validators.required] ],
+            'deptId'    : ['', [Validators.required ] ]
         } )
 
-        this.userForm.valueChanges.subscribe(data => {
+        this.teamForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
-            this.userFormInputChange(data)
+            this.teamFormInputChange(data)
         })
     }
 
 
-    userFormSubmit() {
+    teamFormSubmit() {
 
-        if (this.userForm.invalid) {
-            this.userFormInputChange(this.userForm.value, true)
+        if (this.teamForm.invalid) {
+            this.teamFormInputChange(this.teamForm.value, true)
             this.ignoreDirty = true
 
-            console.log('当前信息: ', this.userForm, this.userFormError)
+            console.log('当前信息: ', this.teamForm, this.teamFormError)
             return
         }
 
-        const postData = this.userForm.value
+        const postData = this.teamForm.value
 
         if (this.isAddNew) {
-            this.hsUserService.createNewUser(postData).subscribe(
+            this.hsUserService.createNewTeam(postData).subscribe(
                 data => {
-                    console.log('保存用户地址成功: ', data)
+                    console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getUserList()
+                    this.getTeamList()
                     this.showForm()
 
                 },
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
-            this.hsUserService.modifyUser(this.currentUserId, postData).subscribe(
+            this.hsUserService.modifyTeam(this.currentTeamId, postData).subscribe(
                 data => {
-                    console.log('修改用户地址成功: ', data)
+                    console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getUserList()
+                    this.getTeamList()
                     this.showForm()
 
                 },
@@ -190,24 +171,21 @@ export class UserManagementComponent implements OnInit {
     }
 
 
-    showForm(isAddNew : boolean = true, user?: any ) {
+    showForm(isAddNew : boolean = true, team?: any ) {
 
         if (isAddNew) {
             this.isAddNew = true
 
-            this.userForm.patchValue({
-                'phone'    : '',
-                'password'    : '',
-                'deptId'    : '',
-                'isAdmin'    : 1,
-                'isActive'    : 1
+            this.teamForm.patchValue({
+                'name'    : '',
+                'deptId'    : ''
             })
 
         } else {
             this.isAddNew = false
-            this.currentUserId = user.id
+            this.currentTeamId = team.id
 
-            this.userForm.patchValue(user)
+            this.teamForm.patchValue(team)
         }
 
 
