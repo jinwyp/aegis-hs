@@ -8,4 +8,5 @@ import lombok.Data;
  */
 @Data
 public class PageYingHuankuanDTO extends BaseFilter<PageYingHuankuanDTO> {
+    private Long orderId;
 }
