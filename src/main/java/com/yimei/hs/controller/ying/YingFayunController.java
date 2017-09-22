@@ -47,7 +47,13 @@ public class YingFayunController {
     public ResponseEntity<Result<YingFayun>> read(
             @PathVariable("orderId") Long orderId,
             @PathVariable("id") long id) {
-        return Result.ok(yingFayunService.findOne(id));
+
+        YingFayun fayun = yingFayunService.findOne(id);
+        if (fayun == null) {
+            return Result.error(4001, "记录不存在");
+        } else {
+            return Result.ok(fayun);
+        }
     }
 
     /**

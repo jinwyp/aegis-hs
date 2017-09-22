@@ -14,7 +14,7 @@
     from hs_dept
     where id = #{id,jdbcType=BIGINT}
   </select>
-    <select id="selectAll" resultType="com.yimei.hs.entity.Dept">
+    <select id="getPage" resultType="com.yimei.hs.entity.Dept">
       SELECT <include refid="Base_Column_List" />
       from hs_dept
     </select>

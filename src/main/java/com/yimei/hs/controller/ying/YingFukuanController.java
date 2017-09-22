@@ -8,6 +8,7 @@ import com.yimei.hs.service.ying.YingFukuanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +47,12 @@ public class YingFukuanController {
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
     ) {
-        return Result.ok(null);
+        YingFukuan fukuan = yingFukuanService.findOne(id);
+        if (fukuan == null) {
+            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+        } else {
+            return Result.ok(fukuan);
+        }
     }
 
     /**
