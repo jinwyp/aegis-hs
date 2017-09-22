@@ -28,8 +28,7 @@ public class YingHuikuanService {
     @Autowired
     private YingLogService yingLogService;
 
-
     public Page<YingHuikuan> getPage(PageYingHuikuanDTO pageYingHuikuanDTO) {
-        yingHuikuanMapper.getPage(pageYingHuikuanDTO);
+        return yingHuikuanMapper.getPage(pageYingHuikuanDTO);
     }
 }
