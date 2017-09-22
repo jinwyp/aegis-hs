@@ -56,12 +56,12 @@ insert into hs_team(name, deptId) values
 -- 外部客户: 上游、下游、贸易商, 运输方, 资金方, ccs账务公司
 create table hs_party (
   id bigint(20)          not null auto_increment,
-  custType int       not null comment '1: ccs账务公司, 2: 资金方, 3: 外部',
+  partyType int       not null comment '1: ccs账务公司, 2: 资金方, 3: 外部',
   name varchar(128)      not null comment '客户名称',
   shortName varchar(128) not null comment '客户简称',
   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
-insert into hs_party(custType, name, shortName) values
+insert into hs_party(partyType, name, shortName) values
   (1, '江苏晋和电力燃料有限公司', '晋和'),
   (1, '那曲瑞昌煤炭运销有限公司','那曲'),
   (1, '郑州嘉瑞供应链管理有限公司', '嘉瑞'),
