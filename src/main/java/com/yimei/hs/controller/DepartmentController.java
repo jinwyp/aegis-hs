@@ -39,7 +39,7 @@ public class DepartmentController {
     @GetMapping("/departments/{id}")
     public ResponseEntity<Result<Dept>> read(@PathVariable(value = "id") long id) {
         logger.warn(""+id);
-        if (departmentService.checkDepatIsExit(id)) {
+        if (departmentService.checkDeptExist(id)) {
             return Result.ok(departmentService.selectDeptById(id));
         } else {
             return Result.error(5003, "部门不存在");

@@ -41,7 +41,7 @@ public class DepartmentService {
         return deptMapper.insert(department);
     }
 
-    public boolean checkDepatIsExit(Long id){
-        return deptMapper.checkDepayIsExist(id);
+    public boolean checkDeptExist(Long id){
+        return deptMapper.checkDepptExist(id);
     }
 }

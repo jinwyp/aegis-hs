@@ -18,7 +18,7 @@
       SELECT <include refid="Base_Column_List" />
       from hs_dept
     </select>
-  <select id="checkDepayIsExist" resultType="java.lang.Boolean">
+  <select id="checkDepptExist" resultType="java.lang.Boolean">
         select  count(id) from hs_dept where id = #{values,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
