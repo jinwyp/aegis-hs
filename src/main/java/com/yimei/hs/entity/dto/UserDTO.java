@@ -1,5 +1,6 @@
 package com.yimei.hs.entity.dto;
 
+import com.yimei.hs.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,10 @@ public class UserDTO {
     private String plainPassword;
 
     private Boolean isActive;
+
+    @NotNull
+    private UserRole userRole;
+
 
 
 }

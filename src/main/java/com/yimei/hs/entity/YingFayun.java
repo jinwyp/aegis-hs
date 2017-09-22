@@ -1,5 +1,8 @@
 package com.yimei.hs.entity;
 
+import com.yimei.hs.enums.CargoArriveStatus;
+import com.yimei.hs.enums.TrafficMode;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,9 +18,9 @@ public class YingFayun implements Serializable {
 
     private BigDecimal fyAmount;
 
-    private String arriveStatus;
+    private CargoArriveStatus arriveStatus;
 
-    private String upstreamTrafficMode;
+    private TrafficMode upstreamTrafficMode;
 
     private Integer upstreamCars;
 
@@ -25,7 +28,7 @@ public class YingFayun implements Serializable {
 
     private String upstreamShip;
 
-    private String downstreamTrafficMode;
+    private TrafficMode downstreamTrafficMode;
 
     private Integer downstreamCars;
 

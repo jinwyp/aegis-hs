@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+
 public class YingSettleDownstream implements Serializable {
     private Long id;
 

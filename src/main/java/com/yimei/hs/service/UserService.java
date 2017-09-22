@@ -12,6 +12,7 @@ import com.yimei.hs.util.JsonMapper;
 import io.jsonwebtoken.CompressionCodecs;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.lang.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class UserService {
         user.setPasswordSalt(Encodes.encodeHex(passwordSalt));
         user.setCreateDate(LocalDateTime.now());
         user.setCreateBy("register");
-        userMapper.insertSelective(user);
+        userMapper.insert(user);
         return user;
 
     }
@@ -69,20 +70,20 @@ public class UserService {
      */
     public boolean validPasswordEquals(String phone, String plainPassword) {
 
-//        User user = userMapper.(phone);
+        User user = userMapper.loadByPhone(phone);
 //        Assert.notNull(user);
 //        String credentials = Encodes.encodeHex(Digests.sha1(plainPassword.getBytes(), Encodes.decodeHex(user.getPasswordSalt()), HASH_INTERATIONS));
-        // return user.getPassword().equals(credentials);
-        return true;
+        return user.getPassword().equals(plainPassword);
+
     }
 
 
     public User loadBySecurePhone(String phone) {
-         return userMapper.loadByPhone(phone);
+        return userMapper.loadByPhone(phone);
     }
 
 
-    public Page<User> loadAllUser(PageUserDTO pageUserDTO ) {
+    public Page<User> loadAllUser(PageUserDTO pageUserDTO) {
         return userMapper.loadAllUser(pageUserDTO);
     }
 
