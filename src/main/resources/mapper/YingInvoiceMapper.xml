@@ -51,6 +51,7 @@
             t2.priceAndTax,
             t2.tsc t2tsc
         FROM hs_ying_invoice t1 LEFT JOIN hs_ying_invoice_detail t2 ON t1.id = t2.invoiceId
+        WHERE t1.orderId = #{orderId, jdbcType=BIGINT}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

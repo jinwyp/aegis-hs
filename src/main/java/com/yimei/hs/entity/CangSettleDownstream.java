@@ -3,6 +3,7 @@ package com.yimei.hs.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class CangSettleDownstream implements Serializable {
     private Long id;
@@ -26,6 +27,18 @@ public class CangSettleDownstream implements Serializable {
     private BigDecimal discountAmount;
 
     private LocalDateTime tsc;
+
+    public List<YingFayun> getFayunList() {
+        return fayunList;
+    }
+
+    public void setFayunList(List<YingFayun> fayunList) {
+        this.fayunList = fayunList;
+    }
+
+    // 下游结算关联了多个上游发运数据
+    private List<YingFayun>  fayunList;
+
 
     private static final long serialVersionUID = 1L;
 
