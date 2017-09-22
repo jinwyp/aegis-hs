@@ -2,14 +2,12 @@ package com.yimei.hs.mapper;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.Dept;
-import com.yimei.hs.entity.dto.ying.PageDeptDTO;
-
-import java.util.List;
+import com.yimei.hs.entity.dto.PageDeptDTO;
 
 public interface DeptMapper {
     int deleteByPrimaryKey(Long id);
 
-    Long insert(Dept record);
+    int insert(Dept record);
 
     Long insertSelective(Dept record);
 
@@ -21,5 +19,5 @@ public interface DeptMapper {
 
     Page<Dept> selectAll(PageDeptDTO pageDeptDTO);
 
-    boolean checkDepayIsExist(Long id);
+    boolean checkDepptExist(Long id);
 }

@@ -2,16 +2,12 @@ package com.yimei.hs.service;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.Team;
-import com.yimei.hs.entity.dto.TeamPageDTO;
+import com.yimei.hs.entity.dto.PageTeamDTO;
 import com.yimei.hs.mapper.TeamMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import java.util.ArrayList;
 
 /**
  * Created by hary on 2017/9/15.
@@ -47,8 +43,8 @@ public class TeamService {
         return mTeamMapper.updateByPrimaryKey(team);
     }
 
-    public Page<Team> getTeamPage(TeamPageDTO teamPageDTO) {
-      return   mTeamMapper.getPageTeam(teamPageDTO);
+    public Page<Team> getTeamPage(PageTeamDTO pageTeamDTO) {
+      return   mTeamMapper.getPageTeam(pageTeamDTO);
     }
 
     public boolean checkTeamExist(long tid) {

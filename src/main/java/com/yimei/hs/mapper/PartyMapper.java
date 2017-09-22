@@ -2,8 +2,7 @@ package com.yimei.hs.mapper;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.Party;
-import com.yimei.hs.entity.dto.PartyPageDTO;
-import org.apache.ibatis.annotations.Param;
+import com.yimei.hs.entity.dto.PagePartyDTO;
 
 public interface PartyMapper {
     int deleteByPrimaryKey(Long id);
@@ -18,5 +17,5 @@ public interface PartyMapper {
 
     int updateByPrimaryKey(Party record);
 
-    Page<Party> selectParty(PartyPageDTO partyPageDTO);
+    Page<Party> selectParty(PagePartyDTO pagePartyDTO);
 }

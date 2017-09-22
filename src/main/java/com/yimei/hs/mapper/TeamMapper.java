@@ -2,8 +2,7 @@ package com.yimei.hs.mapper;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.Team;
-import com.yimei.hs.entity.dto.TeamPageDTO;
-import org.apache.ibatis.annotations.Param;
+import com.yimei.hs.entity.dto.PageTeamDTO;
 
 import java.util.ArrayList;
 
@@ -22,7 +21,7 @@ public interface TeamMapper {
 
     ArrayList<Team> getAllTeams();
 
-    Page<Team> getPageTeam(TeamPageDTO teamPageDTO);
+    Page<Team> getPageTeam(PageTeamDTO pageTeamDTO);
 
     boolean checkTeamExsit(long tid);
 }

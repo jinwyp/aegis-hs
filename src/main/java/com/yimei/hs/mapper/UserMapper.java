@@ -2,7 +2,7 @@ package com.yimei.hs.mapper;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.User;
-import com.yimei.hs.entity.dto.ying.PageUserDTO;
+import com.yimei.hs.entity.dto.PageUserDTO;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Long id);

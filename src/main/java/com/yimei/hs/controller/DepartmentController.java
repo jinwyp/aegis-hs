@@ -1,18 +1,15 @@
 package com.yimei.hs.controller;
 
-import com.yimei.hs.boot.annotation.CurrentUser;
 import com.yimei.hs.entity.Dept;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
-import com.yimei.hs.entity.dto.UserDTO;
-import com.yimei.hs.entity.dto.ying.PageDeptDTO;
+import com.yimei.hs.entity.dto.PageDeptDTO;
 import com.yimei.hs.service.DepartmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -42,7 +39,7 @@ public class DepartmentController {
     @GetMapping("/departments/{id}")
     public ResponseEntity<Result<Dept>> read(@PathVariable(value = "id") long id) {
         logger.warn(""+id);
-        if (departmentService.checkDepatIsExit(id)) {
+        if (departmentService.checkDeptExist(id)) {
             return Result.ok(departmentService.selectDeptById(id));
         } else {
             return Result.error(5003, "部门不存在");

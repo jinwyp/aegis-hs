@@ -1,20 +1,16 @@
 package com.yimei.hs.controller;
 
-import com.yimei.hs.entity.Dept;
 import com.yimei.hs.entity.Team;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
-import com.yimei.hs.entity.dto.TeamPageDTO;
+import com.yimei.hs.entity.dto.PageTeamDTO;
 import com.yimei.hs.service.DepartmentService;
 import com.yimei.hs.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 
 /**
  * Created by hary on 2017/9/15.
@@ -31,10 +27,10 @@ public class TeamController {
 
 
     @GetMapping("/teams")
-    public ResponseEntity<PageResult<Team>> list(TeamPageDTO teamPageDTO
+    public ResponseEntity<PageResult<Team>> list(PageTeamDTO pageTeamDTO
     ) {
 
-        return PageResult.ok(teamService.getTeamPage(teamPageDTO));
+        return PageResult.ok(teamService.getTeamPage(pageTeamDTO));
     }
 
 
@@ -47,7 +43,7 @@ public class TeamController {
     public ResponseEntity<Result<Team>> create(@RequestBody Team team) {
         ResponseEntity teamResponseEntity;
 
-        if (departmentService.checkDepatIsExit(team.getDeptId())) {
+        if (departmentService.checkDeptExist(team.getDeptId())) {
             teamService.createTeams(team);
             return Result.ok(team);
         } else {

@@ -2,7 +2,7 @@ package com.yimei.hs.service;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.Dept;
-import com.yimei.hs.entity.dto.ying.PageDeptDTO;
+import com.yimei.hs.entity.dto.PageDeptDTO;
 import com.yimei.hs.mapper.DeptMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,11 +37,11 @@ public class DepartmentService {
         return deptMapper.updateByPrimaryKey(dept);
     }
 
-    public Long createDept(Dept department){
+    public int createDept(Dept department){
         return deptMapper.insert(department);
     }
 
-    public boolean checkDepatIsExit(Long id){
-        return deptMapper.checkDepayIsExist(id);
+    public boolean checkDeptExist(Long id){
+        return deptMapper.checkDepptExist(id);
     }
 }
