@@ -29,7 +29,6 @@ create table hs_team (
   deptId bigint(20) not null comment '所属部门',
   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_team 
 
 
 -- 外部客户: 上游、下游、贸易商, 运输方, 资金方, ccs账务公司

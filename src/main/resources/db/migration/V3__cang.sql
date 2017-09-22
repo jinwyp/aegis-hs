@@ -18,11 +18,7 @@ create table hs_cang_order (
    tsc timestamp                    not null default current_timestamp,
    primary key (id)
 ) engine=InnoDB default charset=utf8;
-alter table hs_cang_order 
-alter table hs_cang_order 
-alter table hs_cang_order 
-alter table hs_cang_order 
-alter table hs_cang_order 
+
 
 -- 业务订单-其他参与方
 create table hs_cang_order_party (
@@ -34,8 +30,7 @@ create table hs_cang_order_party (
    tsc timestamp         not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_order_party 
-alter table hs_cang_order_party 
+
 
 -- 业务线(订单)核算月全局配置
 create table hs_cang_order_config (
@@ -50,7 +45,7 @@ create table hs_cang_order_config (
    tsc timestamp                       not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_order_party 
+
 
 -- 苍押订单 - 入库
 create table hs_cang_ruku (
@@ -72,8 +67,7 @@ create table hs_cang_ruku (
   tsc timestamp                   not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_ruku 
-alter table hs_cang_ruku 
+
 
 create table hs_cang_chuku (
   id bigint(20)                  not null auto_increment,
@@ -88,8 +82,7 @@ create table hs_cang_chuku (
   tsc timestamp                   not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_chuku 
-alter table hs_cang_chuku 
+
 
 -- 苍押订单 - 付款
 create table hs_cang_fukuan (
@@ -108,10 +101,7 @@ create table hs_cang_fukuan (
   tsc timestamp                  not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_fukuan 
-alter table hs_cang_fukuan 
-alter table hs_cang_fukuan 
-alter table hs_cang_fukuan 
+
 
 -- 苍押订单 - 回款
 create table hs_cang_huikuan (
@@ -134,9 +124,7 @@ create table hs_cang_huikuan (
    tsc timestamp                    not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_huikuan 
-alter table hs_cang_huikuan 
-alter table hs_cang_huikuan 
+
 
 -- 苍押订单 - 回款-付款mapping
 create table hs_cang_huikuan_map (
@@ -147,8 +135,6 @@ create table hs_cang_huikuan_map (
    tsc timestamp         not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_huikuan_map 
-alter table hs_cang_huikuan_map 
 
 -- 苍押订单 - 还款
 create table hs_cang_huankuan (
@@ -162,9 +148,7 @@ create table hs_cang_huankuan (
    tsc timestamp           not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_huankuan 
-alter table hs_cang_huankuan 
-alter table hs_cang_huankuan 
+
 
 -- 苍押订单 - 还款-付款mapping
 create table hs_cang_huankuan_map (
@@ -178,8 +162,7 @@ create table hs_cang_huankuan_map (
   tsc timestamp            not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_huankuan_map 
-alter table hs_cang_huankuan_map 
+
 
 -- 苍押订单 - 上游结算
 create table hs_cang_settle_upstream (
@@ -194,8 +177,6 @@ create table hs_cang_settle_upstream (
    tsc timestamp             not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_settle_upstream 
-alter table hs_cang_settle_upstream 
 
 -- 苍押订单 - 下游结算
 create table hs_cang_settle_downstream (
@@ -215,8 +196,7 @@ create table hs_cang_settle_downstream (
    tsc timestamp             not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_settle_downstream 
-alter table hs_cang_settle_downstream 
+
 
 -- 苍押订单 - 上游结算-入库-map
 create table hs_cang_settle_upstream_map (
@@ -227,8 +207,6 @@ create table hs_cang_settle_upstream_map (
    tsc timestamp             not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_settle_upstream_map 
-alter table hs_cang_settle_upstream_map 
 
 -- 苍押订单 - 运输方结算
 create table hs_cang_settle_traffic (
@@ -243,9 +221,7 @@ create table hs_cang_settle_traffic (
   tsc timestamp               not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_settle_traffic 
-alter table hs_cang_settle_traffic 
-alter table hs_cang_settle_traffic 
+
 
 -- 苍押订单 - 费用
 create table hs_cang_fee (
@@ -258,8 +234,7 @@ create table hs_cang_fee (
   tsc timestamp              not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_fee 
-alter table hs_cang_fee 
+
 
 -- 苍押订单 - 发票
 create table hs_cang_invoice (
@@ -275,9 +250,6 @@ create table hs_cang_invoice (
   tsc timestamp                 not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_invoice 
-alter table hs_cang_invoice 
-alter table hs_cang_invoice 
 
 -- 苍押订单 - 发票明细
 create table hs_cang_invoice_detail (
@@ -290,7 +262,6 @@ create table hs_cang_invoice_detail (
   tsc timestamp              not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;;
-alter table hs_cang_invoice_detail 
 
 -- 苍押订单-转移记录
 create table hs_cang_transfer (
@@ -301,7 +272,6 @@ create table hs_cang_transfer (
   tsc timestamp         not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_transfer 
 
 
 -- 修改记录
@@ -315,6 +285,4 @@ create table hs_cang_log (
   tsc timestamp           not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_log 
-alter table hs_cang_log 
 

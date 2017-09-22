@@ -18,11 +18,7 @@ create table hs_ying_order (
    tsc timestamp                    not null default current_timestamp,
    primary key (id)
 ) engine=InnoDB default charset=utf8;
-alter table hs_ying_order 
-alter table hs_ying_order 
-alter table hs_ying_order 
-alter table hs_ying_order 
-alter table hs_ying_order 
+
 
 -- 业务订单-其他参与方
 create table hs_ying_order_party (
@@ -34,8 +30,6 @@ create table hs_ying_order_party (
    tsc timestamp         not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_order_party 
-alter table hs_ying_order_party 
 
 -- 业务线(订单)核算月全局配置
 create table hs_ying_order_config (
@@ -51,7 +45,6 @@ create table hs_ying_order_config (
    tsc timestamp                       not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_order_party 
 
 -- 应收订单 - 发运
 create table hs_ying_fayun (
@@ -75,8 +68,6 @@ create table hs_ying_fayun (
   tsc timestamp                   not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_fayun 
-alter table hs_ying_fayun 
 
 -- 应收订单 - 付款:(主账务公司付给上游)
 create table hs_ying_fukuan (
@@ -95,10 +86,6 @@ create table hs_ying_fukuan (
   tsc timestamp                  not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_fukuan 
-alter table hs_ying_fukuan 
-alter table hs_ying_fukuan 
-alter table hs_ying_fukuan 
 
 -- 应收订单 - 回款
 create table hs_ying_huikuan (
@@ -127,9 +114,6 @@ create table hs_ying_huikuan (
    tsc timestamp                    not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_huikuan 
-alter table hs_ying_huikuan 
-alter table hs_ying_huikuan 
 
 -- 应收订单 - 回款-付款mapping
 create table hs_ying_huikuan_map (
@@ -140,8 +124,6 @@ create table hs_ying_huikuan_map (
    tsc timestamp         not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_huikuan_map 
-alter table hs_ying_huikuan_map 
 
 -- 应收订单 - 还款
 create table hs_ying_huankuan (
@@ -155,9 +137,6 @@ create table hs_ying_huankuan (
    tsc timestamp           not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_huankuan 
-alter table hs_ying_huankuan 
-alter table hs_ying_huankuan 
 
 -- 应收订单 - 还款-付款mapping
 create table hs_ying_huankuan_map (
@@ -170,8 +149,6 @@ create table hs_ying_huankuan_map (
   tsc timestamp            not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_huankuan_map 
-alter table hs_ying_huankuan_map 
 
 -- 应收订单 - 上游结算
 create table hs_ying_settle_upstream (
@@ -191,8 +168,6 @@ create table hs_ying_settle_upstream (
    tsc timestamp             not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_settle_upstream 
-alter table hs_ying_settle_upstream 
 
 -- 应收订单 - 下游结算
 create table hs_ying_settle_downstream (
@@ -209,8 +184,6 @@ create table hs_ying_settle_downstream (
    tsc timestamp             not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_settle_downstream 
-alter table hs_ying_settle_downstream 
 
 -- 应收订单 - 下游结算-发运map
 create table hs_ying_settle_downstream_map (
@@ -222,8 +195,6 @@ create table hs_ying_settle_downstream_map (
 
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_settle_downstream_map 
-alter table hs_ying_settle_downstream_map 
 
 -- 应收订单 - 运输方结算
 create table hs_ying_settle_traffic (
@@ -238,9 +209,6 @@ create table hs_ying_settle_traffic (
   tsc timestamp               not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_settle_traffic 
-alter table hs_ying_settle_traffic 
-alter table hs_ying_settle_traffic 
 
 -- 应收订单 - 费用
 create table hs_ying_fee (
@@ -253,8 +221,6 @@ create table hs_ying_fee (
   tsc timestamp              not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_fee 
-alter table hs_ying_fee 
 
 -- 应收订单 - 发票
 create table hs_ying_invoice (
@@ -270,9 +236,6 @@ create table hs_ying_invoice (
   tsc timestamp                 not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_invoice 
-alter table hs_ying_invoice 
-alter table hs_ying_invoice 
 
 -- 应收订单 - 发票明细
 create table hs_ying_invoice_detail (
@@ -285,7 +248,6 @@ create table hs_ying_invoice_detail (
   tsc timestamp              not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;;
-alter table hs_ying_invoice_detail 
 
 -- 订单转移
 create table hs_ying_transfer (
@@ -296,7 +258,6 @@ create table hs_ying_transfer (
   tsc timestamp         not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_transfer 
 
 -- 修改记录
 create table hs_ying_log (
@@ -309,8 +270,6 @@ create table hs_ying_log (
   tsc timestamp           not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_ying_log 
-alter table hs_ying_log 
 
 
 
