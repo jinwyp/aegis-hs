@@ -24,14 +24,13 @@ public class UserAdminController {
     private UserService userService;
 
     /**
-     * 获取所有
+     * 查询用户, 分页
      *
      * @return
      */
     @GetMapping("/users")
-    public ResponseEntity<PageResult<User>> list(PageUserDTO pageUserDTO
-    ) {
-        return PageResult.ok(userService.loadAllUser(pageUserDTO));
+    public ResponseEntity<PageResult<User>> list(PageUserDTO pageUserDTO) {
+        return PageResult.ok(userService.getPage(pageUserDTO));
     }
 
     /**
@@ -42,8 +41,7 @@ public class UserAdminController {
      */
     @GetMapping("/users/{phone}")
     public ResponseEntity<Result<User>> read( @PathVariable("phone") String phone) {
-
-        return Result.ok(userService.loadBySecurePhone(phone));
+        return Result.ok(userService.getUserByPhone(phone));
     }
 
     /**
@@ -51,7 +49,7 @@ public class UserAdminController {
      */
     @PostMapping("/users")
     public ResponseEntity<Result<User>> create(@RequestBody User user) {
-        userService.createUser(user);
+        userService.register(user);
         return Result.ok(user);
     }
 
@@ -59,9 +57,9 @@ public class UserAdminController {
      * 更新用户
      * @return
      */
-    @PutMapping("/users/:id")
-    public ResponseEntity<Result<Integer>> update( @PathVariable("id") long id )
-    {
+    @PutMapping("/users")
+    public ResponseEntity<Result<Integer>> update(@RequestBody User user) {
+        userService.update(user);
         return Result.ok(1);
     }
 

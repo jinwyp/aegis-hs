@@ -2,7 +2,7 @@ package com.yimei.hs.boot.web;
 
 import com.yimei.hs.boot.annotation.CurrentUser;
 import com.yimei.hs.boot.exception.NoJwtTokenException;
-import com.yimei.hs.entity.dto.UserDTO;
+import com.yimei.hs.entity.User;
 import com.yimei.hs.util.JsonMapper;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -47,7 +47,7 @@ public class CurrentUserMethodArgumentHandler implements HandlerMethodArgumentRe
             if (m.matches()) {
                 String token = m.group(1);
                 String userJson = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-                return JsonMapper.nonDefaultMapper().fromJson(userJson, UserDTO.class);
+                return JsonMapper.nonDefaultMapper().fromJson(userJson, User.class);
             } else {
                 throw new NoJwtTokenException("缺少jwtToken异常");
             }

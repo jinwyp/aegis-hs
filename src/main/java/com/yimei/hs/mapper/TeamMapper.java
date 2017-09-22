@@ -21,7 +21,7 @@ public interface TeamMapper {
 
     ArrayList<Team> getAllTeams();
 
-    Page<Team> getPageTeam(PageTeamDTO pageTeamDTO);
+    Page<Team> getPage(PageTeamDTO pageTeamDTO);
 
     boolean checkTeamExsit(long tid);
 }

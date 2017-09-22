@@ -18,7 +18,7 @@ public class TeamService {
     private static final Logger logger = LoggerFactory.getLogger(TeamService.class);
 
     @Autowired
-    private TeamMapper mTeamMapper;
+    private TeamMapper teamMapper;
 
     /**
      * 根据id查 团队
@@ -26,28 +26,28 @@ public class TeamService {
      * @return
      */
    public Team findTeamByid(Long tid) {
-       Team team = mTeamMapper.selectByPrimaryKey(tid);
+       Team team = teamMapper.selectByPrimaryKey(tid);
        return team;
     }
 
     public int createTeams(Team team){
-        return mTeamMapper.insert(team);
+        return teamMapper.insert(team);
     }
 
     public int deleteTeamById(long id){
-        return mTeamMapper.deleteByPrimaryKey(id);
+        return teamMapper.deleteByPrimaryKey(id);
     }
 
     public int updateTeam(Team team){
 
-        return mTeamMapper.updateByPrimaryKey(team);
+        return teamMapper.updateByPrimaryKey(team);
     }
 
-    public Page<Team> getTeamPage(PageTeamDTO pageTeamDTO) {
-      return   mTeamMapper.getPageTeam(pageTeamDTO);
+    public Page<Team> getPage(PageTeamDTO pageTeamDTO) {
+      return   teamMapper.getPage(pageTeamDTO);
     }
 
     public boolean checkTeamExist(long tid) {
-        return mTeamMapper.checkTeamExsit(tid);
+        return teamMapper.checkTeamExsit(tid);
     }
 }

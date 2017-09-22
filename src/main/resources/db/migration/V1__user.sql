@@ -6,7 +6,6 @@ create table hs_user (
   deptId bigint(20)        not null comment '所属部门id',
   phone varchar(12)        not null comment '手机号',
   password varchar(40)     not null comment '密码',
-  role     varchar(20) NOT NULL COMMENT '用户角色',
   passwordSalt varchar(40) not null comment '密码盐',
   createDate datetime      not null comment '创建时间',
   createBy varchar(45)     not null comment '创建人',

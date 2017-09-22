@@ -21,11 +21,25 @@
         from hs_user
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <select id="loadAllUser" resultType="com.yimei.hs.entity.User">
+
+    <!-- -->
+    <select id="getPage" resultType="com.yimei.hs.entity.User">
         select
         <include refid="Base_Column_List"/>
         from hs_user
+        <where>
+            <if test="isAdmin != null">
+                isAdmin = #{isAdmin, jdbcType=TINYINT}
+            </if>
+            <if test="isActive != null">
+                isActive = #{isActive, jdbcType=TINYINT}
+            </if>
+            <if test="deptId != null">
+                deptId = #{deptId, jdbcType=BIGINT}
+            </if>
+        </where>
     </select>
+
     <select id="loadByPhone" resultType="com.yimei.hs.entity.User">
         select
         <include refid="Base_Column_List"/>

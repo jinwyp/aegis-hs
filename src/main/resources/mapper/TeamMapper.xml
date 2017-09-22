@@ -18,7 +18,9 @@
     <select id="getAllTeams" resultType="com.yimei.hs.entity.Team">
         SELECT * from hs_team
     </select>
-    <select id="getPageTeam" resultType="com.yimei.hs.entity.Team">
+
+
+    <select id="getPage" resultType="com.yimei.hs.entity.Team">
         SELECT * from hs_team
         <where>
             <if test="deptId !=null">
@@ -26,6 +28,8 @@
             </if>
         </where>
     </select>
+
+
     <select id="checkTeamExsit" resultType="java.lang.Boolean">
         select
         count(id)

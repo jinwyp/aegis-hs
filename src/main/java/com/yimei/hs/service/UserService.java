@@ -2,10 +2,8 @@ package com.yimei.hs.service;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.User;
-import com.yimei.hs.entity.dto.UserDTO;
 import com.yimei.hs.entity.dto.PageUserDTO;
 import com.yimei.hs.mapper.UserMapper;
-import com.yimei.hs.util.BeanMapper;
 import com.yimei.hs.util.Digests;
 import com.yimei.hs.util.Encodes;
 import com.yimei.hs.util.JsonMapper;
@@ -37,9 +35,9 @@ public class UserService {
     private String secretKey;
 
     //生成jwt token
-    public String genAuthorization(UserDTO userDTO) {
+    public String genAuthorization(User user) {
         return "Bearer " + Jwts.builder()
-                .setSubject(JsonMapper.nonDefaultMapper().toJson(userDTO))
+                .setSubject(JsonMapper.nonDefaultMapper().toJson(user))
                 .compressWith(CompressionCodecs.DEFLATE)
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
@@ -47,15 +45,17 @@ public class UserService {
 
 
     @Transactional(readOnly = false)
-    public User registerUser(UserDTO userDTO) {
+    public User register(User user) {
+
         byte[] passwordSalt = Digests.generateSalt(SALT_SIZE);
-        byte[] hashPassword = Digests.sha1(userDTO.getPlainPassword().getBytes(), passwordSalt, HASH_INTERATIONS);
-        User user = BeanMapper.map(userDTO, User.class);
+        byte[] hashPassword = Digests.sha1(user.getPassword().getBytes(), passwordSalt, HASH_INTERATIONS);
+
         user.setIsActive(true);
+        user.setIsAdmin(false);
         user.setPassword(Encodes.encodeHex(hashPassword));
         user.setPasswordSalt(Encodes.encodeHex(passwordSalt));
         user.setCreateDate(LocalDateTime.now());
-        user.setCreateBy("register");
+        user.setCreateBy("sys");
         userMapper.insert(user);
         return user;
 
@@ -64,30 +64,44 @@ public class UserService {
     /**
      * 验证密码
      *
-     * @param phone
      * @param plainPassword
      * @return
      */
-    public boolean validPasswordEquals(String phone, String plainPassword) {
-
-        User user = userMapper.loadByPhone(phone);
-//        Assert.notNull(user);
-//        String credentials = Encodes.encodeHex(Digests.sha1(plainPassword.getBytes(), Encodes.decodeHex(user.getPasswordSalt()), HASH_INTERATIONS));
-        return user.getPassword().equals(plainPassword);
-
+    public boolean validPasswordEquals(User user, String plainPassword) {
+        Assert.notNull(user);
+        String credentials = Encodes.encodeHex(Digests.sha1(plainPassword.getBytes(), Encodes.decodeHex(user.getPasswordSalt()), HASH_INTERATIONS));
+        return user.getPassword().equals(credentials);
     }
 
-
-    public User loadBySecurePhone(String phone) {
+    public User getUserByPhone(String phone) {
         return userMapper.loadByPhone(phone);
     }
 
 
-    public Page<User> loadAllUser(PageUserDTO pageUserDTO) {
-        return userMapper.loadAllUser(pageUserDTO);
+    /**
+     * 查询用户 - 分页
+     * @param pageUserDTO
+     * @return
+     */
+    public Page<User> getPage(PageUserDTO pageUserDTO) {
+        return userMapper.getPage(pageUserDTO);
     }
 
-    public int createUser(User user) {
+    /**
+     *  创建用户
+     * @param user
+     * @return
+     */
+    public int create(User user) {
         return userMapper.insert(user);
+    }
+
+    /**
+     * 更新用户
+     * @param user
+     * @return
+     */
+    public int update(User user) {
+        return userMapper.updateByPrimaryKey(user);
     }
 }

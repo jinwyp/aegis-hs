@@ -24,8 +24,8 @@ insert into hs_team(name, deptId) values
   ('冷链团队', 2);
 
 -- 用户
-insert into hs_user(deptId, phone, role ,password, passwordSalt, createDate, createBy, isAdmin) values
-  (1, '13022117050', 'ADMIN','12345678', 'salt', '2017-01-01', 'hary', 2);
+# insert into hs_user(deptId, phone, password, passwordSalt, createDate, createBy, isAdmin) values
+#  (1, '13022117050', '12345678', 'salt', '2017-01-01', 'hary', 2);
 
 
 -- 参与方

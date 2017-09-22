@@ -5,5 +5,5 @@ import lombok.Data;
 
 @Data
 public class PagePartyDTO extends BaseFilter<PagePartyDTO> {
-    private Integer custType;
+    private Integer partyType;
 }

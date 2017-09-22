@@ -1,14 +1,20 @@
 package com.yimei.hs.controller.ying;
 
+import com.yimei.hs.boot.annotation.CurrentUser;
+import com.yimei.hs.entity.User;
 import com.yimei.hs.entity.YingOrder;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
 import com.yimei.hs.entity.dto.ying.PageYingOrderDTO;
+import com.yimei.hs.enums.OrderStatus;
 import com.yimei.hs.service.ying.YingOrderService;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -50,10 +56,16 @@ public class YingOrderController {
      * @return
      */
     @PostMapping
-    public ResponseEntity<Result<YingOrder>> create(@RequestBody YingOrder order) {
+    @Transactional(readOnly = false)
+    public ResponseEntity<Result<YingOrder>> create(@CurrentUser User user, @RequestBody YingOrder order) {
+        order.setCreatorId(user.getId());
+        order.setOwnerId(user.getId());
+        order.setStatus(OrderStatus.UNCOMPLETED);
+        logger.info("my order = {}", order);
         yingOrderService.create(order);
         return Result.ok(order);
     }
+
 
     /**
      * 更新order
@@ -62,10 +74,9 @@ public class YingOrderController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Result<Integer>> update(
-            @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
     ) {
-        yingOrderService.update(new YingOrder());
+        //
         return Result.ok(1);
     }
 }

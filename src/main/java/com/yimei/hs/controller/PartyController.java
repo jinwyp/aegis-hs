@@ -29,8 +29,7 @@ public class PartyController {
      */
     @GetMapping("/partys")
     public ResponseEntity<PageResult<Party>> list(PagePartyDTO pagePartyDTO) {
-
-        return PageResult.ok(partyService.selectParty(pagePartyDTO));
+        return PageResult.ok(partyService.getPage(pagePartyDTO));
     }
 
     /**

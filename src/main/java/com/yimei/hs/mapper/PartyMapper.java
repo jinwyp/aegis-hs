@@ -17,5 +17,5 @@ public interface PartyMapper {
 
     int updateByPrimaryKey(Party record);
 
-    Page<Party> selectParty(PagePartyDTO pagePartyDTO);
+    Page<Party> getPage(PagePartyDTO pagePartyDTO);
 }

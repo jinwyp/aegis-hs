@@ -44,7 +44,6 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         argumentResolvers.add(currentUserMethodArgumentHandler);
     }
 
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(aclInterceptor).addPathPatterns("/**");

@@ -1,7 +1,10 @@
 package com.yimei.hs.service.ying;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.entity.Party;
 import com.yimei.hs.entity.YingOrder;
+import com.yimei.hs.entity.YingOrderConfig;
+import com.yimei.hs.entity.YingOrderParty;
 import com.yimei.hs.entity.dto.ying.PageYingOrderDTO;
 import com.yimei.hs.mapper.YingOrderConfigMapper;
 import com.yimei.hs.mapper.YingOrderMapper;
@@ -10,6 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by hary on 2017/9/15.
@@ -52,7 +58,37 @@ public class YingOrderService {
      * @return
      */
     public int create(YingOrder order) {
-        return yingOrderMapper.insert(order);
+
+        // 插入业务线
+        int rtn = yingOrderMapper.insert(order);
+
+        List<YingOrderConfig> configList = order.getOrderConfigList();
+
+        List<YingOrderParty> partyList = order.getOrderPartyList();
+
+        // 插入参与方
+        if (partyList != null ) {
+            partyList.forEach(new Consumer<YingOrderParty>() {
+                @Override
+                public void accept(YingOrderParty yingOrderParty) {
+                    yingOrderParty.setOrderId(order.getId());
+                    yingOrderPartyMapper.insert(yingOrderParty);
+                }
+            });
+        }
+
+        // 插入核算月配置
+        if (partyList != null) {
+            configList.forEach(new Consumer<YingOrderConfig>() {
+                @Override
+                public void accept(YingOrderConfig yingOrderConfig) {
+                    yingOrderConfig.setOrderId(order.getId());
+                    yingOrderConfigMapper.insert(yingOrderConfig);
+                }
+            });
+        }
+
+        return rtn;
     }
 
     /**

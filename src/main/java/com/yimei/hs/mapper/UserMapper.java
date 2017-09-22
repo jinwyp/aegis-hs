@@ -17,7 +17,7 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    Page<User> loadAllUser(PageUserDTO pageUserDTO);
+    Page<User> getPage(PageUserDTO pageUserDTO);
 
     User loadByPhone(String phone);
 }

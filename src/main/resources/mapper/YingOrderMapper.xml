@@ -60,22 +60,27 @@
         DELETE FROM hs_ying_order
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.yimei.hs.entity.YingOrder">
+    <insert id="insert" parameterType="com.yimei.hs.entity.YingOrder" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO hs_ying_order (id, deptId, teamId,
                                    creatorId, ownerId, mainAccounting,
                                    line, cargoType, upstreamId,
                                    upstreamSettleMode, downstreamId, downstreamSettleMode,
                                    status, tsc)
-        VALUES (#{id,jdbcType=BIGINT}, #{deptId,jdbcType=BIGINT}, #{teamId,jdbcType=BIGINT},
-                                       #{creatorId,jdbcType=BIGINT}, #{ownerId,jdbcType=BIGINT},
-                                       #{mainAccounting,jdbcType=BIGINT},
-                                       #{line,jdbcType=VARCHAR}, #{cargoType,jdbcType=VARCHAR},
-                                       #{upstreamId,jdbcType=BIGINT},
-                                       #{upstreamSettleMode,jdbcType=VARCHAR}, #{downstreamId,jdbcType=BIGINT},
-                #{downstreamSettleMode,jdbcType=VARCHAR},
-                #{status,jdbcType=VARCHAR}, #{tsc,jdbcType=TIMESTAMP})
+        VALUES (#{id,jdbcType=BIGINT},
+            #{deptId,jdbcType=BIGINT},
+            #{teamId,jdbcType=BIGINT},
+            #{creatorId,jdbcType=BIGINT},
+            #{ownerId,jdbcType=BIGINT},
+            #{mainAccounting,jdbcType=BIGINT},
+            #{line,jdbcType=VARCHAR},
+            #{cargoType,jdbcType=VARCHAR},
+            #{upstreamId,jdbcType=BIGINT},
+            #{upstreamSettleMode,jdbcType=VARCHAR}, #{downstreamId,jdbcType=BIGINT},
+            #{downstreamSettleMode,jdbcType=VARCHAR},
+            #{status,jdbcType=VARCHAR},
+            #{tsc,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingOrder">
+    <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingOrder" useGeneratedKeys="true" keyProperty="id">
         insert into hs_ying_order
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

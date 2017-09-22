@@ -27,7 +27,8 @@
     delete from hs_ying_order_config
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.YingOrderConfig">
+
+  <insert id="insert" parameterType="com.yimei.hs.entity.YingOrderConfig" useGeneratedKeys="true" keyProperty="id">
     insert into hs_ying_order_config (id, orderId, hsMonth, 
       maxPrepayRate, unInvoicedRate, contractBaseInterest, 
       expectHKDays, tradeAddPrice, wPrice, 
@@ -37,7 +38,8 @@
       #{expectHKDays,jdbcType=INTEGER}, #{tradeAddPrice,jdbcType=DECIMAL}, #{wPrice,jdbcType=DECIMAL}, 
       #{tsc,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingOrderConfig">
+
+  <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingOrderConfig" useGeneratedKeys="true" keyProperty="id">
     insert into hs_ying_order_config
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

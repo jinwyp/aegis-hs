@@ -3,12 +3,12 @@
 <mapper namespace="com.yimei.hs.mapper.PartyMapper">
     <resultMap id="BaseResultMap" type="com.yimei.hs.entity.Party">
         <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="custType" jdbcType="TINYINT" property="custType"/>
+        <result column="partyType" jdbcType="TINYINT" property="partyType"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="shortName" jdbcType="VARCHAR" property="shortName"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, custType, name, shortName
+    id, partyType, name, shortName
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -16,13 +16,13 @@
         from hs_party
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <select id="selectParty" resultType="com.yimei.hs.entity.Party">
+    <select id="getPage" resultType="com.yimei.hs.entity.Party">
         select
         <include refid="Base_Column_List"/>
         from hs_party
         <where>
-            <if test="custType !=null">
-                custType=#{custType}
+            <if test="partyType !=null">
+                partyType=#{partyType}
             </if>
 
         </where>
@@ -32,9 +32,9 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
     <insert id="insert" parameterType="com.yimei.hs.entity.Party" keyProperty="id" useGeneratedKeys="true">
-    insert into hs_party (id, custType, name, 
+    insert into hs_party (id, partyType, name,
       shortName)
-    values (#{id,jdbcType=BIGINT}, #{custType,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{partyType,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR},
       #{shortName,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.yimei.hs.entity.Party">
@@ -43,8 +43,8 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="custType != null">
-                custType,
+            <if test="partyType != null">
+                partyType,
             </if>
             <if test="name != null">
                 name,
@@ -57,8 +57,8 @@
             <if test="id != null">
                 #{id,jdbcType=BIGINT},
             </if>
-            <if test="custType != null">
-                #{custType,jdbcType=TINYINT},
+            <if test="partyType != null">
+                #{partyType,jdbcType=TINYINT},
             </if>
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
@@ -71,8 +71,8 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.Party">
         update hs_party
         <set>
-            <if test="custType != null">
-                custType = #{custType,jdbcType=INTEGER},
+            <if test="partyType != null">
+                partyType = #{partyType,jdbcType=INTEGER},
             </if>
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
@@ -86,8 +86,8 @@
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.Party">
         update hs_party
         <set>
-            <if test="custType !=null">
-                custType = #{custType,jdbcType=INTEGER},
+            <if test="partyType !=null">
+                partyType = #{partyType,jdbcType=INTEGER},
             </if>
             <if test="shortName !=null">
                 name = #{name,jdbcType=VARCHAR},

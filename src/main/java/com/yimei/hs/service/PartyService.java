@@ -17,8 +17,8 @@ public class PartyService {
     @Autowired
     PartyMapper partyMapper;
 
-    public Page<Party> selectParty(PagePartyDTO pagePartyDTO) {
-        return partyMapper.selectParty(pagePartyDTO);
+    public Page<Party> getPage(PagePartyDTO pagePartyDTO) {
+        return partyMapper.getPage(pagePartyDTO);
     }
 
     public Party selectPartByid(long id) {

@@ -21,13 +21,13 @@
     delete from hs_ying_order_party
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.YingOrderParty">
+  <insert id="insert" parameterType="com.yimei.hs.entity.YingOrderParty" useGeneratedKeys="true" keyProperty="id">
     insert into hs_ying_order_party (id, orderId, custType, 
       customerId, tsc)
     values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{custType,jdbcType=VARCHAR}, 
       #{customerId,jdbcType=BIGINT}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingOrderParty">
+  <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingOrderParty" useGeneratedKeys="true" keyProperty="id">
     insert into hs_ying_order_party
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
