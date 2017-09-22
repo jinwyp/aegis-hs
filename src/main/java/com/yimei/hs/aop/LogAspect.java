@@ -27,13 +27,14 @@ public class LogAspect {
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Signature sigature = proceedingJoinPoint.getSignature();
 
-        logger.info("service {} called with following args", sigature.getName());
+
+        logger.info("service {} called with following args", sigature.toShortString());
         Object[] args = proceedingJoinPoint.getArgs();
         for (Object arg : args) {
             logger.info("{}", arg);
         }
         Object o = proceedingJoinPoint.proceed();
-        logger.info("service {} return with {}", o);
+        logger.info("service {} return with {}", sigature.toShortString(), o);
         return o;
     }
 }
