@@ -37,7 +37,7 @@ public class DepartmentService {
         return deptMapper.updateByPrimaryKey(dept);
     }
 
-    public Long createDept(Dept department){
+    public int createDept(Dept department){
         return deptMapper.insert(department);
     }
 
