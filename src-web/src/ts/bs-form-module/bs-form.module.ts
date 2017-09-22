@@ -23,6 +23,7 @@ import {ForbiddenValidatorDirective} from './validators/custom-validator'
 
 
 import {FilterArrayPipe} from './pipes/filterArray/filterArray.pipe'
+import {FindKeyPipe} from './pipes/findKey/findKey.pipe'
 
 
 import {HttpService} from './services/http.service'
@@ -30,6 +31,7 @@ import {HttpService} from './services/http.service'
 @NgModule({
     declarations : [
         FilterArrayPipe,
+        FindKeyPipe,
 
         UiSwitchComponent,
         SwitchComponent,
@@ -60,6 +62,10 @@ import {HttpService} from './services/http.service'
         HttpClientModule,
 
         NgbDatepickerModule,
+
+
+        FilterArrayPipe,
+        FindKeyPipe,
 
         TextInputComponent,
         UiSwitchComponent,
