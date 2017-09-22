@@ -30,6 +30,7 @@
                     <th>ID</th>
                     <th>团队名称</th>
                     <th>部门ID</th>
+                    <th>部门</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -38,6 +39,7 @@
                     <td> {{team.id}}</td>
                     <td> {{team.name}}</td>
                     <td> {{team.deptId}}</td>
+                    <td> {{team.deptId | findKey : departmentList : 'name' }}</td>
                     <td> <button class="btn btn-info btn-sm" (click)="showForm(false, team)"> 修改 </button></td>
                 </tr>
                 </tbody>

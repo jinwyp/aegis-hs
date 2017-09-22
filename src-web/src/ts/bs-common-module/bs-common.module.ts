@@ -42,6 +42,8 @@ import {NotificationService} from './services/notification.service'
         CommonModule,
         BrowserAnimationsModule,
 
+        MaxPipe,
+
         BSModalComponent,
         BSPaginationComponent,
         SimpleNotificationsComponent

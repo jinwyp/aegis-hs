@@ -12,7 +12,7 @@ import {Pipe, PipeTransform} from '@angular/core'
  * Usage:
  *   value | filterArray:exponent
  * Example:
- *   {{ 2 | filterArray: {isCity : true} }}
+ *   {{ [{isCity : true , name : 'Shanghai'}] | filterArray: {isCity : true} }}
  *   formats to: 1024
  */
 

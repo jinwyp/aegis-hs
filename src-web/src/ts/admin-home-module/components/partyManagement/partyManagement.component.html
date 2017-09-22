@@ -8,8 +8,8 @@
 
         <form [formGroup]="partyForm" (ngSubmit)="partyFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-            <bs-text-input formControlName="name" [fc]="partyForm.get('name')" [type]="'text'" [label]="'手机号:'" [readOnly]="!isAddNew" [dirty]="ignoreDirty" [error]="partyFormError.name"></bs-text-input>
-            <bs-text-input formControlName ="shortName" [fc]="partyForm.get('shortName')" [type]="'text'" [label]="'密码:'" [dirty]="ignoreDirty" [error]="partyFormError.shortName"></bs-text-input>
+            <bs-text-input formControlName="name" [fc]="partyForm.get('name')" [type]="'text'" [label]="'公司名称:'" [dirty]="ignoreDirty" [error]="partyFormError.name"></bs-text-input>
+            <bs-text-input formControlName ="shortName" [fc]="partyForm.get('shortName')" [type]="'text'" [label]="'公司简称:'" [dirty]="ignoreDirty" [error]="partyFormError.shortName"></bs-text-input>
 
             <bs-select formControlName ="partyType" [options]="partyType" [label]="'部门:'" [error]="partyFormError.partyType"></bs-select>
 
@@ -35,16 +35,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let user of userList; trackBy: trackByFn">
-                    <td> {{user.id}}</td>
-                    <td> {{user.name}}</td>
-                    <td> {{user.shortName}}</td>
+                <tr *ngFor="let party of partyList; trackBy: trackByFn">
+                    <td> {{party.id}}</td>
+                    <td> {{party.name}}</td>
+                    <td> {{party.shortName}}</td>
                     <td>
-                        <span *ngIf="user.partyType === 1"> ccs账务公司 </span>
-                        <span *ngIf="user.partyType === 2"> 资金方 </span>
-                        <span *ngIf="user.partyType === 3"> 外部 </span>
+                        <span *ngIf="party.partyType === 1"> ccs账务公司 </span>
+                        <span *ngIf="party.partyType === 2"> 资金方 </span>
+                        <span *ngIf="party.partyType === 3"> 外部 </span>
                     </td>
-                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, user)"> 修改 </button></td>
+                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, party)"> 修改 </button></td>
                 </tr>
                 </tbody>
             </table>
