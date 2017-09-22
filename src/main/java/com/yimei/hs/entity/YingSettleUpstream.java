@@ -1,5 +1,7 @@
 package com.yimei.hs.entity;
 
+import com.yimei.hs.enums.DiscountMode;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,7 +19,7 @@ public class YingSettleUpstream implements Serializable {
 
     private BigDecimal money;
 
-    private String discountType;
+    private DiscountMode discountType;
 
     private BigDecimal discountInterest;
 
@@ -77,12 +79,12 @@ public class YingSettleUpstream implements Serializable {
         this.money = money;
     }
 
-    public String getDiscountType() {
+    public DiscountMode getDiscountType() {
         return discountType;
     }
 
-    public void setDiscountType(String discountType) {
-        this.discountType = discountType == null ? null : discountType.trim();
+    public void setDiscountType(DiscountMode discountType) {
+        this.discountType = discountType == null ? null : discountType;
     }
 
     public BigDecimal getDiscountInterest() {

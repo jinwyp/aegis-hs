@@ -70,7 +70,7 @@ public class PartyController {
             @RequestParam("custType") Integer custType) {
 
         Party party = new Party();
-        party.setCustType(custType);
+        party.setPartyType(custType);
         party.setName(name);
         party.setShortName(shotName);
         int status = partyService.updateParty(party);

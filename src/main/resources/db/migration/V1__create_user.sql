@@ -3,8 +3,9 @@ use hsdb;
 -- 用户表
 create table hs_user (
   id bigint(20)            not null auto_increment,
-  deptId bigint(20)        not null comment '所属部门id',
-  phone varchar(12)        not null comment '手机号',
+  deptId   bigint(20)        not null comment '所属部门id',
+  phone    varchar(12)        not null comment '手机号',
+  role     varchar(20) NOT NULL COMMENT '用户角色',
   password varchar(40)     not null comment '密码',
   passwordSalt varchar(40) not null comment '密码盐',
   createDate datetime      not null comment '创建时间',
@@ -14,8 +15,8 @@ create table hs_user (
   PRIMARY KEY (id),
   UNIQUE KEY name_UNIQUE (phone)
 )engine=InnoDB default charset=utf8;
-insert into hs_user(deptId, phone, password, passwordSalt, createDate, createBy, isAdmin) values
-  (1, '13022117050', '12345678', 'salt', '2017-01-01', 'hary', 1);
+insert into hs_user(deptId, phone,role, password, passwordSalt, createDate, createBy, isAdmin) values
+  (1, '13022117050', 'ADMIN','12345678', 'salt', '2017-01-01', 'hary', 1);
 
 -- 部门表
 create table hs_dept (
