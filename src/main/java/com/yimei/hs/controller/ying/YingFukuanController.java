@@ -55,8 +55,9 @@ public class YingFukuanController {
      * @return
      */
     @PostMapping("/{orderId}/fukuans")
-    public ResponseEntity<Result<YingFukuan>> create(@PathVariable("orderId") long orderId) {
-        return Result.ok(null);
+    public ResponseEntity<Result<YingFukuan>> create(YingFukuan yingFukuan) {
+        yingFukuanService.create(yingFukuan);
+        return Result.ok(yingFukuan);
     }
 
     /**

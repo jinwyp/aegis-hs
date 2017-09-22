@@ -44,7 +44,7 @@ public class YingHuankuanController {
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
     ) {
-        return Result.ok(null);
+        return Result.ok(yingHuankuanService.findOne(id));
     }
 
     /**
@@ -53,8 +53,9 @@ public class YingHuankuanController {
      * @return
      */
     @PostMapping("/{orderId}/huankuans")
-    public ResponseEntity<Result<YingHuankuan>> create(@PathVariable("orderId") long orderId) {
-        return Result.ok(null);
+    public ResponseEntity<Result<YingHuankuan>> create(YingHuankuan yingHuankuan) {
+        yingHuankuanService.create(yingHuankuan);
+        return Result.ok(yingHuankuan);
     }
 
     /**

@@ -31,4 +31,13 @@ public class YingFukuanService {
     public Page<YingFukuan> getPage(PageYingFukuanDTO pageYingFukuanDTO) {
         return yingFukuanMapper.getPage(pageYingFukuanDTO);
     }
+
+    /**
+     *
+     * @param yingFukuan
+     * @return
+     */
+    public int create(YingFukuan yingFukuan) {
+        return yingFukuanMapper.insert(yingFukuan);
+    }
 }

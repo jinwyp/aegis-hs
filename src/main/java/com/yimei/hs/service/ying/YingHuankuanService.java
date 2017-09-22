@@ -28,4 +28,12 @@ public class YingHuankuanService {
     public Page<YingHuankuan> getPage(PageYingHuankuanDTO pageYingHuankuanDTO) {
         return yingHuankuanMapper.getPage(pageYingHuankuanDTO);
     }
+
+    public YingHuankuan findOne(long id) {
+        return yingHuankuanMapper.selectByPrimaryKey(id);
+    }
+
+    public int create(YingHuankuan yingHuankuan) {
+        return yingHuankuanMapper.insert(yingHuankuan);
+    }
 }
