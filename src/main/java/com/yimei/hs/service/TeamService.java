@@ -25,7 +25,7 @@ public class TeamService {
      * @param tid
      * @return
      */
-   public Team findTeamByid(Long tid) {
+   public Team findOne(Long tid) {
        Team team = teamMapper.selectByPrimaryKey(tid);
        return team;
     }

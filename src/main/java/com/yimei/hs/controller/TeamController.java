@@ -9,6 +9,7 @@ import com.yimei.hs.service.TeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,7 +68,11 @@ public class TeamController {
      */
     @GetMapping("/teams/{id}")
     public ResponseEntity<Result<Team>> read(@PathVariable("id") long id) {
-        return Result.ok(teamService.findTeamByid(id));
+        Team team = teamService.findOne(id);
+        if (team == null) {
+            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+        }
+        return Result.ok(team);
     }
 
     /**
