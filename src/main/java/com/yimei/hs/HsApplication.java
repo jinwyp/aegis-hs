@@ -15,11 +15,11 @@ public class HsApplication {
     @Autowired
     private YingInvoiceMapper yingInvoiceMapper;
 
-    @PostConstruct
-    public void a(){
-        System.out.println(yingInvoiceMapper.getPage(new PageYingInvoiceDTO()));
+//    @PostConstruct
+//    public void a(){
+//        System.out.println(yingInvoiceMapper.getPage(new PageYingInvoiceDTO()));
+//    }
 
-    }
     public static void main(String[] args) {
         SpringApplication.run(HsApplication.class, args);
     }
