@@ -12,6 +12,7 @@ import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,8 +47,13 @@ public class YingOrderController {
      * @return
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Result<YingOrder>> read( @PathVariable("id") long id ) {
-        return Result.ok(yingOrderService.findOne(id));
+    public ResponseEntity<Result<YingOrder>> read(@PathVariable("id") long id) {
+        YingOrder order = yingOrderService.findOne(id);
+        if (order == null) {
+            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+        } else {
+            return Result.ok(order);
+        }
     }
 
     /**

@@ -44,7 +44,7 @@ public class UserController {
 
 
     /**
-     * 登录下发 jwt
+     * 登录下发 jwt 和cookie
      * @param user
      * @return
      */

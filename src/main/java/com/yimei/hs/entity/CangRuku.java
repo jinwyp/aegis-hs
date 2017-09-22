@@ -1,9 +1,12 @@
 package com.yimei.hs.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Data
 public class CangRuku implements Serializable {
     private Long id;
 
@@ -33,107 +36,4 @@ public class CangRuku implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Long getHsId() {
-        return hsId;
-    }
-
-    public void setHsId(Long hsId) {
-        this.hsId = hsId;
-    }
-
-    public LocalDateTime getRukuDate() {
-        return rukuDate;
-    }
-
-    public void setRukuDate(LocalDateTime rukuDate) {
-        this.rukuDate = rukuDate;
-    }
-
-    public Integer getRukuStatus() {
-        return rukuStatus;
-    }
-
-    public void setRukuStatus(Integer rukuStatus) {
-        this.rukuStatus = rukuStatus;
-    }
-
-    public BigDecimal getRukuAmount() {
-        return rukuAmount;
-    }
-
-    public void setRukuAmount(BigDecimal rukuAmount) {
-        this.rukuAmount = rukuAmount;
-    }
-
-    public BigDecimal getRukuPrice() {
-        return rukuPrice;
-    }
-
-    public void setRukuPrice(BigDecimal rukuPrice) {
-        this.rukuPrice = rukuPrice;
-    }
-
-    public String getLocality() {
-        return locality;
-    }
-
-    public void setLocality(String locality) {
-        this.locality = locality == null ? null : locality.trim();
-    }
-
-    public String getTrafficMode() {
-        return trafficMode;
-    }
-
-    public void setTrafficMode(String trafficMode) {
-        this.trafficMode = trafficMode == null ? null : trafficMode.trim();
-    }
-
-    public Integer getCars() {
-        return cars;
-    }
-
-    public void setCars(Integer cars) {
-        this.cars = cars;
-    }
-
-    public String getJhh() {
-        return jhh;
-    }
-
-    public void setJhh(String jhh) {
-        this.jhh = jhh == null ? null : jhh.trim();
-    }
-
-    public String getShip() {
-        return ship;
-    }
-
-    public void setShip(String ship) {
-        this.ship = ship == null ? null : ship.trim();
-    }
-
-    public LocalDateTime getTsc() {
-        return tsc;
-    }
-
-    public void setTsc(LocalDateTime tsc) {
-        this.tsc = tsc;
-    }
 }

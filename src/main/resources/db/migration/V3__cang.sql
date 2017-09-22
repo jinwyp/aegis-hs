@@ -18,11 +18,7 @@ create table hs_cang_order (
    tsc timestamp                    not null default current_timestamp,
    primary key (id)
 ) engine=InnoDB default charset=utf8;
-alter table hs_cang_order add foreign key(upstreamId)     references hs_party(id);
-alter table hs_cang_order add foreign key(downstreamId)   references hs_party(id);
-alter table hs_cang_order add foreign key(mainAccounting) references hs_party(id);
-alter table hs_cang_order add foreign key(creatorId)      references hs_user(id);
-alter table hs_cang_order add foreign key(ownerId)        references hs_user(id);
+
 
 -- 业务订单-其他参与方
 create table hs_cang_order_party (
@@ -34,8 +30,7 @@ create table hs_cang_order_party (
    tsc timestamp         not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_order_party add foreign key(orderId)    references hs_cang_order(id);
-alter table hs_cang_order_party add foreign key(customerId) references hs_party(id);
+
 
 -- 业务线(订单)核算月全局配置
 create table hs_cang_order_config (
@@ -50,7 +45,7 @@ create table hs_cang_order_config (
    tsc timestamp                       not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_order_party add foreign key(orderId) references hs_cang_order(id);
+
 
 -- 苍押订单 - 入库
 create table hs_cang_ruku (
@@ -72,8 +67,7 @@ create table hs_cang_ruku (
   tsc timestamp                   not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_ruku add foreign key(orderId) references hs_cang_order(id);
-alter table hs_cang_ruku add foreign key(hsId)    references hs_cang_order_config(id);
+
 
 create table hs_cang_chuku (
   id bigint(20)                  not null auto_increment,
@@ -88,8 +82,7 @@ create table hs_cang_chuku (
   tsc timestamp                   not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_chuku add foreign key(orderId) references hs_cang_order(id);
-alter table hs_cang_chuku add foreign key(hsId)    references hs_cang_order_config(id);
+
 
 -- 苍押订单 - 付款
 create table hs_cang_fukuan (
@@ -108,10 +101,7 @@ create table hs_cang_fukuan (
   tsc timestamp                  not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_fukuan add foreign key(orderId)   references hs_cang_order(id);
-alter table hs_cang_fukuan add foreign key(hsId)      references hs_cang_order_config(id);
-alter table hs_cang_fukuan add foreign key(capitalId) references hs_party(id);
-alter table hs_cang_fukuan add foreign key(recieveCompanyId) references hs_party(id);
+
 
 -- 苍押订单 - 回款
 create table hs_cang_huikuan (
@@ -134,9 +124,7 @@ create table hs_cang_huikuan (
    tsc timestamp                    not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_huikuan add foreign key(orderId) references hs_cang_order(id);
-alter table hs_cang_huikuan add foreign key(hsId) references hs_cang_order_config(id);
-alter table hs_cang_huikuan add foreign key(huikuanCompanyId) references hs_party(id);
+
 
 -- 苍押订单 - 回款-付款mapping
 create table hs_cang_huikuan_map (
@@ -147,8 +135,6 @@ create table hs_cang_huikuan_map (
    tsc timestamp         not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_huikuan_map add foreign key(huikuanId) references hs_cang_huikuan(id);
-alter table hs_cang_huikuan_map add foreign key(fukuanId) references hs_cang_fukuan(id);
 
 -- 苍押订单 - 还款
 create table hs_cang_huankuan (
@@ -162,9 +148,7 @@ create table hs_cang_huankuan (
    tsc timestamp           not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_huankuan add foreign key(orderId) references hs_cang_order(id);
-alter table hs_cang_huankuan add foreign key(hsId)    references hs_cang_order_config(id);
-alter table hs_cang_huankuan add foreign key(skCompanyId) references hs_party(id);
+
 
 -- 苍押订单 - 还款-付款mapping
 create table hs_cang_huankuan_map (
@@ -178,8 +162,7 @@ create table hs_cang_huankuan_map (
   tsc timestamp            not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_huankuan_map add foreign key(huankuanId) references hs_cang_huankuan(id);
-alter table hs_cang_huankuan_map add foreign key(fukuanId)   references hs_cang_fukuan(id);
+
 
 -- 苍押订单 - 上游结算
 create table hs_cang_settle_upstream (
@@ -194,8 +177,6 @@ create table hs_cang_settle_upstream (
    tsc timestamp             not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_settle_upstream add foreign key(orderId) references hs_cang_order(id);
-alter table hs_cang_settle_upstream add foreign key(hsId)    references hs_cang_order_config(id);
 
 -- 苍押订单 - 下游结算
 create table hs_cang_settle_downstream (
@@ -215,8 +196,7 @@ create table hs_cang_settle_downstream (
    tsc timestamp             not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_settle_downstream add foreign key(orderId) references hs_cang_order(id);
-alter table hs_cang_settle_downstream add foreign key(hsId)    references hs_cang_order_config(id);
+
 
 -- 苍押订单 - 上游结算-入库-map
 create table hs_cang_settle_upstream_map (
@@ -227,8 +207,6 @@ create table hs_cang_settle_upstream_map (
    tsc timestamp             not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_settle_upstream_map add foreign key(settleId) references hs_cang_settle_upstream(id);
-alter table hs_cang_settle_upstream_map add foreign key(rukuId) references hs_cang_ruku(id);
 
 -- 苍押订单 - 运输方结算
 create table hs_cang_settle_traffic (
@@ -243,9 +221,7 @@ create table hs_cang_settle_traffic (
   tsc timestamp               not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_settle_traffic add foreign key(orderId) references hs_cang_order(id);
-alter table hs_cang_settle_traffic add foreign key(hsId)    references hs_cang_order_config(id);
-alter table hs_cang_settle_traffic add foreign key(trafficCompanyId) references hs_party(id);
+
 
 -- 苍押订单 - 费用
 create table hs_cang_fee (
@@ -258,8 +234,7 @@ create table hs_cang_fee (
   tsc timestamp              not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_fee add foreign key(orderId) references hs_cang_order(id);
-alter table hs_cang_fee add foreign key(hsId)    references hs_cang_order_config(id);
+
 
 -- 苍押订单 - 发票
 create table hs_cang_invoice (
@@ -275,9 +250,6 @@ create table hs_cang_invoice (
   tsc timestamp                 not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_invoice add foreign key(orderId)       references hs_cang_order(id);
-alter table hs_cang_invoice add foreign key(hsId)          references hs_cang_order_config(id);
-alter table hs_cang_invoice add foreign key(openCompanyId) references hs_party(id);
 
 -- 苍押订单 - 发票明细
 create table hs_cang_invoice_detail (
@@ -290,7 +262,6 @@ create table hs_cang_invoice_detail (
   tsc timestamp              not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;;
-alter table hs_cang_invoice_detail add foreign key(invoiceId) references hs_cang_invoice(id);
 
 -- 苍押订单-转移记录
 create table hs_cang_transfer (
@@ -301,7 +272,6 @@ create table hs_cang_transfer (
   tsc timestamp         not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_transfer add foreign key(orderId) references hs_cang_order(id);
 
 
 -- 修改记录
@@ -315,6 +285,4 @@ create table hs_cang_log (
   tsc timestamp           not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-alter table hs_cang_log add foreign key(orderId) references hs_cang_order(id);
-alter table hs_cang_log add foreign key(hsId) references hs_cang_order_config(id);
 

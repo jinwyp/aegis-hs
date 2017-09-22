@@ -20,24 +20,24 @@ public class DepartmentService {
     @Autowired
     private DeptMapper deptMapper;
 
-    public Page<Dept> selectAllDept(PageDeptDTO pageDeptDTO) {
+    public Page<Dept> getPage(PageDeptDTO pageDeptDTO) {
 
-        return deptMapper.selectAll(pageDeptDTO);
+        return deptMapper.getPage(pageDeptDTO);
     }
 
-    public Dept selectDeptById(long id) {
-
+    public Dept findOne(long id) {
         return deptMapper.selectByPrimaryKey(id);
     }
 
     public int deleteDeptById(long id) {
         return deptMapper.deleteByPrimaryKey(id);
     }
+
     public int update(Dept dept){
         return deptMapper.updateByPrimaryKey(dept);
     }
 
-    public int createDept(Dept department){
+    public int create(Dept department){
         return deptMapper.insert(department);
     }
 

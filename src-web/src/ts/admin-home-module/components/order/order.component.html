@@ -1,0 +1,51 @@
+
+
+        <h3>
+            核算单管理
+            <button type="button" class="btn btn-outline-info btn-sm float-right" *ngIf="!isShowForm" (click)="showForm(true)">添加</button>
+        </h3>
+
+
+        <form [formGroup]="orderForm" (ngSubmit)="orderFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+
+            <bs-text-input formControlName="name" [fc]="orderForm.get('name')" [type]="'text'" [label]="'名称:'" [dirty]="ignoreDirty" [error]="orderFormError.name"></bs-text-input>
+
+            <bs-select formControlName ="deptId" [fc]="orderForm.get('deptId')" [label]="'部门:'" [options]="departmentList" [error]="orderFormError.deptId"></bs-select>
+
+
+            <div class="form-group row">
+                <div class="col-10 ml-auto">
+                    <button type="submit" class="btn btn-info" >保存</button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
+                </div>
+            </div>
+        </form>
+
+
+
+        <div *ngIf="!isShowForm">
+            <table class="table table-bordered table-hover table-responsive" >
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>核算单名称</th>
+                    <th>部门ID</th>
+                    <th>部门</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let order of orderList; trackBy: trackByFn">
+                    <td> {{order.id}}</td>
+                    <td> {{order.name}}</td>
+                    <td> {{order.deptId}}</td>
+                    <td> {{order.deptId | findKey : departmentList : 'name' }}</td>
+                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, order)"> 修改 </button></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <bs-pagination [collectionSize]="pagination.total" [pageSize]="pagination.pageSize" [(page)]="pagination.pageNo" (pageChange)="getUserList($event)"></bs-pagination>
+
+        </div>
+

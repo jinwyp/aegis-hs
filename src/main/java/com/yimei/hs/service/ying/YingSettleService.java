@@ -94,4 +94,8 @@ public class YingSettleService {
     public YingSettleDownstream findDownstream(long id) {
         return yingSettleDownstreamMapper.selectByPrimaryKey(id);
     }
+
+    public YingSettleUpstream findUpstream(long id) {
+        return yingSettleUpstreamMapper.selectByPrimaryKey(id);
+    }
 }

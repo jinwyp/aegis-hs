@@ -1,8 +1,11 @@
 package com.yimei.hs.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@Data
 public class YingTransfer implements Serializable {
     private Long id;
 
@@ -16,43 +19,4 @@ public class YingTransfer implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Long getFromUserId() {
-        return fromUserId;
-    }
-
-    public void setFromUserId(Long fromUserId) {
-        this.fromUserId = fromUserId;
-    }
-
-    public Long getToUserId() {
-        return toUserId;
-    }
-
-    public void setToUserId(Long toUserId) {
-        this.toUserId = toUserId;
-    }
-
-    public LocalDateTime getTsc() {
-        return tsc;
-    }
-
-    public void setTsc(LocalDateTime tsc) {
-        this.tsc = tsc;
-    }
 }

@@ -40,8 +40,12 @@ public class PartyController {
      */
     @GetMapping("/parties/{id}")
     public ResponseEntity<Result<Party>> read(@PathVariable long id) {
-
-        return Result.ok(partyService.selectPartByid(id));
+        Party party = partyService.findOne(id);
+        if (party == null) {
+            return Result.error(4001, "记录不存在");
+        } else {
+            return Result.ok(party);
+        }
     }
 
     /**
@@ -72,7 +76,7 @@ public class PartyController {
         party.setPartyType(custType);
         party.setName(name);
         party.setShortName(shotName);
-        int status = partyService.updateParty(party);
+        int status = partyService.update(party);
         if (status == 1) {
             return Result.ok(1);
         } else {

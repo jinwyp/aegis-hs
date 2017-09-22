@@ -1,6 +1,5 @@
 package com.yimei.hs.entity;
 
-import com.yimei.hs.enums.UserRole;
 import lombok.Data;
 
 import java.io.Serializable;

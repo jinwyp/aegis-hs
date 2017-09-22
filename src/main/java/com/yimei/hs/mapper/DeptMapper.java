@@ -17,7 +17,7 @@ public interface DeptMapper {
 
     int updateByPrimaryKey(Dept record);
 
-    Page<Dept> selectAll(PageDeptDTO pageDeptDTO);
+    Page<Dept> getPage(PageDeptDTO pageDeptDTO);
 
     boolean checkDeptExist(Long id);
 }

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms'
 import { HttpService } from '../../../bs-form-module/services/http.service'
 
 
-import { formErrorHandler } from '../../../bs-form-module/validators/validator'
+import { formErrorHandler, isMobilePhone } from '../../../bs-form-module/validators/validator'
 import {UserLoginService} from '../../../services/userLogin.service'
 
 
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
             'pattern'       : '用户名必须字母开头!',
             'isExist'       : '用户名已经存在!'
         },
-        'mobilePhone' : {
+        'phone' : {
             'required'    : '请填写手机号!',
             'mobilePhone' : '手机号格式不正确!',
             'isExist'     : '手机号已经存在!'
@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
 
     createLoginForm(): void {
         this.loginForm = this.fb.group({
-            'username'    : ['', [Validators.required, Validators.minLength(4), Validators.maxLength(30), Validators.pattern(/^[a-zA-Z][a-zA-Z0-9_]*$/)] ],
+            'phone'    : ['', [Validators.required, isMobilePhone()] ],
             'password'    : ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)] ]
         } )
         this.loginForm.valueChanges.subscribe(data => {
