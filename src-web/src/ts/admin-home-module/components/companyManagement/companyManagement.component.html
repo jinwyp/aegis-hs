@@ -9,6 +9,7 @@
         <form [formGroup]="userForm" (ngSubmit)="userFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
             <bs-text-input formControlName="phone" [fc]="userForm.get('phone')" [type]="'text'" [label]="'手机号:'" [readOnly]="!isAddNew" [dirty]="ignoreDirty" [error]="userFormError.phone"></bs-text-input>
+
             <bs-text-input formControlName ="password" [fc]="userForm.get('password')" [type]="'text'" [label]="'密码:'" [dirty]="ignoreDirty" [error]="userFormError.password"></bs-text-input>
 
             <bs-select formControlName ="deptId" [options]="departmentList" [label]="'部门:'" [error]="userFormError.deptId"></bs-select>

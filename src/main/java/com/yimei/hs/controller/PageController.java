@@ -16,6 +16,16 @@ public class PageController {
     }
 
 
+    /**
+     * 管理页面 为了前端路由需要重定向
+     */
+    @GetMapping("/web/index/**")
+    public String adminHome() {
+        return "forward:/web/index";
+    }
+
+
+
     @GetMapping("/web/login")
     public String hello(Model model) {
         return "/login";

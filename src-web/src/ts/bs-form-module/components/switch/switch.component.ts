@@ -1,9 +1,10 @@
 import {Component, Input, forwardRef, OnInit, OnChanges, SimpleChange} from '@angular/core'
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms'
+import {ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl} from '@angular/forms'
 
 @Component({
     selector    : 'bs-switch',
     templateUrl : './switch.component.html',
+    styleUrls: ['./switch.component.css'],
     providers   : [
         {
             provide     : NG_VALUE_ACCESSOR,
@@ -14,11 +15,23 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms'
 })
 export class SwitchComponent implements ControlValueAccessor, OnInit, OnChanges {
 
-    @Input() label: string = 'label switch'
+    @Input('fc') currentFormControl: FormControl = new FormControl()
+    @Input() label: string
+    @Input() prompt: string = 'Checkbox'
+
+    @Input() error: string = ''
+
+
+    @Input() checkbox: boolean = false
+
+    @Input('labelclass') labelClass: string = 'col-2'
+    @Input('inputclass') inputClass: string = 'col-6'
+
+
     interValue: boolean = false
 
-    onChange: any  = () => {}
-    onTouched: any = () => {}
+    onChange: any  = () => { return }
+    onTouched: any = () => { return }
 
     constructor () {
         // console.log('constructor')
@@ -66,9 +79,13 @@ export class SwitchComponent implements ControlValueAccessor, OnInit, OnChanges 
 
     writeValue(value: any): void {
         // console.log('writeValue: ', value)
-        if (value) {
+
+        if ( typeof value === 'boolean') {
             this.value = value
+        } else {
+            this.value = false
         }
+
     }
 
 
