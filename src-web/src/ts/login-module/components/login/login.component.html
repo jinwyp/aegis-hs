@@ -5,7 +5,7 @@
         <H1> 登陆 </H1>
         <form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()">
 
-            <bs-text-input formControlName="username" [fc]="loginForm.get('username')" [type]="'text'" [label]="'用户名:'" [dirty]="ignoreDirty" [error]="loginFormError.username"></bs-text-input>
+            <bs-text-input formControlName="phone" [fc]="loginForm.get('phone')" [type]="'text'" [label]="'手机:'" [dirty]="ignoreDirty" [error]="loginFormError.phone"></bs-text-input>
             <bs-text-input formControlName="password" [fc]="loginForm.get('password')" [type]="'password'" [label]="'密码:'" [dirty]="ignoreDirty" [error]="loginFormError.password"></bs-text-input>
 
             <div class="form-group row">
