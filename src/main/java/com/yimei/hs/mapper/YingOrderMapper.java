@@ -2,6 +2,7 @@ package com.yimei.hs.mapper;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.YingOrder;
+import com.yimei.hs.entity.dto.ying.PageYingOrderDTO;
 
 import java.util.List;
 
@@ -18,5 +19,5 @@ public interface YingOrderMapper {
 
     int updateByPrimaryKey(YingOrder record);
 
-    Page<YingOrder> selectAllOrder();
+    Page<YingOrder> getPage(PageYingOrderDTO pageYingOrderDTO);
 }

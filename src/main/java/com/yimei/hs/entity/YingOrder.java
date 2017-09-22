@@ -2,6 +2,7 @@ package com.yimei.hs.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class YingOrder implements Serializable {
     private Long id;
@@ -31,6 +32,26 @@ public class YingOrder implements Serializable {
     private String status;
 
     private LocalDateTime tsc;
+
+    private List<YingOrderConfig> orderConfigList;   // 关联的核算月配置
+
+    public List<YingOrderParty> getOrderPartyList() {
+        return orderPartyList;
+    }
+
+    public void setOrderPartyList(List<YingOrderParty> orderPartyList) {
+        this.orderPartyList = orderPartyList;
+    }
+
+    private List<YingOrderParty> orderPartyList; // 关联的参与方
+
+    public List<YingOrderConfig> getOrderConfigList() {
+        return orderConfigList;
+    }
+
+    public void setOrderConfigList(List<YingOrderConfig> orderConfigList) {
+        this.orderConfigList = orderConfigList;
+    }
 
     private static final long serialVersionUID = 1L;
 

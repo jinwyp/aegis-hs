@@ -2,6 +2,7 @@ package com.yimei.hs.service.ying;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.YingOrder;
+import com.yimei.hs.entity.dto.ying.PageYingOrderDTO;
 import com.yimei.hs.mapper.YingOrderConfigMapper;
 import com.yimei.hs.mapper.YingOrderMapper;
 import com.yimei.hs.mapper.YingOrderPartyMapper;
@@ -27,11 +28,11 @@ public class YingOrderService {
     @Autowired
     private YingOrderConfigMapper yingOrderConfigMapper;
 
-    public Page<YingOrder> quaryAllOrder() {
-        return yingOrderMapper.selectAllOrder();
+    public Page<YingOrder> getPage(PageYingOrderDTO pageYingOrderDTO) {
+        return yingOrderMapper.getPage(pageYingOrderDTO);
     }
 
-    public YingOrder quaryOrderbyId(long id) {
+    public YingOrder findOne(long id) {
         return yingOrderMapper.selectByPrimaryKey(id);
     }
 
