@@ -5,7 +5,7 @@ import com.yimei.hs.entity.CangLog;
 public interface CangLogMapper {
     int deleteByPrimaryKey(Long id);
 
-    long insert(CangLog record);
+    int insert(CangLog record);
 
     int insertSelective(CangLog record);
 

@@ -7,7 +7,7 @@ import com.yimei.hs.entity.dto.PageDeptDTO;
 public interface DeptMapper {
     int deleteByPrimaryKey(Long id);
 
-    Long insert(Dept record);
+    int insert(Dept record);
 
     Long insertSelective(Dept record);
 

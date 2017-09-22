@@ -5,7 +5,7 @@ import com.yimei.hs.entity.CangSettleUpstreamMap;
 public interface CangSettleUpstreamMapMapper {
     int deleteByPrimaryKey(Long id);
 
-    long insert(CangSettleUpstreamMap record);
+    int insert(CangSettleUpstreamMap record);
 
     int insertSelective(CangSettleUpstreamMap record);
 

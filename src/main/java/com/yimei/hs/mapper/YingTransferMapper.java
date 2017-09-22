@@ -5,7 +5,7 @@ import com.yimei.hs.entity.YingTransfer;
 public interface YingTransferMapper {
     int deleteByPrimaryKey(Long id);
 
-    long insert(YingTransfer record);
+    int insert(YingTransfer record);
 
     int insertSelective(YingTransfer record);
 

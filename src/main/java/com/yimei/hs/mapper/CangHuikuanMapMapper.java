@@ -5,7 +5,7 @@ import com.yimei.hs.entity.CangHuikuanMap;
 public interface CangHuikuanMapMapper {
     int deleteByPrimaryKey(Long id);
 
-    long insert(CangHuikuanMap record);
+    int insert(CangHuikuanMap record);
 
     int insertSelective(CangHuikuanMap record);
 

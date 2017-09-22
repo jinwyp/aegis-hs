@@ -5,7 +5,7 @@ import com.yimei.hs.entity.YingFee;
 public interface YingFeeMapper {
     int deleteByPrimaryKey(Long id);
 
-    long insert(YingFee record);
+    int insert(YingFee record);
 
     int insertSelective(YingFee record);
 

@@ -5,7 +5,7 @@ import com.yimei.hs.entity.YingOrderParty;
 public interface YingOrderPartyMapper {
     int deleteByPrimaryKey(Long id);
 
-    long insert(YingOrderParty record);
+    int insert(YingOrderParty record);
 
     int insertSelective(YingOrderParty record);
 

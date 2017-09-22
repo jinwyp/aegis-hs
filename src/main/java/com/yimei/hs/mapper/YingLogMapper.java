@@ -5,7 +5,7 @@ import com.yimei.hs.entity.YingLog;
 public interface YingLogMapper {
     int deleteByPrimaryKey(Long id);
 
-    long insert(YingLog record);
+    int insert(YingLog record);
 
     int insertSelective(YingLog record);
 

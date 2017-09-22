@@ -7,7 +7,7 @@ import java.util.List;
 public interface YingSettleUpstreamMapper {
     int deleteByPrimaryKey(Long id);
 
-    long insert(YingSettleUpstream record);
+    int insert(YingSettleUpstream record);
 
     int insertSelective(YingSettleUpstream record);
 

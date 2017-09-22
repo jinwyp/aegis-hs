@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public interface TeamMapper {
     int deleteByPrimaryKey(Long id);
 
-    long insert(Team record);
+    int insert(Team record);
 
     int insertSelective(Team record);
 

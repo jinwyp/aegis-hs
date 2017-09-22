@@ -5,7 +5,7 @@ import com.yimei.hs.entity.CangOrderParty;
 public interface CangOrderPartyMapper {
     int deleteByPrimaryKey(Long id);
 
-    long insert(CangOrderParty record);
+    int insert(CangOrderParty record);
 
     int insertSelective(CangOrderParty record);
 
