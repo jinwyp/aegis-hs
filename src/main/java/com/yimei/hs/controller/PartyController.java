@@ -45,7 +45,7 @@ public class PartyController {
      * @param id
      * @return
      */
-    @GetMapping("/party/{id}")
+    @GetMapping("/partys/{id}")
     public ResponseEntity<Result<Party>> read(@PathVariable long id) {
 
         return Result.ok(partyService.selectPartByid(id));
@@ -68,7 +68,7 @@ public class PartyController {
      *
      * @return
      */
-    @PutMapping("/party/{id}")
+    @PutMapping("/partys/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("id") long id,
             @RequestParam("shortName") String shotName,
