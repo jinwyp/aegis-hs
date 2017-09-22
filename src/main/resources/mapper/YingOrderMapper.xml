@@ -123,6 +123,17 @@
             LEFT JOIN hs_ying_order_config t2 ON t1.id = t2.id
             LEFT JOIN hs_ying_order_party t3 ON t1.id = t3.id
 
+        <where>
+           <if test="deptId!=null"> deptId = #{deptId, jdbcType=BIGINT}</if>
+            <if test="cargoType!=null"> cargoType = #{cargoType, jdbcType=VARCHAR}</if>
+            <if test="creatorId!=null"> creatorId = #{creatorId, jdbcType=BIGINT}</if>
+            <if test="ownerId!=null"> ownerId = #{ownerId, jdbcType=BIGINT}</if>
+            <if test="upstreamId!=null"> upstreamId = #{upstreamId, jdbcType=BIGINT}</if>
+            <if test="downstreamId!=null"> downstreamId = #{downstreamId, jdbcType=BIGINT}</if>
+            <if test="mainAccounting!=null"> mainAccounting = #{mainAccounting, jdbcType=BIGINT}</if>
+            <if test="status!=null"> status = #{status, jdbcType=VARCHAR}</if>
+        </where>
+
     </select>
 
 
