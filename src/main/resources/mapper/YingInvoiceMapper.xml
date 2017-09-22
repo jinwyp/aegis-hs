@@ -22,7 +22,12 @@
     from hs_ying_invoice
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+
+
+    <select id="getPage" resultType="com.yimei.hs.entity.YingInvoice">
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from hs_ying_invoice
     where id = #{id,jdbcType=BIGINT}
   </delete>

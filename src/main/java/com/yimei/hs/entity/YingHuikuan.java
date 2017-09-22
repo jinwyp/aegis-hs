@@ -1,25 +1,29 @@
 package com.yimei.hs.entity;
 
+import com.yimei.hs.enums.PayMode;
+import com.yimei.hs.enums.RecivedPaymentPurpose;
+
+import javax.validation.constraints.Max;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class YingHuikuan implements Serializable {
     private Long id;
-
+    @Max(20)
     private Long orderId;
-
+    @Max(20)
     private Long hsId;
-
+    @Max(20)
     private Long huikuanCompanyId;
 
     private LocalDateTime huikuanDate;
 
     private BigDecimal huikuanAmount;
 
-    private String huikuanUsage;
+    private RecivedPaymentPurpose huikuanUsage;
 
-    private String huikuanMode;
+    private PayMode huikuanMode;
 
     private Boolean huikuanBankPaper;
 
@@ -93,20 +97,20 @@ public class YingHuikuan implements Serializable {
         this.huikuanAmount = huikuanAmount;
     }
 
-    public String getHuikuanUsage() {
+    public RecivedPaymentPurpose getHuikuanUsage() {
         return huikuanUsage;
     }
 
-    public void setHuikuanUsage(String huikuanUsage) {
-        this.huikuanUsage = huikuanUsage == null ? null : huikuanUsage.trim();
+    public void setHuikuanUsage(RecivedPaymentPurpose huikuanUsage) {
+        this.huikuanUsage = huikuanUsage == null ? null : huikuanUsage;
     }
 
-    public String getHuikuanMode() {
+    public PayMode getHuikuanMode() {
         return huikuanMode;
     }
 
-    public void setHuikuanMode(String huikuanMode) {
-        this.huikuanMode = huikuanMode == null ? null : huikuanMode.trim();
+    public void setHuikuanMode(PayMode huikuanMode) {
+        this.huikuanMode = huikuanMode == null ? null : huikuanMode;
     }
 
     public Boolean getHuikuanBankPaper() {

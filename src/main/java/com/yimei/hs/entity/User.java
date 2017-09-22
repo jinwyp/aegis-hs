@@ -1,14 +1,20 @@
 package com.yimei.hs.entity;
 
+import com.yimei.hs.enums.UserRole;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@Data
 public class User implements Serializable {
     private Long id;
 
     private Long deptId;
 
     private String phone;
+
+    private UserRole role;
 
     private String password;
 
@@ -46,6 +52,14 @@ public class User implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone == null ? null : phone.trim();
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role == null ? null : role;
     }
 
     public String getPassword() {

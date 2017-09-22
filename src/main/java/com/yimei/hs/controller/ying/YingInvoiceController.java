@@ -1,13 +1,16 @@
 package com.yimei.hs.controller.ying;
 
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.YingInvoice;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.entity.dto.ying.PageYingInvoiceDTO;
 import com.yimei.hs.service.ying.YingInvoiceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -28,8 +31,9 @@ public class YingInvoiceController {
      * @return
      */
     @GetMapping("/{orderId}/invoices")
-    public ResponseEntity<PageResult<YingInvoice>> list() {
-        return PageResult.ok(null);
+    public ResponseEntity<PageResult<YingInvoice>> list(PageYingInvoiceDTO pageYingInvoiceDTO) {
+        Page<YingInvoice> page = yingInvoiceService.getPage(pageYingInvoiceDTO);
+        return PageResult.ok(page);
     }
 
     /**
@@ -43,7 +47,7 @@ public class YingInvoiceController {
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
     ) {
-        return Result.ok(null);
+        return Result.ok(yingInvoiceService.findOne(id));
     }
 
     /**
@@ -52,8 +56,11 @@ public class YingInvoiceController {
      * @return
      */
     @PostMapping("/{orderId}/invoices")
-    public ResponseEntity<Result<YingInvoice>> create(@PathVariable("orderId") long orderId) {
-        return Result.ok(null);
+    @Transactional(readOnly = false)
+    public ResponseEntity<Result<YingInvoice>> create(YingInvoice yingInvoice) {
+        // 创建发表记录 todo
+        yingInvoiceService.create(yingInvoice);
+        return Result.ok(yingInvoice);
     }
 
     /**

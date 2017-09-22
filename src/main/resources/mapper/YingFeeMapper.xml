@@ -18,7 +18,12 @@
     from hs_ying_fee
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+
+    <select id="getPage" resultType="com.yimei.hs.entity.YingFee">
+
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from hs_ying_fee
     where id = #{id,jdbcType=BIGINT}
   </delete>

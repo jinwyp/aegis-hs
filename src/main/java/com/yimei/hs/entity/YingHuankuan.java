@@ -1,14 +1,18 @@
 package com.yimei.hs.entity;
 
+import lombok.Data;
+
+import javax.validation.constraints.Max;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Data
 public class YingHuankuan implements Serializable {
     private Long id;
-
+    @Max(20)
     private Long orderId;
-
+    @Max(20)
     private Long hsId;
 
     private Long skCompanyId;

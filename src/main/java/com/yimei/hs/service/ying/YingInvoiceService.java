@@ -1,5 +1,8 @@
 package com.yimei.hs.service.ying;
 
+import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.entity.YingInvoice;
+import com.yimei.hs.entity.dto.ying.PageYingInvoiceDTO;
 import com.yimei.hs.mapper.YingInvoiceDetailMapper;
 import com.yimei.hs.mapper.YingInvoiceMapper;
 import org.slf4j.Logger;
@@ -24,4 +27,16 @@ public class YingInvoiceService {
 
     @Autowired
     private YingLogService yingLogService;
+
+    public Page<YingInvoice> getPage(PageYingInvoiceDTO pageYingInvoiceDTO) {
+        return yingInvoiceMapper.getPage(pageYingInvoiceDTO);
+    }
+
+    public YingInvoice findOne(long id) {
+        return yingInvoiceMapper.selectByPrimaryKey(id);
+    }
+
+    public int create(YingInvoice yingInvoice) {
+        return yingInvoiceMapper.insert(yingInvoice);
+    }
 }
