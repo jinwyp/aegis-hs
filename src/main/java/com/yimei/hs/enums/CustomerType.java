@@ -7,7 +7,7 @@ public enum CustomerType {
 
 
     UPSTREAM("上游戏"),
-    DOWTSTREAM("下游"),
+    DOWNSTREAM("下游"),
     TRAFFICKCER("贸易公司"),
     FUNDER("资金方"),
     TRANSPORT_COMPANY("运输方"),
