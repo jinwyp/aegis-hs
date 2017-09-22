@@ -3,6 +3,7 @@ package com.yimei.hs.controller.ying;
 import com.yimei.hs.entity.YingSettleTraffic;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.entity.dto.ying.PageYingSettleTrafficDTO;
 import com.yimei.hs.service.ying.YingSettleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +33,8 @@ public class YingSettleTrafficController {
      * @return
      */
     @GetMapping("/{orderId}/settletraffic")
-    public ResponseEntity<PageResult<YingSettleTraffic>> list() {
-        return PageResult.ok(null);
+    public ResponseEntity<PageResult<YingSettleTraffic>> list(PageYingSettleTrafficDTO pageYingSettleTrafficDTO) {
+        return PageResult.ok(yingSettleService.getPageTraffic(pageYingSettleTrafficDTO));
     }
 
     /**

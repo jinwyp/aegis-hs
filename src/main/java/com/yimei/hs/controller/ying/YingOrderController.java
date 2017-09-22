@@ -51,7 +51,7 @@ public class YingOrderController {
      */
     @PostMapping
     public ResponseEntity<Result<YingOrder>> create(@RequestBody YingOrder order) {
-        yingOrderService.createOrder(order);
+        yingOrderService.create(order);
         return Result.ok(order);
     }
 
@@ -65,7 +65,7 @@ public class YingOrderController {
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
     ) {
-        yingOrderService.updateOrder(new YingOrder());
+        yingOrderService.update(new YingOrder());
         return Result.ok(1);
     }
 }

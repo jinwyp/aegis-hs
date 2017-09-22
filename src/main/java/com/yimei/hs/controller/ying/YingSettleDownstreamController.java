@@ -3,6 +3,7 @@ package com.yimei.hs.controller.ying;
 import com.yimei.hs.entity.YingSettleDownstream;
 import com.yimei.hs.entity.dto.PageResult;
 import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.entity.dto.ying.PageYingSettleDownstreamDTO;
 import com.yimei.hs.service.ying.YingSettleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +32,8 @@ public class YingSettleDownstreamController {
      * @return
      */
     @GetMapping("/{orderId}/settledownstream")
-    public ResponseEntity<PageResult<YingSettleDownstream>> list() {
-        return PageResult.ok(null);
+    public ResponseEntity<PageResult<YingSettleDownstream>> list(PageYingSettleDownstreamDTO pageYingSettleDownstreamDTO) {
+        return PageResult.ok(yingSettleService.getPageDownstream(pageYingSettleDownstreamDTO));
     }
 
     /**

@@ -1,6 +1,12 @@
 package com.yimei.hs.service.ying;
 
+import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.entity.YingSettleDownstream;
+import com.yimei.hs.entity.YingSettleTraffic;
 import com.yimei.hs.entity.YingSettleUpstream;
+import com.yimei.hs.entity.dto.ying.PageYingSettleDownstreamDTO;
+import com.yimei.hs.entity.dto.ying.PageYingSettleTrafficDTO;
+import com.yimei.hs.entity.dto.ying.PageYingSettleUpstreamDTO;
 import com.yimei.hs.mapper.YingSettleDownstreamMapMapper;
 import com.yimei.hs.mapper.YingSettleDownstreamMapper;
 import com.yimei.hs.mapper.YingSettleTrafficMapper;
@@ -30,9 +36,6 @@ public class YingSettleService {
     @Autowired
     YingSettleTrafficMapper yingSettleTrafficMapper;
 
-    @Autowired
-    YingSettleDownstreamMapMapper yingSettleDownstreamMapMapper;
-
     /**
      *  find settles by orderid
      * @param orderId
@@ -44,4 +47,31 @@ public class YingSettleService {
 
     @Autowired
     private YingLogService yingLogService;
+
+    /**
+     *
+     * @param pageYingSettleTrafficDTO
+     * @return
+     */
+    public Page<YingSettleTraffic> getPageTraffic(PageYingSettleTrafficDTO pageYingSettleTrafficDTO) {
+        return yingSettleTrafficMapper.getPage(pageYingSettleTrafficDTO);
+    }
+
+    /**
+     *
+     * @param pageYingSettleUpstreamDTO
+     * @return
+     */
+    public Page<YingSettleUpstream> getPageUpstream(PageYingSettleUpstreamDTO pageYingSettleUpstreamDTO) {
+        return yingSettleUpstreamMapper.getPage(pageYingSettleUpstreamDTO);
+    }
+
+    /**
+     *
+     * @param pageYingSettleDownstreamDTO
+     * @return
+     */
+    public Page<YingSettleDownstream> getPageDownstream(PageYingSettleDownstreamDTO pageYingSettleDownstreamDTO) {
+        return yingSettleDownstreamMapper.getPage(pageYingSettleDownstreamDTO);
+    }
 }

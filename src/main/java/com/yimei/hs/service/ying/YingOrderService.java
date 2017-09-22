@@ -28,19 +28,39 @@ public class YingOrderService {
     @Autowired
     private YingOrderConfigMapper yingOrderConfigMapper;
 
+    /**
+     * 获取一页订单
+     * @param pageYingOrderDTO
+     * @return
+     */
     public Page<YingOrder> getPage(PageYingOrderDTO pageYingOrderDTO) {
         return yingOrderMapper.getPage(pageYingOrderDTO);
     }
 
+    /**
+     * 获取指定订单
+     * @param id
+     * @return
+     */
     public YingOrder findOne(long id) {
         return yingOrderMapper.selectByPrimaryKey(id);
     }
 
-    public int createOrder(YingOrder order) {
+    /**
+     * 创建订单
+     * @param order
+     * @return
+     */
+    public int create(YingOrder order) {
         return yingOrderMapper.insert(order);
     }
 
-    public int updateOrder(YingOrder record) {
+    /**
+     *  更新订单
+     * @param record
+     * @return
+     */
+    public int update(YingOrder record) {
         return yingOrderMapper.updateByPrimaryKey(record);
     }
 
