@@ -43,7 +43,7 @@ public class YingSettleTrafficController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/settletraffic/:id")
+    @GetMapping("/{orderId}/settletraffic/{id}")
     public ResponseEntity<Result<YingSettleTraffic>> read(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
@@ -67,7 +67,7 @@ public class YingSettleTrafficController {
      *
      * @return
      */
-    @PutMapping("/{orderId}/settletraffic/:id")
+    @PutMapping("/{orderId}/settletraffic/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id

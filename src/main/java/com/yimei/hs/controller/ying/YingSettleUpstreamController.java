@@ -40,7 +40,7 @@ public class YingSettleUpstreamController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/settleupstream/:id")
+    @GetMapping("/{orderId}/settleupstream/{id}")
     public ResponseEntity<Result<YingSettleUpstream>> read(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
@@ -64,7 +64,7 @@ public class YingSettleUpstreamController {
      *
      * @return
      */
-    @PutMapping("/{orderId}/settleupstream/:id")
+    @PutMapping("/{orderId}/settleupstream/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
