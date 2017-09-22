@@ -19,6 +19,9 @@ import { TeamManagementComponent } from './components/teamManagement/teamManagem
 import { PartyManagementComponent } from './components/partyManagement/partyManagement.component'
 
 
+import { OrderComponent } from './components/order/order.component'
+
+
 
 import { UserInfoService } from '../services/userInfo.service'
 import { HSUserService } from '../services/hsUser.service'
@@ -34,6 +37,8 @@ const userHomeRoutes: Routes = [
     {path : 'departments', component : DepartmentManagementComponent},
     {path : 'teams', component : TeamManagementComponent},
     {path : 'companies', component : PartyManagementComponent},
+
+    {path : 'orders', component : OrderComponent},
     {path : '**', redirectTo : '/info/basic', pathMatch : 'full'},
 ]
 
@@ -47,7 +52,9 @@ const userHomeRoutes: Routes = [
         UserManagementComponent,
         DepartmentManagementComponent,
         TeamManagementComponent,
-        PartyManagementComponent
+        PartyManagementComponent,
+
+        OrderComponent
     ],
     imports      : [
         BrowserModule,
