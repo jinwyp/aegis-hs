@@ -16,11 +16,28 @@
         id, orderId, hsId, invoiceDirection, invoiceType, openDate, openCompanyId, recieverId,
         tsc
     </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from hs_ying_invoice
-        where id = #{id,jdbcType=BIGINT}
+
+    <!-- 获取一个发票记录以及相关的发票明细 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="YingInvoiceResultMap">
+        SELECT
+            t1.id  t1Id,
+            t2.id  t2Id,
+            t1.orderId,
+            t1.hsId,
+            t1.invoiceDirection,
+            t1.invoiceType,
+            t1.openDate,
+            t1.openCompanyId,
+            t1.recieverId,
+            t1.tsc,
+            t2.invoiceId,
+            t2.invoiceNumber,
+            t2.cargoAmount,
+            t2.taxRate,
+            t2.priceAndTax,
+            t2.tsc t2tsc
+        FROM hs_ying_invoice t1 LEFT JOIN hs_ying_invoice_detail t2 ON t1.id = t2.invoiceId
+        where t1.id = #{id, jdbcType=BIGINT}
     </select>
 
     <!-- 选出一页发票数据 -->

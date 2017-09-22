@@ -28,7 +28,7 @@ public class YingOrderService {
     private YingOrderConfigMapper yingOrderConfigMapper;
 
     public Page<YingOrder> quaryAllOrder() {
-        return yingOrderMapper.selectAllOrder();
+        return yingOrderMapper.getPage();
     }
 
     public YingOrder quaryOrderbyId(long id) {
