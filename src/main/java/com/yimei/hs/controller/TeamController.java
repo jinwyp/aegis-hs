@@ -53,7 +53,7 @@ public class TeamController {
         ResponseEntity teamResponseEntity;
 
         if (departmentService.checkDeptExist(team.getDeptId())) {
-            teamService.createTeams(team);
+            teamService.create(team);
             return Result.ok(team);
         } else {
             return Result.error(5001, "添加失败");
@@ -88,7 +88,7 @@ public class TeamController {
         team.setDeptId(deptId);
         team.setName(name);
 
-        int status = teamService.updateTeam(team);
+        int status = teamService.update(team);
         if (status == 1) {
             return Result.ok(1);
         } else {
@@ -102,7 +102,7 @@ public class TeamController {
      */
     @DeleteMapping("/teams/{id}")
     public String delete(@PathVariable("id") long id) {
-        teamService.deleteTeamById(id);
+        teamService.delete(id);
         return "Team";
     }
 

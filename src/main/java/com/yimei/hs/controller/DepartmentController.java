@@ -28,7 +28,7 @@ public class DepartmentController {
     @GetMapping("/departments")
     public ResponseEntity<PageResult<Dept>> list(PageDeptDTO pageDeptDTO
     ) {
-        return PageResult.ok(departmentService.selectAllDept(pageDeptDTO));
+        return PageResult.ok(departmentService.getPage(pageDeptDTO));
     }
 
     /**
@@ -39,7 +39,7 @@ public class DepartmentController {
      */
     @GetMapping("/departments/{id}")
     public ResponseEntity<Result<Dept>> read(@PathVariable(value = "id") long id) {
-        Dept dept = departmentService.selectDeptById(id);
+        Dept dept = departmentService.findOne(id);
         if (dept == null) {
             return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
         } else {
@@ -56,7 +56,7 @@ public class DepartmentController {
     @PostMapping("/departments")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Dept>> create(@RequestBody Dept dept) {
-       departmentService.createDept(dept);
+       departmentService.create(dept);
        return Result.ok(dept);
     }
 

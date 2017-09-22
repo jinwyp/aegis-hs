@@ -21,7 +21,7 @@ public class PartyService {
         return partyMapper.getPage(pagePartyDTO);
     }
 
-    public Party selectOne(long id) {
+    public Party findOne(long id) {
         return partyMapper.selectByPrimaryKey(id);
     }
 
@@ -29,7 +29,7 @@ public class PartyService {
         return partyMapper.insert(party);
     }
 
-    public int updateParty(Party party) {
+    public int update(Party party) {
         return partyMapper.updateByPrimaryKey(party);
     }
 }

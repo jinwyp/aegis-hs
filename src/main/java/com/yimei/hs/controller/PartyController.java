@@ -40,7 +40,7 @@ public class PartyController {
      */
     @GetMapping("/parties/{id}")
     public ResponseEntity<Result<Party>> read(@PathVariable long id) {
-        Party party = partyService.selectOne(id);
+        Party party = partyService.findOne(id);
         if (party == null) {
             return Result.error(4001, "记录不存在");
         } else {
@@ -76,7 +76,7 @@ public class PartyController {
         party.setPartyType(custType);
         party.setName(name);
         party.setShortName(shotName);
-        int status = partyService.updateParty(party);
+        int status = partyService.update(party);
         if (status == 1) {
             return Result.ok(1);
         } else {

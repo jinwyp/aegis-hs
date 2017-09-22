@@ -30,15 +30,15 @@ public class TeamService {
        return team;
     }
 
-    public int createTeams(Team team){
+    public int create(Team team){
         return teamMapper.insert(team);
     }
 
-    public int deleteTeamById(long id){
+    public int delete(long id){
         return teamMapper.deleteByPrimaryKey(id);
     }
 
-    public int updateTeam(Team team){
+    public int update(Team team){
 
         return teamMapper.updateByPrimaryKey(team);
     }
