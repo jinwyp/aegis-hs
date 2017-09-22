@@ -22,34 +22,115 @@
         <result column="huikuanBusinessPaperExpire" jdbcType="TIMESTAMP" property="huikuanBusinessPaperExpire"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
+
+
+    <resultMap id="YingHuikuanResultMap" type="com.yimei.hs.entity.YingHuikuan" autoMapping="true">
+
+        <result property="id" column="t1Id"/>
+        <result property="orderId" column="t1orderId"/>
+        <result property="hsId" column="t1hsId"/>
+        <result property="tsc" column="t1tsc"/>
+
+        <collection property="fukuanList" javaType="ArrayList" ofType="com.yimei.hs.entity.YingFukuan" autoMapping="true">
+            <id property="id" column="t2Id"/>
+            <id property="orderId" column="t2orderId"/>
+            <id property="hsId" column="t2hsId"/>
+            <id property="tsc" column="t2tsc"/>
+        </collection>
+
+    </resultMap>
+
+
     <sql id="Base_Column_List">
         id, orderId, hsId, huikuanCompanyId, huikuanDate, huikuanAmount, huikuanUsage, huikuanMode,
         huikuanBankPaper, huikuanBankPaperDate, huikuanBankDiscount, huikuanBankDiscountRate,
         huikuanBankPaperExpire, huikuanBusinessPaper, huikuanBusinessPaperDate, huikuanBusinessDiscount,
         huikuanBusinessDiscountRate, huikuanBusinessPaperExpire, tsc
     </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from hs_ying_huikuan
-        where id = #{id,jdbcType=BIGINT}
+        SELECT
+            t1.id AS t1id,
+            t1.orderId as t1orderId,
+            t1.hsId as t1hsId,
+            t1.huikuanCompanyId,
+            t1.huikuanDate,
+            t1.huikuanAmount,
+            t1.huikuanUsage,
+            t1.huikuanMode,
+            t1.huikuanBankPaper,
+            t1.huikuanBankPaperDate,
+            t1.huikuanBankDiscount,
+            t1.huikuanBankDiscountRate,
+            t1.huikuanBankPaperExpire,
+            t1.huikuanBusinessPaper,
+            t1.huikuanBusinessPaperDate,
+            t1.huikuanBusinessDiscount,
+            t1.huikuanBusinessDiscountRate,
+            t1.huikuanBusinessPaperExpire,
+            t1.tsc as t1tsc,
+
+            t2.id as t2id,
+            t2.orderId as t2orderId,
+            t2.hsId as t2hsId,
+            t2.payDate,
+            t2.recieveCompanyId,
+            t2.payUsage,
+            t2.payAmount,
+            t2.payMode,
+            t2.capitalId,
+            t2.useInterest,
+            t2.useDays,
+            t2.tsc as t2tsc,
+
+            map.amount
+
+        FROM hs_ying_huikuan t1 LEFT JOIN hs_ying_huikuan_map map ON t1.id = map.huikuanId
+            LEFT JOIN hs_ying_fukuan t2 ON map.fukuanId = t2.id
+
     </select>
 
 
-
-    <!-- 回款， 以及其关联的付款-->
-    <resultMap id="YingHuikuanResultMap" type="com.yimei.hs.entity.YingHuikuan" autoMapping="true">
-        <result property="id" column="t1Id"/>
-        <collection property="fukuanList" javaType="ArrayList" ofType="com.yimei.hs.entity.YingFukuan"
-                    autoMapping="true">
-            <id property="id" column="t2Id"/>
-            <id property="tsc" column="t2tsc"/>
-        </collection>
-    </resultMap>
-
     <!-- 获取一页回款信息 -->
-    <select id="getPage" resultType="com.yimei.hs.entity.YingHuikuan">
+    <select id="getPage" resultMap="YingHuikuanResultMap">
+        SELECT
+            t1.id AS t1id,
+            t1.orderId as t1orderId,
+            t1.hsId as t1hsId,
+            t1.huikuanCompanyId,
+            t1.huikuanDate,
+            t1.huikuanAmount,
+            t1.huikuanUsage,
+            t1.huikuanMode,
+            t1.huikuanBankPaper,
+            t1.huikuanBankPaperDate,
+            t1.huikuanBankDiscount,
+            t1.huikuanBankDiscountRate,
+            t1.huikuanBankPaperExpire,
+            t1.huikuanBusinessPaper,
+            t1.huikuanBusinessPaperDate,
+            t1.huikuanBusinessDiscount,
+            t1.huikuanBusinessDiscountRate,
+            t1.huikuanBusinessPaperExpire,
+            t1.tsc as t1tsc,
 
+            t2.id as t2id,
+            t2.orderId as t2orderId,
+            t2.hsId as t2hsId,
+            t2.payDate,
+            t2.recieveCompanyId,
+            t2.payUsage,
+            t2.payAmount,
+            t2.payMode,
+            t2.capitalId,
+            t2.useInterest,
+            t2.useDays,
+            t2.tsc as t2tsc,
+
+            map.amount
+
+        FROM hs_ying_huikuan t1 LEFT JOIN hs_ying_huikuan_map map ON t1.id = map.huikuanId
+            LEFT JOIN hs_ying_fukuan t2 ON map.fukuanId = t2.id
     </select>
 
 

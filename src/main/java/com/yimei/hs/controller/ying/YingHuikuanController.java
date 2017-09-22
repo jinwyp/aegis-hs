@@ -39,12 +39,12 @@ public class YingHuikuanController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/huikuans/:id")
+    @GetMapping("/{orderId}/huikuans/{id}")
     public ResponseEntity<Result<YingHuikuan>> read(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
     ) {
-        return Result.ok(null);
+        return Result.ok(yingHuikuanService.findOne(id));
     }
 
     /**

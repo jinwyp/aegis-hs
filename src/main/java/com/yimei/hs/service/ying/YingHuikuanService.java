@@ -31,4 +31,8 @@ public class YingHuikuanService {
     public Page<YingHuikuan> getPage(PageYingHuikuanDTO pageYingHuikuanDTO) {
         return yingHuikuanMapper.getPage(pageYingHuikuanDTO);
     }
+
+    public YingHuikuan findOne(long id) {
+        return yingHuikuanMapper.selectByPrimaryKey(id);
+    }
 }
