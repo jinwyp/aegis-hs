@@ -39,6 +39,10 @@ public class LogAspect {
 
     private Object doLog(ProceedingJoinPoint proceedingJoinPoint, String name) throws Throwable {
 
+//        Object othis = proceedingJoinPoint.getThis();
+//        Logger ologger = (Logger)othis.getClass().getField("logger").get(othis);
+//        logger.info("原始logger");
+
         Signature sigature = proceedingJoinPoint.getSignature();
         logger.info("{} {} called with following args", name, sigature.toShortString());
         Object[] args = proceedingJoinPoint.getArgs();
