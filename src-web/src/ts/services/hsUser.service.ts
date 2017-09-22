@@ -40,10 +40,23 @@ export class HSUserService {
     }
 
 
-    getDepartmentList(): Observable<any> {
+    getDepartmentList(query: any = {pageSize: 100, pageNo: 1}): Observable<any> {
+        const params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetDepartmentList)
+        return this.http.get(apiPath.hsGetDepartmentList, {params: params})
     }
+    createNewDepartment(department: any): Observable<any> {
+
+        return this.http.post(apiPath.hsGetDepartmentList, department)
+    }
+    modifyDepartment(departmentId: number, department: any): Observable<any> {
+
+        return this.http.put(apiPath.hsGetDepartmentList + '/' + departmentId, department)
+    }
+
+
 
 
     getTeamList(): Observable<any> {

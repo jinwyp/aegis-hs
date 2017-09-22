@@ -11,28 +11,22 @@ import { HSUserService } from '../../../services/hsUser.service'
 
 
 @Component({
-  selector: 'app-user-management',
-  templateUrl: './userManagement.component.html',
-  styleUrls: ['./userManagement.component.css']
+  selector: 'app-department-management',
+  templateUrl: './departmentManagement.component.html',
+  styleUrls: ['./departmentManagement.component.css']
 })
-export class UserManagementComponent implements OnInit {
+export class DepartmentManagementComponent implements OnInit {
 
     sessionUser : any
-    currentUserId : any
+    currentDepartmentId : any
 
-    userForm: FormGroup
+    departmentForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
 
-    userList : any[] = []
     departmentList : any[] = []
-
-    dataIsAdmin : any [] = [
-        { id : 2 , name : '是'},
-        { id : 1 , name : '否'}
-    ]
 
     pagination: any = {
         pageSize : 20,
@@ -57,7 +51,6 @@ export class UserManagementComponent implements OnInit {
         this.getDepartmentList()
         this.getSessionUserInfo()
         this.createUserForm()
-        this.getUserList()
     }
 
     trackByFn(index: any, item: any) {
@@ -76,30 +69,21 @@ export class UserManagementComponent implements OnInit {
         )
     }
 
-    getUserList () {
 
+    getDepartmentList () {
         const query : any = {
             pageSize: this.pagination.pageSize,
             pageNo: this.pagination.pageNo
         }
 
 
-        this.hsUserService.getUserList(query).subscribe(
-            data => {
-                this.userList = data.data
-
-                // this.pagination.total = data.meta.total
-                // this.pagination.pageNo = data.meta.pageNo
-
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-    }
-
-    getDepartmentList () {
         this.hsUserService.getDepartmentList().subscribe(
             data => {
-                this.departmentList = data.data
+                this.departmentList = data.data.results
+
+                this.pagination.pageSize = data.data.pageSize
+                this.pagination.pageNo = data.data.pageNo
+                this.pagination.total = data.data.totalRecord
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -107,79 +91,61 @@ export class UserManagementComponent implements OnInit {
     }
 
 
-    userFormError : any = {}
-    userFormValidationMessages: any = {
-        'phone'  : {
-            'required'      : '请填写手机号!',
-            'mobilePhone' : '手机号格式不正确!',
-            'isExist'     : '手机号已经存在!'
-        },
-        'password'  : {
-            'required'      : '请填写密码!'
-        },
-        'deptId'  : {
-            'required'      : '请填写事业部门!'
-        },
-        'isAdmin' : {
-            'required'    : '必填项!'
-        },
-        'isActive' : {
-            'required'    : '必填项!'
+    departmentFormError : any = {}
+    departmentFormValidationMessages: any = {
+        'name'  : {
+            'required'      : '请填写部门名称!'
         }
     }
 
-    userFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.userFormError = formErrorHandler(formInputData, this.userForm, this.userFormValidationMessages, ignoreDirty)
+    departmentFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
+        this.departmentFormError = formErrorHandler(formInputData, this.departmentForm, this.departmentFormValidationMessages, ignoreDirty)
     }
 
     createUserForm(user: any = {}): void {
 
-        this.userForm = this.fb.group({
-            'phone'    : ['', [Validators.required, isMobilePhone()] ],
-            'password'    : ['', [Validators.required] ],
-            'deptId'    : ['', [Validators.required ] ],
-            'isAdmin'    : [1, [Validators.required] ],
-            'isActive'    : [1, [Validators.required ]]
+        this.departmentForm = this.fb.group({
+            'name'    : ['', [Validators.required] ]
         } )
 
-        this.userForm.valueChanges.subscribe(data => {
+        this.departmentForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
-            this.userFormInputChange(data)
+            this.departmentFormInputChange(data)
         })
     }
 
 
-    userFormSubmit() {
+    departmentFormSubmit() {
 
-        if (this.userForm.invalid) {
-            this.userFormInputChange(this.userForm.value, true)
+        if (this.departmentForm.invalid) {
+            this.departmentFormInputChange(this.departmentForm.value, true)
             this.ignoreDirty = true
 
-            console.log('当前信息: ', this.userForm, this.userFormError)
+            console.log('当前信息: ', this.departmentForm, this.departmentFormError)
             return
         }
 
-        const postData = this.userForm.value
+        const postData = this.departmentForm.value
 
         if (this.isAddNew) {
-            this.hsUserService.createNewUser(postData).subscribe(
+            this.hsUserService.createNewDepartment(postData).subscribe(
                 data => {
-                    console.log('保存用户地址成功: ', data)
+                    console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getUserList()
+                    this.getDepartmentList()
                     this.showForm()
 
                 },
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
-            this.hsUserService.modifyUser(this.currentUserId, postData).subscribe(
+            this.hsUserService.modifyDepartment(this.currentDepartmentId, postData).subscribe(
                 data => {
-                    console.log('修改用户地址成功: ', data)
+                    console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getUserList()
+                    this.getDepartmentList()
                     this.showForm()
 
                 },
@@ -190,24 +156,20 @@ export class UserManagementComponent implements OnInit {
     }
 
 
-    showForm(isAddNew : boolean = true, user?: any ) {
+    showForm(isAddNew : boolean = true, department?: any ) {
 
         if (isAddNew) {
             this.isAddNew = true
 
-            this.userForm.patchValue({
-                'phone'    : '',
-                'password'    : '',
-                'deptId'    : '',
-                'isAdmin'    : 1,
-                'isActive'    : 1
+            this.departmentForm.patchValue({
+                'name'    : ''
             })
 
         } else {
             this.isAddNew = false
-            this.currentUserId = user.id
+            this.currentDepartmentId = department.id
 
-            this.userForm.patchValue(user)
+            this.departmentForm.patchValue(department)
         }
 
 
