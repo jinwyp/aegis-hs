@@ -43,7 +43,7 @@ public class YingInvoiceController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/invoices/:id")
+    @GetMapping("/{orderId}/invoices/{id}")
     public ResponseEntity<Result<YingInvoice>> read(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
