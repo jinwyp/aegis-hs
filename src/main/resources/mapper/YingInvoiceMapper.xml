@@ -12,6 +12,17 @@
         <result column="recieverId" jdbcType="BIGINT" property="recieverId"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
+
+    <!-- 选出一条发票数据 -->
+    <resultMap id="YingInvoiceResultMap" type="com.yimei.hs.entity.YingInvoice" autoMapping="true">
+        <result property="id" column="t1Id"/>
+        <collection property="details" javaType="ArrayList" ofType="com.yimei.hs.entity.YingInvoiceDetail"
+                    autoMapping="true">
+            <id property="id" column="t2Id"/>
+            <id property="tsc" column="t2tsc"/>
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id, orderId, hsId, invoiceDirection, invoiceType, openDate, openCompanyId, recieverId,
         tsc
@@ -37,18 +48,9 @@
             t2.priceAndTax,
             t2.tsc t2tsc
         FROM hs_ying_invoice t1 LEFT JOIN hs_ying_invoice_detail t2 ON t1.id = t2.invoiceId
-        where t1.id = #{id, jdbcType=BIGINT}
+        WHERE t1.id = #{id, jdbcType=BIGINT}
     </select>
 
-    <!-- 选出一页发票数据 -->
-    <resultMap id="YingInvoiceResultMap" type="com.yimei.hs.entity.YingInvoice" autoMapping="true">
-        <result property="id" column="t1Id"/>
-        <collection property="details" javaType="ArrayList" ofType="com.yimei.hs.entity.YingInvoiceDetail"
-                    autoMapping="true">
-            <id property="id" column="t2Id"/>
-            <id property="tsc" column="t2tsc"/>
-        </collection>
-    </resultMap>
     <select id="getPage" resultMap="YingInvoiceResultMap">
         SELECT
             t1.id  t1Id,
@@ -75,107 +77,73 @@
         DELETE FROM hs_ying_invoice
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
+
     <insert id="insert" parameterType="com.yimei.hs.entity.YingInvoice">
-        INSERT INTO hs_ying_invoice (id, orderId, hsId,
-                                     invoiceDirection, invoiceType, openDate,
-                                     openCompanyId, recieverId, tsc
+        INSERT INTO hs_ying_invoice (
+            id,
+            orderId,
+            hsId,
+            invoiceDirection,
+            invoiceType,
+            openDate,
+            openCompanyId,
+            recieverId,
+            tsc
         )
-        VALUES (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT},
-                #{invoiceDirection,jdbcType=VARCHAR}, #{invoiceType,jdbcType=VARCHAR}, #{openDate,jdbcType=TIMESTAMP},
-                #{openCompanyId,jdbcType=BIGINT}, #{recieverId,jdbcType=BIGINT}, #{tsc,jdbcType=TIMESTAMP}
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{hsId,jdbcType=BIGINT},
+            #{invoiceDirection,jdbcType=VARCHAR},
+            #{invoiceType,jdbcType=VARCHAR},
+            #{openDate,jdbcType=TIMESTAMP},
+            #{openCompanyId,jdbcType=BIGINT},
+            #{recieverId,jdbcType=BIGINT},
+            #{tsc,jdbcType=TIMESTAMP}
         )
     </insert>
+
     <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingInvoice">
         insert into hs_ying_invoice
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="orderId != null">
-                orderId,
-            </if>
-            <if test="hsId != null">
-                hsId,
-            </if>
-            <if test="invoiceDirection != null">
-                invoiceDirection,
-            </if>
-            <if test="invoiceType != null">
-                invoiceType,
-            </if>
-            <if test="openDate != null">
-                openDate,
-            </if>
-            <if test="openCompanyId != null">
-                openCompanyId,
-            </if>
-            <if test="recieverId != null">
-                recieverId,
-            </if>
-            <if test="tsc != null">
-                tsc,
-            </if>
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="hsId != null">hsId,</if>
+            <if test="invoiceDirection != null">invoiceDirection,</if>
+            <if test="invoiceType != null">invoiceType,</if>
+            <if test="openDate != null">openDate,</if>
+            <if test="openCompanyId != null">openCompanyId,</if>
+            <if test="recieverId != null">recieverId,</if>
+            <if test="tsc != null">tsc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=BIGINT},
-            </if>
-            <if test="orderId != null">
-                #{orderId,jdbcType=BIGINT},
-            </if>
-            <if test="hsId != null">
-                #{hsId,jdbcType=BIGINT},
-            </if>
-            <if test="invoiceDirection != null">
-                #{invoiceDirection,jdbcType=VARCHAR},
-            </if>
-            <if test="invoiceType != null">
-                #{invoiceType,jdbcType=VARCHAR},
-            </if>
-            <if test="openDate != null">
-                #{openDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="openCompanyId != null">
-                #{openCompanyId,jdbcType=BIGINT},
-            </if>
-            <if test="recieverId != null">
-                #{recieverId,jdbcType=BIGINT},
-            </if>
-            <if test="tsc != null">
-                #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
+            <if test="invoiceDirection != null">#{invoiceDirection,jdbcType=VARCHAR},</if>
+            <if test="invoiceType != null">#{invoiceType,jdbcType=VARCHAR},</if>
+            <if test="openDate != null">#{openDate,jdbcType=TIMESTAMP},</if>
+            <if test="openCompanyId != null">#{openCompanyId,jdbcType=BIGINT},</if>
+            <if test="recieverId != null">#{recieverId,jdbcType=BIGINT},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingInvoice">
         update hs_ying_invoice
         <set>
-            <if test="orderId != null">
-                orderId = #{orderId,jdbcType=BIGINT},
-            </if>
-            <if test="hsId != null">
-                hsId = #{hsId,jdbcType=BIGINT},
-            </if>
-            <if test="invoiceDirection != null">
-                invoiceDirection = #{invoiceDirection,jdbcType=VARCHAR},
-            </if>
-            <if test="invoiceType != null">
-                invoiceType = #{invoiceType,jdbcType=VARCHAR},
-            </if>
-            <if test="openDate != null">
-                openDate = #{openDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="openCompanyId != null">
-                openCompanyId = #{openCompanyId,jdbcType=BIGINT},
-            </if>
-            <if test="recieverId != null">
-                recieverId = #{recieverId,jdbcType=BIGINT},
-            </if>
-            <if test="tsc != null">
-                tsc = #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
+            <if test="invoiceDirection != null">invoiceDirection = #{invoiceDirection,jdbcType=VARCHAR},</if>
+            <if test="invoiceType != null">invoiceType = #{invoiceType,jdbcType=VARCHAR},</if>
+            <if test="openDate != null">openDate = #{openDate,jdbcType=TIMESTAMP},</if>
+            <if test="openCompanyId != null">openCompanyId = #{openCompanyId,jdbcType=BIGINT},</if>
+            <if test="recieverId != null">recieverId = #{recieverId,jdbcType=BIGINT},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingInvoice">
         UPDATE hs_ying_invoice
         SET orderId          = #{orderId,jdbcType=BIGINT},

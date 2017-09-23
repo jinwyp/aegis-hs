@@ -90,33 +90,18 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.CangInvoice">
         update hs_cang_invoice
         <set>
-            <if test="orderId != null">
-                orderId = #{orderId,jdbcType=BIGINT},
-            </if>
-            <if test="hsId != null">
-                hsId = #{hsId,jdbcType=BIGINT},
-            </if>
-            <if test="invoiceDirection != null">
-                invoiceDirection = #{invoiceDirection,jdbcType=VARCHAR},
-            </if>
-            <if test="invoiceType != null">
-                invoiceType = #{invoiceType,jdbcType=VARCHAR},
-            </if>
-            <if test="openDate != null">
-                openDate = #{openDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="openCompanyId != null">
-                openCompanyId = #{openCompanyId,jdbcType=BIGINT},
-            </if>
-            <if test="recieverId != null">
-                recieverId = #{recieverId,jdbcType=BIGINT},
-            </if>
-            <if test="tsc != null">
-                tsc = #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="orderId != null"> orderId = #{orderId,jdbcType=BIGINT}, </if>
+            <if test="hsId != null"> hsId = #{hsId,jdbcType=BIGINT}, </if>
+            <if test="invoiceDirection != null"> invoiceDirection = #{invoiceDirection,jdbcType=VARCHAR}, </if>
+            <if test="invoiceType != null"> invoiceType = #{invoiceType,jdbcType=VARCHAR}, </if>
+            <if test="openDate != null"> openDate = #{openDate,jdbcType=TIMESTAMP}, </if>
+            <if test="openCompanyId != null"> openCompanyId = #{openCompanyId,jdbcType=BIGINT}, </if>
+            <if test="recieverId != null"> recieverId = #{recieverId,jdbcType=BIGINT}, </if>
+            <if test="tsc != null"> tsc = #{tsc,jdbcType=TIMESTAMP}, </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.CangInvoice">
         UPDATE hs_cang_invoice
         SET orderId          = #{orderId,jdbcType=BIGINT},

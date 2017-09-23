@@ -1,200 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yimei.hs.mapper.CangHuikuanMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.CangHuikuan">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="orderId" jdbcType="BIGINT" property="orderId" />
-    <result column="hsId" jdbcType="BIGINT" property="hsId" />
-    <result column="huikuanCompanyId" jdbcType="BIGINT" property="huikuanCompanyId" />
-    <result column="huikuanDate" jdbcType="TIMESTAMP" property="huikuanDate" />
-    <result column="huikuanAmount" jdbcType="DECIMAL" property="huikuanAmount" />
-    <result column="huikuanUsage" jdbcType="VARCHAR" property="huikuanUsage" />
-    <result column="huikuanMode" jdbcType="VARCHAR" property="huikuanMode" />
-    <result column="huikuanPaper" jdbcType="BIT" property="huikuanPaper" />
-    <result column="huikuanPaperDate" jdbcType="TIMESTAMP" property="huikuanPaperDate" />
-    <result column="huikuanDiscount" jdbcType="BIT" property="huikuanDiscount" />
-    <result column="huikuanDiscountRate" jdbcType="DECIMAL" property="huikuanDiscountRate" />
-    <result column="huikuanPaperExpire" jdbcType="TIMESTAMP" property="huikuanPaperExpire" />
-    <result column="tsc" jdbcType="TIMESTAMP" property="tsc" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, orderId, hsId, huikuanCompanyId, huikuanDate, huikuanAmount, huikuanUsage, huikuanMode, 
-    huikuanPaper, huikuanPaperDate, huikuanDiscount, huikuanDiscountRate, huikuanPaperExpire, 
-    tsc
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from hs_cang_huikuan
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from hs_cang_huikuan
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.CangHuikuan">
-    insert into hs_cang_huikuan (id, orderId, hsId, 
-      huikuanCompanyId, huikuanDate, huikuanAmount, 
-      huikuanUsage, huikuanMode, huikuanPaper, 
-      huikuanPaperDate, huikuanDiscount, huikuanDiscountRate, 
-      huikuanPaperExpire, tsc)
-    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT}, 
-      #{huikuanCompanyId,jdbcType=BIGINT}, #{huikuanDate,jdbcType=TIMESTAMP}, #{huikuanAmount,jdbcType=DECIMAL}, 
-      #{huikuanUsage,jdbcType=VARCHAR}, #{huikuanMode,jdbcType=VARCHAR}, #{huikuanPaper,jdbcType=BIT}, 
-      #{huikuanPaperDate,jdbcType=TIMESTAMP}, #{huikuanDiscount,jdbcType=BIT}, #{huikuanDiscountRate,jdbcType=DECIMAL}, 
-      #{huikuanPaperExpire,jdbcType=TIMESTAMP}, #{tsc,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.entity.CangHuikuan">
-    insert into hs_cang_huikuan
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="orderId != null">
-        orderId,
-      </if>
-      <if test="hsId != null">
-        hsId,
-      </if>
-      <if test="huikuanCompanyId != null">
-        huikuanCompanyId,
-      </if>
-      <if test="huikuanDate != null">
-        huikuanDate,
-      </if>
-      <if test="huikuanAmount != null">
-        huikuanAmount,
-      </if>
-      <if test="huikuanUsage != null">
-        huikuanUsage,
-      </if>
-      <if test="huikuanMode != null">
-        huikuanMode,
-      </if>
-      <if test="huikuanPaper != null">
-        huikuanPaper,
-      </if>
-      <if test="huikuanPaperDate != null">
-        huikuanPaperDate,
-      </if>
-      <if test="huikuanDiscount != null">
-        huikuanDiscount,
-      </if>
-      <if test="huikuanDiscountRate != null">
-        huikuanDiscountRate,
-      </if>
-      <if test="huikuanPaperExpire != null">
-        huikuanPaperExpire,
-      </if>
-      <if test="tsc != null">
-        tsc,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orderId != null">
-        #{orderId,jdbcType=BIGINT},
-      </if>
-      <if test="hsId != null">
-        #{hsId,jdbcType=BIGINT},
-      </if>
-      <if test="huikuanCompanyId != null">
-        #{huikuanCompanyId,jdbcType=BIGINT},
-      </if>
-      <if test="huikuanDate != null">
-        #{huikuanDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="huikuanAmount != null">
-        #{huikuanAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="huikuanUsage != null">
-        #{huikuanUsage,jdbcType=VARCHAR},
-      </if>
-      <if test="huikuanMode != null">
-        #{huikuanMode,jdbcType=VARCHAR},
-      </if>
-      <if test="huikuanPaper != null">
-        #{huikuanPaper,jdbcType=BIT},
-      </if>
-      <if test="huikuanPaperDate != null">
-        #{huikuanPaperDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="huikuanDiscount != null">
-        #{huikuanDiscount,jdbcType=BIT},
-      </if>
-      <if test="huikuanDiscountRate != null">
-        #{huikuanDiscountRate,jdbcType=DECIMAL},
-      </if>
-      <if test="huikuanPaperExpire != null">
-        #{huikuanPaperExpire,jdbcType=TIMESTAMP},
-      </if>
-      <if test="tsc != null">
-        #{tsc,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.CangHuikuan">
-    update hs_cang_huikuan
-    <set>
-      <if test="orderId != null">
-        orderId = #{orderId,jdbcType=BIGINT},
-      </if>
-      <if test="hsId != null">
-        hsId = #{hsId,jdbcType=BIGINT},
-      </if>
-      <if test="huikuanCompanyId != null">
-        huikuanCompanyId = #{huikuanCompanyId,jdbcType=BIGINT},
-      </if>
-      <if test="huikuanDate != null">
-        huikuanDate = #{huikuanDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="huikuanAmount != null">
-        huikuanAmount = #{huikuanAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="huikuanUsage != null">
-        huikuanUsage = #{huikuanUsage,jdbcType=VARCHAR},
-      </if>
-      <if test="huikuanMode != null">
-        huikuanMode = #{huikuanMode,jdbcType=VARCHAR},
-      </if>
-      <if test="huikuanPaper != null">
-        huikuanPaper = #{huikuanPaper,jdbcType=BIT},
-      </if>
-      <if test="huikuanPaperDate != null">
-        huikuanPaperDate = #{huikuanPaperDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="huikuanDiscount != null">
-        huikuanDiscount = #{huikuanDiscount,jdbcType=BIT},
-      </if>
-      <if test="huikuanDiscountRate != null">
-        huikuanDiscountRate = #{huikuanDiscountRate,jdbcType=DECIMAL},
-      </if>
-      <if test="huikuanPaperExpire != null">
-        huikuanPaperExpire = #{huikuanPaperExpire,jdbcType=TIMESTAMP},
-      </if>
-      <if test="tsc != null">
-        tsc = #{tsc,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.CangHuikuan">
-    update hs_cang_huikuan
-    set orderId = #{orderId,jdbcType=BIGINT},
-      hsId = #{hsId,jdbcType=BIGINT},
-      huikuanCompanyId = #{huikuanCompanyId,jdbcType=BIGINT},
-      huikuanDate = #{huikuanDate,jdbcType=TIMESTAMP},
-      huikuanAmount = #{huikuanAmount,jdbcType=DECIMAL},
-      huikuanUsage = #{huikuanUsage,jdbcType=VARCHAR},
-      huikuanMode = #{huikuanMode,jdbcType=VARCHAR},
-      huikuanPaper = #{huikuanPaper,jdbcType=BIT},
-      huikuanPaperDate = #{huikuanPaperDate,jdbcType=TIMESTAMP},
-      huikuanDiscount = #{huikuanDiscount,jdbcType=BIT},
-      huikuanDiscountRate = #{huikuanDiscountRate,jdbcType=DECIMAL},
-      huikuanPaperExpire = #{huikuanPaperExpire,jdbcType=TIMESTAMP},
-      tsc = #{tsc,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.CangHuikuan">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="hsId" jdbcType="BIGINT" property="hsId"/>
+        <result column="huikuanCompanyId" jdbcType="BIGINT" property="huikuanCompanyId"/>
+        <result column="huikuanDate" jdbcType="TIMESTAMP" property="huikuanDate"/>
+        <result column="huikuanAmount" jdbcType="DECIMAL" property="huikuanAmount"/>
+        <result column="huikuanUsage" jdbcType="VARCHAR" property="huikuanUsage"/>
+        <result column="huikuanMode" jdbcType="VARCHAR" property="huikuanMode"/>
+        <result column="huikuanPaper" jdbcType="BIT" property="huikuanPaper"/>
+        <result column="huikuanPaperDate" jdbcType="TIMESTAMP" property="huikuanPaperDate"/>
+        <result column="huikuanDiscount" jdbcType="BIT" property="huikuanDiscount"/>
+        <result column="huikuanDiscountRate" jdbcType="DECIMAL" property="huikuanDiscountRate"/>
+        <result column="huikuanPaperExpire" jdbcType="TIMESTAMP" property="huikuanPaperExpire"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, orderId, hsId, huikuanCompanyId, huikuanDate, huikuanAmount, huikuanUsage, huikuanMode,
+        huikuanPaper, huikuanPaperDate, huikuanDiscount, huikuanDiscountRate, huikuanPaperExpire,
+        tsc
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_cang_huikuan
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM hs_cang_huikuan
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.yimei.hs.entity.CangHuikuan">
+        INSERT INTO hs_cang_huikuan (
+            id,
+            orderId,
+            hsId,
+            huikuanCompanyId,
+            huikuanDate,
+            huikuanAmount,
+            huikuanUsage,
+            huikuanMode,
+            huikuanPaper,
+            huikuanPaperDate,
+            huikuanDiscount,
+            huikuanDiscountRate,
+            huikuanPaperExpire,
+            tsc)
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{hsId,jdbcType=BIGINT},
+            #{huikuanCompanyId,jdbcType=BIGINT},
+            #{huikuanDate,jdbcType=TIMESTAMP},
+            #{huikuanAmount,jdbcType=DECIMAL},
+            #{huikuanUsage,jdbcType=VARCHAR},
+            #{huikuanMode,jdbcType=VARCHAR},
+            #{huikuanPaper,jdbcType=BIT},
+            #{huikuanPaperDate,jdbcType=TIMESTAMP},
+            #{huikuanDiscount,jdbcType=BIT},
+            #{huikuanDiscountRate,jdbcType=DECIMAL},
+            #{huikuanPaperExpire,jdbcType=TIMESTAMP},
+            #{tsc,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.yimei.hs.entity.CangHuikuan">
+        insert into hs_cang_huikuan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="hsId != null">hsId,</if>
+            <if test="huikuanCompanyId != null">huikuanCompanyId,</if>
+            <if test="huikuanDate != null">huikuanDate,</if>
+            <if test="huikuanAmount != null">huikuanAmount,</if>
+            <if test="huikuanUsage != null">huikuanUsage,</if>
+            <if test="huikuanMode != null">huikuanMode,</if>
+            <if test="huikuanPaper != null">huikuanPaper,</if>
+            <if test="huikuanPaperDate != null">huikuanPaperDate,</if>
+            <if test="huikuanDiscount != null">huikuanDiscount,</if>
+            <if test="huikuanDiscountRate != null">huikuanDiscountRate,</if>
+            <if test="huikuanPaperExpire != null">huikuanPaperExpire,</if>
+            <if test="tsc != null">tsc,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
+            <if test="huikuanCompanyId != null">#{huikuanCompanyId,jdbcType=BIGINT},</if>
+            <if test="huikuanDate != null">#{huikuanDate,jdbcType=TIMESTAMP},</if>
+            <if test="huikuanAmount != null">#{huikuanAmount,jdbcType=DECIMAL},</if>
+            <if test="huikuanUsage != null">#{huikuanUsage,jdbcType=VARCHAR},</if>
+            <if test="huikuanMode != null">#{huikuanMode,jdbcType=VARCHAR},</if>
+            <if test="huikuanPaper != null">#{huikuanPaper,jdbcType=BIT},</if>
+            <if test="huikuanPaperDate != null">#{huikuanPaperDate,jdbcType=TIMESTAMP},</if>
+            <if test="huikuanDiscount != null">#{huikuanDiscount,jdbcType=BIT},</if>
+            <if test="huikuanDiscountRate != null">#{huikuanDiscountRate,jdbcType=DECIMAL},</if>
+            <if test="huikuanPaperExpire != null">#{huikuanPaperExpire,jdbcType=TIMESTAMP},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.CangHuikuan">
+        update hs_cang_huikuan
+        <set>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
+            <if test="huikuanCompanyId != null">huikuanCompanyId = #{huikuanCompanyId,jdbcType=BIGINT},</if>
+            <if test="huikuanDate != null">huikuanDate = #{huikuanDate,jdbcType=TIMESTAMP},</if>
+            <if test="huikuanAmount != null">huikuanAmount = #{huikuanAmount,jdbcType=DECIMAL},</if>
+            <if test="huikuanUsage != null">huikuanUsage = #{huikuanUsage,jdbcType=VARCHAR},</if>
+            <if test="huikuanMode != null">huikuanMode = #{huikuanMode,jdbcType=VARCHAR},</if>
+            <if test="huikuanPaper != null">huikuanPaper = #{huikuanPaper,jdbcType=BIT},</if>
+            <if test="huikuanPaperDate != null">huikuanPaperDate = #{huikuanPaperDate,jdbcType=TIMESTAMP},</if>
+            <if test="huikuanDiscount != null">huikuanDiscount = #{huikuanDiscount,jdbcType=BIT},</if>
+            <if test="huikuanDiscountRate != null">huikuanDiscountRate = #{huikuanDiscountRate,jdbcType=DECIMAL},</if>
+            <if test="huikuanPaperExpire != null">huikuanPaperExpire = #{huikuanPaperExpire,jdbcType=TIMESTAMP},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.CangHuikuan">
+        UPDATE hs_cang_huikuan
+        SET orderId             = #{orderId,jdbcType=BIGINT},
+            hsId                = #{hsId,jdbcType=BIGINT},
+            huikuanCompanyId    = #{huikuanCompanyId,jdbcType=BIGINT},
+            huikuanDate         = #{huikuanDate,jdbcType=TIMESTAMP},
+            huikuanAmount       = #{huikuanAmount,jdbcType=DECIMAL},
+            huikuanUsage        = #{huikuanUsage,jdbcType=VARCHAR},
+            huikuanMode         = #{huikuanMode,jdbcType=VARCHAR},
+            huikuanPaper        = #{huikuanPaper,jdbcType=BIT},
+            huikuanPaperDate    = #{huikuanPaperDate,jdbcType=TIMESTAMP},
+            huikuanDiscount     = #{huikuanDiscount,jdbcType=BIT},
+            huikuanDiscountRate = #{huikuanDiscountRate,jdbcType=DECIMAL},
+            huikuanPaperExpire  = #{huikuanPaperExpire,jdbcType=TIMESTAMP},
+            tsc                 = #{tsc,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>
