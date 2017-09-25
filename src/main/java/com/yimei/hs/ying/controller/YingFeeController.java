@@ -1,5 +1,6 @@
 package com.yimei.hs.ying.controller;
 
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.YingFee;
 import com.yimei.hs.boot.PageResult;
 import com.yimei.hs.boot.Result;
@@ -33,12 +34,13 @@ public class YingFeeController {
      */
     @GetMapping("/{orderId}/fees")
     public ResponseEntity<PageResult<YingFee>> list(PageYingFeeDTO pageYingFeeDTO) {
-        return PageResult.ok(yingFeeService.getPage(pageYingFeeDTO));
+        Page<YingFee> page = yingFeeService.getPage(pageYingFeeDTO);
+        return PageResult.ok(page);
     }
 
     /**
-     * 获取fee
      *
+     * @param orderId
      * @param id
      * @return
      */
@@ -62,7 +64,10 @@ public class YingFeeController {
      */
     @PostMapping("/{orderId}/fees")
     public ResponseEntity<Result<YingFee>> create(@RequestBody YingFee yingFee) {
-        yingFeeService.create(yingFee);
+        int rtn = yingFeeService.create(yingFee);
+        if (rtn != 1) {
+            return Result.error(5001, "创建失败");
+        }
         return Result.ok(yingFee);
     }
 
@@ -73,7 +78,10 @@ public class YingFeeController {
      */
     @PutMapping("/{orderId}/fees/{id}")
     public ResponseEntity<Result<Integer>> update(YingFee yingFee) {
-        yingFeeService.update(yingFee);
+        int rtn = yingFeeService.update(yingFee);
+        if (rtn != 1) {
+            return Result.error(5001, "关系失败");
+        }
         return Result.ok(1);
     }
 }

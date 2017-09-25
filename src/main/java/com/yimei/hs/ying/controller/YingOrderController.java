@@ -29,7 +29,7 @@ public class YingOrderController {
     private YingOrderService yingOrderService;
 
     /**
-     * 获取所有order
+     * 获取订单分页数据
      *
      * @return
      */
@@ -39,7 +39,7 @@ public class YingOrderController {
     }
 
     /**
-     * 获取order
+     * 获取订单
      *
      * @param id
      * @return
