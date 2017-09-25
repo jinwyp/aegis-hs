@@ -35,4 +35,9 @@ public class YingHuikuanService {
     public YingHuikuan findOne(long id) {
         return yingHuikuanMapper.selectByPrimaryKey(id);
     }
+
+    public int update(YingHuikuan yingHuikuan) {
+        return yingHuikuanMapper.updateByPrimaryKeySelective(yingHuikuan);
+    }
+
 }

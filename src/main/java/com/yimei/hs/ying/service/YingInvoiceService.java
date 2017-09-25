@@ -39,4 +39,8 @@ public class YingInvoiceService {
     public int create(YingInvoice yingInvoice) {
         return yingInvoiceMapper.insert(yingInvoice);
     }
+
+    public int update(YingInvoice yingInvoice) {
+        return yingInvoiceMapper.updateByPrimaryKeySelective(yingInvoice);
+    }
 }

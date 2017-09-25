@@ -71,8 +71,19 @@ public class YingHuikuanController {
     @PutMapping("/{orderId}/huikuans/:id")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
-            @PathVariable("id") long id
+            @PathVariable("id") long id,
+            @RequestBody YingHuikuan yingHuikuan
     ) {
+        assert (yingHuikuan.getOrderId() == orderId);
+        yingHuikuan.setId(id);
+        int cnt = yingHuikuanService.update(yingHuikuan);
+
+        // 删除以前的对应记录
+        // 重新插入对应记录  todo
+
+        if (cnt != 1) {
+            return Result.error(4001, "更新失败");
+        }
         return Result.ok(1);
     }
 }
