@@ -24,8 +24,8 @@ insert into hs_team(name, deptId) values
   ('冷链团队', 2);
 
 -- 用户
--- insert into hs_user(deptId, phone, password, passwordSalt, createDate, createBy, isAdmin) values
--- (1, '13022117050', '12345678', 'salt', '2017-01-01', 'hary', 2);
+insert into hs_user(deptId, phone, password, passwordSalt, createDate, createBy, isAdmin) values
+ (1, '13022117050', 'c9ca4cc1ce82a2c7c21feb41df67ebdd12a471f5', 'd379e428ee88629f', '2017-01-01', 'hary', 1);
 
 
 -- 参与方
@@ -46,5 +46,5 @@ insert into hs_party(partyType, name, shortName) values
   (1, '江西瑞茂通供应链管理有限公司', '江西瑞茂通'),
   (1, '上海瑞易供应链管理有限公司', '上海瑞易'),
   (1, '深圳前海瑞茂通供应链平台服务有限公司', '前海瑞茂通'),
-  (2, '中瑞财富', ''),
-  (2, '中平金融', '');
+  (2, '中瑞财富', '中瑞财富'),
+  (2, '中平金融', '中平金融');
