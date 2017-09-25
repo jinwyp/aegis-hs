@@ -20,6 +20,8 @@ import { PartyManagementComponent } from './components/partyManagement/partyMana
 
 
 import { OrderComponent } from './components/order/order.component'
+import { OrderDetailComponent } from './components/orderDetail/orderDetail.component'
+
 
 
 
@@ -42,6 +44,7 @@ const userHomeRoutes: Routes = [
     {path : 'companies', component : PartyManagementComponent},
 
     {path : 'orders', component : OrderComponent},
+    {path : 'orders/:orderId', component : OrderDetailComponent},
     {path : '**', redirectTo : '/info/basic', pathMatch : 'full'},
 ]
 
@@ -57,7 +60,8 @@ const userHomeRoutes: Routes = [
         TeamManagementComponent,
         PartyManagementComponent,
 
-        OrderComponent
+        OrderComponent,
+        OrderDetailComponent
     ],
     imports      : [
         BrowserModule,

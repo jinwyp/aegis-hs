@@ -62,7 +62,10 @@
                     <td> {{order.mainAccounting }}</td>
                     <td> {{order.STATUS }}</td>
                     <td> {{order.tsc }}</td>
-                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, order)"> 修改 </button></td>
+                    <td>
+                        <a class="btn btn-link btn-sm" [routerLink]="['/orders', order.id]" role="button">查看</a>
+                        <button class="btn btn-info btn-sm" (click)="showForm(false, order)"> 修改 </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -1,5 +1,10 @@
 import {Component, OnInit} from '@angular/core'
 import { FormBuilder, FormGroup, Validators} from '@angular/forms'
+import {ActivatedRoute, ParamMap} from "@angular/router"
+
+
+import 'rxjs/add/operator/switchMap'
+
 
 import { HttpService } from '../../../bs-form-module/services/http.service'
 
@@ -11,33 +16,28 @@ import { HSOrderService } from '../../../services/hsOrder.service'
 
 
 
-@Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css']
-})
-export class OrderComponent implements OnInit {
 
-    sessionUser : any
+@Component({
+  selector: 'app-order-detail',
+  templateUrl: './orderDetail.component.html',
+  styleUrls: ['./orderDetail.component.css']
+})
+export class OrderDetailComponent implements OnInit {
+
+    currentOrder : any
     currentOrderId : any
 
-    orderForm: FormGroup
+    orderUnitForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
 
-    orderList : any[] = []
     departmentList : any[] = []
     teamList : any[] = []
     filterTeamList : any[] = []
     partyList : any[] = []
 
-
-    jieSuanType : any[] = [
-        { id: 10, name :'结算方式1'},
-        { id: 20, name :'结算方式2'}
-    ]
 
     pagination: any = {
         pageSize : 20,
@@ -45,11 +45,12 @@ export class OrderComponent implements OnInit {
         total : 1
     }
 
+    currentTabIndex : number = 1
 
     constructor(
+        private route: ActivatedRoute,
         private httpService: HttpService,
         private fb: FormBuilder,
-        private userService: UserInfoService,
         private hsUserService: HSUserService,
         private hsOrderService: HSOrderService
 
@@ -60,49 +61,30 @@ export class OrderComponent implements OnInit {
 
 
     ngOnInit(): void {
+
+        this.route.paramMap.switchMap( (params: ParamMap) => {
+            this.currentOrderId = params.get('orderId')
+            return this.hsOrderService.getOrderByID(this.currentOrderId)
+        }).subscribe(
+            data => {
+                if (data) {
+                    this.currentOrder = data.data
+                }
+                // console.log('Order信息: ', data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
         this.getPartyList()
         this.getDepartmentList()
         this.getTeamList()
-        this.getOrderList()
-        this.getSessionUserInfo()
-        this.createOrderForm()
+        this.createOrderUnitForm()
     }
 
     trackByFn(index: any, item: any) {
         return item ? item.id : undefined
     }
 
-    getSessionUserInfo () {
-        this.userService.sessionUserInfo().subscribe(
-            data => {
-                if (data) {
-                    this.sessionUser = data
-                }
-                // console.log('当前登陆的用户信息: ', data)
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-    }
-
-    getOrderList () {
-
-        const query : any = {
-            pageSize: this.pagination.pageSize,
-            pageNo: this.pagination.pageNo
-        }
-
-        this.hsOrderService.getOrderList(query).subscribe(
-            data => {
-                this.orderList = data.data
-
-                this.pagination.pageSize = data.data.pageSize
-                this.pagination.pageNo = data.data.pageNo
-                this.pagination.total = data.data.totalRecord
-
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-    }
 
     getDepartmentList () {
         this.hsUserService.getDepartmentList().subscribe(
@@ -142,8 +124,8 @@ export class OrderComponent implements OnInit {
     }
 
 
-    orderFormError : any = {}
-    orderFormValidationMessages: any = {
+    orderUnitFormError : any = {}
+    orderUnitFormValidationMessages: any = {
         'name'  : {
             'required'      : '请填写名称!'
         },
@@ -152,44 +134,41 @@ export class OrderComponent implements OnInit {
         }
     }
 
-    orderFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.orderFormError = formErrorHandler(formInputData, this.orderForm, this.orderFormValidationMessages, ignoreDirty)
+    orderUnitFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
+        this.orderUnitFormError = formErrorHandler(formInputData, this.orderUnitForm, this.orderUnitFormValidationMessages, ignoreDirty)
     }
 
-    createOrderForm(): void {
+    createOrderUnitForm(): void {
 
-        this.orderForm = this.fb.group({
-            'deptId'    : ['', [Validators.required ] ],
-            'teamId'    : ['', [Validators.required ] ],
+        this.orderUnitForm = this.fb.group({
+            'hsMonth'    : ['', [Validators.required ] ],
+            'maxPrepayRate'    : ['', [Validators.required ] ],
+            'unInvoicedRate'    : ['', [Validators.required ] ],
+            'contractBaseInterest'    : ['', [Validators.required ] ],
 
-            'line'    : ['', [Validators.required ] ],
-            'cargoType'    : ['', [Validators.required ] ],
-            'upstreamSettleMode'    : ['', [Validators.required ] ],
-            'downstreamSettleMode'    : ['', [Validators.required ] ],
-
-            'mainAccounting'    : ['', [Validators.required ] ],
-            'upstreamId'    : ['', [Validators.required ] ],
-            'downstreamId'    : ['', [Validators.required ] ],
+            'expectHKDays'    : ['', [Validators.required ] ],
+            'tradeAddPrice'    : ['', [Validators.required ] ],
+            'weightedPrice'    : ['', [Validators.required ] ]
         } )
 
-        this.orderForm.valueChanges.subscribe(data => {
+        this.orderUnitForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
-            this.orderFormInputChange(data)
+            this.orderUnitFormInputChange(data)
         })
     }
 
 
-    orderFormSubmit() {
+    orderUnitFormSubmit() {
 
-        if (this.orderForm.invalid) {
-            this.orderFormInputChange(this.orderForm.value, true)
+        if (this.orderUnitForm.invalid) {
+            this.orderUnitFormInputChange(this.orderUnitForm.value, true)
             this.ignoreDirty = true
 
-            console.log('当前信息: ', this.orderForm, this.orderFormError)
+            console.log('当前信息: ', this.orderUnitForm, this.orderUnitFormError)
             return
         }
 
-        const postData = this.orderForm.value
+        const postData = this.orderUnitForm.value
 
         if (this.isAddNew) {
             this.hsOrderService.createNewOrder(postData).subscribe(
@@ -197,7 +176,6 @@ export class OrderComponent implements OnInit {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getOrderList()
                     this.showForm()
 
                 },
@@ -209,7 +187,6 @@ export class OrderComponent implements OnInit {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getOrderList()
                     this.showForm()
 
                 },
@@ -220,31 +197,27 @@ export class OrderComponent implements OnInit {
     }
 
 
-    showForm(isAddNew : boolean = true, order?: any ) {
+    showForm(isAddNew : boolean = true, team?: any ) {
 
         if (isAddNew) {
             this.isAddNew = true
 
-            this.orderForm.patchValue({
-                'deptId'    : '',
-                'teamId'    : '',
-                'line'    : '',
-                'cargoType'    : '',
+            this.orderUnitForm.patchValue({
+                'hsMonth'    : '',
+                'maxPrepayRate'    : '',
+                'unInvoicedRate'    : '',
+                'contractBaseInterest'    : '',
 
-                'upstreamSettleMode'    : '',
-                'downstreamSettleMode'    : '',
-
-                'mainAccounting'    : '',
-                'upstreamId'    : '',
-                'downstreamId'    : ''
+                'expectHKDays'    : '',
+                'tradeAddPrice'    : '',
+                'weightedPrice'    : ''
 
             })
 
         } else {
             this.isAddNew = false
-            this.currentOrderId = order.id
 
-            this.orderForm.patchValue(order)
+            this.orderUnitForm.patchValue(team)
         }
 
 
@@ -252,6 +225,10 @@ export class OrderComponent implements OnInit {
     }
 
 
+
+    changeTab (currentIndex : number) {
+        this.currentTabIndex = currentIndex
+    }
 
 }
 
