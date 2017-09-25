@@ -16,11 +16,11 @@ const server = supertest(config.path.urlApi)
 
 
 
-describe('管理用户-相关功能', function () {
+describe('事业部门', function () {
 
 
-    it('获取用户列表 GET: /api/users?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/users?pageNo=1&pageSize=2')
+    it('获取部门列表 GET: /api/departments?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/departments?pageNo=1&pageSize=2')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200)
@@ -36,15 +36,11 @@ describe('管理用户-相关功能', function () {
     })
 
 
-    it('新建用户 POST: /api/users', function (done) {
-        server.post('/api/users')
+    it('新建部门 POST: /api/departments', function (done) {
+        server.post('/api/departments')
             .set('Accept', 'application/json')
             .send({
-                phone : '13564568304',
-                password : '123456',
-                deptId : 2,
-                isActive  :  2,
-                isAdmin  : 1
+                name: "新的部门" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
             })
             .expect('Content-Type', /json/)
             .expect(200)
@@ -53,14 +49,14 @@ describe('管理用户-相关功能', function () {
                 expect(res.body.success).to.equal(true)
                 expect(res.body.data).to.not.equal(null)
                 expect(res.body.data.id).to.be.a('number')
-                // expect(res.body.data.name).to.include('新的用户')
+                expect(res.body.data.name).to.include('新的部门')
                 done()
             })
     })
 
 
-    it('获取某个ID的用户信息 GET: /api/users/1' , function (done) {
-        server.get('/api/users/1')
+    it('获取某个ID的部门信息 GET: /api/departments/1', function (done) {
+        server.get('/api/departments/1')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200)
@@ -69,17 +65,17 @@ describe('管理用户-相关功能', function () {
                 expect(res.body.success).to.equal(true)
                 expect(res.body.data).to.not.equal(null)
                 expect(res.body.data.id).to.be.a('number')
-                // expect(res.body.data.name).to.include('团队')
+                expect(res.body.data.name).to.include('管理部')
                 done()
             })
     })
 
 
-    it('修改某个ID的用户信息 PUT: /api/users/1', function (done) {
-        server.put('/api/users/1')
+    it('修改某个ID的部门名称 PUT: /api/departments/3', function (done) {
+        server.put('/api/departments/3')
             .set('Accept', 'application/json')
             .send({
-                isActive: 1
+                name: "新的部门" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
             })
             .expect('Content-Type', /json/)
             .expect(200)
