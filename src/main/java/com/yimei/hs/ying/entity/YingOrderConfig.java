@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 public class YingOrderConfig implements Serializable {
     private Long id;
 
-    @NotNull(message = "订单id不能为空")
+//    @NotNull(message = "订单id不能为空")
     private Long orderId;
 
-    @NotNull(message = "结算月不能为空")
+//    @NotNull(message = "结算月不能为空")
     private String hsMonth;
 
     private BigDecimal maxPrepayRate;
