@@ -3,6 +3,7 @@ package com.yimei.hs.ying.dto;
 import com.yimei.hs.boot.persistence.BaseFilter;
 import com.yimei.hs.enums.PayMode;
 import lombok.Data;
+import org.apache.ibatis.jdbc.SQL;
 
 import java.time.LocalDateTime;
 
@@ -28,24 +29,18 @@ public class PageYingHuikuanDTO extends BaseFilter<PageYingHuikuanDTO> {
     @Override
     public String getCountSql(String sql) {
 
-        System.out.println("orignal sql = " + sql);
-        StringBuilder sb = new StringBuilder("select * from hs_ying_huikuan ");
-        if (orderId != null) {
-            sb.append(" where orderId = ?");
-        }
-        if (hsId != null) {
-            sb.append( " and hsId = ?");
-        }
-        if (huikuanCompanyId != null) {
-            sb.append(" and huikuanCompanyId = ?");
-        }
-        if (huikuanDate != null) {
-            sb.append(" and huikuanDate = ?");
-        }
-        if( huikuanMode != null) {
-            sb.append(" and huikuanMode = ?");
-        }
-        String countSql = super.getCountSql(sb.toString());
+
+        String nsql = new SQL() {{
+            SELECT("*");
+            FROM("hs_ying_invoice");
+            if (orderId != null) { WHERE("orderId = #{orderId"); }
+            if (hsId != null) { WHERE("hsId = #{hsId}"); }
+            if (huikuanCompanyId != null) { WHERE("huikuanCompanyId = #{huikuanCompanyId}"); }
+            if (huikuanDate != null) { WHERE("huikuanDate = #{huikuanDate}"); }
+            if (huikuanMode != null) { WHERE("huikuanMode = #{huikuanMode}"); }
+        }}.toString();
+
+        String countSql = super.getCountSql(nsql);
         System.out.println("count sql = " + countSql);
         return countSql;
     }

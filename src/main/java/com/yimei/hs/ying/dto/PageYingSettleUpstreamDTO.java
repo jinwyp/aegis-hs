@@ -13,4 +13,5 @@ import java.time.LocalDateTime;
 public class PageYingSettleUpstreamDTO extends BaseFilter<PageYingSettleUpstreamDTO>{
     private Long orderId;
     private Long hsId;
-    private LocalDateTime settleDate;}
+    private LocalDateTime settleDate;
+}
