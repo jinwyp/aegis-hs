@@ -31,11 +31,11 @@ describe('用户注册登陆', function () {
             .set('Accept', 'application/json')
             .send({
                 deptId : 2,
-                username: "18321805753",
+                phone: "18321805753",
                 password: "123456"
             })
             .expect('Content-Type', /json/)
-            .expect(400)
+            .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
                 expect(res.body.success).to.equal(true)
@@ -48,11 +48,11 @@ describe('用户注册登陆', function () {
         server.post('/api/login')
             .set('Accept', 'application/json')
             .send({
-                username: "18321805753",
+                phone: "18321805753",
                 password: "1234567"
             })
             .expect('Content-Type', /json/)
-            .expect(400)
+            .expect(401)
             .end(function(err, res) {
                 if (err) return done(err)
                 done()
@@ -64,7 +64,7 @@ describe('用户注册登陆', function () {
         server.post('/api/login')
             .set('Accept', 'application/json')
             .send({
-                username: "18321805753",
+                phone: "18321805753",
                 password: "123456"
             })
             .expect('Content-Type', /json/)
