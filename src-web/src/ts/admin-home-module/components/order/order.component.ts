@@ -93,7 +93,7 @@ export class OrderComponent implements OnInit {
 
         this.hsOrderService.getOrderList(query).subscribe(
             data => {
-                this.orderList = data.data.results
+                this.orderList = data.data
 
                 this.pagination.pageSize = data.data.pageSize
                 this.pagination.pageNo = data.data.pageNo
@@ -226,9 +226,17 @@ export class OrderComponent implements OnInit {
             this.isAddNew = true
 
             this.orderForm.patchValue({
-                'name'    : '',
                 'deptId'    : '',
-                'teamId'    : ''
+                'teamId'    : '',
+                'line'    : '',
+                'cargoType'    : '',
+
+                'upstreamSettleMode'    : '',
+                'downstreamSettleMode'    : '',
+
+                'mainAccounting'    : '',
+                'upstreamId'    : '',
+                'downstreamId'    : ''
 
             })
 
@@ -246,3 +254,4 @@ export class OrderComponent implements OnInit {
 
 
 }
+
