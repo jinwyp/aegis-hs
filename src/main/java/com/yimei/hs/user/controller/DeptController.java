@@ -31,7 +31,7 @@ public class DeptController {
      * @param pageDeptDTO
      * @return
      */
-    @GetMapping("/depts")
+    @GetMapping("/departments")
     public ResponseEntity<PageResult<Dept>> list(PageDeptDTO pageDeptDTO) {
         return PageResult.ok(deptService.getPage(pageDeptDTO));
     }
@@ -41,7 +41,7 @@ public class DeptController {
      * @param id
      * @return
      */
-    @GetMapping("/depts/{id}")
+    @GetMapping("/departments/{id}")
     public ResponseEntity<Result<Dept>> read(@PathVariable(value = "id") long id) {
         Dept dept = deptService.findOne(id);
         if (dept == null) {
@@ -56,7 +56,7 @@ public class DeptController {
      * 创建部门
      * @return
      */
-    @PostMapping("/depts")
+    @PostMapping("/departments")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Dept>> create(@RequestBody Dept dept) {
         deptService.create(dept);
@@ -67,9 +67,9 @@ public class DeptController {
      * 更新dept
      * @return
      */
-    @PutMapping("/depts/{id}")
+    @PutMapping("/departments/{id}")
     @Transactional(readOnly = false)
-    public ResponseEntity<Result<Integer>> update(@PathVariable(value = "id") Long id, @RequestParam(value = "deptName") String name) {
+    public ResponseEntity<Result<Integer>> update(@PathVariable(value = "id") Long id, @RequestParam(value = "name") String name) {
         Dept dept = new Dept();
         dept.setId(id);
         dept.setName(name);
@@ -84,7 +84,7 @@ public class DeptController {
     /**
      * delete
      */
-    @DeleteMapping("/depts/{id}")
+    @DeleteMapping("/departments/{id}")
     public ResponseEntity<Result<Integer>> delete(@PathVariable("id") String pid) {
         return Result.ok(deptService.deleteDeptById(Long.parseLong(pid)));
     }
