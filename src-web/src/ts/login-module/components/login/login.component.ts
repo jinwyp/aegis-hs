@@ -5,7 +5,8 @@ import { HttpService } from '../../../bs-form-module/services/http.service'
 
 
 import { formErrorHandler, isMobilePhone } from '../../../bs-form-module/validators/validator'
-import {UserLoginService} from '../../../services/userLogin.service'
+import { UserLoginService } from '../../../services/userLogin.service'
+import { saveAccessToken } from '../../../services/localStorage'
 
 
 
@@ -79,8 +80,9 @@ export class LoginComponent implements OnInit {
         this.userService.login(this.loginForm.value).subscribe(
             data => {
                 console.log('登陆成功: ', data)
+                saveAccessToken(data.data)
                 window.location.href = '/web/index'
-                this.httpService.successHandler(data)
+                // this.httpService.successHandler(data)
             },
             error => {this.httpService.errorHandler(error) }
         )
