@@ -16,6 +16,11 @@ public class YingPartyService {
     @Autowired
     YingOrderPartyMapper yingOrderPartyMapper;
 
+    /**
+     * 获取应收订单(业务线)的参与方
+     * @param pageYingOrderPartyDTO
+     * @return
+     */
     public Page<YingOrderParty> getPage(PageYingOrderPartyDTO pageYingOrderPartyDTO) {
         return yingOrderPartyMapper.getPage(pageYingOrderPartyDTO);
     }

@@ -23,7 +23,7 @@ public class YingPartyController {
 
 
     /**
-     * 获取分页数据party
+     * 获取分页数据party - 一个订单(业务线)所有参与方客户
      *
      * @return
      */
