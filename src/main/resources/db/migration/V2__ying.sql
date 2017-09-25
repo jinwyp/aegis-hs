@@ -274,44 +274,44 @@ create table hs_ying_log (
 )engine=InnoDB default charset=utf8;
 
 --  发运总吨数， 发运到场吨数， 发运未到场吨数
-create view hs_ying_ledger_fy AS
-  (
-    SELECT
-      orderId,
-      hsId,
-      sum(fyAmount) as fyAmount,
-      sum(CASE WHEN arriveStatus = 'ARRIVE' THEN fyAmount ELSE 0 END) as arrivedAmount,
-      sum(CASE WHEN arriveStatus = 'UNARRIVE' THEN fyAmount ELSE 0 END) as unarrivedAmount
-    FROM hs_ying_fayun
-    GROUP BY orderId, hsId
-  );
-
--- 下游结算总吨数， 下游结算总金额, 
-create view hs_ying_ledger_down AS
-  (
-      select
-        orderId,
-        hsId,
-        sum(amount) as amount,
-        sum(money) as money,
-        (sum(amount) - sum(settleGap)) * t2.tradeAddPrice + sum(t1.money) as salesAll
-      from hs_ying_settle_downstream t1
-    LEFT JOIN hs_ying_order_config t2 on  t1.orderId = t2.orderId and t1.hsId = t2.id
-    GROUP BY orderId, hsId
-  );
-
-
-create view hs_ying_ledger_up AS
-  (
-    select
-      orderId,
-      hsId,
-      sum(amount) as amount,
-      sum(money) as money,
-      sum(discountDays) as discountDays
-    from hs_ying_settle_upstream
-    group by orderId, hsId
-  );
+-- create view hs_ying_ledger_fy AS
+--   (
+--     SELECT
+--       orderId,
+--       hsId,
+--       sum(fyAmount) as fyAmount,
+--       sum(CASE WHEN arriveStatus = 'ARRIVE' THEN fyAmount ELSE 0 END) as arrivedAmount,
+--       sum(CASE WHEN arriveStatus = 'UNARRIVE' THEN fyAmount ELSE 0 END) as unarrivedAmount
+--     FROM hs_ying_fayun
+--     GROUP BY orderId, hsId
+--   );
+--
+-- -- 下游结算总吨数， 下游结算总金额,
+-- create view hs_ying_ledger_down AS
+--   (
+--       select
+--         orderId,
+--         hsId,
+--         sum(amount) as amount,
+--         sum(money) as money,
+--         (sum(amount) - sum(settleGap)) * t2.tradeAddPrice + sum(t1.money) as salesAll
+--       from hs_ying_settle_downstream t1
+--     LEFT JOIN hs_ying_order_config t2 on  t1.orderId = t2.orderId and t1.hsId = t2.id
+--     GROUP BY orderId, hsId
+--   );
+--
+--
+-- create view hs_ying_ledger_up AS
+--   (
+--     select
+--       orderId,
+--       hsId,
+--       sum(amount) as amount,
+--       sum(money) as money,
+--       sum(discountDays) as discountDays
+--    from hs_ying_settle_upstream
+--    group by orderId, hsId
+--  );
 
 
 
