@@ -23,9 +23,12 @@ import { OrderComponent } from './components/order/order.component'
 
 
 
+import { AuthInterceptor } from '../services/headerHttpInterceptor'
+
 import { UserInfoService } from '../services/userInfo.service'
 import { HSUserService } from '../services/hsUser.service'
-import { AuthInterceptor } from '../services/headerHttpInterceptor'
+import { HSOrderService } from '../services/hsOrder.service'
+
 
 
 const userHomeRoutes: Routes = [
@@ -70,6 +73,7 @@ const userHomeRoutes: Routes = [
     providers    : [
         UserInfoService,
         HSUserService,
+        HSOrderService,
 
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
     ],

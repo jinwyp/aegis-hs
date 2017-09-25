@@ -1,4 +1,7 @@
-import {Component, OnInit, Input, forwardRef, ElementRef, ViewChild, OnChanges, SimpleChange} from '@angular/core'
+import {
+    Component, OnInit, Input, Output, forwardRef, ElementRef, ViewChild, OnChanges, SimpleChange,
+    EventEmitter
+} from '@angular/core'
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
 
 @Component({
@@ -29,6 +32,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
     @Input('labelclass') labelClass: string = 'col-2'
     @Input('inputclass') inputClass: string = 'col-6'
 
+    @Output() change: any                = new EventEmitter<any>()
 
     @ViewChild('optionsListEl') optionsListEl: ElementRef
 
@@ -44,7 +48,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
     }
 
     ngOnInit(): void {
-        console.log('ngOnInit', this.el.nativeElement)
+        // console.log('ngOnInit', this.el.nativeElement)
     }
 
 
@@ -81,6 +85,8 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
         this.value = currentOption
         this.isShowSelectOptionList = false
         this.currentSelectByKeyboard = this.optionList.indexOf(currentOption)
+
+        this.change.emit(currentOption)
     }
 
 
