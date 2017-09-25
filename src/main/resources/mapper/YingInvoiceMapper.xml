@@ -51,6 +51,7 @@
         WHERE t1.id = #{id, jdbcType=BIGINT}
     </select>
 
+    <!-- 获取发票分页 -->
     <select id="getPage" resultMap="YingInvoiceResultMap">
         SELECT
             t1.id  t1Id,
@@ -70,7 +71,13 @@
             t2.priceAndTax,
             t2.tsc t2tsc
         FROM hs_ying_invoice t1 LEFT JOIN hs_ying_invoice_detail t2 ON t1.id = t2.invoiceId
-        WHERE t1.orderId = #{orderId, jdbcType=BIGINT}
+        <where>
+            <if test="orderId!=null"> orderId=#{orderId,jdbcType=BIGINT}</if>
+            <if test="hsId!=null"> hsId=#{hsId,jdbcType=BIGINT}</if>
+            <if test="openCompanyId!=null"> openCompanyId=#{openCompanyId,jdbcType=BIGINT}</if>
+            <if test="invoiceType!=null"> invoiceType=#{invoiceType,jdbcType=VARCHAR}</if>
+            <if test="recieverId!=null"> recieverId=#{recieverId, jdbcType=BIGINT}</if>
+        </where>
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

@@ -1,117 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yimei.hs.mapper.YingLogMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.YingLog">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="orderId" jdbcType="BIGINT" property="orderId" />
-    <result column="hsId" jdbcType="BIGINT" property="hsId" />
-    <result column="entityId" jdbcType="BIGINT" property="entityId" />
-    <result column="entityType" jdbcType="VARCHAR" property="entityType" />
-    <result column="memo" jdbcType="VARCHAR" property="memo" />
-    <result column="tsc" jdbcType="TIMESTAMP" property="tsc" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, orderId, hsId, entityId, entityType, memo, tsc
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from hs_ying_log
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from hs_ying_log
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.YingLog">
-    insert into hs_ying_log (id, orderId, hsId, 
-      entityId, entityType, memo, 
-      tsc)
-    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT}, 
-      #{entityId,jdbcType=BIGINT}, #{entityType,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
-      #{tsc,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingLog">
-    insert into hs_ying_log
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="orderId != null">
-        orderId,
-      </if>
-      <if test="hsId != null">
-        hsId,
-      </if>
-      <if test="entityId != null">
-        entityId,
-      </if>
-      <if test="entityType != null">
-        entityType,
-      </if>
-      <if test="memo != null">
-        memo,
-      </if>
-      <if test="tsc != null">
-        tsc,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orderId != null">
-        #{orderId,jdbcType=BIGINT},
-      </if>
-      <if test="hsId != null">
-        #{hsId,jdbcType=BIGINT},
-      </if>
-      <if test="entityId != null">
-        #{entityId,jdbcType=BIGINT},
-      </if>
-      <if test="entityType != null">
-        #{entityType,jdbcType=VARCHAR},
-      </if>
-      <if test="memo != null">
-        #{memo,jdbcType=VARCHAR},
-      </if>
-      <if test="tsc != null">
-        #{tsc,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingLog">
-    update hs_ying_log
-    <set>
-      <if test="orderId != null">
-        orderId = #{orderId,jdbcType=BIGINT},
-      </if>
-      <if test="hsId != null">
-        hsId = #{hsId,jdbcType=BIGINT},
-      </if>
-      <if test="entityId != null">
-        entityId = #{entityId,jdbcType=BIGINT},
-      </if>
-      <if test="entityType != null">
-        entityType = #{entityType,jdbcType=VARCHAR},
-      </if>
-      <if test="memo != null">
-        memo = #{memo,jdbcType=VARCHAR},
-      </if>
-      <if test="tsc != null">
-        tsc = #{tsc,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingLog">
-    update hs_ying_log
-    set orderId = #{orderId,jdbcType=BIGINT},
-      hsId = #{hsId,jdbcType=BIGINT},
-      entityId = #{entityId,jdbcType=BIGINT},
-      entityType = #{entityType,jdbcType=VARCHAR},
-      memo = #{memo,jdbcType=VARCHAR},
-      tsc = #{tsc,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+
+    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.YingLog">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="hsId" jdbcType="BIGINT" property="hsId"/>
+        <result column="entityId" jdbcType="BIGINT" property="entityId"/>
+        <result column="entityType" jdbcType="VARCHAR" property="entityType"/>
+        <result column="memo" jdbcType="VARCHAR" property="memo"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, orderId, hsId, entityId, entityType, memo, tsc
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_ying_log
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 获取分页日志-->
+    <select id="getPage" resultType="com.yimei.hs.entity.YingLog">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_ying_log
+        <where>
+            <if test="orderId"> orderId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="hsId"> hsId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="entityType"> entityType = #{entityType, jdbcType=VARCHAR}</if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM hs_ying_log
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.yimei.hs.entity.YingLog">
+        INSERT INTO hs_ying_log (
+            id,
+            orderId,
+            hsId,
+            entityId,
+            entityType,
+            memo,
+            tsc)
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{hsId,jdbcType=BIGINT},
+            #{entityId,jdbcType=BIGINT},
+            #{entityType,jdbcType=VARCHAR},
+            #{memo,jdbcType=VARCHAR},
+            #{tsc,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingLog">
+        insert into hs_ying_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="hsId != null">hsId,</if>
+            <if test="entityId != null">entityId,</if>
+            <if test="entityType != null">entityType,</if>
+            <if test="memo != null">memo,</if>
+            <if test="tsc != null">tsc,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
+            <if test="entityId != null">#{entityId,jdbcType=BIGINT},</if>
+            <if test="entityType != null">#{entityType,jdbcType=VARCHAR},</if>
+            <if test="memo != null">#{memo,jdbcType=VARCHAR},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingLog">
+        update hs_ying_log
+        <set>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
+            <if test="entityId != null">entityId = #{entityId,jdbcType=BIGINT},</if>
+            <if test="entityType != null">entityType = #{entityType,jdbcType=VARCHAR},</if>
+            <if test="memo != null">memo = #{memo,jdbcType=VARCHAR},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingLog">
+        UPDATE hs_ying_log
+        SET orderId    = #{orderId,jdbcType=BIGINT},
+            hsId       = #{hsId,jdbcType=BIGINT},
+            entityId   = #{entityId,jdbcType=BIGINT},
+            entityType = #{entityType,jdbcType=VARCHAR},
+            memo       = #{memo,jdbcType=VARCHAR},
+            tsc        = #{tsc,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

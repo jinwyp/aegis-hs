@@ -9,4 +9,7 @@ import lombok.Data;
 
 @Data
 public class PageYingLogDTO extends BaseFilter<PageYingLogDTO> {
+    private Long orderId;
+    private Long hsId;
+    private String entityType;
 }
