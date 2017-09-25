@@ -77,8 +77,15 @@ public class YingInvoiceController {
     @PutMapping("/{orderId}/invoice/:id")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
-            @PathVariable("id") long id
+            @PathVariable("id") long id,
+            @RequestBody YingInvoice yingInvoice
     ) {
+        assert (yingInvoice.getOrderId() == orderId);
+        yingInvoice.setOrderId(orderId);
+        int rtn = yingInvoiceService.update(yingInvoice);
+        if (rtn != 1) {
+            return Result.error(4001, "更新错误");
+        }
         return Result.ok(1);
     }
 

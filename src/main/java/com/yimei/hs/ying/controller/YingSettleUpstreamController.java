@@ -74,8 +74,15 @@ public class YingSettleUpstreamController {
     @PutMapping("/{orderId}/settleupstream/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
-            @PathVariable("id") long id
+            @PathVariable("id") long id,
+            @RequestBody YingSettleUpstream yingSettleUpstream
     ) {
+        assert (orderId == yingSettleUpstream.getOrderId());
+        yingSettleUpstream.setId(id);
+        int rtn = yingSettleService.updateUpstream(yingSettleUpstream);
+        if (rtn != 1) {
+            return Result.error(4001, "更新失败");
+        }
         return Result.ok(1);
     }
 }

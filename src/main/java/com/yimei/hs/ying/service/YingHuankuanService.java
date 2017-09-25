@@ -35,4 +35,8 @@ public class YingHuankuanService {
     public int create(YingHuankuan yingHuankuan) {
         return yingHuankuanMapper.insert(yingHuankuan);
     }
+
+    public int update(YingHuankuan yingHuankuan) {
+        return yingHuankuanMapper.updateByPrimaryKey(yingHuankuan);
+    }
 }

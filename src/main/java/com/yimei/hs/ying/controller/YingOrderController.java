@@ -78,9 +78,13 @@ public class YingOrderController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Result<Integer>> update(
-            @PathVariable("id") long id
+            @PathVariable("id") long id,
+            @RequestBody YingOrder yingOrder
     ) {
-        //
+        int rtn = yingOrderService.update(yingOrder);
+        if (rtn != 1) {
+            return Result.error(4001, "更新失败");
+        }
         return Result.ok(1);
     }
 }

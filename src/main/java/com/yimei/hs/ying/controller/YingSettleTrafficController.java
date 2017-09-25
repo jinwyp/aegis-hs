@@ -76,8 +76,14 @@ public class YingSettleTrafficController {
     @PutMapping("/{orderId}/settletraffic/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
-            @PathVariable("id") long id
+            @PathVariable("id") long id,
+            @RequestBody YingSettleTraffic yingSettleTraffic
     ) {
+        assert (orderId == yingSettleTraffic.getOrderId());
+        int rtn = yingSettleService.udpateTraffic(yingSettleTraffic);
+        if (rtn != 1) {
+            return Result.error(4001, "更新失败");
+        }
         return Result.ok(1);
     }
 }

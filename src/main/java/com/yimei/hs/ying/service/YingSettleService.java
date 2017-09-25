@@ -97,4 +97,16 @@ public class YingSettleService {
     public YingSettleUpstream findUpstream(long id) {
         return yingSettleUpstreamMapper.selectByPrimaryKey(id);
     }
+
+    public int updateUpstream(YingSettleUpstream yingSettleUpstream) {
+        return yingSettleUpstreamMapper.updateByPrimaryKeySelective(yingSettleUpstream);
+    }
+
+    public int udpateTraffic(YingSettleTraffic yingSettleTraffic) {
+        return yingSettleTrafficMapper.updateByPrimaryKeySelective(yingSettleTraffic);
+    }
+
+    public int updateDownstream(YingSettleDownstream yingSettleDownstream) {
+        return yingSettleDownstreamMapper.updateByPrimaryKeySelective(yingSettleDownstream);
+    }
 }

@@ -73,8 +73,16 @@ public class YingHuankuanController {
     @PutMapping("/{orderId}/huankuans/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
-            @PathVariable("id") long id
+            @PathVariable("id") long id,
+            @RequestBody YingHuankuan yingHuankuan
     ) {
+        yingHuankuan.setId(id);
+        assert (orderId == yingHuankuan.getOrderId());
+        int cnt = yingHuankuanService.update(yingHuankuan);
+        if (cnt != 1) {
+            return Result.error(4001, "更新失败");
+        }
         return Result.ok(1);
     }
 }
+
