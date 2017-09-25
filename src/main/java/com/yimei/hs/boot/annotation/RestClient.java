@@ -1,4 +1,4 @@
-package com.yimei.hs.service;
+package com.yimei.hs.boot.annotation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
