@@ -44,4 +44,8 @@ public class YingFukuanService {
     public YingFukuan findOne(long id) {
         return yingFukuanMapper.selectByPrimaryKey(id);
     }
+
+    public int update(YingFukuan yingFukuan) {
+        return yingFukuanMapper.updateByPrimaryKeySelective(yingFukuan);
+    }
 }

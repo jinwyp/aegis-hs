@@ -27,7 +27,7 @@ public class YingPartyController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/partys")
+    @GetMapping("/{orderId}/parties")
     public ResponseEntity<PageResult<YingOrderParty>> list(PageYingOrderPartyDTO pageYingOrderPartyDTO) {
         return PageResult.ok(yingPartyService.getPage(pageYingOrderPartyDTO));
     }

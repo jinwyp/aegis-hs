@@ -73,8 +73,15 @@ public class YingFayunController {
      * @return
      */
     @PutMapping("/{orderId}/fayuns/{id}")
-    public ResponseEntity<Result<YingFayun>> update(YingFayun yingFayun) {
-        yingFayunService.update(yingFayun);
+    public ResponseEntity<Result<YingFayun>> update(
+            @PathVariable("orderId") Long orderId,
+            @PathVariable("id") Long id,
+            @RequestBody YingFayun yingFayun) {
+        assert (orderId == orderId);
+        int cnt = yingFayunService.update(yingFayun);
+        if (cnt != 2) {
+            return Result.error(4001, "更新失败");
+        }
         return Result.ok(yingFayun);
     }
 

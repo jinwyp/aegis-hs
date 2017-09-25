@@ -77,10 +77,15 @@ public class YingFeeController {
      * @return
      */
     @PutMapping("/{orderId}/fees/{id}")
-    public ResponseEntity<Result<Integer>> update(YingFee yingFee) {
+    public ResponseEntity<Result<Integer>> update(
+            @PathVariable("orderId") Long orderId,
+            @PathVariable("id") Long id,
+            YingFee yingFee) {
+        assert (orderId == yingFee.getOrderId());
+        yingFee.setId(id);
         int rtn = yingFeeService.update(yingFee);
         if (rtn != 1) {
-            return Result.error(5001, "关系失败");
+            return Result.error(5001, "更新失败");
         }
         return Result.ok(1);
     }
