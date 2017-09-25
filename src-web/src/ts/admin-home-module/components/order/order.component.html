@@ -8,11 +8,12 @@
 
         <form [formGroup]="orderForm" (ngSubmit)="orderFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-            <bs-text-input formControlName="line" [fc]="orderForm.get('line')" [type]="'text'" [label]="'业务线名称:'" [dirty]="ignoreDirty" [error]="orderFormError.line"></bs-text-input>
-            <bs-text-input formControlName="cargoType" [fc]="orderForm.get('cargoType')" [type]="'text'" [label]="'货物种类:'" [dirty]="ignoreDirty" [error]="orderFormError.cargoType"></bs-text-input>
-
             <bs-select formControlName ="deptId" [fc]="orderForm.get('deptId')" [label]="'事业部门:'" [options]="departmentList" [error]="orderFormError.deptId" (change)="filterTeams($event)" ></bs-select>
             <bs-select formControlName ="teamId" [fc]="orderForm.get('teamId')" [label]="'团队:'" [options]="filterTeamList" [error]="orderFormError.teamId"></bs-select>
+
+
+            <bs-text-input formControlName="line" [fc]="orderForm.get('line')" [type]="'text'" [label]="'业务线名称:'" [dirty]="ignoreDirty" [error]="orderFormError.line"></bs-text-input>
+            <bs-text-input formControlName="cargoType" [fc]="orderForm.get('cargoType')" [type]="'text'" [label]="'货物种类:'" [dirty]="ignoreDirty" [error]="orderFormError.cargoType"></bs-text-input>
 
             <bs-select formControlName ="upstreamSettleMode" [fc]="orderForm.get('upstreamSettleMode')" [label]="'上游结算方式:'" [options]="jieSuanType" [error]="orderFormError.upstreamSettleMode"></bs-select>
             <bs-select formControlName ="downstreamSettleMode" [fc]="orderForm.get('downstreamSettleMode')" [label]="'下游结算方式:'" [options]="jieSuanType" [error]="orderFormError.downstreamSettleMode"></bs-select>
@@ -39,18 +40,28 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>核算单名称</th>
-                    <th>部门ID</th>
-                    <th>部门</th>
+                    <th>业务线</th>
+                    <th>事业部门</th>
+                    <th>业务团队</th>
+
+                    <th>货物种类</th>
+                    <th>账务公司</th>
+                    <th>状态</th>
+                    <th>创建时间</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let order of orderList; trackBy: trackByFn">
                     <td> {{order.id}}</td>
-                    <td> {{order.name}}</td>
-                    <td> {{order.deptId}}</td>
-                    <td> {{order.deptId | findKey : departmentList : 'name' }}</td>
+                    <td> {{order.line}}</td>
+                    <td> {{order.deptId | findKey : departmentList : 'name'}}</td>
+                    <td> {{order.teamId | findKey : teamList : 'name'}}</td>
+
+                    <td> {{order.cargoType}}</td>
+                    <td> {{order.mainAccounting }}</td>
+                    <td> {{order.STATUS }}</td>
+                    <td> {{order.tsc }}</td>
                     <td> <button class="btn btn-info btn-sm" (click)="showForm(false, order)"> 修改 </button></td>
                 </tr>
                 </tbody>
