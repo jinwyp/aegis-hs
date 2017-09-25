@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.YingSettleTrafficMapper">
-    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.YingSettleTraffic">
+<mapper namespace="com.yimei.hs.ying.mapper.YingSettleTrafficMapper">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingSettleTraffic">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
@@ -22,7 +22,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="getPage" resultType="com.yimei.hs.entity.YingSettleTraffic">
+    <select id="getPage" resultType="com.yimei.hs.ying.entity.YingSettleTraffic">
         select
         <include refid="Base_Column_List"/>
         from hs_ying_settle_traffic
@@ -37,7 +37,7 @@
         DELETE FROM hs_ying_settle_traffic
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.yimei.hs.entity.YingSettleTraffic">
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleTraffic">
         INSERT INTO hs_ying_settle_traffic (id, orderId, hsId,
                                             settleDate, amount, money,
                                             trafficCompanyId, tsc)
@@ -45,7 +45,7 @@
                 #{settleDate,jdbcType=DATE}, #{amount,jdbcType=DECIMAL}, #{money,jdbcType=DECIMAL},
                 #{trafficCompanyId,jdbcType=BIGINT}, #{tsc,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingSettleTraffic">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingSettleTraffic">
         insert into hs_ying_settle_traffic
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -100,7 +100,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingSettleTraffic">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingSettleTraffic">
         update hs_ying_settle_traffic
         <set>
             <if test="orderId != null">
@@ -127,7 +127,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingSettleTraffic">
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingSettleTraffic">
         UPDATE hs_ying_settle_traffic
         SET orderId          = #{orderId,jdbcType=BIGINT},
             hsId             = #{hsId,jdbcType=BIGINT},

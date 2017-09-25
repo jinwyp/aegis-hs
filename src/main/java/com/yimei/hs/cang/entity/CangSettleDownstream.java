@@ -1,6 +1,6 @@
 package com.yimei.hs.cang.entity;
 
-import com.yimei.hs.entity.YingFayun;
+import com.yimei.hs.ying.entity.YingFayun;
 import lombok.Data;
 
 import java.io.Serializable;

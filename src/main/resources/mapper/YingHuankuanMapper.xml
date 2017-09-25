@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.YingHuankuanMapper">
-    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.YingHuankuan">
+<mapper namespace="com.yimei.hs.ying.mapper.YingHuankuanMapper">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingHuankuan">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
@@ -14,9 +14,9 @@
     </resultMap>
 
     <!-- 还款， 以及其关联的付款 -->
-    <resultMap id="YingHuankuanResultMap" type="com.yimei.hs.entity.YingHuankuan" autoMapping="true">
+    <resultMap id="YingHuankuanResultMap" type="com.yimei.hs.ying.entity.YingHuankuan" autoMapping="true">
         <result property="id" column="t1Id"/>
-        <collection property="fukuanList" javaType="ArrayList" ofType="com.yimei.hs.entity.YingFukuan"
+        <collection property="fukuanList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingFukuan"
                     autoMapping="true">
             <id property="id" column="t2Id"/>
             <id property="tsc" column="t2tsc"/>
@@ -35,7 +35,7 @@
     </select>
 
     <!--获取一页数据-->
-    <select id="getPage" resultType="com.yimei.hs.entity.YingHuankuan">
+    <select id="getPage" resultType="com.yimei.hs.ying.entity.YingHuankuan">
         select
             t1.id,
             t1.orderId,
@@ -64,7 +64,7 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insert" parameterType="com.yimei.hs.entity.YingHuankuan">
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuankuan">
         INSERT INTO hs_ying_huankuan (
             id,
             orderId,
@@ -87,7 +87,7 @@
             #{tsc,jdbcType=TIMESTAMP})
     </insert>
 
-    <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingHuankuan">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuankuan">
         insert into hs_ying_huankuan
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -113,7 +113,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingHuankuan">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingHuankuan">
         update hs_ying_huankuan
         <set>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
@@ -128,7 +128,7 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingHuankuan">
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingHuankuan">
         UPDATE hs_ying_huankuan
         SET orderId        = #{orderId,jdbcType=BIGINT},
             hsId           = #{hsId,jdbcType=BIGINT},

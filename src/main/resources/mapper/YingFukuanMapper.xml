@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.YingFukuanMapper">
+<mapper namespace="com.yimei.hs.ying.mapper.YingFukuanMapper">
 
-    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.YingFukuan">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingFukuan">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
@@ -30,7 +30,7 @@
     </select>
 
     <!-- 获取付款分页 -->
-    <select id="getPage" resultType="com.yimei.hs.entity.YingFukuan">
+    <select id="getPage" resultType="com.yimei.hs.ying.entity.YingFukuan">
         select
         <include refid="Base_Column_List"/>
         from hs_ying_fukuan
@@ -47,7 +47,7 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insert" parameterType="com.yimei.hs.entity.YingFukuan">
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingFukuan">
         INSERT INTO hs_ying_fukuan (
             id,
             orderId,
@@ -76,7 +76,7 @@
             #{tsc,jdbcType=TIMESTAMP}
         )
     </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingFukuan">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingFukuan">
         insert into hs_ying_fukuan
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -107,7 +107,7 @@
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingFukuan">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingFukuan">
         update hs_ying_fukuan
         <set>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
@@ -124,7 +124,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingFukuan">
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingFukuan">
         UPDATE hs_ying_fukuan
         SET orderId          = #{orderId,jdbcType=BIGINT},
             hsId             = #{hsId,jdbcType=BIGINT},

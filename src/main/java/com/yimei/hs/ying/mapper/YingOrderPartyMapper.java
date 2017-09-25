@@ -1,0 +1,17 @@
+package com.yimei.hs.ying.mapper;
+
+import com.yimei.hs.ying.entity.YingOrderParty;
+
+public interface YingOrderPartyMapper {
+    int deleteByPrimaryKey(Long id);
+
+    int insert(YingOrderParty record);
+
+    int insertSelective(YingOrderParty record);
+
+    YingOrderParty selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(YingOrderParty record);
+
+    int updateByPrimaryKey(YingOrderParty record);
+}

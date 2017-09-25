@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.YingOrderConfigMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.YingOrderConfig">
+<mapper namespace="com.yimei.hs.ying.mapper.YingOrderConfigMapper">
+  <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingOrderConfig">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="orderId" jdbcType="BIGINT" property="orderId" />
     <result column="hsMonth" jdbcType="CHAR" property="hsMonth" />
@@ -28,7 +28,7 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
-  <insert id="insert" parameterType="com.yimei.hs.entity.YingOrderConfig" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingOrderConfig" useGeneratedKeys="true" keyProperty="id">
     insert into hs_ying_order_config (id, orderId, hsMonth, 
       maxPrepayRate, unInvoicedRate, contractBaseInterest, 
       expectHKDays, tradeAddPrice, wPrice, 
@@ -39,7 +39,7 @@
       #{tsc,jdbcType=TIMESTAMP})
   </insert>
 
-  <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingOrderConfig" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingOrderConfig" useGeneratedKeys="true" keyProperty="id">
     insert into hs_ying_order_config
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -106,7 +106,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingOrderConfig">
+  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingOrderConfig">
     update hs_ying_order_config
     <set>
       <if test="orderId != null">
@@ -139,7 +139,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingOrderConfig">
+  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingOrderConfig">
     update hs_ying_order_config
     set orderId = #{orderId,jdbcType=BIGINT},
       hsMonth = #{hsMonth,jdbcType=CHAR},

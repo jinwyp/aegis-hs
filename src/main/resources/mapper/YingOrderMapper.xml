@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.YingOrderMapper">
+<mapper namespace="com.yimei.hs.ying.mapper.YingOrderMapper">
 
-    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.YingOrder">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingOrder">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="deptId" jdbcType="BIGINT" property="deptId"/>
         <result column="teamId" jdbcType="BIGINT" property="teamId"/>
@@ -21,16 +21,16 @@
 
 
     <!-- 一个订单记录: 包含的多个核算月配置， 以及多个参与方-->
-    <resultMap id="YingOrderResultMap" type="com.yimei.hs.entity.YingOrder" autoMapping="true">
+    <resultMap id="YingOrderResultMap" type="com.yimei.hs.ying.entity.YingOrder" autoMapping="true">
         <result property="id" column="t1id"/>
 
-        <collection property="orderConfigList" javaType="ArrayList" ofType="com.yimei.hs.entity.YingOrderConfig"
+        <collection property="orderConfigList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingOrderConfig"
                     autoMapping="true">
             <id property="id" column="t2id"/>
             <id property="tsc" column="t2tsc"/>
         </collection>
 
-        <collection property="orderPartyList" javaType="ArrayList" ofType="com.yimei.hs.entity.YingOrderParty"
+        <collection property="orderPartyList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingOrderParty"
                     autoMapping="true">
             <id property="id" column="t3id"/>
             <id property="tsc" column="t3tsc"/>
@@ -141,7 +141,7 @@
         DELETE FROM hs_ying_order
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.yimei.hs.entity.YingOrder" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingOrder" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO hs_ying_order (id, deptId, teamId,
                                    creatorId, ownerId, mainAccounting,
                                    line, cargoType, upstreamId,
@@ -161,7 +161,7 @@
                 #{status,jdbcType=VARCHAR},
                 #{tsc,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingOrder" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingOrder" useGeneratedKeys="true" keyProperty="id">
         insert into hs_ying_order
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -252,7 +252,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingOrder">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingOrder">
         update hs_ying_order
         <set>
             <if test="deptId != null">
@@ -297,7 +297,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingOrder">
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingOrder">
         UPDATE hs_ying_order
         SET deptId               = #{deptId,jdbcType=BIGINT},
             teamId               = #{teamId,jdbcType=BIGINT},

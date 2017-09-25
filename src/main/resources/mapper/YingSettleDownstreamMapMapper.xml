@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.YingSettleDownstreamMapMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.YingSettleDownstreamMap">
+<mapper namespace="com.yimei.hs.ying.mapper.YingSettleDownstreamMapMapper">
+  <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingSettleDownstreamMap">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="settleId" jdbcType="BIGINT" property="settleId" />
     <result column="fyId" jdbcType="BIGINT" property="fyId" />
@@ -21,13 +21,13 @@
     delete from hs_ying_settle_downstream_map
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.YingSettleDownstreamMap">
+  <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleDownstreamMap">
     insert into hs_ying_settle_downstream_map (id, settleId, fyId, 
       deduction, tsc)
     values (#{id,jdbcType=BIGINT}, #{settleId,jdbcType=BIGINT}, #{fyId,jdbcType=BIGINT}, 
       #{deduction,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingSettleDownstreamMap">
+  <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingSettleDownstreamMap">
     insert into hs_ying_settle_downstream_map
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -64,7 +64,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingSettleDownstreamMap">
+  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingSettleDownstreamMap">
     update hs_ying_settle_downstream_map
     <set>
       <if test="settleId != null">
@@ -82,7 +82,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingSettleDownstreamMap">
+  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingSettleDownstreamMap">
     update hs_ying_settle_downstream_map
     set settleId = #{settleId,jdbcType=BIGINT},
       fyId = #{fyId,jdbcType=BIGINT},

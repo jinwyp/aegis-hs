@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.YingHuikuanMapMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.YingHuikuanMap">
+<mapper namespace="com.yimei.hs.ying.mapper.YingHuikuanMapMapper">
+  <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingHuikuanMap">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="huikuanId" jdbcType="BIGINT" property="huikuanId" />
     <result column="fukuanId" jdbcType="BIGINT" property="fukuanId" />
@@ -21,13 +21,13 @@
     delete from hs_ying_huikuan_map
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.YingHuikuanMap">
+  <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuikuanMap">
     insert into hs_ying_huikuan_map (id, huikuanId, fukuanId, 
       amount, tsc)
     values (#{id,jdbcType=BIGINT}, #{huikuanId,jdbcType=BIGINT}, #{fukuanId,jdbcType=BIGINT}, 
       #{amount,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingHuikuanMap">
+  <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuikuanMap">
     insert into hs_ying_huikuan_map
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -64,7 +64,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingHuikuanMap">
+  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingHuikuanMap">
     update hs_ying_huikuan_map
     <set>
       <if test="huikuanId != null">
@@ -82,7 +82,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingHuikuanMap">
+  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingHuikuanMap">
     update hs_ying_huikuan_map
     set huikuanId = #{huikuanId,jdbcType=BIGINT},
       fukuanId = #{fukuanId,jdbcType=BIGINT},
