@@ -36,16 +36,12 @@ public class UserController {
      *
      * @return
      */
-    @GetMapping("/users")
+    @GetMapping("/api/users")
     public ResponseEntity<PageResult<User>> list(PageUserDTO pageUserDTO) {
         return PageResult.ok(userService.getPage(pageUserDTO));
     }
 
-//    @RequestMapping("/")
-//    public String hello(Model model) {
-//        model.addAttribute("userName", "张三");
-//        return "/index";
-//    }
+
 
     /**
      * 注册， 当做添加用户的接口
@@ -85,7 +81,7 @@ public class UserController {
      *
      * @return
      */
-    @PutMapping("/users")
+    @PutMapping("/api/users")
     public ResponseEntity<Result<Integer>> update(@RequestBody User user) {
         userService.update(user);
         return Result.ok(1);
