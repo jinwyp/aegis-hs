@@ -86,7 +86,7 @@ export class UserManagementComponent implements OnInit {
 
         this.hsUserService.getUserList(query).subscribe(
             data => {
-                this.userList = data.data
+                this.userList = data.data.results
 
                 // this.pagination.total = data.meta.total
                 // this.pagination.pageNo = data.meta.pageNo
@@ -99,7 +99,7 @@ export class UserManagementComponent implements OnInit {
     getDepartmentList () {
         this.hsUserService.getDepartmentList().subscribe(
             data => {
-                this.departmentList = data.data
+                this.departmentList = data.data.results
 
             },
             error => {this.httpService.errorHandler(error) }
