@@ -52,11 +52,27 @@ public class AdminController {
 
 
     /**
+     * 获取用户
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/users/{id}")
+    public ResponseEntity<Result<User>> read(@PathVariable long id) {
+        User nuser = userService.findOne(id);
+        if (nuser == null) {
+            return Result.error(4001, "记录不存在");
+        } else {
+            return Result.ok(nuser);
+        }
+    }
+
+    /**
      * 更新用户信息 - 非密码
      *
      * @return
      */
-    @PutMapping("/users")
+    @PutMapping("/users/{id}")
     public ResponseEntity<Result<Integer>> update(@RequestBody User user) {
         userService.update(user);
         return Result.ok(1);

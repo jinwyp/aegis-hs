@@ -19,7 +19,7 @@ const server = supertest(config.path.urlApi)
 describe('管理用户-相关功能', function () {
 
 
-    it('获取用户列表', function (done) {
+    it('获取用户列表 GET: /api/users?pageNo=1&pageSize=2', function (done) {
         server.get('/api/users?pageNo=1&pageSize=2')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
@@ -36,7 +36,7 @@ describe('管理用户-相关功能', function () {
     })
 
 
-    it('新建用户', function (done) {
+    it('新建用户 POST: /api/users', function (done) {
         server.post('/api/users')
             .set('Accept', 'application/json')
             .send({
@@ -59,7 +59,7 @@ describe('管理用户-相关功能', function () {
     })
 
 
-    it('获取某个ID的用户信息', function (done) {
+    it('获取某个ID的用户信息 GET: /api/users/1' , function (done) {
         server.get('/api/users/1')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
@@ -75,7 +75,7 @@ describe('管理用户-相关功能', function () {
     })
 
 
-    it('修改某个ID的用户信息', function (done) {
+    it('修改某个ID的用户信息 PUT: /api/users/1', function (done) {
         server.put('/api/users/1')
             .set('Accept', 'application/json')
             .send({

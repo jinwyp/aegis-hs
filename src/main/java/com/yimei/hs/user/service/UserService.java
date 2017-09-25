@@ -87,6 +87,11 @@ public class UserService {
         return userMapper.getPage(pageUserDTO);
     }
 
+    public User findOne(long id) {
+        return userMapper.selectByPrimaryKey(id);
+    }
+
+
     /**
      *  创建用户
      * @param user
