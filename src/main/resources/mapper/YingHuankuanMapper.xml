@@ -8,6 +8,8 @@
         <result column="skCompanyId" jdbcType="BIGINT" property="skCompanyId"/>
         <result column="huankuankDate" jdbcType="TIMESTAMP" property="huankuankDate"/>
         <result column="huankuanAmount" jdbcType="DECIMAL" property="huankuanAmount"/>
+        <result column="huankuanInterest" jdbcType="DECIMAL" property="huankuanInterest"/>
+        <result column="huankuanFee" jdbcType="DECIMAL" property="huankuanFee"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
 
@@ -22,7 +24,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, skCompanyId, huankuankDate, huankuanAmount, tsc
+        id, orderId, hsId, skCompanyId, huankuankDate, huankuanAmount, huankuanInterest, huankuanFee, tsc
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -33,94 +35,96 @@
     </select>
 
     <!--获取一页数据-->
-    <select id="getPage" resultType="com.yimei.hs.entity.YingHuankuan"></select>
+    <select id="getPage" resultType="com.yimei.hs.entity.YingHuankuan">
+        select
+            t1.id,
+            t1.orderId,
+            t1.hsId,
+            t1.skCompanyId,
+            t1.huankuankDate,
+            t1.huankuanAmount,
+            t1.huankuanInterest,
+            t1.huankuanFee,
+            t1.tsc
+        from hs_ying_huankuan t1
+        LEFT JOIN hs_ying_huankuan_map map on t1.id = map.huankuanId
+        LEFT JOIN hs_ying_fukuan t2 on map.fukuanId = t2.id
+        <where>
+            <if test="orderId!=null">t1.orderId=#{orderId}</if>
+            <if test="hsId!=null">t1.hsId=#{hsId}</if>
+        </where>
+    </select>
 
-
+    <!---->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_huankuan
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
+
     <insert id="insert" parameterType="com.yimei.hs.entity.YingHuankuan">
-        INSERT INTO hs_ying_huankuan (id, orderId, hsId,
-                                      skCompanyId, huankuankDate, huankuanAmount,
-                                      tsc)
-        VALUES (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT},
-                #{skCompanyId,jdbcType=BIGINT}, #{huankuankDate,jdbcType=TIMESTAMP}, #{huankuanAmount,jdbcType=DECIMAL},
-                #{tsc,jdbcType=TIMESTAMP})
+        INSERT INTO hs_ying_huankuan (
+            id,
+            orderId,
+            hsId,
+            skCompanyId,
+            huankuankDate,
+            huankuanAmount,
+            huankuanInterest,
+            huankuanFee,
+            tsc)
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{hsId,jdbcType=BIGINT},
+            #{skCompanyId,jdbcType=BIGINT},
+            #{huankuankDate,jdbcType=TIMESTAMP},
+            #{huankuanAmount,jdbcType=DECIMAL},
+            #{huankuanInterest,jdbcType=DECIMAL},
+            #{huankuanFee,jdbcType=DECIMAL},
+            #{tsc,jdbcType=TIMESTAMP})
     </insert>
+
     <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingHuankuan">
         insert into hs_ying_huankuan
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="orderId != null">
-                orderId,
-            </if>
-            <if test="hsId != null">
-                hsId,
-            </if>
-            <if test="skCompanyId != null">
-                skCompanyId,
-            </if>
-            <if test="huankuankDate != null">
-                huankuankDate,
-            </if>
-            <if test="huankuanAmount != null">
-                huankuanAmount,
-            </if>
-            <if test="tsc != null">
-                tsc,
-            </if>
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="hsId != null">hsId,</if>
+            <if test="skCompanyId != null">skCompanyId,</if>
+            <if test="huankuankDate != null">huankuankDate,</if>
+            <if test="huankuanAmount != null">huankuanAmount,</if>
+            <if test="huankuanInterest != null">huankuanInterest,</if>
+            <if test="huankuanFee != null">huankuanFee,</if>
+            <if test="tsc != null">tsc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=BIGINT},
-            </if>
-            <if test="orderId != null">
-                #{orderId,jdbcType=BIGINT},
-            </if>
-            <if test="hsId != null">
-                #{hsId,jdbcType=BIGINT},
-            </if>
-            <if test="skCompanyId != null">
-                #{skCompanyId,jdbcType=BIGINT},
-            </if>
-            <if test="huankuankDate != null">
-                #{huankuankDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="huankuanAmount != null">
-                #{huankuanAmount,jdbcType=DECIMAL},
-            </if>
-            <if test="tsc != null">
-                #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
+            <if test="skCompanyId != null">#{skCompanyId,jdbcType=BIGINT},</if>
+            <if test="huankuankDate != null">#{huankuankDate,jdbcType=TIMESTAMP},</if>
+            <if test="huankuanAmount != null">#{huankuanAmount,jdbcType=DECIMAL},</if>
+            <if test="huankuanInterest != null">#{huankuanInterest,jdbcType=DECIMAL},</if>
+            <if test="huankuanFee != null">#{huankuanFee,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingHuankuan">
         update hs_ying_huankuan
         <set>
-            <if test="orderId != null">
-                orderId = #{orderId,jdbcType=BIGINT},
-            </if>
-            <if test="hsId != null">
-                hsId = #{hsId,jdbcType=BIGINT},
-            </if>
-            <if test="skCompanyId != null">
-                skCompanyId = #{skCompanyId,jdbcType=BIGINT},
-            </if>
-            <if test="huankuankDate != null">
-                huankuankDate = #{huankuankDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="huankuanAmount != null">
-                huankuanAmount = #{huankuanAmount,jdbcType=DECIMAL},
-            </if>
-            <if test="tsc != null">
-                tsc = #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
+            <if test="skCompanyId != null">skCompanyId = #{skCompanyId,jdbcType=BIGINT},</if>
+            <if test="huankuankDate != null">huankuankDate = #{huankuankDate,jdbcType=TIMESTAMP},</if>
+            <if test="huankuanAmount != null">huankuanAmount = #{huankuanAmount,jdbcType=DECIMAL},</if>
+            <if test="huankuanInterest != null">huankuanInterest = #{huankuanInterest,jdbcType=DECIMAL},</if>
+            <if test="huankuanFee != null">huankuanFee = #{huankuanFee,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingHuankuan">
         UPDATE hs_ying_huankuan
         SET orderId        = #{orderId,jdbcType=BIGINT},
@@ -131,4 +135,5 @@
             tsc            = #{tsc,jdbcType=TIMESTAMP}
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
+
 </mapper>

@@ -134,6 +134,8 @@ create table hs_ying_huankuan (
    skCompanyId bigint(20)  not null comment '收款单位(资金方), 只有外部资金的情况, 才存在还款',
    huankuankDate datetime  not null comment '还款日期',
    huankuanAmount decimal(10,2)  not null comment '还款总额',
+   huankuanInterest decimal(10, 2) not null comment '还款利息',
+   huankuanFee decimal(10, 2) not null comment '还款服务费',
    tsc timestamp           not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;

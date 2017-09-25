@@ -22,17 +22,13 @@ public class YingHuankuan implements Serializable {
 
     private BigDecimal huankuanAmount;
 
+    private BigDecimal huankuanInterest;
+
+    private BigDecimal huankuanFee;
+
     private LocalDateTime tsc;
 
     private List<YingFukuan> fukuanList;
-
-    public List<YingFukuan> getFukuanList() {
-        return fukuanList;
-    }
-
-    public void setFukuanList(List<YingFukuan> fukuanList) {
-        this.fukuanList = fukuanList;
-    }
 
     private static final long serialVersionUID = 1L;
 }
