@@ -27,7 +27,31 @@ public class PageYingInvoiceDTO extends BaseFilter<PageYingInvoiceDTO> {
 
     @Override
     public String getCountSql(String sql) {
-        return getCountSqlForResultMap(sql);
+
+        System.out.println("orignal sql = " + sql);
+        StringBuilder sb = new StringBuilder("select * from hs_ying_settle_downstream ");
+        if (orderId != null) {
+            sb.append(" where orderId = ?");
+        }
+        if (hsId != null) {
+            sb.append( " and hsId = ?");
+        }
+        if (invoiceType != null) {
+            sb.append(" and invoiceType = ?");
+        }
+        if (openDate != null) {
+            sb.append(" and openDate = ?");
+        }
+        if (openCompanyId != null) {
+            sb.append(" and openCompanyId = ?");
+        }
+        if (recieverId != null) {
+            sb.append(" and recieverId = ?");
+        }
+
+        String countSql = super.getCountSql(sb.toString());
+        System.out.println("count sql = " + countSql);
+        return countSql;
     }
 
 }
