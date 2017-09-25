@@ -36,7 +36,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping(value = "/register")
+    @PostMapping(value = "/api/register")
     public ResponseEntity<Result<Boolean>> register(@RequestBody @Validated User user) {
         userService.register(user);
         return Result.ok(true);
@@ -48,7 +48,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/api/login")
     public ResponseEntity<Result<String>> login(@RequestBody User user) {
         User record = userService.getUserByPhone(StringUtils.trim(user.getPhone()));
         if (record == null) {

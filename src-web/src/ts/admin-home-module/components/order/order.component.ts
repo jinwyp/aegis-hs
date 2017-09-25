@@ -27,6 +27,10 @@ export class OrderComponent implements OnInit {
     isAddNew: boolean = true
 
     orderList : any[] = []
+    departmentList : any[] = []
+    teamList : any[] = []
+    filterTeamList : any[] = []
+
 
     pagination: any = {
         pageSize : 20,
@@ -48,6 +52,8 @@ export class OrderComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.getDepartmentList()
+        this.getTeamList()
         this.getOrderList()
         this.getSessionUserInfo()
         this.createOrderForm()
@@ -89,6 +95,31 @@ export class OrderComponent implements OnInit {
         )
     }
 
+    getDepartmentList () {
+        this.hsUserService.getDepartmentList().subscribe(
+            data => {
+                this.departmentList = data.data.results
+
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
+
+    getTeamList () {
+        this.hsUserService.getTeamList().subscribe(
+            data => {
+                this.teamList = data.data.results
+
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
+
+    filterTeams (event : any) {
+        this.filterTeamList = this.teamList.filter( team => {
+            return team.deptId === event.id
+        })
+    }
 
 
     orderFormError : any = {}
@@ -109,7 +140,13 @@ export class OrderComponent implements OnInit {
 
         this.orderForm = this.fb.group({
             'name'    : ['', [Validators.required] ],
-            'deptId'    : ['', [Validators.required ] ]
+            'deptId'    : ['', [Validators.required ] ],
+            'teamId'    : ['', [Validators.required ] ],
+            'mainAccounting'    : ['', [Validators.required ] ],
+            'line'    : ['', [Validators.required ] ],
+            'cargoType'    : ['', [Validators.required ] ],
+            'upstreamSettleMode'    : ['', [Validators.required ] ],
+            'downstreamSettleMode'    : ['', [Validators.required ] ],
         } )
 
         this.orderForm.valueChanges.subscribe(data => {

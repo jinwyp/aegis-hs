@@ -14,23 +14,24 @@ const config = require('../testConfig')
 const server = supertest(config.path.urlApi)
 
 
+/*
 
 describe('First test', () => {
     it('Should assert true to be true', () => {
         expect(true).to.be.true;
     });
 });
+*/
 
-/*
 
 describe('用户登陆', function () {
 
 
     it('登陆失败', function (done) {
-        server.post('/api/user/login')
+        server.post('/api/login')
             .set('Accept', 'application/json')
             .send({
-                username: "jinwyp1",
+                username: "18321805753",
                 password: "1234567"
             })
             .expect('Content-Type', /json/)
@@ -43,17 +44,18 @@ describe('用户登陆', function () {
 
 
     it('登陆成功', function (done) {
-        server.post('/api/user/login')
+        server.post('/api/login')
             .set('Accept', 'application/json')
             .send({
-                username: "jinwyp1",
+                username: "18321805753",
                 password: "123456"
             })
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.data).to.have.property("accessToken")
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
                 done()
             })
     })
@@ -61,4 +63,3 @@ describe('用户登陆', function () {
 
 })
 
-*/
