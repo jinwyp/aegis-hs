@@ -33,7 +33,7 @@ export class OrderDetailComponent implements OnInit {
     isShowForm: boolean = false
     isAddNew: boolean = true
 
-    departmentList : any[] = []
+    unitList : any[] = []
     teamList : any[] = []
     filterTeamList : any[] = []
     partyList : any[] = []
@@ -70,13 +70,16 @@ export class OrderDetailComponent implements OnInit {
                 if (data) {
                     this.currentOrder = data.data
                 }
+
+                this.getOrderUnitList()
+
                 // console.log('Order信息: ', data)
             },
             error => {this.httpService.errorHandler(error) }
         )
 
         this.getPartyList()
-        this.getDepartmentList()
+
         this.getTeamList()
         this.createOrderUnitForm()
     }
@@ -86,10 +89,10 @@ export class OrderDetailComponent implements OnInit {
     }
 
 
-    getDepartmentList () {
-        this.hsUserService.getDepartmentList().subscribe(
+    getOrderUnitList () {
+        this.hsOrderService.getOrderUnitListByID(this.currentOrderId).subscribe(
             data => {
-                this.departmentList = data.data.results
+                this.unitList = data.data
 
             },
             error => {this.httpService.errorHandler(error) }

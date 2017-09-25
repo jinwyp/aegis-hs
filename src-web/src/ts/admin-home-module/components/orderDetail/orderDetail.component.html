@@ -60,17 +60,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let order of orderList; trackBy: trackByFn">
-                        <td> {{order.id}}</td>
-                        <td> {{order.line}}</td>
-                        <td> {{order.deptId | findKey : departmentList : 'name'}}</td>
-                        <td> {{order.teamId | findKey : teamList : 'name'}}</td>
+                    <tr *ngFor="let unit of unitList; trackBy: trackByFn">
+                        <td> {{unit.id}}</td>
+                        <td> {{unit.line}}</td>
+                        <td> {{unit.deptId | findKey : departmentList : 'name'}}</td>
+                        <td> {{unit.teamId | findKey : teamList : 'name'}}</td>
 
-                        <td> {{order.cargoType}}</td>
-                        <td> {{order.mainAccounting }}</td>
-                        <td> {{order.STATUS }}</td>
-                        <td> {{order.tsc }}</td>
-                        <td> <button class="btn btn-info btn-sm" (click)="showForm(false, order)"> 修改 </button></td>
+                        <td> {{unit.cargoType}}</td>
+                        <td> {{unit.mainAccounting }}</td>
+                        <td> {{unit.STATUS }}</td>
+                        <td> {{unit.tsc }}</td>
+                        <td> <button class="btn btn-info btn-sm" (click)="showForm(false, unit)"> 修改 </button></td>
                     </tr>
                     </tbody>
                 </table>

@@ -45,6 +45,9 @@ export class HSOrderService {
     }
 
 
+    getOrderUnitListByID(orderId: any): Observable<any> {
 
+        return this.http.get(apiPath.hsGetOrderList + '/' + orderId + '/units' )
+    }
 
 }
