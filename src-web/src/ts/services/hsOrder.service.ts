@@ -30,6 +30,11 @@ export class HSOrderService {
 
         return this.http.get(apiPath.hsGetOrderList, {params: params})
     }
+    getOrderByID(orderId: any): Observable<any> {
+
+        return this.http.get(apiPath.hsGetOrderList + '/' + orderId )
+    }
+
     createNewOrder(user: any): Observable<any> {
 
         return this.http.post(apiPath.hsGetOrderList, user)

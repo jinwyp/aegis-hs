@@ -16,11 +16,11 @@ const server = supertest(config.path.urlApi)
 
 
 
-describe('参与商公司-相关功能', function () {
+describe('业务团队', function () {
 
 
-    it('获取参与商公司列表', function (done) {
-        server.get('/api/parties?pageNo=1&pageSize=2')
+    it('获取团队列表 GET: /api/teams?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/teams?pageNo=1&pageSize=2')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200)
@@ -36,14 +36,12 @@ describe('参与商公司-相关功能', function () {
     })
 
 
-    it('新建参与商', function (done) {
-        server.post('/api/parties')
+    it('新建团队 POST: /api/teams', function (done) {
+        server.post('/api/teams')
             .set('Accept', 'application/json')
             .send({
-                name: "新的参与商公司" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
-                shortName : '新的参与商公司简称',
-                partyType : 1
-
+                name: "新的团队" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
+                deptId : 2
             })
             .expect('Content-Type', /json/)
             .expect(200)
@@ -52,14 +50,14 @@ describe('参与商公司-相关功能', function () {
                 expect(res.body.success).to.equal(true)
                 expect(res.body.data).to.not.equal(null)
                 expect(res.body.data.id).to.be.a('number')
-                expect(res.body.data.name).to.include('新的参与商公司')
+                expect(res.body.data.name).to.include('新的团队')
                 done()
             })
     })
 
 
-    it('获取某个ID的参与商信息', function (done) {
-        server.get('/api/parties/1')
+    it('获取某个ID的团队信息 GET: /api/teams/1', function (done) {
+        server.get('/api/teams/1')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200)
@@ -68,17 +66,18 @@ describe('参与商公司-相关功能', function () {
                 expect(res.body.success).to.equal(true)
                 expect(res.body.data).to.not.equal(null)
                 expect(res.body.data.id).to.be.a('number')
-                expect(res.body.data.name).to.include('江苏晋和电力燃料有限公司')
+                expect(res.body.data.name).to.include('团队')
                 done()
             })
     })
 
 
-    it('修改某个ID的参与商信息', function (done) {
-        server.put('/api/parties/19')
+    it('修改某个ID的团队名称 PUT: /api/teams/1', function (done) {
+        server.put('/api/teams/1')
             .set('Accept', 'application/json')
             .send({
-                name: "新的参与商公司" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
+                name: "新的团队" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
+                deptId : 2
             })
             .expect('Content-Type', /json/)
             .expect(200)

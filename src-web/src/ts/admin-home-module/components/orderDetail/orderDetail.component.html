@@ -1,0 +1,89 @@
+
+
+        <h3>
+            核算详情 - {{currentOrderId}}
+
+
+
+        </h3>
+
+
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="currentTabIndex === 1" (click)="changeTab(1)">订单详情</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="currentTabIndex === 2" (click)="changeTab(2)">核算月管理</a>
+            </li>
+        </ul>
+
+
+        <div *ngIf="currentTabIndex === 2">
+
+
+            <form [formGroup]="orderUnitForm" (ngSubmit)="orderUnitFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+
+                <bs-text-input formControlName="hsMonth" [fc]="orderUnitForm.get('hsMonth')" [type]="'text'" [label]="'核算月名称:'" [dirty]="ignoreDirty" [error]="orderUnitFormError.hsMonth"></bs-text-input>
+                <bs-text-input formControlName="maxPrepayRate" [fc]="orderUnitForm.get('maxPrepayRate')" [type]="'text'" [label]="'最高预付款比例:'" [dirty]="ignoreDirty" [error]="orderUnitFormError.maxPrepayRate"></bs-text-input>
+                <bs-text-input formControlName="unInvoicedRate" [fc]="orderUnitForm.get('unInvoicedRate')" [type]="'text'" [label]="'未开票款付款比例:'" [dirty]="ignoreDirty" [error]="orderUnitFormError.unInvoicedRate"></bs-text-input>
+                <bs-text-input formControlName="contractBaseInterest" [fc]="orderUnitForm.get('contractBaseInterest')" [type]="'text'" [label]="'合同基准利率:'" [dirty]="ignoreDirty" [error]="orderUnitFormError.contractBaseInterest"></bs-text-input>
+
+                <bs-text-input formControlName="expectHKDays" [fc]="orderUnitForm.get('expectHKDays')" [type]="'text'" [label]="'预计回款天数:'" [dirty]="ignoreDirty" [error]="orderUnitFormError.expectHKDays"></bs-text-input>
+                <bs-text-input formControlName="tradeAddPrice" [fc]="orderUnitForm.get('tradeAddPrice')" [type]="'text'" [label]="'贸易公司加价(吨):'" [dirty]="ignoreDirty" [error]="orderUnitFormError.tradeAddPrice"></bs-text-input>
+                <bs-text-input formControlName="weightedPrice" [fc]="orderUnitForm.get('weightedPrice')" [type]="'text'" [label]="'加权单价:'" [dirty]="ignoreDirty" [error]="orderUnitFormError.weightedPrice"></bs-text-input>
+
+
+                <div class="form-group row">
+                    <div class="col-10 ml-auto">
+                        <button type="submit" class="btn btn-info" >保存</button>
+                        <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
+                    </div>
+                </div>
+            </form>
+
+
+
+            <div *ngIf="!isShowForm">
+                <table class="table table-bordered table-hover table-responsive" >
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>业务线</th>
+                        <th>事业部门</th>
+                        <th>业务团队</th>
+
+                        <th>货物种类</th>
+                        <th>账务公司</th>
+                        <th>状态</th>
+                        <th>创建时间</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let order of orderList; trackBy: trackByFn">
+                        <td> {{order.id}}</td>
+                        <td> {{order.line}}</td>
+                        <td> {{order.deptId | findKey : departmentList : 'name'}}</td>
+                        <td> {{order.teamId | findKey : teamList : 'name'}}</td>
+
+                        <td> {{order.cargoType}}</td>
+                        <td> {{order.mainAccounting }}</td>
+                        <td> {{order.STATUS }}</td>
+                        <td> {{order.tsc }}</td>
+                        <td> <button class="btn btn-info btn-sm" (click)="showForm(false, order)"> 修改 </button></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
+            <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加新核算月</button>
+
+
+
+
+        </div>
+
+

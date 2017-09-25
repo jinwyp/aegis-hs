@@ -26,7 +26,8 @@ describe('First test', () => {
 
 describe('用户注册登陆', function () {
 
-    it('注册成功', function (done) {
+
+    it('注册成功 POST: /api/register', function (done) {
         server.post('/api/register')
             .set('Accept', 'application/json')
             .send({
@@ -44,7 +45,7 @@ describe('用户注册登陆', function () {
     })
 
 
-    it('登陆失败', function (done) {
+    it('登陆失败 POST: /api/login', function (done) {
         server.post('/api/login')
             .set('Accept', 'application/json')
             .send({
@@ -60,7 +61,7 @@ describe('用户注册登陆', function () {
     })
 
 
-    it('登陆成功', function (done) {
+    it('登陆成功 POST: /api/login', function (done) {
         server.post('/api/login')
             .set('Accept', 'application/json')
             .send({

@@ -30,7 +30,8 @@ public class YingOrderConfigController {
      * @return
      */
     @GetMapping("/{orderId}/configs")
-    public ResponseEntity<PageResult<YingOrderConfig>> list(PageYingOrderConfigDTO pageYingOrderConfigDTO) {
+    public ResponseEntity<PageResult<YingOrderConfig>> list(@PathVariable("orderId" )long orderId, PageYingOrderConfigDTO pageYingOrderConfigDTO) {
+        pageYingOrderConfigDTO.setOrderId(orderId);
         return PageResult.ok(yingOrderConfigService.getPage(pageYingOrderConfigDTO));
     }
 
@@ -57,14 +58,16 @@ public class YingOrderConfigController {
      * @return
      */
     @GetMapping("/{orderId}/configs/{id}")
-    public ResponseEntity<Result<YingOrderConfig>> findOne(@RequestParam("id") Long id) {
+    public ResponseEntity<Result<YingOrderConfig>> findOne(@PathVariable("id") Long id,@PathVariable("orderId") Long orderId) {
         YingOrderConfig yingOrderConfig = yingOrderConfigService.findOne(id);
+
         if (yingOrderConfig == null) {
             return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
         } else {
             return Result.ok(yingOrderConfig);
         }
     }
+
 
 }
 
