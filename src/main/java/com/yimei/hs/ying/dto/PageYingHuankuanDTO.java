@@ -33,7 +33,7 @@ public class PageYingHuankuanDTO extends BaseFilter<PageYingHuankuanDTO> {
 
         String nsql = new SQL() {{
             SELECT("*");
-            FROM("hs_ying_invoice");
+            FROM("hs_ying_huankuan");
             if (orderId != null) { WHERE("orderId = #{orderId"); }
             if (hsId != null) { WHERE("hsId = #{hsId}"); }
             if (skCompanyId != null) { WHERE("skCompanyId = #{skCompanyId}"); }
