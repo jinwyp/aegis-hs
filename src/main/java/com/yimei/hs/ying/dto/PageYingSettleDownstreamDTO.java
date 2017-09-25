@@ -28,7 +28,7 @@ public class PageYingSettleDownstreamDTO extends BaseFilter<PageYingSettleDownst
 
         String nsql = new SQL() {{
             SELECT("*");
-            FROM("hs_ying_invoice");
+            FROM("hs_ying_settle_downstream");
             if (orderId != null) { WHERE("orderId = #{orderId"); }
             if (hsId != null) { WHERE("hsId = #{hsId}"); }
             if (settleDate != null) { WHERE("settleDate = #{settleDate}"); }
