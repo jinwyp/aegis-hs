@@ -24,21 +24,15 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <!-- 分页查询 -->
+    <!-- 分页用户查询 -->
     <select id="getPage" resultType="com.yimei.hs.entity.User">
         select
         <include refid="Base_Column_List"/>
         from hs_user
         <where>
-            <if test="isAdmin != null">
-                isAdmin = #{isAdmin, jdbcType=TINYINT}
-            </if>
-            <if test="isActive != null">
-                isActive = #{isActive, jdbcType=TINYINT}
-            </if>
-            <if test="deptId != null">
-                deptId = #{deptId, jdbcType=BIGINT}
-            </if>
+            <if test="isAdmin != null">isAdmin = #{isAdmin, jdbcType=TINYINT}</if>
+            <if test="isActive != null">isActive = #{isActive, jdbcType=TINYINT}</if>
+            <if test="deptId != null">deptId = #{deptId, jdbcType=BIGINT}</if>
         </where>
     </select>
 
@@ -58,13 +52,27 @@
 
     <!-- 插入-->
     <insert id="insert" parameterType="com.yimei.hs.entity.User" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO hs_user (id, deptId, phone,
-                             password, passwordSalt, createDate,
-                             createBy, isAdmin, isActive
+        INSERT INTO hs_user (
+            id,
+            deptId,
+            phone,
+            password,
+            passwordSalt,
+            createDate,
+            createBy,
+            isAdmin,
+            isActive
         )
-        VALUES (#{id,jdbcType=BIGINT}, #{deptId,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR},
-                #{password,jdbcType=VARCHAR}, #{passwordSalt,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
-                #{createBy,jdbcType=VARCHAR}, #{isAdmin,jdbcType=BIT}, #{isActive,jdbcType=BIT}
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{deptId,jdbcType=BIGINT},
+            #{phone,jdbcType=VARCHAR},
+            #{password,jdbcType=VARCHAR},
+            #{passwordSalt,jdbcType=VARCHAR},
+            #{createDate,jdbcType=TIMESTAMP},
+            #{createBy,jdbcType=VARCHAR},
+            #{isAdmin,jdbcType=BIT},
+            #{isActive,jdbcType=BIT}
         )
     </insert>
 
@@ -72,26 +80,26 @@
     <insert id="insertSelective" parameterType="com.yimei.hs.entity.User">
         insert into hs_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null"> id, </if>
-            <if test="deptId != null"> deptId, </if>
-            <if test="phone != null"> phone, </if>
-            <if test="password != null"> password, </if>
-            <if test="passwordSalt != null"> passwordSalt, </if>
-            <if test="createDate != null"> createDate, </if>
-            <if test="createBy != null"> createBy, </if>
-            <if test="isAdmin != null"> isAdmin, </if>
-            <if test="isActive != null"> isActive, </if>
+            <if test="id != null">id,</if>
+            <if test="deptId != null">deptId,</if>
+            <if test="phone != null">phone,</if>
+            <if test="password != null">password,</if>
+            <if test="passwordSalt != null">passwordSalt,</if>
+            <if test="createDate != null">createDate,</if>
+            <if test="createBy != null">createBy,</if>
+            <if test="isAdmin != null">isAdmin,</if>
+            <if test="isActive != null">isActive,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null"> #{id,jdbcType=BIGINT}, </if>
-            <if test="deptId != null"> #{deptId,jdbcType=BIGINT}, </if>
-            <if test="phone != null"> #{phone,jdbcType=VARCHAR}, </if>
-            <if test="password != null"> #{password,jdbcType=VARCHAR}, </if>
-            <if test="passwordSalt != null"> #{passwordSalt,jdbcType=VARCHAR}, </if>
-            <if test="createDate != null"> #{createDate,jdbcType=TIMESTAMP}, </if>
-            <if test="createBy != null"> #{createBy,jdbcType=VARCHAR}, </if>
-            <if test="isAdmin != null"> #{isAdmin,jdbcType=BIT}, </if>
-            <if test="isActive != null"> #{isActive,jdbcType=BIT}, </if>
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="deptId != null">#{deptId,jdbcType=BIGINT},</if>
+            <if test="phone != null">#{phone,jdbcType=VARCHAR},</if>
+            <if test="password != null">#{password,jdbcType=VARCHAR},</if>
+            <if test="passwordSalt != null">#{passwordSalt,jdbcType=VARCHAR},</if>
+            <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
+            <if test="createBy != null">#{createBy,jdbcType=VARCHAR},</if>
+            <if test="isAdmin != null">#{isAdmin,jdbcType=BIT},</if>
+            <if test="isActive != null">#{isActive,jdbcType=BIT},</if>
         </trim>
     </insert>
 
@@ -99,14 +107,14 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.User">
         update hs_user
         <set>
-            <if test="deptId != null"> deptId = #{deptId,jdbcType=BIGINT}, </if>
-            <if test="phone != null"> phone = #{phone,jdbcType=VARCHAR}, </if>
-            <if test="password != null"> password = #{password,jdbcType=VARCHAR}, </if>
-            <if test="passwordSalt != null"> passwordSalt = #{passwordSalt,jdbcType=VARCHAR}, </if>
-            <if test="createDate != null"> createDate = #{createDate,jdbcType=TIMESTAMP}, </if>
-            <if test="createBy != null"> createBy = #{createBy,jdbcType=VARCHAR}, </if>
-            <if test="isAdmin != null"> isAdmin = #{isAdmin,jdbcType=BIT}, </if>
-            <if test="isActive != null"> isActive = #{isActive,jdbcType=BIT}, </if>
+            <if test="deptId != null">deptId = #{deptId,jdbcType=BIGINT},</if>
+            <if test="phone != null">phone = #{phone,jdbcType=VARCHAR},</if>
+            <if test="password != null">password = #{password,jdbcType=VARCHAR},</if>
+            <if test="passwordSalt != null">passwordSalt = #{passwordSalt,jdbcType=VARCHAR},</if>
+            <if test="createDate != null">createDate = #{createDate,jdbcType=TIMESTAMP},</if>
+            <if test="createBy != null">createBy = #{createBy,jdbcType=VARCHAR},</if>
+            <if test="isAdmin != null">isAdmin = #{isAdmin,jdbcType=BIT},</if>
+            <if test="isActive != null">isActive = #{isActive,jdbcType=BIT},</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>

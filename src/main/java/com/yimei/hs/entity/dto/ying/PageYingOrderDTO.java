@@ -35,4 +35,9 @@ public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
     private Long downstreamId;
 
     private OrderStatus status;
+
+    @Override
+    public String getCountSql(String sql) {
+        return getCountSqlForResultMap(sql);
+    }
 }

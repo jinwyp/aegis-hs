@@ -10,15 +10,6 @@
         <result column="huankuanAmount" jdbcType="DECIMAL" property="huankuanAmount"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        id, orderId, hsId, skCompanyId, huankuankDate, huankuanAmount, tsc
-    </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from hs_ying_huankuan
-        where id = #{id,jdbcType=BIGINT}
-    </select>
 
     <!-- 还款， 以及其关联的付款 -->
     <resultMap id="YingHuankuanResultMap" type="com.yimei.hs.entity.YingHuankuan" autoMapping="true">
@@ -30,6 +21,16 @@
         </collection>
     </resultMap>
 
+    <sql id="Base_Column_List">
+        id, orderId, hsId, skCompanyId, huankuankDate, huankuanAmount, tsc
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_ying_huankuan
+        where id = #{id,jdbcType=BIGINT}
+    </select>
 
     <!--获取一页数据-->
     <select id="getPage" resultType="com.yimei.hs.entity.YingHuankuan"></select>

@@ -27,24 +27,38 @@ public class PageInterceptor implements Interceptor {
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
+
         RoutingStatementHandler handler = (RoutingStatementHandler) invocation.getTarget();
+
         StatementHandler delegate = (StatementHandler) Reflections.getFieldValue(handler, "delegate");
+
         BoundSql boundSql = delegate.getBoundSql();
+
         Object obj = boundSql.getParameterObject();
+
         //传入的参数是BaseFilter对象就认定它是需要进行分页操作的。
         if (obj instanceof BaseFilter<?>) {
+
             BaseFilter<?> pageParam = (BaseFilter<?>) obj;
+
             MappedStatement mappedStatement = (MappedStatement) Reflections.getFieldValue(delegate, "mappedStatement");
+
             Connection connection = (Connection) invocation.getArgs()[0];
+
             String sql = boundSql.getSql();
+
             //给当前的page参数对象设置总记录数
             this.setTotalRecord(pageParam, mappedStatement, connection);
+
             //获取分页Sql语句
             String pageSql = this.getPageSql(pageParam, sql);
+
             Reflections.setFieldValue(boundSql, "sql", pageSql);
+
             //放到ThreadLocal
             PageContext.setPageParam(pageParam);
         }
+
         return invocation.proceed();
     }
 
@@ -61,7 +75,10 @@ public class PageInterceptor implements Interceptor {
     private void setTotalRecord(BaseFilter<?> page, MappedStatement mappedStatement, Connection connection) {
         BoundSql boundSql = mappedStatement.getBoundSql(page);
         String sql = boundSql.getSql();
-        String countSql = this.getCountSql(sql);
+
+        // String countSql = this.getCountSql(sql);
+        String countSql = page.getCountSql(sql);
+
         List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
         BoundSql countBoundSql = new BoundSql(mappedStatement.getConfiguration(), countSql, parameterMappings, page);
         ParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, page, countBoundSql);
@@ -93,6 +110,8 @@ public class PageInterceptor implements Interceptor {
     private String getCountSql(String sql) {
         return "select count(1) from (" + sql + ") jm_t";
     }
+
+
 
     private String getPageSql(BaseFilter<?> pageParam, String sql) {
         int offset = (pageParam.getPageNo() - 1) * pageParam.getPageSize();

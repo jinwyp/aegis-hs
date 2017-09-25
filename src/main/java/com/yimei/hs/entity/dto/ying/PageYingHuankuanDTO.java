@@ -9,4 +9,10 @@ import lombok.Data;
 @Data
 public class PageYingHuankuanDTO extends BaseFilter<PageYingHuankuanDTO> {
     private Long orderId;
+    private Long hsId;
+
+    @Override
+    public String getCountSql(String sql) {
+        return super.getCountSql(sql);
+    }
 }

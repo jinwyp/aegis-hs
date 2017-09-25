@@ -9,4 +9,6 @@ import lombok.Data;
 
 @Data
 public class PageYingTransferDTO extends BaseFilter<PageYingTransferDTO> {
+    private Long orderId;
+    private Long fromUserID;
 }

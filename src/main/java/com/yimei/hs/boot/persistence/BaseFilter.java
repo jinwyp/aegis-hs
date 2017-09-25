@@ -19,6 +19,21 @@ public class BaseFilter<T> {
 
     private List<T> results;
 
+    public String getCountSql(String sql) {
+        return "select count(1) from (" + sql + ") jm_t";
+    }
+
+
+    /**
+     * todo: 陆彪
+     * 将sql中的 left join 到 where部分的东西删除
+     * @param sql
+     * @return
+     */
+    protected String getCountSqlForResultMap(String sql) {
+        return null;
+    }
+
 
     public void setPageNo(Integer pageNo) {
         this.pageNo = pageNo <= 0 ? 1 : pageNo;
