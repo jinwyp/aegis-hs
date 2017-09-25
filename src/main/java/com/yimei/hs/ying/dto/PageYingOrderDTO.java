@@ -4,6 +4,7 @@ import com.yimei.hs.boot.persistence.BaseFilter;
 import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.OrderStatus;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.ibatis.jdbc.SQL;
 
 /**
@@ -11,6 +12,7 @@ import org.apache.ibatis.jdbc.SQL;
  */
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
 
     private Long deptId;
