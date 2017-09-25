@@ -6,6 +6,7 @@ import { HttpService } from '../../../bs-form-module/services/http.service'
 import { formErrorHandler, isMobilePhone, isMatched, checkFieldIsExist } from '../../../bs-form-module/validators/validator'
 import { UserInfoService } from '../../../services/userInfo.service'
 import { HSUserService } from '../../../services/hsUser.service'
+import { HSOrderService } from '../../../services/hsOrder.service'
 
 
 
@@ -32,6 +33,11 @@ export class OrderComponent implements OnInit {
     filterTeamList : any[] = []
 
 
+    jieSuanType : any[] = [
+        { id: 10, name :'结算方式1'},
+        { id: 20, name :'结算方式2'}
+    ]
+
     pagination: any = {
         pageSize : 20,
         pageNo : 1,
@@ -43,7 +49,8 @@ export class OrderComponent implements OnInit {
         private httpService: HttpService,
         private fb: FormBuilder,
         private userService: UserInfoService,
-        private hsUserService: HSUserService
+        private hsUserService: HSUserService,
+        private hsOrderService: HSOrderService
 
     ) {
 
@@ -82,7 +89,7 @@ export class OrderComponent implements OnInit {
             pageNo: this.pagination.pageNo
         }
 
-        this.hsUserService.getTeamList(query).subscribe(
+        this.hsOrderService.getOrderList(query).subscribe(
             data => {
                 this.orderList = data.data.results
 

@@ -6,7 +6,6 @@
         </h3>
 
         create table hs_ying_order (
-        id bigint(20)                    not null auto_increment,
         mainAccounting bigint            not null comment '主账务公司 - 与下有接触的',
         line varchar(256)                not null comment '业务线名称: 由参与方公司简称组成',
         cargoType varchar(32)            not null comment '货物种类: 煤炭、钢材',
@@ -23,10 +22,15 @@
 
         <form [formGroup]="orderForm" (ngSubmit)="orderFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-            <bs-text-input formControlName="name" [fc]="orderForm.get('name')" [type]="'text'" [label]="'名称:'" [dirty]="ignoreDirty" [error]="orderFormError.name"></bs-text-input>
+            <bs-text-input formControlName="line" [fc]="orderForm.get('line')" [type]="'text'" [label]="'业务线名称:'" [dirty]="ignoreDirty" [error]="orderFormError.line"></bs-text-input>
+            <bs-text-input formControlName="cargoType" [fc]="orderForm.get('cargoType')" [type]="'text'" [label]="'货物种类:'" [dirty]="ignoreDirty" [error]="orderFormError.cargoType"></bs-text-input>
 
             <bs-select formControlName ="deptId" [fc]="orderForm.get('deptId')" [label]="'事业部门:'" [options]="departmentList" [error]="orderFormError.deptId" (change)="filterTeams($event)" ></bs-select>
             <bs-select formControlName ="teamId" [fc]="orderForm.get('teamId')" [label]="'团队:'" [options]="filterTeamList" [error]="orderFormError.teamId"></bs-select>
+
+            <bs-select formControlName ="upstreamSettleMode" [fc]="orderForm.get('upstreamSettleMode')" [label]="'上游结算方式:'" [options]="jieSuanType" [error]="orderFormError.upstreamSettleMode"></bs-select>
+            <bs-select formControlName ="downstreamSettleMode" [fc]="orderForm.get('downstreamSettleMode')" [label]="'下游结算方式:'" [options]="jieSuanType" [error]="orderFormError.downstreamSettleMode"></bs-select>
+
 
 
             <div class="form-group row">
