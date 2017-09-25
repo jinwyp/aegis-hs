@@ -48,28 +48,28 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>业务线</th>
-                        <th>事业部门</th>
-                        <th>业务团队</th>
+                        <th>核算月</th>
+                        <th>最高预付款比例</th>
+                        <th>未开票款付款比例</th>
 
-                        <th>货物种类</th>
-                        <th>账务公司</th>
-                        <th>状态</th>
-                        <th>创建时间</th>
+                        <th>合同基准利率</th>
+                        <th>预计回款天数</th>
+                        <th>贸易公司加价(元/吨)</th>
+                        <th>加权单价</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let unit of unitList; trackBy: trackByFn">
                         <td> {{unit.id}}</td>
-                        <td> {{unit.line}}</td>
-                        <td> {{unit.deptId | findKey : departmentList : 'name'}}</td>
-                        <td> {{unit.teamId | findKey : teamList : 'name'}}</td>
+                        <td> {{unit.hsMonth}}</td>
+                        <td> {{unit.maxPrepayRate }}</td>
+                        <td> {{unit.unInvoicedRate }}</td>
 
-                        <td> {{unit.cargoType}}</td>
-                        <td> {{unit.mainAccounting }}</td>
-                        <td> {{unit.STATUS }}</td>
-                        <td> {{unit.tsc }}</td>
+                        <td> {{unit.contractBaseInterest}}</td>
+                        <td> {{unit.expectHKDays }}</td>
+                        <td> {{unit.tradeAddPrice }}</td>
+                        <td> {{unit.weightedPrice }}</td>
                         <td> <button class="btn btn-info btn-sm" (click)="showForm(false, unit)"> 修改 </button></td>
                     </tr>
                     </tbody>

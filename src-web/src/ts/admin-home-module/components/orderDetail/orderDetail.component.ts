@@ -200,7 +200,7 @@ export class OrderDetailComponent implements OnInit {
     }
 
 
-    showForm(isAddNew : boolean = true, team?: any ) {
+    showForm(isAddNew : boolean = true, unit?: any ) {
 
         if (isAddNew) {
             this.isAddNew = true
@@ -220,7 +220,7 @@ export class OrderDetailComponent implements OnInit {
         } else {
             this.isAddNew = false
 
-            this.orderUnitForm.patchValue(team)
+            this.orderUnitForm.patchValue(unit)
         }
 
 
