@@ -30,8 +30,19 @@ public class BaseFilter<T> {
      * @param sql
      * @return
      */
-    protected String getCountSqlForResultMap(String sql) {
-        return null;
+    public String getCountSqlForResultMap(String sql) {
+
+        int begin = sql.indexOf("LEFT JOIN");
+        int end = sql.lastIndexOf("WHERE");
+        if (end == -1) {
+            end = sql.length();
+        }
+        //  System.out.println("end = " + end);
+
+        String frag1 = sql.substring(0, begin);
+        String frag2 = sql.substring(end);
+
+        return "select count(1) (" + frag1 + frag2 + ") jm_t";
     }
 
 
