@@ -82,7 +82,9 @@ public class YingOrderController {
             @PathVariable("id") long id,
             @RequestBody YingOrder yingOrder
     ) {
+        yingOrder.setId(id);
         int rtn = yingOrderService.update(yingOrder);
+        logger.error("yingOrder"+yingOrder);
         if (rtn != 1) {
             return Result.error(4001, "更新失败");
         }
