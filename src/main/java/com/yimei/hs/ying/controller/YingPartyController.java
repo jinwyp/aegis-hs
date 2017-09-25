@@ -1,14 +1,13 @@
 package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.boot.PageResult;
+import com.yimei.hs.boot.Result;
 import com.yimei.hs.ying.dto.PageYingOrderPartyDTO;
 import com.yimei.hs.ying.entity.YingOrderParty;
 import com.yimei.hs.ying.service.YingPartyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by hary on 2017/9/25.
@@ -28,8 +27,27 @@ public class YingPartyController {
      * @return
      */
     @GetMapping("/{orderId}/parties")
-    public ResponseEntity<PageResult<YingOrderParty>> list(PageYingOrderPartyDTO pageYingOrderPartyDTO) {
+    public ResponseEntity<PageResult<YingOrderParty>> list(@PathVariable("orderId") long orderId,  PageYingOrderPartyDTO pageYingOrderPartyDTO) {
+        pageYingOrderPartyDTO.setOrderId(orderId);
         return PageResult.ok(yingPartyService.getPage(pageYingOrderPartyDTO));
+    }
+
+
+    /**
+     * update
+     */
+    @PutMapping("/{orderId}/parties/{id}")
+    public ResponseEntity<Result<Integer>> update(@PathVariable("orderId") Long orderId,@PathVariable("id") Long id,@RequestBody YingOrderParty yingOrderParty){
+
+        yingOrderParty.setOrderId(orderId);
+        yingOrderParty.setId(id);
+       int status= yingPartyService.update(yingOrderParty);
+        if (status == 1) {
+            return Result.ok(1);
+        } else {
+            return Result.error(5003, "操作失败");
+        }
+
     }
 
 }
