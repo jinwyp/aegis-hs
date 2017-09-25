@@ -15,4 +15,10 @@ public class PageYingSettleDownstreamDTO extends BaseFilter<PageYingSettleDownst
     private Long orderId;
     private Long hsId;
     private LocalDateTime settleDate;
+
+    @Override
+    public String getCountSql(String sql) {
+        return getCountSqlForResultMap(sql);
+    }
+
 }

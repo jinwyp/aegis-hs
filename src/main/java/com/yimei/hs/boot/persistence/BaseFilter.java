@@ -26,7 +26,7 @@ public class BaseFilter<T> {
 
     /**
      * todo: 陆彪
-     * 将sql中的 left join 到 where部分的东西删除
+     * 将sql中的 left join 到 where部分的东西删除  select asdfasf  left join  asdfasfadfa      where jsfasdfa
      * @param sql
      * @return
      */

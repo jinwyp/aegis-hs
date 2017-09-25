@@ -27,4 +27,9 @@ public class PageYingInvoiceDTO extends BaseFilter<PageYingInvoiceDTO> {
 
     private LocalDateTime tsc;
 
+    @Override
+    public String getCountSql(String sql) {
+        return getCountSqlForResultMap(sql);
+    }
+
 }

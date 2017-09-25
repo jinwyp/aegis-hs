@@ -13,6 +13,7 @@ public class PageYingHuankuanDTO extends BaseFilter<PageYingHuankuanDTO> {
 
     @Override
     public String getCountSql(String sql) {
-        return super.getCountSql(sql);
+        return getCountSqlForResultMap(sql);
     }
+
 }

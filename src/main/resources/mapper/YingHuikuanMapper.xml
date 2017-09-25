@@ -133,6 +133,10 @@
             LEFT JOIN hs_ying_fukuan t2 ON map.fukuanId = t2.id
         <where>
             <if test="orderId!=null">t1.orderId=#{orderId}</if>
+            <if test="hsId!=null">t1.hsId=#{hsId}</if>
+            <if test="huikuanCompanyId!=null">t1.huikuanCompanyId=#{huikuanCompanyId}</if>
+            <if test="huikuanMode!=null">t1.huikuanMode=#{huikuanMode}</if>
+            <if test="huikuanDate!=null">t1.huikuanDate=#{huikuanDate}</if>
         </where>
     </select>
 
