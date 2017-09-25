@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -62,6 +63,7 @@ public class YingFayunController {
      * @return
      */
     @PostMapping("/{orderId}/fayuns")
+    @Transactional(readOnly =  false)
     public ResponseEntity<Result<YingFayun>> create(YingFayun yingFayun) {
         yingFayunService.create(yingFayun);
         return Result.ok(yingFayun);
@@ -73,6 +75,7 @@ public class YingFayunController {
      * @return
      */
     @PutMapping("/{orderId}/fayuns/{id}")
+    @Transactional(readOnly =  false)
     public ResponseEntity<Result<YingFayun>> update(
             @PathVariable("orderId") Long orderId,
             @PathVariable("id") Long id,
@@ -95,6 +98,7 @@ public class YingFayunController {
      *  发运统计
      */
     @GetMapping("/{orderId}/fayuns-stat")
+
     public ResponseEntity<Result<FayunStat>> stat(
             @PathVariable("orderId") long orderId
     ) {

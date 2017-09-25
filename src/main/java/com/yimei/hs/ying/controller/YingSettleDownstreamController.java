@@ -1,15 +1,16 @@
 package com.yimei.hs.ying.controller;
 
-import com.yimei.hs.ying.entity.YingSettleDownstream;
 import com.yimei.hs.boot.PageResult;
 import com.yimei.hs.boot.Result;
 import com.yimei.hs.ying.dto.PageYingSettleDownstreamDTO;
+import com.yimei.hs.ying.entity.YingSettleDownstream;
 import com.yimei.hs.ying.service.YingSettleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -61,6 +62,7 @@ public class YingSettleDownstreamController {
      *
      * @return
      */
+    @Transactional(readOnly = false)
     @PostMapping("/{orderId}/settledownstream")
     public ResponseEntity<Result<YingSettleDownstream>> create(YingSettleDownstream yingSettleDownstream) {
         yingSettleService.createDownstream(yingSettleDownstream);
@@ -72,6 +74,7 @@ public class YingSettleDownstreamController {
      *
      * @return
      */
+    @Transactional(readOnly = false)
     @PutMapping("/{orderId}/settledownstream/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,

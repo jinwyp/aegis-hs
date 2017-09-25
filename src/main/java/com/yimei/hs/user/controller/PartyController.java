@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -54,6 +55,7 @@ public class PartyController {
      * @return
      */
     @PostMapping("/parties")
+    @Transactional(readOnly = false)
     public ResponseEntity<Result<Party>> create(@RequestBody Party party) {
         logger.warn(party.getName()+"简称"+party.getShortName());
         partyService.create(party);
@@ -66,6 +68,7 @@ public class PartyController {
      * @return
      */
     @PutMapping("/parties/{id}")
+    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(@RequestBody Party party) {
         int status = partyService.update(party);
         if (status == 1) {

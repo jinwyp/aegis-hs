@@ -77,6 +77,7 @@ public class YingOrderController {
      * @return
      */
     @PutMapping("/{id}")
+    @Transactional(readOnly =  false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("id") long id,
             @RequestBody YingOrder yingOrder

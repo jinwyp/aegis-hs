@@ -96,6 +96,7 @@ public class TeamController {
      * 删除某个Team
      */
     @DeleteMapping("/teams/{id}")
+    @Transactional(readOnly = false)
     public String delete(@PathVariable("id") long id) {
         teamService.delete(id);
         return "Team";
