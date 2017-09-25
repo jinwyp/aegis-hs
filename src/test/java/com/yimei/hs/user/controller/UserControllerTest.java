@@ -129,7 +129,7 @@ public class UserControllerTest {
     public <M, R> Result<R> get(String url, M model, Class<?> classz) {
         return client.exchange(
                 url, HttpMethod.GET,
-                /*new HttpEntity<M>(model)*/null,
+                HttpEntity.EMPTY,
                 new ParameterizedTypeReference<Result<R>>() {
 
                     @Override
@@ -144,7 +144,7 @@ public class UserControllerTest {
     public <M, R> PageResult<R> getPage(String url, M model, Class<?> classz) {
         return client.exchange(
                 url, HttpMethod.GET,
-                null, //                new HttpEntity<M>(model),
+                HttpEntity.EMPTY,
                 new ParameterizedTypeReference<PageResult<R>>() {
                     @Override
                     public Type getType() {
@@ -288,7 +288,10 @@ public class UserControllerTest {
 
         // 8. 分页查询order
         PageYingOrderDTO pageYingOrderDTO = new PageYingOrderDTO();
-        PageResult<YingOrder> yingOrderPageResult = getPage("/api/yings", pageYingOrderDTO, YingOrder.class);
+        ParameterizedTypeReference<PageResult<YingOrder>> tfp  = new ParameterizedTypeReference<PageResult<YingOrder>>() {
+        };
+        // PageResult<YingOrder> yingOrderPageResult = getPage("/api/yings", pageYingOrderDTO, YingOrder.class);
+        PageResult<YingOrder> yingOrderPageResult = client.exchange("/api/yings", HttpMethod.GET, new HttpEntity<PageYingOrderDTO>(pageYingOrderDTO), tfp).getBody();
         if (yingOrderPageResult.getSuccess()) {
             logger.info("获取应收订单分页成功 GET /api/yings request: {}\nresponse:\n{}", printJson(pageYingOrderDTO), printJson(yingOrderPageResult.getData()));
         } else {
@@ -296,18 +299,25 @@ public class UserControllerTest {
             System.exit(-1);
         }
 
-        // 9. 单个查询
-        Result<YingOrder> yingOrderResult1 = get("/api/yings/" + yingOrderResult.getData().getId(), 1, YingOrder.class);
-        if (yingOrderResult1.getSuccess()) {
-            logger.info("获取订单成功/api/yings/{}: {}", yingOrderResult.getData().getId(), printJson(yingOrderResult1.getData()));
-        } else {
-            logger.error("获取订单失败: {}", yingOrderResult1.getError());
-            System.exit(-1);
-        }
+//        // 9. 单个查询
+//        Result<YingOrder> yingOrderResult1 = get("/api/yings/" + yingOrderResult.getData().getId(), 1, YingOrder.class);
+//        if (yingOrderResult1.getSuccess()) {
+//            logger.info("获取订单成功/api/yings/{}: {}", yingOrderResult.getData().getId(), printJson(yingOrderResult1.getData()));
+//        } else {
+//            logger.error("获取订单失败: {}", yingOrderResult1.getError());
+//            System.exit(-1);
+//        }
+
+        ParameterizedTypeReference<Result<YingOrder>> tf  = new ParameterizedTypeReference<Result<YingOrder>>() {
+        };
+        String kurl = "/api/yings/" + yingOrderResult.getData().getId();
+        Result<YingOrder> yingOrderResult1 = client.exchange(kurl, HttpMethod.GET, HttpEntity.EMPTY,tf).getBody();
+
 
         // 10. 增加核算月配置
         String url = "/api/ying/" + yingOrderResult1.getData().getId() + "/configs";
         YingOrderConfig config = new YingOrderConfig() {{
+            setHsMonth("201712");
             setContractBaseInterest(new BigDecimal("0.20"));
             setMaxPrepayRate(new BigDecimal("0.90"));
             setUnInvoicedRate(new BigDecimal("0.7"));
