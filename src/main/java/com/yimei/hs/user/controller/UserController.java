@@ -69,8 +69,8 @@ public class UserController {
      * @return
      */
     @GetMapping(value = "/api/user/session")
-    public ResponseEntity authorization(@CurrentUser User user) {
-        return new ResponseEntity(user, HttpStatus.OK);
+    public ResponseEntity<Result<User>> authorization(@CurrentUser User user) {
+        return Result.ok(user);
     }
 
 
