@@ -24,7 +24,24 @@ describe('First test', () => {
 */
 
 
-describe('用户登陆', function () {
+describe('用户注册登陆', function () {
+
+    it('注册成功', function (done) {
+        server.post('/api/register')
+            .set('Accept', 'application/json')
+            .send({
+                deptId : 2,
+                username: "18321805753",
+                password: "123456"
+            })
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                done()
+            })
+    })
 
 
     it('登陆失败', function (done) {
