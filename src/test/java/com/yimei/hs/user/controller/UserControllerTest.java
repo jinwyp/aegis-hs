@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.HsApplication;
 import com.yimei.hs.boot.PageResult;
 import com.yimei.hs.boot.Result;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.CustomerType;
 import com.yimei.hs.enums.SettleMode;
@@ -126,26 +127,32 @@ public class UserControllerTest {
     }
 
     public <M, R> Result<R> get(String url, M model, Class<?> classz) {
-        return client.exchange(url, HttpMethod.GET, new HttpEntity<M>(model), new ParameterizedTypeReference<Result<R>>() {
+        return client.exchange(
+                url, HttpMethod.GET,
+                /*new HttpEntity<M>(model)*/null,
+                new ParameterizedTypeReference<Result<R>>() {
 
-            @Override
-            public Type getType() {
-                Type[] responseWrapper = {classz};
-                ParameterizedType pt = ParameterizedTypeImpl.make(Result.class, responseWrapper, null);
-                return super.getType();
-            }
-        }).getBody();
+                    @Override
+                    public Type getType() {
+                        Type[] responseWrapper = {classz};
+                        ParameterizedType pt = ParameterizedTypeImpl.make(Result.class, responseWrapper, null);
+                        return super.getType();
+                    }
+                }).getBody();
     }
 
     public <M, R> PageResult<R> getPage(String url, M model, Class<?> classz) {
-        return client.exchange(url, HttpMethod.GET, new HttpEntity<M>(model), new ParameterizedTypeReference<PageResult<R>>() {
-            @Override
-            public Type getType() {
-                Type[] responseWrapper = {classz};
-                ParameterizedType pt = ParameterizedTypeImpl.make(Result.class, responseWrapper, null);
-                return super.getType();
-            }
-        }).getBody();
+        return client.exchange(
+                url, HttpMethod.GET,
+                null, //                new HttpEntity<M>(model),
+                new ParameterizedTypeReference<PageResult<R>>() {
+                    @Override
+                    public Type getType() {
+                        Type[] responseWrapper = {classz};
+                        ParameterizedType pt = ParameterizedTypeImpl.make(PageResult.class, responseWrapper, null);
+                        return super.getType();
+                    }
+                }).getBody();
     }
 
     private List<Long> createParties(List<Party> parties) {
@@ -290,16 +297,31 @@ public class UserControllerTest {
         }
 
         // 9. 单个查询
-        Result<YingOrder> yingOrderResult1 = get("/api/yings/" + yingOrderResult.getData().getId(), null, YingOrder.class);
+        Result<YingOrder> yingOrderResult1 = get("/api/yings/" + yingOrderResult.getData().getId(), 1, YingOrder.class);
         if (yingOrderResult1.getSuccess()) {
-            logger.info("获取订单成功/api/yings/{}: {}",  yingOrderResult.getData().getId(), printJson(yingOrderResult1.getData()));
+            logger.info("获取订单成功/api/yings/{}: {}", yingOrderResult.getData().getId(), printJson(yingOrderResult1.getData()));
         } else {
             logger.error("获取订单失败: {}", yingOrderResult1.getError());
             System.exit(-1);
         }
 
         // 10. 增加核算月配置
-        Result<YingOrderConfig> yingOrderConfigResult = post("/api/ying/" + yingOrderResult1.getData().getId(), )
+        String url = "/api/ying/" + yingOrderResult1.getData().getId() + "/configs";
+        YingOrderConfig config = new YingOrderConfig() {{
+            setContractBaseInterest(new BigDecimal("0.20"));
+            setMaxPrepayRate(new BigDecimal("0.90"));
+            setUnInvoicedRate(new BigDecimal("0.7"));
+            setExpectHKDays(45);
+            setTradeAddPrice(new BigDecimal("0"));
+            setWeightedPrice(new BigDecimal("612"));
+        }};
+        Result<YingOrderConfig> yingOrderConfigResult = post(url, config, YingOrderConfig.class);
+        if (yingOrderConfigResult.getSuccess()) {
+            logger.info("添加核算月配置成功 POST {}\nrequest:{}\nresponse:{}", url, printJson(config), printJson(yingOrderConfigResult.getData()));
+        } else {
+            logger.error("添加核算月配置失败: {}", yingOrderConfigResult.getError());
+            System.exit(-2);
+        }
 
     }
 

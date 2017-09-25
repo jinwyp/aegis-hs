@@ -43,7 +43,9 @@ public class YingOrderConfigController {
      */
     @PostMapping("/{orderId}/configs")
     @Transactional(readOnly = false)
-    public ResponseEntity<Result<YingOrderConfig>> create(@PathVariable("orderId") long orderId, @RequestBody YingOrderConfig yingOrderConfig) {
+    public ResponseEntity<Result<YingOrderConfig>> create(
+            @PathVariable("orderId") long orderId,
+            @RequestBody YingOrderConfig yingOrderConfig) {
 
         yingOrderConfig.setOrderId(orderId);
         int rtn = yingOrderConfigService.create(yingOrderConfig);
