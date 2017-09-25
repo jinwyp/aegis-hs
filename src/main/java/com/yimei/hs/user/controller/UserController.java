@@ -31,15 +31,6 @@ public class UserController {
     private UserService userService;
 
 
-    /**
-     * 查询用户, 分页
-     *
-     * @return
-     */
-    @GetMapping("/api/users")
-    public ResponseEntity<PageResult<User>> list(PageUserDTO pageUserDTO) {
-        return PageResult.ok(userService.getPage(pageUserDTO));
-    }
 
 
 
@@ -76,23 +67,14 @@ public class UserController {
         }
     }
 
-    /**
-     * 更新用户信息 - 非密码
-     *
-     * @return
-     */
-    @PutMapping("/api/users")
-    public ResponseEntity<Result<Integer>> update(@RequestBody User user) {
-        userService.update(user);
-        return Result.ok(1);
-    }
+
 
     /**
      * jwt example
      *
      * @return
      */
-    @GetMapping(value = "/authorization")
+    @GetMapping(value = "/api/user/session")
     public ResponseEntity authorization(@CurrentUser User user) {
         return new ResponseEntity(user, HttpStatus.OK);
     }
