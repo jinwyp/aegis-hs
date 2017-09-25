@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.CangLogMapper">
-    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.CangLog">
+<mapper namespace="com.yimei.hs.cang.mapper.CangLogMapper">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.cang.entity.CangLog">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
@@ -30,7 +30,7 @@
     </delete>
 
     <!---->
-    <insert id="insert" parameterType="com.yimei.hs.entity.CangLog">
+    <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangLog">
         INSERT INTO hs_cang_log (
             id,
             orderId,
@@ -51,7 +51,7 @@
     </insert>
 
     <!---->
-    <insert id="insertSelective" parameterType="com.yimei.hs.entity.CangLog">
+    <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangLog">
         insert into hs_cang_log
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -74,7 +74,7 @@
     </insert>
 
     <!---->
-    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.CangLog">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.cang.entity.CangLog">
         update hs_cang_log
         <set>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
@@ -88,7 +88,7 @@
     </update>
 
     <!---->
-    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.CangLog">
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.cang.entity.CangLog">
         UPDATE hs_cang_log
         SET orderId    = #{orderId,jdbcType=BIGINT},
             hsId       = #{hsId,jdbcType=BIGINT},

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.CangFeeMapper">
-    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.CangFee">
+<mapper namespace="com.yimei.hs.cang.mapper.CangFeeMapper">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.cang.entity.CangFee">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
@@ -26,7 +26,7 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insert" parameterType="com.yimei.hs.entity.CangFee">
+    <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangFee">
         INSERT INTO hs_cang_fee (id, orderId, hsId,
                                  name, amount, tsc
         )
@@ -35,7 +35,7 @@
         )
     </insert>
 
-    <insert id="insertSelective" parameterType="com.yimei.hs.entity.CangFee">
+    <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangFee">
         insert into hs_cang_fee
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -55,7 +55,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.CangFee">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.cang.entity.CangFee">
         update hs_cang_fee
         <set>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
@@ -66,7 +66,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.CangFee">
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.cang.entity.CangFee">
         UPDATE hs_cang_fee
         SET orderId = #{orderId,jdbcType=BIGINT},
             hsId    = #{hsId,jdbcType=BIGINT},

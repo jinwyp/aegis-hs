@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.User">
+<mapper namespace="com.yimei.hs.user.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.user.entity.User">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="deptId" jdbcType="BIGINT" property="deptId"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
@@ -25,7 +25,7 @@
     </select>
 
     <!-- 分页用户查询 -->
-    <select id="getPage" resultType="com.yimei.hs.entity.User">
+    <select id="getPage" resultType="com.yimei.hs.user.entity.User">
         select
         <include refid="Base_Column_List"/>
         from hs_user
@@ -37,7 +37,7 @@
     </select>
 
     <!-- 依据用户手机号查询 -->
-    <select id="loadByPhone" resultType="com.yimei.hs.entity.User">
+    <select id="loadByPhone" resultType="com.yimei.hs.user.entity.User">
         select
         <include refid="Base_Column_List"/>
         from hs_user
@@ -51,7 +51,7 @@
     </delete>
 
     <!-- 插入-->
-    <insert id="insert" parameterType="com.yimei.hs.entity.User" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.yimei.hs.user.entity.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO hs_user (
             id,
             deptId,
@@ -77,7 +77,7 @@
     </insert>
 
     <!-- 插入 -->
-    <insert id="insertSelective" parameterType="com.yimei.hs.entity.User">
+    <insert id="insertSelective" parameterType="com.yimei.hs.user.entity.User">
         insert into hs_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -104,7 +104,7 @@
     </insert>
 
     <!-- 更新-->
-    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.User">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.user.entity.User">
         update hs_user
         <set>
             <if test="deptId != null">deptId = #{deptId,jdbcType=BIGINT},</if>
@@ -120,7 +120,7 @@
     </update>
 
     <!-- -->
-    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.User">
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.user.entity.User">
         UPDATE hs_user
         SET deptId       = #{deptId,jdbcType=BIGINT},
             phone        = #{phone,jdbcType=VARCHAR},

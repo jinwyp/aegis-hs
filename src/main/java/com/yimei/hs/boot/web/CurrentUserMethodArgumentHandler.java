@@ -2,7 +2,7 @@ package com.yimei.hs.boot.web;
 
 import com.yimei.hs.boot.annotation.CurrentUser;
 import com.yimei.hs.boot.exception.NoJwtTokenException;
-import com.yimei.hs.entity.User;
+import com.yimei.hs.user.entity.User;
 import com.yimei.hs.util.JsonMapper;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;

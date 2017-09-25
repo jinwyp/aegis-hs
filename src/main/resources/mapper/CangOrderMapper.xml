@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.CangOrderMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.CangOrder">
+<mapper namespace="com.yimei.hs.cang.mapper.CangOrderMapper">
+  <resultMap id="BaseResultMap" type="com.yimei.hs.cang.entity.CangOrder">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="deptId" jdbcType="BIGINT" property="deptId" />
     <result column="teamId" jdbcType="BIGINT" property="teamId" />
@@ -31,7 +31,7 @@
     delete from hs_cang_order
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.CangOrder">
+  <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangOrder">
     insert into hs_cang_order (id, deptId, teamId, 
       creatorId, ownerId, mainAccounting, 
       line, cargoType, upstreamId, 
@@ -43,7 +43,7 @@
       #{upstreamSettleMode,jdbcType=VARCHAR}, #{downstreamId,jdbcType=BIGINT}, #{downstreamSettleMode,jdbcType=VARCHAR}, 
       #{status,jdbcType=VARCHAR}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.entity.CangOrder">
+  <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangOrder">
     insert into hs_cang_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -134,7 +134,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.CangOrder">
+  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.cang.entity.CangOrder">
     update hs_cang_order
     <set>
       <if test="deptId != null">
@@ -179,7 +179,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.CangOrder">
+  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.cang.entity.CangOrder">
     update hs_cang_order
     set deptId = #{deptId,jdbcType=BIGINT},
       teamId = #{teamId,jdbcType=BIGINT},

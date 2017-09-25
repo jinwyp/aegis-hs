@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.PartyMapper">
-    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.Party">
+<mapper namespace="com.yimei.hs.user.mapper.PartyMapper">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.user.entity.Party">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="partyType" jdbcType="TINYINT" property="partyType"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
@@ -16,7 +16,7 @@
         from hs_party
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <select id="getPage" resultType="com.yimei.hs.entity.Party">
+    <select id="getPage" resultType="com.yimei.hs.user.entity.Party">
         select
         <include refid="Base_Column_List"/>
         from hs_party
@@ -31,13 +31,13 @@
     delete from hs_party
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <insert id="insert" parameterType="com.yimei.hs.entity.Party" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insert" parameterType="com.yimei.hs.user.entity.Party" keyProperty="id" useGeneratedKeys="true">
     insert into hs_party (id, partyType, name,
       shortName)
     values (#{id,jdbcType=BIGINT}, #{partyType,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR},
       #{shortName,jdbcType=VARCHAR})
   </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.entity.Party">
+    <insert id="insertSelective" parameterType="com.yimei.hs.user.entity.Party">
         insert into hs_party
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -68,7 +68,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.Party">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.user.entity.Party">
         update hs_party
         <set>
             <if test="partyType != null">
@@ -83,7 +83,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.Party">
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.user.entity.Party">
         update hs_party
         <set>
             <if test="partyType !=null">

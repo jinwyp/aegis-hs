@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.CangInvoiceMapper">
+<mapper namespace="com.yimei.hs.cang.mapper.CangInvoiceMapper">
 
-    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.CangInvoice">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.cang.entity.CangInvoice">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
@@ -34,7 +34,7 @@
     </delete>
 
     <!---->
-    <insert id="insert" parameterType="com.yimei.hs.entity.CangInvoice">
+    <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangInvoice">
         INSERT INTO hs_cang_invoice (
             id,
             orderId,
@@ -60,7 +60,7 @@
     </insert>
 
     <!-- -->
-    <insert id="insertSelective" parameterType="com.yimei.hs.entity.CangInvoice">
+    <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangInvoice">
         insert into hs_cang_invoice
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null"> id, </if>
@@ -87,7 +87,7 @@
     </insert>
 
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.CangInvoice">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.cang.entity.CangInvoice">
         update hs_cang_invoice
         <set>
             <if test="orderId != null"> orderId = #{orderId,jdbcType=BIGINT}, </if>
@@ -102,7 +102,7 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.CangInvoice">
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.cang.entity.CangInvoice">
         UPDATE hs_cang_invoice
         SET orderId          = #{orderId,jdbcType=BIGINT},
             hsId             = #{hsId,jdbcType=BIGINT},

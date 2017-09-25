@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.YingInvoiceMapper">
-    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.YingInvoice">
+<mapper namespace="com.yimei.hs.ying.mapper.YingInvoiceMapper">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingInvoice">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
@@ -14,9 +14,9 @@
     </resultMap>
 
     <!-- 选出一条发票数据 -->
-    <resultMap id="YingInvoiceResultMap" type="com.yimei.hs.entity.YingInvoice" autoMapping="true">
+    <resultMap id="YingInvoiceResultMap" type="com.yimei.hs.ying.entity.YingInvoice" autoMapping="true">
         <result property="id" column="t1Id"/>
-        <collection property="details" javaType="ArrayList" ofType="com.yimei.hs.entity.YingInvoiceDetail"
+        <collection property="details" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingInvoiceDetail"
                     autoMapping="true">
             <id property="id" column="t2Id"/>
             <id property="tsc" column="t2tsc"/>
@@ -85,7 +85,7 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insert" parameterType="com.yimei.hs.entity.YingInvoice">
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingInvoice">
         INSERT INTO hs_ying_invoice (
             id,
             orderId,
@@ -110,7 +110,7 @@
         )
     </insert>
 
-    <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingInvoice">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingInvoice">
         insert into hs_ying_invoice
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -136,7 +136,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingInvoice">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingInvoice">
         update hs_ying_invoice
         <set>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
@@ -151,7 +151,7 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingInvoice">
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingInvoice">
         UPDATE hs_ying_invoice
         SET orderId          = #{orderId,jdbcType=BIGINT},
             hsId             = #{hsId,jdbcType=BIGINT},

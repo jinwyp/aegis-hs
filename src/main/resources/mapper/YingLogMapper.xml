@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.YingLogMapper">
+<mapper namespace="com.yimei.hs.ying.mapper.YingLogMapper">
 
-    <resultMap id="BaseResultMap" type="com.yimei.hs.entity.YingLog">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingLog">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
@@ -24,7 +24,7 @@
     </select>
 
     <!-- 获取分页日志-->
-    <select id="getPage" resultType="com.yimei.hs.entity.YingLog">
+    <select id="getPage" resultType="com.yimei.hs.ying.entity.YingLog">
         select
         <include refid="Base_Column_List"/>
         from hs_ying_log
@@ -40,7 +40,7 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insert" parameterType="com.yimei.hs.entity.YingLog">
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingLog">
         INSERT INTO hs_ying_log (
             id,
             orderId,
@@ -59,7 +59,7 @@
             #{tsc,jdbcType=TIMESTAMP})
     </insert>
 
-    <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingLog">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingLog">
         insert into hs_ying_log
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -81,7 +81,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingLog">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingLog">
         update hs_ying_log
         <set>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
@@ -94,7 +94,7 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingLog">
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingLog">
         UPDATE hs_ying_log
         SET orderId    = #{orderId,jdbcType=BIGINT},
             hsId       = #{hsId,jdbcType=BIGINT},
