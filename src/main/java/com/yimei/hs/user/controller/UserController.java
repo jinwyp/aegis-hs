@@ -1,6 +1,8 @@
 package com.yimei.hs.user.controller;
 
+import com.yimei.hs.boot.PageResult;
 import com.yimei.hs.boot.annotation.CurrentUser;
+import com.yimei.hs.user.dto.PageUserDTO;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.boot.Result;
 import com.yimei.hs.user.service.UserService;
@@ -25,11 +27,22 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/")
-    public String hello(Model model) {
-        model.addAttribute("userName", "张三");
-        return "/index";
+
+    /**
+     * 查询用户, 分页
+     *
+     * @return
+     */
+    @GetMapping("/users")
+    public ResponseEntity<PageResult<User>> list(PageUserDTO pageUserDTO) {
+        return PageResult.ok(userService.getPage(pageUserDTO));
     }
+
+//    @RequestMapping("/")
+//    public String hello(Model model) {
+//        model.addAttribute("userName", "张三");
+//        return "/index";
+//    }
 
     /**
      * 注册， 当做添加用户的接口
@@ -60,6 +73,16 @@ public class UserController {
         } else {
             return Result.ok(userService.genAuthorization(record));
         }
+    }
+
+    /**
+     * 更新用户信息 - 非密码
+     * @return
+     */
+    @PutMapping("/users")
+    public ResponseEntity<Result<Integer>> update(@RequestBody User user) {
+        userService.update(user);
+        return Result.ok(1);
     }
 
     /**

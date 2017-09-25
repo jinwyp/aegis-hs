@@ -25,15 +25,18 @@ public class DeptController {
     @Autowired
     private DeptService deptService;
 
+    /**
+     * 部门分页
+     * @param pageDeptDTO
+     * @return
+     */
     @GetMapping("/depts")
-    public ResponseEntity<PageResult<Dept>> list(PageDeptDTO pageDeptDTO
-    ) {
+    public ResponseEntity<PageResult<Dept>> list(PageDeptDTO pageDeptDTO) {
         return PageResult.ok(deptService.getPage(pageDeptDTO));
     }
 
     /**
-     * 获取dept
-     *
+     * 获取部门详情
      * @param id
      * @return
      */
@@ -49,20 +52,18 @@ public class DeptController {
     }
 
     /**
-     * 创建dept
-     *
+     * 创建部门
      * @return
      */
     @PostMapping("/depts")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Dept>> create(@RequestBody Dept dept) {
-       deptService.create(dept);
-       return Result.ok(dept);
+        deptService.create(dept);
+        return Result.ok(dept);
     }
 
     /**
      * 更新dept
-     *
      * @return
      */
     @PutMapping("/depts/{id}")

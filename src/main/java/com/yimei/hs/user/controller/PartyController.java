@@ -66,16 +66,7 @@ public class PartyController {
      * @return
      */
     @PutMapping("/parties/{id}")
-    public ResponseEntity<Result<Integer>> update(
-            @PathVariable("id") long id,
-            @RequestParam("shortName") String shotName,
-            @RequestParam("name") String name,
-            @RequestParam("custType") Integer custType) {
-
-        Party party = new Party();
-        party.setPartyType(custType);
-        party.setName(name);
-        party.setShortName(shotName);
+    public ResponseEntity<Result<Integer>> update(@RequestBody Party party) {
         int status = partyService.update(party);
         if (status == 1) {
             return Result.ok(1);

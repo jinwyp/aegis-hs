@@ -82,12 +82,7 @@ public class TeamController {
      */
     @PutMapping("/teams/{id}")
     @Transactional(readOnly = false)
-    public ResponseEntity<Result<Integer>> update(@PathVariable(value = "id") long id, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "deptId", required = false) long deptId) {
-
-        Team team = new Team();
-        team.setDeptId(deptId);
-        team.setName(name);
-
+    public ResponseEntity<Result<Integer>> update( @RequestBody Team team) {
         int status = teamService.update(team);
         if (status == 1) {
             return Result.ok(1);

@@ -2,9 +2,7 @@ package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.boot.PageResult;
 import com.yimei.hs.ying.dto.PageYingOrderConfigDTO;
-import com.yimei.hs.ying.dto.PageYingOrderPartyDTO;
 import com.yimei.hs.ying.entity.YingOrderConfig;
-import com.yimei.hs.ying.entity.YingOrderParty;
 import com.yimei.hs.ying.service.YingOrderConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +22,7 @@ public class YingOrderConfigController {
 
 
     /**
-     * 获取分页数据party
+     * 获取分页数据应收订单核月配置
      *
      * @return
      */
