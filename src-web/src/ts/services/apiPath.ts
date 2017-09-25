@@ -13,7 +13,7 @@ const apiPath = {
     signUp : prefix + '/user/signup',
     signUpByMobile : prefix + '/user/signupmobile',
 
-    login : prefix + '/user/login',
+
 
     getUserInfo : prefix + '/users/session',
     saveUserInfo : prefix + '/users/session/info',
@@ -23,6 +23,8 @@ const apiPath = {
     saveUserAddressList : prefix + '/users/address',
 
 
+
+    login : prefix + '/login',
 
     hsGetUserList : prefix + '/test/users',
     hsGetDepartmentList : prefix + '/departments',
