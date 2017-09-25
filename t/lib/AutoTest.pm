@@ -148,7 +148,7 @@ EOF
 #    my $u002 = $self->get("2. 获取图形验证码", "/api/$system/captcha/find");
 #    my $u003 = $self->get("3. 触发服务器发送短信验证码", "/api/$system/register/sms?mobilePhone=$phone&imgCode=$u002");
 #    my $u004 = $self->get("4. 获取短信验证码", "/api/$system/register/findSms?authCodeType=REGISTER");
-#    my $u005 = $self->pos("5. 发起注册", "/api/$system/register/register", {
+#    my $u005 = $self->pos("5. 发起注册", "/api/$system/create/create", {
 #            data => {
 #                "userName"  => $userName,
 #                "loginName" => $loginName,
