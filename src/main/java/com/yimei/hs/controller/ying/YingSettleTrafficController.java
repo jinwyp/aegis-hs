@@ -1,8 +1,8 @@
 package com.yimei.hs.controller.ying;
 
 import com.yimei.hs.entity.YingSettleTraffic;
-import com.yimei.hs.entity.dto.PageResult;
-import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.boot.PageResult;
+import com.yimei.hs.boot.Result;
 import com.yimei.hs.entity.dto.ying.PageYingSettleTrafficDTO;
 import com.yimei.hs.service.ying.YingSettleService;
 import org.slf4j.Logger;

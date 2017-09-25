@@ -2,8 +2,8 @@ package com.yimei.hs.controller.ying;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.YingFayun;
-import com.yimei.hs.entity.dto.PageResult;
-import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.boot.PageResult;
+import com.yimei.hs.boot.Result;
 import com.yimei.hs.entity.dto.ying.PageYingFayunDTO;
 import com.yimei.hs.service.ying.YingFayunService;
 import lombok.Data;

@@ -1,7 +1,6 @@
 package com.yimei.hs.service.ying;
 
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.entity.Party;
 import com.yimei.hs.entity.YingOrder;
 import com.yimei.hs.entity.YingOrderConfig;
 import com.yimei.hs.entity.YingOrderParty;

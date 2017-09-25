@@ -2,8 +2,8 @@ package com.yimei.hs.controller.ying;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.entity.YingInvoice;
-import com.yimei.hs.entity.dto.PageResult;
-import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.boot.PageResult;
+import com.yimei.hs.boot.Result;
 import com.yimei.hs.entity.dto.ying.PageYingInvoiceDTO;
 import com.yimei.hs.service.ying.YingInvoiceService;
 import org.slf4j.Logger;

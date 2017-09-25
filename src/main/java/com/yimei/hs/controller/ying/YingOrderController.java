@@ -1,19 +1,17 @@
 package com.yimei.hs.controller.ying;
 
 import com.yimei.hs.boot.annotation.CurrentUser;
-import com.yimei.hs.entity.User;
+import com.yimei.hs.user.entity.User;
 import com.yimei.hs.entity.YingOrder;
-import com.yimei.hs.entity.dto.PageResult;
-import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.boot.PageResult;
+import com.yimei.hs.boot.Result;
 import com.yimei.hs.entity.dto.ying.PageYingOrderDTO;
 import com.yimei.hs.enums.OrderStatus;
 import com.yimei.hs.service.ying.YingOrderService;
-import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;

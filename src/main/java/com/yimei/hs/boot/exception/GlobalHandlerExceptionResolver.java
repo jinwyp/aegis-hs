@@ -2,7 +2,7 @@ package com.yimei.hs.boot.exception;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yimei.hs.entity.dto.Result;
+import com.yimei.hs.boot.Result;
 import com.yimei.hs.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

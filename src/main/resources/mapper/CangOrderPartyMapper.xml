@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.CangOrderPartyMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.CangOrderParty">
+<mapper namespace="com.yimei.hs.cang.mapper.CangOrderPartyMapper">
+  <resultMap id="BaseResultMap" type="com.yimei.hs.cang.entity.CangOrderParty">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="orderId" jdbcType="BIGINT" property="orderId" />
     <result column="custType" jdbcType="VARCHAR" property="custType" />
@@ -21,13 +21,13 @@
     delete from hs_cang_order_party
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.CangOrderParty">
+  <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangOrderParty">
     insert into hs_cang_order_party (id, orderId, custType, 
       customerId, tsc)
     values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{custType,jdbcType=VARCHAR}, 
       #{customerId,jdbcType=BIGINT}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.entity.CangOrderParty">
+  <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangOrderParty">
     insert into hs_cang_order_party
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -64,7 +64,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.CangOrderParty">
+  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.cang.entity.CangOrderParty">
     update hs_cang_order_party
     <set>
       <if test="orderId != null">
@@ -82,7 +82,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.CangOrderParty">
+  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.cang.entity.CangOrderParty">
     update hs_cang_order_party
     set orderId = #{orderId,jdbcType=BIGINT},
       custType = #{custType,jdbcType=VARCHAR},

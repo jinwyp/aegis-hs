@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.CangSettleTrafficMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.CangSettleTraffic">
+<mapper namespace="com.yimei.hs.cang.mapper.CangSettleTrafficMapper">
+  <resultMap id="BaseResultMap" type="com.yimei.hs.cang.entity.CangSettleTraffic">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="orderId" jdbcType="BIGINT" property="orderId" />
     <result column="hsId" jdbcType="BIGINT" property="hsId" />
@@ -24,7 +24,7 @@
     delete from hs_cang_settle_traffic
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.CangSettleTraffic">
+  <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangSettleTraffic">
     insert into hs_cang_settle_traffic (id, orderId, hsId, 
       settleDate, amount, money, 
       trafficCompanyId, tsc)
@@ -32,7 +32,7 @@
       #{settleDate,jdbcType=DATE}, #{amount,jdbcType=DECIMAL}, #{money,jdbcType=DECIMAL}, 
       #{trafficCompanyId,jdbcType=BIGINT}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.entity.CangSettleTraffic">
+  <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangSettleTraffic">
     insert into hs_cang_settle_traffic
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -87,7 +87,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.CangSettleTraffic">
+  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.cang.entity.CangSettleTraffic">
     update hs_cang_settle_traffic
     <set>
       <if test="orderId != null">
@@ -114,7 +114,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.CangSettleTraffic">
+  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.cang.entity.CangSettleTraffic">
     update hs_cang_settle_traffic
     set orderId = #{orderId,jdbcType=BIGINT},
       hsId = #{hsId,jdbcType=BIGINT},

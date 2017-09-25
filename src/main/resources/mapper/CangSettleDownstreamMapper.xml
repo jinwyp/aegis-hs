@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.mapper.CangSettleDownstreamMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.CangSettleDownstream">
+<mapper namespace="com.yimei.hs.cang.mapper.CangSettleDownstreamMapper">
+  <resultMap id="BaseResultMap" type="com.yimei.hs.cang.entity.CangSettleDownstream">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="orderId" jdbcType="BIGINT" property="orderId" />
     <result column="hsId" jdbcType="BIGINT" property="hsId" />
@@ -28,7 +28,7 @@
     delete from hs_cang_settle_downstream
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.entity.CangSettleDownstream">
+  <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangSettleDownstream">
     insert into hs_cang_settle_downstream (id, orderId, hsId, 
       settleDate, amount, money, 
       discountType, discountInterest, discountDays, 
@@ -38,7 +38,7 @@
       #{discountType,jdbcType=VARCHAR}, #{discountInterest,jdbcType=DECIMAL}, #{discountDays,jdbcType=INTEGER}, 
       #{discountAmount,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.entity.CangSettleDownstream">
+  <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangSettleDownstream">
     insert into hs_cang_settle_downstream
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -111,7 +111,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.CangSettleDownstream">
+  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.cang.entity.CangSettleDownstream">
     update hs_cang_settle_downstream
     <set>
       <if test="orderId != null">
@@ -147,7 +147,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.CangSettleDownstream">
+  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.cang.entity.CangSettleDownstream">
     update hs_cang_settle_downstream
     set orderId = #{orderId,jdbcType=BIGINT},
       hsId = #{hsId,jdbcType=BIGINT},
