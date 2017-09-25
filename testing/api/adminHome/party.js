@@ -19,7 +19,7 @@ const server = supertest(config.path.urlApi)
 describe('参与商公司-相关功能', function () {
 
 
-    it('获取参与商公司列表', function (done) {
+    it('获取参与商公司列表 GET: /api/parties?pageNo=1&pageSize=2', function (done) {
         server.get('/api/parties?pageNo=1&pageSize=2')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
@@ -36,7 +36,7 @@ describe('参与商公司-相关功能', function () {
     })
 
 
-    it('新建参与商', function (done) {
+    it('新建参与商 POST: /api/parties', function (done) {
         server.post('/api/parties')
             .set('Accept', 'application/json')
             .send({
@@ -58,7 +58,7 @@ describe('参与商公司-相关功能', function () {
     })
 
 
-    it('获取某个ID的参与商信息', function (done) {
+    it('获取某个ID的参与商信息 GET: /api/parties/1', function (done) {
         server.get('/api/parties/1')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
@@ -74,11 +74,13 @@ describe('参与商公司-相关功能', function () {
     })
 
 
-    it('修改某个ID的参与商信息', function (done) {
+    it('修改某个ID的参与商信息 PUT: /api/parties/19', function (done) {
         server.put('/api/parties/19')
             .set('Accept', 'application/json')
             .send({
-                name: "新的参与商公司" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
+                name: "新的参与商公司" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
+                partyType : 1,
+                shortName : '新的参与商公司简称'
             })
             .expect('Content-Type', /json/)
             .expect(200)
