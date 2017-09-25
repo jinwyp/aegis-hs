@@ -21,7 +21,7 @@ INSERT INTO  hs_ying_order_config(
     contractBaseInterest ,
     expectHKDays ,             
     tradeAddPrice  , 
-    wPrice         
+    weightedPrice
   )
 VALUES(2000,3001,'201701',20.3,10.22,11.11,10,50.21,100.1),
       (2001,3001,'201702',20.3,10.22,11.11,10,50.21,100.1),

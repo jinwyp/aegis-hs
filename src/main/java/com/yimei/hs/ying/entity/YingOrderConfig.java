@@ -27,7 +27,7 @@ public class YingOrderConfig implements Serializable {
 
     private BigDecimal tradeAddPrice;
 
-    private BigDecimal wPrice;
+    private BigDecimal weightedPrice;
 
     private LocalDateTime tsc;
 

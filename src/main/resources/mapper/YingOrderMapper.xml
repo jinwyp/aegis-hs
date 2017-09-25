@@ -70,7 +70,7 @@
             t2.contractBaseInterest,
             t2.expectHKDays,
             t2.tradeAddPrice,
-            t2.wPrice,
+            t2.weightedPrice,
             t2.tsc AS t2tsc,
 
             t3.id as t3id,
@@ -110,7 +110,7 @@
             t2.contractBaseInterest,
             t2.expectHKDays,
             t2.tradeAddPrice,
-            t2.wPrice,
+            t2.weightedPrice,
             t2.tsc AS t2tsc,
 
             t3.id as t3id,
