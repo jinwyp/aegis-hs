@@ -11,4 +11,5 @@ import org.springframework.web.bind.annotation.RestController;
 @IsAdmin
 @RequestMapping("/api/admin")
 public class AdminController {
+
 }

@@ -72,6 +72,7 @@ public class DeptController {
     public ResponseEntity<Result<Integer>> update(
             @PathVariable(value = "id") Long id,
             @RequestBody Dept dept) {
+        dept.setId(id);
         int success = deptService.update(dept);
         if (success == 1) {
             return Result.ok(1);
