@@ -1,9 +1,7 @@
 package com.yimei.hs.user.controller;
 
-import com.yimei.hs.boot.PageResult;
 import com.yimei.hs.boot.Result;
 import com.yimei.hs.boot.annotation.CurrentUser;
-import com.yimei.hs.user.dto.PageUserDTO;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.user.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
@@ -29,9 +26,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-
-
 
 
     /**
