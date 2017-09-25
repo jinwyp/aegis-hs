@@ -52,10 +52,13 @@
         <where>
             <if test="orderId!=null">t1.orderId=#{orderId}</if>
             <if test="hsId!=null">t1.hsId=#{hsId}</if>
+            <if test="skCompanyId!=null">t1.skCompanyId=#{skCompanyId}</if>
+            <if test="huankuanDate!=null">t1.huankuanDate=#{huankuanDate}</if>
+            <if test="huankuanAmount!=null">t1.huankuanAmount=#{huankuanAmount}</if>
         </where>
     </select>
 
-    <!---->
+    <!-- -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_huankuan
         WHERE id = #{id,jdbcType=BIGINT}
