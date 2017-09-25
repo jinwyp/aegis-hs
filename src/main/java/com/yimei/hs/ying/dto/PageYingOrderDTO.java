@@ -3,9 +3,12 @@ package com.yimei.hs.ying.dto;
 import com.yimei.hs.boot.persistence.BaseFilter;
 import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.OrderStatus;
+import com.yimei.hs.ying.controller.YingOrderController;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.ibatis.jdbc.SQL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by hary on 2017/9/21.
@@ -14,6 +17,7 @@ import org.apache.ibatis.jdbc.SQL;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
+    private static final Logger logger = LoggerFactory.getLogger(YingOrderController.class);
 
     private Long deptId;
 
@@ -51,6 +55,7 @@ public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
             }
         }.toString();
 
+        logger.error("sql===============>"+sql);
         String countSql =  super.getCountSql(nsql);
         System.out.println("count sql = " + countSql);
         return countSql;

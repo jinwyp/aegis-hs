@@ -97,7 +97,7 @@ public class YingOrderService {
      * @return
      */
     public int update(YingOrder record) {
-        return yingOrderMapper.updateByPrimaryKey(record);
+        return yingOrderMapper.updateByPrimaryKeySelective(record);
     }
 
     @Autowired
