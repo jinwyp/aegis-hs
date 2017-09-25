@@ -80,7 +80,8 @@ public class YingFeeController {
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") Long orderId,
             @PathVariable("id") Long id,
-            YingFee yingFee) {
+            YingFee yingFee
+    ) {
         assert (orderId == yingFee.getOrderId());
         yingFee.setId(id);
         int rtn = yingFeeService.update(yingFee);
