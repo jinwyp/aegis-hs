@@ -31,21 +31,8 @@ public class UserController {
     private UserService userService;
 
 
-    /**
-     * 查询用户, 分页
-     *
-     * @return
-     */
-    @GetMapping("/users")
-    public ResponseEntity<PageResult<User>> list(PageUserDTO pageUserDTO) {
-        return PageResult.ok(userService.getPage(pageUserDTO));
-    }
 
-//    @RequestMapping("/")
-//    public String hello(Model model) {
-//        model.addAttribute("userName", "张三");
-//        return "/index";
-//    }
+
 
     /**
      * 注册， 当做添加用户的接口
@@ -55,7 +42,7 @@ public class UserController {
      */
     @PostMapping(value = "/api/register")
     public ResponseEntity<Result<Boolean>> register(@RequestBody @Validated User user) {
-        userService.register(user);
+        userService.create(user);
         return Result.ok(true);
     }
 
@@ -80,23 +67,14 @@ public class UserController {
         }
     }
 
-    /**
-     * 更新用户信息 - 非密码
-     *
-     * @return
-     */
-    @PutMapping("/users")
-    public ResponseEntity<Result<Integer>> update(@RequestBody User user) {
-        userService.update(user);
-        return Result.ok(1);
-    }
+
 
     /**
      * jwt example
      *
      * @return
      */
-    @GetMapping(value = "/authorization")
+    @GetMapping(value = "/api/user/session")
     public ResponseEntity authorization(@CurrentUser User user) {
         return new ResponseEntity(user, HttpStatus.OK);
     }

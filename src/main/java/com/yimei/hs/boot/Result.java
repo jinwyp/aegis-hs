@@ -7,6 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.CookieGenerator;
+
+import java.util.Map;
 
 /**
  * Created by hary on 2017/9/21.
@@ -35,8 +39,14 @@ public class Result<T> {
     }
 
     public static final <M> ResponseEntity<Result<M>> ok(M m) {
-        return new ResponseEntity<>(new Result<>(true, m, null), HttpStatus.OK);
+        ResponseEntity<Result<M>> entity=  new ResponseEntity<>(new Result<>(true, m, null), HttpStatus.OK);
+        return entity;
     }
+
+    public static final <M> ResponseEntity<Result<M>> ok(M m,  MultiValueMap<String, String> headers) {
+        return new ResponseEntity<>(new Result<>(true, m, null), headers, HttpStatus.OK);
+    }
+
 }
 
 

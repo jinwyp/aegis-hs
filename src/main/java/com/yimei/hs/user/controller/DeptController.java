@@ -69,10 +69,10 @@ public class DeptController {
      */
     @PutMapping("/departments/{id}")
     @Transactional(readOnly = false)
-    public ResponseEntity<Result<Integer>> update(@PathVariable(value = "id") Long id, @RequestParam(value = "name") String name) {
-        Dept dept = new Dept();
+    public ResponseEntity<Result<Integer>> update(
+            @PathVariable(value = "id") Long id,
+            @RequestBody Dept dept) {
         dept.setId(id);
-        dept.setName(name);
         int success = deptService.update(dept);
         if (success == 1) {
             return Result.ok(1);

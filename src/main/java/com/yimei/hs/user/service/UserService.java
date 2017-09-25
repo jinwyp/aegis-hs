@@ -45,7 +45,7 @@ public class UserService {
 
 
     @Transactional(readOnly = false)
-    public User register(User user) {
+    public User create(User user) {
 
         byte[] passwordSalt = Digests.generateSalt(SALT_SIZE);
         byte[] hashPassword = Digests.sha1(user.getPassword().getBytes(), passwordSalt, HASH_INTERATIONS);
@@ -87,14 +87,10 @@ public class UserService {
         return userMapper.getPage(pageUserDTO);
     }
 
-    /**
-     *  创建用户
-     * @param user
-     * @return
-     */
-    public int create(User user) {
-        return userMapper.insert(user);
+    public User findOne(long id) {
+        return userMapper.selectByPrimaryKey(id);
     }
+
 
     /**
      * 更新用户
