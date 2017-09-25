@@ -2,6 +2,8 @@ package com.yimei.hs.ying.dto;
 
 import com.yimei.hs.boot.persistence.BaseFilter;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.apache.ibatis.jdbc.SQL;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,6 +12,7 @@ import java.time.LocalDateTime;
  * Created by hary on 2017/9/21.
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class PageYingHuankuanDTO extends BaseFilter<PageYingHuankuanDTO> {
 
     private Long orderId;
@@ -30,24 +33,17 @@ public class PageYingHuankuanDTO extends BaseFilter<PageYingHuankuanDTO> {
     @Override
     public String getCountSql(String sql) {
 
-        System.out.println("orignal sql = " + sql);
-        StringBuilder sb = new StringBuilder("select * from hs_ying_huankuan ");
-        if (orderId != null) {
-            sb.append(" where orderId = ?");
-        }
-        if (hsId != null) {
-            sb.append( " and hsId = ?");
-        }
-        if (skCompanyId != null) {
-            sb.append(" and skCompanyId = ?");
-        }
-        if (huankuanDate != null) {
-            sb.append(" and huankuanDate = ?");
-        }
-        if( huankuanAmount != null) {
-            sb.append(" and huankuanAmount = ?");
-        }
-        String countSql = super.getCountSql(sb.toString());
+        String nsql = new SQL() {{
+            SELECT("*");
+            FROM("hs_ying_huankuan");
+            if (orderId != null) { WHERE("orderId = #{orderId"); }
+            if (hsId != null) { WHERE("hsId = #{hsId}"); }
+            if (skCompanyId != null) { WHERE("skCompanyId = #{skCompanyId}"); }
+            if (huankuanDate != null) { WHERE("huankuanDate = #{huankuanDate}"); }
+            if (huankuanAmount != null) { WHERE("huankuanAmount = #{huankuanAmount}"); }
+        }}.toString();
+
+        String countSql = super.getCountSql(nsql);
         System.out.println("count sql = " + countSql);
         return countSql;
     }

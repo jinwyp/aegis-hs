@@ -23,38 +23,22 @@ export class HSOrderService {
 
 
 
-    getUserList(query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getOrderList(query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetUserList, {params: params})
+        return this.http.get(apiPath.hsGetOrderList, {params: params})
     }
-    createNewUser(user: any): Observable<any> {
+    createNewOrder(user: any): Observable<any> {
 
-        return this.http.post(apiPath.hsGetUserList, user)
+        return this.http.post(apiPath.hsGetOrderList, user)
     }
-    modifyUser(userId: number, user: any): Observable<any> {
+    modifyOrder(userId: number, user: any): Observable<any> {
 
-        return this.http.put(apiPath.hsGetUserList + '/' + userId, user)
+        return this.http.put(apiPath.hsGetOrderList + '/' + userId, user)
     }
 
-
-    getDepartmentList(query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
-            .set('pageSize', query.pageSize)
-            .set('pageNo', query.pageNo)
-
-        return this.http.get(apiPath.hsGetDepartmentList, {params: params})
-    }
-    createNewDepartment(department: any): Observable<any> {
-
-        return this.http.post(apiPath.hsGetDepartmentList, department)
-    }
-    modifyDepartment(departmentId: number, department: any): Observable<any> {
-
-        return this.http.put(apiPath.hsGetDepartmentList + '/' + departmentId, department)
-    }
 
 
 

@@ -29,7 +29,10 @@ const apiPath = {
     hsGetUserList : prefix + '/test/users',
     hsGetDepartmentList : prefix + '/departments',
     hsGetTeamList : prefix + '/teams',
-    hsGetPartyList : prefix + '/parties'
+    hsGetPartyList : prefix + '/parties',
+
+
+    hsGetOrderList : '/apx/test/yings',
 }
 
 

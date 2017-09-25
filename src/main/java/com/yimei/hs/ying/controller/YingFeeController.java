@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -63,6 +64,7 @@ public class YingFeeController {
      * @return
      */
     @PostMapping("/{orderId}/fees")
+    @Transactional(readOnly =  false)
     public ResponseEntity<Result<YingFee>> create(@RequestBody YingFee yingFee) {
         int rtn = yingFeeService.create(yingFee);
         if (rtn != 1) {
@@ -77,10 +79,12 @@ public class YingFeeController {
      * @return
      */
     @PutMapping("/{orderId}/fees/{id}")
+    @Transactional(readOnly =  false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") Long orderId,
             @PathVariable("id") Long id,
-            YingFee yingFee) {
+            YingFee yingFee
+    ) {
         assert (orderId == yingFee.getOrderId());
         yingFee.setId(id);
         int rtn = yingFeeService.update(yingFee);

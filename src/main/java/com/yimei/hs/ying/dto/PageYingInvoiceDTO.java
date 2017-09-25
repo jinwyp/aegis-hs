@@ -2,6 +2,8 @@ package com.yimei.hs.ying.dto;
 
 import com.yimei.hs.boot.persistence.BaseFilter;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.apache.ibatis.jdbc.SQL;
 
 import java.time.LocalDateTime;
 
@@ -9,6 +11,7 @@ import java.time.LocalDateTime;
  * Created by hary on 2017/9/21.
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class PageYingInvoiceDTO extends BaseFilter<PageYingInvoiceDTO> {
 
     private Long orderId;
@@ -21,35 +24,26 @@ public class PageYingInvoiceDTO extends BaseFilter<PageYingInvoiceDTO> {
 
     private Long openCompanyId;
 
-    private Long recieverId;
-
-    private LocalDateTime tsc;
+    private Long receiverId;
 
     @Override
     public String getCountSql(String sql) {
 
         System.out.println("orignal sql = " + sql);
-        StringBuilder sb = new StringBuilder("select * from hs_ying_settle_downstream ");
-        if (orderId != null) {
-            sb.append(" where orderId = ?");
-        }
-        if (hsId != null) {
-            sb.append( " and hsId = ?");
-        }
-        if (invoiceType != null) {
-            sb.append(" and invoiceType = ?");
-        }
-        if (openDate != null) {
-            sb.append(" and openDate = ?");
-        }
-        if (openCompanyId != null) {
-            sb.append(" and openCompanyId = ?");
-        }
-        if (recieverId != null) {
-            sb.append(" and recieverId = ?");
-        }
+        String nsql = new SQL() {
+            {
+                SELECT("*");
+                FROM("hs_ying_invoice");
+                if (orderId != null) { WHERE("orderId = #{orderId"); }
+                if (hsId != null) { WHERE("hsId = #{hsId}"); }
+                if (invoiceType != null) { WHERE("invoiceType = #{invoiceType}"); }
+                if (openDate != null) { WHERE( "openDate = #{openDate}"); }
+                if (openCompanyId != null) { WHERE("openCompanyId = #{openCompanyId}"); }
+                if (receiverId != null) { WHERE("receiverId = #{receiverId}"); }
+            }
+        }.toString();
 
-        String countSql = super.getCountSql(sb.toString());
+        String countSql =  super.getCountSql(nsql);
         System.out.println("count sql = " + countSql);
         return countSql;
     }

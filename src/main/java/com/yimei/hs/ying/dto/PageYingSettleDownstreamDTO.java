@@ -2,6 +2,8 @@ package com.yimei.hs.ying.dto;
 
 import com.yimei.hs.boot.persistence.BaseFilter;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.apache.ibatis.jdbc.SQL;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +13,7 @@ import java.time.LocalDateTime;
 
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class PageYingSettleDownstreamDTO extends BaseFilter<PageYingSettleDownstreamDTO> {
     private Long orderId;
     private Long hsId;
@@ -24,18 +27,16 @@ public class PageYingSettleDownstreamDTO extends BaseFilter<PageYingSettleDownst
     public String getCountSql(String sql) {
 
         System.out.println("orignal sql = " + sql);
-        StringBuilder sb = new StringBuilder("select * from hs_ying_settle_downstream ");
-        if (orderId != null) {
-            sb.append(" where orderId = ?");
-        }
-        if (hsId != null) {
-            sb.append( " and hsId = ?");
-        }
-        if (settleDate != null) {
-            sb.append(" and settleDate = ?");
-        }
 
-        String countSql = super.getCountSql(sb.toString());
+        String nsql = new SQL() {{
+            SELECT("*");
+            FROM("hs_ying_settle_downstream");
+            if (orderId != null) { WHERE("orderId = #{orderId"); }
+            if (hsId != null) { WHERE("hsId = #{hsId}"); }
+            if (settleDate != null) { WHERE("settleDate = #{settleDate}"); }
+        }}.toString();
+
+        String countSql = super.getCountSql(nsql);
         System.out.println("count sql = " + countSql);
         return countSql;
     }
