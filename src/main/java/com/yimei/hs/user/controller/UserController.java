@@ -51,7 +51,7 @@ public class UserController {
      */
     @PostMapping(value = "/api/register")
     public ResponseEntity<Result<Boolean>> register(@RequestBody @Validated User user) {
-        userService.register(user);
+        userService.create(user);
         return Result.ok(true);
     }
 

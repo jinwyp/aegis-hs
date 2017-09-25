@@ -30,7 +30,7 @@ public class AdminController {
      */
     @PostMapping("/users")
     public ResponseEntity<Result<User>> create(@RequestBody @Validated User user) {
-        User nuser = userService.register(user);
+        User nuser = userService.create(user);
         if (nuser == null) {
            return Result.error(4001, "创建用户失败");
         } else {
