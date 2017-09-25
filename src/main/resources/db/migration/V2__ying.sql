@@ -41,7 +41,7 @@ create table hs_ying_order_config (
    contractBaseInterest decimal(10, 2) not null comment '合同基准利率',
    expectHKDays int                    not null comment '预计回款天数',
    tradeAddPrice decimal(10, 2)        not null comment '贸易公司加价: 单位: 元/吨',
-   wPrice  decimal(10, 2)              not null comment '加权单价',
+   weightedPrice  decimal(10, 2)              not null comment '加权单价',
    tsc timestamp                       not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
