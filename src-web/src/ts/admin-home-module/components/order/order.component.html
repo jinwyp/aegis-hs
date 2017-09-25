@@ -5,20 +5,6 @@
             <button type="button" class="btn btn-outline-info btn-sm float-right" *ngIf="!isShowForm" (click)="showForm(true)">添加</button>
         </h3>
 
-        create table hs_ying_order (
-        mainAccounting bigint            not null comment '主账务公司 - 与下有接触的',
-        line varchar(256)                not null comment '业务线名称: 由参与方公司简称组成',
-        cargoType varchar(32)            not null comment '货物种类: 煤炭、钢材',
-        upstreamId  bigint(20)           not null comment '上游id',
-        upstreamSettleMode varchar(20)   not null comment '上游结算方式',
-        downstreamId  bigint(20)         not null comment '下游id',
-        downstreamSettleMode varchar(20) not null comment '下游结算方式',
-        status varchar(32)               not null comment '订单状态: 完结, 未完结',
-        tsc timestamp                    not null default current_timestamp,
-        primary key (id)
-        ) engine=InnoDB default charset=utf8;
-
-
 
         <form [formGroup]="orderForm" (ngSubmit)="orderFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
@@ -30,6 +16,11 @@
 
             <bs-select formControlName ="upstreamSettleMode" [fc]="orderForm.get('upstreamSettleMode')" [label]="'上游结算方式:'" [options]="jieSuanType" [error]="orderFormError.upstreamSettleMode"></bs-select>
             <bs-select formControlName ="downstreamSettleMode" [fc]="orderForm.get('downstreamSettleMode')" [label]="'下游结算方式:'" [options]="jieSuanType" [error]="orderFormError.downstreamSettleMode"></bs-select>
+
+
+            <bs-select formControlName ="mainAccounting" [fc]="orderForm.get('mainAccounting')" [label]="'主账务公司:'" [options]="partyList" [error]="orderFormError.mainAccounting"></bs-select>
+            <bs-select formControlName ="upstreamId" [fc]="orderForm.get('upstreamId')" [label]="'上游供应商:'" [options]="partyList" [error]="orderFormError.upstreamId"></bs-select>
+            <bs-select formControlName ="downstreamId" [fc]="orderForm.get('downstreamId')" [label]="'下游客户:'" [options]="partyList" [error]="orderFormError.downstreamId"></bs-select>
 
 
 

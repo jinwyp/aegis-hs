@@ -31,6 +31,7 @@ export class OrderComponent implements OnInit {
     departmentList : any[] = []
     teamList : any[] = []
     filterTeamList : any[] = []
+    partyList : any[] = []
 
 
     jieSuanType : any[] = [
@@ -59,6 +60,7 @@ export class OrderComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.getPartyList()
         this.getDepartmentList()
         this.getTeamList()
         this.getOrderList()
@@ -128,6 +130,17 @@ export class OrderComponent implements OnInit {
         })
     }
 
+    getPartyList () {
+
+        this.hsUserService.getPartyList().subscribe(
+            data => {
+                this.partyList = data.data.results
+
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
+
 
     orderFormError : any = {}
     orderFormValidationMessages: any = {
@@ -146,14 +159,17 @@ export class OrderComponent implements OnInit {
     createOrderForm(): void {
 
         this.orderForm = this.fb.group({
-            'name'    : ['', [Validators.required] ],
             'deptId'    : ['', [Validators.required ] ],
             'teamId'    : ['', [Validators.required ] ],
-            'mainAccounting'    : ['', [Validators.required ] ],
+
             'line'    : ['', [Validators.required ] ],
             'cargoType'    : ['', [Validators.required ] ],
             'upstreamSettleMode'    : ['', [Validators.required ] ],
             'downstreamSettleMode'    : ['', [Validators.required ] ],
+
+            'mainAccounting'    : ['', [Validators.required ] ],
+            'upstreamId'    : ['', [Validators.required ] ],
+            'downstreamId'    : ['', [Validators.required ] ],
         } )
 
         this.orderForm.valueChanges.subscribe(data => {
@@ -176,7 +192,7 @@ export class OrderComponent implements OnInit {
         const postData = this.orderForm.value
 
         if (this.isAddNew) {
-            this.hsUserService.createNewTeam(postData).subscribe(
+            this.hsOrderService.createNewOrder(postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -188,7 +204,7 @@ export class OrderComponent implements OnInit {
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
-            this.hsUserService.modifyTeam(this.currentTeamId, postData).subscribe(
+            this.hsOrderService.modifyOrder(this.currentTeamId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
@@ -211,7 +227,9 @@ export class OrderComponent implements OnInit {
 
             this.orderForm.patchValue({
                 'name'    : '',
-                'deptId'    : ''
+                'deptId'    : '',
+                'teamId'    : ''
+
             })
 
         } else {
