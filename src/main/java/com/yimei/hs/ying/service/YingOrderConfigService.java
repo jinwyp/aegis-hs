@@ -27,4 +27,8 @@ public class YingOrderConfigService {
     public YingOrderConfig findOne(Long id) {
         return yingOrderConfigMapper.selectByPrimaryKey(id);
     }
+
+    public int update(YingOrderConfig yingOrderConfig) {
+        return yingOrderConfigMapper.updateByPrimaryKeySelective(yingOrderConfig);
+    }
 }

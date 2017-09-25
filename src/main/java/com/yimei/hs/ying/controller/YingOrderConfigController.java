@@ -30,7 +30,7 @@ public class YingOrderConfigController {
      * @return
      */
     @GetMapping("/{orderId}/configs")
-    public ResponseEntity<PageResult<YingOrderConfig>> list(@PathVariable("orderId" )long orderId, PageYingOrderConfigDTO pageYingOrderConfigDTO) {
+    public ResponseEntity<PageResult<YingOrderConfig>> list(@PathVariable("orderId") long orderId, PageYingOrderConfigDTO pageYingOrderConfigDTO) {
         pageYingOrderConfigDTO.setOrderId(orderId);
         return PageResult.ok(yingOrderConfigService.getPage(pageYingOrderConfigDTO));
     }
@@ -43,7 +43,9 @@ public class YingOrderConfigController {
      */
     @PostMapping("/{orderId}/configs")
     @Transactional(readOnly = false)
-    public ResponseEntity<Result<YingOrderConfig>> create(@RequestBody YingOrderConfig yingOrderConfig) {
+    public ResponseEntity<Result<YingOrderConfig>> create(@PathVariable("orderId") long orderId, @RequestBody YingOrderConfig yingOrderConfig) {
+
+        yingOrderConfig.setOrderId(orderId);
         int rtn = yingOrderConfigService.create(yingOrderConfig);
         if (rtn != 1) {
             return Result.error(5001, "创建失败");
@@ -54,11 +56,12 @@ public class YingOrderConfigController {
 
     /**
      * 查询核算月数据
+     *
      * @param id
      * @return
      */
     @GetMapping("/{orderId}/configs/{id}")
-    public ResponseEntity<Result<YingOrderConfig>> findOne(@PathVariable("id") Long id,@PathVariable("orderId") Long orderId) {
+    public ResponseEntity<Result<YingOrderConfig>> findOne(@PathVariable("id") Long id, @PathVariable("orderId") Long orderId) {
         YingOrderConfig yingOrderConfig = yingOrderConfigService.findOne(id);
 
         if (yingOrderConfig == null) {
@@ -68,6 +71,21 @@ public class YingOrderConfigController {
         }
     }
 
+    @PutMapping("/{orderId}/configs/{id}")
+    public ResponseEntity<Result<Integer>> update(@PathVariable("id") Long id,
+                                                  @PathVariable("orderId") Long orderId,
+                                                  @RequestBody YingOrderConfig yingOrderConfig) {
+
+        yingOrderConfig.setOrderId(id);
+        yingOrderConfig.setOrderId(orderId);
+        int status = yingOrderConfigService.update(yingOrderConfig);
+        if (status == 1) {
+            return Result.ok(1);
+        } else {
+            return Result.error(5003, "更新失败");
+        }
+
+    }
 
 }
 
