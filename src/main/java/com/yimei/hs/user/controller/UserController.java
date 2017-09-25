@@ -1,10 +1,10 @@
 package com.yimei.hs.user.controller;
 
 import com.yimei.hs.boot.PageResult;
+import com.yimei.hs.boot.Result;
 import com.yimei.hs.boot.annotation.CurrentUser;
 import com.yimei.hs.user.dto.PageUserDTO;
 import com.yimei.hs.user.entity.User;
-import com.yimei.hs.boot.Result;
 import com.yimei.hs.user.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * Created by xiangyang on 2017/7/1.
@@ -23,7 +25,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserAdminController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private UserService userService;
 
@@ -46,6 +49,7 @@ public class UserController {
 
     /**
      * 注册， 当做添加用户的接口
+     *
      * @param user
      * @return
      */
@@ -58,6 +62,7 @@ public class UserController {
 
     /**
      * 登录下发 jwt 和cookie
+     *
      * @param user
      * @return
      */
@@ -77,6 +82,7 @@ public class UserController {
 
     /**
      * 更新用户信息 - 非密码
+     *
      * @return
      */
     @PutMapping("/users")
@@ -87,6 +93,7 @@ public class UserController {
 
     /**
      * jwt example
+     *
      * @return
      */
     @GetMapping(value = "/authorization")
