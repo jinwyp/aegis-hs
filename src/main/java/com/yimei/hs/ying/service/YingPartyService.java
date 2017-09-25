@@ -24,4 +24,8 @@ public class YingPartyService {
     public Page<YingOrderParty> getPage(PageYingOrderPartyDTO pageYingOrderPartyDTO) {
         return yingOrderPartyMapper.getPage(pageYingOrderPartyDTO);
     }
+
+    public int update(YingOrderParty yingOrderParty) {
+        return yingOrderPartyMapper.updateByPrimaryKeySelective(yingOrderParty);
+    }
 }

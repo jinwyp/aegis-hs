@@ -3,10 +3,12 @@ package com.yimei.hs.ying.entity;
 import com.yimei.hs.enums.CustomerType;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 @Data
 public class YingOrderParty implements Serializable {
+
     private Long id;
 
     private Long orderId;
