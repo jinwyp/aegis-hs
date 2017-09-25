@@ -19,7 +19,7 @@ import { HSOrderService } from '../../../services/hsOrder.service'
 export class OrderComponent implements OnInit {
 
     sessionUser : any
-    currentTeamId : any
+    currentOrderId : any
 
     orderForm: FormGroup
     ignoreDirty: boolean = false
@@ -204,7 +204,7 @@ export class OrderComponent implements OnInit {
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
-            this.hsOrderService.modifyOrder(this.currentTeamId, postData).subscribe(
+            this.hsOrderService.modifyOrder(this.currentOrderId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
@@ -220,7 +220,7 @@ export class OrderComponent implements OnInit {
     }
 
 
-    showForm(isAddNew : boolean = true, team?: any ) {
+    showForm(isAddNew : boolean = true, order?: any ) {
 
         if (isAddNew) {
             this.isAddNew = true
@@ -242,9 +242,9 @@ export class OrderComponent implements OnInit {
 
         } else {
             this.isAddNew = false
-            this.currentTeamId = team.id
+            this.currentOrderId = order.id
 
-            this.orderForm.patchValue(team)
+            this.orderForm.patchValue(order)
         }
 
 

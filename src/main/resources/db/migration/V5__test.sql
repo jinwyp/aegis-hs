@@ -4,8 +4,8 @@ USE hsdb;
 -- 造数据
 -- 创建用户
 INSERT INTO hs_user(id ,deptId,phone,password,passwordSalt,createDate,createBy,isAdmin,isActive)
-	VALUES(1,2,'18321805757','1234567','12345','2017-01-01','ADMIN','1','1'),
-	      (2,2,'18321806666','1234567','12345','2017-01-01','ADMIN','1','1');
+	VALUES(5001,2,'18321805757','1234567','12345','2017-01-01','ADMIN','1','1'),
+	      (5002,2,'18321806666','1234567','12345','2017-01-01','ADMIN','1','1');
 -- 创建部门
 
 
@@ -45,7 +45,7 @@ INSERT INTO hs_ying_order(
    downstreamSettleMode ,
    STATUS
   ) 
-  VALUES(3001,1001,2,1,1,1,'业务线','COAL',11,'ONE_PAPER_SETTLE',10,'ONE_PAPER_SETTLE','UNCOMPLETED');
+  VALUES(3001,1001,2,5001,5001,1,'业务线','COAL',11,'ONE_PAPER_SETTLE',10,'ONE_PAPER_SETTLE','UNCOMPLETED');
   -- 参与方
   INSERT INTO hs_ying_order_party(
   	  id,
