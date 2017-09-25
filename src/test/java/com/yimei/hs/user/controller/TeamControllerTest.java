@@ -1,6 +1,8 @@
 package com.yimei.hs.user.controller;
 
 import com.yimei.hs.HsApplication;
+import com.yimei.hs.boot.PageResult;
+import com.yimei.hs.boot.Result;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
 import org.junit.Test;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.*;
 
@@ -18,6 +21,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = HsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Transactional(readOnly = true)
 public class TeamControllerTest {
 
     @Autowired
@@ -25,6 +29,8 @@ public class TeamControllerTest {
 
     @Test
     public void list() throws Exception {
+        PageResult<Team> page = testRestTemplate.getForObject("/api/teams", PageResult.class);
+        System.out.println("get page = " + page.toString());
     }
 
     @Test
@@ -32,11 +38,14 @@ public class TeamControllerTest {
         Team team = new Team();
         team.setDeptId(2L);
         team.setName("我的team");
-        Team rtn = testRestTemplate.postForObject("/api/teams", team, Team.class);
+        Result<Team> rtn = testRestTemplate.postForObject("/api/teams", team, Result.class);
+        System.out.println("create return " + rtn.toString());
     }
 
     @Test
     public void read() throws Exception {
+        Result<Team> rtn = testRestTemplate.getForObject("/api/teams/1", Result.class);
+        System.out.println("rtn = " + rtn.toString());
     }
 
     @Test
