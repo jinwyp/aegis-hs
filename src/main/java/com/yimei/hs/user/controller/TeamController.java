@@ -4,7 +4,7 @@ import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.boot.PageResult;
 import com.yimei.hs.boot.Result;
 import com.yimei.hs.user.dto.PageTeamDTO;
-import com.yimei.hs.user.service.DepartmentService;
+import com.yimei.hs.user.service.DeptService;
 import com.yimei.hs.user.service.TeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class TeamController {
     private TeamService teamService;
 
     @Autowired
-    private DepartmentService departmentService;
+    private DeptService deptService;
 
 
     /**
@@ -52,7 +52,7 @@ public class TeamController {
     public ResponseEntity<Result<Team>> create(@RequestBody Team team) {
         ResponseEntity teamResponseEntity;
 
-        if (departmentService.checkDeptExist(team.getDeptId())) {
+        if (deptService.checkDeptExist(team.getDeptId())) {
             teamService.create(team);
             return Result.ok(team);
         } else {

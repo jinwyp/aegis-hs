@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
  * Created by hary on 2017/9/15.
  */
 @Service
-public class DepartmentService {
+public class DeptService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DepartmentService.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeptService.class);
 
     @Autowired
     private DeptMapper deptMapper;
@@ -37,8 +37,8 @@ public class DepartmentService {
         return deptMapper.updateByPrimaryKey(dept);
     }
 
-    public int create(Dept department){
-        return deptMapper.insert(department);
+    public int create(Dept Dept){
+        return deptMapper.insert(Dept);
     }
 
     public boolean checkDeptExist(Long id){

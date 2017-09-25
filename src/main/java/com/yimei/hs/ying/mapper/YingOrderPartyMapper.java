@@ -1,5 +1,7 @@
 package com.yimei.hs.ying.mapper;
 
+import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.ying.dto.PageYingOrderPartyDTO;
 import com.yimei.hs.ying.entity.YingOrderParty;
 
 public interface YingOrderPartyMapper {
@@ -14,4 +16,6 @@ public interface YingOrderPartyMapper {
     int updateByPrimaryKeySelective(YingOrderParty record);
 
     int updateByPrimaryKey(YingOrderParty record);
+
+    Page<YingOrderParty> getPage(PageYingOrderPartyDTO pageYingOrderPartyDTO);
 }
