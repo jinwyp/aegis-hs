@@ -64,6 +64,7 @@ public class YingOrderController {
     public ResponseEntity<Result<YingOrder>> create(@CurrentUser User user, @RequestBody YingOrder order) {
         order.setCreatorId(user.getId());
         order.setOwnerId(user.getId());
+        order.setDeptId(user.getDeptId());
         order.setStatus(OrderStatus.UNCOMPLETED);
         logger.info("my order = {}", order);
         yingOrderService.create(order);
