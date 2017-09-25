@@ -23,8 +23,6 @@ public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
 
     private Long mainAccounting;
 
-    private String line;
-
     private CargoType cargoType;
 
     private Long upstreamId;
