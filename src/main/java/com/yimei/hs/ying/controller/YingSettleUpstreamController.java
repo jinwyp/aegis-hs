@@ -32,7 +32,9 @@ public class YingSettleUpstreamController {
      * @return
      */
     @GetMapping("/{orderId}/settleupstream")
-    public ResponseEntity<PageResult<YingSettleUpstream>> list(PageYingSettleUpstreamDTO pageYingSettleUpstreamDTO) {
+    public ResponseEntity<PageResult<YingSettleUpstream>> list(@PathVariable("orderId") long orderId,PageYingSettleUpstreamDTO pageYingSettleUpstreamDTO) {
+
+        pageYingSettleUpstreamDTO.setOrderId(orderId);
         return PageResult.ok(yingSettleService.getPageUpstream(pageYingSettleUpstreamDTO));
     }
 
@@ -63,7 +65,8 @@ public class YingSettleUpstreamController {
      */
     @Transactional(readOnly =  false)
     @PostMapping("/{orderId}/settleupstream")
-    public ResponseEntity<Result<YingSettleUpstream>> create(YingSettleUpstream yingSettleUpstream) {
+    public ResponseEntity<Result<YingSettleUpstream>> create(@PathVariable("orderId") long orderId, @RequestBody YingSettleUpstream yingSettleUpstream) {
+        yingSettleUpstream.setOrderId(orderId);
         yingSettleService.createUpstream(yingSettleUpstream);
         return Result.ok(yingSettleUpstream);
     }
@@ -80,7 +83,7 @@ public class YingSettleUpstreamController {
             @PathVariable("id") long id,
             @RequestBody YingSettleUpstream yingSettleUpstream
     ) {
-        assert (orderId == yingSettleUpstream.getOrderId());
+//        assert (orderId == yingSettleUpstream.getOrderId());
         yingSettleUpstream.setId(id);
         int rtn = yingSettleService.updateUpstream(yingSettleUpstream);
         if (rtn != 1) {

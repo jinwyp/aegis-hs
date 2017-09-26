@@ -35,7 +35,9 @@ public class YingSettleTrafficController {
      * @return
      */
     @GetMapping("/{orderId}/settletraffic")
-    public ResponseEntity<PageResult<YingSettleTraffic>> list(PageYingSettleTrafficDTO pageYingSettleTrafficDTO) {
+    public ResponseEntity<PageResult<YingSettleTraffic>> list( @PathVariable("orderId") long  orderId,  PageYingSettleTrafficDTO pageYingSettleTrafficDTO) {
+
+        pageYingSettleTrafficDTO.setOrderId(orderId);
         return PageResult.ok(yingSettleService.getPageTraffic(pageYingSettleTrafficDTO));
     }
 
@@ -66,7 +68,9 @@ public class YingSettleTrafficController {
     @PostMapping("/{orderId}/settletraffic")
     @Transactional(readOnly = false)
 
-    public ResponseEntity<Result<YingSettleTraffic>> create(YingSettleTraffic yingSettleTraffic) {
+    public ResponseEntity<Result<YingSettleTraffic>> create( @PathVariable("orderId") long orderId,  @RequestBody YingSettleTraffic yingSettleTraffic) {
+        yingSettleTraffic.setOrderId(orderId);
+        logger.info("create { }",yingSettleTraffic);
         yingSettleService.createTraffic(yingSettleTraffic);
         return Result.ok(yingSettleTraffic);
     }

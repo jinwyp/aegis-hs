@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yimei.hs.mapper.CangFukuanMapper">
+  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.CangFukuan">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="orderId" jdbcType="BIGINT" property="orderId" />
+    <result column="hsId" jdbcType="BIGINT" property="hsId" />
+    <result column="payDate" jdbcType="TIMESTAMP" property="payDate" />
+    <result column="recieveCompanyId" jdbcType="BIGINT" property="recieveCompanyId" />
+    <result column="payFor" jdbcType="VARCHAR" property="payFor" />
+    <result column="payAmount" jdbcType="DECIMAL" property="payAmount" />
+    <result column="payMode" jdbcType="VARCHAR" property="payMode" />
+    <result column="capitalId" jdbcType="BIGINT" property="capitalId" />
+    <result column="useInterest" jdbcType="DECIMAL" property="useInterest" />
+    <result column="useDays" jdbcType="INTEGER" property="useDays" />
+    <result column="tsc" jdbcType="TIMESTAMP" property="tsc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, orderId, hsId, payDate, recieveCompanyId, payFor, payAmount, payMode, capitalId, 
+    useInterest, useDays, tsc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hs_cang_fukuan
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from hs_cang_fukuan
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yimei.hs.entity.CangFukuan">
+    insert into hs_cang_fukuan (id, orderId, hsId, 
+      payDate, recieveCompanyId, payFor, 
+      payAmount, payMode, capitalId, 
+      useInterest, useDays, tsc
+      )
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT}, 
+      #{payDate,jdbcType=TIMESTAMP}, #{recieveCompanyId,jdbcType=BIGINT}, #{payFor,jdbcType=VARCHAR}, 
+      #{payAmount,jdbcType=DECIMAL}, #{payMode,jdbcType=VARCHAR}, #{capitalId,jdbcType=BIGINT}, 
+      #{useInterest,jdbcType=DECIMAL}, #{useDays,jdbcType=INTEGER}, #{tsc,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yimei.hs.entity.CangFukuan">
+    insert into hs_cang_fukuan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderId != null">
+        orderId,
+      </if>
+      <if test="hsId != null">
+        hsId,
+      </if>
+      <if test="payDate != null">
+        payDate,
+      </if>
+      <if test="recieveCompanyId != null">
+        recieveCompanyId,
+      </if>
+      <if test="payFor != null">
+        payFor,
+      </if>
+      <if test="payAmount != null">
+        payAmount,
+      </if>
+      <if test="payMode != null">
+        payMode,
+      </if>
+      <if test="capitalId != null">
+        capitalId,
+      </if>
+      <if test="useInterest != null">
+        useInterest,
+      </if>
+      <if test="useDays != null">
+        useDays,
+      </if>
+      <if test="tsc != null">
+        tsc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="hsId != null">
+        #{hsId,jdbcType=BIGINT},
+      </if>
+      <if test="payDate != null">
+        #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recieveCompanyId != null">
+        #{recieveCompanyId,jdbcType=BIGINT},
+      </if>
+      <if test="payFor != null">
+        #{payFor,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null">
+        #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalId != null">
+        #{capitalId,jdbcType=BIGINT},
+      </if>
+      <if test="useInterest != null">
+        #{useInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="useDays != null">
+        #{useDays,jdbcType=INTEGER},
+      </if>
+      <if test="tsc != null">
+        #{tsc,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.CangFukuan">
+    update hs_cang_fukuan
+    <set>
+      <if test="orderId != null">
+        orderId = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="hsId != null">
+        hsId = #{hsId,jdbcType=BIGINT},
+      </if>
+      <if test="payDate != null">
+        payDate = #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recieveCompanyId != null">
+        recieveCompanyId = #{recieveCompanyId,jdbcType=BIGINT},
+      </if>
+      <if test="payFor != null">
+        payFor = #{payFor,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null">
+        payAmount = #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        payMode = #{payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalId != null">
+        capitalId = #{capitalId,jdbcType=BIGINT},
+      </if>
+      <if test="useInterest != null">
+        useInterest = #{useInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="useDays != null">
+        useDays = #{useDays,jdbcType=INTEGER},
+      </if>
+      <if test="tsc != null">
+        tsc = #{tsc,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.CangFukuan">
+    update hs_cang_fukuan
+    set orderId = #{orderId,jdbcType=BIGINT},
+      hsId = #{hsId,jdbcType=BIGINT},
+      payDate = #{payDate,jdbcType=TIMESTAMP},
+      recieveCompanyId = #{recieveCompanyId,jdbcType=BIGINT},
+      payFor = #{payFor,jdbcType=VARCHAR},
+      payAmount = #{payAmount,jdbcType=DECIMAL},
+      payMode = #{payMode,jdbcType=VARCHAR},
+      capitalId = #{capitalId,jdbcType=BIGINT},
+      useInterest = #{useInterest,jdbcType=DECIMAL},
+      useDays = #{useDays,jdbcType=INTEGER},
+      tsc = #{tsc,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
