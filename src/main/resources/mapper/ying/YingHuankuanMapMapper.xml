@@ -1,106 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yimei.hs.ying.mapper.YingHuankuanMapMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingHuankuanMap">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="huankuanId" jdbcType="BIGINT" property="huankuanId" />
-    <result column="fukuanId" jdbcType="BIGINT" property="fukuanId" />
-    <result column="principal" jdbcType="DECIMAL" property="principal" />
-    <result column="amount" jdbcType="DECIMAL" property="amount" />
-    <result column="tsc" jdbcType="TIMESTAMP" property="tsc" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, huankuanId, fukuanId, principal, amount, tsc
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from hs_ying_huankuan_map
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from hs_ying_huankuan_map
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuankuanMap"  keyProperty="id" useGeneratedKeys="true">
-    insert into hs_ying_huankuan_map (id, huankuanId, fukuanId, 
-      principal, amount, tsc
-      )
-    values (#{id,jdbcType=BIGINT}, #{huankuanId,jdbcType=BIGINT}, #{fukuanId,jdbcType=BIGINT}, 
-      #{principal,jdbcType=DECIMAL}, #{amount,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuankuanMap" keyProperty="id" useGeneratedKeys="true">
-    insert into hs_ying_huankuan_map
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="huankuanId != null">
-        huankuanId,
-      </if>
-      <if test="fukuanId != null">
-        fukuanId,
-      </if>
-      <if test="principal != null">
-        principal,
-      </if>
-      <if test="amount != null">
-        amount,
-      </if>
-      <if test="tsc != null">
-        tsc,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="huankuanId != null">
-        #{huankuanId,jdbcType=BIGINT},
-      </if>
-      <if test="fukuanId != null">
-        #{fukuanId,jdbcType=BIGINT},
-      </if>
-      <if test="principal != null">
-        #{principal,jdbcType=DECIMAL},
-      </if>
-      <if test="amount != null">
-        #{amount,jdbcType=DECIMAL},
-      </if>
-      <if test="tsc != null">
-        #{tsc,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingHuankuanMap">
-    update hs_ying_huankuan_map
-    <set>
-      <if test="huankuanId != null">
-        huankuanId = #{huankuanId,jdbcType=BIGINT},
-      </if>
-      <if test="fukuanId != null">
-        fukuanId = #{fukuanId,jdbcType=BIGINT},
-      </if>
-      <if test="principal != null">
-        principal = #{principal,jdbcType=DECIMAL},
-      </if>
-      <if test="amount != null">
-        amount = #{amount,jdbcType=DECIMAL},
-      </if>
-      <if test="tsc != null">
-        tsc = #{tsc,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingHuankuanMap">
-    update hs_ying_huankuan_map
-    set huankuanId = #{huankuanId,jdbcType=BIGINT},
-      fukuanId = #{fukuanId,jdbcType=BIGINT},
-      principal = #{principal,jdbcType=DECIMAL},
-      amount = #{amount,jdbcType=DECIMAL},
-      tsc = #{tsc,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingHuankuanMap">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="huankuanId" jdbcType="BIGINT" property="huankuanId"/>
+        <result column="fukuanId" jdbcType="BIGINT" property="fukuanId"/>
+        <result column="principal" jdbcType="DECIMAL" property="principal"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, orderId, huankuanId, fukuanId, principal, amount, tsc
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_ying_huankuan_map
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="loadAll" resultType="com.yimei.hs.ying.entity.YingHuankuanMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM hs_ying_huankuan_map
+        WHERE orderId = #{orderId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM hs_ying_huankuan_map
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuankuanMap" keyProperty="id"
+            useGeneratedKeys="true">
+        INSERT INTO hs_ying_huankuan_map (
+            id,
+            orderId,
+            huankuanId,
+            fukuanId,
+            principal,
+            amount,
+            tsc
+        )
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{huankuanId,jdbcType=BIGINT},
+            #{fukuanId,jdbcType=BIGINT},
+            #{principal,jdbcType=DECIMAL},
+            #{amount,jdbcType=DECIMAL},
+            #{tsc,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuankuanMap" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into hs_ying_huankuan_map
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="huankuanId != null">huankuanId,</if>
+            <if test="fukuanId != null"> fukuanId, </if>
+            <if test="principal != null"> principal, </if>
+            <if test="amount != null"> amount, </if>
+            <if test="tsc != null"> tsc, </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null"> #{id,jdbcType=BIGINT}, </if>
+            <if test="orderId != null"> #{orderId,jdbcType=BIGINT}, </if>
+            <if test="huankuanId != null"> #{huankuanId,jdbcType=BIGINT}, </if>
+            <if test="fukuanId != null"> #{fukuanId,jdbcType=BIGINT}, </if>
+            <if test="principal != null"> #{principal,jdbcType=DECIMAL}, </if>
+            <if test="amount != null"> #{amount,jdbcType=DECIMAL}, </if>
+            <if test="tsc != null"> #{tsc,jdbcType=TIMESTAMP}, </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingHuankuanMap">
+        update hs_ying_huankuan_map
+        <set>
+            <if test="orderId != null"> orderId = #{orderId,jdbcType=BIGINT}, </if>
+            <if test="huankuanId != null"> huankuanId = #{huankuanId,jdbcType=BIGINT}, </if>
+            <if test="fukuanId != null"> fukuanId = #{fukuanId,jdbcType=BIGINT}, </if>
+            <if test="principal != null"> principal = #{principal,jdbcType=DECIMAL}, </if>
+            <if test="amount != null"> amount = #{amount,jdbcType=DECIMAL}, </if>
+            <if test="tsc != null"> tsc = #{tsc,jdbcType=TIMESTAMP}, </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingHuankuanMap">
+        UPDATE hs_ying_huankuan_map
+        SET huankuanId = #{huankuanId,jdbcType=BIGINT},
+            orderId    = #{orderId,jdbcType=BIGINT},
+            fukuanId   = #{fukuanId,jdbcType=BIGINT},
+            principal  = #{principal,jdbcType=DECIMAL},
+            amount     = #{amount,jdbcType=DECIMAL},
+            tsc        = #{tsc,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

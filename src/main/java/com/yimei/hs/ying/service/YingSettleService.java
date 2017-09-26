@@ -1,20 +1,17 @@
 package com.yimei.hs.ying.service;
 
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.ying.entity.YingSettleDownstream;
-import com.yimei.hs.ying.entity.YingSettleTraffic;
-import com.yimei.hs.ying.entity.YingSettleUpstream;
+import com.yimei.hs.ying.entity.*;
 import com.yimei.hs.ying.dto.PageYingSettleDownstreamDTO;
 import com.yimei.hs.ying.dto.PageYingSettleTrafficDTO;
 import com.yimei.hs.ying.dto.PageYingSettleUpstreamDTO;
-import com.yimei.hs.ying.mapper.YingSettleDownstreamMapper;
-import com.yimei.hs.ying.mapper.YingSettleTrafficMapper;
-import com.yimei.hs.ying.mapper.YingSettleUpstreamMapper;
+import com.yimei.hs.ying.mapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,10 +24,16 @@ public class YingSettleService {
 
 
     @Autowired
+    YingFayunMapper yingFayunMapper;
+
+    @Autowired
     YingSettleUpstreamMapper yingSettleUpstreamMapper;
 
     @Autowired
     YingSettleDownstreamMapper yingSettleDownstreamMapper;
+
+    @Autowired
+    YingSettleDownstreamMapMapper yingSettleDownstreamMapMapper;
 
     @Autowired
     YingSettleTrafficMapper yingSettleTrafficMapper;
@@ -86,26 +89,75 @@ public class YingSettleService {
         return yingSettleUpstreamMapper.insert(yingSettleUpstream);
     }
 
+    /**
+     * 下游结算
+     * @param yingSettleDownstream
+     * @return
+     */
     public int createDownstream(YingSettleDownstream yingSettleDownstream) {
-        return yingSettleDownstreamMapper.insert(yingSettleDownstream);
+        int rtn = yingSettleDownstreamMapper.insert(yingSettleDownstream);
+        if (rtn != 1) {
+            return 0;
+        }
+
+        // 查询出当前订单的所有与付款的对应记录
+        List<YingSettleDownstreamMap> huankuanMap = yingSettleDownstreamMapMapper.loadAll(yingSettleDownstream.getOrderId());
+
+        // 当前订单的所有发运记录
+        List<YingFayun> hukuanList = yingFayunMapper.getList(yingSettleDownstream.getOrderId());
+
+        // 待添加的记录 todo
+        List<YingSettleDownstreamMap> toAdd = new ArrayList<>();
+
+        //
+        for ( YingSettleDownstreamMap item: toAdd) {
+            yingSettleDownstreamMapMapper.insert(item);
+        }
+
+        return rtn;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public YingSettleDownstream findDownstream(long id) {
         return yingSettleDownstreamMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public YingSettleUpstream findUpstream(long id) {
         return yingSettleUpstreamMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     *
+     * @param yingSettleUpstream
+     * @return
+     */
     public int updateUpstream(YingSettleUpstream yingSettleUpstream) {
         return yingSettleUpstreamMapper.updateByPrimaryKeySelective(yingSettleUpstream);
     }
 
+    /**
+     *
+     * @param yingSettleTraffic
+     * @return
+     */
     public int udpateTraffic(YingSettleTraffic yingSettleTraffic) {
         return yingSettleTrafficMapper.updateByPrimaryKeySelective(yingSettleTraffic);
     }
 
+    /**
+     *
+     * @param yingSettleDownstream
+     * @return
+     */
     public int updateDownstream(YingSettleDownstream yingSettleDownstream) {
         return yingSettleDownstreamMapper.updateByPrimaryKeySelective(yingSettleDownstream);
     }

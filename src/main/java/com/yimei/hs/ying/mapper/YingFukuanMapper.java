@@ -4,6 +4,8 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.YingFukuan;
 import com.yimei.hs.ying.dto.PageYingFukuanDTO;
 
+import java.util.List;
+
 public interface YingFukuanMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -18,4 +20,6 @@ public interface YingFukuanMapper {
     int updateByPrimaryKey(YingFukuan record);
 
     Page<YingFukuan> getPage(PageYingFukuanDTO pageYingFukuanDTO);
+
+    List<YingFukuan> getList(Long orderId);
 }

@@ -1,5 +1,8 @@
 package com.yimei.hs.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 折扣类型
  */
@@ -14,4 +17,16 @@ public enum DiscountMode{
     DiscountMode(String value) {
         this.value = value;
     }
+
+    public static List<EnumEntity> list() {
+        List<EnumEntity> data = new ArrayList<>();
+        for (DiscountMode bt : DiscountMode.values()) {
+            data.add(new EnumEntity(bt.name(), bt.value));
+        }
+        return data;
+    }
+
+    public static String name = "DiscountMode";
+
+
 }

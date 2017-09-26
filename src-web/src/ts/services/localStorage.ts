@@ -10,5 +10,13 @@ const saveAccessToken = function (newToken: string = '') {
 }
 
 
-export { getAccessToken, saveAccessToken}
+const getEnum = function (key: string) {
+    return JSON.parse(localStorage.getItem(key) || '[]')
+}
+const saveEnum = function (key: string, data: any[]) {
+    localStorage.setItem(key, JSON.stringify(data))
+}
+
+
+export { getAccessToken, saveAccessToken, getEnum, saveEnum}
 

@@ -1,5 +1,8 @@
 package com.yimei.hs.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 结算对象
  */
@@ -18,5 +21,15 @@ public enum SettleTarget {
     SettleTarget(String value) {
         this.value = value;
     }
+
+    public static List<EnumEntity> list() {
+        List<EnumEntity> data = new ArrayList<>();
+        for (SettleTarget bt : SettleTarget.values()) {
+            data.add(new EnumEntity(bt.name(), bt.value));
+        }
+        return data;
+    }
+
+    public static String name = "SettleTarget";
 
 }

@@ -60,7 +60,13 @@ public class YingHuikuanController {
      * @return
      */
     @PostMapping("/{orderId}/huikuans")
-    public ResponseEntity<Result<YingHuikuan>> create(@PathVariable("orderId") long orderId) {
+    @Transactional(readOnly = false)
+    public ResponseEntity<Result<YingHuikuan>> create(
+            @PathVariable("orderId") long orderId,
+            @RequestBody YingHuikuan  yingHuikuan
+    ) {
+        yingHuikuan.setOrderId(orderId);
+        int cnt = yingHuikuanService.create(yingHuikuan);
         return Result.ok(null);
     }
 

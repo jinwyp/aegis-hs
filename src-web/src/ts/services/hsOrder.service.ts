@@ -21,7 +21,9 @@ export class HSOrderService {
     ) {
     }
 
-
+    getEnumList(path: string): Observable<any> {
+        return this.http.get(apiPath.dictionary + '/' + path)
+    }
 
     getOrderList(query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
