@@ -54,10 +54,7 @@ public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
                 if (status != null ) { WHERE( "status = #{status}"); }
             }
         }.toString();
-
-        logger.error("sql===============>"+sql);
         String countSql =  super.getCountSql(nsql);
-        System.out.println("count sql = " + countSql);
         return countSql;
     }
 }

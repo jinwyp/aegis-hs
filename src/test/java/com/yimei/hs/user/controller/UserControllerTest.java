@@ -13,8 +13,6 @@ import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
-import com.yimei.hs.util.Digests;
-import com.yimei.hs.util.Encodes;
 import com.yimei.hs.ying.entity.YingOrder;
 import com.yimei.hs.ying.entity.YingOrderConfig;
 import com.yimei.hs.ying.entity.YingOrderParty;
@@ -33,8 +31,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
