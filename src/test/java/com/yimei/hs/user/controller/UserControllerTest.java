@@ -235,8 +235,32 @@ public class UserControllerTest extends YingTestBase {
 
         // 11. 修改核算月配置
 
+        YingOrderConfig yingOrderConfig = new YingOrderConfig() {{
+            setOrderId(yingOrderConfigResult.getData().getOrderId());
+            setId(yingOrderConfigResult.getData().getId());
+            setHsMonth("201711");
+            setContractBaseInterest(new BigDecimal("0.20"));
+            setMaxPrepayRate(new BigDecimal("0.90"));
+            setUnInvoicedRate(new BigDecimal("0.7"));
+            setExpectHKDays(45);
+            setTradeAddPrice(new BigDecimal("0"));
+            setWeightedPrice(new BigDecimal("700"));
+        }};
+
+
+        String yingOrderCongfigUpdateUrl = "api/ying/" + yingOrderConfigResult.getData().getOrderId() + "/configs/" + yingOrderConfigResult.getData().getId();
+        logger.info("ymurl===>"+yingOrderCongfigUpdateUrl);
+        Result<Integer> yingOrderCOnfigUpdateResult = client.exchange(yingOrderCongfigUpdateUrl, HttpMethod.PUT,new HttpEntity<YingOrderConfig>(yingOrderConfig),typeReferenceInteger).getBody();
+
+        if (yingOrderCOnfigUpdateResult.getSuccess()) {
+            logger.info("更新核算月配置成功 POST {}\nrequest:{}\nresponse:{}", yingOrderCongfigUpdateUrl, printJson(yingOrderCOnfigUpdateResult), printJson(yingOrderCOnfigUpdateResult.getData()));
+        } else {
+            logger.error("更新核算月配置失败: {}", yingOrderCOnfigUpdateResult.getError());
+            System.exit(-2);
+        }
 
         // 12. 核算月查询 by orderId
+        
 
         // 13. 创建发运
 
