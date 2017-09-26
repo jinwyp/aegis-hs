@@ -39,7 +39,7 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleDownstream">
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleDownstream"  keyProperty="id" useGeneratedKeys="true">
         INSERT INTO hs_ying_settle_downstream (id, orderId, hsId,
                                                settleDate, amount, money,
                                                settleGap, tsc)
@@ -48,7 +48,7 @@
                 #{settleGap,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP})
     </insert>
 
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingSettleDownstream">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingSettleDownstream"  keyProperty="id" useGeneratedKeys="true">
         insert into hs_ying_settle_downstream
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>

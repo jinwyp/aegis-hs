@@ -21,13 +21,13 @@
     delete from hs_ying_huikuan_map
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuikuanMap">
+  <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuikuanMap" keyProperty="id" useGeneratedKeys="true">
     insert into hs_ying_huikuan_map (id, huikuanId, fukuanId, 
       amount, tsc)
     values (#{id,jdbcType=BIGINT}, #{huikuanId,jdbcType=BIGINT}, #{fukuanId,jdbcType=BIGINT}, 
       #{amount,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuikuanMap">
+  <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuikuanMap"  keyProperty="id" useGeneratedKeys="true">
     insert into hs_ying_huikuan_map
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

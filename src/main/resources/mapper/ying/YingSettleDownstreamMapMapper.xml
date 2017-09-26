@@ -21,13 +21,13 @@
     delete from hs_ying_settle_downstream_map
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleDownstreamMap">
+  <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleDownstreamMap"  keyProperty="id" useGeneratedKeys="true">
     insert into hs_ying_settle_downstream_map (id, settleId, fyId, 
       deduction, tsc)
     values (#{id,jdbcType=BIGINT}, #{settleId,jdbcType=BIGINT}, #{fyId,jdbcType=BIGINT}, 
       #{deduction,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingSettleDownstreamMap">
+  <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingSettleDownstreamMap"  keyProperty="id" useGeneratedKeys="true">
     insert into hs_ying_settle_downstream_map
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

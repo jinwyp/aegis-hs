@@ -145,7 +145,7 @@
         DELETE FROM hs_ying_huikuan
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuikuan">
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuikuan"  keyProperty="id" useGeneratedKeys="true">
         INSERT INTO hs_ying_huikuan (id, orderId, hsId,
                                      huikuanCompanyId, huikuanDate, huikuanAmount,
                                      huikuanUsage, huikuanMode, huikuanBankPaper,
@@ -165,7 +165,7 @@
                 #{huikuanBusinessDiscount,jdbcType=BIT}, #{huikuanBusinessDiscountRate,jdbcType=DECIMAL},
                 #{huikuanBusinessPaperExpire,jdbcType=TIMESTAMP}, #{tsc,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuikuan">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuikuan" keyProperty="id" useGeneratedKeys="true">
         insert into hs_ying_huikuan
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

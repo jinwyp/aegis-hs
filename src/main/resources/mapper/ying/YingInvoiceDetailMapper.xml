@@ -23,7 +23,7 @@
     delete from hs_ying_invoice_detail
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingInvoiceDetail">
+  <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingInvoiceDetail"  keyProperty="id" useGeneratedKeys="true">
     insert into hs_ying_invoice_detail (id, invoiceId, invoiceNumber, 
       cargoAmount, taxRate, priceAndTax, 
       tsc)
@@ -31,7 +31,7 @@
       #{cargoAmount,jdbcType=DECIMAL}, #{taxRate,jdbcType=DECIMAL}, #{priceAndTax,jdbcType=DECIMAL}, 
       #{tsc,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingInvoiceDetail">
+  <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingInvoiceDetail"  keyProperty="id" useGeneratedKeys="true">
     insert into hs_ying_invoice_detail
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

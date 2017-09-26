@@ -85,7 +85,7 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingInvoice">
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingInvoice"  keyProperty="id" useGeneratedKeys="true">
         INSERT INTO hs_ying_invoice (
             id,
             orderId,
@@ -110,7 +110,7 @@
         )
     </insert>
 
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingInvoice">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingInvoice" keyProperty="id" useGeneratedKeys="true">
         insert into hs_ying_invoice
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>

@@ -64,7 +64,7 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuankuan">
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuankuan" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO hs_ying_huankuan (
             id,
             orderId,
@@ -87,7 +87,7 @@
             #{tsc,jdbcType=TIMESTAMP})
     </insert>
 
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuankuan">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuankuan"  keyProperty="id" useGeneratedKeys="true">
         insert into hs_ying_huankuan
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>

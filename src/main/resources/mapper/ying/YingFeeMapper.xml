@@ -35,7 +35,8 @@
         DELETE FROM hs_ying_fee
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingFee">
+
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingFee" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO hs_ying_fee (id, orderId, hsId,
                                  name, amount, tsc
         )
@@ -43,7 +44,8 @@
                 #{name,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP}
         )
     </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingFee">
+
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingFee" keyProperty="id" useGeneratedKeys="true">
         insert into hs_ying_fee
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

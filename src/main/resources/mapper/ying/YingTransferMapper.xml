@@ -35,13 +35,13 @@
         DELETE FROM hs_ying_transfer
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingTransfer">
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingTransfer"  keyProperty="id" useGeneratedKeys="true">
         INSERT INTO hs_ying_transfer (id, orderId, fromUserId,
                                       toUserId, tsc)
         VALUES (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{fromUserId,jdbcType=BIGINT},
                 #{toUserId,jdbcType=BIGINT}, #{tsc,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingTransfer">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingTransfer"  keyProperty="id" useGeneratedKeys="true">
         insert into hs_ying_transfer
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

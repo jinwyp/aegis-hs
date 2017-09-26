@@ -64,8 +64,13 @@ public class YingFayunController {
      */
     @PostMapping("/{orderId}/fayuns")
     @Transactional(readOnly =  false)
-    public ResponseEntity<Result<YingFayun>> create(YingFayun yingFayun) {
+    public ResponseEntity<Result<YingFayun>> create(
+            @PathVariable("orderId") long orderId,
+            @RequestBody YingFayun yingFayun
+    ) {
+        yingFayun.setOrderId(orderId);
         yingFayunService.create(yingFayun);
+        logger.info("created fayn: {}", yingFayun);
         return Result.ok(yingFayun);
     }
 
@@ -81,6 +86,7 @@ public class YingFayunController {
             @PathVariable("id") Long id,
             @RequestBody YingFayun yingFayun) {
         assert (orderId == orderId);
+        yingFayun.setId(id);
         int cnt = yingFayunService.update(yingFayun);
         if (cnt != 2) {
             return Result.error(4001, "更新失败");

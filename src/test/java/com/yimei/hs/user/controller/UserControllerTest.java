@@ -5,14 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.HsApplication;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
-import com.yimei.hs.enums.CargoType;
-import com.yimei.hs.enums.CustomerType;
-import com.yimei.hs.enums.SettleMode;
+import com.yimei.hs.enums.*;
 import com.yimei.hs.test.YingTestBase;
 import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
+import com.yimei.hs.ying.dto.PageYingOrderConfigDTO;
+import com.yimei.hs.ying.entity.YingFayun;
 import com.yimei.hs.ying.entity.YingOrder;
 import com.yimei.hs.ying.entity.YingOrderConfig;
 import com.yimei.hs.ying.entity.YingOrderParty;
@@ -31,6 +31,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -244,9 +247,9 @@ public class UserControllerTest extends YingTestBase {
         }};
 
 
-        String yingOrderCongfigUpdateUrl = "api/ying/" + yingOrderConfigResult.getData().getOrderId() + "/configs/" + yingOrderConfigResult.getData().getId();
-        logger.info("ymurl===>"+yingOrderCongfigUpdateUrl);
-        Result<Integer> yingOrderCOnfigUpdateResult = client.exchange(yingOrderCongfigUpdateUrl, HttpMethod.PUT,new HttpEntity<YingOrderConfig>(yingOrderConfig),typeReferenceInteger).getBody();
+        String yingOrderCongfigUpdateUrl = "/api/ying/" + yingOrderConfigResult.getData().getOrderId() + "/configs/" + yingOrderConfigResult.getData().getId();
+        logger.info("ymurl===>" + yingOrderCongfigUpdateUrl);
+        Result<Integer> yingOrderCOnfigUpdateResult = client.exchange(yingOrderCongfigUpdateUrl, HttpMethod.PUT, new HttpEntity<YingOrderConfig>(yingOrderConfig), typeReferenceInteger).getBody();
 
         if (yingOrderCOnfigUpdateResult.getSuccess()) {
             logger.info("更新核算月配置成功 POST {}\nrequest:{}\nresponse:{}", yingOrderCongfigUpdateUrl, printJson(yingOrderCOnfigUpdateResult), printJson(yingOrderCOnfigUpdateResult.getData()));
@@ -256,11 +259,45 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 12. 核算月查询 by orderId
-        
+//        Map<String, Object> variablesHs = new HashMap<>();
+//        variables.put("orderId", yingOrderConfigResult.getData().getOrderId());
+////        PageYingOrderConfigDTO configDTO = new PageYingOrderConfigDTO();
+////        configDTO.setOrderId(yingOrderConfigResult.getData().getOrderId());
+//        PageResult<YingOrderConfig> yingOrderConfigPageResult= client.exchange("/api/ying/"+yingOrderConfigResult.getData().getOrderId()+"/congfigs", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderConfigPage, variables).getBody();
+//        if (yingOrderConfigPageResult.getSuccess()) {
+//            logger.info("获取核算月配置分页成功 GET /api/yings request: {}\nresponse:\n{}", variablesHs, printJson(yingOrderConfigPageResult.getData()));
+//        } else {
+//            logger.error("获取核算月配置分页失败: {}", yingOrderConfigPageResult.getError());
+//            System.exit(-1);
+//        }
+
 
         // 13. 创建发运
 
+        YingFayun fayun = new YingFayun() {{
+            setOrderId(yingOrderResult.getData().getId());
+            setHsId(yingOrderResult.getData().getOrderConfigList().get(0).getId());
+            setArriveStatus(CargoArriveStatus.ARRIVE);
+            setFyDate(LocalDateTime.now());
+            setFyAmount(new BigDecimal("1510.60"));
+            setUpstreamTrafficMode(TrafficMode.RAIL);
+            setUpstreamJHH("1000001");
+            setDownstreamTrafficMode(TrafficMode.MOTOR);
+            setDownstreamCars(166);
+
+        }};
+
+        String urlFaYun = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns";
+        Result<YingFayun> yingFayunResult = client.exchange(urlFaYun, HttpMethod.POST, new HttpEntity<YingFayun>(fayun), typeReferenceFayun).getBody();
+        if (yingFayunResult.getSuccess()) {
+            logger.info("创建发运成功: {}", yingFayunResult.getData());
+        } else {
+            logger.error("创建发运失败: {}", yingFayunResult.getError());
+        }
+
+
         // 14. 发运分页查询,  orderId
+
 
         // 15. 发运单记录查询
 

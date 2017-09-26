@@ -51,7 +51,7 @@
         DELETE FROM hs_ying_settle_upstream
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleUpstream">
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleUpstream"  keyProperty="id" useGeneratedKeys="true">
         INSERT INTO hs_ying_settle_upstream (id, orderId, hsId,
                                              settleDate, amount, money,
                                              discountType, discountInterest, discountDays,
@@ -63,7 +63,7 @@
                                        #{discountDays,jdbcType=INTEGER},
                                        #{discountAmount,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingSettleUpstream">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingSettleUpstream"  keyProperty="id" useGeneratedKeys="true">
         insert into hs_ying_settle_upstream
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null"> id, </if>
