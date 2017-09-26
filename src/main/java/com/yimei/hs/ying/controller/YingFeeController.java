@@ -1,6 +1,8 @@
 package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.util.CreateGroup;
+import com.yimei.hs.util.UpdateGroup;
 import com.yimei.hs.ying.entity.YingFee;
 import com.yimei.hs.boot.PageResult;
 import com.yimei.hs.boot.Result;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -65,7 +68,9 @@ public class YingFeeController {
      */
     @PostMapping("/{orderId}/fees")
     @Transactional(readOnly =  false)
-    public ResponseEntity<Result<YingFee>> create(@RequestBody YingFee yingFee) {
+    public ResponseEntity<Result<YingFee>> create(
+            @RequestBody @Validated(CreateGroup.class) YingFee yingFee
+    ) {
         int rtn = yingFeeService.create(yingFee);
         if (rtn != 1) {
             return Result.error(5001, "创建失败");
@@ -83,7 +88,7 @@ public class YingFeeController {
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") Long orderId,
             @PathVariable("id") Long id,
-            YingFee yingFee
+            @RequestBody @Validated(UpdateGroup.class) YingFee yingFee
     ) {
         assert (orderId == yingFee.getOrderId());
         yingFee.setId(id);

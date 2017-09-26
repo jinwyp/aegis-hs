@@ -3,9 +3,13 @@ package com.yimei.hs.ying.entity;
 import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.OrderStatus;
 import com.yimei.hs.enums.SettleMode;
+import com.yimei.hs.util.CreateGroup;
+import com.yimei.hs.util.UpdateGroup;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,6 +17,9 @@ import java.util.List;
 
 @Data
 public class YingOrder implements Serializable {
+
+
+    @NotNull(groups = {UpdateGroup.class})
     private Long id;
 
     @NotNull(message = "部门编号不能为空")
@@ -47,8 +54,10 @@ public class YingOrder implements Serializable {
 
     private LocalDateTime tsc;
 
+    @Valid()
     private List<YingOrderConfig> orderConfigList;   // 关联的核算月配置
 
+    @Valid()
     private List<YingOrderParty> orderPartyList; // 关联的参与方
 
     private static final long serialVersionUID = 1L;
