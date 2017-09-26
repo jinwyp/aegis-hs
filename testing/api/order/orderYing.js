@@ -1,4 +1,9 @@
 /**
+ * Created by jin on 9/26/17.
+ */
+
+
+/**
  * Created by jin on 9/18/17.
  */
 
@@ -16,7 +21,7 @@ const server = supertest(config.path.urlApi)
 
 
 
-describe('管理用户', function () {
+describe('应收订单', function () {
 
     let Authorization = ''
 
@@ -38,16 +43,22 @@ describe('管理用户', function () {
 
     });
 
-    it('新建用户 POST: /api/users', function (done) {
-        server.post('/api/users')
+
+
+    it('新建应收订单1 POST: /api/yings', function (done) {
+        server.post('/api/yings')
             .set('Authorization', Authorization)
             .set('Accept', 'application/json')
             .send({
-                phone : '13564568304',
-                password : '123456',
-                deptId : 2,
-                isActive  :  2,
-                isAdmin  : 1
+                "deptId":2,
+                "teamId":1,
+                "line":"那曲 - 晋和 - 嘉瑞",
+                "cargoType":"COAL",
+                "upstreamSettleMode":"ONE_PAPER_SETTLE",
+                "downstreamSettleMode":"ONE_PAPER_SETTLE",
+                "mainAccounting":1,
+                "upstreamId":2,
+                "downstreamId":3
             })
             .expect('Content-Type', /json/)
             .expect(200)
@@ -56,14 +67,43 @@ describe('管理用户', function () {
                 expect(res.body.success).to.equal(true)
                 expect(res.body.data).to.not.equal(null)
                 expect(res.body.data.id).to.be.a('number')
-                // expect(res.body.data.name).to.include('新的用户')
+                expect(res.body.data.line).to.include('那曲')
                 done()
             })
     })
 
 
-    it('获取用户列表 GET: /api/users?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/users?pageNo=1&pageSize=2')
+    it('新建应收订单2 POST: /api/yings', function (done) {
+        server.post('/api/yings')
+            .set('Authorization', Authorization)
+            .set('Accept', 'application/json')
+            .send({
+                "deptId":2,
+                "teamId":1,
+                "line":"那曲 - 晋和 - 嘉瑞",
+                "cargoType":"COAL",
+                "upstreamSettleMode":"ONE_PAPER_SETTLE",
+                "downstreamSettleMode":"ONE_PAPER_SETTLE",
+                "mainAccounting":1,
+                "upstreamId":2,
+                "downstreamId":3
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id).to.be.a('number')
+                expect(res.body.data.line).to.include('那曲')
+                done()
+            })
+    })
+
+
+
+    it('获取应收订单列表 GET: /api/yings?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/yings?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
@@ -82,8 +122,8 @@ describe('管理用户', function () {
 
 
 
-    it('获取某个ID的用户信息 GET: /api/users/2' , function (done) {
-        server.get('/api/users/1')
+    it('获取某个ID的应收订单信息 GET: /api/yings/1', function (done) {
+        server.get('/api/yings/1')
             .set('Authorization', Authorization)
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
@@ -93,18 +133,19 @@ describe('管理用户', function () {
                 expect(res.body.success).to.equal(true)
                 expect(res.body.data).to.not.equal(null)
                 expect(res.body.data.id).to.be.a('number')
-                // expect(res.body.data.name).to.include('团队')
+                expect(res.body.data.line).to.include('那曲')
                 done()
             })
     })
 
 
-    it('修改某个ID的用户信息 PUT: /api/users/2', function (done) {
-        server.put('/api/users/1')
+    it('修改某个ID的应收订单名称 PUT: /api/yings/1', function (done) {
+        server.put('/api/yings/1')
             .set('Authorization', Authorization)
             .set('Accept', 'application/json')
             .send({
-                isActive: 1
+                name: "新的团队" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
+                deptId : 2
             })
             .expect('Content-Type', /json/)
             .expect(200)
@@ -115,5 +156,8 @@ describe('管理用户', function () {
                 done()
             })
     })
+
+
+
 
 })

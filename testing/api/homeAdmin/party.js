@@ -58,7 +58,7 @@ describe('参与商公司', function () {
     })
 
 
-    it('获取某个ID的参与商信息 GET: /api/parties/1', function (done) {
+    it('获取某个ID的参与商信息 GET: /api/parties/19', function (done) {
         server.get('/api/parties/1')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
