@@ -297,20 +297,11 @@ public class UserControllerTest {
             System.exit(-1);
         }
 
-//        // 9. 单个查询
-//        Result<YingOrder> yingOrderResult1 = get("/api/yings/" + yingOrderResult.getData().getId(), 1, YingOrder.class);
-//        if (yingOrderResult1.getSuccess()) {
-//            logger.info("获取订单成功/api/yings/{}: {}", yingOrderResult.getData().getId(), printJson(yingOrderResult1.getData()));
-//        } else {
-//            logger.error("获取订单失败: {}", yingOrderResult1.getError());
-//            System.exit(-1);
-//        }
-
+        // 9. 单个订单查询
         ParameterizedTypeReference<Result<YingOrder>> tf  = new ParameterizedTypeReference<Result<YingOrder>>() {
         };
         String kurl = "/api/yings/" + yingOrderResult.getData().getId();
         Result<YingOrder> yingOrderResult1 = client.exchange(kurl, HttpMethod.GET, HttpEntity.EMPTY,tf).getBody();
-
 
         // 10. 增加核算月配置
         String url = "/api/ying/" + yingOrderResult1.getData().getId() + "/configs";
@@ -330,6 +321,8 @@ public class UserControllerTest {
             logger.error("添加核算月配置失败: {}", yingOrderConfigResult.getError());
             System.exit(-2);
         }
+
+
 
     }
 
