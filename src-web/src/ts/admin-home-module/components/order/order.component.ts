@@ -40,6 +40,7 @@ export class OrderComponent implements OnInit {
 
     payModeList : any[] = getEnum('PayMode')
     customerType : any[] = getEnum('CustomerType')
+    cargoTypeList : any[] = getEnum('CargoType')
 
 
 
@@ -155,6 +156,9 @@ export class OrderComponent implements OnInit {
         },
         'teamId'  : {
             'required'      : '请选择团队!'
+        },
+        'line'  : {
+            'required'      : '请选择相关公司完成业务线名称!'
         },
 
         'custType'  : {
@@ -296,6 +300,31 @@ export class OrderComponent implements OnInit {
 
         const index = this.otherPartyList.indexOf(company)
         this.otherPartyList.splice(index, 1)
+    }
+
+
+    lineName(){
+        let lineName = ''
+
+        if (this.orderForm.value.upstreamId && this.orderForm.value.mainAccounting && this.orderForm.value.downstreamId ) {
+            this.partyList.forEach( company => {
+                if (company.id === this.orderForm.value.upstreamId) {
+                    lineName = company.shortName + ' - '
+                }
+            })
+            this.partyList.forEach( company => {
+                if (company.id === this.orderForm.value.mainAccounting) {
+                    lineName = lineName + company.shortName + ' - '
+                }
+            })
+            this.partyList.forEach( company => {
+                if (company.id === this.orderForm.value.downstreamId) {
+                    lineName = lineName + company.shortName
+                }
+            })
+
+        }
+
     }
 
 }
