@@ -637,6 +637,20 @@ public class UserControllerTest extends YingTestBase {
         }
     }
 
+
+
+    private void order() {
+
+    }
+
+    private void config() {
+
+    }
+
+    private void fayun() {
+
+    }
+
     private void huikuan() {
 
     }
@@ -669,15 +683,5 @@ public class UserControllerTest extends YingTestBase {
 
     }
 
-    private void order() {
 
-    }
-
-    private void config() {
-
-    }
-
-    private void fayun() {
-
-    }
 }
