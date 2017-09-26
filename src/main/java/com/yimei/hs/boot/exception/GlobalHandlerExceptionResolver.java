@@ -50,6 +50,7 @@ public class GlobalHandlerExceptionResolver {
             response.setStatus(400);
             response.sendRedirect("/400");
         }
+        response.setStatus(400);
         om.writeValue(response.getOutputStream(), Result.error(4001, "客户端错误", HttpStatus.BAD_REQUEST));
     }
 
@@ -64,6 +65,7 @@ public class GlobalHandlerExceptionResolver {
             }
             return;
         }
+        response.setStatus(400);
         om.writeValue(response.getOutputStream(), Result.error(4001, "无权访问", HttpStatus.UNAUTHORIZED));
     }
 
@@ -79,6 +81,7 @@ public class GlobalHandlerExceptionResolver {
         if (errMsg == null) {
             errMsg = "系统错误";
         }
+        response.setStatus(400);
         om.writeValue(response.getOutputStream(), Result.error(5000, errMsg));
     }
 

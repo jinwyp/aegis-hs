@@ -19,11 +19,11 @@ public class LogAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
-    @Pointcut("execution(* com.yimei.hs.service..*.*(..))")
+    @Pointcut("execution(* com.yimei.hs..*.service..*.*(..))")
     public void service() {
     }
 
-    @Pointcut("execution(* com.yimei.hs.controller..*.*(..))")
+    @Pointcut("execution(* com.yimei.hs..*.controller..*.*(..))")
     public void controller() {
     }
 
