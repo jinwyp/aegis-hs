@@ -58,6 +58,7 @@ public class UserControllerTest {
     public <T> String printJson(T m) throws JsonProcessingException {
         return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(m);
     }
+    ParameterizedTypeReference<Result<String>> typeReferenceString  = new ParameterizedTypeReference<Result<String>>() {};
 
     ParameterizedTypeReference<Result<User>> typeReferenceUser  = new ParameterizedTypeReference<Result<User>>() {};
     ParameterizedTypeReference<Result<Team>> typeReferenceTeam  = new ParameterizedTypeReference<Result<Team>>() {};
@@ -150,8 +151,6 @@ public class UserControllerTest {
         }).getBody();
     }
 
-
-
     private List<Long> createParties(List<Party> parties) {
         List<Long> rtn = new ArrayList<Long>();
         for (Party p : parties) {
@@ -176,7 +175,10 @@ public class UserControllerTest {
         User admin = new User();
         admin.setPhone("13022117050");
         admin.setPassword("123456");
-        Result<String> result = post("/api/login", admin, String.class);
+
+        // Result<String> result = post("/api/login", admin, String.class);
+        Result<String> result = client.exchange("/api/login", HttpMethod.POST, new HttpEntity<User>(admin), typeReferenceString).getBody();
+
         if (result.getSuccess()) {
             logger.info("登录成功: {}", result.getData());
         } else {
@@ -203,7 +205,8 @@ public class UserControllerTest {
         // 3. 创建部门
         Dept dept = new Dept();
         dept.setName("周超团队");
-        Result<Dept> deptResult = post("/api/departments", dept, Dept.class);
+        // Result<Dept> deptResult = post("/api/departments", dept, Dept.class);
+        Result<Dept> deptResult = client.exchange("/api/departments", HttpMethod.POST, new HttpEntity<Dept>(dept), typeReferenceDept).getBody();
         if (deptResult.getSuccess()) {
             logger.info("创建部门成功: {}", deptResult.getData());
         } else {
@@ -215,7 +218,8 @@ public class UserControllerTest {
         Team team = new Team();
         team.setDeptId(deptResult.getData().getId());
         team.setName("我的team");
-        Result<Team> teamResult = post("/api/teams", team, Team.class);
+        // Result<Team> teamResult = post("/api/teams", team, Team.class);
+        Result<Team> teamResult = client.exchange("/api/teams", HttpMethod.POST,  new HttpEntity<Team>(team), typeReferenceTeam).getBody();
         if (teamResult.getSuccess()) {
             logger.info("创建团队成功: {}", teamResult.getData());
         } else {
@@ -227,7 +231,8 @@ public class UserControllerTest {
         newUser.setPassword("123456");
         newUser.setPhone("13022117051");
         newUser.setDeptId(deptResult.getData().getId());
-        Result<User> nuser = post("/api/users", newUser, User.class);
+        // Result<User> nuser = post("/api/users", newUser, User.class);
+        Result<User> nuser = client.exchange("/api/users", HttpMethod.POST, new HttpEntity<User>(newUser), typeReferenceUser).getBody();
         if (nuser.getSuccess()) {
             logger.info("创建用户成功: {}", nuser.getClass());
         } else {
@@ -236,7 +241,8 @@ public class UserControllerTest {
         }
 
         // 6. 用户登录
-        Result<String> loginResult = post("/api/login", newUser, String.class);
+        // Result<String> loginResult = post("/api/login", newUser, String.class);
+        Result<String> loginResult = client.exchange("/api/login", HttpMethod.POST, new HttpEntity<User>(newUser), typeReferenceString).getBody();
         if (loginResult.getSuccess()) {
             logger.info("登录成功: {}", loginResult.getData());
         } else {
@@ -276,7 +282,8 @@ public class UserControllerTest {
                 }}
         ));
 
-        Result<YingOrder> yingOrderResult = post("/api/yings", yingOrder, YingOrder.class);
+        // Result<YingOrder> yingOrderResult = post("/api/yings", yingOrder, YingOrder.class);
+        Result<YingOrder> yingOrderResult = client.exchange("/api/yings", HttpMethod.POST, new HttpEntity<YingOrder>(yingOrder), typeReferenceOrder).getBody();
         if (yingOrderResult.getSuccess()) {
             logger.info("创建应收订单成功: {}", yingOrderResult.getData());
         } else {

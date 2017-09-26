@@ -25,7 +25,7 @@
     </select>
 
     <select id="getPage" resultType="com.yimei.hs.ying.entity.YingOrderConfig">
-       SELECT
+        SELECT
         <include refid="Base_Column_List"/>
         from hs_ying_order_config
         <where>
@@ -40,115 +40,70 @@
 
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingOrderConfig" useGeneratedKeys="true"
             keyProperty="id">
-        INSERT INTO hs_ying_order_config (id, orderId, hsMonth,
-                                          maxPrepayRate, unInvoicedRate, contractBaseInterest,
-                                          expectHKDays, tradeAddPrice, weightedPrice,
-                                          )
-        VALUES (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsMonth,jdbcType=CHAR},
-                #{maxPrepayRate,jdbcType=DECIMAL}, #{unInvoicedRate,jdbcType=DECIMAL},
-                #{contractBaseInterest,jdbcType=DECIMAL},
-                #{expectHKDays,jdbcType=INTEGER}, #{tradeAddPrice,jdbcType=DECIMAL}, #{weightedPrice,jdbcType=DECIMAL},
-                )
+        INSERT INTO hs_ying_order_config (
+            id,
+            orderId,
+            hsMonth,
+            maxPrepayRate,
+            unInvoicedRate,
+            contractBaseInterest,
+            expectHKDays,
+            tradeAddPrice,
+            weightedPrice
+        )
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{hsMonth,jdbcType=CHAR},
+            #{maxPrepayRate,jdbcType=DECIMAL},
+            #{unInvoicedRate,jdbcType=DECIMAL},
+            #{contractBaseInterest,jdbcType=DECIMAL},
+            #{expectHKDays,jdbcType=INTEGER},
+            #{tradeAddPrice,jdbcType=DECIMAL},
+            #{weightedPrice,jdbcType=DECIMAL}
+        )
     </insert>
 
     <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingOrderConfig" useGeneratedKeys="true"
             keyProperty="id">
         insert into hs_ying_order_config
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="orderId != null">
-                orderId,
-            </if>
-            <if test="hsMonth != null">
-                hsMonth,
-            </if>
-            <if test="maxPrepayRate != null">
-                maxPrepayRate,
-            </if>
-            <if test="unInvoicedRate != null">
-                unInvoicedRate,
-            </if>
-            <if test="contractBaseInterest != null">
-                contractBaseInterest,
-            </if>
-            <if test="expectHKDays != null">
-                expectHKDays,
-            </if>
-            <if test="tradeAddPrice != null">
-                tradeAddPrice,
-            </if>
-            <if test="weightedPrice != null">
-                weightedPrice,
-            </if>
-            <if test="tsc != null">
-                tsc,
-            </if>
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="hsMonth != null">hsMonth,</if>
+            <if test="maxPrepayRate != null">maxPrepayRate,</if>
+            <if test="unInvoicedRate != null">unInvoicedRate,</if>
+            <if test="contractBaseInterest != null">contractBaseInterest,</if>
+            <if test="expectHKDays != null">expectHKDays,</if>
+            <if test="tradeAddPrice != null">tradeAddPrice,</if>
+            <if test="weightedPrice != null">weightedPrice,</if>
+            <if test="tsc != null">tsc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=BIGINT},
-            </if>
-            <if test="orderId != null">
-                #{orderId,jdbcType=BIGINT},
-            </if>
-            <if test="hsMonth != null">
-                #{hsMonth,jdbcType=CHAR},
-            </if>
-            <if test="maxPrepayRate != null">
-                #{maxPrepayRate,jdbcType=DECIMAL},
-            </if>
-            <if test="unInvoicedRate != null">
-                #{unInvoicedRate,jdbcType=DECIMAL},
-            </if>
-            <if test="contractBaseInterest != null">
-                #{contractBaseInterest,jdbcType=DECIMAL},
-            </if>
-            <if test="expectHKDays != null">
-                #{expectHKDays,jdbcType=INTEGER},
-            </if>
-            <if test="tradeAddPrice != null">
-                #{tradeAddPrice,jdbcType=DECIMAL},
-            </if>
-            <if test="weightedPrice != null">
-                #{weightedPrice,jdbcType=DECIMAL},
-            </if>
-            <if test="tsc != null">
-                #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="hsMonth != null">#{hsMonth,jdbcType=CHAR},</if>
+            <if test="maxPrepayRate != null">#{maxPrepayRate,jdbcType=DECIMAL},</if>
+            <if test="unInvoicedRate != null">#{unInvoicedRate,jdbcType=DECIMAL},</if>
+            <if test="contractBaseInterest != null">#{contractBaseInterest,jdbcType=DECIMAL},</if>
+            <if test="expectHKDays != null">#{expectHKDays,jdbcType=INTEGER},</if>
+            <if test="tradeAddPrice != null">#{tradeAddPrice,jdbcType=DECIMAL},</if>
+            <if test="weightedPrice != null">#{weightedPrice,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingOrderConfig">
         update hs_ying_order_config
         <set>
-            <if test="orderId != null">
-                orderId = #{orderId,jdbcType=BIGINT},
-            </if>
-            <if test="hsMonth != null">
-                hsMonth = #{hsMonth,jdbcType=CHAR},
-            </if>
-            <if test="maxPrepayRate != null">
-                maxPrepayRate = #{maxPrepayRate,jdbcType=DECIMAL},
-            </if>
-            <if test="unInvoicedRate != null">
-                unInvoicedRate = #{unInvoicedRate,jdbcType=DECIMAL},
-            </if>
-            <if test="contractBaseInterest != null">
-                contractBaseInterest = #{contractBaseInterest,jdbcType=DECIMAL},
-            </if>
-            <if test="expectHKDays != null">
-                expectHKDays = #{expectHKDays,jdbcType=INTEGER},
-            </if>
-            <if test="tradeAddPrice != null">
-                tradeAddPrice = #{tradeAddPrice,jdbcType=DECIMAL},
-            </if>
-            <if test="weightedPrice != null">
-                weightedPrice = #{weightedPrice,jdbcType=DECIMAL},
-            </if>
-            <if test="tsc != null">
-                tsc = #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="hsMonth != null">hsMonth = #{hsMonth,jdbcType=CHAR},</if>
+            <if test="maxPrepayRate != null">maxPrepayRate = #{maxPrepayRate,jdbcType=DECIMAL},</if>
+            <if test="unInvoicedRate != null">unInvoicedRate = #{unInvoicedRate,jdbcType=DECIMAL},</if>
+            <if test="contractBaseInterest != null">contractBaseInterest = #{contractBaseInterest,jdbcType=DECIMAL}, </if>
+            <if test="expectHKDays != null">expectHKDays = #{expectHKDays,jdbcType=INTEGER},</if>
+            <if test="tradeAddPrice != null">tradeAddPrice = #{tradeAddPrice,jdbcType=DECIMAL},</if>
+            <if test="weightedPrice != null">weightedPrice = #{weightedPrice,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -161,7 +116,7 @@
             contractBaseInterest = #{contractBaseInterest,jdbcType=DECIMAL},
             expectHKDays         = #{expectHKDays,jdbcType=INTEGER},
             tradeAddPrice        = #{tradeAddPrice,jdbcType=DECIMAL},
-            weightedPrice               = #{weightedPrice,jdbcType=DECIMAL},
+            weightedPrice        = #{weightedPrice,jdbcType=DECIMAL},
             tsc                  = #{tsc,jdbcType=TIMESTAMP}
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
