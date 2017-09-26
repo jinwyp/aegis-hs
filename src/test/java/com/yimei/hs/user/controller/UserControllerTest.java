@@ -139,6 +139,19 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-2);
         }
 
+        // 5.1 更新用户
+        User updateUser = new User();
+        updateUser.setIsActive(true);
+        updateUser.setDeptId(nuser.getData().getDeptId());
+        String updateUserURL = "/api/users/" + nuser.getData().getId();
+        Result<Integer> updateUserRtn = client.exchange(updateUserURL, HttpMethod.PUT, new HttpEntity<User>(updateUser), typeReferenceInteger).getBody();
+        if (updateUserRtn.getSuccess()) {
+            logger.info("更新用户成功\nPUT {}\nrequest = {}\nresponse = {}", "/api/users", updateUserURL, printJson(updateUser), printJson(updateUserRtn.getData()));
+        } else {
+            logger.error("更新用户失败: {}", updateUserRtn.getError());
+            System.exit(-2);
+        }
+
         // 6. 用户登录
         // Result<String> loginResult = post("/api/login", newUser, String.class);
         Result<String> loginResult = client.exchange("/api/login", HttpMethod.POST, new HttpEntity<User>(newUser), typeReferenceString).getBody();

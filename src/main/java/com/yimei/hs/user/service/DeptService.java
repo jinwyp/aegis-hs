@@ -34,7 +34,7 @@ public class DeptService {
     }
 
     public int update(Dept dept){
-        return deptMapper.updateByPrimaryKey(dept);
+        return deptMapper.updateByPrimaryKeySelective(dept);
     }
 
     public int create(Dept Dept){

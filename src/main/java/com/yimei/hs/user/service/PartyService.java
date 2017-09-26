@@ -30,6 +30,7 @@ public class PartyService {
     }
 
     public int update(Party party) {
-        return partyMapper.updateByPrimaryKey(party);
+        return partyMapper.updateByPrimaryKeySelective(party);
     }
+
 }

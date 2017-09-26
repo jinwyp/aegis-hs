@@ -77,6 +77,7 @@ public class YingOrderConfigController {
     }
 
     @PutMapping("/{orderId}/configs/{id}")
+    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") Long orderId,
             @PathVariable("id") Long id,
