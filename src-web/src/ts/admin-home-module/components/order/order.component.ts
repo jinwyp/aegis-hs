@@ -224,6 +224,7 @@ export class OrderComponent implements OnInit {
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
+            postData.id = this.currentOrderId
             this.hsOrderService.modifyOrder(this.currentOrderId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
