@@ -22,6 +22,7 @@ abstract public class YingTestBase extends HsTestBase {
     protected ParameterizedTypeReference<Result<YingSettleUpstream>> typeReferenceSettleUpstream  = new ParameterizedTypeReference<Result<YingSettleUpstream>>() {};
     protected ParameterizedTypeReference<Result<YingSettleDownstream>> typeReferenceSettleDownstream  = new ParameterizedTypeReference<Result<YingSettleDownstream>>() {};
     protected ParameterizedTypeReference<Result<YingSettleTraffic>> typeReferenceSettleTraffic  = new ParameterizedTypeReference<Result<YingSettleTraffic>>() {};
+    protected ParameterizedTypeReference<Result<YingFee>> typeReferenceFee = new ParameterizedTypeReference<Result<YingFee>>() {};
 
     protected ParameterizedTypeReference<PageResult<YingOrder>> typeReferenceOrderPage  = new ParameterizedTypeReference<PageResult<YingOrder>>() {};
     protected ParameterizedTypeReference<PageResult<YingOrderConfig>> typeReferenceOrderConfigPage  = new ParameterizedTypeReference<PageResult<YingOrderConfig>>() {};
@@ -35,5 +36,6 @@ abstract public class YingTestBase extends HsTestBase {
     protected ParameterizedTypeReference<PageResult<YingSettleUpstream>> typeReferenceSettleUpstreamPage  = new ParameterizedTypeReference<PageResult<YingSettleUpstream>>() {};
     protected ParameterizedTypeReference<PageResult<YingSettleDownstream>> typeReferenceSettleDownstreamPage  = new ParameterizedTypeReference<PageResult<YingSettleDownstream>>() {};
     protected ParameterizedTypeReference<PageResult<YingSettleTraffic>> typeReferenceSettleTrafficPage  = new ParameterizedTypeReference<PageResult<YingSettleTraffic>>() {};
+    protected ParameterizedTypeReference<PageResult<YingFee>> typeReferenceFeePage = new ParameterizedTypeReference<PageResult<YingFee>>() {};
 
 }
