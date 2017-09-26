@@ -22,6 +22,13 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
+    <select id="loadAll" resultType="com.yimei.hs.ying.entity.YingHuikuanMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_ying_huikuan_map
+        where order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_huikuan_map
         WHERE id = #{id,jdbcType=BIGINT}

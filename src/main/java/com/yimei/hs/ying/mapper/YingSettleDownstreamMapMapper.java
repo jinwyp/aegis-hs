@@ -2,6 +2,8 @@ package com.yimei.hs.ying.mapper;
 
 import com.yimei.hs.ying.entity.YingSettleDownstreamMap;
 
+import java.util.List;
+
 public interface YingSettleDownstreamMapMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,6 @@ public interface YingSettleDownstreamMapMapper {
     int updateByPrimaryKeySelective(YingSettleDownstreamMap record);
 
     int updateByPrimaryKey(YingSettleDownstreamMap record);
+
+    List<YingSettleDownstreamMap> loadAll(Long orderId);
 }

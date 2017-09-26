@@ -1,9 +1,11 @@
 package com.yimei.hs.ying.service;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.ying.entity.YingFukuan;
 import com.yimei.hs.ying.entity.YingHuankuan;
 import com.yimei.hs.ying.dto.PageYingHuankuanDTO;
 import com.yimei.hs.ying.entity.YingHuankuanMap;
+import com.yimei.hs.ying.mapper.YingFukuanMapper;
 import com.yimei.hs.ying.mapper.YingHuankuanMapMapper;
 import com.yimei.hs.ying.mapper.YingHuankuanMapper;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +30,9 @@ public class YingHuankuanService {
 
     @Autowired
     private YingHuankuanMapMapper yingHuankuanMapMapper;
+
+    @Autowired
+    private YingFukuanMapper yingFukuanMapper;
 
     @Autowired
     private YingLogService yingLogService;
@@ -52,9 +58,21 @@ public class YingHuankuanService {
             return 0;
         }
 
+        // 查询出当前订单的所有与付款的对应记录
         List<YingHuankuanMap> huankuanMap = yingHuankuanMapMapper.loadAll(yingHuankuan.getOrderId());
 
+        // 当前订单的所有付款记录
+        List<YingFukuan> hukuanList = yingFukuanMapper.getList(yingHuankuan.getOrderId());
+
+        // 待添加的记录 todo
+        List<YingHuankuanMap> toAdd = new ArrayList<>();
+
+        for ( YingHuankuanMap item: toAdd) {
+            yingHuankuanMapMapper.insert(item);
+        }
+
         return rtn;
+
     }
 
     public int update(YingHuankuan yingHuankuan) {
