@@ -8,6 +8,7 @@ import com.yimei.hs.user.entity.User;
 import com.yimei.hs.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,6 @@ public class AdminController {
     UserService userService;
 
     /**
-     *
      * @param user
      * @return
      */
@@ -32,12 +32,11 @@ public class AdminController {
     public ResponseEntity<Result<User>> create(@RequestBody @Validated User user) {
         User nuser = userService.create(user);
         if (nuser == null) {
-           return Result.error(4001, "创建用户失败");
+            return Result.error(4001, "创建用户失败");
         } else {
             return Result.ok(nuser);
         }
     }
-
 
 
     /**
@@ -73,7 +72,11 @@ public class AdminController {
      * @return
      */
     @PutMapping("/users/{id}")
-    public ResponseEntity<Result<Integer>> update(@PathVariable("id") Long id, @RequestBody User user) {
+    @Transactional(readOnly = false)
+    public ResponseEntity<Result<Integer>> update(
+            @PathVariable("id") Long id,
+            @RequestBody User user
+    ) {
         user.setId(id);
         userService.update(user);
         return Result.ok(1);

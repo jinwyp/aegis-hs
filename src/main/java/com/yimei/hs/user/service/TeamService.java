@@ -40,7 +40,7 @@ public class TeamService {
 
     public int update(Team team){
 
-        return teamMapper.updateByPrimaryKey(team);
+        return teamMapper.updateByPrimaryKeySelective(team);
     }
 
     public Page<Team> getPage(PageTeamDTO pageTeamDTO) {

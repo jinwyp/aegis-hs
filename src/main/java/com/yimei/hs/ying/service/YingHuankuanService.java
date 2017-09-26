@@ -37,6 +37,6 @@ public class YingHuankuanService {
     }
 
     public int update(YingHuankuan yingHuankuan) {
-        return yingHuankuanMapper.updateByPrimaryKey(yingHuankuan);
+        return yingHuankuanMapper.updateByPrimaryKeySelective(yingHuankuan);
     }
 }

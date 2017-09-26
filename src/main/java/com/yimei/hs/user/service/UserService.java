@@ -98,6 +98,6 @@ public class UserService {
      * @return
      */
     public int update(User user) {
-        return userMapper.updateByPrimaryKey(user);
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 }

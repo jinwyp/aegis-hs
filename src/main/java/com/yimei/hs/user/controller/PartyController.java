@@ -69,7 +69,10 @@ public class PartyController {
      */
     @PutMapping("/parties/{id}")
     @Transactional(readOnly = false)
-    public ResponseEntity<Result<Integer>> update(@PathVariable(value = "id") Long id, @RequestBody Party party) {
+    public ResponseEntity<Result<Integer>> update(
+            @PathVariable(value = "id") Long id,
+            @RequestBody Party party
+    ) {
         party.setId(id);
         int status = partyService.update(party);
         if (status == 1) {
