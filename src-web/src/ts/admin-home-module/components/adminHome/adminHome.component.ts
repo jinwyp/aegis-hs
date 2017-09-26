@@ -80,6 +80,13 @@ export class AdminHomeComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+
+        this.orderService.getEnumList('CargoType').subscribe(
+            data => {
+                saveEnum('CargoType', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
     }
 
 }

@@ -26,13 +26,14 @@
                 </div>
             </div>
 
-            <bs-text-input formControlName="line" [fc]="orderForm.get('line')" [type]="'text'" [label]="'业务线名称:'" [dirty]="ignoreDirty" [error]="orderFormError.line"></bs-text-input>
-            <bs-text-input formControlName="cargoType" [fc]="orderForm.get('cargoType')" [type]="'text'" [label]="'货物种类:'" [dirty]="ignoreDirty" [error]="orderFormError.cargoType"></bs-text-input>
+            <bs-text-input formControlName="line" [fc]="orderForm.get('line')" [type]="'text'" [label]="'业务线名称:'" [readOnly]="true" [dirty]="ignoreDirty" [error]="orderFormError.line"></bs-text-input>
 
 
-            <bs-select formControlName ="mainAccounting" [fc]="orderForm.get('mainAccounting')" [label]="'主账务公司:'" [options]="partyList" [error]="orderFormError.mainAccounting"></bs-select>
-            <bs-select formControlName ="upstreamId" [fc]="orderForm.get('upstreamId')" [label]="'上游供应商:'" [options]="partyList" [error]="orderFormError.upstreamId"></bs-select>
-            <bs-select formControlName ="downstreamId" [fc]="orderForm.get('downstreamId')" [label]="'下游客户:'" [options]="partyList" [error]="orderFormError.downstreamId"></bs-select>
+            <bs-select formControlName ="cargoType" [fc]="orderForm.get('cargoType')" [label]="'货物种类:'" [options]="cargoTypeList" [error]="orderFormError.cargoType"></bs-select>
+
+            <bs-select formControlName ="mainAccounting" [fc]="orderForm.get('mainAccounting')" [label]="'主账务公司:'" [options]="partyList" [error]="orderFormError.mainAccounting" (change)="lineName()"></bs-select>
+            <bs-select formControlName ="upstreamId" [fc]="orderForm.get('upstreamId')" [label]="'上游供应商:'" [options]="partyList" [error]="orderFormError.upstreamId" (change)="lineName()"></bs-select>
+            <bs-select formControlName ="downstreamId" [fc]="orderForm.get('downstreamId')" [label]="'下游客户:'" [options]="partyList" [error]="orderFormError.downstreamId" (change)="lineName()"></bs-select>
 
 
             <div class="form-group row" *ngIf="isShowForm">
