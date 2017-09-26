@@ -314,7 +314,8 @@ public class UserControllerTest extends YingTestBase {
 
 
         // 14. 发运分页查询,  orderId
-        PageResult<YingFayun> fayunPageResult=client.execute("/api/ying/"+yingOrderResult.getData().getId()+"/configs",HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFayunPage)
+//        PageResult<YingFayun> fayunPageResult=client.execute("/api/ying/"+yingOrderResult.getData().getId()+"/configs",HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFayunPage)
+
 
         // 15. 发运单记录查询
 
