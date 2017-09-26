@@ -13,7 +13,7 @@
 
             <bs-select formControlName ="deptId" [options]="departmentList" [label]="'部门:'" [error]="userFormError.deptId"></bs-select>
             <bs-radio formControlName ="isAdmin" [sourceList]="dataIsAdmin" [label]="'是否为管理员:'" [error]="userFormError.isAdmin"></bs-radio>
-            <bs-radio formControlName ="isActive" [sourceList]="dataIsAdmin" [label]="'是否禁用:'" [error]="userFormError.isActive"></bs-radio>
+            <bs-radio formControlName ="isActive" [sourceList]="dataIsAdmin" [label]="'是否启用:'" [error]="userFormError.isActive"></bs-radio>
 
 
             <div class="form-group row">
@@ -36,7 +36,7 @@
                     <th>创建时间</th>
                     <th>创建人</th>
                     <th>是否为管理员</th>
-                    <th>是否禁用</th>
+                    <th>是否启用</th>
                     <th></th>
                 </tr>
             </thead>
@@ -46,8 +46,8 @@
                     <td> {{user.phone}}</td>
                     <td> {{user.createDate}}</td>
                     <td> {{user.createBy}}</td>
-                    <td> {{user.isAdmin === 2 ? '是' : '否'}} </td>
-                    <td> {{user.isActive === 2 ? '是' : '否'}}</td>
+                    <td> {{user.isAdmin === true ? '是' : '否'}} </td>
+                    <td> {{user.isActive === true ? '是' : '否'}}</td>
                     <td> <button class="btn btn-info btn-sm" (click)="showForm(false, user)"> 修改 </button></td>
                 </tr>
             </tbody>

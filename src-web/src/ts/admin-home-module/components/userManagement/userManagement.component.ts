@@ -139,7 +139,7 @@ export class UserManagementComponent implements OnInit {
             'password'    : ['', [Validators.required] ],
             'deptId'    : ['', [Validators.required ] ],
             'isAdmin'    : [1, [Validators.required] ],
-            'isActive'    : [1, [Validators.required ]]
+            'isActive'    : [2, [Validators.required ]]
         } )
 
         this.userForm.valueChanges.subscribe(data => {
@@ -160,6 +160,18 @@ export class UserManagementComponent implements OnInit {
         }
 
         const postData = this.userForm.value
+
+        if (postData.isAdmin === 2) {
+            postData.isAdmin = true
+        } else {
+            postData.isAdmin = false
+        }
+
+        if (postData.isActive === 2) {
+            postData.isActive = true
+        } else {
+            postData.isActive = false
+        }
 
         if (this.isAddNew) {
             this.hsUserService.createNewUser(postData).subscribe(
@@ -200,13 +212,24 @@ export class UserManagementComponent implements OnInit {
                 'password'    : '',
                 'deptId'    : '',
                 'isAdmin'    : 1,
-                'isActive'    : 1
+                'isActive'    : 2
             })
 
         } else {
             this.isAddNew = false
             this.currentUserId = user.id
 
+            if (user.isAdmin === true) {
+                user.isAdmin = 2
+            } else {
+                user.isAdmin = 1
+            }
+
+            if (user.isActive === true) {
+                user.isActive = 2
+            } else {
+                user.isActive = 1
+            }
             this.userForm.patchValue(user)
         }
 
