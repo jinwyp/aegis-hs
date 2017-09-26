@@ -26,8 +26,10 @@ public class YingFee implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "核算月不能为空")
     private Long hsId;
 
+    @NotNull(groups = {CreateGroup.class}, message = "费用科目不能为空")
     private FeeClass name;
 
+    @NotNull(groups = {CreateGroup.class}, message = "金额不能为空")
     private BigDecimal amount;
 
     private LocalDateTime tsc;

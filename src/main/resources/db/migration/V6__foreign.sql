@@ -19,7 +19,7 @@ alter table hs_ying_fayun add foreign key(hsId)    references hs_ying_order_conf
 alter table hs_ying_fukuan add foreign key(orderId)   references hs_ying_order(id);
 alter table hs_ying_fukuan add foreign key(hsId)      references hs_ying_order_config(id);
 alter table hs_ying_fukuan add foreign key(capitalId) references hs_party(id);
-alter table hs_ying_fukuan add foreign key(recieveCompanyId) references hs_party(id);
+alter table hs_ying_fukuan add foreign key(receiveCompanyId) references hs_party(id);
 
 alter table hs_ying_huikuan add foreign key(orderId) references hs_ying_order(id);
 alter table hs_ying_huikuan add foreign key(hsId) references hs_ying_order_config(id);

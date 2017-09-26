@@ -27,6 +27,7 @@ public class CurrentUserMethodArgumentHandler implements HandlerMethodArgumentRe
 
     private static final Logger logger = LoggerFactory.getLogger(CurrentUserMethodArgumentHandler.class);
     Pattern p = Pattern.compile("Bearer (\\S+)");
+
     @Value("${jwt.secureKey}")
     private String secretKey;
 

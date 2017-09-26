@@ -1,8 +1,10 @@
 package com.yimei.hs.ying.controller;
 
+import com.yimei.hs.boot.annotation.CurrentUser;
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.user.entity.User;
 import com.yimei.hs.ying.entity.YingFayun;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
@@ -37,6 +39,7 @@ public class YingFayunController {
      */
     @GetMapping("/{orderId}/fayuns")
     public ResponseEntity<PageResult<YingFayun>> list(
+            @CurrentUser User user,
             @PathVariable("orderId") Long orderId,
             PageYingFayunDTO pageYingFayunDTO) {
         pageYingFayunDTO.setOrderId(orderId);

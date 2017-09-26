@@ -16,5 +16,5 @@ public class PageYingFukuanDTO extends BaseFilter<PageYingFukuanDTO> {
     private Long hsId;
 
     private LocalDateTime payDate;
-    private Long recieveCompanyId;
+    private Long receiveCompanyId;
 }
