@@ -553,6 +553,7 @@ public class UserControllerTest extends YingTestBase {
 
         String fayunUpdateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settleupstream/" + upstreamCreateResult.getData().getId();
         upstream.setAmount(new BigDecimal("9999"));
+        upstream.setId(upstreamCreateResult.getData().getId());
         Result<Integer> upstreamUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<YingSettleUpstream>(upstream), typeReferenceInteger).getBody();
         if (upstreamUpdateResult.getSuccess()) {
             logger.info("更新上游结算成功\nPOST {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(upstream), printJson(upstreamUpdateResult.getData()));
@@ -662,6 +663,8 @@ public class UserControllerTest extends YingTestBase {
         //运输方结算-更新
         String fayunUpdateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settletraffic/" + trafficCreateResult.getData().getId();
         traffic.setAmount(new BigDecimal("9999"));
+        traffic.setOrderId(yingOrderResult.getData().getId());
+        traffic.setId(trafficCreateResult.getData().getId());
         Result<Integer> yingFayunUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<YingSettleTraffic>(traffic), typeReferenceInteger).getBody();
         if (yingFayunUpdateResult.getSuccess()) {
             logger.info("更新输方结算成功\nPOST {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(traffic), printJson(yingFayunUpdateResult.getData()));
