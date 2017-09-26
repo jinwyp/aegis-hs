@@ -243,12 +243,12 @@ public class UserControllerTest extends YingTestBase {
         }};
 
 
-        String yingOrderCongfigUpdateUrl = "api/ying/" + yingOrderConfigResult.getData().getOrderId() + "/configs/" + yingOrderConfigResult.getData().getId();
+        String yingOrderCongfigUpdateUrl = "/api/ying/" + yingOrderConfigResult.getData().getOrderId() + "/configs/" + yingOrderConfigResult.getData().getId();
         logger.info("ymurl===>"+yingOrderCongfigUpdateUrl);
         Result<Integer> yingOrderCOnfigUpdateResult = client.exchange(yingOrderCongfigUpdateUrl, HttpMethod.PUT,new HttpEntity<YingOrderConfig>(yingOrderConfig),typeReferenceInteger).getBody();
 
         if (yingOrderCOnfigUpdateResult.getSuccess()) {
-            logger.info("更新核算月配置成功 POST {}\nrequest:{}\nresponse:{}", yingOrderCongfigUpdateUrl, printJson(yingOrderCOnfigUpdateResult), printJson(yingOrderCOnfigUpdateResult.getData()));
+            logger.info("更新核算月配置成功\nPOST {}\nrequest = {}\nresponse = {}", yingOrderCongfigUpdateUrl, printJson(yingOrderCOnfigUpdateResult), printJson(yingOrderCOnfigUpdateResult.getData()));
         } else {
             logger.error("更新核算月配置失败: {}", yingOrderCOnfigUpdateResult.getError());
             System.exit(-2);
