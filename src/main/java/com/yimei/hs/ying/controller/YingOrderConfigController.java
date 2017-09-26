@@ -5,6 +5,8 @@ import com.yimei.hs.boot.Result;
 import com.yimei.hs.ying.dto.PageYingOrderConfigDTO;
 import com.yimei.hs.ying.entity.YingOrderConfig;
 import com.yimei.hs.ying.service.YingOrderConfigService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,9 @@ import javax.xml.ws.Response;
 @RestController
 @RequestMapping("/api/ying")
 public class YingOrderConfigController {
+
+
+    private static final Logger logger = LoggerFactory.getLogger(YingOrderController.class);
 
     @Autowired
     YingOrderConfigService yingOrderConfigService;
@@ -72,12 +77,17 @@ public class YingOrderConfigController {
     }
 
     @PutMapping("/{orderId}/configs/{id}")
-    public ResponseEntity<Result<Integer>> update(@PathVariable("id") Long id,
-                                                  @PathVariable("orderId") Long orderId,
-                                                  @RequestBody YingOrderConfig yingOrderConfig) {
+    public ResponseEntity<Result<Integer>> update(
+            @PathVariable("orderId") Long orderId,
+            @PathVariable("id") Long id,
+            @RequestBody YingOrderConfig yingOrderConfig) {
 
-        yingOrderConfig.setOrderId(id);
+
+        logger.error("yingOrderConfig-====>" + id);
+        yingOrderConfig.setId(id);
         yingOrderConfig.setOrderId(orderId);
+
+        logger.error("yingOrderConfig-====>" + yingOrderConfig);
         int status = yingOrderConfigService.update(yingOrderConfig);
         if (status == 1) {
             return Result.ok(1);

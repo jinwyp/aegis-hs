@@ -43,12 +43,12 @@
         INSERT INTO hs_ying_order_config (id, orderId, hsMonth,
                                           maxPrepayRate, unInvoicedRate, contractBaseInterest,
                                           expectHKDays, tradeAddPrice, weightedPrice,
-                                          tsc)
+                                          )
         VALUES (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsMonth,jdbcType=CHAR},
                 #{maxPrepayRate,jdbcType=DECIMAL}, #{unInvoicedRate,jdbcType=DECIMAL},
                 #{contractBaseInterest,jdbcType=DECIMAL},
                 #{expectHKDays,jdbcType=INTEGER}, #{tradeAddPrice,jdbcType=DECIMAL}, #{weightedPrice,jdbcType=DECIMAL},
-                #{tsc,jdbcType=TIMESTAMP})
+                )
     </insert>
 
     <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingOrderConfig" useGeneratedKeys="true"
@@ -154,7 +154,7 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingOrderConfig">
         UPDATE hs_ying_order_config
-        SET orderId              = #{orderId,jdbcType=BIGINT},
+        SET
             hsMonth              = #{hsMonth,jdbcType=CHAR},
             maxPrepayRate        = #{maxPrepayRate,jdbcType=DECIMAL},
             unInvoicedRate       = #{unInvoicedRate,jdbcType=DECIMAL},
