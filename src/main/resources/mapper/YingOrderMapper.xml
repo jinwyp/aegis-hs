@@ -30,12 +30,12 @@
             <id property="tsc" column="t2tsc"/>
         </collection>
 
-        <collection property="orderPartyList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingOrderParty"
-                    autoMapping="true">
-            <id property="id" column="t3id"/>
-            <id property="tsc" column="t3tsc"/>
-            <id property="orderId" column="t3orderId"/>
-        </collection>
+        <!--<collection property="orderPartyList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingOrderParty"-->
+        <!--autoMapping="true">-->
+        <!--<id property="id" column="t3id"/>-->
+        <!--<id property="tsc" column="t3tsc"/>-->
+        <!--<id property="orderId" column="t3orderId"/>-->
+        <!--</collection>-->
 
     </resultMap>
 
@@ -47,7 +47,7 @@
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="YingOrderResultMap">
         SELECT
-            t1.id as t1id,
+            t1.id      AS t1id,
             t1.deptId,
             t1.teamId,
             t1.creatorId,
@@ -62,7 +62,7 @@
             t1.status,
             t1.tsc,
 
-            t2.id  AS t2id,
+            t2.id      AS t2id,
             t2.orderId,
             t2.hsMonth,
             t2.maxPrepayRate,
@@ -71,67 +71,67 @@
             t2.expectHKDays,
             t2.tradeAddPrice,
             t2.weightedPrice,
-            t2.tsc AS t2tsc,
+            t2.tsc     AS t2tsc,
 
-            t3.id as t3id,
-            t3.orderId as t3orderId,
+            t3.id      AS t3id,
+            t3.orderId AS t3orderId,
             t3.custType,
             t3.customerId,
-            t3.tsc as t3tsc
+            t3.tsc     AS t3tsc
 
         FROM hs_ying_order t1
-            LEFT JOIN hs_ying_order_config t2 ON t1.id = t2.id
-            LEFT JOIN hs_ying_order_party t3 ON t1.id = t3.id
-        where t1.id = #{id, jdbcType=BIGINT}
+            LEFT JOIN hs_ying_order_config t2 ON t1.id = t2.orderId
+            LEFT JOIN hs_ying_order_party t3 ON t1.id = t2.orderId
+        WHERE t1.id = #{id, jdbcType=BIGINT}
     </select>
 
     <select id="getPage" resultMap="YingOrderResultMap">
         SELECT
-            t1.id as t1id,
-            t1.deptId,
-            t1.teamId,
-            t1.creatorId,
-            t1.ownerId,
-            t1.mainAccounting,
-            t1.line,
-            t1.cargoType,
-            t1.upstreamId,
-            t1.upstreamSettleMode,
-            t1.downstreamId,
-            t1.downstreamSettleMode,
-            t1.status,
-            t1.tsc,
+        t1.id as t1id,
+        t1.deptId,
+        t1.teamId,
+        t1.creatorId,
+        t1.ownerId,
+        t1.mainAccounting,
+        t1.line,
+        t1.cargoType,
+        t1.upstreamId,
+        t1.upstreamSettleMode,
+        t1.downstreamId,
+        t1.downstreamSettleMode,
+        t1.status,
+        t1.tsc,
 
-            t2.id  AS t2id,
-            t2.orderId,
-            t2.hsMonth,
-            t2.maxPrepayRate,
-            t2.unInvoicedRate,
-            t2.contractBaseInterest,
-            t2.expectHKDays,
-            t2.tradeAddPrice,
-            t2.weightedPrice,
-            t2.tsc AS t2tsc,
+        t2.id AS t2id,
+        t2.orderId,
+        t2.hsMonth,
+        t2.maxPrepayRate,
+        t2.unInvoicedRate,
+        t2.contractBaseInterest,
+        t2.expectHKDays,
+        t2.tradeAddPrice,
+        t2.weightedPrice,
+        t2.tsc AS t2tsc,
 
-            t3.id as t3id,
-            t3.orderId as t3orderId,
-            t3.custType,
-            t3.customerId,
-            t3.tsc as t3tsc
+        t3.id as t3id,
+        t3.orderId as t3orderId,
+        t3.custType,
+        t3.customerId,
+        t3.tsc as t3tsc
 
         FROM hs_ying_order t1
-            LEFT JOIN hs_ying_order_config t2 ON t1.id = t2.id
-            LEFT JOIN hs_ying_order_party t3 ON t1.id = t3.id
+        LEFT JOIN hs_ying_order_config t2 ON t1.id = t2.orderId
+        LEFT JOIN hs_ying_order_party t3 ON t1.id = t2.orderId
 
         <where>
-           <if test="deptId!=null"> deptId = #{deptId, jdbcType=BIGINT}</if>
-            <if test="cargoType!=null"> cargoType = #{cargoType, jdbcType=VARCHAR}</if>
-            <if test="creatorId!=null"> creatorId = #{creatorId, jdbcType=BIGINT}</if>
-            <if test="ownerId!=null"> ownerId = #{ownerId, jdbcType=BIGINT}</if>
-            <if test="upstreamId!=null"> upstreamId = #{upstreamId, jdbcType=BIGINT}</if>
-            <if test="downstreamId!=null"> downstreamId = #{downstreamId, jdbcType=BIGINT}</if>
-            <if test="mainAccounting!=null"> mainAccounting = #{mainAccounting, jdbcType=BIGINT}</if>
-            <if test="status!=null"> status = #{status, jdbcType=VARCHAR}</if>
+            <if test="deptId!=null">deptId = #{deptId, jdbcType=BIGINT}</if>
+            <if test="cargoType!=null">cargoType = #{cargoType, jdbcType=VARCHAR}</if>
+            <if test="creatorId!=null">creatorId = #{creatorId, jdbcType=BIGINT}</if>
+            <if test="ownerId!=null">ownerId = #{ownerId, jdbcType=BIGINT}</if>
+            <if test="upstreamId!=null">upstreamId = #{upstreamId, jdbcType=BIGINT}</if>
+            <if test="downstreamId!=null">downstreamId = #{downstreamId, jdbcType=BIGINT}</if>
+            <if test="mainAccounting!=null">mainAccounting = #{mainAccounting, jdbcType=BIGINT}</if>
+            <if test="status!=null">status = #{status, jdbcType=VARCHAR}</if>
         </where>
 
     </select>
@@ -161,7 +161,8 @@
                 #{status,jdbcType=VARCHAR},
                 #{tsc,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingOrder" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingOrder" useGeneratedKeys="true"
+            keyProperty="id">
         insert into hs_ying_order
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
