@@ -27,15 +27,19 @@ public class YingInvoice implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "核算月不能为空")
     private Long hsId;
 
+    @NotNull(groups = {CreateGroup.class}, message = "发票方向不能为空")
     private InvoiceDirection invoiceDirection;
 
+    @NotNull(groups = {CreateGroup.class}, message = "发票类型不能为空")
     private InvoiceType invoiceType;
 
+    @NotNull(groups = {CreateGroup.class}, message = "开票日期不能为空")
     private LocalDateTime openDate;
 
+    @NotNull(groups = {CreateGroup.class}, message = "开票公司不能为空")
     private Long openCompanyId;
 
-    private Long recieverId;
+    private Long receiverId;
 
     private LocalDateTime tsc;
 

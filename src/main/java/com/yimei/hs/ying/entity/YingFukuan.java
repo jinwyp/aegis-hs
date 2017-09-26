@@ -28,8 +28,10 @@ public class YingFukuan implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "核算月不能为空")
     private Long hsId;
 
+    @NotNull(groups = {CreateGroup.class}, message = "付款日期不能为空")
     private LocalDateTime payDate;
 
+    @NotNull(groups = { CreateGroup.class}, message = "收款公司不能为空")
     private Long receiveCompanyId;
 
     private PaymentPurpose payUsage;

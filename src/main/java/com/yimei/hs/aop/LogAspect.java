@@ -49,6 +49,7 @@ public class LogAspect {
         for (Object arg : args) {
             logger.info("{}", arg);
         }
+
         Object o = proceedingJoinPoint.proceed();
         logger.info("{} {} return with {}", name, sigature.toShortString(), o);
         return o;

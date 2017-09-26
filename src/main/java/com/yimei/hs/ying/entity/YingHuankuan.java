@@ -27,8 +27,10 @@ public class YingHuankuan implements Serializable {
 
     private Long hsId;
 
+    @NotNull(groups = {CreateGroup.class}, message = "收款公司不能为空")
     private Long skCompanyId;
 
+    @NotNull(groups = {CreateGroup.class}, message = "还款日期不能为空")
     private LocalDateTime huankuankDate;
 
     @Null(groups = {UpdateGroup.class}, message = "还款记录不能更新金额")

@@ -239,7 +239,7 @@ create table hs_ying_invoice (
   invoiceType varchar(32)       not null comment '货款发票 or 运输发票',
   openDate  datetime            not null comment '开票日期',
   openCompanyId  bigint(20)     not null comment '开票单位',
-  recieverId  bigint(20)        not null comment '收票单位',
+  receiverId  bigint(20)        not null comment '收票单位',
   tsc timestamp                 not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
