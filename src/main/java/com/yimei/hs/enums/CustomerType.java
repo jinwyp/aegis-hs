@@ -9,7 +9,7 @@ import java.util.List;
 public enum CustomerType {
 
 
-    UPSTREAM("上游戏"),
+    UPSTREAM("上游"),
     DOWNSTREAM("下游"),
     TRAFFICKCER("贸易公司"),
     FUNDER("资金方"),

@@ -8,6 +8,8 @@ import { UserInfoService } from '../../../services/userInfo.service'
 import { HSUserService } from '../../../services/hsUser.service'
 import { HSOrderService } from '../../../services/hsOrder.service'
 
+import {getEnum} from '../../../services/localStorage'
+
 
 
 
@@ -22,7 +24,10 @@ export class OrderComponent implements OnInit {
     currentOrderId : any
 
     orderForm: FormGroup
+    orderOtherPartyForm: FormGroup
     ignoreDirty: boolean = false
+
+    otherPartyList : any[] = []
 
     isShowForm: boolean = false
     isAddNew: boolean = true
@@ -33,11 +38,10 @@ export class OrderComponent implements OnInit {
     filterTeamList : any[] = []
     partyList : any[] = []
 
+    payModeList : any[] = getEnum('PayMode')
+    customerType : any[] = getEnum('CustomerType')
 
-    jieSuanType : any[] = [
-        { id: 10, name :'结算方式1'},
-        { id: 20, name :'结算方式2'}
-    ]
+
 
     pagination: any = {
         pageSize : 20,
@@ -66,6 +70,7 @@ export class OrderComponent implements OnInit {
         this.getOrderList()
         this.getSessionUserInfo()
         this.createOrderForm()
+        this.createOrderOtherPartyForm()
     }
 
     trackByFn(index: any, item: any) {
@@ -143,18 +148,30 @@ export class OrderComponent implements OnInit {
 
 
     orderFormError : any = {}
+    orderOtherPartyFormError : any = {}
     orderFormValidationMessages: any = {
-        'name'  : {
-            'required'      : '请填写名称!'
-        },
         'deptId'  : {
-            'required'      : '请选择事业部门!'
+            'required'      : '请填写事业部门!'
+        },
+        'teamId'  : {
+            'required'      : '请选择团队!'
+        },
+
+        'custType'  : {
+            'required'      : '请选择客户类型!'
+        },
+        'customerId'  : {
+            'required'      : '请选择公司!'
         }
     }
 
     orderFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
         this.orderFormError = formErrorHandler(formInputData, this.orderForm, this.orderFormValidationMessages, ignoreDirty)
     }
+    orderOtherPartyFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
+        this.orderOtherPartyFormError = formErrorHandler(formInputData, this.orderOtherPartyForm, this.orderFormValidationMessages, ignoreDirty)
+    }
+
 
     createOrderForm(): void {
 
@@ -177,7 +194,6 @@ export class OrderComponent implements OnInit {
             this.orderFormInputChange(data)
         })
     }
-
 
     orderFormSubmit() {
 
@@ -252,6 +268,35 @@ export class OrderComponent implements OnInit {
     }
 
 
+
+    createOrderOtherPartyForm(): void {
+
+        this.orderOtherPartyForm = this.fb.group({
+            'custType'    : ['', [Validators.required ] ],
+            'customerId'    : ['', [Validators.required ] ],
+        } )
+
+        this.orderOtherPartyForm.valueChanges.subscribe(data => {
+            this.ignoreDirty = false
+            this.orderOtherPartyFormInputChange(data)
+        })
+    }
+
+    createNewOtherParty () {
+        if (this.orderOtherPartyForm.invalid) {
+            this.orderOtherPartyFormInputChange(this.orderOtherPartyForm.value, true)
+            this.ignoreDirty = true
+
+            return
+        }
+
+        this.otherPartyList.push(this.orderOtherPartyForm.value)
+    }
+    delOtherParty (company: any) {
+
+        const index = this.otherPartyList.indexOf(company)
+        this.otherPartyList.splice(index, 1)
+    }
 
 }
 
