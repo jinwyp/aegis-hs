@@ -35,6 +35,7 @@ public class YingOrderController {
      */
     @GetMapping
     public ResponseEntity<PageResult<YingOrder>> list(PageYingOrderDTO pageYingOrderDTO) {
+        logger.info("page ying order args: {}", pageYingOrderDTO);
         return PageResult.ok(yingOrderService.getPage(pageYingOrderDTO));
     }
 

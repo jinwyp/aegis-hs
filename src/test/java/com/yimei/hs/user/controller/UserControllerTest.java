@@ -46,9 +46,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -287,13 +285,13 @@ public class UserControllerTest {
         }
 
         // 8. 分页查询order
-        PageYingOrderDTO pageYingOrderDTO = new PageYingOrderDTO();
         ParameterizedTypeReference<PageResult<YingOrder>> tfp  = new ParameterizedTypeReference<PageResult<YingOrder>>() {
         };
-        // PageResult<YingOrder> yingOrderPageResult = getPage("/api/yings", pageYingOrderDTO, YingOrder.class);
-        PageResult<YingOrder> yingOrderPageResult = client.exchange("/api/yings", HttpMethod.GET, new HttpEntity<PageYingOrderDTO>(pageYingOrderDTO), tfp).getBody();
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("ownerId", nuser.getData().getId());
+        PageResult<YingOrder> yingOrderPageResult = client.exchange( "/api/yings", HttpMethod.GET, HttpEntity.EMPTY, tfp, variables).getBody();
         if (yingOrderPageResult.getSuccess()) {
-            logger.info("获取应收订单分页成功 GET /api/yings request: {}\nresponse:\n{}", printJson(pageYingOrderDTO), printJson(yingOrderPageResult.getData()));
+            logger.info("获取应收订单分页成功 GET /api/yings request: {}\nresponse:\n{}", variables, printJson(yingOrderPageResult.getData()));
         } else {
             logger.error("获取应收订单分页失败: {}", yingOrderPageResult.getError());
             System.exit(-1);
