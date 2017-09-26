@@ -75,27 +75,21 @@ public class UserControllerTest extends YingTestBase {
         createUser("13022117050", "123456");
     }
 
-
     @Test
     public void userTest() throws JsonProcessingException {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        user();
+        order();
+        config();
+        fayun();
+//        fukuan();
+//        huikuan();
+//        huankuan();
+//        upstream();
+//        downstream();
+//        traffic();
+//        fee();
+//        invoice();
     }
-
-
 
     private void user() throws JsonProcessingException {
         // 默认有个admin用户了 13022117050
@@ -255,7 +249,8 @@ public class UserControllerTest extends YingTestBase {
     private void config() throws JsonProcessingException {
 
         // 10. 增加核算月配置
-        String url = "/api/ying/" + yingOrderResult.getData().getId() + "/configs";
+        String configCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/configs";
+
         YingOrderConfig config = new YingOrderConfig() {{
             setHsMonth("201712");
             setContractBaseInterest(new BigDecimal("0.20"));
@@ -265,9 +260,9 @@ public class UserControllerTest extends YingTestBase {
             setTradeAddPrice(new BigDecimal("0"));
             setWeightedPrice(new BigDecimal("612"));
         }};
-        Result<YingOrderConfig> yingOrderConfigResult = client.exchange(url, HttpMethod.POST, new HttpEntity<YingOrderConfig>(config), typeReferenceOrderConfig).getBody();
+        Result<YingOrderConfig> yingOrderConfigResult = client.exchange(configCreateUrl, HttpMethod.POST, new HttpEntity<YingOrderConfig>(config), typeReferenceOrderConfig).getBody();
         if (yingOrderConfigResult.getSuccess()) {
-            logger.info("添加核算月配置成功\nPOST {}\nrequest:{}\nresponse:{}", url, printJson(config), printJson(yingOrderConfigResult.getData()));
+            logger.info("添加核算月配置成功\nPOST {}\nrequest:{}\nresponse:{}", configCreateUrl, printJson(config), printJson(yingOrderConfigResult.getData()));
         } else {
             logger.error("添加核算月配置失败: {}", yingOrderConfigResult.getError());
             System.exit(-2);
@@ -275,7 +270,7 @@ public class UserControllerTest extends YingTestBase {
 
         // 11. 修改核算月配置
         YingOrderConfig yingOrderConfig = new YingOrderConfig() {{
-            setOrderId(yingOrderConfigResult.getData().getOrderId());
+           setOrderId(yingOrderResult.getData().getId());
             setId(yingOrderConfigResult.getData().getId());
             setHsMonth("201711");
             setContractBaseInterest(new BigDecimal("0.20"));
@@ -285,11 +280,11 @@ public class UserControllerTest extends YingTestBase {
             setTradeAddPrice(new BigDecimal("0"));
             setWeightedPrice(new BigDecimal("700"));
         }};
-        String yingOrderCongfigUpdateUrl = "/api/ying/" + yingOrderConfigResult.getData().getOrderId() + "/configs/" + yingOrderConfigResult.getData().getId();
-        logger.info("ymurl===>"+yingOrderCongfigUpdateUrl);
-        Result<Integer> yingOrderConfigUpdateResult = client.exchange(yingOrderCongfigUpdateUrl, HttpMethod.PUT,new HttpEntity<YingOrderConfig>(yingOrderConfig),typeReferenceInteger).getBody();
+
+        String configUpdateUrl = "/api/ying/" + yingOrderConfigResult.getData().getOrderId() + "/configs/" + yingOrderConfigResult.getData().getId();
+        Result<Integer> yingOrderConfigUpdateResult = client.exchange(configUpdateUrl, HttpMethod.PUT,new HttpEntity<YingOrderConfig>(yingOrderConfig),typeReferenceInteger).getBody();
         if (yingOrderConfigUpdateResult.getSuccess()) {
-            logger.info("更新核算月配置成功\nPOST {}\nrequest = {}\nresponse = {}", yingOrderCongfigUpdateUrl, printJson(yingOrderConfig), printJson(yingOrderConfigUpdateResult.getData()));
+            logger.info("更新核算月配置成功\nPOST {}\nrequest = {}\nresponse = {}", configUpdateUrl, printJson(yingOrderConfig), printJson(yingOrderConfigUpdateResult.getData()));
         } else {
             logger.error("更新核算月配置失败: {}", yingOrderConfigUpdateResult.getError());
             System.exit(-2);
@@ -300,7 +295,9 @@ public class UserControllerTest extends YingTestBase {
         variablesHs.put("orderId", ""+yingOrderResult.getData().getId());
         PageYingOrderConfigDTO configDTO = new PageYingOrderConfigDTO();
         configDTO.setOrderId(yingOrderResult.getData().getId());
-        PageResult<YingOrderConfig> yingOrderConfigPageResult= client.exchange("/api/ying/"+yingOrderResult.getData().getId()+"/configs", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderConfigPage, variablesHs).getBody();
+
+        String configPageUrl = "/api/ying/"+yingOrderResult.getData().getId()+"/configs";
+        PageResult<YingOrderConfig> yingOrderConfigPageResult= client.exchange(configPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderConfigPage, variablesHs).getBody();
         if (yingOrderConfigPageResult.getSuccess()) {
             logger.info("获取核算月配置分页成功 GET /api/yings request: {}\nresponse:\n{}", variablesHs, printJson(yingOrderConfigPageResult.getData()));
         } else {
@@ -308,32 +305,37 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
 
-        yingOrderConfigResult = new Result<YingOrderConfig>(true, yingOrderConfigPageResult.getData().getResults().get(0), null);
-
+        this.yingOrderConfigResult = new Result<YingOrderConfig>(true, yingOrderConfigPageResult.getData().getResults().get(0), null);
     }
 
-    private void fayun() {
-        // 13. 创建发运
-
-        YingFayun fayun = new YingFayun() {{
-            setOrderId(yingOrderResult.getData().getId());
-            setHsId(yingOrderResult.getData().getOrderConfigList().get(0).getId());
-            setArriveStatus(CargoArriveStatus.ARRIVE);
-            setFyDate(LocalDateTime.now());
-            setFyAmount(new BigDecimal("1510.60"));
-            setUpstreamTrafficMode(TrafficMode.RAIL);
-            setUpstreamJHH("1000001");
-            setDownstreamTrafficMode(TrafficMode.MOTOR);
-            setDownstreamCars(166);
-
-        }};
-
-        String urlFaYun = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns";
-        Result<YingFayun> yingFayunResult = client.exchange(urlFaYun, HttpMethod.POST, new HttpEntity<YingFayun>(fayun), typeReferenceFayun).getBody();
-        if (yingFayunResult.getSuccess()) {
-            logger.info("创建发运成功: post /api/ying/orderId/configs  request\n{}\n response:\n {}", printJson(fayun), printJson(yingFayunResult.getData()));
+    private void fayun() throws JsonProcessingException {
+        String fayunCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns";
+        YingFayun fayun = new YingFayun();
+        Result<YingFayun> fayunCreateResult = client.exchange(fayunCreateUrl, HttpMethod.POST, new HttpEntity<>(fayun), typeReferenceFayun).getBody();
+        if (fayunCreateResult.getSuccess()) {
+            logger.info("创建发运成功\nPOST {}\nrequest = {}\nresponse = {}", fayunCreateUrl, printJson(fayun), printJson(fayunCreateResult.getData()));
         } else {
-            logger.error("创建发运失败: {}", yingFayunResult.getError());
+            logger.info("创建发运失败: {}", fayunCreateResult.getError());
+            System.exit(-1);
+        }
+
+        // 发运 - 分页
+        String fayunPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns";
+        PageResult<YingFayun> fayunPageResult = client.exchange(fayunPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFayunPage).getBody();
+        if (fayunPageResult.getSuccess()) {
+            logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", fayunPageUrl, "", printJson(fayunPageResult.getData()));
+        } else {
+            logger.info("创建分页失败: {}", fayunPageResult.getError());
+            System.exit(-1);
+        }
+
+        // 发运 - 查询
+        String fayunFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns/" + fayunCreateResult.getData().getId();
+        Result<YingSettleDownstream> fayunFindResult = client.exchange(fayunFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleDownstream).getBody();
+        if (fayunFindResult.getSuccess()) {
+            logger.info("查询发运成功\nPOST {}\nrequest = {}\nresponse = {}", fayunFindUrl, "", printJson(fayunFindResult.getData()));
+        } else {
+            logger.info("查询发运失败: {}", fayunFindResult.getError());
             System.exit(-1);
         }
 
@@ -417,7 +419,7 @@ public class UserControllerTest extends YingTestBase {
         }
     }
 
-    private void fukuan() {
+    private void fukuan() throws JsonProcessingException {
 
         ///////////////////////////////////////////////////////////////////////////
         // 付款
@@ -427,7 +429,7 @@ public class UserControllerTest extends YingTestBase {
         YingFukuan yingFukuan = new YingFukuan(
                 null,
                 yingOrderResult.getData().getId(),
-                yingOrderConfig.getId(),
+                yingOrderConfigResult.getData().getId(),
                 LocalDateTime.now(),
                 1L,
                 PaymentPurpose.DEPOSITECASH,
@@ -637,9 +639,6 @@ public class UserControllerTest extends YingTestBase {
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    // 发票
-    ///////////////////////////////////////////////////////////////////////////
     private void invoice() throws JsonProcessingException {
 
         // 发票 - 创建
@@ -647,7 +646,7 @@ public class UserControllerTest extends YingTestBase {
         YingInvoice yingInvoice = new YingInvoice(
                 null,
                 yingOrderResult.getData().getId(),
-                yingOrderConfig.getId(),
+                yingOrderConfigResult.getData().getId(),
                 InvoiceDirection.INCOME,
                 InvoiceType.FRIGHT_INVOICE,
                 LocalDateTime.now(),
