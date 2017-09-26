@@ -38,7 +38,8 @@ public class YingHuikuanController {
     @GetMapping("/{orderId}/huikuans")
     public ResponseEntity<PageResult<YingHuikuan>> list(
             @PathVariable("orderId") Long orderId,
-            PageYingHuikuanDTO pageYingHuikuanDTO) {
+            PageYingHuikuanDTO pageYingHuikuanDTO)
+    {
         pageYingHuikuanDTO.setOrderId(orderId);
         return PageResult.ok(yingHuikuanService.getPage(pageYingHuikuanDTO));
     }
@@ -75,7 +76,7 @@ public class YingHuikuanController {
     ) {
         yingHuikuan.setOrderId(orderId);
         int cnt = yingHuikuanService.create(yingHuikuan);
-        return Result.ok(null);
+        return Result.ok(yingHuikuan);
     }
 
     /**

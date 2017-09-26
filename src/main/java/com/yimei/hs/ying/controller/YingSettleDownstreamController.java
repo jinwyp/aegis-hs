@@ -57,6 +57,7 @@ public class YingSettleDownstreamController {
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
     ) {
+
         YingSettleDownstream settleDownstream = yingSettleService.findDownstream(id);
         if (settleDownstream == null) {
             return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);

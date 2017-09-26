@@ -97,7 +97,7 @@ public class YingFayunController {
             @PathVariable("id") Long id,
             @RequestBody @Validated(UpdateGroup.class) YingFayun yingFayun) {
 
-//        assert (orderId == orderId);
+        assert (orderId == orderId);
         yingFayun.setId(id);
         int cnt = yingFayunService.update(yingFayun);
         if (cnt != 1) {

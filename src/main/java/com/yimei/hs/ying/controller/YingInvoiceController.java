@@ -85,7 +85,7 @@ public class YingInvoiceController {
      *
      * @return
      */
-    @PutMapping("/{orderId}/invoice/:id")
+    @PutMapping("/{orderId}/invoices/{id}")
     @Transactional(readOnly =  false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,

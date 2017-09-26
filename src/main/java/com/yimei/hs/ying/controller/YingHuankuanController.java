@@ -49,7 +49,7 @@ public class YingHuankuanController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/huankuans/:id")
+    @GetMapping("/{orderId}/huankuans/{id}")
     public ResponseEntity<Result<YingHuankuan>> read(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id

@@ -35,11 +35,11 @@ public class PageYingHuikuanDTO extends BaseFilter<PageYingHuikuanDTO> {
         String nsql = new SQL() {{
             SELECT("*");
             FROM("hs_ying_huikuan");
-            if (orderId != null) { WHERE("orderId = #{orderId"); }
-            if (hsId != null) { WHERE("hsId = #{hsId}"); }
-            if (huikuanCompanyId != null) { WHERE("huikuanCompanyId = #{huikuanCompanyId}"); }
-            if (huikuanDate != null) { WHERE("huikuanDate = #{huikuanDate}"); }
-            if (huikuanMode != null) { WHERE("huikuanMode = #{huikuanMode}"); }
+            if (orderId != null) { WHERE("orderId = ?"); }
+            if (hsId != null) { WHERE("hsId = ?"); }
+            if (huikuanCompanyId != null) { WHERE("huikuanCompanyId = ?"); }
+            if (huikuanDate != null) { WHERE("huikuanDate = ?"); }
+            if (huikuanMode != null) { WHERE("huikuanMode = ?"); }
         }}.toString();
 
         String countSql = super.getCountSql(nsql);

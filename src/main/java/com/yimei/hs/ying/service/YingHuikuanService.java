@@ -56,19 +56,20 @@ public class YingHuikuanService {
         if (rtn != 1) {
             return 0;
         }
-
-        // 查询出当前订单的所有与付款的对应记录
-        List<YingHuikuanMap> huankuanMap = yingHuikuanMapMapper.loadAll(yingHuikuan.getOrderId());
-
-        // 当前订单的所有付款记录
-        List<YingFukuan> hukuanList = yingFukuanMapper.getList(yingHuikuan.getOrderId());
-
-        // 待添加的记录 todo
-        List<YingHuikuanMap> toAdd = new ArrayList<>();
-
-        for ( YingHuikuanMap item: toAdd) {
-            yingHuikuanMapMapper.insert(item);
-        }
+//
+//
+//        // 查询出当前订单的所有与付款的对应记录
+//        List<YingHuikuanMap> huankuanMap = yingHuikuanMapMapper.loadAll(yingHuikuan.getOrderId());
+//
+//        // 当前订单的所有付款记录
+//        List<YingFukuan> hukuanList = yingFukuanMapper.getList(yingHuikuan.getOrderId());
+//
+//        // 待添加的记录 todo
+//        List<YingHuikuanMap> toAdd = new ArrayList<>();
+//
+//        for ( YingHuikuanMap item: toAdd) {
+//            yingHuikuanMapMapper.insert(item);
+//        }
 
         return rtn;
     }
