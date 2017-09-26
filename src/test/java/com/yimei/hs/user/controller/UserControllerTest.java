@@ -14,9 +14,7 @@ import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.util.Digests;
 import com.yimei.hs.util.Encodes;
-import com.yimei.hs.ying.entity.YingOrder;
-import com.yimei.hs.ying.entity.YingOrderConfig;
-import com.yimei.hs.ying.entity.YingOrderParty;
+import com.yimei.hs.ying.entity.*;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,6 +59,41 @@ public class UserControllerTest {
         return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(m);
     }
 
+    ParameterizedTypeReference<Result<User>> typeReferenceUser  = new ParameterizedTypeReference<Result<User>>() {};
+    ParameterizedTypeReference<Result<Team>> typeReferenceTeam  = new ParameterizedTypeReference<Result<Team>>() {};
+    ParameterizedTypeReference<Result<Dept>> typeReferenceDept  = new ParameterizedTypeReference<Result<Dept>>() {};
+    ParameterizedTypeReference<Result<Party>> typeReferenceParty  = new ParameterizedTypeReference<Result<Party>>() {};
+
+    ParameterizedTypeReference<PageResult<User>> typeReferenceUserPage  = new ParameterizedTypeReference<PageResult<User>>() {};
+    ParameterizedTypeReference<PageResult<Team>> typeReferenceTeamPage  = new ParameterizedTypeReference<PageResult<Team>>() {};
+    ParameterizedTypeReference<PageResult<Dept>> typeReferenceDeptPage  = new ParameterizedTypeReference<PageResult<Dept>>() {};
+    ParameterizedTypeReference<PageResult<Party>> typeReferencePartyPage  = new ParameterizedTypeReference<PageResult<Party>>() {};
+
+    ParameterizedTypeReference<Result<YingOrder>> typeReferenceOrder  = new ParameterizedTypeReference<Result<YingOrder>>() {};
+    ParameterizedTypeReference<Result<YingOrderConfig>> typeReferenceOrderConfig  = new ParameterizedTypeReference<Result<YingOrderConfig>>() {};
+    ParameterizedTypeReference<Result<YingOrderParty>> typeReferenceOrderParty  = new ParameterizedTypeReference<Result<YingOrderParty>>() {};
+    ParameterizedTypeReference<Result<YingInvoice>> typeReferenceInvoice  = new ParameterizedTypeReference<Result<YingInvoice>>() {};
+    ParameterizedTypeReference<Result<YingInvoiceDetail>> typeReferenceInvoiceDetail  = new ParameterizedTypeReference<Result<YingInvoiceDetail>>() {};
+    ParameterizedTypeReference<Result<YingFayun>> typeReferenceFayun  = new ParameterizedTypeReference<Result<YingFayun>>() {};
+    ParameterizedTypeReference<Result<YingFukuan>> typeReferenceFukuan  = new ParameterizedTypeReference<Result<YingFukuan>>() {};
+    ParameterizedTypeReference<Result<YingHuikuan>> typeReferenceHuikuan  = new ParameterizedTypeReference<Result<YingHuikuan>>() {};
+    ParameterizedTypeReference<Result<YingHuankuan>> typeReferenceHuankuan  = new ParameterizedTypeReference<Result<YingHuankuan>>() {};
+    ParameterizedTypeReference<Result<YingSettleUpstream>> typeReferenceSettleUpstream  = new ParameterizedTypeReference<Result<YingSettleUpstream>>() {};
+    ParameterizedTypeReference<Result<YingSettleDownstream>> typeReferenceSettleDownstream  = new ParameterizedTypeReference<Result<YingSettleDownstream>>() {};
+    ParameterizedTypeReference<Result<YingSettleTraffic>> typeReferenceSettleTraffic  = new ParameterizedTypeReference<Result<YingSettleTraffic>>() {};
+
+    ParameterizedTypeReference<PageResult<YingOrder>> typeReferenceOrderPage  = new ParameterizedTypeReference<PageResult<YingOrder>>() {};
+    ParameterizedTypeReference<PageResult<YingOrderConfig>> typeReferenceOrderConfigPage  = new ParameterizedTypeReference<PageResult<YingOrderConfig>>() {};
+    ParameterizedTypeReference<PageResult<YingOrderParty>> typeReferenceOrderPartyPage  = new ParameterizedTypeReference<PageResult<YingOrderParty>>() {};
+    ParameterizedTypeReference<PageResult<YingInvoice>> typeReferenceInvoicePage  = new ParameterizedTypeReference<PageResult<YingInvoice>>() {};
+    ParameterizedTypeReference<PageResult<YingInvoiceDetail>> typeReferenceInvoiceDetailPage  = new ParameterizedTypeReference<PageResult<YingInvoiceDetail>>() {};
+    ParameterizedTypeReference<PageResult<YingFayun>> typeReferenceFayunPage  = new ParameterizedTypeReference<PageResult<YingFayun>>() {};
+    ParameterizedTypeReference<PageResult<YingFukuan>> typeReferenceFukuanPage  = new ParameterizedTypeReference<PageResult<YingFukuan>>() {};
+    ParameterizedTypeReference<PageResult<YingHuikuan>> typeReferenceHuikuanPage  = new ParameterizedTypeReference<PageResult<YingHuikuan>>() {};
+    ParameterizedTypeReference<PageResult<YingHuankuan>> typeReferenceHuankuanPage  = new ParameterizedTypeReference<PageResult<YingHuankuan>>() {};
+    ParameterizedTypeReference<PageResult<YingSettleUpstream>> typeReferenceSettleUpstreamPage  = new ParameterizedTypeReference<PageResult<YingSettleUpstream>>() {};
+    ParameterizedTypeReference<PageResult<YingSettleDownstream>> typeReferenceSettleDownstreamPage  = new ParameterizedTypeReference<PageResult<YingSettleDownstream>>() {};
+    ParameterizedTypeReference<PageResult<YingSettleTraffic>> typeReferenceSettleTrafficPage  = new ParameterizedTypeReference<PageResult<YingSettleTraffic>>() {};
 
 //    @PostConstruct
 //    void postContruct() {
@@ -117,34 +150,7 @@ public class UserControllerTest {
         }).getBody();
     }
 
-    public <M, R> Result<R> get(String url, M model, Class<?> classz) {
-        return client.exchange(
-                url, HttpMethod.GET,
-                HttpEntity.EMPTY,
-                new ParameterizedTypeReference<Result<R>>() {
 
-                    @Override
-                    public Type getType() {
-                        Type[] responseWrapper = {classz};
-                        ParameterizedType pt = ParameterizedTypeImpl.make(Result.class, responseWrapper, null);
-                        return super.getType();
-                    }
-                }).getBody();
-    }
-
-    public <M, R> PageResult<R> getPage(String url, M model, Class<?> classz) {
-        return client.exchange(
-                url, HttpMethod.GET,
-                HttpEntity.EMPTY,
-                new ParameterizedTypeReference<PageResult<R>>() {
-                    @Override
-                    public Type getType() {
-                        Type[] responseWrapper = {classz};
-                        ParameterizedType pt = ParameterizedTypeImpl.make(PageResult.class, responseWrapper, null);
-                        return super.getType();
-                    }
-                }).getBody();
-    }
 
     private List<Long> createParties(List<Party> parties) {
         List<Long> rtn = new ArrayList<Long>();
@@ -278,11 +284,9 @@ public class UserControllerTest {
         }
 
         // 8. 分页查询order
-        ParameterizedTypeReference<PageResult<YingOrder>> tfp  = new ParameterizedTypeReference<PageResult<YingOrder>>() {
-        };
         Map<String, Object> variables = new HashMap<>();
         variables.put("ownerId", nuser.getData().getId());
-        PageResult<YingOrder> yingOrderPageResult = client.exchange( "/api/yings", HttpMethod.GET, HttpEntity.EMPTY, tfp, variables).getBody();
+        PageResult<YingOrder> yingOrderPageResult = client.exchange( "/api/yings", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
         if (yingOrderPageResult.getSuccess()) {
             logger.info("获取应收订单分页成功 GET /api/yings request: {}\nresponse:\n{}", variables, printJson(yingOrderPageResult.getData()));
         } else {
@@ -316,7 +320,6 @@ public class UserControllerTest {
         }
 
         // 11. 修改核算月配置
-
 
 
 
