@@ -1,7 +1,7 @@
 package com.yimei.hs.ying.entity;
 
 import com.yimei.hs.enums.PayMode;
-import com.yimei.hs.enums.RecivedPaymentPurpose;
+import com.yimei.hs.enums.ReceivePaymentPurpose;
 import lombok.Data;
 
 import javax.validation.constraints.Max;
@@ -24,7 +24,7 @@ public class YingHuikuan implements Serializable {
 
     private BigDecimal huikuanAmount;
 
-    private RecivedPaymentPurpose huikuanUsage;
+    private ReceivePaymentPurpose huikuanUsage;
 
     private PayMode huikuanMode;
 

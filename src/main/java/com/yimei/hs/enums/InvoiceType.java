@@ -1,5 +1,8 @@
 package com.yimei.hs.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 发票用途(发票项目)
  */
@@ -14,4 +17,13 @@ public enum InvoiceType {
         this.value = value;
     }
 
+    public static List<EnumEntity> list() {
+        List<EnumEntity> data = new ArrayList<>();
+        for (InvoiceType bt : InvoiceType.values()) {
+            data.add(new EnumEntity(bt.name(), bt.value));
+        }
+        return data;
+    }
+
+    public static String name = "InvoiceType";
 }

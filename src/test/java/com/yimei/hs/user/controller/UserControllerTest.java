@@ -77,6 +77,7 @@ public class UserControllerTest extends YingTestBase {
 
     @Test
     public void userTest() throws JsonProcessingException {
+        enums();
         user();
         order();
         config();
@@ -695,5 +696,14 @@ public class UserControllerTest extends YingTestBase {
 
     }
 
-
+    private void enums() throws JsonProcessingException {
+        String url = "/api/enum/BusinessType";
+        Result<List<EnumEntity>> lists = client.exchange( url , HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<Result<List<EnumEntity>>>(){}).getBody();
+        if (lists.getSuccess()) {
+            logger.info("获取BusinessType成功\nGET {} request = {}\nresponse = {}", url, "", printJson(lists.getData()));
+        } else {
+            logger.error("获取BusinessType失败: {}", lists.getError());
+            System.exit(-1);
+        }
+    }
 }
