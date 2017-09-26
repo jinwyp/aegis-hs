@@ -25,7 +25,7 @@ describe('当前登陆用户信息', function () {
         server.post('/api/login')
             .set('Accept', 'application/json')
             .send({
-                phone: "18321805753",
+                phone: "13022117050",
                 password: "123456"
             })
             .expect('Content-Type', /json/)

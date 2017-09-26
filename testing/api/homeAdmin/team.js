@@ -56,7 +56,7 @@ describe('业务团队', function () {
     })
 
 
-    it('获取某个ID的团队信息 GET: /api/teams/1', function (done) {
+    it('获取某个ID的团队信息 GET: /api/teams/16', function (done) {
         server.get('/api/teams/1')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
@@ -72,7 +72,7 @@ describe('业务团队', function () {
     })
 
 
-    it('修改某个ID的团队名称 PUT: /api/teams/1', function (done) {
+    it('修改某个ID的团队名称 PUT: /api/teams/16', function (done) {
         server.put('/api/teams/1')
             .set('Accept', 'application/json')
             .send({
@@ -90,3 +90,4 @@ describe('业务团队', function () {
     })
 
 })
+
