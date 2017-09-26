@@ -79,11 +79,10 @@ public class UserControllerTest extends YingTestBase {
         admin.setPhone("13022117050");
         admin.setPassword("123456");
 
-        // Result<String> result = post("/api/login", admin, String.class);
         Result<String> result = client.exchange("/api/login", HttpMethod.POST, new HttpEntity<User>(admin), typeReferenceString).getBody();
 
         if (result.getSuccess()) {
-            logger.info("登录成功: {}", result.getData());
+            logger.info("登录成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/login", printJson(admin), printJson(result.getData()));
         } else {
             logger.error("admin 登录失败");
             System.exit(-1);
@@ -108,10 +107,9 @@ public class UserControllerTest extends YingTestBase {
         // 3. 创建部门
         Dept dept = new Dept();
         dept.setName("周超团队");
-        // Result<Dept> deptResult = post("/api/departments", dept, Dept.class);
         Result<Dept> deptResult = client.exchange("/api/departments", HttpMethod.POST, new HttpEntity<Dept>(dept), typeReferenceDept).getBody();
         if (deptResult.getSuccess()) {
-            logger.info("创建部门成功: {}", deptResult.getData());
+            logger.info("创建部门成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/departments", printJson(dept), printJson(deptResult.getData()));
         } else {
             logger.error("创建部门失败: {}", deptResult.getError());
             System.exit(-3);
@@ -121,10 +119,9 @@ public class UserControllerTest extends YingTestBase {
         Team team = new Team();
         team.setDeptId(deptResult.getData().getId());
         team.setName("我的team");
-        // Result<Team> teamResult = post("/api/teams", team, Team.class);
         Result<Team> teamResult = client.exchange("/api/teams", HttpMethod.POST, new HttpEntity<Team>(team), typeReferenceTeam).getBody();
         if (teamResult.getSuccess()) {
-            logger.info("创建团队成功: {}", teamResult.getData());
+            logger.info("创建团队成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/teams", printJson(team), printJson(teamResult.getData()));
         } else {
             logger.error("创建团队失败: {}", teamResult.getError());
         }
@@ -134,10 +131,9 @@ public class UserControllerTest extends YingTestBase {
         newUser.setPassword("123456");
         newUser.setPhone("13022117051");
         newUser.setDeptId(deptResult.getData().getId());
-        // Result<User> nuser = post("/api/users", newUser, User.class);
         Result<User> nuser = client.exchange("/api/users", HttpMethod.POST, new HttpEntity<User>(newUser), typeReferenceUser).getBody();
         if (nuser.getSuccess()) {
-            logger.info("创建用户成功: {}", nuser.getClass());
+            logger.info("创建用户成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/users", printJson(newUser), printJson(nuser.getData()));
         } else {
             logger.error("创建用户失败: {}", nuser.getError());
             System.exit(-2);
@@ -147,7 +143,7 @@ public class UserControllerTest extends YingTestBase {
         // Result<String> loginResult = post("/api/login", newUser, String.class);
         Result<String> loginResult = client.exchange("/api/login", HttpMethod.POST, new HttpEntity<User>(newUser), typeReferenceString).getBody();
         if (loginResult.getSuccess()) {
-            logger.info("登录成功: {}", loginResult.getData());
+            logger.info("登录成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/login", printJson(newUser), printJson(loginResult.getData()));
         } else {
             logger.error("登录失败: {}", loginResult.getError());
         }
@@ -184,31 +180,34 @@ public class UserControllerTest extends YingTestBase {
                     setCustType(CustomerType.ACCOUNTING_COMPANY);
                 }}
         ));
-
-        // Result<YingOrder> yingOrderResult = post("/api/yings", yingOrder, YingOrder.class);
         Result<YingOrder> yingOrderResult = client.exchange("/api/yings", HttpMethod.POST, new HttpEntity<YingOrder>(yingOrder), typeReferenceOrder).getBody();
         if (yingOrderResult.getSuccess()) {
-            logger.info("创建应收订单成功: {}", yingOrderResult.getData());
+            logger.info("创建应收订单成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/yings", printJson(yingOrder), printJson(yingOrderResult.getData()));
         } else {
             logger.error("创建应收订单失败: {}", yingOrderResult.getError());
         }
 
         // 8. 分页查询order
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("ownerId", nuser.getData().getId());
+        Map<String, String> variables = new HashMap<>();
+        variables.put("ownerId", nuser.getData().getId().toString());
         PageResult<YingOrder> yingOrderPageResult = client.exchange("/api/yings", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
         if (yingOrderPageResult.getSuccess()) {
-            logger.info("获取应收订单分页成功 GET /api/yings request: {}\nresponse:\n{}", variables, printJson(yingOrderPageResult.getData()));
+            logger.info("获取应收订单分页成功\nGET {}\nrequest = {}\nresponse:\n{}", "/api/yings", printJson(variables), printJson(yingOrderPageResult.getData()));
         } else {
             logger.error("获取应收订单分页失败: {}", yingOrderPageResult.getError());
             System.exit(-1);
         }
 
         // 9. 单个订单查询
-        ParameterizedTypeReference<Result<YingOrder>> tf = new ParameterizedTypeReference<Result<YingOrder>>() {
-        };
         String kurl = "/api/yings/" + yingOrderResult.getData().getId();
-        Result<YingOrder> yingOrderResult1 = client.exchange(kurl, HttpMethod.GET, HttpEntity.EMPTY, tf).getBody();
+        Result<YingOrder> yingOrderResult1 = client.exchange(kurl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrder).getBody();
+        if (yingOrderResult1.getSuccess()) {
+            logger.info("查询订单成功\nGET {}\nrequest = {}\nresponse = {}", kurl, "", printJson(yingOrderResult1.getData()));
+        } else {
+            logger.error("查询订单失败: {}", yingOrderResult1.getError());
+            System.exit(-1);
+        }
+
 
         // 10. 增加核算月配置
         String url = "/api/ying/" + yingOrderResult1.getData().getId() + "/configs";
@@ -223,7 +222,7 @@ public class UserControllerTest extends YingTestBase {
         }};
         Result<YingOrderConfig> yingOrderConfigResult = client.exchange(url, HttpMethod.POST, new HttpEntity<YingOrderConfig>(config), typeReferenceOrderConfig).getBody();
         if (yingOrderConfigResult.getSuccess()) {
-            logger.info("添加核算月配置成功 POST {}\nrequest:{}\nresponse:{}", url, printJson(config), printJson(yingOrderConfigResult.getData()));
+            logger.info("添加核算月配置成功\nPOST {}\nrequest:{}\nresponse:{}", url, printJson(config), printJson(yingOrderConfigResult.getData()));
         } else {
             logger.error("添加核算月配置失败: {}", yingOrderConfigResult.getError());
             System.exit(-2);
