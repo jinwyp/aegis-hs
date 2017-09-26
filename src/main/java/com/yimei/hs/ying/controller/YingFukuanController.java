@@ -43,7 +43,7 @@ public class YingFukuanController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/fukuans/:id")
+    @GetMapping("/{orderId}/fukuans/{id}")
     public ResponseEntity<Result<YingFukuan>> read(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id
@@ -63,7 +63,9 @@ public class YingFukuanController {
      */
     @PostMapping("/{orderId}/fukuans")
     @Transactional(readOnly =  false)
-    public ResponseEntity<Result<YingFukuan>> create(YingFukuan yingFukuan) {
+    public ResponseEntity<Result<YingFukuan>> create( @PathVariable("orderId") long orderId,@RequestBody YingFukuan yingFukuan) {
+
+        yingFukuan.setOrderId(orderId);
         yingFukuanService.create(yingFukuan);
         return Result.ok(yingFukuan);
     }

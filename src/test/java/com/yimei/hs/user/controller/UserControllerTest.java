@@ -77,13 +77,12 @@ public class UserControllerTest extends YingTestBase {
 
     @Test
     public void userTest() throws JsonProcessingException {
-        enums(); System.exit(-1);
         user();
         order();
         config();
-        fayun();
-//        fukuan();
-//        huikuan();
+//        fayun();
+        fukuan();
+//        huikua n();
 //        huankuan();
 //        upstream();
 //        downstream();
@@ -311,7 +310,17 @@ public class UserControllerTest extends YingTestBase {
 
     private void fayun() throws JsonProcessingException {
         String fayunCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns";
-        YingFayun fayun = new YingFayun();
+        YingFayun fayun = new YingFayun(){{
+            setOrderId(yingOrderResult.getData().getId());
+            setDownstreamCars(166);
+            setDownstreamTrafficMode(TrafficMode.MOTOR);
+            setUpstreamTrafficMode(TrafficMode.RAIL);
+            setUpstreamJHH("1000001");
+            setFyAmount(new BigDecimal("1510.60"));
+            setArriveStatus(CargoArriveStatus.ARRIVE);
+            setHsId(yingOrderConfigResult.getData().getId());
+            setFyDate(LocalDateTime.now());
+        }};
         Result<YingFayun> fayunCreateResult = client.exchange(fayunCreateUrl, HttpMethod.POST, new HttpEntity<>(fayun), typeReferenceFayun).getBody();
         if (fayunCreateResult.getSuccess()) {
             logger.info("创建发运成功\nPOST {}\nrequest = {}\nresponse = {}", fayunCreateUrl, printJson(fayun), printJson(fayunCreateResult.getData()));
@@ -332,7 +341,7 @@ public class UserControllerTest extends YingTestBase {
 
         // 发运 - 查询
         String fayunFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns/" + fayunCreateResult.getData().getId();
-        Result<YingSettleDownstream> fayunFindResult = client.exchange(fayunFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleDownstream).getBody();
+        Result<YingFayun> fayunFindResult = client.exchange(fayunFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFayun).getBody();
         if (fayunFindResult.getSuccess()) {
             logger.info("查询发运成功\nPOST {}\nrequest = {}\nresponse = {}", fayunFindUrl, "", printJson(fayunFindResult.getData()));
         } else {
@@ -340,6 +349,19 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
 
+        fayun.setFyAmount(new BigDecimal("1510.61"));
+
+        //发运更新
+
+        String fayunUpdateUrl="/api/ying/" + yingOrderResult.getData().getId() + "/fayuns/" + fayunCreateResult.getData().getId();
+
+        Result<Integer> yingFayunUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT,new HttpEntity<YingFayun>(fayun),typeReferenceInteger).getBody();
+        if (yingFayunUpdateResult.getSuccess()) {
+            logger.info("更新核算月配置成功\nPOST {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(fayun), printJson(yingFayunUpdateResult.getData()));
+        } else {
+            logger.error("更新核算月配置失败: {}", yingFayunUpdateResult.getError());
+            System.exit(-2);
+        }
     }
 
     private void huikuan() throws JsonProcessingException {
@@ -422,26 +444,35 @@ public class UserControllerTest extends YingTestBase {
 
     private void fukuan() throws JsonProcessingException {
 
-        ///////////////////////////////////////////////////////////////////////////
-        // 付款
-        ///////////////////////////////////////////////////////////////////////////
-        // 付款 - 创建
+
+
         String fukuanCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans";
         YingFukuan yingFukuan = new YingFukuan(
-                null,
-                yingOrderResult.getData().getId(),
-                yingOrderConfigResult.getData().getId(),
-                LocalDateTime.now(),
-                1L,
-                PaymentPurpose.DEPOSITECASH,
-                new BigDecimal("10"),
-                PayMode.BANK_ACCEPTANCE,
-                1L,
-                new BigDecimal("0.11"),
-                10,
-                null,
-                new BigDecimal("10000")
-        );
+        ){{
+
+               setOrderId(yingOrderResult.getData().getId());
+               setHsId(yingOrderConfigResult.getData().getId());
+               setPayDate(LocalDateTime.now());
+               setRecieveCompanyId( yingOrderResult.getData().getUpstreamId());
+               setPayUsage(PaymentPurpose.DEPOSITECASH);
+               setPayMode(PayMode.ELEC_REMITTANCE);
+               setPayAmount(new BigDecimal("510000"));
+               setUseDays(35);
+               setUseInterest(new BigDecimal("0.075"));
+               setCapitalId(yingOrderResult.getData().getOrderPartyList().get(0).getCustomerId());
+            }};
+        YingFukuan yingFukuantwo = new YingFukuan(
+        ){{
+
+            setOrderId(yingOrderResult.getData().getId());
+            setHsId(yingOrderConfigResult.getData().getId());
+            setPayDate(LocalDateTime.now());
+            setRecieveCompanyId( yingOrderResult.getData().getUpstreamId());
+            setPayUsage(PaymentPurpose.FIAL_PAYMENT);
+            setPayMode(PayMode.ELEC_REMITTANCE);
+            setPayAmount(new BigDecimal("54291.93"));
+            setCapitalId(17l);
+        }};
         Result<YingFukuan> fukuanResult = client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuan), typeReferenceFukuan).getBody();
         if (fukuanResult.getSuccess()) {
             logger.info("创建付款成功\nPOST {}\nrequest = {}\nresponse = {}", fukuanCreateUrl, printJson(yingFukuan), printJson(fukuanResult.getData()));
@@ -449,6 +480,7 @@ public class UserControllerTest extends YingTestBase {
             logger.info("创建付款失败: {}", fukuanResult.getError());
             System.exit(-1);
         }
+        client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuantwo), typeReferenceFukuan).getBody();
         // 付款 - 分页
         String fukuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans";
         Map<String, String> fukuanVariablesPage = new HashMap<>();
@@ -461,7 +493,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 付款 - 单记录
-        String fukuanFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans" + fukuanResult.getData().getId();
+        String fukuanFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans/" + fukuanResult.getData().getId();
         Result<YingFukuan> fukuanFindResult = client.exchange(fukuanFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFukuan).getBody();
         if (fukuanFindResult.getSuccess()) {
             logger.info("查询付款成功\nGET {}\nrequest = {}\nresponse = {}", fukuanFindUrl, "", printJson(fukuanFindResult.getData()));
@@ -696,23 +728,5 @@ public class UserControllerTest extends YingTestBase {
 
     }
 
-    private void enums() throws JsonProcessingException {
-        String url = "/api/enums/BusinessType";
-        Result<List<EnumEntity>> lists = client.exchange( url , HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<Result<List<EnumEntity>>>(){}).getBody();
-        if (lists.getSuccess()) {
-            logger.info("获取BusinessType成功\nGET {} request = {}\nresponse = {}", url, "", printJson(lists.getData()));
-        } else {
-            logger.error("获取BusinessType失败: {}", lists.getError());
-            System.exit(-1);
-        }
 
-        String urlAll = "/api/enums";
-        Result<List<String>> listAll = client.exchange( urlAll , HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<Result<List<String>>>(){}).getBody();
-        if (listAll.getSuccess()) {
-            logger.info("获取BusinessType成功\nGET {} request = {}\nresponse = {}", urlAll, "", printJson(listAll.getData()));
-        } else {
-            logger.error("获取BusinessType失败: {}", listAll.getError());
-            System.exit(-1);
-        }
-    }
 }
