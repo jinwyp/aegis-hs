@@ -38,7 +38,7 @@ export class OrderComponent implements OnInit {
     filterTeamList : any[] = []
     partyList : any[] = []
 
-    payModeList : any[] = getEnum('PayMode')
+    payModeList : any[] = getEnum('SettleMode')
     customerType : any[] = getEnum('CustomerType')
     cargoTypeList : any[] = getEnum('CargoType')
 
@@ -99,7 +99,7 @@ export class OrderComponent implements OnInit {
 
         this.hsOrderService.getOrderList(query).subscribe(
             data => {
-                this.orderList = data.data
+                this.orderList = data.data.results
 
                 this.pagination.pageSize = data.data.pageSize
                 this.pagination.pageNo = data.data.pageNo
@@ -323,6 +323,7 @@ export class OrderComponent implements OnInit {
                 }
             })
 
+            this.orderForm.patchValue({line : lineName})
         }
 
     }

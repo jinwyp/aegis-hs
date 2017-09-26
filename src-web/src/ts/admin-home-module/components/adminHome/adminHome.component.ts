@@ -74,6 +74,14 @@ export class AdminHomeComponent implements OnInit {
             error => {this.httpService.errorHandler(error) }
         )
 
+        this.orderService.getEnumList('SettleMode').subscribe(
+            data => {
+                saveEnum('SettleMode', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+
         this.orderService.getEnumList('CustomerType').subscribe(
             data => {
                 saveEnum('CustomerType', data.data)

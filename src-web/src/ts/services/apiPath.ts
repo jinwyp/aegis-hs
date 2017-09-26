@@ -35,7 +35,7 @@ const apiPath = {
     hsGetPartyList : prefix + '/parties',
 
 
-    hsGetOrderList : '/apx/test/yings',
+    hsGetOrderList : '/api/yings',
 }
 
 
