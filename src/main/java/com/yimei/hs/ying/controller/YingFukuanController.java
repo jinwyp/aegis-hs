@@ -87,7 +87,7 @@ public class YingFukuanController {
      * @return
      */
     @Transactional(readOnly =  false)
-    @PutMapping("/{orderId}/fukuans/:id")
+    @PutMapping("/{orderId}/fukuans/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id,

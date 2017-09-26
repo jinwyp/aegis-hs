@@ -1,5 +1,6 @@
 package com.yimei.hs.ying.entity;
 
+import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.OrderStatus;
 import com.yimei.hs.enums.SettleMode;
@@ -27,27 +28,27 @@ public class YingOrder implements Serializable {
     @NotNull(message = "部门编号不能为空")
     private Long deptId;
 
-    @NotNull(message = "团队不能为空")
+    @NotNull(groups = {CreateGroup.class },message = "团队不能为空")
     private Long teamId;
 
     private Long creatorId;
 
     private Long ownerId;
 
-    @NotNull(message = "主财务公司不能为空")
+    @NotNull(groups = {CreateGroup.class }, message = "主财务公司不能为空")
     private Long mainAccounting;
 
-    @NotEmpty(message = "业务线名称不能为空")
+    @NotEmpty(groups = {CreateGroup.class }, message = "业务线名称不能为空")
     private String line;
 
     private CargoType cargoType;
 
-    @NotNull(message = "上游不能为空")
+    @NotNull(groups = {CreateGroup.class }, message = "上游不能为空")
     private Long upstreamId;
 
     private SettleMode upstreamSettleMode;
 
-    @NotNull(message = "下游不能为空")
+    @NotNull(groups = {CreateGroup.class }, message = "下游不能为空")
     private Long downstreamId;
 
     private SettleMode downstreamSettleMode;
