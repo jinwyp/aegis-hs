@@ -104,7 +104,6 @@ public class YingFayunController {
      *  发运统计
      */
     @GetMapping("/{orderId}/fayuns-stat")
-
     public ResponseEntity<Result<FayunStat>> stat(
             @PathVariable("orderId") long orderId
     ) {

@@ -12,10 +12,7 @@ import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.ying.dto.PageYingOrderConfigDTO;
-import com.yimei.hs.ying.entity.YingFayun;
-import com.yimei.hs.ying.entity.YingOrder;
-import com.yimei.hs.ying.entity.YingOrderConfig;
-import com.yimei.hs.ying.entity.YingOrderParty;
+import com.yimei.hs.ying.entity.*;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -264,8 +261,8 @@ public class UserControllerTest extends YingTestBase {
 //        logger.info("ymurl===>" + yingOrderCongfigUpdateUrl);
 //        Result<Integer> yingOrderCOnfigUpdateResult = client.exchange(yingOrderCongfigUpdateUrl, HttpMethod.PUT, new HttpEntity<YingOrderConfig>(yingOrderConfig), typeReferenceInteger).getBody();
 
-        logger.info("ymurl===>"+yingOrderCongfigUpdateUrl);
-        Result<Integer> yingOrderCOnfigUpdateResult = client.exchange(yingOrderCongfigUpdateUrl, HttpMethod.PUT,new HttpEntity<YingOrderConfig>(yingOrderConfig),typeReferenceInteger).getBody();
+        logger.info("ymurl===>" + yingOrderCongfigUpdateUrl);
+        Result<Integer> yingOrderCOnfigUpdateResult = client.exchange(yingOrderCongfigUpdateUrl, HttpMethod.PUT, new HttpEntity<YingOrderConfig>(yingOrderConfig), typeReferenceInteger).getBody();
 
 
         if (yingOrderCOnfigUpdateResult.getSuccess()) {
@@ -310,6 +307,7 @@ public class UserControllerTest extends YingTestBase {
             logger.info("创建发运成功: {}", yingFayunResult.getData());
         } else {
             logger.error("创建发运失败: {}", yingFayunResult.getError());
+            System.exit(-1);
         }
 
 
@@ -318,54 +316,323 @@ public class UserControllerTest extends YingTestBase {
 
         // 15. 发运单记录查询
 
-        // 16. 费用创建
+        ///////////////////////////////////////////////////////////////////////////
+        // 费用
+        ///////////////////////////////////////////////////////////////////////////
+        // 费用 - 创建
+        String feeCreateUrl = "/api/ying/" + yingOrder.getId() + "/settlefee";
+        YingFee fee = new YingFee();
+        Result<YingFee> feeCreateResult = client.exchange(feeCreateUrl, HttpMethod.POST, new HttpEntity<>(fee), typeReferenceFee).getBody();
+        if (feeCreateResult.getSuccess()) {
+            logger.info("创建费用成功\nPOST {}\nrequest = {}\nresponse = {}", feeCreateUrl, printJson(fee), printJson(feeCreateResult.getData()));
+        } else {
+            logger.info("创建费用失败: {}", feeCreateResult.getError());
+            System.exit(-1);
+        }
 
-        // 17. 费用分页
+        // 费用 - 分页
+        String feePageUrl = "/api/ying/" + yingOrder.getId() + "/settlefee";
+        PageResult<YingFee> feePageResult = client.exchange(feePageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFeePage).getBody();
+        if (feePageResult.getSuccess()) {
+            logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", feePageUrl, "", printJson(feePageResult.getData()));
+        } else {
+            logger.info("创建分页失败: {}", feePageResult.getError());
+            System.exit(-1);
+        }
 
-        // 18. 分页单记录查询
+        // 费用 - 查询
+        String feeFindUrl = "/api/ying/" + yingOrder.getId() + "/settlefee";
+        Result<YingFee> feeFindResult = client.exchange(feeFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFee).getBody();
+        if (feeFindResult.getSuccess()) {
+            logger.info("查询发票成功\nPOST {}\nrequest = {}\nresponse = {}", feeFindUrl, "", printJson(feeFindResult.getData()));
+        } else {
+            logger.info("查询发票失败: {}", feeFindResult.getError());
+            System.exit(-1);
+        }
 
-        // 19. 费用更新
 
-        // 20-1. 运输方结算 - 创建
+        ///////////////////////////////////////////////////////////////////////////
+        // 运输方结算
+        ///////////////////////////////////////////////////////////////////////////
+        // 运输方结算 - 创建
+        String trafficCreateUrl = "/api/ying/" + yingOrder.getId() + "/settletraffic";
+        YingSettleTraffic traffic = new YingSettleTraffic();
+        Result<YingSettleTraffic> trafficCreateResult = client.exchange(trafficCreateUrl, HttpMethod.POST, new HttpEntity<>(traffic), typeReferenceSettleTraffic).getBody();
+        if (trafficCreateResult.getSuccess()) {
+            logger.info("创建运输方结算成功\nPOST {}\nrequest = {}\nresponse = {}", trafficCreateUrl, printJson(traffic), printJson(trafficCreateResult.getData()));
+        } else {
+            logger.info("创建运输方结算失败: {}", trafficCreateResult.getError());
+            System.exit(-1);
+        }
 
-        // 20-2. 运输方结算 - 分页查询
+        // 运输方结算 - 分页
+        String trafficPageUrl = "/api/ying/" + yingOrder.getId() + "/settletraffic";
+        PageResult<YingSettleTraffic> trafficPageResult = client.exchange(trafficPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleTrafficPage).getBody();
+        if (trafficPageResult.getSuccess()) {
+            logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", trafficPageUrl, "", printJson(trafficPageResult.getData()));
+        } else {
+            logger.info("创建分页失败: {}", trafficPageResult.getError());
+            System.exit(-1);
+        }
 
-        // 20-3. 运输方结算 - 单记录查询
+        // 运输方结算 - 查询
+        String trafficFindUrl = "/api/ying/" + yingOrder.getId() + "/settletraffic";
+        Result<YingSettleTraffic> trafficFindResult = client.exchange(trafficFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleTraffic).getBody();
+        if (trafficFindResult.getSuccess()) {
+            logger.info("查询发票成功\nPOST {}\nrequest = {}\nresponse = {}", trafficFindUrl, "", printJson(trafficFindResult.getData()));
+        } else {
+            logger.info("查询发票失败: {}", trafficFindResult.getError());
+            System.exit(-1);
+        }
 
-        // 20-4. 运输方结算 - 更新
-
+        ///////////////////////////////////////////////////////////////////////////
+        // 上游结算
+        ///////////////////////////////////////////////////////////////////////////
         // 上游结算 - 创建
+        String upstreamCreateUrl = "/api/ying/" + yingOrder.getId() + "/settleupstream";
+        YingSettleUpstream upstream = new YingSettleUpstream();
+        Result<YingSettleUpstream> upstreamCreateResult = client.exchange(upstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(upstream), typeReferenceSettleUpstream).getBody();
+        if (upstreamCreateResult.getSuccess()) {
+            logger.info("创建上游结算成功\nPOST {}\nrequest = {}\nresponse = {}", upstreamCreateUrl, printJson(upstream), printJson(upstreamCreateResult.getData()));
+        } else {
+            logger.info("创建上游结算失败: {}", upstreamCreateResult.getError());
+            System.exit(-1);
+        }
 
         // 上游结算 - 分页
+        String upstreamPageUrl = "/api/ying/" + yingOrder.getId() + "/settleupstream";
+        PageResult<YingSettleUpstream> upstreamPageResult = client.exchange(upstreamPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleUpstreamPage).getBody();
+        if (upstreamPageResult.getSuccess()) {
+            logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", upstreamPageUrl, "", printJson(upstreamPageResult.getData()));
+        } else {
+            logger.info("创建分页失败: {}", upstreamPageResult.getError());
+            System.exit(-1);
+        }
 
-        // 上游结算 - 单记录
+        // 上游结算 - 查询
+        String upstreamFindUrl = "/api/ying/" + yingOrder.getId() + "/settleupstream";
+        Result<YingSettleUpstream> upstreamFindResult = client.exchange(upstreamFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleUpstream).getBody();
+        if (upstreamFindResult.getSuccess()) {
+            logger.info("查询发票成功\nPOST {}\nrequest = {}\nresponse = {}", upstreamFindUrl, "", printJson(upstreamFindResult.getData()));
+        } else {
+            logger.info("查询发票失败: {}", upstreamFindResult.getError());
+            System.exit(-1);
+        }
 
-        // 上游结算 - 更新
-
+        ///////////////////////////////////////////////////////////////////////////
+        // 付款
+        ///////////////////////////////////////////////////////////////////////////
         // 付款 - 创建
+        String fukuanCreateUrl = "/api/ying/" + yingOrder.getId() + "/fukuans";
+        YingFukuan yingFukuan = new YingFukuan(
+                null,
+                yingOrder.getId(),
+                yingOrderConfig.getId(),
+                LocalDateTime.now(),
+                1L,
+                PaymentPurpose.DEPOSITECASH,
+                new BigDecimal("10"),
+                PayMode.BANK_ACCEPTANCE,
+                1L,
+                new BigDecimal("0.11"),
+                10,
+                null,
+                new BigDecimal("10000")
+        );
+        Result<YingFukuan> fukuanResult = client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuan), typeReferenceFukuan).getBody();
+        if (fukuanResult.getSuccess()) {
+            logger.info("创建付款成功\nPOST {}\nrequest = {}\nresponse = {}", fukuanCreateUrl, printJson(yingFukuan), printJson(fukuanResult.getData()));
+        } else {
+            logger.info("创建付款失败: {}", fukuanResult.getError());
+            System.exit(-1);
+        }
         // 付款 - 分页
-        // 付款 - 单记录
+        String fukuanPageUrl = "/api/ying/" + yingOrder.getId() + "/fukuans";
+        Map<String, String> fukuanVariablesPage = new HashMap<>();
+        PageResult<YingFukuan> fukuanPageResult = client.exchange(fukuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFukuanPage, fukuanVariablesPage).getBody();
+        if (fukuanPageResult.getSuccess()) {
+            logger.info("付款分页成功\nPOST {}\nrequest = {}\nresponse = {}", fukuanPageUrl, "", printJson(fukuanPageResult.getData()));
+        } else {
+            logger.info("付款分页失败: {}", fukuanPageResult.getError());
+            System.exit(-1);
+        }
 
+        // 付款 - 单记录
+        String fukuanFindUrl = "/api/ying/" + yingOrder.getId() + "/fukuans" + fukuanResult.getData().getId();
+        Result<YingFukuan> fukuanFindResult = client.exchange(fukuanFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFukuan).getBody();
+        if (fukuanFindResult.getSuccess()) {
+            logger.info("查询付款成功\nGET {}\nrequest = {}\nresponse = {}", fukuanFindUrl, "", printJson(fukuanFindResult.getData()));
+        } else {
+            logger.info("查询付款失败: {}", fukuanFindResult.getError());
+            System.exit(-1);
+        }
+
+        ///////////////////////////////////////////////////////////////////////////
+        // 发票
+        ///////////////////////////////////////////////////////////////////////////
         // 发票 - 创建
+        String invoiceCreateUrl = "/api/ying/" + yingOrder.getId() + "/invoices";
+        YingInvoice yingInvoice = new YingInvoice(
+                null,
+                yingOrder.getId(),
+                yingOrderConfig.getId(),
+                InvoiceDirection.INCOME,
+                InvoiceType.FRIGHT_INVOICE,
+                LocalDateTime.now(),
+                1L,
+                1L,
+                null,
+                null
+        );
+        Result<YingInvoice> invoiceResult = client.exchange(invoiceCreateUrl, HttpMethod.POST, new HttpEntity<YingInvoice>(yingInvoice), typeReferenceInvoice).getBody();
+        if (fukuanFindResult.getSuccess()) {
+            logger.info("创建发票成功\nPOST {}\nrequest = {}\nresponse = {}", invoiceCreateUrl, printJson(yingInvoice), printJson(invoiceResult.getData()));
+        } else {
+            logger.info("创建发票失败: {}", invoiceResult.getError());
+            System.exit(-1);
+        }
+
         // 发票 - 分页
+        String invoicePageUrl = "/api/ying/" + yingOrder.getId() + "/invoices";
+        PageResult<YingInvoice> invoicePageResult = client.exchange(invoicePageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceInvoicePage).getBody();
+        if (fukuanPageResult.getSuccess()) {
+            logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", invoicePageUrl, "", printJson(invoicePageResult.getData()));
+        } else {
+            logger.info("创建分页失败: {}", invoicePageResult.getError());
+            System.exit(-1);
+        }
+
         // 发票 - 单记录
+        String invoiceFindUrl = "/api/ying/" + yingOrder.getId() + "/invoices" + "/" + invoiceResult.getData().getId();
+        Result<YingInvoice> invoiceFindResult = client.exchange(invoiceFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceInvoice).getBody();
+        if (fukuanFindResult.getSuccess()) {
+            logger.info("查询发票成功\nPOST {}\nrequest = {}\nresponse = {}", invoiceFindUrl, "", printJson(invoiceFindResult.getData()));
+        } else {
+            logger.info("查询发票失败: {}", invoiceFindResult.getError());
+            System.exit(-1);
+        }
+
         // 发票 - 更新
+        String invoiceUpdateUrl = "/api/ying/" + yingOrder.getId() + "/invoices" + "/" + invoiceResult.getData().getId();
+        Result<YingInvoice> invoiceUpdateResult = client.exchange(invoiceFindUrl, HttpMethod.PUT, HttpEntity.EMPTY, typeReferenceInvoice).getBody();
+        if (fukuanFindResult.getSuccess()) {
+            logger.info("更新发票成功\nPUT {}\nrequest = {}\nresponse = {}", invoiceUpdateUrl, "", printJson(invoiceUpdateResult.getData()));
+        } else {
+            logger.info("更新发票失败: {}", invoiceUpdateResult.getError());
+            System.exit(-1);
+        }
 
         // 发票明细 - 分页
         // 发票明细 - 更新
 
-        // 下游结算 - 创建
+        ///////////////////////////////////////////////////////////////////////////
+        // 下游结算
+        ///////////////////////////////////////////////////////////////////////////
+        String downstreamCreateUrl = "/api/ying/" + yingOrder.getId() + "/settledownstream";
+        YingSettleDownstream downstream = new YingSettleDownstream(
+                null,
+                yingOrder.getId(),
+                yingOrderConfigResult.getData().getId(),
+                LocalDateTime.now(),
+                new BigDecimal("100"),
+                new BigDecimal("100"),
+                new BigDecimal("100"),
+                null
+        );
+        Result<YingSettleDownstream> downstreamCreateResult = client.exchange(downstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(downstream), typeReferenceSettleDownstream).getBody();
+        if (downstreamCreateResult.getSuccess()) {
+            logger.info("创建下游结算成功\nPOST {}\nrequest = {}\nresponse = {}", downstreamCreateUrl, printJson(downstream), printJson(downstreamCreateResult.getData()));
+        } else {
+            logger.info("创建下游结算失败: {}", downstreamCreateResult.getError());
+            System.exit(-1);
+        }
+
         // 下游结算 - 分页
+        String downstreamPageUrl = "/api/ying/" + yingOrder.getId() + "/settledownstream";
+        PageResult<YingSettleDownstream> downstreamPageResult = client.exchange(downstreamPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleDownstreamPage).getBody();
+        if (fukuanPageResult.getSuccess()) {
+            logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", downstreamPageUrl, "", printJson(downstreamPageResult.getData()));
+        } else {
+            logger.info("创建分页失败: {}", downstreamPageResult.getError());
+            System.exit(-1);
+        }
+
         // 下游结算 - 查询
-        // 下游结算 - 更新  todo
+        String downstreamFindUrl = "/api/ying/" + yingOrder.getId() + "/settledownstream";
+        Result<YingSettleDownstream> downstreamFindResult = client.exchange(downstreamFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleDownstream).getBody();
+        if (fukuanFindResult.getSuccess()) {
+            logger.info("查询发票成功\nPOST {}\nrequest = {}\nresponse = {}", downstreamFindUrl, "", printJson(downstreamFindResult.getData()));
+        } else {
+            logger.info("查询发票失败: {}", downstreamFindResult.getError());
+            System.exit(-1);
+        }
 
-        // 回款 - 创建
+        ///////////////////////////////////////////////////////////////////////////
+        // 回款
+        ///////////////////////////////////////////////////////////////////////////
+        String huikuanCreateUrl = "/api/ying/" + yingOrder.getId() + "/huikuans";
+        YingHuikuan huikuan = new YingHuikuan();
+        Result<YingHuikuan> huikuanCreateResult = client.exchange(huikuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huikuan), typeReferenceHuikuan).getBody();
+        if (huikuanCreateResult.getSuccess()) {
+            logger.info("创建回款成功\nPOST {}\nrequest = {}\nresponse = {}", huikuanCreateUrl, printJson(huikuan), printJson(huikuanCreateResult.getData()));
+        } else {
+            logger.info("创建回款失败: {}", huikuanCreateResult.getError());
+            System.exit(-1);
+        }
+
         // 回款 - 分页
-        // 回款 - 查询
+        String huikuanPageUrl = "/api/ying/" + yingOrder.getId() + "/huikuans";
+        PageResult<YingHuikuan> huikuanPageResult = client.exchange(huikuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceHuikuanPage).getBody();
+        if (fukuanPageResult.getSuccess()) {
+            logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", huikuanPageUrl, "", printJson(huikuanPageResult.getData()));
+        } else {
+            logger.info("创建分页失败: {}", huikuanPageResult.getError());
+            System.exit(-1);
+        }
 
+        // 回款 - 查询
+        String huikuanFindUrl = "/api/ying/" + yingOrder.getId() + "/huikuans/" + huikuanCreateResult.getData().getId();
+        Result<YingSettleDownstream> huikuanFindResult = client.exchange(huikuanFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleDownstream).getBody();
+        if (fukuanFindResult.getSuccess()) {
+            logger.info("查询回款成功\nPOST {}\nrequest = {}\nresponse = {}", huikuanFindUrl, "", printJson(huikuanFindResult.getData()));
+        } else {
+            logger.info("查询回款失败: {}", huikuanFindResult.getError());
+            System.exit(-1);
+        }
+
+        ///////////////////////////////////////////////////////////////////////////
+        // 还款
+        ///////////////////////////////////////////////////////////////////////////
         // 还款 - 创建
+        String huankuanCreateUrl = "/api/ying/" + yingOrder.getId() + "/huankuan";
+        YingHuankuan huankuan = new YingHuankuan();
+        Result<YingHuankuan> huankuanCreateResult = client.exchange(huankuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huankuan), typeReferenceHuankuan).getBody();
+        if (huankuanCreateResult.getSuccess()) {
+            logger.info("创建还款成功\nPOST {}\nrequest = {}\nresponse = {}", huankuanCreateUrl, printJson(huankuan), printJson(huankuanCreateResult.getData()));
+        } else {
+            logger.info("创建还款失败: {}", huankuanCreateResult.getError());
+            System.exit(-1);
+        }
+
         // 还款 - 分页
+        String huankuanPageUrl = "/api/ying/" + yingOrder.getId() + "/huankuans";
+        PageResult<YingHuankuan> huankuanPageResult = client.exchange(huankuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceHuankuanPage).getBody();
+        if (fukuanPageResult.getSuccess()) {
+            logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", huankuanPageUrl, "", printJson(huankuanPageResult.getData()));
+        } else {
+            logger.info("创建分页失败: {}", huankuanPageResult.getError());
+            System.exit(-1);
+        }
+
         // 还款 - 查询
+        String huankuanFindUrl = "/api/ying/" + yingOrder.getId() + "/huankuans/" + huankuanCreateResult.getData().getId();
+        Result<YingSettleDownstream> huankuanFindResult = client.exchange(huankuanFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleDownstream).getBody();
+        if (fukuanFindResult.getSuccess()) {
+            logger.info("查询还款成功\nPOST {}\nrequest = {}\nresponse = {}", huankuanFindUrl, "", printJson(huankuanFindResult.getData()));
+        } else {
+            logger.info("查询还款失败: {}", huankuanFindResult.getError());
+            System.exit(-1);
+        }
     }
 
 }
