@@ -77,7 +77,6 @@ public class UserControllerTest extends YingTestBase {
 
     @Test
     public void userTest() throws JsonProcessingException {
-        enums(); System.exit(-1);
         user();
         order();
         config();
@@ -470,7 +469,7 @@ public class UserControllerTest extends YingTestBase {
             setPayDate(LocalDateTime.now());
             setRecieveCompanyId( yingOrderResult.getData().getUpstreamId());
             setPayUsage(PaymentPurpose.FIAL_PAYMENT);
-            setPayMode(PayMode.ELEC_REMIgit  TTANCE);
+            setPayMode(PayMode.ELEC_REMITTANCE);
             setPayAmount(new BigDecimal("54291.93"));
             setCapitalId(17l);
         }};
@@ -729,23 +728,5 @@ public class UserControllerTest extends YingTestBase {
 
     }
 
-    private void enums() throws JsonProcessingException {
-        String url = "/api/enums/BusinessType";
-        Result<List<EnumEntity>> lists = client.exchange( url , HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<Result<List<EnumEntity>>>(){}).getBody();
-        if (lists.getSuccess()) {
-            logger.info("获取BusinessType成功\nGET {} request = {}\nresponse = {}", url, "", printJson(lists.getData()));
-        } else {
-            logger.error("获取BusinessType失败: {}", lists.getError());
-            System.exit(-1);
-        }
 
-        String urlAll = "/api/enums";
-        Result<List<String>> listAll = client.exchange( urlAll , HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<Result<List<String>>>(){}).getBody();
-        if (listAll.getSuccess()) {
-            logger.info("获取BusinessType成功\nGET {} request = {}\nresponse = {}", urlAll, "", printJson(listAll.getData()));
-        } else {
-            logger.error("获取BusinessType失败: {}", listAll.getError());
-            System.exit(-1);
-        }
-    }
 }
