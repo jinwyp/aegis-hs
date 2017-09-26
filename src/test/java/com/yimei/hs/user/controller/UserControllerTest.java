@@ -81,9 +81,9 @@ public class UserControllerTest extends YingTestBase {
 //        fukuan();
 //        huikua n();
 //        huankuan();
-        upstream();
-//        downstream();
-        traffic();
+//        upstream();
+        downstream();
+//        traffic();
 //        fee();
 //        invoice();
     }
@@ -566,23 +566,20 @@ public class UserControllerTest extends YingTestBase {
 
     private void downstream() throws JsonProcessingException {
 
-        ///////////////////////////////////////////////////////////////////////////
-        // 下游结算
-        ///////////////////////////////////////////////////////////////////////////
+        //创建下游结算
         String downstreamCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settledownstream";
         YingSettleDownstream downstream = new YingSettleDownstream(
-                null,
-                yingOrderResult.getData().getId(),
-                yingOrderConfigResult.getData().getId(),
-                LocalDateTime.now(),
-                new BigDecimal("100"),
-                new BigDecimal("100"),
-                new BigDecimal("100"),
-                null
-        );
+        ){{
+            setAmount(new BigDecimal("1510.61"));
+            setMoney( new BigDecimal("55968.26"));
+            setHsId( yingOrderConfigResult.getData().getId());
+            setOrderId( yingOrderResult.getData().getId());
+            setSettleDate( LocalDateTime.now());
+            setSettleGap(new BigDecimal("0"));
+        }};
         Result<YingSettleDownstream> downstreamCreateResult = client.exchange(downstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(downstream), typeReferenceSettleDownstream).getBody();
         if (downstreamCreateResult.getSuccess()) {
-            logger.info("创建下游结算成功\nPOST {}\nrequest = {}\nresponse = {}", downstreamCreateUrl, printJson(downstream), printJson(downstreamCreateResult.getData()));
+            logger.info("创建下游结算成功\nGET {}\nrequest = {}\nresponse = {}", downstreamCreateUrl, printJson(downstream), printJson(downstreamCreateResult.getData()));
         } else {
             logger.info("创建下游结算失败: {}", downstreamCreateResult.getError());
             System.exit(-1);
@@ -592,7 +589,7 @@ public class UserControllerTest extends YingTestBase {
         String downstreamPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settledownstream";
         PageResult<YingSettleDownstream> downstreamPageResult = client.exchange(downstreamPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleDownstreamPage).getBody();
         if (downstreamPageResult.getSuccess()) {
-            logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", downstreamPageUrl, "", printJson(downstreamPageResult.getData()));
+            logger.info("创建分页成功\nGET {}\nrequest = {}\nresponse = {}", downstreamPageUrl, "", printJson(downstreamPageResult.getData()));
         } else {
             logger.info("创建分页失败: {}", downstreamPageResult.getError());
             System.exit(-1);
@@ -676,12 +673,14 @@ public class UserControllerTest extends YingTestBase {
 
     private void fee() throws JsonProcessingException {
 
-        ///////////////////////////////////////////////////////////////////////////
-        // 费用
-        ///////////////////////////////////////////////////////////////////////////
         // 费用 - 创建
-        String feeCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settlefee";
-        YingFee fee = new YingFee();
+        String feeCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fees";
+        YingFee fee = new YingFee(){{
+            setHsId(yingOrderConfigResult.getData().getId());
+            setOrderId(yingOrderResult.getData().getId());
+            setAmount(new BigDecimal("100"));
+            setName(FeeClass.SERVICE_FEE);
+        }};
         Result<YingFee> feeCreateResult = client.exchange(feeCreateUrl, HttpMethod.POST, new HttpEntity<>(fee), typeReferenceFee).getBody();
         if (feeCreateResult.getSuccess()) {
             logger.info("创建费用成功\nPOST {}\nrequest = {}\nresponse = {}", feeCreateUrl, printJson(fee), printJson(feeCreateResult.getData()));
@@ -691,26 +690,65 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 费用 - 分页
-        String feePageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settlefee";
+        String feePageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fees";
         PageResult<YingFee> feePageResult = client.exchange(feePageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFeePage).getBody();
         if (feePageResult.getSuccess()) {
-            logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", feePageUrl, "", printJson(feePageResult.getData()));
+            logger.info("费用分页查询成功\nGET {}\nrequest = {}\nresponse = {}", feePageUrl, "", printJson(feePageResult.getData()));
         } else {
-            logger.info("创建分页失败: {}", feePageResult.getError());
+            logger.info("费用分页查询失败: {}", feePageResult.getError());
             System.exit(-1);
         }
 
         // 费用 - 查询
-        String feeFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settlefee";
+        String feeFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fees";
         Result<YingFee> feeFindResult = client.exchange(feeFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFee).getBody();
         if (feeFindResult.getSuccess()) {
-            logger.info("查询发票成功\nPOST {}\nrequest = {}\nresponse = {}", feeFindUrl, "", printJson(feeFindResult.getData()));
+            logger.info("费用查询成功\nGET {}\nrequest = {}\nresponse = {}", feeFindUrl, "", printJson(feeFindResult.getData()));
         } else {
-            logger.info("查询发票失败: {}", feeFindResult.getError());
+            logger.info("费用查询失败: {}", feeFindResult.getError());
             System.exit(-1);
+        }
+
+
+        //运输方结算-更新
+        String fayunUpdateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fees/" + yingOrderResult.getData().getId();
+        fee.setAmount(new BigDecimal("9999"));
+        fee.setOrderId(yingOrderResult.getData().getId());
+        fee.setId(feeCreateResult.getData().getId());
+        Result<Integer> yingFayunUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<YingFee>(fee), typeReferenceInteger).getBody();
+        if (yingFayunUpdateResult.getSuccess()) {
+            logger.info("更新费用成功\nPOST {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(fee), printJson(yingFayunUpdateResult.getData()));
+        } else {
+            logger.error("更新费用失败: {}", yingFayunUpdateResult.getError());
+            System.exit(-2);
         }
     }
 
+
+    private  List<YingInvoiceDetail> invoiceDetail() {
+        List<YingInvoiceDetail> listVoiceDetail = Lists.newArrayList(
+                new YingInvoiceDetail(){{
+                    setInvoiceNumber("66661234");
+                    setCargoAmount(new BigDecimal("10000"));
+                    setTaxRate(new BigDecimal("0.17"));
+                    setPriceAndTax(new BigDecimal("340000"));
+                }},
+                new YingInvoiceDetail(){{
+                    setInvoiceNumber("66661235");
+                    setCargoAmount(new BigDecimal("367"));
+                    setTaxRate(new BigDecimal("0.17"));
+                    setPriceAndTax(new BigDecimal("170000"));
+                }},
+                new YingInvoiceDetail(){{
+                    setInvoiceNumber("66661236");
+                    setCargoAmount(new BigDecimal("143.67"));
+                    setTaxRate(new BigDecimal("0.17"));
+                    setPriceAndTax(new BigDecimal("565994.5995"));
+                }}
+        );
+        return listVoiceDetail;
+
+    }
     private void invoice() throws JsonProcessingException {
 
         // 发票 - 创建
@@ -720,12 +758,12 @@ public class UserControllerTest extends YingTestBase {
                 yingOrderResult.getData().getId(),
                 yingOrderConfigResult.getData().getId(),
                 InvoiceDirection.INCOME,
-                InvoiceType.FRIGHT_INVOICE,
+                InvoiceType.GOODS_INVOICE,
                 LocalDateTime.now(),
-                1L,
-                1L,
+                yingOrderResult.getData().getUpstreamId(),
+                yingOrderResult.getData().getMainAccounting(),
                 null,
-                null
+                invoiceDetail()
         );
         Result<YingInvoice> invoiceCreateResult = client.exchange(invoiceCreateUrl, HttpMethod.POST, new HttpEntity<YingInvoice>(yingInvoice), typeReferenceInvoice).getBody();
         if (invoiceCreateResult.getSuccess()) {
@@ -739,7 +777,7 @@ public class UserControllerTest extends YingTestBase {
         String invoicePageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices";
         PageResult<YingInvoice> invoicePageResult = client.exchange(invoicePageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceInvoicePage).getBody();
         if (invoicePageResult.getSuccess()) {
-            logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", invoicePageUrl, "", printJson(invoicePageResult.getData()));
+            logger.info("创建分页成功\nGET {}\nrequest = {}\nresponse = {}", invoicePageUrl, "", printJson(invoicePageResult.getData()));
         } else {
             logger.info("创建分页失败: {}", invoicePageResult.getError());
             System.exit(-1);
@@ -749,7 +787,7 @@ public class UserControllerTest extends YingTestBase {
         String invoiceFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices" + "/" + invoiceCreateResult.getData().getId();
         Result<YingInvoice> invoiceFindResult = client.exchange(invoiceFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceInvoice).getBody();
         if (invoiceFindResult.getSuccess()) {
-            logger.info("查询发票成功\nPOST {}\nrequest = {}\nresponse = {}", invoiceFindUrl, "", printJson(invoiceFindResult.getData()));
+            logger.info("查询发票成功\nGET {}\nrequest = {}\nresponse = {}", invoiceFindUrl, "", printJson(invoiceFindResult.getData()));
         } else {
             logger.info("查询发票失败: {}", invoiceFindResult.getError());
             System.exit(-1);
