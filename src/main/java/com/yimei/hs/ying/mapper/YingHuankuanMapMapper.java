@@ -2,6 +2,8 @@ package com.yimei.hs.ying.mapper;
 
 import com.yimei.hs.ying.entity.YingHuankuanMap;
 
+import java.util.List;
+
 public interface YingHuankuanMapMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,6 @@ public interface YingHuankuanMapMapper {
     int updateByPrimaryKeySelective(YingHuankuanMap record);
 
     int updateByPrimaryKey(YingHuankuanMap record);
+
+    List<YingHuankuanMap> loadAll(Long orderId);
 }

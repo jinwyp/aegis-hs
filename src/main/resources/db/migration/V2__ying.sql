@@ -118,6 +118,7 @@ create table hs_ying_huikuan (
 -- 应收订单 - 回款-付款mapping
 create table hs_ying_huikuan_map (
    id bigint(20)         not null auto_increment,
+   orderId bigint(20)    not null,
    huikuanId bigint(20)  not null comment '回款id',
    fukuanId bigint(20)   not null comment '付款id',
    amount decimal(10,2)  not null comment '回款-付款 对应金额',
@@ -143,6 +144,8 @@ create table hs_ying_huankuan (
 -- 应收订单 - 还款-付款mapping
 create table hs_ying_huankuan_map (
   id bigint(20)            not null auto_increment,
+
+  orderId bigint(20)       not null auto_increment comment '还款所属的业务线',
 
   huankuanId bigint(20)    not null comment '还款id',
   fukuanId  bigint(20)     not null comment '还款对应的付款id',
@@ -190,6 +193,8 @@ create table hs_ying_settle_downstream (
 -- 应收订单 - 下游结算-发运map
 create table hs_ying_settle_downstream_map (
    id bigint(20)             not null auto_increment,
+  orderId bigint(20)         not null auto_increment,
+
    settleId bigint(20)       not null comment '下游结算id',
    fyId bigint(20)           not null comment '对应发运id',
    deduction decimal(10,2)   not null comment '抵扣发运吨数',

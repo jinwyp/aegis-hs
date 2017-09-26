@@ -84,11 +84,11 @@ public class YingOrderConfigController {
             @RequestBody YingOrderConfig yingOrderConfig) {
 
 
-        logger.error("yingOrderConfig-====>" + id);
+        logger.debug("yingOrderConfig-====>" + id);
         yingOrderConfig.setId(id);
         yingOrderConfig.setOrderId(orderId);
 
-        logger.error("yingOrderConfig-====>" + yingOrderConfig);
+        logger.debug("yingOrderConfig-====>" + yingOrderConfig);
         int status = yingOrderConfigService.update(yingOrderConfig);
         if (status == 1) {
             return Result.ok(1);
