@@ -1,6 +1,11 @@
 package com.yimei.hs.ying.controller;
 
+import com.yimei.hs.boot.ext.annotation.CurrentUser;
+import com.yimei.hs.boot.api.CreateGroup;
+import com.yimei.hs.boot.api.UpdateGroup;
+import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.user.entity.User;
 import com.yimei.hs.ying.entity.YingFayun;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
@@ -12,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("/api/ying")
 @RestController
+@Logined
 public class YingFayunController {
 
     private static final Logger logger = LoggerFactory.getLogger(YingFayunController.class);
@@ -33,7 +40,11 @@ public class YingFayunController {
      * @return
      */
     @GetMapping("/{orderId}/fayuns")
-    public ResponseEntity<PageResult<YingFayun>> list(PageYingFayunDTO pageYingFayunDTO) {
+    public ResponseEntity<PageResult<YingFayun>> list(
+            @CurrentUser User user,
+            @PathVariable("orderId") Long orderId,
+            PageYingFayunDTO pageYingFayunDTO) {
+        pageYingFayunDTO.setOrderId(orderId);
         Page<YingFayun> page = yingFayunService.getPage(pageYingFayunDTO);
         return PageResult.ok(page);
     }
@@ -66,7 +77,7 @@ public class YingFayunController {
     @Transactional(readOnly =  false)
     public ResponseEntity<Result<YingFayun>> create(
             @PathVariable("orderId") long orderId,
-            @RequestBody YingFayun yingFayun
+            @RequestBody @Validated(CreateGroup.class) YingFayun yingFayun
     ) {
         yingFayun.setOrderId(orderId);
         yingFayunService.create(yingFayun);
@@ -84,7 +95,7 @@ public class YingFayunController {
     public ResponseEntity<Result<Integer>>update(
             @PathVariable("orderId") Long orderId,
             @PathVariable("id") Long id,
-            @RequestBody YingFayun yingFayun) {
+            @RequestBody @Validated(UpdateGroup.class) YingFayun yingFayun) {
 
 //        assert (orderId == orderId);
         yingFayun.setId(id);

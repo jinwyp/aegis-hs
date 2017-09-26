@@ -2,6 +2,7 @@ package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
+import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.ying.dto.PageYingOrderConfigDTO;
 import com.yimei.hs.ying.entity.YingOrderConfig;
 import com.yimei.hs.ying.service.YingOrderConfigService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -81,7 +83,7 @@ public class YingOrderConfigController {
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") Long orderId,
             @PathVariable("id") Long id,
-            @RequestBody YingOrderConfig yingOrderConfig) {
+            @RequestBody @Validated(UpdateGroup.class) YingOrderConfig yingOrderConfig) {
 
 
         logger.debug("yingOrderConfig-====>" + id);

@@ -76,7 +76,7 @@ create table hs_ying_fukuan (
   hsId bigint(20)                not null comment '核算月id',
 
   payDate datetime               not null comment '付款日期yyyy-mm-dd',
-  recieveCompanyId bigint(20)    not null comment '收款单位id',
+  receiveCompanyId bigint(20)    not null comment '收款单位id',
   payUsage varchar(32)           not null comment '付款用途: 货款, 贸易差价, 尾款, 运费, 保证金',
   payAmount decimal(10, 2)       not null comment '付款金额',
   payMode varchar(32)            not null comment '付款方式: 电汇, 银行承兑, 商业承兑, 现金',

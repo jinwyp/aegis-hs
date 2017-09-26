@@ -1,6 +1,8 @@
 package com.yimei.hs.ying.controller;
 
+import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
+import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.ying.entity.YingHuikuan;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("/api/ying")
 @RestController
+@Logined
 public class YingHuikuanController {
 
     private static final Logger logger = LoggerFactory.getLogger(YingHuikuanController.class);
@@ -33,7 +36,10 @@ public class YingHuikuanController {
      * @return
      */
     @GetMapping("/{orderId}/huikuans")
-    public ResponseEntity<PageResult<YingHuikuan>> list(PageYingHuikuanDTO pageYingHuikuanDTO) {
+    public ResponseEntity<PageResult<YingHuikuan>> list(
+            @PathVariable("orderId") Long orderId,
+            PageYingHuikuanDTO pageYingHuikuanDTO) {
+        pageYingHuikuanDTO.setOrderId(orderId);
         return PageResult.ok(yingHuikuanService.getPage(pageYingHuikuanDTO));
     }
 
@@ -65,7 +71,7 @@ public class YingHuikuanController {
     @Transactional(readOnly = false)
     public ResponseEntity<Result<YingHuikuan>> create(
             @PathVariable("orderId") long orderId,
-            @RequestBody YingHuikuan  yingHuikuan
+            @RequestBody @Validated(CreateGroup.class) YingHuikuan  yingHuikuan
     ) {
         yingHuikuan.setOrderId(orderId);
         int cnt = yingHuikuanService.create(yingHuikuan);

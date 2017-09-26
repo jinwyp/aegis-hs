@@ -1,5 +1,8 @@
 package com.yimei.hs.ying.controller;
 
+import com.yimei.hs.boot.api.CreateGroup;
+import com.yimei.hs.boot.api.UpdateGroup;
+import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.YingInvoice;
 import com.yimei.hs.boot.api.PageResult;
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("/api/ying")
 @RestController
+@Logined
 public class YingInvoiceController {
 
     private static final Logger logger = LoggerFactory.getLogger(YingInvoiceController.class);
@@ -32,7 +37,11 @@ public class YingInvoiceController {
      * @return
      */
     @GetMapping("/{orderId}/invoices")
-    public ResponseEntity<PageResult<YingInvoice>> list(PageYingInvoiceDTO pageYingInvoiceDTO) {
+    public ResponseEntity<PageResult<YingInvoice>> list(
+            @PathVariable("orderId") Long orderId,
+            PageYingInvoiceDTO pageYingInvoiceDTO
+    ) {
+        pageYingInvoiceDTO.setOrderId(orderId);
         Page<YingInvoice> page = yingInvoiceService.getPage(pageYingInvoiceDTO);
         return PageResult.ok(page);
     }
@@ -63,7 +72,9 @@ public class YingInvoiceController {
      */
     @PostMapping("/{orderId}/invoices")
     @Transactional(readOnly = false)
-    public ResponseEntity<Result<YingInvoice>> create(YingInvoice yingInvoice) {
+    public ResponseEntity<Result<YingInvoice>> create(
+       @RequestBody @Validated(CreateGroup.class) YingInvoice yingInvoice
+    ) {
         // 创建发表记录 todo
         yingInvoiceService.create(yingInvoice);
         return Result.ok(yingInvoice);
@@ -79,7 +90,7 @@ public class YingInvoiceController {
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id,
-            @RequestBody YingInvoice yingInvoice
+            @RequestBody @Validated(UpdateGroup.class) YingInvoice yingInvoice
     ) {
         assert (yingInvoice.getOrderId() == orderId);
         yingInvoice.setOrderId(orderId);

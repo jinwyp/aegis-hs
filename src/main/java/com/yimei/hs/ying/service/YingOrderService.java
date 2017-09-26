@@ -100,6 +100,17 @@ public class YingOrderService {
         return yingOrderMapper.updateByPrimaryKeySelective(record);
     }
 
+    /**
+     *
+     * @param orderId
+     * @param from
+     * @param to
+     * @return
+     */
+    public int transfer(Long orderId, Long from, Long to) {
+        return 1; // todo
+    }
+
     @Autowired
     private YingLogService yingLogService;
 }

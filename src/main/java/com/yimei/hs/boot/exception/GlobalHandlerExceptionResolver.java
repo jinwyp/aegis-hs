@@ -50,10 +50,12 @@ public class GlobalHandlerExceptionResolver {
             response.setStatus(400);
             response.sendRedirect("/400");
         }
+        response.setStatus(400);
+        om.writeValue(response.getOutputStream(), Result.error(4001, "客户端错误", HttpStatus.BAD_REQUEST));
     }
 
     //户登录异常处理
-    @ExceptionHandler({NoJwtTokenException.class})
+    @ExceptionHandler({NoJwtTokenException.class, UnAuthorizedException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public void process401Error(HttpServletRequest request, HttpServletResponse response, Exception ex) throws IOException {
         response.setStatus(401);
@@ -61,7 +63,10 @@ public class GlobalHandlerExceptionResolver {
             if (ex instanceof NoJwtTokenException) {
                 response.sendRedirect("/login");
             }
+            return;
         }
+        response.setStatus(400);
+        om.writeValue(response.getOutputStream(), Result.error(4001, "无权访问", HttpStatus.UNAUTHORIZED));
     }
 
 
@@ -76,6 +81,7 @@ public class GlobalHandlerExceptionResolver {
         if (errMsg == null) {
             errMsg = "系统错误";
         }
+        response.setStatus(400);
         om.writeValue(response.getOutputStream(), Result.error(5000, errMsg));
     }
 

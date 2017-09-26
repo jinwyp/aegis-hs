@@ -17,7 +17,7 @@ public class CangFukuan implements Serializable {
 
     private LocalDateTime payDate;
 
-    private Long recieveCompanyId;
+    private Long receiveCompanyId;
 
     private String payFor;
 

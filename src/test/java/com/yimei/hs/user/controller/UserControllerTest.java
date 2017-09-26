@@ -11,7 +11,6 @@ import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
-import com.yimei.hs.ying.dto.PageYingFukuanDTO;
 import com.yimei.hs.ying.dto.PageYingOrderConfigDTO;
 import com.yimei.hs.ying.dto.PageYingSettleTrafficDTO;
 import com.yimei.hs.ying.dto.PageYingSettleUpstreamDTO;
@@ -24,17 +23,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -448,12 +443,13 @@ public class UserControllerTest extends YingTestBase {
 
         String fukuanCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans";
         YingFukuan yingFukuan = new YingFukuan(
+
         ) {{
 
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
             setPayDate(LocalDateTime.now());
-            setRecieveCompanyId(yingOrderResult.getData().getUpstreamId());
+            setReceiveCompanyId(yingOrderResult.getData().getUpstreamId());
             setPayUsage(PaymentPurpose.DEPOSITECASH);
             setPayMode(PayMode.ELEC_REMITTANCE);
             setPayAmount(new BigDecimal("510000"));
@@ -467,7 +463,7 @@ public class UserControllerTest extends YingTestBase {
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
             setPayDate(LocalDateTime.now());
-            setRecieveCompanyId(yingOrderResult.getData().getUpstreamId());
+            setReceiveCompanyId(yingOrderResult.getData().getUpstreamId());
             setPayUsage(PaymentPurpose.FIAL_PAYMENT);
             setPayMode(PayMode.ELEC_REMITTANCE);
             setPayAmount(new BigDecimal("54291.93"));

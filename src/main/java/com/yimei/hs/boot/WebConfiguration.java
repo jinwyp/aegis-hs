@@ -1,8 +1,9 @@
 package com.yimei.hs.boot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yimei.hs.boot.ext.ACLInterceptor;
 import com.yimei.hs.boot.support.Java8TimeModule;
-import com.yimei.hs.boot.web.CurrentUserMethodArgumentHandler;
+import com.yimei.hs.boot.ext.CurrentUserMethodArgumentHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;

@@ -1,5 +1,6 @@
 package com.yimei.hs.ying.controller;
 
+import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("/api/ying")
 @RestController
+@Logined
 public class YingFeeController {
 
 
@@ -37,7 +39,10 @@ public class YingFeeController {
      * @return
      */
     @GetMapping("/{orderId}/fees")
-    public ResponseEntity<PageResult<YingFee>> list(PageYingFeeDTO pageYingFeeDTO) {
+    public ResponseEntity<PageResult<YingFee>> list(
+            @PathVariable("orderId") Long orderId,
+            PageYingFeeDTO pageYingFeeDTO) {
+        pageYingFeeDTO.setOrderId(orderId);
         Page<YingFee> page = yingFeeService.getPage(pageYingFeeDTO);
         return PageResult.ok(page);
     }

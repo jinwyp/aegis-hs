@@ -30,7 +30,7 @@ public class YingFukuan implements Serializable {
 
     private LocalDateTime payDate;
 
-    private Long recieveCompanyId;
+    private Long receiveCompanyId;
 
     private PaymentPurpose payUsage;
 

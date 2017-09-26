@@ -38,8 +38,9 @@ export class OrderComponent implements OnInit {
     filterTeamList : any[] = []
     partyList : any[] = []
 
-    payModeList : any[] = getEnum('PayMode')
+    payModeList : any[] = getEnum('SettleMode')
     customerType : any[] = getEnum('CustomerType')
+    cargoTypeList : any[] = getEnum('CargoType')
 
 
 
@@ -98,7 +99,7 @@ export class OrderComponent implements OnInit {
 
         this.hsOrderService.getOrderList(query).subscribe(
             data => {
-                this.orderList = data.data
+                this.orderList = data.data.results
 
                 this.pagination.pageSize = data.data.pageSize
                 this.pagination.pageNo = data.data.pageNo
@@ -155,6 +156,9 @@ export class OrderComponent implements OnInit {
         },
         'teamId'  : {
             'required'      : '请选择团队!'
+        },
+        'line'  : {
+            'required'      : '请选择相关公司完成业务线名称!'
         },
 
         'custType'  : {
@@ -220,6 +224,7 @@ export class OrderComponent implements OnInit {
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
+            postData.id = this.currentOrderId
             this.hsOrderService.modifyOrder(this.currentOrderId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
@@ -296,6 +301,32 @@ export class OrderComponent implements OnInit {
 
         const index = this.otherPartyList.indexOf(company)
         this.otherPartyList.splice(index, 1)
+    }
+
+
+    lineName(){
+        let lineName = ''
+
+        if (this.orderForm.value.upstreamId && this.orderForm.value.mainAccounting && this.orderForm.value.downstreamId ) {
+            this.partyList.forEach( company => {
+                if (company.id === this.orderForm.value.upstreamId) {
+                    lineName = company.shortName + ' - '
+                }
+            })
+            this.partyList.forEach( company => {
+                if (company.id === this.orderForm.value.mainAccounting) {
+                    lineName = lineName + company.shortName + ' - '
+                }
+            })
+            this.partyList.forEach( company => {
+                if (company.id === this.orderForm.value.downstreamId) {
+                    lineName = lineName + company.shortName
+                }
+            })
+
+            this.orderForm.patchValue({line : lineName})
+        }
+
     }
 
 }

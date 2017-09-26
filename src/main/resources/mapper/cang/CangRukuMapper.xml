@@ -1,188 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yimei.hs.cang.mapper.CangRukuMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.cang.entity.CangRuku">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="orderId" jdbcType="BIGINT" property="orderId" />
-    <result column="hsId" jdbcType="BIGINT" property="hsId" />
-    <result column="rukuDate" jdbcType="TIMESTAMP" property="rukuDate" />
-    <result column="rukuStatus" jdbcType="INTEGER" property="rukuStatus" />
-    <result column="rukuAmount" jdbcType="DECIMAL" property="rukuAmount" />
-    <result column="rukuPrice" jdbcType="DECIMAL" property="rukuPrice" />
-    <result column="locality" jdbcType="VARCHAR" property="locality" />
-    <result column="trafficMode" jdbcType="VARCHAR" property="trafficMode" />
-    <result column="cars" jdbcType="INTEGER" property="cars" />
-    <result column="jhh" jdbcType="VARCHAR" property="jhh" />
-    <result column="ship" jdbcType="VARCHAR" property="ship" />
-    <result column="tsc" jdbcType="TIMESTAMP" property="tsc" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, orderId, hsId, rukuDate, rukuStatus, rukuAmount, rukuPrice, locality, trafficMode, 
-    cars, jhh, ship, tsc
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from hs_cang_ruku
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from hs_cang_ruku
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangRuku">
-    insert into hs_cang_ruku (id, orderId, hsId, 
-      rukuDate, rukuStatus, rukuAmount, 
-      rukuPrice, locality, trafficMode, 
-      cars, jhh, ship, tsc
-      )
-    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT}, 
-      #{rukuDate,jdbcType=TIMESTAMP}, #{rukuStatus,jdbcType=INTEGER}, #{rukuAmount,jdbcType=DECIMAL}, 
-      #{rukuPrice,jdbcType=DECIMAL}, #{locality,jdbcType=VARCHAR}, #{trafficMode,jdbcType=VARCHAR}, 
-      #{cars,jdbcType=INTEGER}, #{jhh,jdbcType=VARCHAR}, #{ship,jdbcType=VARCHAR}, #{tsc,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangRuku">
-    insert into hs_cang_ruku
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="orderId != null">
-        orderId,
-      </if>
-      <if test="hsId != null">
-        hsId,
-      </if>
-      <if test="rukuDate != null">
-        rukuDate,
-      </if>
-      <if test="rukuStatus != null">
-        rukuStatus,
-      </if>
-      <if test="rukuAmount != null">
-        rukuAmount,
-      </if>
-      <if test="rukuPrice != null">
-        rukuPrice,
-      </if>
-      <if test="locality != null">
-        locality,
-      </if>
-      <if test="trafficMode != null">
-        trafficMode,
-      </if>
-      <if test="cars != null">
-        cars,
-      </if>
-      <if test="jhh != null">
-        jhh,
-      </if>
-      <if test="ship != null">
-        ship,
-      </if>
-      <if test="tsc != null">
-        tsc,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orderId != null">
-        #{orderId,jdbcType=BIGINT},
-      </if>
-      <if test="hsId != null">
-        #{hsId,jdbcType=BIGINT},
-      </if>
-      <if test="rukuDate != null">
-        #{rukuDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="rukuStatus != null">
-        #{rukuStatus,jdbcType=INTEGER},
-      </if>
-      <if test="rukuAmount != null">
-        #{rukuAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="rukuPrice != null">
-        #{rukuPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="locality != null">
-        #{locality,jdbcType=VARCHAR},
-      </if>
-      <if test="trafficMode != null">
-        #{trafficMode,jdbcType=VARCHAR},
-      </if>
-      <if test="cars != null">
-        #{cars,jdbcType=INTEGER},
-      </if>
-      <if test="jhh != null">
-        #{jhh,jdbcType=VARCHAR},
-      </if>
-      <if test="ship != null">
-        #{ship,jdbcType=VARCHAR},
-      </if>
-      <if test="tsc != null">
-        #{tsc,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.cang.entity.CangRuku">
-    update hs_cang_ruku
-    <set>
-      <if test="orderId != null">
-        orderId = #{orderId,jdbcType=BIGINT},
-      </if>
-      <if test="hsId != null">
-        hsId = #{hsId,jdbcType=BIGINT},
-      </if>
-      <if test="rukuDate != null">
-        rukuDate = #{rukuDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="rukuStatus != null">
-        rukuStatus = #{rukuStatus,jdbcType=INTEGER},
-      </if>
-      <if test="rukuAmount != null">
-        rukuAmount = #{rukuAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="rukuPrice != null">
-        rukuPrice = #{rukuPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="locality != null">
-        locality = #{locality,jdbcType=VARCHAR},
-      </if>
-      <if test="trafficMode != null">
-        trafficMode = #{trafficMode,jdbcType=VARCHAR},
-      </if>
-      <if test="cars != null">
-        cars = #{cars,jdbcType=INTEGER},
-      </if>
-      <if test="jhh != null">
-        jhh = #{jhh,jdbcType=VARCHAR},
-      </if>
-      <if test="ship != null">
-        ship = #{ship,jdbcType=VARCHAR},
-      </if>
-      <if test="tsc != null">
-        tsc = #{tsc,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.cang.entity.CangRuku">
-    update hs_cang_ruku
-    set orderId = #{orderId,jdbcType=BIGINT},
-      hsId = #{hsId,jdbcType=BIGINT},
-      rukuDate = #{rukuDate,jdbcType=TIMESTAMP},
-      rukuStatus = #{rukuStatus,jdbcType=INTEGER},
-      rukuAmount = #{rukuAmount,jdbcType=DECIMAL},
-      rukuPrice = #{rukuPrice,jdbcType=DECIMAL},
-      locality = #{locality,jdbcType=VARCHAR},
-      trafficMode = #{trafficMode,jdbcType=VARCHAR},
-      cars = #{cars,jdbcType=INTEGER},
-      jhh = #{jhh,jdbcType=VARCHAR},
-      ship = #{ship,jdbcType=VARCHAR},
-      tsc = #{tsc,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <resultMap id="BaseResultMap" type="com.yimei.hs.cang.entity.CangRuku">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="hsId" jdbcType="BIGINT" property="hsId"/>
+        <result column="rukuDate" jdbcType="TIMESTAMP" property="rukuDate"/>
+        <result column="rukuStatus" jdbcType="INTEGER" property="rukuStatus"/>
+        <result column="rukuAmount" jdbcType="DECIMAL" property="rukuAmount"/>
+        <result column="rukuPrice" jdbcType="DECIMAL" property="rukuPrice"/>
+        <result column="locality" jdbcType="VARCHAR" property="locality"/>
+        <result column="trafficMode" jdbcType="VARCHAR" property="trafficMode"/>
+        <result column="cars" jdbcType="INTEGER" property="cars"/>
+        <result column="jhh" jdbcType="VARCHAR" property="jhh"/>
+        <result column="ship" jdbcType="VARCHAR" property="ship"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, orderId, hsId, rukuDate, rukuStatus, rukuAmount, rukuPrice, locality, trafficMode,
+        cars, jhh, ship, tsc
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_cang_ruku
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM hs_cang_ruku
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangRuku">
+        INSERT INTO hs_cang_ruku (id, orderId, hsId,
+                                  rukuDate, rukuStatus, rukuAmount,
+                                  rukuPrice, locality, trafficMode,
+                                  cars, jhh, ship, tsc
+        )
+        VALUES (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT},
+                                       #{rukuDate,jdbcType=TIMESTAMP}, #{rukuStatus,jdbcType=INTEGER},
+                                       #{rukuAmount,jdbcType=DECIMAL},
+                                       #{rukuPrice,jdbcType=DECIMAL}, #{locality,jdbcType=VARCHAR},
+                                       #{trafficMode,jdbcType=VARCHAR},
+                                       #{cars,jdbcType=INTEGER}, #{jhh,jdbcType=VARCHAR}, #{ship,jdbcType=VARCHAR},
+                #{tsc,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangRuku">
+        insert into hs_cang_ruku
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="hsId != null">hsId,</if>
+            <if test="rukuDate != null">rukuDate,</if>
+            <if test="rukuStatus != null">rukuStatus,</if>
+            <if test="rukuAmount != null">rukuAmount,</if>
+            <if test="rukuPrice != null">rukuPrice,</if>
+            <if test="locality != null">locality,</if>
+            <if test="trafficMode != null">trafficMode,</if>
+            <if test="cars != null">cars,</if>
+            <if test="jhh != null">jhh,</if>
+            <if test="ship != null">ship,</if>
+            <if test="tsc != null">tsc,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
+            <if test="rukuDate != null">#{rukuDate,jdbcType=TIMESTAMP},</if>
+            <if test="rukuStatus != null">#{rukuStatus,jdbcType=INTEGER},</if>
+            <if test="rukuAmount != null">#{rukuAmount,jdbcType=DECIMAL},</if>
+            <if test="rukuPrice != null">#{rukuPrice,jdbcType=DECIMAL},</if>
+            <if test="locality != null">#{locality,jdbcType=VARCHAR},</if>
+            <if test="trafficMode != null">#{trafficMode,jdbcType=VARCHAR},</if>
+            <if test="cars != null">#{cars,jdbcType=INTEGER},</if>
+            <if test="jhh != null">#{jhh,jdbcType=VARCHAR},</if>
+            <if test="ship != null">#{ship,jdbcType=VARCHAR},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.cang.entity.CangRuku">
+        update hs_cang_ruku
+        <set>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
+            <if test="rukuDate != null">rukuDate = #{rukuDate,jdbcType=TIMESTAMP},</if>
+            <if test="rukuStatus != null">rukuStatus = #{rukuStatus,jdbcType=INTEGER},</if>
+            <if test="rukuAmount != null">rukuAmount = #{rukuAmount,jdbcType=DECIMAL},</if>
+            <if test="rukuPrice != null">rukuPrice = #{rukuPrice,jdbcType=DECIMAL},</if>
+            <if test="locality != null">locality = #{locality,jdbcType=VARCHAR},</if>
+            <if test="trafficMode != null">trafficMode = #{trafficMode,jdbcType=VARCHAR},</if>
+            <if test="cars != null">cars = #{cars,jdbcType=INTEGER},</if>
+            <if test="jhh != null">jhh = #{jhh,jdbcType=VARCHAR},</if>
+            <if test="ship != null">ship = #{ship,jdbcType=VARCHAR},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.cang.entity.CangRuku">
+        UPDATE hs_cang_ruku
+        SET orderId     = #{orderId,jdbcType=BIGINT},
+            hsId        = #{hsId,jdbcType=BIGINT},
+            rukuDate    = #{rukuDate,jdbcType=TIMESTAMP},
+            rukuStatus  = #{rukuStatus,jdbcType=INTEGER},
+            rukuAmount  = #{rukuAmount,jdbcType=DECIMAL},
+            rukuPrice   = #{rukuPrice,jdbcType=DECIMAL},
+            locality    = #{locality,jdbcType=VARCHAR},
+            trafficMode = #{trafficMode,jdbcType=VARCHAR},
+            cars        = #{cars,jdbcType=INTEGER},
+            jhh         = #{jhh,jdbcType=VARCHAR},
+            ship        = #{ship,jdbcType=VARCHAR},
+            tsc         = #{tsc,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>
