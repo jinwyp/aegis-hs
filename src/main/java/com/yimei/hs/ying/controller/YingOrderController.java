@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
+
 /**
  * Created by hary on 2017/9/15.
  */
@@ -83,17 +85,38 @@ public class YingOrderController {
      * @return
      */
     @PutMapping("/{id}")
-    @Transactional(readOnly =  false)
+    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) YingOrder yingOrder
     ) {
         yingOrder.setId(id);
         int rtn = yingOrderService.update(yingOrder);
-        logger.error("yingOrder"+yingOrder);
+        logger.error("yingOrder" + yingOrder);
         if (rtn != 1) {
             return Result.error(4001, "更新失败");
         }
         return Result.ok(1);
     }
+
+    /**
+     * 将order转移
+     * @param orderId
+     * @param toId
+     * @return
+     */
+    @PostMapping("/{id}/to/{toId}")
+    @Transactional(readOnly = false)
+    public ResponseEntity<Result<Integer>> transfer(
+            @CurrentUser User user,
+            @PathVariable("orderId") Long orderId,
+            @PathVariable("toId") Long toId
+    ) {
+        int cnt =  yingOrderService.transfer(orderId,user.getId(), toId);
+        if (cnt != 1) {
+            return Result.error(4001, "转移失败");
+        }
+        return Result.ok(1);
+    }
 }
+
