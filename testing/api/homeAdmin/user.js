@@ -83,7 +83,7 @@ describe('管理用户', function () {
 
 
     it('获取某个ID的用户信息 GET: /api/users/2' , function (done) {
-        server.get('/api/users/1')
+        server.get('/api/users/2')
             .set('Authorization', Authorization)
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
@@ -100,7 +100,7 @@ describe('管理用户', function () {
 
 
     it('修改某个ID的用户信息 PUT: /api/users/2', function (done) {
-        server.put('/api/users/1')
+        server.put('/api/users/2')
             .set('Authorization', Authorization)
             .set('Accept', 'application/json')
             .send({
