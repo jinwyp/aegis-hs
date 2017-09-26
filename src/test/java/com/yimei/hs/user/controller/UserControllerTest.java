@@ -320,7 +320,7 @@ public class UserControllerTest extends YingTestBase {
 
 //        Map<String ,Object>  va
         PageYingFukuanDTO fayunDot=new PageYingFukuanDTO(){{
-            set
+
         }};
 
 
