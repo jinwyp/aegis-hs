@@ -1,4 +1,4 @@
-package com.yimei.hs.boot.annotation;
+package com.yimei.hs.boot.ext.annotation;
 
 import java.lang.annotation.*;
 

@@ -1,7 +1,8 @@
 package com.yimei.hs.ying.controller;
 
-import com.yimei.hs.boot.annotation.CurrentUser;
+import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.api.UpdateGroup;
+import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.ying.entity.YingOrder;
 import com.yimei.hs.boot.api.PageResult;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("/api/yings")
 @RestController
+@Logined
 public class YingOrderController {
 
     private static final Logger logger = LoggerFactory.getLogger(YingOrderController.class);

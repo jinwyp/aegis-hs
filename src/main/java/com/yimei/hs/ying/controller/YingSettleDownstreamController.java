@@ -4,6 +4,7 @@ import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
+import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.ying.dto.PageYingSettleDownstreamDTO;
 import com.yimei.hs.ying.entity.YingSettleDownstream;
 import com.yimei.hs.ying.service.YingSettleService;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/ying")
+@Logined
 public class YingSettleDownstreamController {
 
     private static final Logger logger = LoggerFactory.getLogger(YingSettleDownstreamController.class);

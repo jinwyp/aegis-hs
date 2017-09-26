@@ -53,7 +53,7 @@ public class GlobalHandlerExceptionResolver {
     }
 
     //户登录异常处理
-    @ExceptionHandler({NoJwtTokenException.class})
+    @ExceptionHandler({NoJwtTokenException.class, UnAuthorizedException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public void process401Error(HttpServletRequest request, HttpServletResponse response, Exception ex) throws IOException {
         response.setStatus(401);

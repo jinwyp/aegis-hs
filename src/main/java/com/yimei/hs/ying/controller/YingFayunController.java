@@ -1,8 +1,9 @@
 package com.yimei.hs.ying.controller;
 
-import com.yimei.hs.boot.annotation.CurrentUser;
+import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
+import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.ying.entity.YingFayun;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("/api/ying")
 @RestController
+@Logined
 public class YingFayunController {
 
     private static final Logger logger = LoggerFactory.getLogger(YingFayunController.class);

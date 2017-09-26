@@ -2,6 +2,7 @@ package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
+import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.ying.entity.YingSettleUpstream;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/ying")
+@Logined
 public class YingSettleUpstreamController {
 
     private static final Logger logger = LoggerFactory.getLogger(YingSettleUpstreamController.class);

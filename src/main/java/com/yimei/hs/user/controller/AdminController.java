@@ -2,7 +2,7 @@ package com.yimei.hs.user.controller;
 
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
-import com.yimei.hs.boot.annotation.IsAdmin;
+import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.user.dto.PageUserDTO;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.user.service.UserService;
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
  * Created by hary on 2017/9/25.
  */
 @RestController()
-@IsAdmin
 @RequestMapping("/api")
+@Logined(isAdmin = true)
 public class AdminController {
 
 
