@@ -1,7 +1,10 @@
 package com.yimei.hs.ying.entity;
 
+import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -9,15 +12,16 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class YingOrderConfig implements Serializable {
 
-    @NotNull(groups = {UpdateGroup.class})
+    @NotNull(groups = {UpdateGroup.class}, message = "id不能为空")
     private Long id;
 
-//    @NotNull(message = "订单id不能为空")
+    @NotNull(groups = {CreateGroup.class}, message = "业务线不能为空")
     private Long orderId;
 
-//    @NotNull(message = "结算月不能为空")
     private String hsMonth;
 
     private BigDecimal maxPrepayRate;

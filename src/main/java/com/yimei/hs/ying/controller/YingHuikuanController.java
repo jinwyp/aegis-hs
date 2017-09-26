@@ -1,5 +1,6 @@
 package com.yimei.hs.ying.controller;
 
+import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.ying.entity.YingHuikuan;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -80,7 +82,7 @@ public class YingHuikuanController {
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id,
-            @RequestBody YingHuikuan yingHuikuan
+            @RequestBody @Validated(UpdateGroup.class) YingHuikuan yingHuikuan
     ) {
         assert (yingHuikuan.getOrderId() == orderId);
         yingHuikuan.setId(id);

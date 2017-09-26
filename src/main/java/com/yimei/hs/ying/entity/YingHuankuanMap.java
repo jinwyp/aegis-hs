@@ -1,9 +1,11 @@
 package com.yimei.hs.ying.entity;
 
+import com.yimei.hs.boot.api.CreateGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 public class YingHuankuanMap implements Serializable {
     private Long id;
 
+    @NotNull(groups = {CreateGroup.class}, message = "业务线id不能为空")
     private Long orderId;
 
     private Long huankuanId;

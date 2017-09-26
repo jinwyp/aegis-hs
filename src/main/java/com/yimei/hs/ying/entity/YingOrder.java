@@ -4,7 +4,9 @@ import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.OrderStatus;
 import com.yimei.hs.enums.SettleMode;
 import com.yimei.hs.boot.api.UpdateGroup;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
@@ -14,10 +16,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class YingOrder implements Serializable {
 
 
-    @NotNull(groups = {UpdateGroup.class})
+    @NotNull(groups = {UpdateGroup.class}, message = "id不能为空")
     private Long id;
 
     @NotNull(message = "部门编号不能为空")
