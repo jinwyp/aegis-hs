@@ -41,6 +41,7 @@ public class YingOrder implements Serializable {
     @NotEmpty(groups = {CreateGroup.class }, message = "业务线名称不能为空")
     private String line;
 
+    @NotNull(groups = {CreateGroup.class}, message = "货物类型不能为空")
     private CargoType cargoType;
 
     @NotNull(groups = {CreateGroup.class }, message = "上游不能为空")

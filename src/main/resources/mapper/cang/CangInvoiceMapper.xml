@@ -10,12 +10,12 @@
         <result column="invoiceType" jdbcType="VARCHAR" property="invoiceType"/>
         <result column="openDate" jdbcType="TIMESTAMP" property="openDate"/>
         <result column="openCompanyId" jdbcType="BIGINT" property="openCompanyId"/>
-        <result column="recieverId" jdbcType="BIGINT" property="recieverId"/>
+        <result column="receiverId" jdbcType="BIGINT" property="recieverId"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, invoiceDirection, invoiceType, openDate, openCompanyId, recieverId,
+        id, orderId, hsId, invoiceDirection, invoiceType, openDate, openCompanyId, receiverId,
         tsc
     </sql>
 
@@ -43,7 +43,7 @@
             invoiceType,
             openDate,
             openCompanyId,
-            recieverId,
+            receiverId,
             tsc
         )
         VALUES (
@@ -70,7 +70,7 @@
             <if test="invoiceType != null"> invoiceType, </if>
             <if test="openDate != null"> openDate, </if>
             <if test="openCompanyId != null"> openCompanyId, </if>
-            <if test="recieverId != null"> recieverId, </if>
+            <if test="receiverId != null"> receiverId, </if>
             <if test="tsc != null"> tsc, </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -81,7 +81,7 @@
             <if test="invoiceType != null"> #{invoiceType,jdbcType=VARCHAR}, </if>
             <if test="openDate != null"> #{openDate,jdbcType=TIMESTAMP}, </if>
             <if test="openCompanyId != null"> #{openCompanyId,jdbcType=BIGINT}, </if>
-            <if test="recieverId != null"> #{recieverId,jdbcType=BIGINT}, </if>
+            <if test="receiverId != null"> #{recieverId,jdbcType=BIGINT}, </if>
             <if test="tsc != null"> #{tsc,jdbcType=TIMESTAMP}, </if>
         </trim>
     </insert>
@@ -96,7 +96,7 @@
             <if test="invoiceType != null"> invoiceType = #{invoiceType,jdbcType=VARCHAR}, </if>
             <if test="openDate != null"> openDate = #{openDate,jdbcType=TIMESTAMP}, </if>
             <if test="openCompanyId != null"> openCompanyId = #{openCompanyId,jdbcType=BIGINT}, </if>
-            <if test="recieverId != null"> recieverId = #{recieverId,jdbcType=BIGINT}, </if>
+            <if test="receiverId != null"> receiverId = #{recieverId,jdbcType=BIGINT}, </if>
             <if test="tsc != null"> tsc = #{tsc,jdbcType=TIMESTAMP}, </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
@@ -110,7 +110,7 @@
             invoiceType      = #{invoiceType,jdbcType=VARCHAR},
             openDate         = #{openDate,jdbcType=TIMESTAMP},
             openCompanyId    = #{openCompanyId,jdbcType=BIGINT},
-            recieverId       = #{recieverId,jdbcType=BIGINT},
+            receiverId       = #{recieverId,jdbcType=BIGINT},
             tsc              = #{tsc,jdbcType=TIMESTAMP}
         WHERE id = #{id,jdbcType=BIGINT}
     </update>

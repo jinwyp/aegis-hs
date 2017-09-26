@@ -24,17 +24,18 @@ public class YingHuikuan implements Serializable {
     @NotNull(groups = {UpdateGroup.class}, message = "id不能为空")
     private Long id;
 
-    @Max(20)
+    @NotNull(groups = {CreateGroup.class}, message = "业务线不能为空")
     private Long orderId;
 
     @Max(20)
     @NotNull(groups = {CreateGroup.class}, message = "核算月不能为空")
     private Long hsId;
-    @Max(20)
+
+    @NotNull(groups = {CreateGroup.class}, message = "回款公司不能为空")
     private Long huikuanCompanyId;
 
+    @NotNull(groups = {CreateGroup.class}, message = "回款日期不能为空")
     private LocalDateTime huikuanDate;
-
 
     @Null(groups = {UpdateGroup.class})  // 更新回款时不能更新金额
     private BigDecimal huikuanAmount;
