@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yimei.hs.mapper.CangSettleUpstreamMapMapper">
+  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.CangSettleUpstreamMap">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="settleId" jdbcType="BIGINT" property="settleId" />
+    <result column="rukuId" jdbcType="BIGINT" property="rukuId" />
+    <result column="deduction" jdbcType="DECIMAL" property="deduction" />
+    <result column="tsc" jdbcType="TIMESTAMP" property="tsc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, settleId, rukuId, deduction, tsc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hs_cang_settle_upstream_map
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from hs_cang_settle_upstream_map
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yimei.hs.entity.CangSettleUpstreamMap">
+    insert into hs_cang_settle_upstream_map (id, settleId, rukuId, 
+      deduction, tsc)
+    values (#{id,jdbcType=BIGINT}, #{settleId,jdbcType=BIGINT}, #{rukuId,jdbcType=BIGINT}, 
+      #{deduction,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yimei.hs.entity.CangSettleUpstreamMap">
+    insert into hs_cang_settle_upstream_map
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="settleId != null">
+        settleId,
+      </if>
+      <if test="rukuId != null">
+        rukuId,
+      </if>
+      <if test="deduction != null">
+        deduction,
+      </if>
+      <if test="tsc != null">
+        tsc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="settleId != null">
+        #{settleId,jdbcType=BIGINT},
+      </if>
+      <if test="rukuId != null">
+        #{rukuId,jdbcType=BIGINT},
+      </if>
+      <if test="deduction != null">
+        #{deduction,jdbcType=DECIMAL},
+      </if>
+      <if test="tsc != null">
+        #{tsc,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.CangSettleUpstreamMap">
+    update hs_cang_settle_upstream_map
+    <set>
+      <if test="settleId != null">
+        settleId = #{settleId,jdbcType=BIGINT},
+      </if>
+      <if test="rukuId != null">
+        rukuId = #{rukuId,jdbcType=BIGINT},
+      </if>
+      <if test="deduction != null">
+        deduction = #{deduction,jdbcType=DECIMAL},
+      </if>
+      <if test="tsc != null">
+        tsc = #{tsc,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.CangSettleUpstreamMap">
+    update hs_cang_settle_upstream_map
+    set settleId = #{settleId,jdbcType=BIGINT},
+      rukuId = #{rukuId,jdbcType=BIGINT},
+      deduction = #{deduction,jdbcType=DECIMAL},
+      tsc = #{tsc,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

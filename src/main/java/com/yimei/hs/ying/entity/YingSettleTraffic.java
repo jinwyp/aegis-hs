@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class YingSettleTraffic implements Serializable {
 
-    @NotNull(groups = {UpdateGroup.class}, message = "id不能为空")
+//    @NotNull(groups = {UpdateGroup.class}, message = "id不能为空")
     private Long id;
 
-    @NotNull(groups = {CreateGroup.class}, message = "业务线不能为空")
+//    @NotNull(groups = {CreateGroup.class}, message = "业务线不能为空")
     private Long orderId;
 
     @NotNull(groups = {CreateGroup.class}, message = "核算月不能为空")

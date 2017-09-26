@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yimei.hs.mapper.YingFayunMapper">
+  <resultMap id="BaseResultMap" type="com.yimei.hs.entity.YingFayun">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="orderId" jdbcType="BIGINT" property="orderId" />
+    <result column="hsId" jdbcType="BIGINT" property="hsId" />
+    <result column="fyDate" jdbcType="TIMESTAMP" property="fyDate" />
+    <result column="fyAmount" jdbcType="DECIMAL" property="fyAmount" />
+    <result column="arriveStatus" jdbcType="VARCHAR" property="arriveStatus" />
+    <result column="upstreamTrafficMode" jdbcType="VARCHAR" property="upstreamTrafficMode" />
+    <result column="upstreamCars" jdbcType="INTEGER" property="upstreamCars" />
+    <result column="upstreamJHH" jdbcType="VARCHAR" property="upstreamJHH" />
+    <result column="upstreamShip" jdbcType="VARCHAR" property="upstreamShip" />
+    <result column="downstreamTrafficMode" jdbcType="VARCHAR" property="downstreamTrafficMode" />
+    <result column="downstreamCars" jdbcType="INTEGER" property="downstreamCars" />
+    <result column="downstreamJHH" jdbcType="VARCHAR" property="downstreamJHH" />
+    <result column="downstreamShip" jdbcType="VARCHAR" property="downstreamShip" />
+    <result column="tsc" jdbcType="TIMESTAMP" property="tsc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, orderId, hsId, fyDate, fyAmount, arriveStatus, upstreamTrafficMode, upstreamCars, 
+    upstreamJHH, upstreamShip, downstreamTrafficMode, downstreamCars, downstreamJHH, 
+    downstreamShip, tsc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hs_ying_fayun
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from hs_ying_fayun
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yimei.hs.entity.YingFayun">
+    insert into hs_ying_fayun (id, orderId, hsId, 
+      fyDate, fyAmount, arriveStatus, 
+      upstreamTrafficMode, upstreamCars, upstreamJHH, 
+      upstreamShip, downstreamTrafficMode, downstreamCars, 
+      downstreamJHH, downstreamShip, tsc
+      )
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT}, 
+      #{fyDate,jdbcType=TIMESTAMP}, #{fyAmount,jdbcType=DECIMAL}, #{arriveStatus,jdbcType=VARCHAR}, 
+      #{upstreamTrafficMode,jdbcType=VARCHAR}, #{upstreamCars,jdbcType=INTEGER}, #{upstreamJHH,jdbcType=VARCHAR}, 
+      #{upstreamShip,jdbcType=VARCHAR}, #{downstreamTrafficMode,jdbcType=VARCHAR}, #{downstreamCars,jdbcType=INTEGER}, 
+      #{downstreamJHH,jdbcType=VARCHAR}, #{downstreamShip,jdbcType=VARCHAR}, #{tsc,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yimei.hs.entity.YingFayun">
+    insert into hs_ying_fayun
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderId != null">
+        orderId,
+      </if>
+      <if test="hsId != null">
+        hsId,
+      </if>
+      <if test="fyDate != null">
+        fyDate,
+      </if>
+      <if test="fyAmount != null">
+        fyAmount,
+      </if>
+      <if test="arriveStatus != null">
+        arriveStatus,
+      </if>
+      <if test="upstreamTrafficMode != null">
+        upstreamTrafficMode,
+      </if>
+      <if test="upstreamCars != null">
+        upstreamCars,
+      </if>
+      <if test="upstreamJHH != null">
+        upstreamJHH,
+      </if>
+      <if test="upstreamShip != null">
+        upstreamShip,
+      </if>
+      <if test="downstreamTrafficMode != null">
+        downstreamTrafficMode,
+      </if>
+      <if test="downstreamCars != null">
+        downstreamCars,
+      </if>
+      <if test="downstreamJHH != null">
+        downstreamJHH,
+      </if>
+      <if test="downstreamShip != null">
+        downstreamShip,
+      </if>
+      <if test="tsc != null">
+        tsc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="hsId != null">
+        #{hsId,jdbcType=BIGINT},
+      </if>
+      <if test="fyDate != null">
+        #{fyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fyAmount != null">
+        #{fyAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="arriveStatus != null">
+        #{arriveStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="upstreamTrafficMode != null">
+        #{upstreamTrafficMode,jdbcType=VARCHAR},
+      </if>
+      <if test="upstreamCars != null">
+        #{upstreamCars,jdbcType=INTEGER},
+      </if>
+      <if test="upstreamJHH != null">
+        #{upstreamJHH,jdbcType=VARCHAR},
+      </if>
+      <if test="upstreamShip != null">
+        #{upstreamShip,jdbcType=VARCHAR},
+      </if>
+      <if test="downstreamTrafficMode != null">
+        #{downstreamTrafficMode,jdbcType=VARCHAR},
+      </if>
+      <if test="downstreamCars != null">
+        #{downstreamCars,jdbcType=INTEGER},
+      </if>
+      <if test="downstreamJHH != null">
+        #{downstreamJHH,jdbcType=VARCHAR},
+      </if>
+      <if test="downstreamShip != null">
+        #{downstreamShip,jdbcType=VARCHAR},
+      </if>
+      <if test="tsc != null">
+        #{tsc,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.entity.YingFayun">
+    update hs_ying_fayun
+    <set>
+      <if test="orderId != null">
+        orderId = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="hsId != null">
+        hsId = #{hsId,jdbcType=BIGINT},
+      </if>
+      <if test="fyDate != null">
+        fyDate = #{fyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fyAmount != null">
+        fyAmount = #{fyAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="arriveStatus != null">
+        arriveStatus = #{arriveStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="upstreamTrafficMode != null">
+        upstreamTrafficMode = #{upstreamTrafficMode,jdbcType=VARCHAR},
+      </if>
+      <if test="upstreamCars != null">
+        upstreamCars = #{upstreamCars,jdbcType=INTEGER},
+      </if>
+      <if test="upstreamJHH != null">
+        upstreamJHH = #{upstreamJHH,jdbcType=VARCHAR},
+      </if>
+      <if test="upstreamShip != null">
+        upstreamShip = #{upstreamShip,jdbcType=VARCHAR},
+      </if>
+      <if test="downstreamTrafficMode != null">
+        downstreamTrafficMode = #{downstreamTrafficMode,jdbcType=VARCHAR},
+      </if>
+      <if test="downstreamCars != null">
+        downstreamCars = #{downstreamCars,jdbcType=INTEGER},
+      </if>
+      <if test="downstreamJHH != null">
+        downstreamJHH = #{downstreamJHH,jdbcType=VARCHAR},
+      </if>
+      <if test="downstreamShip != null">
+        downstreamShip = #{downstreamShip,jdbcType=VARCHAR},
+      </if>
+      <if test="tsc != null">
+        tsc = #{tsc,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.entity.YingFayun">
+    update hs_ying_fayun
+    set orderId = #{orderId,jdbcType=BIGINT},
+      hsId = #{hsId,jdbcType=BIGINT},
+      fyDate = #{fyDate,jdbcType=TIMESTAMP},
+      fyAmount = #{fyAmount,jdbcType=DECIMAL},
+      arriveStatus = #{arriveStatus,jdbcType=VARCHAR},
+      upstreamTrafficMode = #{upstreamTrafficMode,jdbcType=VARCHAR},
+      upstreamCars = #{upstreamCars,jdbcType=INTEGER},
+      upstreamJHH = #{upstreamJHH,jdbcType=VARCHAR},
+      upstreamShip = #{upstreamShip,jdbcType=VARCHAR},
+      downstreamTrafficMode = #{downstreamTrafficMode,jdbcType=VARCHAR},
+      downstreamCars = #{downstreamCars,jdbcType=INTEGER},
+      downstreamJHH = #{downstreamJHH,jdbcType=VARCHAR},
+      downstreamShip = #{downstreamShip,jdbcType=VARCHAR},
+      tsc = #{tsc,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
