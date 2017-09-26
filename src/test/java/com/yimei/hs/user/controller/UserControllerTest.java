@@ -8,13 +8,16 @@ import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.CustomerType;
 import com.yimei.hs.enums.SettleMode;
+import com.yimei.hs.test.YingTestBase;
 import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.util.Digests;
 import com.yimei.hs.util.Encodes;
-import com.yimei.hs.ying.entity.*;
+import com.yimei.hs.ying.entity.YingOrder;
+import com.yimei.hs.ying.entity.YingOrderConfig;
+import com.yimei.hs.ying.entity.YingOrderParty;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,20 +29,15 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.client.ClientHttpRequestExecution;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
-import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hary on 2017/9/25.
@@ -47,7 +45,7 @@ import java.util.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = HsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional(readOnly = true)
-public class UserControllerTest {
+public class UserControllerTest extends YingTestBase {
 
     @Autowired
     TestRestTemplate client;
@@ -55,78 +53,26 @@ public class UserControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    public <T> String printJson(T m) throws JsonProcessingException {
-        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(m);
+
+    @Override
+    public ObjectMapper getObjectMapper() {
+        return objectMapper;
     }
-    ParameterizedTypeReference<Result<Boolean>> typeReferenceBoolean  = new ParameterizedTypeReference<Result<Boolean>>() {};
-    ParameterizedTypeReference<PageResult<Boolean>> typeReferenceBooleanPage  = new ParameterizedTypeReference<PageResult<Boolean>>() {};
 
-    ParameterizedTypeReference<Result<Integer>> typeReferenceInteger  = new ParameterizedTypeReference<Result<Integer>>() {};
-    ParameterizedTypeReference<PageResult<Integer>> typeReferenceIntegerPage  = new ParameterizedTypeReference<PageResult<Integer>>() {};
+    @Override
+    public TestRestTemplate getTestRestTemplate() {
+        return client;
+    }
 
-    ParameterizedTypeReference<Result<String>> typeReferenceString  = new ParameterizedTypeReference<Result<String>>() {};
-    ParameterizedTypeReference<PageResult<String>> typeReferenceStringPage  = new ParameterizedTypeReference<PageResult<String>>() {};
-
-    ParameterizedTypeReference<Result<User>> typeReferenceUser  = new ParameterizedTypeReference<Result<User>>() {};
-    ParameterizedTypeReference<Result<Team>> typeReferenceTeam  = new ParameterizedTypeReference<Result<Team>>() {};
-    ParameterizedTypeReference<Result<Dept>> typeReferenceDept  = new ParameterizedTypeReference<Result<Dept>>() {};
-    ParameterizedTypeReference<Result<Party>> typeReferenceParty  = new ParameterizedTypeReference<Result<Party>>() {};
-
-    ParameterizedTypeReference<PageResult<User>> typeReferenceUserPage  = new ParameterizedTypeReference<PageResult<User>>() {};
-    ParameterizedTypeReference<PageResult<Team>> typeReferenceTeamPage  = new ParameterizedTypeReference<PageResult<Team>>() {};
-    ParameterizedTypeReference<PageResult<Dept>> typeReferenceDeptPage  = new ParameterizedTypeReference<PageResult<Dept>>() {};
-    ParameterizedTypeReference<PageResult<Party>> typeReferencePartyPage  = new ParameterizedTypeReference<PageResult<Party>>() {};
-
-    ParameterizedTypeReference<Result<YingOrder>> typeReferenceOrder  = new ParameterizedTypeReference<Result<YingOrder>>() {};
-    ParameterizedTypeReference<Result<YingOrderConfig>> typeReferenceOrderConfig  = new ParameterizedTypeReference<Result<YingOrderConfig>>() {};
-    ParameterizedTypeReference<Result<YingOrderParty>> typeReferenceOrderParty  = new ParameterizedTypeReference<Result<YingOrderParty>>() {};
-    ParameterizedTypeReference<Result<YingInvoice>> typeReferenceInvoice  = new ParameterizedTypeReference<Result<YingInvoice>>() {};
-    ParameterizedTypeReference<Result<YingInvoiceDetail>> typeReferenceInvoiceDetail  = new ParameterizedTypeReference<Result<YingInvoiceDetail>>() {};
-    ParameterizedTypeReference<Result<YingFayun>> typeReferenceFayun  = new ParameterizedTypeReference<Result<YingFayun>>() {};
-    ParameterizedTypeReference<Result<YingFukuan>> typeReferenceFukuan  = new ParameterizedTypeReference<Result<YingFukuan>>() {};
-    ParameterizedTypeReference<Result<YingHuikuan>> typeReferenceHuikuan  = new ParameterizedTypeReference<Result<YingHuikuan>>() {};
-    ParameterizedTypeReference<Result<YingHuankuan>> typeReferenceHuankuan  = new ParameterizedTypeReference<Result<YingHuankuan>>() {};
-    ParameterizedTypeReference<Result<YingSettleUpstream>> typeReferenceSettleUpstream  = new ParameterizedTypeReference<Result<YingSettleUpstream>>() {};
-    ParameterizedTypeReference<Result<YingSettleDownstream>> typeReferenceSettleDownstream  = new ParameterizedTypeReference<Result<YingSettleDownstream>>() {};
-    ParameterizedTypeReference<Result<YingSettleTraffic>> typeReferenceSettleTraffic  = new ParameterizedTypeReference<Result<YingSettleTraffic>>() {};
-
-    ParameterizedTypeReference<PageResult<YingOrder>> typeReferenceOrderPage  = new ParameterizedTypeReference<PageResult<YingOrder>>() {};
-    ParameterizedTypeReference<PageResult<YingOrderConfig>> typeReferenceOrderConfigPage  = new ParameterizedTypeReference<PageResult<YingOrderConfig>>() {};
-    ParameterizedTypeReference<PageResult<YingOrderParty>> typeReferenceOrderPartyPage  = new ParameterizedTypeReference<PageResult<YingOrderParty>>() {};
-    ParameterizedTypeReference<PageResult<YingInvoice>> typeReferenceInvoicePage  = new ParameterizedTypeReference<PageResult<YingInvoice>>() {};
-    ParameterizedTypeReference<PageResult<YingInvoiceDetail>> typeReferenceInvoiceDetailPage  = new ParameterizedTypeReference<PageResult<YingInvoiceDetail>>() {};
-    ParameterizedTypeReference<PageResult<YingFayun>> typeReferenceFayunPage  = new ParameterizedTypeReference<PageResult<YingFayun>>() {};
-    ParameterizedTypeReference<PageResult<YingFukuan>> typeReferenceFukuanPage  = new ParameterizedTypeReference<PageResult<YingFukuan>>() {};
-    ParameterizedTypeReference<PageResult<YingHuikuan>> typeReferenceHuikuanPage  = new ParameterizedTypeReference<PageResult<YingHuikuan>>() {};
-    ParameterizedTypeReference<PageResult<YingHuankuan>> typeReferenceHuankuanPage  = new ParameterizedTypeReference<PageResult<YingHuankuan>>() {};
-    ParameterizedTypeReference<PageResult<YingSettleUpstream>> typeReferenceSettleUpstreamPage  = new ParameterizedTypeReference<PageResult<YingSettleUpstream>>() {};
-    ParameterizedTypeReference<PageResult<YingSettleDownstream>> typeReferenceSettleDownstreamPage  = new ParameterizedTypeReference<PageResult<YingSettleDownstream>>() {};
-    ParameterizedTypeReference<PageResult<YingSettleTraffic>> typeReferenceSettleTrafficPage  = new ParameterizedTypeReference<PageResult<YingSettleTraffic>>() {};
-
-//    @PostConstruct
-//    void postContruct() {
-//        objectMapper.setDefaultPrettyPrinter()
-//    }
 
     private static final Logger logger = LoggerFactory.getLogger(UserControllerTest.class);
 
-    private void setClientInterceptor(String bearer) {
-        ClientHttpRequestInterceptor interceptor = new ClientHttpRequestInterceptor() {
-            @Override
-            public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-                request.getHeaders().add("Authorization", bearer);
-                return execution.execute(request, body);
-            }
-        };
-
-        client.getRestTemplate().setInterceptors(Collections.singletonList(interceptor));
-    }
-
-    public static final int HASH_INTERATIONS = 1024;
-    public static final int SALT_SIZE = 8;
 
     @Test
     public void initUser() {
+
+        final int HASH_INTERATIONS = 1024;
+        final int SALT_SIZE = 8;
 
         User user = new User();
         user.setDeptId(1L);
@@ -144,25 +90,14 @@ public class UserControllerTest {
         user.setCreateBy("sys");
 
         logger.info("create user: {}", user);
-
     }
 
-    public <M, R> Result<R> post(String url, M model, Class<?> classz) {
-        return client.exchange(url, HttpMethod.POST, new HttpEntity<M>(model), new ParameterizedTypeReference<Result<R>>() {
-            @Override
-            public Type getType() {
-                Type[] responseWrapper = {classz};
-                ParameterizedType pt = ParameterizedTypeImpl.make(Result.class, responseWrapper, null);
-                return pt;
-            }
-        }).getBody();
-    }
 
     private List<Long> createParties(List<Party> parties) {
         List<Long> rtn = new ArrayList<Long>();
         for (Party p : parties) {
 
-            Result<Party> pt = post("/api/parties", p, Party.class);
+            Result<Party> pt = client.exchange("/api/parties", HttpMethod.POST, new HttpEntity<Party>(p), typeReferenceParty).getBody();
             if (pt.getSuccess()) {
                 logger.info("创建party成功: {}", pt.getData());
                 rtn.add(pt.getData().getId());
@@ -226,7 +161,7 @@ public class UserControllerTest {
         team.setDeptId(deptResult.getData().getId());
         team.setName("我的team");
         // Result<Team> teamResult = post("/api/teams", team, Team.class);
-        Result<Team> teamResult = client.exchange("/api/teams", HttpMethod.POST,  new HttpEntity<Team>(team), typeReferenceTeam).getBody();
+        Result<Team> teamResult = client.exchange("/api/teams", HttpMethod.POST, new HttpEntity<Team>(team), typeReferenceTeam).getBody();
         if (teamResult.getSuccess()) {
             logger.info("创建团队成功: {}", teamResult.getData());
         } else {
@@ -300,7 +235,7 @@ public class UserControllerTest {
         // 8. 分页查询order
         Map<String, Object> variables = new HashMap<>();
         variables.put("ownerId", nuser.getData().getId());
-        PageResult<YingOrder> yingOrderPageResult = client.exchange( "/api/yings", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
+        PageResult<YingOrder> yingOrderPageResult = client.exchange("/api/yings", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
         if (yingOrderPageResult.getSuccess()) {
             logger.info("获取应收订单分页成功 GET /api/yings request: {}\nresponse:\n{}", variables, printJson(yingOrderPageResult.getData()));
         } else {
@@ -309,10 +244,10 @@ public class UserControllerTest {
         }
 
         // 9. 单个订单查询
-        ParameterizedTypeReference<Result<YingOrder>> tf  = new ParameterizedTypeReference<Result<YingOrder>>() {
+        ParameterizedTypeReference<Result<YingOrder>> tf = new ParameterizedTypeReference<Result<YingOrder>>() {
         };
         String kurl = "/api/yings/" + yingOrderResult.getData().getId();
-        Result<YingOrder> yingOrderResult1 = client.exchange(kurl, HttpMethod.GET, HttpEntity.EMPTY,tf).getBody();
+        Result<YingOrder> yingOrderResult1 = client.exchange(kurl, HttpMethod.GET, HttpEntity.EMPTY, tf).getBody();
 
         // 10. 增加核算月配置
         String url = "/api/ying/" + yingOrderResult1.getData().getId() + "/configs";
@@ -325,7 +260,7 @@ public class UserControllerTest {
             setTradeAddPrice(new BigDecimal("0"));
             setWeightedPrice(new BigDecimal("612"));
         }};
-        Result<YingOrderConfig> yingOrderConfigResult = post(url, config, YingOrderConfig.class);
+        Result<YingOrderConfig> yingOrderConfigResult = client.exchange(url, HttpMethod.POST, new HttpEntity<YingOrderConfig>(config), typeReferenceOrderConfig).getBody();
         if (yingOrderConfigResult.getSuccess()) {
             logger.info("添加核算月配置成功 POST {}\nrequest:{}\nresponse:{}", url, printJson(config), printJson(yingOrderConfigResult.getData()));
         } else {
@@ -334,7 +269,6 @@ public class UserControllerTest {
         }
 
         // 11. 修改核算月配置
-
 
 
         // 12. 核算月查询 by orderId
