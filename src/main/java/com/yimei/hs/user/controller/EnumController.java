@@ -9,17 +9,41 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by hary on 2017/9/26.
  */
 @RestController
-@RequestMapping("/api/enum")
+@RequestMapping("/api")
 public class EnumController {
 
-    @GetMapping("/{type}")
-    public ResponseEntity<Result<List<EnumEntity>>> getEnums(
+    @GetMapping("/enums")
+    public ResponseEntity<Result<List<String>>> getEnums() {
+        return Result.ok(
+                new ArrayList<String>(){{
+                    add(BusinessType.name);
+                    add(CargoArriveStatus.name);
+                    add(CargoType.name);
+                    add(CustomerType.name);
+                    add(DiscountMode.name);
+                    add(FeeClass.name);
+                    add(InvoiceDirection.name);
+                    add(InvoiceType.name);
+                    add(OrderStatus.name);
+                    add(PaymentPurpose.name);
+                    add(PayMode.name);
+                    add(ReceivePaymentPurpose.name);
+                    add(SettleMode.name);
+                    add(SettleTarget.name);
+                    add(TrafficMode.name);
+                }}
+        );
+    }
+
+    @GetMapping("/enums/{type}")
+    public ResponseEntity<Result<List<EnumEntity>>> getEnum(
             @PathVariable("type") String type
     ) {
 
