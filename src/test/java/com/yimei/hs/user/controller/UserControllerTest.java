@@ -70,44 +70,9 @@ public class UserControllerTest extends YingTestBase {
 
     @Test
     public void initUser() {
-
-        final int HASH_INTERATIONS = 1024;
-        final int SALT_SIZE = 8;
-
-        User user = new User();
-        user.setDeptId(1L);
-        user.setPhone("13022117050");
-        user.setPassword("123456");
-
-        byte[] passwordSalt = Digests.generateSalt(SALT_SIZE);
-        byte[] hashPassword = Digests.sha1(user.getPassword().getBytes(), passwordSalt, HASH_INTERATIONS);
-
-        user.setIsActive(true);
-        user.setIsAdmin(false);
-        user.setPassword(Encodes.encodeHex(hashPassword));
-        user.setPasswordSalt(Encodes.encodeHex(passwordSalt));
-        user.setCreateDate(LocalDateTime.now());
-        user.setCreateBy("sys");
-
-        logger.info("create user: {}", user);
+        createUser("13022117050", "123456");
     }
 
-
-    private List<Long> createParties(List<Party> parties) {
-        List<Long> rtn = new ArrayList<Long>();
-        for (Party p : parties) {
-
-            Result<Party> pt = client.exchange("/api/parties", HttpMethod.POST, new HttpEntity<Party>(p), typeReferenceParty).getBody();
-            if (pt.getSuccess()) {
-                logger.info("创建party成功: {}", pt.getData());
-                rtn.add(pt.getData().getId());
-            } else {
-                logger.error("创建party失败: {}", pt.getError());
-                System.exit(-1);
-            }
-        }
-        return rtn;
-    }
 
     @Test
     public void userTest() throws JsonProcessingException {
