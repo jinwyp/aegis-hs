@@ -6,17 +6,28 @@
         </h3>
 
 
-        <form [formGroup]="orderForm" (ngSubmit)="orderFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+        <form [formGroup]="orderForm"  (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-            <bs-select formControlName ="deptId" [fc]="orderForm.get('deptId')" [label]="'事业部门:'" [options]="departmentList" [error]="orderFormError.deptId" (change)="filterTeams($event)" ></bs-select>
-            <bs-select formControlName ="teamId" [fc]="orderForm.get('teamId')" [label]="'团队:'" [options]="filterTeamList" [error]="orderFormError.teamId"></bs-select>
+            <div class="form-row ">
+                <div class="col">
+                    <bs-select formControlName ="deptId" [fc]="orderForm.get('deptId')" [label]="'事业部门:'" [labelclass]="'col-4'" [options]="departmentList" [error]="orderFormError.deptId" (change)="filterTeams($event)" ></bs-select>
+                </div>
+                <div class="col">
+                    <bs-select formControlName ="teamId" [fc]="orderForm.get('teamId')" [label]="'团队:'" [options]="filterTeamList" [error]="orderFormError.teamId"></bs-select>
+                </div>
+            </div>
 
+            <div class="form-row ">
+                <div class="col">
+                    <bs-select formControlName ="upstreamSettleMode" [fc]="orderForm.get('upstreamSettleMode')" [label]="'上游结算方式:'" [labelclass]="'col-4'" [options]="payModeList" [error]="orderFormError.upstreamSettleMode"></bs-select>
+                </div>
+                <div class="col">
+                    <bs-select formControlName ="downstreamSettleMode" [fc]="orderForm.get('downstreamSettleMode')" [label]="'下游结算方式:'" [options]="payModeList" [error]="orderFormError.downstreamSettleMode"></bs-select>
+                </div>
+            </div>
 
             <bs-text-input formControlName="line" [fc]="orderForm.get('line')" [type]="'text'" [label]="'业务线名称:'" [dirty]="ignoreDirty" [error]="orderFormError.line"></bs-text-input>
             <bs-text-input formControlName="cargoType" [fc]="orderForm.get('cargoType')" [type]="'text'" [label]="'货物种类:'" [dirty]="ignoreDirty" [error]="orderFormError.cargoType"></bs-text-input>
-
-            <bs-select formControlName ="upstreamSettleMode" [fc]="orderForm.get('upstreamSettleMode')" [label]="'上游结算方式:'" [options]="jieSuanType" [error]="orderFormError.upstreamSettleMode"></bs-select>
-            <bs-select formControlName ="downstreamSettleMode" [fc]="orderForm.get('downstreamSettleMode')" [label]="'下游结算方式:'" [options]="jieSuanType" [error]="orderFormError.downstreamSettleMode"></bs-select>
 
 
             <bs-select formControlName ="mainAccounting" [fc]="orderForm.get('mainAccounting')" [label]="'主账务公司:'" [options]="partyList" [error]="orderFormError.mainAccounting"></bs-select>
@@ -24,14 +35,55 @@
             <bs-select formControlName ="downstreamId" [fc]="orderForm.get('downstreamId')" [label]="'下游客户:'" [options]="partyList" [error]="orderFormError.downstreamId"></bs-select>
 
 
+            <div class="form-group row" *ngIf="isShowForm">
+                <label class="col-2 col-form-label" >其他参与方:</label>
+
+                <div class="col-8">
+
+                    <form [formGroup]="orderOtherPartyForm"  (keydown.enter)="$event.preventDefault()">
+
+                        <div class="form-row ">
+                            <div class="col-8" >
+
+                                <ul class="list-group" >
+                                    <li class="list-group-item" *ngFor=" let company of otherPartyList">
+                                        {{company.custType | findKey:customerType:'name'}}:  {{company.customerId| findKey:partyList:'name'}} ({{company.customerId| findKey:partyList:'shortName'}})
+                                        <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delOtherParty(company)"> x </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div class="form-row ">
+                            <div class="col-4">
+                                <bs-select formControlName ="custType" [fc]="orderOtherPartyForm.get('custType')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择客户类型:'" [options]="customerType" [error]="orderOtherPartyFormError.custType"></bs-select>
+                            </div>
+                            <div class="col-4">
+                                <bs-select formControlName ="customerId" [fc]="orderOtherPartyForm.get('customerId')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择其他公司:'" [options]="partyList" [error]="orderOtherPartyFormError.customerId"></bs-select>
+                            </div>
+
+                            <div class="col-2">
+                                <button type="button" class="btn btn-info" (click)="createNewOtherParty()">添加</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
 
             <div class="form-group row">
                 <div class="col-10 ml-auto">
-                    <button type="submit" class="btn btn-info" >保存</button>
+                    <button type="button" class="btn btn-info " (click)="orderFormSubmit()"  >保存</button>
                     <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
                 </div>
             </div>
         </form>
+
+
+
+
 
 
 
@@ -64,7 +116,7 @@
                     <td> {{order.tsc }}</td>
                     <td>
                         <a class="btn btn-link btn-sm" [routerLink]="['/orders', order.id]" role="button">查看</a>
-                        <button class="btn btn-info btn-sm" (click)="showForm(false, order)"> 修改 </button>
+                        <!--<button class="btn btn-info btn-sm" (click)="showForm(false, order)"> 修改 </button>-->
                     </td>
                 </tr>
                 </tbody>

@@ -5,6 +5,9 @@ import { HttpService } from '../../../bs-form-module/services/http.service'
 
 
 import {UserInfoService} from '../../../services/userInfo.service'
+import {HSOrderService} from '../../../services/hsOrder.service'
+
+import {saveEnum} from '../../../services/localStorage'
 
 
 
@@ -26,7 +29,8 @@ export class AdminHomeComponent implements OnInit {
 
     constructor(
         private httpService: HttpService,
-        private userService: UserInfoService
+        private userService: UserInfoService,
+        private orderService: HSOrderService
     ) {
         // this.getCurrentUserInfo()
     }
@@ -35,6 +39,7 @@ export class AdminHomeComponent implements OnInit {
 
     ngOnInit(): void {
         this.getCurrentUserInfo()
+        this.getDictionary()
     }
 
 
@@ -60,5 +65,21 @@ export class AdminHomeComponent implements OnInit {
         )
     }
 
+
+    getDictionary () {
+        this.orderService.getEnumList('PayMode').subscribe(
+            data => {
+                saveEnum('PayMode', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+        this.orderService.getEnumList('CustomerType').subscribe(
+            data => {
+                saveEnum('CustomerType', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
 
 }

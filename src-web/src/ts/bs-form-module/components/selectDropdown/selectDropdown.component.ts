@@ -24,6 +24,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
     @Input('fc') currentFormControl: FormControl = new FormControl()
     @Input() label: string
+    @Input() prompt: string = ''
 
     @Input('options') optionList: any[]
 
@@ -36,7 +37,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
     @ViewChild('optionsListEl') optionsListEl: ElementRef
 
-    interValueCurrentSelected : any = { id : -1 , name : '请选择'}
+    interValueCurrentSelected : any = { id : -1 , name : this.prompt || '请选择'}
 
     isShowSelectOptionList: boolean = false
     currentSelectByKeyboard: number =  -1
@@ -164,7 +165,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
         if (Array.isArray(this.optionList)) {
 
-            let tempValue = { id : -1 , name : '请选择'}
+            let tempValue = { id : -1 , name : this.prompt || '请选择'}
 
             this.optionList.forEach( option => {
                 if (option.id === value) {
