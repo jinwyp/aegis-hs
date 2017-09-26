@@ -50,6 +50,7 @@ public class GlobalHandlerExceptionResolver {
             response.setStatus(400);
             response.sendRedirect("/400");
         }
+        om.writeValue(response.getOutputStream(), Result.error(4001, "客户端错误", HttpStatus.BAD_REQUEST));
     }
 
     //户登录异常处理
@@ -61,7 +62,9 @@ public class GlobalHandlerExceptionResolver {
             if (ex instanceof NoJwtTokenException) {
                 response.sendRedirect("/login");
             }
+            return;
         }
+        om.writeValue(response.getOutputStream(), Result.error(4001, "无权访问", HttpStatus.UNAUTHORIZED));
     }
 
 
