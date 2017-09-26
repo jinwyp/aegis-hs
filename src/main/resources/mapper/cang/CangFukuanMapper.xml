@@ -6,7 +6,7 @@
     <result column="orderId" jdbcType="BIGINT" property="orderId" />
     <result column="hsId" jdbcType="BIGINT" property="hsId" />
     <result column="payDate" jdbcType="TIMESTAMP" property="payDate" />
-    <result column="receiveCompanyId" jdbcType="BIGINT" property="recieveCompanyId" />
+    <result column="receiveCompanyId" jdbcType="BIGINT" property="receiveCompanyId" />
     <result column="payFor" jdbcType="VARCHAR" property="payFor" />
     <result column="payAmount" jdbcType="DECIMAL" property="payAmount" />
     <result column="payMode" jdbcType="VARCHAR" property="payMode" />
@@ -36,7 +36,7 @@
       useInterest, useDays, tsc
       )
     values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT}, 
-      #{payDate,jdbcType=TIMESTAMP}, #{recieveCompanyId,jdbcType=BIGINT}, #{payFor,jdbcType=VARCHAR}, 
+      #{payDate,jdbcType=TIMESTAMP}, #{receiveCompanyId,jdbcType=BIGINT}, #{payFor,jdbcType=VARCHAR}, 
       #{payAmount,jdbcType=DECIMAL}, #{payMode,jdbcType=VARCHAR}, #{capitalId,jdbcType=BIGINT}, 
       #{useInterest,jdbcType=DECIMAL}, #{useDays,jdbcType=INTEGER}, #{tsc,jdbcType=TIMESTAMP}
       )
@@ -95,7 +95,7 @@
         #{payDate,jdbcType=TIMESTAMP},
       </if>
       <if test="receiveCompanyId != null">
-        #{recieveCompanyId,jdbcType=BIGINT},
+        #{receiveCompanyId,jdbcType=BIGINT},
       </if>
       <if test="payFor != null">
         #{payFor,jdbcType=VARCHAR},
@@ -133,7 +133,7 @@
         payDate = #{payDate,jdbcType=TIMESTAMP},
       </if>
       <if test="receiveCompanyId != null">
-        receiveCompanyId = #{recieveCompanyId,jdbcType=BIGINT},
+        receiveCompanyId = #{receiveCompanyId,jdbcType=BIGINT},
       </if>
       <if test="payFor != null">
         payFor = #{payFor,jdbcType=VARCHAR},
@@ -164,7 +164,7 @@
     set orderId = #{orderId,jdbcType=BIGINT},
       hsId = #{hsId,jdbcType=BIGINT},
       payDate = #{payDate,jdbcType=TIMESTAMP},
-      receiveCompanyId = #{recieveCompanyId,jdbcType=BIGINT},
+      receiveCompanyId = #{receiveCompanyId,jdbcType=BIGINT},
       payFor = #{payFor,jdbcType=VARCHAR},
       payAmount = #{payAmount,jdbcType=DECIMAL},
       payMode = #{payMode,jdbcType=VARCHAR},
