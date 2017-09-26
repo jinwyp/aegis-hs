@@ -1,5 +1,7 @@
 package com.yimei.hs.ying.controller;
 
+import com.yimei.hs.boot.api.CreateGroup;
+import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.ying.entity.YingSettleTraffic;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -66,7 +69,8 @@ public class YingSettleTrafficController {
     @PostMapping("/{orderId}/settletraffic")
     @Transactional(readOnly = false)
 
-    public ResponseEntity<Result<YingSettleTraffic>> create(YingSettleTraffic yingSettleTraffic) {
+    public ResponseEntity<Result<YingSettleTraffic>> create(
+            @RequestBody @Validated(CreateGroup.class) YingSettleTraffic yingSettleTraffic) {
         yingSettleService.createTraffic(yingSettleTraffic);
         return Result.ok(yingSettleTraffic);
     }
@@ -81,7 +85,7 @@ public class YingSettleTrafficController {
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id,
-            @RequestBody YingSettleTraffic yingSettleTraffic
+            @RequestBody @Validated(UpdateGroup.class) YingSettleTraffic yingSettleTraffic
     ) {
         assert (orderId == yingSettleTraffic.getOrderId());
         int rtn = yingSettleService.udpateTraffic(yingSettleTraffic);

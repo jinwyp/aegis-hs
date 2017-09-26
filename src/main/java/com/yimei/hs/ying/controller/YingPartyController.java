@@ -2,11 +2,13 @@ package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
+import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.ying.dto.PageYingOrderPartyDTO;
 import com.yimei.hs.ying.entity.YingOrderParty;
 import com.yimei.hs.ying.service.YingPartyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -40,7 +42,7 @@ public class YingPartyController {
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") Long orderId,
             @PathVariable("id") Long id,
-            @RequestBody YingOrderParty yingOrderParty) {
+            @RequestBody @Validated(UpdateGroup.class) YingOrderParty yingOrderParty) {
 
         yingOrderParty.setOrderId(orderId);
         yingOrderParty.setId(id);

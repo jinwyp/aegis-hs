@@ -1,7 +1,9 @@
 package com.yimei.hs.ying.controller;
 
+import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
+import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.ying.dto.PageYingSettleDownstreamDTO;
 import com.yimei.hs.ying.entity.YingSettleDownstream;
 import com.yimei.hs.ying.service.YingSettleService;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -33,7 +36,11 @@ public class YingSettleDownstreamController {
      * @return
      */
     @GetMapping("/{orderId}/settledownstream")
-    public ResponseEntity<PageResult<YingSettleDownstream>> list(PageYingSettleDownstreamDTO pageYingSettleDownstreamDTO) {
+    public ResponseEntity<PageResult<YingSettleDownstream>> list(
+            @PathVariable("orderId") Long orderId,
+            PageYingSettleDownstreamDTO pageYingSettleDownstreamDTO
+    ) {
+        pageYingSettleDownstreamDTO.setOrderId(orderId);
         return PageResult.ok(yingSettleService.getPageDownstream(pageYingSettleDownstreamDTO));
     }
 
@@ -64,7 +71,9 @@ public class YingSettleDownstreamController {
      */
     @Transactional(readOnly = false)
     @PostMapping("/{orderId}/settledownstream")
-    public ResponseEntity<Result<YingSettleDownstream>> create(YingSettleDownstream yingSettleDownstream) {
+    public ResponseEntity<Result<YingSettleDownstream>> create(
+            @RequestBody @Validated(CreateGroup.class) YingSettleDownstream yingSettleDownstream
+    ) {
         yingSettleService.createDownstream(yingSettleDownstream);
         return Result.ok(yingSettleDownstream);
     }
@@ -79,7 +88,7 @@ public class YingSettleDownstreamController {
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id,
-            @RequestBody YingSettleDownstream yingSettleDownstream
+            @RequestBody @Validated(UpdateGroup.class) YingSettleDownstream yingSettleDownstream
     ) {
         assert (yingSettleDownstream.getOrderId() == orderId);
         int rtn = yingSettleService.updateDownstream(yingSettleDownstream);

@@ -1,5 +1,7 @@
 package com.yimei.hs.ying.controller;
 
+import com.yimei.hs.boot.api.CreateGroup;
+import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.ying.entity.YingSettleUpstream;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -61,9 +64,11 @@ public class YingSettleUpstreamController {
      *
      * @return
      */
-    @Transactional(readOnly =  false)
+    @Transactional(readOnly = false)
     @PostMapping("/{orderId}/settleupstream")
-    public ResponseEntity<Result<YingSettleUpstream>> create(YingSettleUpstream yingSettleUpstream) {
+    public ResponseEntity<Result<YingSettleUpstream>> create(
+            @RequestBody @Validated(CreateGroup.class) YingSettleUpstream yingSettleUpstream
+    ) {
         yingSettleService.createUpstream(yingSettleUpstream);
         return Result.ok(yingSettleUpstream);
     }
@@ -73,12 +78,12 @@ public class YingSettleUpstreamController {
      *
      * @return
      */
-    @Transactional(readOnly =  false)
+    @Transactional(readOnly = false)
     @PutMapping("/{orderId}/settleupstream/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id,
-            @RequestBody YingSettleUpstream yingSettleUpstream
+            @RequestBody @Validated(UpdateGroup.class) YingSettleUpstream yingSettleUpstream
     ) {
         assert (orderId == yingSettleUpstream.getOrderId());
         yingSettleUpstream.setId(id);
