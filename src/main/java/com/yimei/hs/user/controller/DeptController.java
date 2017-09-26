@@ -1,9 +1,8 @@
 package com.yimei.hs.user.controller;
 
-import com.yimei.hs.boot.annotation.CurrentUser;
 import com.yimei.hs.user.entity.Dept;
-import com.yimei.hs.boot.PageResult;
-import com.yimei.hs.boot.Result;
+import com.yimei.hs.boot.api.PageResult;
+import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.user.dto.PageDeptDTO;
 import com.yimei.hs.user.service.DeptService;
 import org.slf4j.Logger;

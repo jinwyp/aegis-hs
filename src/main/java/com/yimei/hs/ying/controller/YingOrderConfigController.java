@@ -1,7 +1,7 @@
 package com.yimei.hs.ying.controller;
 
-import com.yimei.hs.boot.PageResult;
-import com.yimei.hs.boot.Result;
+import com.yimei.hs.boot.api.PageResult;
+import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.ying.dto.PageYingOrderConfigDTO;
 import com.yimei.hs.ying.entity.YingOrderConfig;
 import com.yimei.hs.ying.service.YingOrderConfigService;
@@ -12,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import javax.xml.ws.Response;
 
 /**
  * Created by hary on 2017/9/25.

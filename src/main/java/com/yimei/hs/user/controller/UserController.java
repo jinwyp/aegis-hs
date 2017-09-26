@@ -1,6 +1,6 @@
 package com.yimei.hs.user.controller;
 
-import com.yimei.hs.boot.Result;
+import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.annotation.CurrentUser;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.user.service.UserService;

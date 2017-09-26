@@ -1,11 +1,11 @@
 package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.util.CreateGroup;
-import com.yimei.hs.util.UpdateGroup;
+import com.yimei.hs.boot.api.CreateGroup;
+import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.ying.entity.YingFee;
-import com.yimei.hs.boot.PageResult;
-import com.yimei.hs.boot.Result;
+import com.yimei.hs.boot.api.PageResult;
+import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.ying.dto.PageYingFeeDTO;
 import com.yimei.hs.ying.service.YingFeeService;
 import org.slf4j.Logger;

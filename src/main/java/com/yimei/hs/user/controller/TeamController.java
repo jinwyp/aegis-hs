@@ -1,8 +1,8 @@
 package com.yimei.hs.user.controller;
 
 import com.yimei.hs.user.entity.Team;
-import com.yimei.hs.boot.PageResult;
-import com.yimei.hs.boot.Result;
+import com.yimei.hs.boot.api.PageResult;
+import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.user.dto.PageTeamDTO;
 import com.yimei.hs.user.service.DeptService;
 import com.yimei.hs.user.service.TeamService;

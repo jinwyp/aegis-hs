@@ -3,11 +3,9 @@ package com.yimei.hs.ying.entity;
 import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.OrderStatus;
 import com.yimei.hs.enums.SettleMode;
-import com.yimei.hs.util.CreateGroup;
-import com.yimei.hs.util.UpdateGroup;
+import com.yimei.hs.boot.api.UpdateGroup;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

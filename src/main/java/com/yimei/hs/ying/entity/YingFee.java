@@ -1,7 +1,7 @@
 package com.yimei.hs.ying.entity;
 
 import com.yimei.hs.enums.FeeClass;
-import com.yimei.hs.util.UpdateGroup;
+import com.yimei.hs.boot.api.UpdateGroup;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

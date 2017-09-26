@@ -1,4 +1,4 @@
-package com.yimei.hs.boot;
+package com.yimei.hs.boot.api;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.CookieGenerator;
-
-import java.util.Map;
 
 /**
  * Created by hary on 2017/9/21.

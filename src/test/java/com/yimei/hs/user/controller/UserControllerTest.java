@@ -3,9 +3,8 @@ package com.yimei.hs.user.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.HsApplication;
-import com.yimei.hs.boot.PageResult;
-import com.yimei.hs.boot.Result;
-import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.boot.api.PageResult;
+import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.CustomerType;
 import com.yimei.hs.enums.SettleMode;
@@ -15,11 +14,9 @@ import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.util.Digests;
 import com.yimei.hs.util.Encodes;
-import com.yimei.hs.ying.dto.PageYingOrderDTO;
 import com.yimei.hs.ying.entity.YingOrder;
 import com.yimei.hs.ying.entity.YingOrderConfig;
 import com.yimei.hs.ying.entity.YingOrderParty;
-import org.apache.ibatis.reflection.wrapper.ObjectWrapper;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +29,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
@@ -40,15 +36,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by hary on 2017/9/25.

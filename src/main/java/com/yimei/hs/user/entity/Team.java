@@ -1,9 +1,8 @@
 package com.yimei.hs.user.entity;
 
-import com.yimei.hs.util.CreateGroup;
-import com.yimei.hs.util.UpdateGroup;
+import com.yimei.hs.boot.api.CreateGroup;
+import com.yimei.hs.boot.api.UpdateGroup;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.io.Serializable;

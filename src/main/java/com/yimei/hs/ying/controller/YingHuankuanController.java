@@ -1,8 +1,8 @@
 package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.ying.entity.YingHuankuan;
-import com.yimei.hs.boot.PageResult;
-import com.yimei.hs.boot.Result;
+import com.yimei.hs.boot.api.PageResult;
+import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.ying.dto.PageYingHuankuanDTO;
 import com.yimei.hs.ying.service.YingHuankuanService;
 import org.slf4j.Logger;

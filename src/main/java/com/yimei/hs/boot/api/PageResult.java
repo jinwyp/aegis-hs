@@ -1,4 +1,4 @@
-package com.yimei.hs.boot;
+package com.yimei.hs.boot.api;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
