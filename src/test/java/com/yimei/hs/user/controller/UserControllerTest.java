@@ -133,19 +133,19 @@ public class UserControllerTest extends YingTestBase {
         newUser.setPassword("123456");
         newUser.setPhone("13022117051");
         newUser.setDeptId(deptResult.getData().getId());
-        Result<User> nuser = client.exchange("/api/users", HttpMethod.POST, new HttpEntity<User>(newUser), typeReferenceUser).getBody();
-        if (nuser.getSuccess()) {
-            logger.info("创建用户成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/users", printJson(newUser), printJson(nuser.getData()));
+        Result<User> userResult = client.exchange("/api/users", HttpMethod.POST, new HttpEntity<User>(newUser), typeReferenceUser).getBody();
+        if (userResult.getSuccess()) {
+            logger.info("创建用户成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/users", printJson(newUser), printJson(userResult.getData()));
         } else {
-            logger.error("创建用户失败: {}", nuser.getError());
+            logger.error("创建用户失败: {}", userResult.getError());
             System.exit(-2);
         }
 
         // 5.1 更新用户
         User updateUser = new User();
         updateUser.setIsActive(true);
-        updateUser.setDeptId(nuser.getData().getDeptId());
-        String updateUserURL = "/api/users/" + nuser.getData().getId();
+        updateUser.setDeptId(userResult.getData().getDeptId());
+        String updateUserURL = "/api/users/" + userResult.getData().getId();
         Result<Integer> updateUserRtn = client.exchange(updateUserURL, HttpMethod.PUT, new HttpEntity<User>(updateUser), typeReferenceInteger).getBody();
         if (updateUserRtn.getSuccess()) {
             logger.info("更新用户成功\nPUT {}\nrequest = {}\nresponse = {}", "/api/users", updateUserURL, printJson(updateUser), printJson(updateUserRtn.getData()));
@@ -204,7 +204,7 @@ public class UserControllerTest extends YingTestBase {
 
         // 8. 分页查询order
         Map<String, String> variables = new HashMap<>();
-        variables.put("ownerId", nuser.getData().getId().toString());
+        variables.put("ownerId", userResult.getData().getId().toString());
         PageResult<YingOrder> yingOrderPageResult = client.exchange("/api/yings", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
         if (yingOrderPageResult.getSuccess()) {
             logger.info("获取应收订单分页成功\nGET {}\nrequest = {}\nresponse:\n{}", "/api/yings", printJson(variables), printJson(yingOrderPageResult.getData()));
@@ -328,7 +328,7 @@ public class UserControllerTest extends YingTestBase {
         // 费用
         ///////////////////////////////////////////////////////////////////////////
         // 费用 - 创建
-        String feeCreateUrl = "/api/ying/" + yingOrder.getId() + "/settlefee";
+        String feeCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settlefee";
         YingFee fee = new YingFee();
         Result<YingFee> feeCreateResult = client.exchange(feeCreateUrl, HttpMethod.POST, new HttpEntity<>(fee), typeReferenceFee).getBody();
         if (feeCreateResult.getSuccess()) {
@@ -339,7 +339,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 费用 - 分页
-        String feePageUrl = "/api/ying/" + yingOrder.getId() + "/settlefee";
+        String feePageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settlefee";
         PageResult<YingFee> feePageResult = client.exchange(feePageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFeePage).getBody();
         if (feePageResult.getSuccess()) {
             logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", feePageUrl, "", printJson(feePageResult.getData()));
@@ -349,7 +349,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 费用 - 查询
-        String feeFindUrl = "/api/ying/" + yingOrder.getId() + "/settlefee";
+        String feeFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settlefee";
         Result<YingFee> feeFindResult = client.exchange(feeFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFee).getBody();
         if (feeFindResult.getSuccess()) {
             logger.info("查询发票成功\nPOST {}\nrequest = {}\nresponse = {}", feeFindUrl, "", printJson(feeFindResult.getData()));
@@ -363,7 +363,7 @@ public class UserControllerTest extends YingTestBase {
         // 运输方结算
         ///////////////////////////////////////////////////////////////////////////
         // 运输方结算 - 创建
-        String trafficCreateUrl = "/api/ying/" + yingOrder.getId() + "/settletraffic";
+        String trafficCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settletraffic";
         YingSettleTraffic traffic = new YingSettleTraffic();
         Result<YingSettleTraffic> trafficCreateResult = client.exchange(trafficCreateUrl, HttpMethod.POST, new HttpEntity<>(traffic), typeReferenceSettleTraffic).getBody();
         if (trafficCreateResult.getSuccess()) {
@@ -374,7 +374,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 运输方结算 - 分页
-        String trafficPageUrl = "/api/ying/" + yingOrder.getId() + "/settletraffic";
+        String trafficPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settletraffic";
         PageResult<YingSettleTraffic> trafficPageResult = client.exchange(trafficPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleTrafficPage).getBody();
         if (trafficPageResult.getSuccess()) {
             logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", trafficPageUrl, "", printJson(trafficPageResult.getData()));
@@ -384,7 +384,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 运输方结算 - 查询
-        String trafficFindUrl = "/api/ying/" + yingOrder.getId() + "/settletraffic";
+        String trafficFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settletraffic";
         Result<YingSettleTraffic> trafficFindResult = client.exchange(trafficFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleTraffic).getBody();
         if (trafficFindResult.getSuccess()) {
             logger.info("查询发票成功\nPOST {}\nrequest = {}\nresponse = {}", trafficFindUrl, "", printJson(trafficFindResult.getData()));
@@ -397,7 +397,7 @@ public class UserControllerTest extends YingTestBase {
         // 上游结算
         ///////////////////////////////////////////////////////////////////////////
         // 上游结算 - 创建
-        String upstreamCreateUrl = "/api/ying/" + yingOrder.getId() + "/settleupstream";
+        String upstreamCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settleupstream";
         YingSettleUpstream upstream = new YingSettleUpstream();
         Result<YingSettleUpstream> upstreamCreateResult = client.exchange(upstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(upstream), typeReferenceSettleUpstream).getBody();
         if (upstreamCreateResult.getSuccess()) {
@@ -408,7 +408,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 上游结算 - 分页
-        String upstreamPageUrl = "/api/ying/" + yingOrder.getId() + "/settleupstream";
+        String upstreamPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settleupstream";
         PageResult<YingSettleUpstream> upstreamPageResult = client.exchange(upstreamPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleUpstreamPage).getBody();
         if (upstreamPageResult.getSuccess()) {
             logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", upstreamPageUrl, "", printJson(upstreamPageResult.getData()));
@@ -418,7 +418,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 上游结算 - 查询
-        String upstreamFindUrl = "/api/ying/" + yingOrder.getId() + "/settleupstream";
+        String upstreamFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settleupstream";
         Result<YingSettleUpstream> upstreamFindResult = client.exchange(upstreamFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleUpstream).getBody();
         if (upstreamFindResult.getSuccess()) {
             logger.info("查询发票成功\nPOST {}\nrequest = {}\nresponse = {}", upstreamFindUrl, "", printJson(upstreamFindResult.getData()));
@@ -431,7 +431,7 @@ public class UserControllerTest extends YingTestBase {
         // 付款
         ///////////////////////////////////////////////////////////////////////////
         // 付款 - 创建
-        String fukuanCreateUrl = "/api/ying/" + yingOrder.getId() + "/fukuans";
+        String fukuanCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans";
         YingFukuan yingFukuan = new YingFukuan(
                 null,
                 yingOrder.getId(),
@@ -455,7 +455,7 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
         // 付款 - 分页
-        String fukuanPageUrl = "/api/ying/" + yingOrder.getId() + "/fukuans";
+        String fukuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans";
         Map<String, String> fukuanVariablesPage = new HashMap<>();
         PageResult<YingFukuan> fukuanPageResult = client.exchange(fukuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFukuanPage, fukuanVariablesPage).getBody();
         if (fukuanPageResult.getSuccess()) {
@@ -466,7 +466,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 付款 - 单记录
-        String fukuanFindUrl = "/api/ying/" + yingOrder.getId() + "/fukuans" + fukuanResult.getData().getId();
+        String fukuanFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans" + fukuanResult.getData().getId();
         Result<YingFukuan> fukuanFindResult = client.exchange(fukuanFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFukuan).getBody();
         if (fukuanFindResult.getSuccess()) {
             logger.info("查询付款成功\nGET {}\nrequest = {}\nresponse = {}", fukuanFindUrl, "", printJson(fukuanFindResult.getData()));
@@ -479,7 +479,7 @@ public class UserControllerTest extends YingTestBase {
         // 发票
         ///////////////////////////////////////////////////////////////////////////
         // 发票 - 创建
-        String invoiceCreateUrl = "/api/ying/" + yingOrder.getId() + "/invoices";
+        String invoiceCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices";
         YingInvoice yingInvoice = new YingInvoice(
                 null,
                 yingOrder.getId(),
@@ -501,7 +501,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 发票 - 分页
-        String invoicePageUrl = "/api/ying/" + yingOrder.getId() + "/invoices";
+        String invoicePageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices";
         PageResult<YingInvoice> invoicePageResult = client.exchange(invoicePageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceInvoicePage).getBody();
         if (fukuanPageResult.getSuccess()) {
             logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", invoicePageUrl, "", printJson(invoicePageResult.getData()));
@@ -511,7 +511,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 发票 - 单记录
-        String invoiceFindUrl = "/api/ying/" + yingOrder.getId() + "/invoices" + "/" + invoiceResult.getData().getId();
+        String invoiceFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices" + "/" + invoiceResult.getData().getId();
         Result<YingInvoice> invoiceFindResult = client.exchange(invoiceFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceInvoice).getBody();
         if (fukuanFindResult.getSuccess()) {
             logger.info("查询发票成功\nPOST {}\nrequest = {}\nresponse = {}", invoiceFindUrl, "", printJson(invoiceFindResult.getData()));
@@ -521,7 +521,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 发票 - 更新
-        String invoiceUpdateUrl = "/api/ying/" + yingOrder.getId() + "/invoices" + "/" + invoiceResult.getData().getId();
+        String invoiceUpdateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices" + "/" + invoiceResult.getData().getId();
         Result<YingInvoice> invoiceUpdateResult = client.exchange(invoiceFindUrl, HttpMethod.PUT, HttpEntity.EMPTY, typeReferenceInvoice).getBody();
         if (fukuanFindResult.getSuccess()) {
             logger.info("更新发票成功\nPUT {}\nrequest = {}\nresponse = {}", invoiceUpdateUrl, "", printJson(invoiceUpdateResult.getData()));
@@ -536,7 +536,7 @@ public class UserControllerTest extends YingTestBase {
         ///////////////////////////////////////////////////////////////////////////
         // 下游结算
         ///////////////////////////////////////////////////////////////////////////
-        String downstreamCreateUrl = "/api/ying/" + yingOrder.getId() + "/settledownstream";
+        String downstreamCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settledownstream";
         YingSettleDownstream downstream = new YingSettleDownstream(
                 null,
                 yingOrder.getId(),
@@ -556,7 +556,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 下游结算 - 分页
-        String downstreamPageUrl = "/api/ying/" + yingOrder.getId() + "/settledownstream";
+        String downstreamPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settledownstream";
         PageResult<YingSettleDownstream> downstreamPageResult = client.exchange(downstreamPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleDownstreamPage).getBody();
         if (fukuanPageResult.getSuccess()) {
             logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", downstreamPageUrl, "", printJson(downstreamPageResult.getData()));
@@ -566,7 +566,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 下游结算 - 查询
-        String downstreamFindUrl = "/api/ying/" + yingOrder.getId() + "/settledownstream";
+        String downstreamFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settledownstream";
         Result<YingSettleDownstream> downstreamFindResult = client.exchange(downstreamFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleDownstream).getBody();
         if (fukuanFindResult.getSuccess()) {
             logger.info("查询发票成功\nPOST {}\nrequest = {}\nresponse = {}", downstreamFindUrl, "", printJson(downstreamFindResult.getData()));
@@ -578,7 +578,7 @@ public class UserControllerTest extends YingTestBase {
         ///////////////////////////////////////////////////////////////////////////
         // 回款
         ///////////////////////////////////////////////////////////////////////////
-        String huikuanCreateUrl = "/api/ying/" + yingOrder.getId() + "/huikuans";
+        String huikuanCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huikuans";
         YingHuikuan huikuan = new YingHuikuan();
         Result<YingHuikuan> huikuanCreateResult = client.exchange(huikuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huikuan), typeReferenceHuikuan).getBody();
         if (huikuanCreateResult.getSuccess()) {
@@ -589,7 +589,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 回款 - 分页
-        String huikuanPageUrl = "/api/ying/" + yingOrder.getId() + "/huikuans";
+        String huikuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huikuans";
         PageResult<YingHuikuan> huikuanPageResult = client.exchange(huikuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceHuikuanPage).getBody();
         if (fukuanPageResult.getSuccess()) {
             logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", huikuanPageUrl, "", printJson(huikuanPageResult.getData()));
@@ -599,7 +599,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 回款 - 查询
-        String huikuanFindUrl = "/api/ying/" + yingOrder.getId() + "/huikuans/" + huikuanCreateResult.getData().getId();
+        String huikuanFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huikuans/" + huikuanCreateResult.getData().getId();
         Result<YingSettleDownstream> huikuanFindResult = client.exchange(huikuanFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleDownstream).getBody();
         if (fukuanFindResult.getSuccess()) {
             logger.info("查询回款成功\nPOST {}\nrequest = {}\nresponse = {}", huikuanFindUrl, "", printJson(huikuanFindResult.getData()));
@@ -612,7 +612,7 @@ public class UserControllerTest extends YingTestBase {
         // 还款
         ///////////////////////////////////////////////////////////////////////////
         // 还款 - 创建
-        String huankuanCreateUrl = "/api/ying/" + yingOrder.getId() + "/huankuan";
+        String huankuanCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huankuan";
         YingHuankuan huankuan = new YingHuankuan();
         Result<YingHuankuan> huankuanCreateResult = client.exchange(huankuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huankuan), typeReferenceHuankuan).getBody();
         if (huankuanCreateResult.getSuccess()) {
@@ -623,7 +623,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 还款 - 分页
-        String huankuanPageUrl = "/api/ying/" + yingOrder.getId() + "/huankuans";
+        String huankuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huankuans";
         PageResult<YingHuankuan> huankuanPageResult = client.exchange(huankuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceHuankuanPage).getBody();
         if (fukuanPageResult.getSuccess()) {
             logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", huankuanPageUrl, "", printJson(huankuanPageResult.getData()));
@@ -633,7 +633,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 还款 - 查询
-        String huankuanFindUrl = "/api/ying/" + yingOrder.getId() + "/huankuans/" + huankuanCreateResult.getData().getId();
+        String huankuanFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huankuans/" + huankuanCreateResult.getData().getId();
         Result<YingSettleDownstream> huankuanFindResult = client.exchange(huankuanFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleDownstream).getBody();
         if (fukuanFindResult.getSuccess()) {
             logger.info("查询还款成功\nPOST {}\nrequest = {}\nresponse = {}", huankuanFindUrl, "", printJson(huankuanFindResult.getData()));
