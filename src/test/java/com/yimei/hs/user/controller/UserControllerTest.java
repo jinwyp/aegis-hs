@@ -261,7 +261,7 @@ public class UserControllerTest extends YingTestBase {
         Result<Integer> yingOrderCOnfigUpdateResult = client.exchange(yingOrderCongfigUpdateUrl, HttpMethod.PUT,new HttpEntity<YingOrderConfig>(yingOrderConfig),typeReferenceInteger).getBody();
 
         if (yingOrderCOnfigUpdateResult.getSuccess()) {
-            logger.info("更新核算月配置成功\nPOST {}\nrequest = {}\nresponse = {}", yingOrderCongfigUpdateUrl, printJson(yingOrderCOnfigUpdateResult), printJson(yingOrderCOnfigUpdateResult.getData()));
+            logger.info("更新核算月配置成功\nPOST {}\nrequest = {}\nresponse = {}", yingOrderCongfigUpdateUrl, printJson(yingOrderConfig), printJson(yingOrderCOnfigUpdateResult.getData()));
         } else {
             logger.error("更新核算月配置失败: {}", yingOrderCOnfigUpdateResult.getError());
             System.exit(-2);
