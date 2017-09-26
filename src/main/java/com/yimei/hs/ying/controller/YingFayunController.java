@@ -44,7 +44,7 @@ public class YingFayunController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}fayuns/{id}")
+    @GetMapping("/{orderId}/fayuns/{id}")
     public ResponseEntity<Result<YingFayun>> read(
             @PathVariable("orderId") Long orderId,
             @PathVariable("id") long id) {
@@ -80,18 +80,19 @@ public class YingFayunController {
      * @return
      */
     @PutMapping("/{orderId}/fayuns/{id}")
-    @Transactional(readOnly =  false)
-    public ResponseEntity<Result<YingFayun>> update(
+    @Transactional(readOnly = false)
+    public ResponseEntity<Result<Integer>>update(
             @PathVariable("orderId") Long orderId,
             @PathVariable("id") Long id,
             @RequestBody YingFayun yingFayun) {
-        assert (orderId == orderId);
+
+//        assert (orderId == orderId);
         yingFayun.setId(id);
         int cnt = yingFayunService.update(yingFayun);
-        if (cnt != 2) {
+        if (cnt != 1) {
             return Result.error(4001, "更新失败");
         }
-        return Result.ok(yingFayun);
+        return Result.ok(1);
     }
 
 

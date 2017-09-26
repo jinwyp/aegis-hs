@@ -27,7 +27,9 @@
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        id, orderId, hsId, fyDate, fyAmount, arriveStatus, upstreamTrafficMode, upstreamCars,
+            upstreamJHH, upstreamShip, downstreamTrafficMode, downstreamCars, downstreamJHH,
+            downstreamShip, tsc
         from hs_ying_fayun
         where id = #{id,jdbcType=BIGINT}
     </select>
