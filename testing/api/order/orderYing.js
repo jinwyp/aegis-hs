@@ -144,8 +144,15 @@ describe('应收订单', function () {
             .set('Authorization', Authorization)
             .set('Accept', 'application/json')
             .send({
-                name: "新的团队" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
-                deptId : 2
+                "deptId":2,
+                "teamId":2,
+                "line":"那曲 - 晋和 - 嘉瑞",
+                "cargoType":"COAL",
+                "upstreamSettleMode":"ONE_PAPER_SETTLE",
+                "downstreamSettleMode":"ONE_PAPER_SETTLE",
+                "mainAccounting":1,
+                "upstreamId":2,
+                "downstreamId":3
             })
             .expect('Content-Type', /json/)
             .expect(200)

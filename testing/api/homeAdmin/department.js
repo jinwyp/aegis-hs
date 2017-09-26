@@ -56,7 +56,7 @@ describe('事业部门', function () {
 
 
     it('获取某个ID的部门信息 GET: /api/departments/3', function (done) {
-        server.get('/api/departments/1')
+        server.get('/api/departments/3')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200)
