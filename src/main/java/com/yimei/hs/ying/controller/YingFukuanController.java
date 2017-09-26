@@ -1,5 +1,7 @@
 package com.yimei.hs.ying.controller;
 
+import com.yimei.hs.boot.api.CreateGroup;
+import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.ying.entity.YingFukuan;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -33,7 +36,10 @@ public class YingFukuanController {
      * @return
      */
     @GetMapping("/{orderId}/fukuans")
-    public ResponseEntity<PageResult<YingFukuan>> list(PageYingFukuanDTO pageYingFukuanDTO) {
+    public ResponseEntity<PageResult<YingFukuan>> list(
+            @PathVariable("orderId") Long orderId,
+            PageYingFukuanDTO pageYingFukuanDTO) {
+        pageYingFukuanDTO.setOrderId(orderId);
         return PageResult.ok(yingFukuanService.getPage(pageYingFukuanDTO));
     }
 
@@ -63,7 +69,10 @@ public class YingFukuanController {
      */
     @PostMapping("/{orderId}/fukuans")
     @Transactional(readOnly =  false)
-    public ResponseEntity<Result<YingFukuan>> create( @PathVariable("orderId") long orderId,@RequestBody YingFukuan yingFukuan) {
+    public ResponseEntity<Result<YingFukuan>> create(
+            @PathVariable("orderId") long orderId,
+            @RequestBody @Validated(CreateGroup.class) YingFukuan yingFukuan
+    ) {
 
         yingFukuan.setOrderId(orderId);
         yingFukuanService.create(yingFukuan);
@@ -80,7 +89,7 @@ public class YingFukuanController {
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id,
-            @RequestBody YingFukuan yingFukuan
+            @RequestBody @Validated(UpdateGroup.class) YingFukuan yingFukuan
     ) {
         assert (yingFukuan.getOrderId() == orderId);
         yingFukuan.setId(id);

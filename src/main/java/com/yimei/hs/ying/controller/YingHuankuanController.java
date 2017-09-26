@@ -1,5 +1,7 @@
 package com.yimei.hs.ying.controller;
 
+import com.yimei.hs.boot.api.CreateGroup;
+import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.ying.entity.YingHuankuan;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -31,7 +34,10 @@ public class YingHuankuanController {
      * @return
      */
     @GetMapping("/{orderId}/huankuans")
-    public ResponseEntity<PageResult<YingHuankuan>> list(PageYingHuankuanDTO pageYingHuankuanDTO) {
+    public ResponseEntity<PageResult<YingHuankuan>> list(
+            @PathVariable("orderId") Long orderId,
+            PageYingHuankuanDTO pageYingHuankuanDTO) {
+        pageYingHuankuanDTO.setOrderId(orderId);
         return PageResult.ok(yingHuankuanService.getPage(pageYingHuankuanDTO));
     }
 
@@ -61,7 +67,9 @@ public class YingHuankuanController {
      * @return
      */
     @PostMapping("/{orderId}/huankuans")
-    public ResponseEntity<Result<YingHuankuan>> create(YingHuankuan yingHuankuan) {
+    public ResponseEntity<Result<YingHuankuan>> create(
+            @RequestBody @Validated(CreateGroup.class) YingHuankuan yingHuankuan
+    ) {
         yingHuankuanService.create(yingHuankuan);
         return Result.ok(yingHuankuan);
     }
@@ -76,7 +84,7 @@ public class YingHuankuanController {
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("orderId") long orderId,
             @PathVariable("id") long id,
-            @RequestBody YingHuankuan yingHuankuan
+            @RequestBody @Validated(UpdateGroup.class) YingHuankuan yingHuankuan
     ) {
         yingHuankuan.setId(id);
         assert (orderId == yingHuankuan.getOrderId());

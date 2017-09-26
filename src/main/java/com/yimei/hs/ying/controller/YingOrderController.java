@@ -1,6 +1,7 @@
 package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.boot.annotation.CurrentUser;
+import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.ying.entity.YingOrder;
 import com.yimei.hs.boot.api.PageResult;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -82,7 +84,7 @@ public class YingOrderController {
     @Transactional(readOnly =  false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("id") long id,
-            @RequestBody YingOrder yingOrder
+            @RequestBody @Validated(UpdateGroup.class) YingOrder yingOrder
     ) {
         yingOrder.setId(id);
         int rtn = yingOrderService.update(yingOrder);
