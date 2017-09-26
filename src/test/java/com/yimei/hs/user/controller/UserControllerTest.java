@@ -58,7 +58,14 @@ public class UserControllerTest {
     public <T> String printJson(T m) throws JsonProcessingException {
         return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(m);
     }
+    ParameterizedTypeReference<Result<Boolean>> typeReferenceBoolean  = new ParameterizedTypeReference<Result<Boolean>>() {};
+    ParameterizedTypeReference<PageResult<Boolean>> typeReferenceBooleanPage  = new ParameterizedTypeReference<PageResult<Boolean>>() {};
+
+    ParameterizedTypeReference<Result<Integer>> typeReferenceInteger  = new ParameterizedTypeReference<Result<Integer>>() {};
+    ParameterizedTypeReference<PageResult<Integer>> typeReferenceIntegerPage  = new ParameterizedTypeReference<PageResult<Integer>>() {};
+
     ParameterizedTypeReference<Result<String>> typeReferenceString  = new ParameterizedTypeReference<Result<String>>() {};
+    ParameterizedTypeReference<PageResult<String>> typeReferenceStringPage  = new ParameterizedTypeReference<PageResult<String>>() {};
 
     ParameterizedTypeReference<Result<User>> typeReferenceUser  = new ParameterizedTypeReference<Result<User>>() {};
     ParameterizedTypeReference<Result<Team>> typeReferenceTeam  = new ParameterizedTypeReference<Result<Team>>() {};
