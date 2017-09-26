@@ -637,4 +637,47 @@ public class UserControllerTest extends YingTestBase {
         }
     }
 
+    private void huikuan() {
+
+    }
+
+    private void huankuan() {
+
+    }
+
+    private void fukuan() {
+
+    }
+
+    private void upstream() {
+
+    }
+
+    private void downstream() {
+
+    }
+
+    private void traffic() {
+
+    }
+
+    private void fee() {
+
+    }
+
+    private void invoice() {
+
+    }
+
+    private void order() {
+
+    }
+
+    private void config() {
+
+    }
+
+    private void fayun() {
+
+    }
 }
