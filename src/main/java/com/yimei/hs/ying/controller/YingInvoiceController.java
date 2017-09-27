@@ -96,7 +96,7 @@ public class YingInvoiceController {
         yingInvoice.setOrderId(orderId);
         int rtn = yingInvoiceService.update(yingInvoice);
         if (rtn != 1) {
-            return Result.error(4001, "更新错误");
+            return Result.error(4001, "更新错误", HttpStatus.NOT_FOUND);
         }
         return Result.ok(1);
     }

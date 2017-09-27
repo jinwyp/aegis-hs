@@ -15,6 +15,7 @@ import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -62,7 +63,7 @@ public class YingFayunController {
 
         YingFayun fayun = yingFayunService.findOne(id);
         if (fayun == null) {
-            return Result.error(4001, "记录不存在");
+            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
         } else {
             return Result.ok(fayun);
         }
@@ -101,7 +102,7 @@ public class YingFayunController {
         yingFayun.setId(id);
         int cnt = yingFayunService.update(yingFayun);
         if (cnt != 1) {
-            return Result.error(4001, "更新失败");
+            return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
         }
         return Result.ok(1);
     }

@@ -114,7 +114,7 @@ public class YingOrderController {
     ) {
         int cnt =  yingOrderService.transfer(orderId,user.getId(), toId);
         if (cnt != 1) {
-            return Result.error(4001, "转移失败");
+            return Result.error(4001, "转移失败", HttpStatus.NOT_FOUND);
         }
         return Result.ok(1);
     }
