@@ -81,15 +81,15 @@ public class UserControllerTest extends YingTestBase {
         user();
         order();
         config();
-        fayun();
+//        fayun();
         fukuan();
-        huikuan();
-        huankuan();
-        upstream();
-        downstream();
-        traffic();
-        fee();
-        invoice();
+//        huikuan();
+//        huankuan();
+//        upstream();
+//        downstream();
+//        traffic();
+//        fee();
+//        invoice();
 
     }
 
@@ -500,6 +500,10 @@ public class UserControllerTest extends YingTestBase {
         // 2. 分页
         String fukuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans";
         Map<String, String> fukuanVariablesPage = new HashMap<>();
+        fukuanVariablesPage.put("hsId", "22");
+        PageYingFukuanDTO pageYingFukuanDTO = new PageYingFukuanDTO();
+        pageYingFukuanDTO.setHsId(22l);
+        pageYingFukuanDTO.setReceiveCompanyId(18l);
         PageResult<YingFukuan> fukuanPageResult = client.exchange(fukuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFukuanPage, fukuanVariablesPage).getBody();
         if (fukuanPageResult.getSuccess()) {
             logger.info("付款分页成功\nPOST {}\nrequest = {}\nresponse = {}", fukuanPageUrl, "", printJson(fukuanPageResult.getData()));
@@ -815,10 +819,10 @@ public class UserControllerTest extends YingTestBase {
 
         PageYingInvoiceDTO pageYingInvoiceDTO = new PageYingInvoiceDTO();
         pageYingInvoiceDTO.setOrderId(yingOrderResult.getData().getId());
-
+        pageYingInvoiceDTO.setInvoiceType(InvoiceType.FRIGHT_INVOICE);
         Map<String, Object> invoiceVariablesPage = new HashMap<>();
-        invoiceVariablesPage.put("orderId", "" + yingOrderResult.getData().getId());
-        invoiceVariablesPage.put("invoiceType", invoiceCreateResult.getData().getInvoiceType());
+//        invoiceVariablesPage.put("orderId", "" + yingOrderResult.getData().getId());
+        invoiceVariablesPage.put("invoiceType", InvoiceType.FRIGHT_INVOICE);
         PageResult<YingInvoice> invoicePageResult = client.exchange(invoicePageUrl, HttpMethod.GET, new HttpEntity<PageYingInvoiceDTO>(pageYingInvoiceDTO), typeReferenceInvoicePage, invoiceVariablesPage).getBody();
         if (invoicePageResult.getSuccess()) {
             logger.info("创建分页成功\nGET {}\nrequest = {}\nresponse = {}", invoicePageUrl, "", printJson(invoicePageResult.getData()));
