@@ -1,4 +1,4 @@
-package com.yimei.hs.boot;
+package com.yimei.hs.boot.persistence;
 
 
 import com.yimei.hs.boot.persistence.BaseFilter;

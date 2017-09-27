@@ -1,6 +1,5 @@
-package com.yimei.hs.boot;
+package com.yimei.hs.boot.persistence;
 
-import com.yimei.hs.boot.persistence.BaseFilter;
 import com.yimei.hs.util.Reflections;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;

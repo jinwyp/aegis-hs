@@ -1,6 +1,5 @@
 package com.yimei.hs.boot.persistence;
 
-import com.yimei.hs.boot.PageContext;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.reflection.property.PropertyTokenizer;

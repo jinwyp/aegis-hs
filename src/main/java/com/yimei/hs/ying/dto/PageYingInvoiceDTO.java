@@ -4,6 +4,7 @@ import com.yimei.hs.boot.persistence.BaseFilter;
 import com.yimei.hs.enums.InvoiceType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,8 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
+
 public class PageYingInvoiceDTO extends BaseFilter<PageYingInvoiceDTO> {
 
     private Long orderId;

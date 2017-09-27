@@ -3,6 +3,7 @@ package com.yimei.hs.ying.dto;
 import com.yimei.hs.boot.persistence.BaseFilter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.math.BigDecimal;
@@ -13,6 +14,8 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
+
 public class PageYingHuankuanDTO extends BaseFilter<PageYingHuankuanDTO> {
 
     private Long orderId;
@@ -22,11 +25,6 @@ public class PageYingHuankuanDTO extends BaseFilter<PageYingHuankuanDTO> {
     private BigDecimal huankuanAmount;
 
     /**
-     * <if test="orderId!=null">t1.orderId=#{orderId}</if>
-     <if test="hsId!=null">t1.hsId=#{hsId}</if>
-     <if test="skCompanyId!=null">t1.skCompanyId=#{skCompanyId}</if>
-     <if test="huankuanDate!=null">t1.huankuanDate=#{huankuanDate}</if>
-     <if test="huankuanAmount!=null">t1.huankuanAmount=#{huankuanAmount}</if>
      * @param sql
      * @return
      */

@@ -3,12 +3,10 @@ package com.yimei.hs.ying.dto;
 import com.yimei.hs.boot.persistence.BaseFilter;
 import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.OrderStatus;
-import com.yimei.hs.ying.controller.YingOrderController;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.apache.ibatis.jdbc.SQL;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Created by hary on 2017/9/21.
@@ -16,8 +14,8 @@ import org.slf4j.LoggerFactory;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
-    private static final Logger logger = LoggerFactory.getLogger(YingOrderController.class);
 
     private Long deptId;
 
@@ -43,15 +41,15 @@ public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
             {
                 SELECT("*");
                 FROM("hs_ying_order");
-                if (deptId != null) { WHERE("deptId = #{deptId}"); }
-                if (teamId != null) { WHERE( "teamId = #{teamId}"); }
-                if (creatorId != null ) { WHERE( "creatorId = #{creatorId}"); }
-                if (ownerId != null ) { WHERE( "ownerId = #{ownerId}"); }
-                if (mainAccounting != null ) { WHERE( "mainAccounting = #{mainAccounting}"); }
-                if (cargoType != null ) { WHERE( "cargoType = #{cargoType}"); }
-                if (upstreamId != null ) { WHERE( "upstreamId = #{upstreamId}"); }
-                if (downstreamId != null ) { WHERE( "downstreamId = #{downstreamId}"); }
-                if (status != null ) { WHERE( "status = #{status}"); }
+                if (deptId != null) { WHERE("deptId = ?"); }
+                if (teamId != null) { WHERE( "teamId = ?"); }
+                if (creatorId != null ) { WHERE( "creatorId = ?"); }
+                if (ownerId != null ) { WHERE( "ownerId = ?"); }
+                if (mainAccounting != null ) { WHERE( "mainAccounting = ?"); }
+                if (cargoType != null ) { WHERE( "cargoType = ?"); }
+                if (upstreamId != null ) { WHERE( "upstreamId = ?"); }
+                if (downstreamId != null ) { WHERE( "downstreamId = ?"); }
+                if (status != null ) { WHERE( "status = ?"); }
             }
         }.toString();
         String countSql =  super.getCountSql(nsql);
