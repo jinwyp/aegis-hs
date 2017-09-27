@@ -77,6 +77,14 @@ public class UserControllerTest extends YingTestBase {
         createUser("13022117050", "123456");
     }
 
+
+    @Test
+    public void adminTest() throws JsonProcessingException {
+        user();
+        PageResult<User> pageUserResult = client.exchange("/api/users", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceUserPage).getBody();
+        logger.info("page user = {}", pageUserResult);
+    }
+
     @Test
     public void userTest() throws JsonProcessingException {
         user();
