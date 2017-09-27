@@ -57,11 +57,7 @@ public class YingOrderController {
         if (order == null) {
             return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
         } else {
-            if (order.getDeleted()) {
-                return Result.error(4002, "记录已经删除", HttpStatus.NOT_FOUND);
-            } else {
-                return Result.ok(order);
-            }
+            return Result.ok(order);
         }
     }
 
@@ -105,6 +101,7 @@ public class YingOrderController {
 
     /**
      * 将order转移
+     *
      * @param morderId
      * @param toId
      * @return
@@ -116,11 +113,26 @@ public class YingOrderController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("toId") Long toId
     ) {
-        int cnt =  yingOrderService.updateTransfer(morderId,user.getId(), toId);
+        int cnt = yingOrderService.updateTransfer(morderId, user.getId(), toId);
         if (cnt != 1) {
             return Result.error(4001, "转移失败", HttpStatus.NOT_FOUND);
         }
         return Result.ok(1);
     }
+
+    /**
+     * 逻辑删除
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    @Transactional(readOnly = false)
+    public ResponseEntity<Result<Integer>> delete(
+            @PathVariable("id") Long id
+    ) {
+        int rtn = yingOrderService.delete(id);
+        return Result.ok(1);
+    }
+
 }
 

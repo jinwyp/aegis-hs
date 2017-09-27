@@ -16,7 +16,6 @@
         <result column="downstreamId" jdbcType="BIGINT" property="downstreamId"/>
         <result column="downstreamSettleMode" jdbcType="VARCHAR" property="downstreamSettleMode"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
-        <result column="deleted" jdbcType="TINYINT" property="deleted"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
         <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
     </resultMap>
@@ -45,7 +44,7 @@
 
     <sql id="Base_Column_List">
         id, deptId, teamId, creatorId, ownerId, mainAccounting, line, cargoType, upstreamId,
-        upstreamSettleMode, downstreamId, downstreamSettleMode, deleted, status, tsc, tsu, deleted
+        upstreamSettleMode, downstreamId, downstreamSettleMode, deleted, status, tsc, tsu
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="YingOrderResultMap">
@@ -62,7 +61,6 @@
             t1.upstreamSettleMode,
             t1.downstreamId,
             t1.downstreamSettleMode,
-            t1.deleted,
             t1.status,
             t1.tsc,
             t1.tsu,
@@ -89,6 +87,7 @@
             LEFT JOIN hs_ying_order_party t3 ON t1.id = t2.orderId
         WHERE
             t1.id = #{id, jdbcType=BIGINT}
+            AND deleted = 0
     </select>
 
     <select id="getPage" resultMap="YingOrderResultMap">
@@ -108,7 +107,6 @@
         t1.status,
         t1.tsc,
         t1.tsu,
-        t1.deleted,
 
         t2.id AS t2id,
         t2.orderId,
@@ -140,14 +138,16 @@
             <if test="downstreamId!=null">AND downstreamId = #{downstreamId, jdbcType=BIGINT}</if>
             <if test="mainAccounting!=null">AND mainAccounting = #{mainAccounting, jdbcType=BIGINT}</if>
             <if test="status!=null">AND status = #{status, jdbcType=VARCHAR}</if>
-            <if test="deleted!=null">AND deleted = #{deleted, jdbcType=TINYINT}</if>
+            AND deleted = 0
         </where>
 
     </select>
+
     <select id="hasOrder" resultType="java.lang.Boolean">
         SELECT count(id)
         FROM hs_ying_order
         WHERE ownerId = #{ownerId} AND id = #{orderId}
+              AND deleted = 0
     </select>
 
     <!-- 物理删除 -->
@@ -214,7 +214,6 @@
             <if test="downstreamId != null">downstreamId,</if>
             <if test="downstreamSettleMode != null">downstreamSettleMode,</if>
             <if test="status != null">status,</if>
-            <if test="deleted != null">deleted,</if>
             <if test="tsc != null">tsc,</if>
             <if test="tsu != null">tsu,</if>
         </trim>
@@ -233,7 +232,6 @@
             <if test="downstreamSettleMode != null">#{downstreamSettleMode,jdbcType=VARCHAR},</if>
             <if test="status != null">#{status,jdbcType=VARCHAR},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
-            <if test="deleted != null">#{deleted,jdbcType=TINYINT},</if>
             <if test="tsu != null">#{tsu,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
@@ -250,10 +248,8 @@
             <if test="upstreamId != null">upstreamId = #{upstreamId,jdbcType=BIGINT},</if>
             <if test="upstreamSettleMode != null">upstreamSettleMode = #{upstreamSettleMode,jdbcType=VARCHAR},</if>
             <if test="downstreamId != null">downstreamId = #{downstreamId,jdbcType=BIGINT},</if>
-            <if test="downstreamSettleMode != null">downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR},
-            </if>
+            <if test="downstreamSettleMode != null">downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR}, </if>
             <if test="status != null">status = #{status,jdbcType=VARCHAR},</if>
-            <if test="deleted != null">deleted = #{deleted,jdbcType=TINYINT},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
             tsu = current_timestamp
         </set>
@@ -275,8 +271,7 @@
             downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR},
             status               = #{status,jdbcType=VARCHAR},
             tsc                  = #{tsc,jdbcType=TIMESTAMP},
-            tsu                  = current_timestamp,
-            deleted              = #{deleted,jdbcType=TINYINT}
+            tsu                  = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 

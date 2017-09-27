@@ -129,4 +129,13 @@ public class YingOrderService {
 
     @Autowired
     private YingLogService yingLogService;
+
+    /**
+     * 逻辑删除
+     * @param id
+     * @return
+     */
+    public int delete(Long id) {
+        return yingOrderMapper.delete(id);
+    }
 }
