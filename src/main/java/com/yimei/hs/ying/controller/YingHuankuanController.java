@@ -35,12 +35,12 @@ public class YingHuankuanController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/huankuans")
+    @GetMapping("/{morderId}/huankuans")
     public ResponseEntity<PageResult<YingHuankuan>> list(
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             PageYingHuankuanDTO pageYingHuankuanDTO) {
 
-//        pageYingHuankuanDTO.setOrderId(orderId);
+//        pageYingHuankuanDTO.setOrderId(morderId);
 //        System.out.println("-------------------------------------------");
 //        System.out.println(pageYingHuankuanDTO);
 //        System.out.println("-------------------------------------------");
@@ -54,9 +54,9 @@ public class YingHuankuanController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/huankuans/{id}")
+    @GetMapping("/{morderId}/huankuans/{id}")
     public ResponseEntity<Result<YingHuankuan>> read(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
         YingHuankuan yingHuankuan = yingHuankuanService.findOne(id);
@@ -73,7 +73,7 @@ public class YingHuankuanController {
      *
      * @return
      */
-    @PostMapping("/{orderId}/huankuans")
+    @PostMapping("/{morderId}/huankuans")
     public ResponseEntity<Result<YingHuankuan>> create(
             @RequestBody @Validated(CreateGroup.class) YingHuankuan yingHuankuan
     ) {
@@ -87,14 +87,14 @@ public class YingHuankuanController {
      * @return
      */
     @Transactional(readOnly =  false)
-    @PutMapping("/{orderId}/huankuans/{id}")
+    @PutMapping("/{morderId}/huankuans/{id}")
     public ResponseEntity<Result<Integer>> update(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) YingHuankuan yingHuankuan
     ) {
         yingHuankuan.setId(id);
-        assert (orderId == yingHuankuan.getOrderId());
+        assert (morderId == yingHuankuan.getOrderId());
         int cnt = yingHuankuanService.update(yingHuankuan);
         if (cnt != 1) {
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);

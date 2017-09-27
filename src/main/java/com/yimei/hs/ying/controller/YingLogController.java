@@ -30,9 +30,9 @@ public class YingLogController {
      * @param pageYingLogDTO
      * @return
      */
-    @GetMapping("/{orderId}/log/{entityType}")
+    @GetMapping("/{morderId}/log/{entityType}")
     public ResponseEntity<PageResult<YingLog>> getPage(
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("entityType") YingEntityType yingEntityType,
             PageYingLogDTO pageYingLogDTO
     ) {
@@ -46,7 +46,7 @@ public class YingLogController {
      * @param log
      * @return
      */
-    @PostMapping("/{orderId}/log/{entityType}")
+    @PostMapping("/{morderId}/log/{entityType}")
     public ResponseEntity<Result<YingLog>> create(
             @RequestBody YingLog log
     ) {
@@ -56,7 +56,7 @@ public class YingLogController {
 
     @GetMapping("/orderId/log/{entityType}/{id}")
     public ResponseEntity<Result<YingLog>> findOne(
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("entityType") YingEntityType yingEntityType,
             @PathVariable("id") Long id
     ) {

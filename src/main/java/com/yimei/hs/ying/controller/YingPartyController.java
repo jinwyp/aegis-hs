@@ -31,9 +31,9 @@ public class YingPartyController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/parties")
-    public ResponseEntity<PageResult<YingOrderParty>> list(@PathVariable("orderId") long orderId, PageYingOrderPartyDTO pageYingOrderPartyDTO) {
-        pageYingOrderPartyDTO.setOrderId(orderId);
+    @GetMapping("/{morderId}/parties")
+    public ResponseEntity<PageResult<YingOrderParty>> list(@PathVariable("morderId") Long morderId, PageYingOrderPartyDTO pageYingOrderPartyDTO) {
+        pageYingOrderPartyDTO.setOrderId(morderId);
         return PageResult.ok(yingPartyService.getPage(pageYingOrderPartyDTO));
     }
 
@@ -41,13 +41,13 @@ public class YingPartyController {
     /**
      * update
      */
-    @PutMapping("/{orderId}/parties/{id}")
+    @PutMapping("/{morderId}/parties/{id}")
     public ResponseEntity<Result<Integer>> update(
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id,
             @RequestBody @Validated(UpdateGroup.class) YingOrderParty yingOrderParty) {
 
-        yingOrderParty.setOrderId(orderId);
+        yingOrderParty.setOrderId(morderId);
         yingOrderParty.setId(id);
         int status = yingPartyService.update(yingOrderParty);
         if (status == 1) {

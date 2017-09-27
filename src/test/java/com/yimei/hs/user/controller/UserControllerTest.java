@@ -265,7 +265,8 @@ public class UserControllerTest extends YingTestBase {
     private void config() throws JsonProcessingException {
 
         // 1. 增加核算月配置
-        String configCreateUrl = "/api/yings/" + yingOrderResult.getData().getId() + "/configs";
+        logger.info("开始增加核算月配置");
+        String configCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/units";
 
         YingOrderConfig config = new YingOrderConfig() {{
             setHsMonth("201712");
@@ -296,7 +297,7 @@ public class UserControllerTest extends YingTestBase {
             setTradeAddPrice(new BigDecimal("0"));
             setWeightedPrice(new BigDecimal("700"));
         }};
-        String configUpdateUrl = "/api/yings/" + yingOrderConfigResult.getData().getOrderId() + "/configs/" + yingOrderConfigResult.getData().getId();
+        String configUpdateUrl = "/api/ying/" + yingOrderConfigResult.getData().getOrderId() + "/units/" + yingOrderConfigResult.getData().getId();
         Result<Integer> yingOrderConfigUpdateResult = client.exchange(configUpdateUrl, HttpMethod.PUT, new HttpEntity<YingOrderConfig>(yingOrderConfig), typeReferenceInteger).getBody();
         if (yingOrderConfigUpdateResult.getSuccess()) {
             logger.info("更新核算月配置成功\nPOST {}\nrequest = {}\nresponse = {}", configUpdateUrl, printJson(yingOrderConfig), printJson(yingOrderConfigUpdateResult.getData()));
@@ -311,10 +312,10 @@ public class UserControllerTest extends YingTestBase {
         variablesHs.put("orderId", "" + yingOrderResult.getData().getId());
         variablesHs.put("pageSize", 5);
         variablesHs.put("pageNo", 1);
-        String configPageUrl = "/api/yings/" + yingOrderResult.getData().getId() + "/configs?"+WebUtils.getUrlTemplate(PageYingOrderConfigDTO.class);
+        String configPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/units?"+WebUtils.getUrlTemplate(PageYingOrderConfigDTO.class);
         PageResult<YingOrderConfig> yingOrderConfigPageResult = client.exchange(configPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderConfigPage, variablesHs).getBody();
         if (yingOrderConfigPageResult.getSuccess()) {
-            logger.info("获取核算月配置分页成功 GET /api/yings request: {}\nresponse:\n{}", variablesHs, printJson(yingOrderConfigPageResult.getData()));
+            logger.info("获取核算月配置分页成功 GET /api/ying request: {}\nresponse:\n{}", variablesHs, printJson(yingOrderConfigPageResult.getData()));
         } else {
             logger.error("获取核算月配置分页失败: {}", yingOrderConfigPageResult.getError());
             System.exit(-1);

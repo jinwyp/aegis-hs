@@ -39,10 +39,10 @@ public class YingSettleTrafficController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/settletraffic")
-    public ResponseEntity<PageResult<YingSettleTraffic>> list( @PathVariable("orderId") long  orderId,  PageYingSettleTrafficDTO pageYingSettleTrafficDTO) {
+    @GetMapping("/{morderId}/settletraffic")
+    public ResponseEntity<PageResult<YingSettleTraffic>> list( @PathVariable("morderId") long morderId,  PageYingSettleTrafficDTO pageYingSettleTrafficDTO) {
 
-        pageYingSettleTrafficDTO.setOrderId(orderId);
+        pageYingSettleTrafficDTO.setOrderId(morderId);
         return PageResult.ok(yingSettleService.getPageTraffic(pageYingSettleTrafficDTO));
     }
 
@@ -52,9 +52,9 @@ public class YingSettleTrafficController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/settletraffic/{id}")
+    @GetMapping("/{morderId}/settletraffic/{id}")
     public ResponseEntity<Result<YingSettleTraffic>> read(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
         YingSettleTraffic settleTraffic = yingSettleService.findTraffic(id);
@@ -70,10 +70,10 @@ public class YingSettleTrafficController {
      *
      * @return
      */
-    @PostMapping("/{orderId}/settletraffic")
+    @PostMapping("/{morderId}/settletraffic")
     @Transactional(readOnly = false)
-    public ResponseEntity<Result<YingSettleTraffic>> create( @PathVariable("orderId") long orderId,  @RequestBody YingSettleTraffic yingSettleTraffic) {
-        yingSettleTraffic.setOrderId(orderId);
+    public ResponseEntity<Result<YingSettleTraffic>> create( @PathVariable("morderId") Long morderId,  @RequestBody YingSettleTraffic yingSettleTraffic) {
+        yingSettleTraffic.setOrderId(morderId);
 
         yingSettleService.createTraffic(yingSettleTraffic);
         return Result.ok(yingSettleTraffic);
@@ -85,13 +85,13 @@ public class YingSettleTrafficController {
      * @return
      */
     @Transactional(readOnly = false)
-    @PutMapping("/{orderId}/settletraffic/{id}")
+    @PutMapping("/{morderId}/settletraffic/{id}")
     public ResponseEntity<Result<Integer>> update(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) YingSettleTraffic yingSettleTraffic
     ) {
-        assert (orderId == yingSettleTraffic.getOrderId());
+        assert (morderId == yingSettleTraffic.getOrderId());
         int rtn = yingSettleService.udpateTraffic(yingSettleTraffic);
         if (rtn != 1) {
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
