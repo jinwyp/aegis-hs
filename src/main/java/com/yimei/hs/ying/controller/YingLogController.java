@@ -18,14 +18,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/ying")
 public class YingLogController {
 
-
     @Autowired
     YingLogService yingLogService;
 
     /**
      * 查询日志分页
-     *
-     * @param orderId
+     * @param morderId
      * @param yingEntityType
      * @param pageYingLogDTO
      * @return
@@ -42,7 +40,6 @@ public class YingLogController {
 
     /**
      * 创建日志
-     *
      * @param log
      * @return
      */
@@ -54,6 +51,13 @@ public class YingLogController {
         return Result.created(log);
     }
 
+    /**
+     * 查询日志
+     * @param morderId
+     * @param yingEntityType
+     * @param id
+     * @return
+     */
     @GetMapping("/orderId/log/{entityType}/{id}")
     public ResponseEntity<Result<YingLog>> findOne(
             @PathVariable("morderId") Long morderId,

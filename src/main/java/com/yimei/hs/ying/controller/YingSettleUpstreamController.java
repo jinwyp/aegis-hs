@@ -27,12 +27,11 @@ public class YingSettleUpstreamController {
 
     private static final Logger logger = LoggerFactory.getLogger(YingSettleUpstreamController.class);
 
-
     @Autowired
     private YingSettleService yingSettleService;
 
     /**
-     * 获取所有huikuan
+     * 获取上游结算 - 分页
      *
      * @return
      */
@@ -44,7 +43,7 @@ public class YingSettleUpstreamController {
     }
 
     /**
-     * 获取huikuan
+     * 获取上游结算
      *
      * @param id
      * @return
@@ -64,7 +63,7 @@ public class YingSettleUpstreamController {
     }
 
     /**
-     * 创建huikuan
+     * 创建上游结算
      *
      * @return
      */
@@ -77,8 +76,7 @@ public class YingSettleUpstreamController {
     }
 
     /**
-     * 更新huikuan
-     *
+     * 更新上游结算
      * @return
      */
     @Transactional(readOnly = false)
@@ -98,8 +96,7 @@ public class YingSettleUpstreamController {
     }
 
     /**
-     * 更新huikuan
-     *
+     * 删除上游结算
      * @return
      */
     @Transactional(readOnly = false)
