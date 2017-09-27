@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by hary on 2017/9/25.
  */
 @RestController
-@RequestMapping("/api/yings")
+@RequestMapping("/api/ying")
 public class YingOrderConfigController {
 
 
@@ -34,7 +34,7 @@ public class YingOrderConfigController {
      *
      * @return
      */
-    @GetMapping("/{morderId}/configs")
+    @GetMapping("/{morderId}/units")
     public ResponseEntity<PageResult<YingOrderConfig>> list(
             @PathVariable("morderId") Long morderId,
             PageYingOrderConfigDTO pageYingOrderConfigDTO
@@ -49,7 +49,7 @@ public class YingOrderConfigController {
      * @param yingOrderConfig
      * @return
      */
-    @PostMapping("/{morderId}/configs")
+    @PostMapping("/{morderId}/units")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<YingOrderConfig>> create(
             @PathVariable("morderId") Long morderId,
@@ -70,7 +70,7 @@ public class YingOrderConfigController {
      * @param id
      * @return
      */
-    @GetMapping("/{morderId}/configs/{id}")
+    @GetMapping("/{morderId}/units/{id}")
     public ResponseEntity<Result<YingOrderConfig>> findOne(@PathVariable("id") Long id, @PathVariable("morderId") Long morderId) {
         YingOrderConfig yingOrderConfig = yingOrderConfigService.findOne(id);
 
@@ -81,7 +81,7 @@ public class YingOrderConfigController {
         }
     }
 
-    @PutMapping("/{morderId}/configs/{id}")
+    @PutMapping("/{morderId}/units/{id}")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
