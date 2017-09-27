@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 @Service
 public class ACLInterceptor extends HandlerInterceptorAdapter {
 
-    public static final Pattern p = Pattern.compile("^/api/ying/(\\d+).*$");
+    public static final Pattern p = Pattern.compile("^/api/(ying|cang)/(\\d+).*$");
 
     @Autowired
     JwtSupport jwtSupport;
@@ -60,11 +60,28 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
                 // validate /api/ying/{orderId}/.*
                 Matcher m = p.matcher(request.getRequestURI());
                 if (m.matches()) {
-                    long orderId = Long.parseLong(m.group(1));
-                    if (!yingOrderService.orderIsExists(user.getId(), orderId)) {
-                        response.setStatus(401);
+                    String business = m.group(1);
+                    long orderId = Long.parseLong(m.group(2));
+
+                    if ( business.equals("ying")) {
+                        if (!yingOrderService.orderIsExists(user.getId(), orderId)) {
+                            response.setStatus(401);
+                            response.setContentType("application/json;charset=UTF-8");
+                            om.writeValue(response.getOutputStream(), new Result(4001, "你不是这条业务线的主人"));
+                            return false;
+                        }
+
+                    } else if (business.equals("cang")) {
+                        if (!yingOrderService.orderIsExists(user.getId(), orderId)) {
+                            response.setStatus(401);
+                            response.setContentType("application/json;charset=UTF-8");
+                            om.writeValue(response.getOutputStream(), new Result(4001, "你不是这条业务线的主人"));
+                            return false;
+                        }
+                    } else {
+                        response.setStatus(404);
                         response.setContentType("application/json;charset=UTF-8");
-                        om.writeValue(response.getOutputStream(), new Result(4001,"你不是这条业务线的主人"));
+                        om.writeValue(response.getOutputStream(), new Result(4001, "页面不存在"));
                         return false;
                     }
                 }
