@@ -351,7 +351,6 @@ public class UserControllerTest extends YingTestBase {
         // 2. 分页查询
 
         Map<String, Object> variablesFayun = WebUtils.getUrlVariables(PageYingFayunDTO.class);
-        variablesFayun.put("fyDate", LocalDateTime.now());
         variablesFayun.put("pageSize", 5);
         variablesFayun.put("orderId", yingOrderResult.getData().getId());
         variablesFayun.put("pageNo", 1);
