@@ -38,6 +38,7 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
+    <!-- 逻辑删除 按业务线-->
     <update id="deleteByOrderId" parameterType="java.lang.Long">
         UPDATE hs_ying_order_config
         SET deleted = 1
