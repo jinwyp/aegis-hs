@@ -28,6 +28,10 @@ public class JwtSupport {
 
         String jwtToken = request.getHeader("Authorization");
         try {
+            if (jwtToken == null || jwtToken.isEmpty()) {
+                throw new NoJwtTokenException("Header Authorization 缺少jwtToken");
+            }
+
             Matcher m = p.matcher(jwtToken);
             if (m.matches()) {
                 String token = m.group(1);

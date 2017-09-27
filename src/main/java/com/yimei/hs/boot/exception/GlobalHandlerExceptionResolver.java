@@ -54,7 +54,7 @@ public class GlobalHandlerExceptionResolver {
         om.writeValue(response.getOutputStream(), Result.error(4001, "客户端错误", HttpStatus.BAD_REQUEST));
     }
 
-    //户登录异常处理
+    //用户登录异常处理
     @ExceptionHandler({NoJwtTokenException.class, UnAuthorizedException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public void process401Error(HttpServletRequest request, HttpServletResponse response, Exception ex) throws IOException {

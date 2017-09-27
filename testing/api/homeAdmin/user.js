@@ -7,7 +7,6 @@ const env = process.env.NODE_ENV || 'test'
 
 //Require the dev-dependencies
 const expect = require('chai').expect
-const should = require('chai').should()
 const supertest = require('supertest')
 
 const config = require('../testConfig')
@@ -23,7 +22,7 @@ describe('管理用户', function () {
     before(function (done) {
 
         server.post('/api/login')
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .send({
                 phone: "13022117050",
                 password: "123456"
@@ -38,10 +37,28 @@ describe('管理用户', function () {
 
     });
 
+
+    it('获取用户列表无JWT GET: /api/users?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/users?pageNo=1&pageSize=2')
+            .set(config.headers)
+            .expect('Content-Type', /json/)
+            .expect(401)
+            .end(function(err, res) {
+                if (err) return done(err)
+                // console.log('---------------------------')
+                // console.log(res.req._headers)
+                expect(res.body.success).to.equal(false)
+                expect(res.body.data).to.not.equal(null)
+                done()
+            })
+    })
+
+
+
     it('新建用户 POST: /api/users', function (done) {
         server.post('/api/users')
             .set('Authorization', Authorization)
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .send({
                 phone : '13564568304',
                 password : '123456',
@@ -56,7 +73,7 @@ describe('管理用户', function () {
                 expect(res.body.success).to.equal(true)
                 expect(res.body.data).to.not.equal(null)
                 expect(res.body.data.id).to.be.a('number')
-                // expect(res.body.data.name).to.include('新的用户')
+                expect(res.body.data.createBy).to.include('hary')
                 done()
             })
     })
@@ -65,11 +82,13 @@ describe('管理用户', function () {
     it('获取用户列表 GET: /api/users?pageNo=1&pageSize=2', function (done) {
         server.get('/api/users?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                // console.log('---------------------------')
+                // console.log(res.req._headers)
                 expect(res.body.success).to.equal(true)
                 expect(res.body.data).to.not.equal(null)
                 expect(res.body.data.pageNo).to.equal(1)
@@ -85,7 +104,7 @@ describe('管理用户', function () {
     it('获取某个ID的用户信息 GET: /api/users/2' , function (done) {
         server.get('/api/users/2')
             .set('Authorization', Authorization)
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -102,7 +121,7 @@ describe('管理用户', function () {
     it('修改某个ID的用户信息 PUT: /api/users/2', function (done) {
         server.put('/api/users/2')
             .set('Authorization', Authorization)
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .send({
                 isActive: 1
             })
