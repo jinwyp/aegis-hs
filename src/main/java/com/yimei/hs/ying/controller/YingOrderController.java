@@ -20,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by hary on 2017/9/15.
@@ -40,8 +41,14 @@ public class YingOrderController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<PageResult<YingOrder>> list(PageYingOrderDTO pageYingOrderDTO) {
-        logger.info("page ying order args: {}", pageYingOrderDTO);
+    public ResponseEntity<PageResult<YingOrder>> list(
+            HttpServletRequest request,
+            PageYingOrderDTO pageYingOrderDTO
+    ) {
+        String uri = request.getRequestURI();
+        String query = request.getQueryString();
+        logger.info("page ying order args: {}, url = {}", pageYingOrderDTO, uri);
+        System.out.println("query = " + query);
         return PageResult.ok(yingOrderService.getPage(pageYingOrderDTO));
     }
 

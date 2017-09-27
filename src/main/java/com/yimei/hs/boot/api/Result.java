@@ -40,6 +40,28 @@ public class Result<T> {
         return entity;
     }
 
+    /**
+     * 创建成功
+     * @param m
+     * @param <M>
+     * @return
+     */
+    public static final <M> ResponseEntity<Result<M>> created(M m) {
+        ResponseEntity<Result<M>> entity = new ResponseEntity<>(new Result<>(true, m, null), HttpStatus.CREATED);
+        return entity;
+    }
+
+    /**
+     * 更新成功
+     * @param m
+     * @param <M>
+     * @return
+     */
+    public static final <M> ResponseEntity<Result<M>> updated(M m) {
+        ResponseEntity<Result<M>> entity = new ResponseEntity<>(new Result<>(true, m, null), HttpStatus.RESET_CONTENT);
+        return entity;
+    }
+
     public static final <M> ResponseEntity<Result<M>> ok(M m, HttpStatus httpStatus) {
         ResponseEntity<Result<M>> entity = new ResponseEntity<>(new Result<>(true, m, null), httpStatus);
         return entity;
