@@ -38,24 +38,24 @@ public class YingFeeController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/fees")
+    @GetMapping("/{morderId}/fees")
     public ResponseEntity<PageResult<YingFee>> list(
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             PageYingFeeDTO pageYingFeeDTO) {
-        pageYingFeeDTO.setOrderId(orderId);
+        pageYingFeeDTO.setOrderId(morderId);
         Page<YingFee> page = yingFeeService.getPage(pageYingFeeDTO);
         return PageResult.ok(page);
     }
 
     /**
      *
-     * @param orderId
+     * @param morderId
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/fees/{id}")
+    @GetMapping("/{morderId}/fees/{id}")
     public ResponseEntity<Result<YingFee>> read(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
         YingFee yingFee = yingFeeService.findOne(id);
@@ -71,7 +71,7 @@ public class YingFeeController {
      *
      * @return
      */
-    @PostMapping("/{orderId}/fees")
+    @PostMapping("/{morderId}/fees")
     @Transactional(readOnly =  false)
     public ResponseEntity<Result<YingFee>> create(
             @RequestBody @Validated(CreateGroup.class) YingFee yingFee
@@ -88,14 +88,14 @@ public class YingFeeController {
      *
      * @return
      */
-    @PutMapping("/{orderId}/fees/{id}")
+    @PutMapping("/{morderId}/fees/{id}")
     @Transactional(readOnly =  false)
     public ResponseEntity<Result<Integer>> update(
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id,
             @RequestBody @Validated(UpdateGroup.class) YingFee yingFee
     ) {
-        assert (orderId == yingFee.getOrderId());
+        assert (morderId == yingFee.getOrderId());
         yingFee.setId(id);
         int rtn = yingFeeService.update(yingFee);
         if (rtn != 1) {

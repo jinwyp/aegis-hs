@@ -265,6 +265,7 @@ public class UserControllerTest extends YingTestBase {
     private void config() throws JsonProcessingException {
 
         // 1. 增加核算月配置
+        logger.info("开始增加核算月配置");
         String configCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/configs";
 
         YingOrderConfig config = new YingOrderConfig() {{

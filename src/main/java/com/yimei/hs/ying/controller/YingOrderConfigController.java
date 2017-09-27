@@ -34,9 +34,12 @@ public class YingOrderConfigController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/configs")
-    public ResponseEntity<PageResult<YingOrderConfig>> list(@PathVariable("orderId") long orderId, PageYingOrderConfigDTO pageYingOrderConfigDTO) {
-        pageYingOrderConfigDTO.setOrderId(orderId);
+    @GetMapping("/{morderId}/configs")
+    public ResponseEntity<PageResult<YingOrderConfig>> list(
+            @PathVariable("morderId") Long morderId,
+            PageYingOrderConfigDTO pageYingOrderConfigDTO
+    ) {
+        pageYingOrderConfigDTO.setOrderId(morderId);
         return PageResult.ok(yingOrderConfigService.getPage(pageYingOrderConfigDTO));
     }
 
@@ -46,13 +49,13 @@ public class YingOrderConfigController {
      * @param yingOrderConfig
      * @return
      */
-    @PostMapping("/{orderId}/configs")
+    @PostMapping("/{morderId}/configs")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<YingOrderConfig>> create(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @RequestBody YingOrderConfig yingOrderConfig) {
 
-        yingOrderConfig.setOrderId(orderId);
+        yingOrderConfig.setOrderId(morderId);
         int rtn = yingOrderConfigService.create(yingOrderConfig);
         if (rtn != 1) {
             return Result.error(5001, "创建失败", HttpStatus.NOT_FOUND);
@@ -67,8 +70,8 @@ public class YingOrderConfigController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/configs/{id}")
-    public ResponseEntity<Result<YingOrderConfig>> findOne(@PathVariable("id") Long id, @PathVariable("orderId") Long orderId) {
+    @GetMapping("/{morderId}/configs/{id}")
+    public ResponseEntity<Result<YingOrderConfig>> findOne(@PathVariable("id") Long id, @PathVariable("morderId") Long morderId) {
         YingOrderConfig yingOrderConfig = yingOrderConfigService.findOne(id);
 
         if (yingOrderConfig == null) {
@@ -78,17 +81,17 @@ public class YingOrderConfigController {
         }
     }
 
-    @PutMapping("/{orderId}/configs/{id}")
+    @PutMapping("/{morderId}/configs/{id}")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id,
             @RequestBody @Validated(UpdateGroup.class) YingOrderConfig yingOrderConfig) {
 
 
         logger.debug("yingOrderConfig-====>" + id);
         yingOrderConfig.setId(id);
-        yingOrderConfig.setOrderId(orderId);
+        yingOrderConfig.setOrderId(morderId);
 
         logger.debug("yingOrderConfig-====>" + yingOrderConfig);
         int status = yingOrderConfigService.update(yingOrderConfig);

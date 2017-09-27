@@ -36,10 +36,10 @@ public class YingSettleUpstreamController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/settleupstream")
-    public ResponseEntity<PageResult<YingSettleUpstream>> list(@PathVariable("orderId") long orderId,PageYingSettleUpstreamDTO pageYingSettleUpstreamDTO) {
+    @GetMapping("/{morderId}/settleupstream")
+    public ResponseEntity<PageResult<YingSettleUpstream>> list(@PathVariable("morderId") Long morderId,PageYingSettleUpstreamDTO pageYingSettleUpstreamDTO) {
 
-        pageYingSettleUpstreamDTO.setOrderId(orderId);
+        pageYingSettleUpstreamDTO.setOrderId(morderId);
         return PageResult.ok(yingSettleService.getPageUpstream(pageYingSettleUpstreamDTO));
     }
 
@@ -49,9 +49,9 @@ public class YingSettleUpstreamController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/settleupstream/{id}")
+    @GetMapping("/{morderId}/settleupstream/{id}")
     public ResponseEntity<Result<YingSettleUpstream>> read(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
 
@@ -69,9 +69,9 @@ public class YingSettleUpstreamController {
      * @return
      */
     @Transactional(readOnly = false)
-    @PostMapping("/{orderId}/settleupstream")
-    public ResponseEntity<Result<YingSettleUpstream>> create(@PathVariable("orderId") long orderId, @RequestBody YingSettleUpstream yingSettleUpstream) {
-        yingSettleUpstream.setOrderId(orderId);
+    @PostMapping("/{morderId}/settleupstream")
+    public ResponseEntity<Result<YingSettleUpstream>> create(@PathVariable("morderId") Long morderId, @RequestBody YingSettleUpstream yingSettleUpstream) {
+        yingSettleUpstream.setOrderId(morderId);
         yingSettleService.createUpstream(yingSettleUpstream);
         return Result.ok(yingSettleUpstream);
     }
@@ -82,9 +82,9 @@ public class YingSettleUpstreamController {
      * @return
      */
     @Transactional(readOnly = false)
-    @PutMapping("/{orderId}/settleupstream/{id}")
+    @PutMapping("/{morderId}/settleupstream/{id}")
     public ResponseEntity<Result<Integer>> update(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) YingSettleUpstream yingSettleUpstream
     ) {

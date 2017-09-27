@@ -37,12 +37,12 @@ public class YingSettleDownstreamController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/settledownstream")
+    @GetMapping("/{morderId}/settledownstream")
     public ResponseEntity<PageResult<YingSettleDownstream>> list(
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             PageYingSettleDownstreamDTO pageYingSettleDownstreamDTO
     ) {
-        pageYingSettleDownstreamDTO.setOrderId(orderId);
+        pageYingSettleDownstreamDTO.setOrderId(morderId);
         return PageResult.ok(yingSettleService.getPageDownstream(pageYingSettleDownstreamDTO));
     }
 
@@ -52,9 +52,9 @@ public class YingSettleDownstreamController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/settledownstream/{id}")
+    @GetMapping("/{morderId}/settledownstream/{id}")
     public ResponseEntity<Result<YingSettleDownstream>> read(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
 
@@ -73,7 +73,7 @@ public class YingSettleDownstreamController {
      * @return
      */
     @Transactional(readOnly = false)
-    @PostMapping("/{orderId}/settledownstream")
+    @PostMapping("/{morderId}/settledownstream")
     public ResponseEntity<Result<YingSettleDownstream>> create(
             @RequestBody @Validated(CreateGroup.class) YingSettleDownstream yingSettleDownstream
     ) {
@@ -87,13 +87,13 @@ public class YingSettleDownstreamController {
      * @return
      */
     @Transactional(readOnly = false)
-    @PutMapping("/{orderId}/settledownstream/{id}")
+    @PutMapping("/{morderId}/settledownstream/{id}")
     public ResponseEntity<Result<Integer>> update(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) YingSettleDownstream yingSettleDownstream
     ) {
-        assert (yingSettleDownstream.getOrderId() == orderId);
+        assert (yingSettleDownstream.getOrderId() == morderId);
         int rtn = yingSettleService.updateDownstream(yingSettleDownstream);
         if (rtn != 1) {
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);

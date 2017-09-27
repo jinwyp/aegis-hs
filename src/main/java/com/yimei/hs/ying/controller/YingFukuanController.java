@@ -37,11 +37,11 @@ public class YingFukuanController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/fukuans")
+    @GetMapping("/{morderId}/fukuans")
     public ResponseEntity<PageResult<YingFukuan>> list(
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             PageYingFukuanDTO pageYingFukuanDTO) {
-        pageYingFukuanDTO.setOrderId(orderId);
+        pageYingFukuanDTO.setOrderId(morderId);
         return PageResult.ok(yingFukuanService.getPage(pageYingFukuanDTO));
     }
 
@@ -51,9 +51,9 @@ public class YingFukuanController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/fukuans/{id}")
+    @GetMapping("/{morderId}/fukuans/{id}")
     public ResponseEntity<Result<YingFukuan>> read(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
         YingFukuan fukuan = yingFukuanService.findOne(id);
@@ -69,14 +69,14 @@ public class YingFukuanController {
      *
      * @return
      */
-    @PostMapping("/{orderId}/fukuans")
+    @PostMapping("/{morderId}/fukuans")
     @Transactional(readOnly =  false)
     public ResponseEntity<Result<YingFukuan>> create(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingFukuan yingFukuan
     ) {
 
-        yingFukuan.setOrderId(orderId);
+        yingFukuan.setOrderId(morderId);
         yingFukuanService.create(yingFukuan);
         return Result.ok(yingFukuan);
     }
@@ -87,13 +87,13 @@ public class YingFukuanController {
      * @return
      */
     @Transactional(readOnly =  false)
-    @PutMapping("/{orderId}/fukuans/{id}")
+    @PutMapping("/{morderId}/fukuans/{id}")
     public ResponseEntity<Result<Integer>> update(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) YingFukuan yingFukuan
     ) {
-        assert (yingFukuan.getOrderId() == orderId);
+        assert (yingFukuan.getOrderId() == morderId);
         yingFukuan.setId(id);
         int rtn = yingFukuanService.update(yingFukuan);
         if (rtn != 1) {
