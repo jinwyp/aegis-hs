@@ -345,21 +345,23 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
 
-//        fayun.setFyAmount(new BigDecimal("1510.61"));
-        fayun.setOrderId(yingOrderResult.getData().getId());
-        fayun.setId(fayunCreateResult.getData().getId());
+
+
         //发运更新
 
-        //todo Could not extract response
+
+        fayun.setFyAmount(null);
+        fayun.setOrderId(yingOrderResult.getData().getId());
+        fayun.setId(fayunCreateResult.getData().getId());
         String fayunUpdateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns/" + fayunCreateResult.getData().getId();
 
-//        Result<Integer> yingFayunUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<YingFayun>(fayun), typeReferenceInteger).getBody();
-//        if (yingFayunUpdateResult.getSuccess()) {
-//            logger.info("发运更新成功\nPUT {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(fayun), printJson(yingFayunUpdateResult.getData()));
-//        } else {
-//            logger.error("发运更新失败: {}", yingFayunUpdateResult.getError());
-//            System.exit(-2);
-//        }
+        Result<Integer> yingFayunUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<YingFayun>(fayun), typeReferenceInteger).getBody();
+        if (yingFayunUpdateResult.getSuccess()) {
+            logger.info("发运更新成功\nPUT {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(fayun), printJson(yingFayunUpdateResult.getData()));
+        } else {
+            logger.error("发运更新失败: {}", yingFayunUpdateResult.getError());
+            System.exit(-2);
+        }
     }
 
     private void huikuan() throws JsonProcessingException {
