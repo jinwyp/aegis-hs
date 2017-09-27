@@ -117,7 +117,7 @@ public class YingHuikuanController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
-        int cnt = yingHuikuanService.delete(id);
+        int cnt = yingHuikuanService.delete(morderId, id);
 
         // 删除以前的对应记录
         // 重新插入对应记录  todo

@@ -9,6 +9,8 @@ public interface YingHuankuanMapMapper {
 
     int insert(YingHuankuanMap record);
 
+    int deleteByOrderId(long orderId);
+
     int insertSelective(YingHuankuanMap record);
 
     YingHuankuanMap selectByPrimaryKey(Long id);

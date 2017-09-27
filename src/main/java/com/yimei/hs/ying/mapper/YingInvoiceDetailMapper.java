@@ -7,6 +7,8 @@ public interface YingInvoiceDetailMapper {
 
     int insert(YingInvoiceDetail record);
 
+    int delete(long id);
+
     int insertSelective(YingInvoiceDetail record);
 
     YingInvoiceDetail selectByPrimaryKey(Long id);
@@ -14,4 +16,6 @@ public interface YingInvoiceDetailMapper {
     int updateByPrimaryKeySelective(YingInvoiceDetail record);
 
     int updateByPrimaryKey(YingInvoiceDetail record);
+
+    int deleteByInvoiceId(long invoiceId);
 }

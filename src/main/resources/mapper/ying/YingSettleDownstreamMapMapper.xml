@@ -26,13 +26,20 @@
         select
         <include refid="Base_Column_List"/>
         from hs_ying_settle_downstream_map
-        where orderId = #{orderId,jdbcType=BIGINT}
+        where orderId = #{orderId,jdbcType=BIGINT} and deleted = 0
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_settle_downstream_map
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
+
+    <!-- 逻辑删除map -->
+    <update id="deleteByOrderId" parameterType="java.lang.Long">
+        UPDATE hs_ying_settle_downstream_map
+        SET deleted = 1
+        WHERE orderId = #{orderId,jdbcType=BIGINT}
+    </update>
 
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleDownstreamMap" keyProperty="id"
             useGeneratedKeys="true">

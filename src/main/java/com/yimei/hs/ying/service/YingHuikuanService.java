@@ -74,12 +74,25 @@ public class YingHuikuanService {
         return rtn;
     }
 
+
+    /**
+     * 重建 回款-付款-映射
+     * @param orderId
+     * @return
+     */
+    public int createMap(long orderId) {
+        // todo
+        return 1;
+    }
+
     /**
      * 逻辑删除
      * @param id
      * @return
      */
-    public int delete(long id) {
+    public int delete(long orderId, long id) {
+        yingHuikuanMapMapper.deleteByOrderId(orderId);
+        // todo 重建所有的map记录
         return yingHuikuanMapper.delete(id);
     }
 }

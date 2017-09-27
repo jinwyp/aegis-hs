@@ -9,6 +9,8 @@ public interface YingSettleDownstreamMapMapper {
 
     int insert(YingSettleDownstreamMap record);
 
+    int deleteByOrderId(long id);
+
     int insertSelective(YingSettleDownstreamMap record);
 
     YingSettleDownstreamMap selectByPrimaryKey(Long id);

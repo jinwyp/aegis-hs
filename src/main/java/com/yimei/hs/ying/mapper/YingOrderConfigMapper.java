@@ -9,6 +9,8 @@ public interface YingOrderConfigMapper {
 
     int insert(YingOrderConfig record);
 
+    int deleteByOrderId(long orderId);
+
     int insertSelective(YingOrderConfig record);
 
     YingOrderConfig selectByPrimaryKey(Long id);

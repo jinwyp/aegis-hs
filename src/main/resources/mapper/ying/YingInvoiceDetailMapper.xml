@@ -1,117 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yimei.hs.ying.mapper.YingInvoiceDetailMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingInvoiceDetail">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="invoiceId" jdbcType="BIGINT" property="invoiceId" />
-    <result column="invoiceNumber" jdbcType="VARCHAR" property="invoiceNumber" />
-    <result column="cargoAmount" jdbcType="DECIMAL" property="cargoAmount" />
-    <result column="taxRate" jdbcType="DECIMAL" property="taxRate" />
-    <result column="priceAndTax" jdbcType="DECIMAL" property="priceAndTax" />
-    <result column="tsc" jdbcType="TIMESTAMP" property="tsc" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, invoiceId, invoiceNumber, cargoAmount, taxRate, priceAndTax, tsc
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from hs_ying_invoice_detail
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from hs_ying_invoice_detail
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingInvoiceDetail"  keyProperty="id" useGeneratedKeys="true">
-    insert into hs_ying_invoice_detail (id, invoiceId, invoiceNumber, 
-      cargoAmount, taxRate, priceAndTax, 
-      tsc)
-    values (#{id,jdbcType=BIGINT}, #{invoiceId,jdbcType=BIGINT}, #{invoiceNumber,jdbcType=VARCHAR}, 
-      #{cargoAmount,jdbcType=DECIMAL}, #{taxRate,jdbcType=DECIMAL}, #{priceAndTax,jdbcType=DECIMAL}, 
-      #{tsc,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingInvoiceDetail"  keyProperty="id" useGeneratedKeys="true">
-    insert into hs_ying_invoice_detail
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="invoiceId != null">
-        invoiceId,
-      </if>
-      <if test="invoiceNumber != null">
-        invoiceNumber,
-      </if>
-      <if test="cargoAmount != null">
-        cargoAmount,
-      </if>
-      <if test="taxRate != null">
-        taxRate,
-      </if>
-      <if test="priceAndTax != null">
-        priceAndTax,
-      </if>
-      <if test="tsc != null">
-        tsc,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="invoiceId != null">
-        #{invoiceId,jdbcType=BIGINT},
-      </if>
-      <if test="invoiceNumber != null">
-        #{invoiceNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="cargoAmount != null">
-        #{cargoAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="taxRate != null">
-        #{taxRate,jdbcType=DECIMAL},
-      </if>
-      <if test="priceAndTax != null">
-        #{priceAndTax,jdbcType=DECIMAL},
-      </if>
-      <if test="tsc != null">
-        #{tsc,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingInvoiceDetail">
-    update hs_ying_invoice_detail
-    <set>
-      <if test="invoiceId != null">
-        invoiceId = #{invoiceId,jdbcType=BIGINT},
-      </if>
-      <if test="invoiceNumber != null">
-        invoiceNumber = #{invoiceNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="cargoAmount != null">
-        cargoAmount = #{cargoAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="taxRate != null">
-        taxRate = #{taxRate,jdbcType=DECIMAL},
-      </if>
-      <if test="priceAndTax != null">
-        priceAndTax = #{priceAndTax,jdbcType=DECIMAL},
-      </if>
-      <if test="tsc != null">
-        tsc = #{tsc,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingInvoiceDetail">
-    update hs_ying_invoice_detail
-    set invoiceId = #{invoiceId,jdbcType=BIGINT},
-      invoiceNumber = #{invoiceNumber,jdbcType=VARCHAR},
-      cargoAmount = #{cargoAmount,jdbcType=DECIMAL},
-      taxRate = #{taxRate,jdbcType=DECIMAL},
-      priceAndTax = #{priceAndTax,jdbcType=DECIMAL},
-      tsc = #{tsc,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingInvoiceDetail">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="invoiceId" jdbcType="BIGINT" property="invoiceId"/>
+        <result column="invoiceNumber" jdbcType="VARCHAR" property="invoiceNumber"/>
+        <result column="cargoAmount" jdbcType="DECIMAL" property="cargoAmount"/>
+        <result column="taxRate" jdbcType="DECIMAL" property="taxRate"/>
+        <result column="priceAndTax" jdbcType="DECIMAL" property="priceAndTax"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, invoiceId, invoiceNumber, cargoAmount, taxRate, priceAndTax, tsc
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_ying_invoice_detail
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM hs_ying_invoice_detail
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="deleteByInvoiceId" parameterType="java.lang.Long">
+       UPDATE hs_ying_invoice_detail
+       SET delete = 1
+        WHERE invoiceId = #{invoiceId,jdbcType=BIGINT}
+    </update>
+
+    <!-- 逻辑删除 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_ying_invoice_detail
+        SET deleted = 1
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingInvoiceDetail" keyProperty="id"
+            useGeneratedKeys="true">
+        INSERT INTO hs_ying_invoice_detail (id, invoiceId, invoiceNumber,
+                                            cargoAmount, taxRate, priceAndTax,
+                                            tsc)
+        VALUES (#{id,jdbcType=BIGINT}, #{invoiceId,jdbcType=BIGINT}, #{invoiceNumber,jdbcType=VARCHAR},
+                #{cargoAmount,jdbcType=DECIMAL}, #{taxRate,jdbcType=DECIMAL}, #{priceAndTax,jdbcType=DECIMAL},
+                #{tsc,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingInvoiceDetail" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into hs_ying_invoice_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null"> id, </if>
+            <if test="invoiceId != null"> invoiceId, </if>
+            <if test="invoiceNumber != null"> invoiceNumber, </if>
+            <if test="cargoAmount != null"> cargoAmount, </if>
+            <if test="taxRate != null"> taxRate, </if>
+            <if test="priceAndTax != null"> priceAndTax, </if>
+            <if test="tsc != null"> tsc, </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null"> #{id,jdbcType=BIGINT}, </if>
+            <if test="invoiceId != null"> #{invoiceId,jdbcType=BIGINT}, </if>
+            <if test="invoiceNumber != null"> #{invoiceNumber,jdbcType=VARCHAR}, </if>
+            <if test="cargoAmount != null"> #{cargoAmount,jdbcType=DECIMAL}, </if>
+            <if test="taxRate != null"> #{taxRate,jdbcType=DECIMAL}, </if>
+            <if test="priceAndTax != null"> #{priceAndTax,jdbcType=DECIMAL}, </if>
+            <if test="tsc != null"> #{tsc,jdbcType=TIMESTAMP}, </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingInvoiceDetail">
+        update hs_ying_invoice_detail
+        <set>
+            <if test="invoiceId != null"> invoiceId = #{invoiceId,jdbcType=BIGINT}, </if>
+            <if test="invoiceNumber != null"> invoiceNumber = #{invoiceNumber,jdbcType=VARCHAR}, </if>
+            <if test="cargoAmount != null"> cargoAmount = #{cargoAmount,jdbcType=DECIMAL}, </if>
+            <if test="taxRate != null"> taxRate = #{taxRate,jdbcType=DECIMAL}, </if>
+            <if test="priceAndTax != null"> priceAndTax = #{priceAndTax,jdbcType=DECIMAL}, </if>
+            <if test="tsc != null"> tsc = #{tsc,jdbcType=TIMESTAMP}, </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingInvoiceDetail">
+        UPDATE hs_ying_invoice_detail
+        SET invoiceId     = #{invoiceId,jdbcType=BIGINT},
+            invoiceNumber = #{invoiceNumber,jdbcType=VARCHAR},
+            cargoAmount   = #{cargoAmount,jdbcType=DECIMAL},
+            taxRate       = #{taxRate,jdbcType=DECIMAL},
+            priceAndTax   = #{priceAndTax,jdbcType=DECIMAL},
+            tsc           = #{tsc,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

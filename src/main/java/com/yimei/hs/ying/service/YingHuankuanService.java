@@ -75,6 +75,21 @@ public class YingHuankuanService {
 
     }
 
+    /**
+     *  重建 还款-付款-映射
+     * @param orderId
+     * @return
+     */
+    public int createMap(long orderId) {
+        // todo 重建
+        return 1;
+    }
+
+    /**
+     *  更新
+     * @param yingHuankuan
+     * @return
+     */
     public int update(YingHuankuan yingHuankuan) {
         return yingHuankuanMapper.updateByPrimaryKeySelective(yingHuankuan);
     }
@@ -84,7 +99,9 @@ public class YingHuankuanService {
      * @param id
      * @return
      */
-    public int deleted(long id) {
+    public int delete(long orderId, long id) {
+        yingHuankuanMapMapper.deleteByOrderId(orderId);
+        // todo 重新计算所有 map记录
         return yingHuankuanMapper.delete(id);
     }
 }

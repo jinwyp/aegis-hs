@@ -118,6 +118,16 @@ public class YingSettleService {
     }
 
     /**
+     * 重建 下游结算-发运-映射
+     * @param orderId
+     * @return
+     */
+    public int createDownstreamMap(long orderId) {
+        // todo
+        return 1;
+    }
+
+    /**
      *
      * @param id
      * @return
@@ -168,6 +178,7 @@ public class YingSettleService {
      * @return
      */
     public int deleteDownstream(long id) {
+        // todo 如何删除对应关系
         return yingSettleDownstreamMapper.delete(id);
     }
 

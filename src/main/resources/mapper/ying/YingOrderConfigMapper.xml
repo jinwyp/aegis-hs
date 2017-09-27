@@ -38,6 +38,12 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
+    <update id="deleteByOrderId" parameterType="java.lang.Long">
+        UPDATE hs_ying_order_config
+        SET deleted = 1
+        WHERE orderId = #{orderId,jdbcType=BIGINT}
+    </update>
+
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingOrderConfig" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO hs_ying_order_config (

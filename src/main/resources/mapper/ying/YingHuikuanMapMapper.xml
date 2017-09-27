@@ -34,6 +34,13 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
+    <!-- 逻辑删除所有的map记录 -->
+    <update id="deleteByOrderId" parameterType="java.lang.Long">
+        UPDATE hs_ying_huikuan_map
+        SET deleted = 1
+        WHERE orderId = #{orderId,jdbcType=BIGINT}
+    </update>
+
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuikuanMap" keyProperty="id"
             useGeneratedKeys="true">
         INSERT INTO hs_ying_huikuan_map (
