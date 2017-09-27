@@ -209,24 +209,24 @@ export class OrderDetailComponent implements OnInit {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
+                    this.getOrderUnitList()
                     this.showForm()
 
                 },
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
-            // postData.id = this.currentOrderUnitId
+            postData.id = this.currentOrderUnitId
             this.hsOrderService.modifyOrderUnit(this.currentOrderId, this.currentOrderUnitId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
 
+                    this.getOrderUnitList()
                     this.showForm()
 
                 },
-                error => {
-                    // this.httpService.errorHandler(error)
-                }
+                error => {this.httpService.errorHandler(error) }
             )
         }
 

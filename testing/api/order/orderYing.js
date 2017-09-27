@@ -213,7 +213,7 @@ describe('应收订单', function () {
                 expect(res.body.success).to.equal(true)
                 expect(res.body.data).to.not.equal(null)
                 expect(res.body.data.id).to.be.a('number')
-                expect(res.body.data.hsMonth).to.include('201709')
+                expect(res.body.data.hsMonth).to.include('201710')
                 done()
             })
     })
