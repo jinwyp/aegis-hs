@@ -120,7 +120,7 @@ public class YingFayunController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id
     ) {
-        int cnt = yingFayunService.delete(id);
+        int cnt = yingFayunService.delete(morderId, id);
         if (cnt != 1) {
             return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
         }

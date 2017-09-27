@@ -105,13 +105,12 @@ public class YingFeeController {
     }
 
     /**
-     * 更新fee
-     *
+     * 删除fee
      * @return
      */
     @DeleteMapping("/{morderId}/fees/{id}")
     @Transactional(readOnly =  false)
-    public ResponseEntity<Result<Integer>> update(
+    public ResponseEntity<Result<Integer>> delete(
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id
     ) {

@@ -3,7 +3,10 @@ package com.yimei.hs.ying.service;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.YingFukuan;
 import com.yimei.hs.ying.dto.PageYingFukuanDTO;
+import com.yimei.hs.ying.entity.YingHuikuan;
 import com.yimei.hs.ying.mapper.YingFukuanMapper;
+import com.yimei.hs.ying.mapper.YingHuankuanMapMapper;
+import com.yimei.hs.ying.mapper.YingHuikuanMapMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,12 @@ public class YingFukuanService {
 
     @Autowired
     private YingFukuanMapper yingFukuanMapper;
+
+    @Autowired
+    private YingHuikuanMapMapper yingHuikuanMapMapper;
+
+    @Autowired
+    private YingHuankuanMapMapper yingHuankuanMapMapper;
 
     @Autowired
     private YingLogService yingLogService;
@@ -48,5 +57,17 @@ public class YingFukuanService {
 
     public int update(YingFukuan yingFukuan) {
         return yingFukuanMapper.updateByPrimaryKeySelective(yingFukuan);
+    }
+
+    /**
+     *
+     * @param orderId
+     * @param id
+     * @return
+     */
+    public int delete(Long orderId, long id) {
+        yingHuankuanMapMapper.deleteByOrderId(orderId);
+        yingHuikuanMapMapper.deleteByOrderId(orderId);
+        return yingFukuanMapper.delete(id);
     }
 }

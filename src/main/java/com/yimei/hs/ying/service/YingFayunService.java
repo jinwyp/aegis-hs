@@ -4,6 +4,7 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.YingFayun;
 import com.yimei.hs.ying.dto.PageYingFayunDTO;
 import com.yimei.hs.ying.mapper.YingFayunMapper;
+import com.yimei.hs.ying.mapper.YingSettleDownstreamMapMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,9 @@ public class YingFayunService {
 
     @Autowired
     private YingFayunMapper yingFayunMapper;
+
+    @Autowired
+    private YingSettleDownstreamMapMapper yingSettleDownstreamMapMapper;
 
     @Autowired
     private YingLogService yingLogService;
@@ -57,10 +61,13 @@ public class YingFayunService {
 
     /**
      * 逻辑删除
+     *
+     * @param orderId
      * @param id
      * @return
      */
-    public int delete(long id) {
+    public int delete(Long orderId, long id) {
+        yingSettleDownstreamMapMapper.deleteByOrderId(orderId); // todo
         return yingFayunMapper.delete(id);
     }
 }
