@@ -41,9 +41,9 @@
         <include refid="Base_Column_List"/>
         FROM hs_ying_settle_upstream
         <where>
-            <if test="orderId != null">  AND  orderId=#{orderId,jdbcType=BIGINT} </if>
-            <if test="hsId != null"> AND hsId= #{hsId,jdbcType=BIGINT} </if>
-            <if test="settleDate != null">  AND settleDate=#{settleDate,jdbcType=DATE} </if>
+            <if test="orderId != null">AND orderId=#{orderId,jdbcType=BIGINT}</if>
+            <if test="hsId != null">AND hsId= #{hsId,jdbcType=BIGINT}</if>
+            <if test="settleDate != null">AND settleDate=#{settleDate,jdbcType=DATE}</if>
         </where>
     </select>
 
@@ -51,6 +51,13 @@
         DELETE FROM hs_ying_settle_upstream
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
+
+    <!-- 逻辑删除 -->
+    <update id="delete">
+        UPDATE hs_ying_settle_upstream
+        SET deleted = 1
+        WHERE id = #{id,jdbcType=BIGINT};
+    </update>
 
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleUpstream" keyProperty="id"
             useGeneratedKeys="true">
@@ -115,16 +122,16 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingSettleUpstream">
         update hs_ying_settle_upstream
         <set>
-            <if test="orderId != null"> orderId = #{orderId,jdbcType=BIGINT}, </if>
-            <if test="hsId != null"> hsId = #{hsId,jdbcType=BIGINT}, </if>
-            <if test="settleDate != null"> settleDate = #{settleDate,jdbcType=DATE}, </if>
-            <if test="amount != null"> amount = #{amount,jdbcType=DECIMAL}, </if>
-            <if test="money != null"> money = #{money,jdbcType=DECIMAL}, </if>
-            <if test="discountType != null"> discountType = #{discountType,jdbcType=VARCHAR}, </if>
-            <if test="discountInterest != null"> discountInterest = #{discountInterest,jdbcType=DECIMAL}, </if>
-            <if test="discountDays != null"> discountDays = #{discountDays,jdbcType=INTEGER}, </if>
-            <if test="discountAmount != null"> discountAmount = #{discountAmount,jdbcType=DECIMAL}, </if>
-            <if test="tsc != null"> tsc = #{tsc,jdbcType=TIMESTAMP}, </if>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
+            <if test="settleDate != null">settleDate = #{settleDate,jdbcType=DATE},</if>
+            <if test="amount != null">amount = #{amount,jdbcType=DECIMAL},</if>
+            <if test="money != null">money = #{money,jdbcType=DECIMAL},</if>
+            <if test="discountType != null">discountType = #{discountType,jdbcType=VARCHAR},</if>
+            <if test="discountInterest != null">discountInterest = #{discountInterest,jdbcType=DECIMAL},</if>
+            <if test="discountDays != null">discountDays = #{discountDays,jdbcType=INTEGER},</if>
+            <if test="discountAmount != null">discountAmount = #{discountAmount,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>

@@ -23,4 +23,5 @@ public interface YingSettleUpstreamMapper {
 
     Page<YingSettleUpstream> getPage(PageYingSettleUpstreamDTO pageYingSettleUpstreamDTO);
 
+    int delete(long id);
 }

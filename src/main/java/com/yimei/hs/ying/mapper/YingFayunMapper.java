@@ -11,6 +11,8 @@ public interface YingFayunMapper {
 
     int insert(YingFayun record);
 
+    int delete(long id);
+
     int insertSelective(YingFayun record);
 
     YingFayun selectByPrimaryKey(Long id);

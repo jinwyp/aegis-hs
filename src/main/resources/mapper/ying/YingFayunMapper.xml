@@ -26,37 +26,60 @@
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        id, orderId, hsId, fyDate, fyAmount, arriveStatus, upstreamTrafficMode, upstreamCars,
-            upstreamJHH, upstreamShip, downstreamTrafficMode, downstreamCars, downstreamJHH,
-            downstreamShip, tsc
-        from hs_ying_fayun
-        where id = #{id,jdbcType=BIGINT}
+        SELECT
+            id,
+            orderId,
+            hsId,
+            fyDate,
+            fyAmount,
+            arriveStatus,
+            upstreamTrafficMode,
+            upstreamCars,
+            upstreamJHH,
+            upstreamShip,
+            downstreamTrafficMode,
+            downstreamCars,
+            downstreamJHH,
+            downstreamShip,
+            tsc
+        FROM hs_ying_fayun
+        WHERE id = #{id,jdbcType=BIGINT} AND deleted = 0
+
     </select>
 
     <!-- 获取发运分页-->
     <select id="getPage" resultType="com.yimei.hs.ying.entity.YingFayun">
         select id, orderId, hsId, fyDate, fyAmount, arriveStatus, upstreamTrafficMode, upstreamCars,
-            upstreamJHH, upstreamShip, downstreamTrafficMode, downstreamCars, downstreamJHH,
-            downstreamShip, tsc
+        upstreamJHH, upstreamShip, downstreamTrafficMode, downstreamCars, downstreamJHH,
+        downstreamShip, tsc
         FROM hs_ying_fayun
         <where>
-            <if test="orderId!=null"> and orderId = #{orderId,jdbcType=BIGINT}</if>
-            <if test="fyDate!=null"> and fyDate = #{fyDate, jdbcType=TIMESTAMP}</if>
-            <if test="hsId!=null"> and hsId = #{hsId, jdbcType=VARCHAR}</if>
+            <if test="1==1">and deleted = 0</if>
+            <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
+            <if test="fyDate!=null">and fyDate = #{fyDate, jdbcType=TIMESTAMP}</if>
+            <if test="hsId!=null">and hsId = #{hsId, jdbcType=VARCHAR}</if>
         </where>
     </select>
 
     <select id="getList" resultType="com.yimei.hs.ying.entity.YingFayun">
-       SELECT
+        SELECT
         <include refid="Base_Column_List"/>
         FROM hs_ying_fayun
         WHERE orderId = #{orderId,jdbcType=BIGINT}
+        AND deleted = 0
     </select>
 
+    <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_fayun
         WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 逻辑删除 -->
+    <delete id="delete">
+        UPDATE hs_ying_fayun
+        SET deleted = 1
+        WHERE id = #{id, jdbcType=BIGINT}
     </delete>
 
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingFayun" useGeneratedKeys="true" keyProperty="id">
@@ -96,7 +119,8 @@
         )
     </insert>
 
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingFayun" useGeneratedKeys="true" keyColumn="id">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingFayun" useGeneratedKeys="true"
+            keyColumn="id">
         insert into hs_ying_fayun
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>

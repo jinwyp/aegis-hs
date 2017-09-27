@@ -26,7 +26,7 @@
         select
         <include refid="Base_Column_List"/>
         from hs_ying_fukuan
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
     </select>
 
     <!-- 获取付款分页 -->
@@ -35,6 +35,7 @@
         <include refid="Base_Column_List"/>
         from hs_ying_fukuan
         <where>
+            <if test="1==1">deleted = 0</if>
             <if test="orderId!=null"> and orderId = #{orderId, jdbcType=BIGINT}</if>
             <if test="hsId!=null">and hsId = #{hsId, jdbcType=BIGINT}</if>
             <if test="payDate!=null">and payDate = #{payDate, jdbcType=TIMESTAMP}</if>
@@ -42,17 +43,26 @@
         </where>
     </select>
 
+    <!-- 获取某个业务线的所有付款 -->
     <select id="getList" resultType="com.yimei.hs.ying.entity.YingFukuan">
        select
         <include refid="Base_Column_List"/>
         from hs_ying_fukuan
-        where orderId = #{orderId,jdbcType=BIGINT}
+        where orderId = #{orderId,jdbcType=BIGINT} and deleted = 0
     </select>
 
+    <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_fukuan
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
+
+    <!-- 逻辑删除 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_ying_fukuan
+        SET deleted = 1
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
 
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingFukuan" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO hs_ying_fukuan (

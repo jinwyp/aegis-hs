@@ -37,6 +37,7 @@ public class PageYingSettleDownstreamDTO extends BaseFilter<PageYingSettleDownst
             if (orderId != null) { WHERE("orderId = ?"); }
             if (hsId != null) { WHERE("hsId = ？"); }
             if (settleDate != null) { WHERE("settleDate = ？"); }
+            WHERE( "deleted = 0");
         }}.toString();
 
         String countSql = super.getCountSql(nsql);

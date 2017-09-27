@@ -11,11 +11,12 @@
     <sql id="Base_Column_List">
         id, orderId, custType, customerId, tsc
     </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from hs_ying_order_party
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
     </select>
 
     <!---->
@@ -24,15 +25,24 @@
         <include refid="Base_Column_List"/>
         from hs_ying_order_party
         <where>
+            <if test="1==1">deleted = 0</if>
             <if test="orderId!=null">orderId = #{orderId, jdbcType=BIGINT}</if>
-
         </where>
     </select>
 
+    <!-- 物理删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_order_party
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
+
+    <!-- 逻辑删除 -->
+    <delete id="delete" parameterType="java.lang.Long">
+        UPDATE hs_ying_order_party
+        SET deleted = 1
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingOrderParty" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO hs_ying_order_party (

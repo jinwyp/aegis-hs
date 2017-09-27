@@ -96,4 +96,23 @@ public class YingSettleUpstreamController {
         }
         return Result.ok(1);
     }
+
+    /**
+     * 更新huikuan
+     *
+     * @return
+     */
+    @Transactional(readOnly = false)
+    @DeleteMapping("/{morderId}/settleupstream/{id}")
+    public ResponseEntity<Result<Integer>> update(
+            @PathVariable("morderId") Long morderId,
+            @PathVariable("id") long id
+    ) {
+        int rtn = yingSettleService.deleteUpstream(id);
+        if (rtn != 1) {
+            return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+        }
+        return Result.ok(1);
+    }
+
 }

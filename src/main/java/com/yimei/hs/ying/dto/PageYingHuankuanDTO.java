@@ -39,6 +39,7 @@ public class PageYingHuankuanDTO extends BaseFilter<PageYingHuankuanDTO> {
             if (skCompanyId != null) { WHERE("skCompanyId = ?"); }
             if (huankuanDate != null) { WHERE("huankuanDate =?"); }
             if (huankuanAmount != null) { WHERE("huankuanAmount = ?"); }
+            WHERE( "deleted = 0");
         }}.toString();
 
         String countSql = super.getCountSql(nsql);

@@ -18,4 +18,6 @@ public interface YingSettleTrafficMapper {
     int updateByPrimaryKey(YingSettleTraffic record);
 
     Page<YingSettleTraffic> getPage(PageYingSettleTrafficDTO pageYingSettleTrafficDTO);
+
+    int delete(long id);
 }

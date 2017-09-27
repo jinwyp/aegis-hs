@@ -44,6 +44,7 @@ public class PageYingInvoiceDTO extends BaseFilter<PageYingInvoiceDTO> {
                 if (openDate != null) { WHERE( "openDate = ?"); }
                 if (openCompanyId != null) { WHERE("openCompanyId = ?"); }
                 if (receiverId != null) { WHERE("receiverId = ?"); }
+                WHERE( "deleted = 0");
             }
         }.toString();
 

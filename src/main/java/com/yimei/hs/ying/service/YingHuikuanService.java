@@ -73,4 +73,13 @@ public class YingHuikuanService {
 
         return rtn;
     }
+
+    /**
+     * 逻辑删除
+     * @param id
+     * @return
+     */
+    public int delete(long id) {
+        return yingHuikuanMapper.delete(id);
+    }
 }

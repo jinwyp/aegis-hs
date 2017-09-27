@@ -31,7 +31,8 @@
         <result property="hsId" column="t1hsId"/>
         <result property="tsc" column="t1tsc"/>
 
-        <collection property="fukuanList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingFukuan" autoMapping="true">
+        <collection property="fukuanList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingFukuan"
+                    autoMapping="true">
             <id property="id" column="t2Id"/>
             <id property="orderId" column="t2orderId"/>
             <id property="hsId" column="t2hsId"/>
@@ -50,9 +51,9 @@
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="YingHuikuanResultMap">
         SELECT
-            t1.id AS t1id,
-            t1.orderId as t1orderId,
-            t1.hsId as t1hsId,
+            t1.id      AS t1id,
+            t1.orderId AS t1orderId,
+            t1.hsId    AS t1hsId,
             t1.huikuanCompanyId,
             t1.huikuanDate,
             t1.huikuanAmount,
@@ -68,11 +69,11 @@
             t1.huikuanBusinessDiscount,
             t1.huikuanBusinessDiscountRate,
             t1.huikuanBusinessPaperExpire,
-            t1.tsc as t1tsc,
+            t1.tsc     AS t1tsc,
 
-            t2.id as t2id,
-            t2.orderId as t2orderId,
-            t2.hsId as t2hsId,
+            t2.id      AS t2id,
+            t2.orderId AS t2orderId,
+            t2.hsId    AS t2hsId,
             t2.payDate,
             t2.receiveCompanyId,
             t2.payUsage,
@@ -81,73 +82,86 @@
             t2.capitalId,
             t2.useInterest,
             t2.useDays,
-            t2.tsc as t2tsc,
+            t2.tsc     AS t2tsc,
 
             map.amount
 
         FROM hs_ying_huikuan t1 LEFT JOIN hs_ying_huikuan_map map ON t1.id = map.huikuanId
             LEFT JOIN hs_ying_fukuan t2 ON map.fukuanId = t2.id
-            where t1.id = #{id}
+        WHERE t1.id = #{id} AND t1.deleted = 0
     </select>
 
 
     <!-- 获取一页回款信息 -->
     <select id="getPage" resultMap="YingHuikuanResultMap">
         SELECT
-            t1.id AS t1id,
-            t1.orderId as t1orderId,
-            t1.hsId as t1hsId,
-            t1.huikuanCompanyId,
-            t1.huikuanDate,
-            t1.huikuanAmount,
-            t1.huikuanUsage,
-            t1.huikuanMode,
-            t1.huikuanBankPaper,
-            t1.huikuanBankPaperDate,
-            t1.huikuanBankDiscount,
-            t1.huikuanBankDiscountRate,
-            t1.huikuanBankPaperExpire,
-            t1.huikuanBusinessPaper,
-            t1.huikuanBusinessPaperDate,
-            t1.huikuanBusinessDiscount,
-            t1.huikuanBusinessDiscountRate,
-            t1.huikuanBusinessPaperExpire,
-            t1.tsc as t1tsc,
+        t1.id AS t1id,
+        t1.orderId as t1orderId,
+        t1.hsId as t1hsId,
+        t1.huikuanCompanyId,
+        t1.huikuanDate,
+        t1.huikuanAmount,
+        t1.huikuanUsage,
+        t1.huikuanMode,
+        t1.huikuanBankPaper,
+        t1.huikuanBankPaperDate,
+        t1.huikuanBankDiscount,
+        t1.huikuanBankDiscountRate,
+        t1.huikuanBankPaperExpire,
+        t1.huikuanBusinessPaper,
+        t1.huikuanBusinessPaperDate,
+        t1.huikuanBusinessDiscount,
+        t1.huikuanBusinessDiscountRate,
+        t1.huikuanBusinessPaperExpire,
+        t1.tsc as t1tsc,
 
-            t2.id as t2id,
-            t2.orderId as t2orderId,
-            t2.hsId as t2hsId,
-            t2.payDate,
-            t2.receiveCompanyId,
-            t2.payUsage,
-            t2.payAmount,
-            t2.payMode,
-            t2.capitalId,
-            t2.useInterest,
-            t2.useDays,
-            t2.tsc as t2tsc,
+        t2.id as t2id,
+        t2.orderId as t2orderId,
+        t2.hsId as t2hsId,
+        t2.payDate,
+        t2.receiveCompanyId,
+        t2.payUsage,
+        t2.payAmount,
+        t2.payMode,
+        t2.capitalId,
+        t2.useInterest,
+        t2.useDays,
+        t2.tsc as t2tsc,
 
-            map.amount
+        map.amount
 
         FROM hs_ying_huikuan t1 LEFT JOIN hs_ying_huikuan_map map ON t1.id = map.huikuanId
-            LEFT JOIN hs_ying_fukuan t2 ON map.fukuanId = t2.id
+        LEFT JOIN hs_ying_fukuan t2 ON map.fukuanId = t2.id
         <where>
-            <if test="orderId!=null"> AND t1.orderId=#{orderId}</if>
-            <if test="hsId!=null"> AND t1.hsId=#{hsId}</if>
-            <if test="huikuanCompanyId!=null"> AND t1.huikuanCompanyId=#{huikuanCompanyId}</if>
-            <if test="huikuanMode!=null"> AND t1.huikuanMode=#{huikuanMode}</if>
-            <if test="huikuanDate!=null"> AND t1.huikuanDate=#{huikuanDate}</if>
+            <if test="1==1">t1.deleted = 0</if>
+            <if test="orderId!=null">AND t1.orderId=#{orderId}</if>
+            <if test="hsId!=null">AND t1.hsId=#{hsId}</if>
+            <if test="huikuanCompanyId!=null">AND t1.huikuanCompanyId=#{huikuanCompanyId}</if>
+            <if test="huikuanMode!=null">AND t1.huikuanMode=#{huikuanMode}</if>
+            <if test="huikuanDate!=null">AND t1.huikuanDate=#{huikuanDate}</if>
         </where>
     </select>
 
-
+    <!-- 物理删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_huikuan
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuikuan"  keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO hs_ying_huikuan (id, orderId, hsId,
-                                     huikuanCompanyId, huikuanDate, huikuanAmount,
+
+    <!-- 逻辑删除 -->
+    <update id="delete">
+        UPDATE hs_ying_huikuan
+        SET deleted = 1
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuikuan" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO hs_ying_huikuan (id,
+                                     orderId,
+                                     hsId,
+                                     huikuanCompanyId,
+                                     huikuanDate,
+                                     huikuanAmount,
                                      huikuanUsage, huikuanMode, huikuanBankPaper,
                                      huikuanBankPaperDate, huikuanBankDiscount,
                                      huikuanBankDiscountRate, huikuanBankPaperExpire,
@@ -165,119 +179,48 @@
                 #{huikuanBusinessDiscount,jdbcType=BIT}, #{huikuanBusinessDiscountRate,jdbcType=DECIMAL},
                 #{huikuanBusinessPaperExpire,jdbcType=TIMESTAMP}, #{tsc,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuikuan" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuikuan" keyProperty="id"
+            useGeneratedKeys="true">
         insert into hs_ying_huikuan
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="orderId != null">
-                orderId,
-            </if>
-            <if test="hsId != null">
-                hsId,
-            </if>
-            <if test="huikuanCompanyId != null">
-                huikuanCompanyId,
-            </if>
-            <if test="huikuanDate != null">
-                huikuanDate,
-            </if>
-            <if test="huikuanAmount != null">
-                huikuanAmount,
-            </if>
-            <if test="huikuanUsage != null">
-                huikuanUsage,
-            </if>
-            <if test="huikuanMode != null">
-                huikuanMode,
-            </if>
-            <if test="huikuanBankPaper != null">
-                huikuanBankPaper,
-            </if>
-            <if test="huikuanBankPaperDate != null">
-                huikuanBankPaperDate,
-            </if>
-            <if test="huikuanBankDiscount != null">
-                huikuanBankDiscount,
-            </if>
-            <if test="huikuanBankDiscountRate != null">
-                huikuanBankDiscountRate,
-            </if>
-            <if test="huikuanBankPaperExpire != null">
-                huikuanBankPaperExpire,
-            </if>
-            <if test="huikuanBusinessPaper != null">
-                huikuanBusinessPaper,
-            </if>
-            <if test="huikuanBusinessPaperDate != null">
-                huikuanBusinessPaperDate,
-            </if>
-            <if test="huikuanBusinessDiscount != null">
-                huikuanBusinessDiscount,
-            </if>
-            <if test="huikuanBusinessDiscountRate != null">
-                huikuanBusinessDiscountRate,
-            </if>
-            <if test="huikuanBusinessPaperExpire != null">
-                huikuanBusinessPaperExpire,
-            </if>
-            <if test="tsc != null">
-                tsc,
-            </if>
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="hsId != null">hsId,</if>
+            <if test="huikuanCompanyId != null">huikuanCompanyId,</if>
+            <if test="huikuanDate != null">huikuanDate,</if>
+            <if test="huikuanAmount != null">huikuanAmount,</if>
+            <if test="huikuanUsage != null">huikuanUsage,</if>
+            <if test="huikuanMode != null">huikuanMode,</if>
+            <if test="huikuanBankPaper != null">huikuanBankPaper,</if>
+            <if test="huikuanBankPaperDate != null">huikuanBankPaperDate,</if>
+            <if test="huikuanBankDiscount != null">huikuanBankDiscount,</if>
+            <if test="huikuanBankDiscountRate != null">huikuanBankDiscountRate,</if>
+            <if test="huikuanBankPaperExpire != null">huikuanBankPaperExpire,</if>
+            <if test="huikuanBusinessPaper != null">huikuanBusinessPaper,</if>
+            <if test="huikuanBusinessPaperDate != null">huikuanBusinessPaperDate,</if>
+            <if test="huikuanBusinessDiscount != null">huikuanBusinessDiscount,</if>
+            <if test="huikuanBusinessDiscountRate != null">huikuanBusinessDiscountRate,</if>
+            <if test="huikuanBusinessPaperExpire != null">huikuanBusinessPaperExpire,</if>
+            <if test="tsc != null">tsc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=BIGINT},
-            </if>
-            <if test="orderId != null">
-                #{orderId,jdbcType=BIGINT},
-            </if>
-            <if test="hsId != null">
-                #{hsId,jdbcType=BIGINT},
-            </if>
-            <if test="huikuanCompanyId != null">
-                #{huikuanCompanyId,jdbcType=BIGINT},
-            </if>
-            <if test="huikuanDate != null">
-                #{huikuanDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="huikuanAmount != null">
-                #{huikuanAmount,jdbcType=DECIMAL},
-            </if>
-            <if test="huikuanUsage != null">
-                #{huikuanUsage,jdbcType=VARCHAR},
-            </if>
-            <if test="huikuanMode != null">
-                #{huikuanMode,jdbcType=VARCHAR},
-            </if>
-            <if test="huikuanBankPaper != null">
-                #{huikuanBankPaper,jdbcType=BIT},
-            </if>
-            <if test="huikuanBankPaperDate != null">
-                #{huikuanBankPaperDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="huikuanBankDiscount != null">
-                #{huikuanBankDiscount,jdbcType=BIT},
-            </if>
-            <if test="huikuanBankDiscountRate != null">
-                #{huikuanBankDiscountRate,jdbcType=DECIMAL},
-            </if>
-            <if test="huikuanBankPaperExpire != null">
-                #{huikuanBankPaperExpire,jdbcType=TIMESTAMP},
-            </if>
-            <if test="huikuanBusinessPaper != null">
-                #{huikuanBusinessPaper,jdbcType=BIT},
-            </if>
-            <if test="huikuanBusinessPaperDate != null">
-                #{huikuanBusinessPaperDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="huikuanBusinessDiscount != null">
-                #{huikuanBusinessDiscount,jdbcType=BIT},
-            </if>
-            <if test="huikuanBusinessDiscountRate != null">
-                #{huikuanBusinessDiscountRate,jdbcType=DECIMAL},
-            </if>
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
+            <if test="huikuanCompanyId != null">#{huikuanCompanyId,jdbcType=BIGINT},</if>
+            <if test="huikuanDate != null">#{huikuanDate,jdbcType=TIMESTAMP},</if>
+            <if test="huikuanAmount != null">#{huikuanAmount,jdbcType=DECIMAL},</if>
+            <if test="huikuanUsage != null">#{huikuanUsage,jdbcType=VARCHAR},</if>
+            <if test="huikuanMode != null">#{huikuanMode,jdbcType=VARCHAR},</if>
+            <if test="huikuanBankPaper != null">#{huikuanBankPaper,jdbcType=BIT},</if>
+            <if test="huikuanBankPaperDate != null">#{huikuanBankPaperDate,jdbcType=TIMESTAMP},</if>
+            <if test="huikuanBankDiscount != null">#{huikuanBankDiscount,jdbcType=BIT},</if>
+            <if test="huikuanBankDiscountRate != null">#{huikuanBankDiscountRate,jdbcType=DECIMAL},</if>
+            <if test="huikuanBankPaperExpire != null">#{huikuanBankPaperExpire,jdbcType=TIMESTAMP},</if>
+            <if test="huikuanBusinessPaper != null">#{huikuanBusinessPaper,jdbcType=BIT},</if>
+            <if test="huikuanBusinessPaperDate != null">#{huikuanBusinessPaperDate,jdbcType=TIMESTAMP},</if>
+            <if test="huikuanBusinessDiscount != null">#{huikuanBusinessDiscount,jdbcType=BIT},</if>
+            <if test="huikuanBusinessDiscountRate != null">#{huikuanBusinessDiscountRate,jdbcType=DECIMAL},</if>
             <if test="huikuanBusinessPaperExpire != null">
                 #{huikuanBusinessPaperExpire,jdbcType=TIMESTAMP},
             </if>

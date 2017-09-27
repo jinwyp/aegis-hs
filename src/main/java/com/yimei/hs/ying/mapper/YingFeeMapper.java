@@ -9,6 +9,8 @@ public interface YingFeeMapper {
 
     int insert(YingFee record);
 
+    int delete(long id);
+
     int insertSelective(YingFee record);
 
     YingFee selectByPrimaryKey(Long id);

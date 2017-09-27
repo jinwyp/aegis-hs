@@ -85,7 +85,7 @@ public class YingHuikuanController {
      *
      * @return
      */
-    @PutMapping("/{morderId}/huikuans/:id")
+    @PutMapping("/{morderId}/huikuans/{id}")
     @Transactional(readOnly =  false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
@@ -95,6 +95,29 @@ public class YingHuikuanController {
         assert (yingHuikuan.getOrderId() == morderId);
         yingHuikuan.setId(id);
         int cnt = yingHuikuanService.update(yingHuikuan);
+
+        // 删除以前的对应记录
+        // 重新插入对应记录  todo
+
+        if (cnt != 1) {
+            return Result.error(4001, "更新失败");
+        }
+        return Result.ok(1);
+    }
+
+    /**
+     * 逻辑删除
+     * @param morderId
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{morderId}/huikuans/{id}")
+    @Transactional(readOnly =  false)
+    public ResponseEntity<Result<Integer>> update(
+            @PathVariable("morderId") Long morderId,
+            @PathVariable("id") long id
+    ) {
+        int cnt = yingHuikuanService.delete(id);
 
         // 删除以前的对应记录
         // 重新插入对应记录  todo

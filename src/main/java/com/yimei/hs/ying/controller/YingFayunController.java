@@ -108,6 +108,25 @@ public class YingFayunController {
         return Result.ok(1);
     }
 
+    /**
+     * 逻辑删除
+     * @param morderId
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{morderId}/fayuns/{id}")
+    @Transactional(readOnly = false)
+    public ResponseEntity<Result<Integer>>update(
+            @PathVariable("morderId") Long morderId,
+            @PathVariable("id") Long id
+    ) {
+        int cnt = yingFayunService.delete(id);
+        if (cnt != 1) {
+            return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
+        }
+        return Result.ok(1);
+    }
+
 
     // 发运统计
     @Data

@@ -29,4 +29,6 @@ public interface YingInvoiceMapper {
      * @return
      */
     Page<YingInvoice> getPage(PageYingInvoiceDTO pageYingInvoiceDTO);
+
+    int delete(long id);
 }

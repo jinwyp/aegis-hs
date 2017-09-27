@@ -43,6 +43,7 @@ public class PageYingHuikuanDTO extends BaseFilter<PageYingHuikuanDTO> {
             if (huikuanCompanyId != null) { WHERE("huikuanCompanyId = ?"); }
             if (huikuanDate != null) { WHERE("huikuanDate = ?"); }
             if (huikuanMode != null) { WHERE("huikuanMode = ?"); }
+            WHERE( "deleted = 0");
         }}.toString();
 
         String countSql = super.getCountSql(nsql);

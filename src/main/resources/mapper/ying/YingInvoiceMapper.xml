@@ -48,7 +48,7 @@
             t2.priceAndTax,
             t2.tsc t2tsc
         FROM hs_ying_invoice t1 LEFT JOIN hs_ying_invoice_detail t2 ON t1.id = t2.invoiceId
-        WHERE t1.id = #{id, jdbcType=BIGINT}
+        WHERE t1.id = #{id, jdbcType=BIGINT} AND t1.deleted = 0
     </select>
 
     <!-- 获取发票分页 -->
@@ -72,6 +72,7 @@
             t2.tsc t2tsc
         FROM hs_ying_invoice t1 LEFT JOIN hs_ying_invoice_detail t2 ON t1.id = t2.invoiceId
         <where>
+            <if test="1==1">AND t1.deleted = 0</if>
             <if test="orderId!=null"> AND  orderId=#{orderId,jdbcType=BIGINT}</if>
             <if test="hsId!=null">  AND hsId=#{hsId,jdbcType=BIGINT}</if>
             <if test="openCompanyId!=null"> AND  openCompanyId=#{openCompanyId,jdbcType=BIGINT}</if>
@@ -84,6 +85,12 @@
         DELETE FROM hs_ying_invoice
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
+
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_ying_invoice
+        SET deleted = 1
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
 
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingInvoice"  keyProperty="id" useGeneratedKeys="true">
         INSERT INTO hs_ying_invoice (

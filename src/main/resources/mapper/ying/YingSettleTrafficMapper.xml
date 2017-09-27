@@ -19,7 +19,7 @@
         select
         <include refid="Base_Column_List"/>
         from hs_ying_settle_traffic
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
     </select>
 
     <select id="getPage" resultType="com.yimei.hs.ying.entity.YingSettleTraffic">
@@ -27,9 +27,10 @@
         <include refid="Base_Column_List"/>
         from hs_ying_settle_traffic
         <where>
-            <if test="orderId != null">  AND  orderId=#{orderId,jdbcType=BIGINT}</if>
-            <if test="hsId != null">  AND  hsId=#{hsId,jdbcType=BIGINT} </if>
-            <if test="settleDate != null">  AND settleDate= #{settleDate,jdbcType=DATE} </if>
+            <if test="1==1">deleted = 0</if>
+            <if test="orderId != null">AND orderId=#{orderId,jdbcType=BIGINT}</if>
+            <if test="hsId != null">AND hsId=#{hsId,jdbcType=BIGINT}</if>
+            <if test="settleDate != null">AND settleDate= #{settleDate,jdbcType=DATE}</if>
         </where>
     </select>
 
@@ -37,6 +38,13 @@
         DELETE FROM hs_ying_settle_traffic
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
+
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_ying_settle_traffic
+        SET deleted = 1
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleTraffic" keyProperty="id"
             useGeneratedKeys="true">
         INSERT INTO hs_ying_settle_traffic (
@@ -87,13 +95,13 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingSettleTraffic">
         update hs_ying_settle_traffic
         <set>
-            <if test="orderId != null"> orderId = #{orderId,jdbcType=BIGINT}, </if>
-            <if test="hsId != null"> hsId = #{hsId,jdbcType=BIGINT}, </if>
-            <if test="settleDate != null"> settleDate = #{settleDate,jdbcType=DATE}, </if>
-            <if test="amount != null"> amount = #{amount,jdbcType=DECIMAL}, </if>
-            <if test="money != null"> money = #{money,jdbcType=DECIMAL}, </if>
-            <if test="trafficCompanyId != null"> trafficCompanyId = #{trafficCompanyId,jdbcType=BIGINT}, </if>
-            <if test="tsc != null"> tsc = #{tsc,jdbcType=TIMESTAMP}, </if>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
+            <if test="settleDate != null">settleDate = #{settleDate,jdbcType=DATE},</if>
+            <if test="amount != null">amount = #{amount,jdbcType=DECIMAL},</if>
+            <if test="money != null">money = #{money,jdbcType=DECIMAL},</if>
+            <if test="trafficCompanyId != null">trafficCompanyId = #{trafficCompanyId,jdbcType=BIGINT},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>

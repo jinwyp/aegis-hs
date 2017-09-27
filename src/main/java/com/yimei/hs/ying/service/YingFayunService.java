@@ -54,4 +54,13 @@ public class YingFayunService {
     public int update(YingFayun yingFayun) {
         return yingFayunMapper.updateByPrimaryKeySelective(yingFayun);
     }
+
+    /**
+     * 逻辑删除
+     * @param id
+     * @return
+     */
+    public int delete(long id) {
+        return yingFayunMapper.delete(id);
+    }
 }

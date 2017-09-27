@@ -78,4 +78,13 @@ public class YingHuankuanService {
     public int update(YingHuankuan yingHuankuan) {
         return yingHuankuanMapper.updateByPrimaryKeySelective(yingHuankuan);
     }
+
+    /**
+     * 逻辑删除
+     * @param id
+     * @return
+     */
+    public int deleted(long id) {
+        return yingHuankuanMapper.delete(id);
+    }
 }

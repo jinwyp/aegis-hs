@@ -18,4 +18,6 @@ public interface YingOrderPartyMapper {
     int updateByPrimaryKey(YingOrderParty record);
 
     Page<YingOrderParty> getPage(PageYingOrderPartyDTO pageYingOrderPartyDTO);
+
+    int delete(Long id);
 }

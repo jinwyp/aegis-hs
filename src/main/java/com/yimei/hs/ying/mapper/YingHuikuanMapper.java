@@ -9,6 +9,8 @@ public interface YingHuikuanMapper {
 
     int insert(YingHuikuan record);
 
+    int delete(long id);
+
     int insertSelective(YingHuikuan record);
 
     YingHuikuan selectByPrimaryKey(Long id);

@@ -50,6 +50,7 @@
         LEFT JOIN hs_ying_huankuan_map map on t1.id = map.huankuanId
         LEFT JOIN hs_ying_fukuan t2 on map.fukuanId = t2.id
         <where>
+            <if test="1==1">AND t1.deleted = 0</if>
             <if test="orderId!=null"> AND t1.orderId=#{orderId}</if>
             <if test="hsId!=null"> AND t1.hsId=#{hsId}</if>
             <if test="skCompanyId!=null"> AND t1.skCompanyId=#{skCompanyId}</if>
@@ -62,6 +63,12 @@
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_huankuan
         WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 逻辑删除 -->
+    <delete id="delete">
+        DELETE  FROM hs_ying_huankuan
+        WHERE id = #{id} AND deleted = 0
     </delete>
 
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuankuan" keyProperty="id" useGeneratedKeys="true">

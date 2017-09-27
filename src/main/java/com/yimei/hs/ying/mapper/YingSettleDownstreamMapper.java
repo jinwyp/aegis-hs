@@ -21,4 +21,5 @@ public interface YingSettleDownstreamMapper {
     Page<YingSettleDownstream> getPage(PageYingSettleDownstreamDTO pageYingSettleDownstreamDTO);
 
 
+    int delete(long id);
 }

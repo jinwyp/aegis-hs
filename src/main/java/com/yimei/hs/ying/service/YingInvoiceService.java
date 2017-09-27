@@ -43,4 +43,13 @@ public class YingInvoiceService {
     public int update(YingInvoice yingInvoice) {
         return yingInvoiceMapper.updateByPrimaryKeySelective(yingInvoice);
     }
+
+    /**
+     * 逻辑删除
+     * @param id
+     * @return
+     */
+    public int delete(long id) {
+        return yingInvoiceMapper.delete(id);
+    }
 }

@@ -103,4 +103,22 @@ public class YingFeeController {
         }
         return Result.ok(1);
     }
+
+    /**
+     * 更新fee
+     *
+     * @return
+     */
+    @DeleteMapping("/{morderId}/fees/{id}")
+    @Transactional(readOnly =  false)
+    public ResponseEntity<Result<Integer>> update(
+            @PathVariable("morderId") Long morderId,
+            @PathVariable("id") Long id
+    ) {
+        int rtn = yingFeeService.delete(id);
+        if (rtn != 1) {
+            return Result.error(5001, "删除失败", HttpStatus.NOT_FOUND);
+        }
+        return Result.ok(1);
+    }
 }

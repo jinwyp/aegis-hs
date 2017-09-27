@@ -9,14 +9,16 @@
         <result column="amount" jdbcType="DECIMAL" property="amount"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
+
     <sql id="Base_Column_List">
         id, orderId, hsId, name, amount, tsc
     </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from hs_ying_fee
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
     </select>
 
     <!-- 获取费用分页 -->
@@ -25,90 +27,77 @@
         <include refid="Base_Column_List"/>
         FROM hs_ying_fee
         <where>
+            <if test="1==1">deleted = 0</if>
             <if test="orderId!=null">AND orderId = #{orderId, jdbcType=BIGINT}</if>
             <if test="hsId!=null">AND hsId = #{hsId, jdbcType=BIGINT}</if>
             <if test="name!=null">AND name = #{name, jdbcType=VARCHAR}</if>
         </where>
     </select>
 
+    <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_fee
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
+    <!-- 逻辑删除 -->
+    <delete id="delete">
+        DELETE FROM hs_ying_fee
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingFee" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO hs_ying_fee (id, orderId, hsId,
-                                 name, amount, tsc
+        INSERT INTO hs_ying_fee (
+            id,
+            orderId,
+            hsId,
+            name,
+            amount,
+            tsc
         )
-        VALUES (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT},
-                #{name,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP}
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{hsId,jdbcType=BIGINT},
+            #{name,jdbcType=VARCHAR},
+            #{amount,jdbcType=DECIMAL},
+            #{tsc,jdbcType=TIMESTAMP}
         )
     </insert>
 
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingFee" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingFee" keyProperty="id"
+            useGeneratedKeys="true">
         insert into hs_ying_fee
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="orderId != null">
-                orderId,
-            </if>
-            <if test="hsId != null">
-                hsId,
-            </if>
-            <if test="name != null">
-                name,
-            </if>
-            <if test="amount != null">
-                amount,
-            </if>
-            <if test="tsc != null">
-                tsc,
-            </if>
+            <if test="id != null"> id, </if>
+            <if test="orderId != null"> orderId, </if>
+            <if test="hsId != null"> hsId, </if>
+            <if test="name != null"> name, </if>
+            <if test="amount != null"> amount, </if>
+            <if test="tsc != null"> tsc, </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=BIGINT},
-            </if>
-            <if test="orderId != null">
-                #{orderId,jdbcType=BIGINT},
-            </if>
-            <if test="hsId != null">
-                #{hsId,jdbcType=BIGINT},
-            </if>
-            <if test="name != null">
-                #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="amount != null">
-                #{amount,jdbcType=DECIMAL},
-            </if>
-            <if test="tsc != null">
-                #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="id != null"> #{id,jdbcType=BIGINT}, </if>
+            <if test="orderId != null"> #{orderId,jdbcType=BIGINT}, </if>
+            <if test="hsId != null"> #{hsId,jdbcType=BIGINT}, </if>
+            <if test="name != null"> #{name,jdbcType=VARCHAR}, </if>
+            <if test="amount != null"> #{amount,jdbcType=DECIMAL}, </if>
+            <if test="tsc != null"> #{tsc,jdbcType=TIMESTAMP}, </if>
         </trim>
     </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingFee">
         update hs_ying_fee
         <set>
-            <if test="orderId != null">
-                orderId = #{orderId,jdbcType=BIGINT},
-            </if>
-            <if test="hsId != null">
-                hsId = #{hsId,jdbcType=BIGINT},
-            </if>
-            <if test="name != null">
-                name = #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="amount != null">
-                amount = #{amount,jdbcType=DECIMAL},
-            </if>
-            <if test="tsc != null">
-                tsc = #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="orderId != null"> orderId = #{orderId,jdbcType=BIGINT}, </if>
+            <if test="hsId != null"> hsId = #{hsId,jdbcType=BIGINT}, </if>
+            <if test="name != null"> name = #{name,jdbcType=VARCHAR}, </if>
+            <if test="amount != null"> amount = #{amount,jdbcType=DECIMAL}, </if>
+            <if test="tsc != null"> tsc = #{tsc,jdbcType=TIMESTAMP}, </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingFee">
         UPDATE hs_ying_fee
         SET orderId = #{orderId,jdbcType=BIGINT},
@@ -118,4 +107,5 @@
             tsc     = #{tsc,jdbcType=TIMESTAMP}
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
+
 </mapper>

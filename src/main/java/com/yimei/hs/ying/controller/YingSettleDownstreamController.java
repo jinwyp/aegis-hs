@@ -33,7 +33,7 @@ public class YingSettleDownstreamController {
     private YingSettleService yingSettleService;
 
     /**
-     * 获取所有huikuan
+     * 获取所有下游结算
      *
      * @return
      */
@@ -47,7 +47,7 @@ public class YingSettleDownstreamController {
     }
 
     /**
-     * 获取huikuan
+     * 获取下游结算
      *
      * @param id
      * @return
@@ -68,7 +68,7 @@ public class YingSettleDownstreamController {
     }
 
     /**
-     * 创建huikuan
+     * 创建下游结算
      *
      * @return
      */
@@ -82,7 +82,7 @@ public class YingSettleDownstreamController {
     }
 
     /**
-     * 更新huikuan
+     * 更新下游结算
      *
      * @return
      */
@@ -101,4 +101,24 @@ public class YingSettleDownstreamController {
 
         return Result.ok(1);
     }
+
+    /**
+     * 更新下游结算
+     *
+     * @return
+     */
+    @Transactional(readOnly = false)
+    @DeleteMapping("/{morderId}/settledownstream/{id}")
+    public ResponseEntity<Result<Integer>> update(
+            @PathVariable("morderId") Long morderId,
+            @PathVariable("id") long id
+    ) {
+        int rtn = yingSettleService.deleteDownstream(id);
+        if (rtn != 1) {
+            return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
+        }
+
+        return Result.ok(1);
+    }
+
 }

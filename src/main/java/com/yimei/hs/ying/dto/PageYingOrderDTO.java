@@ -52,7 +52,7 @@ public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
                 if (upstreamId != null ) { WHERE( "upstreamId = ?"); }
                 if (downstreamId != null ) { WHERE( "downstreamId = ?"); }
                 if (status != null ) { WHERE( "status = ?"); }
-                if (status != null ) { WHERE( "deleted = ?"); }
+                WHERE( "deleted = 0");
             }
         }.toString();
         String countSql =  super.getCountSql(nsql);

@@ -11,6 +11,8 @@ public interface YingFukuanMapper {
 
     int insert(YingFukuan record);
 
+    int delete(long id);
+
     int insertSelective(YingFukuan record);
 
     YingFukuan selectByPrimaryKey(Long id);

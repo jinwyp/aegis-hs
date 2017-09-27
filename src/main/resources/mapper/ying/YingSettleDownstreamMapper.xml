@@ -20,7 +20,7 @@
         select
         <include refid="Base_Column_List"/>
         from hs_ying_settle_downstream
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
     </select>
 
     <!-- 下游结算分页 -->
@@ -29,9 +29,10 @@
         <include refid="Base_Column_List"/>
         FROM hs_ying_settle_downstream
         <where>
-            <if test="orderId!=null">  AND orderId = #{orderId, jdbcType=BIGINT}</if>
-            <if test="hsId!=null">   AND hsId = #{hsId, jdbcType=BIGINT}</if>
-            <if test="settleDate!=null">  AND settleDate = #{settleDate, jdcbType=TIMESTAMP}</if>
+            <if test="1==1">AND deleted = 0</if>
+            <if test="orderId!=null">AND orderId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="hsId!=null">AND hsId = #{hsId, jdbcType=BIGINT}</if>
+            <if test="settleDate!=null">AND settleDate = #{settleDate, jdcbType=TIMESTAMP}</if>
         </where>
     </select>
 
@@ -39,6 +40,12 @@
         DELETE FROM hs_ying_settle_downstream
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
+
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_ying_settle_downstream
+        SET deleted = 1
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
 
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleDownstream" keyProperty="id"
             useGeneratedKeys="true">

@@ -28,4 +28,8 @@ public class YingPartyService {
     public int update(YingOrderParty yingOrderParty) {
         return yingOrderPartyMapper.updateByPrimaryKeySelective(yingOrderParty);
     }
+
+    public int delete(Long id) {
+        return yingOrderPartyMapper.delete(id);
+    }
 }

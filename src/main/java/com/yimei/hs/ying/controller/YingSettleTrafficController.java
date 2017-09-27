@@ -98,4 +98,22 @@ public class YingSettleTrafficController {
         }
         return Result.ok(1);
     }
+
+    /**
+     * 逻辑删除
+     * @return
+     */
+    @Transactional(readOnly = false)
+    @DeleteMapping("/{morderId}/settletraffic/{id}")
+    public ResponseEntity<Result<Integer>> delete(
+            @PathVariable("morderId") Long morderId,
+            @PathVariable("id") long id
+    ) {
+        int rtn = yingSettleService.deleteTraffic(id);
+        if (rtn != 1) {
+            return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
+        }
+        return Result.ok(1);
+    }
+
 }

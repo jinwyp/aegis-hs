@@ -161,4 +161,31 @@ public class YingSettleService {
     public int updateDownstream(YingSettleDownstream yingSettleDownstream) {
         return yingSettleDownstreamMapper.updateByPrimaryKeySelective(yingSettleDownstream);
     }
+
+    /**
+     *  逻辑删除
+     * @param id
+     * @return
+     */
+    public int deleteDownstream(long id) {
+        return yingSettleDownstreamMapper.delete(id);
+    }
+
+    /**
+     * 逻辑删除
+     * @param id
+     * @return
+     */
+    public int deleteTraffic(long id) {
+        return yingSettleTrafficMapper.delete(id);
+    }
+
+    /**
+     * 逻辑删除
+     * @param id
+     * @return
+     */
+    public int deleteUpstream(long id) {
+        return yingSettleUpstreamMapper.delete(id);
+    }
 }

@@ -100,4 +100,22 @@ public class YingInvoiceController {
         return Result.ok(1);
     }
 
+    /**
+     * 逻辑删除
+     * @return
+     */
+    @DeleteMapping("/{morderId}/invoices/{id}")
+    @Transactional(readOnly =  false)
+    public ResponseEntity<Result<Integer>> delete(
+            @PathVariable("morderId") Long morderId,
+            @PathVariable("id") long id
+    ) {
+        int rtn = yingInvoiceService.delete(id);
+        if (rtn != 1) {
+            return Result.error(4001, "删除错误", HttpStatus.NOT_FOUND);
+        }
+        return Result.ok(1);
+    }
+
+
 }
