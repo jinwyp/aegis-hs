@@ -80,7 +80,7 @@ public class YingFeeController {
         if (rtn != 1) {
             return Result.error(5001, "创建失败", HttpStatus.NOT_ACCEPTABLE);
         }
-        return Result.ok(yingFee);
+        return Result.created(yingFee);
     }
 
     /**
