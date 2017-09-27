@@ -76,11 +76,11 @@
     </delete>
 
     <!-- 逻辑删除 -->
-    <delete id="delete">
+    <update id="delete" parameterType="java.lang.Long">
         UPDATE hs_ying_fayun
-        SET deleted = 1
+        SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id, jdbcType=BIGINT}
-    </delete>
+    </update>
 
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingFayun" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO hs_ying_fayun (
@@ -177,6 +177,7 @@
             <if test="downstreamJHH != null">downstreamJHH = #{downstreamJHH,jdbcType=VARCHAR},</if>
             <if test="downstreamShip != null">downstreamShip = #{downstreamShip,jdbcType=VARCHAR},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -196,7 +197,8 @@
             downstreamCars        = #{downstreamCars,jdbcType=INTEGER},
             downstreamJHH         = #{downstreamJHH,jdbcType=VARCHAR},
             downstreamShip        = #{downstreamShip,jdbcType=VARCHAR},
-            tsc                   = #{tsc,jdbcType=TIMESTAMP}
+            tsc                   = #{tsc,jdbcType=TIMESTAMP},
+            tsu                   = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

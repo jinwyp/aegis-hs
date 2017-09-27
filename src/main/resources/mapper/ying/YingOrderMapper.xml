@@ -17,14 +17,12 @@
         <result column="downstreamSettleMode" jdbcType="VARCHAR" property="downstreamSettleMode"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
-        <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
     </resultMap>
 
 
     <!-- 一个订单记录: 包含的多个核算月配置， 以及多个参与方-->
     <resultMap id="YingOrderResultMap" type="com.yimei.hs.ying.entity.YingOrder" autoMapping="true">
         <result property="id" column="t1id"/>
-        <result property="tsu" column="t1tsu"/>
 
         <collection property="orderConfigList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingOrderConfig"
                     autoMapping="true">
@@ -63,7 +61,6 @@
             t1.downstreamSettleMode,
             t1.status,
             t1.tsc,
-            t1.tsu,
 
             t2.id      AS t2id,
             t2.orderId,
@@ -106,7 +103,6 @@
         t1.downstreamSettleMode,
         t1.status,
         t1.tsc,
-        t1.tsu,
 
         t2.id AS t2id,
         t2.orderId,
@@ -157,11 +153,11 @@
     </delete>
 
     <!-- 逻辑删除 -->
-    <delete id="delete" parameterType="java.lang.Long">
+    <update id="delete" parameterType="java.lang.Long">
         UPDATE hs_ying_order
-        SET deleted = #{deleted,jdbcType=TINYINT}
+        SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
-    </delete>
+    </update>
 
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingOrder" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO hs_ying_order (
@@ -251,7 +247,7 @@
             <if test="downstreamSettleMode != null">downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR}, </if>
             <if test="status != null">status = #{status,jdbcType=VARCHAR},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
-            tsu = current_timestamp
+            <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>

@@ -88,7 +88,7 @@
 
     <update id="delete" parameterType="java.lang.Long">
         UPDATE hs_ying_invoice
-        SET deleted = 1
+        SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 
@@ -154,6 +154,7 @@
             <if test="openCompanyId != null">openCompanyId = #{openCompanyId,jdbcType=BIGINT},</if>
             <if test="receiverId != null">receiverId = #{receiverId,jdbcType=BIGINT},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -167,7 +168,8 @@
             openDate         = #{openDate,jdbcType=TIMESTAMP},
             openCompanyId    = #{openCompanyId,jdbcType=BIGINT},
             receiverId       = #{receiverId,jdbcType=BIGINT},
-            tsc              = #{tsc,jdbcType=TIMESTAMP}
+            tsc              = #{tsc,jdbcType=TIMESTAMP},
+            tsu              = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

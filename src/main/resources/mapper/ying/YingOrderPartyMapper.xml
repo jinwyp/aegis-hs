@@ -39,7 +39,7 @@
     <!-- 逻辑删除 -->
     <delete id="delete" parameterType="java.lang.Long">
         UPDATE hs_ying_order_party
-        SET deleted = 1
+        SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
@@ -85,6 +85,7 @@
             <if test="custType != null">custType = #{custType,jdbcType=VARCHAR},</if>
             <if test="customerId != null">customerId = #{customerId,jdbcType=BIGINT},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -93,7 +94,8 @@
         SET orderId    = #{orderId,jdbcType=BIGINT},
             custType   = #{custType,jdbcType=VARCHAR},
             customerId = #{customerId,jdbcType=BIGINT},
-            tsc        = #{tsc,jdbcType=TIMESTAMP}
+            tsc        = #{tsc,jdbcType=TIMESTAMP},
+        tsu = CURRENT_TIMESTAMP
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

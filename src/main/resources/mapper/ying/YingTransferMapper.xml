@@ -26,8 +26,8 @@
         <include refid="Base_Column_List"/>
         from hs_ying_transfer
         <where>
-            <if test="orderId">  AND orderId = #{orderId, jdcbType=BIGINT}</if>
-            <if test="fromUserID">  AND fromUserID = #{fromUserID, jdcbType=BIGINT}</if>
+            <if test="orderId">AND orderId = #{orderId, jdcbType=BIGINT}</if>
+            <if test="fromUserID">AND fromUserID = #{fromUserID, jdcbType=BIGINT}</if>
         </where>
     </select>
 
@@ -79,6 +79,7 @@
             <if test="fromUserId != null">fromUserId = #{fromUserId,jdbcType=BIGINT},</if>
             <if test="toUserId != null">toUserId = #{toUserId,jdbcType=BIGINT},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -88,7 +89,8 @@
         SET orderId    = #{orderId,jdbcType=BIGINT},
             fromUserId = #{fromUserId,jdbcType=BIGINT},
             toUserId   = #{toUserId,jdbcType=BIGINT},
-            tsc        = #{tsc,jdbcType=TIMESTAMP}
+            tsc        = #{tsc,jdbcType=TIMESTAMP},
+            tsu        = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

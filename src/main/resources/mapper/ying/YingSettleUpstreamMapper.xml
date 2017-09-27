@@ -53,9 +53,9 @@
     </delete>
 
     <!-- 逻辑删除 -->
-    <update id="delete">
+    <update id="delete" parameterType="java.lang.Long">
         UPDATE hs_ying_settle_upstream
-        SET deleted = 1
+        SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT};
     </update>
 
@@ -132,6 +132,7 @@
             <if test="discountDays != null">discountDays = #{discountDays,jdbcType=INTEGER},</if>
             <if test="discountAmount != null">discountAmount = #{discountAmount,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -147,7 +148,8 @@
             discountInterest = #{discountInterest,jdbcType=DECIMAL},
             discountDays     = #{discountDays,jdbcType=INTEGER},
             discountAmount   = #{discountAmount,jdbcType=DECIMAL},
-            tsc              = #{tsc,jdbcType=TIMESTAMP}
+            tsc              = #{tsc,jdbcType=TIMESTAMP},
+            tsu              = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

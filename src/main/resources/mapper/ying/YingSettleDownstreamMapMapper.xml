@@ -37,7 +37,7 @@
     <!-- 逻辑删除map -->
     <update id="deleteByOrderId" parameterType="java.lang.Long">
         UPDATE hs_ying_settle_downstream_map
-        SET deleted = 1
+        SET deleted = 1, tsu = current_timestamp
         WHERE orderId = #{orderId,jdbcType=BIGINT}
     </update>
 
@@ -89,6 +89,7 @@
             <if test="fyId != null">fyId = #{fyId,jdbcType=BIGINT},</if>
             <if test="deduction != null">deduction = #{deduction,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -98,7 +99,8 @@
             orderId   = #{orderId,jdbcType=BIGINT},
             fyId      = #{fyId,jdbcType=BIGINT},
             deduction = #{deduction,jdbcType=DECIMAL},
-            tsc       = #{tsc,jdbcType=TIMESTAMP}
+            tsc       = #{tsc,jdbcType=TIMESTAMP},
+            tsu       = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

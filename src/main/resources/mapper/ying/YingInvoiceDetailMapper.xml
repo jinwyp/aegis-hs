@@ -27,15 +27,15 @@
     </delete>
 
     <update id="deleteByInvoiceId" parameterType="java.lang.Long">
-       UPDATE hs_ying_invoice_detail
-       SET delete = 1
+        UPDATE hs_ying_invoice_detail
+        SET delete = 1, tsu = current_timestamp
         WHERE invoiceId = #{invoiceId,jdbcType=BIGINT}
     </update>
 
     <!-- 逻辑删除 -->
     <update id="delete" parameterType="java.lang.Long">
         UPDATE hs_ying_invoice_detail
-        SET deleted = 1
+        SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 
@@ -52,34 +52,35 @@
             useGeneratedKeys="true">
         insert into hs_ying_invoice_detail
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null"> id, </if>
-            <if test="invoiceId != null"> invoiceId, </if>
-            <if test="invoiceNumber != null"> invoiceNumber, </if>
-            <if test="cargoAmount != null"> cargoAmount, </if>
-            <if test="taxRate != null"> taxRate, </if>
-            <if test="priceAndTax != null"> priceAndTax, </if>
-            <if test="tsc != null"> tsc, </if>
+            <if test="id != null">id,</if>
+            <if test="invoiceId != null">invoiceId,</if>
+            <if test="invoiceNumber != null">invoiceNumber,</if>
+            <if test="cargoAmount != null">cargoAmount,</if>
+            <if test="taxRate != null">taxRate,</if>
+            <if test="priceAndTax != null">priceAndTax,</if>
+            <if test="tsc != null">tsc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null"> #{id,jdbcType=BIGINT}, </if>
-            <if test="invoiceId != null"> #{invoiceId,jdbcType=BIGINT}, </if>
-            <if test="invoiceNumber != null"> #{invoiceNumber,jdbcType=VARCHAR}, </if>
-            <if test="cargoAmount != null"> #{cargoAmount,jdbcType=DECIMAL}, </if>
-            <if test="taxRate != null"> #{taxRate,jdbcType=DECIMAL}, </if>
-            <if test="priceAndTax != null"> #{priceAndTax,jdbcType=DECIMAL}, </if>
-            <if test="tsc != null"> #{tsc,jdbcType=TIMESTAMP}, </if>
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="invoiceId != null">#{invoiceId,jdbcType=BIGINT},</if>
+            <if test="invoiceNumber != null">#{invoiceNumber,jdbcType=VARCHAR},</if>
+            <if test="cargoAmount != null">#{cargoAmount,jdbcType=DECIMAL},</if>
+            <if test="taxRate != null">#{taxRate,jdbcType=DECIMAL},</if>
+            <if test="priceAndTax != null">#{priceAndTax,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingInvoiceDetail">
         update hs_ying_invoice_detail
         <set>
-            <if test="invoiceId != null"> invoiceId = #{invoiceId,jdbcType=BIGINT}, </if>
-            <if test="invoiceNumber != null"> invoiceNumber = #{invoiceNumber,jdbcType=VARCHAR}, </if>
-            <if test="cargoAmount != null"> cargoAmount = #{cargoAmount,jdbcType=DECIMAL}, </if>
-            <if test="taxRate != null"> taxRate = #{taxRate,jdbcType=DECIMAL}, </if>
-            <if test="priceAndTax != null"> priceAndTax = #{priceAndTax,jdbcType=DECIMAL}, </if>
-            <if test="tsc != null"> tsc = #{tsc,jdbcType=TIMESTAMP}, </if>
+            <if test="invoiceId != null">invoiceId = #{invoiceId,jdbcType=BIGINT},</if>
+            <if test="invoiceNumber != null">invoiceNumber = #{invoiceNumber,jdbcType=VARCHAR},</if>
+            <if test="cargoAmount != null">cargoAmount = #{cargoAmount,jdbcType=DECIMAL},</if>
+            <if test="taxRate != null">taxRate = #{taxRate,jdbcType=DECIMAL},</if>
+            <if test="priceAndTax != null">priceAndTax = #{priceAndTax,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -91,7 +92,8 @@
             cargoAmount   = #{cargoAmount,jdbcType=DECIMAL},
             taxRate       = #{taxRate,jdbcType=DECIMAL},
             priceAndTax   = #{priceAndTax,jdbcType=DECIMAL},
-            tsc           = #{tsc,jdbcType=TIMESTAMP}
+            tsc           = #{tsc,jdbcType=TIMESTAMP},
+            tsu           = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

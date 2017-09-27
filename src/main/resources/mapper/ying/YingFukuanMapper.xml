@@ -36,16 +36,16 @@
         from hs_ying_fukuan
         <where>
             <if test="1==1">deleted = 0</if>
-            <if test="orderId!=null"> and orderId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="orderId!=null">and orderId = #{orderId, jdbcType=BIGINT}</if>
             <if test="hsId!=null">and hsId = #{hsId, jdbcType=BIGINT}</if>
             <if test="payDate!=null">and payDate = #{payDate, jdbcType=TIMESTAMP}</if>
-            <if test="receiveCompanyId!=null">and  receiveCompanyId = #{receiveCompanyId, jdbcType=BIGINT}</if>
+            <if test="receiveCompanyId!=null">and receiveCompanyId = #{receiveCompanyId, jdbcType=BIGINT}</if>
         </where>
     </select>
 
     <!-- 获取某个业务线的所有付款 -->
     <select id="getList" resultType="com.yimei.hs.ying.entity.YingFukuan">
-       select
+        select
         <include refid="Base_Column_List"/>
         from hs_ying_fukuan
         where orderId = #{orderId,jdbcType=BIGINT} and deleted = 0
@@ -61,7 +61,7 @@
     <!-- 逻辑删除 -->
     <update id="delete" parameterType="java.lang.Long">
         UPDATE hs_ying_fukuan
-        SET deleted = 1
+        SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 
@@ -94,7 +94,8 @@
             #{tsc,jdbcType=TIMESTAMP}
         )
     </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingFukuan"  keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingFukuan" keyProperty="id"
+            useGeneratedKeys="true">
         insert into hs_ying_fukuan
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -139,6 +140,7 @@
             <if test="useInterest != null">useInterest = #{useInterest,jdbcType=DECIMAL},</if>
             <if test="useDays != null">useDays = #{useDays,jdbcType=INTEGER},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsc = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -154,7 +156,8 @@
             capitalId        = #{capitalId,jdbcType=BIGINT},
             useInterest      = #{useInterest,jdbcType=DECIMAL},
             useDays          = #{useDays,jdbcType=INTEGER},
-            tsc              = #{tsc,jdbcType=TIMESTAMP}
+            tsc              = #{tsc,jdbcType=TIMESTAMP},
+            tsu              = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

@@ -37,7 +37,7 @@
     <!-- 逻辑删除所有的map记录 -->
     <update id="deleteByOrderId" parameterType="java.lang.Long">
         UPDATE hs_ying_huikuan_map
-        SET deleted = 1
+        SET deleted = 1, tsu = current_timestamp
         WHERE orderId = #{orderId,jdbcType=BIGINT}
     </update>
 
@@ -88,6 +88,7 @@
             <if test="fukuanId != null">fukuanId = #{fukuanId,jdbcType=BIGINT},</if>
             <if test="amount != null">amount = #{amount,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -97,7 +98,8 @@
         SET huikuanId = #{huikuanId,jdbcType=BIGINT},
             fukuanId  = #{fukuanId,jdbcType=BIGINT},
             amount    = #{amount,jdbcType=DECIMAL},
-            tsc       = #{tsc,jdbcType=TIMESTAMP}
+            tsc       = #{tsc,jdbcType=TIMESTAMP},
+            tsu       = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

@@ -41,7 +41,7 @@
 
     <update id="delete" parameterType="java.lang.Long">
         UPDATE hs_ying_settle_traffic
-        SET deleted = 1
+        SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 
@@ -102,6 +102,7 @@
             <if test="money != null">money = #{money,jdbcType=DECIMAL},</if>
             <if test="trafficCompanyId != null">trafficCompanyId = #{trafficCompanyId,jdbcType=BIGINT},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -113,7 +114,8 @@
             amount           = #{amount,jdbcType=DECIMAL},
             money            = #{money,jdbcType=DECIMAL},
             trafficCompanyId = #{trafficCompanyId,jdbcType=BIGINT},
-            tsc              = #{tsc,jdbcType=TIMESTAMP}
+            tsc              = #{tsc,jdbcType=TIMESTAMP},
+            tsu              = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

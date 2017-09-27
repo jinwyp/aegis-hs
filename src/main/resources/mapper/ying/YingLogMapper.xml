@@ -29,9 +29,9 @@
         <include refid="Base_Column_List"/>
         from hs_ying_log
         <where>
-            <if test="orderId"> AND  orderId = #{orderId, jdbcType=BIGINT}</if>
-            <if test="hsId">  AND hsId = #{orderId, jdbcType=BIGINT}</if>
-            <if test="entityType">  AND entityType = #{entityType, jdbcType=VARCHAR}</if>
+            <if test="orderId">AND orderId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="hsId">AND hsId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="entityType">AND entityType = #{entityType, jdbcType=VARCHAR}</if>
         </where>
     </select>
 
@@ -59,7 +59,8 @@
             #{tsc,jdbcType=TIMESTAMP})
     </insert>
 
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingLog"  keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingLog" keyProperty="id"
+            useGeneratedKeys="true">
         insert into hs_ying_log
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -90,6 +91,7 @@
             <if test="entityType != null">entityType = #{entityType,jdbcType=VARCHAR},</if>
             <if test="memo != null">memo = #{memo,jdbcType=VARCHAR},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -101,7 +103,8 @@
             entityId   = #{entityId,jdbcType=BIGINT},
             entityType = #{entityType,jdbcType=VARCHAR},
             memo       = #{memo,jdbcType=VARCHAR},
-            tsc        = #{tsc,jdbcType=TIMESTAMP}
+            tsc        = #{tsc,jdbcType=TIMESTAMP},
+            tsu        = CURRENT_TIMESTAMP
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

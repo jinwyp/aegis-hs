@@ -37,25 +37,25 @@
     <!--获取一页数据-->
     <select id="getPage" resultType="com.yimei.hs.ying.entity.YingHuankuan">
         select
-            t1.id,
-            t1.orderId,
-            t1.hsId,
-            t1.skCompanyId,
-            t1.huankuankDate,
-            t1.huankuanAmount,
-            t1.huankuanInterest,
-            t1.huankuanFee,
-            t1.tsc
+        t1.id,
+        t1.orderId,
+        t1.hsId,
+        t1.skCompanyId,
+        t1.huankuankDate,
+        t1.huankuanAmount,
+        t1.huankuanInterest,
+        t1.huankuanFee,
+        t1.tsc
         from hs_ying_huankuan t1
         LEFT JOIN hs_ying_huankuan_map map on t1.id = map.huankuanId
         LEFT JOIN hs_ying_fukuan t2 on map.fukuanId = t2.id
         <where>
             <if test="1==1">AND t1.deleted = 0</if>
-            <if test="orderId!=null"> AND t1.orderId=#{orderId}</if>
-            <if test="hsId!=null"> AND t1.hsId=#{hsId}</if>
-            <if test="skCompanyId!=null"> AND t1.skCompanyId=#{skCompanyId}</if>
-            <if test="huankuanDate!=null"> AND t1.huankuanDate=#{huankuanDate}</if>
-            <if test="huankuanAmount!=null">  AND t1.huankuanAmount=#{huankuanAmount}</if>
+            <if test="orderId!=null">AND t1.orderId=#{orderId}</if>
+            <if test="hsId!=null">AND t1.hsId=#{hsId}</if>
+            <if test="skCompanyId!=null">AND t1.skCompanyId=#{skCompanyId}</if>
+            <if test="huankuanDate!=null">AND t1.huankuanDate=#{huankuanDate}</if>
+            <if test="huankuanAmount!=null">AND t1.huankuanAmount=#{huankuanAmount}</if>
         </where>
     </select>
 
@@ -66,10 +66,11 @@
     </delete>
 
     <!-- 逻辑删除 -->
-    <delete id="delete">
-        DELETE  FROM hs_ying_huankuan
-        WHERE id = #{id} AND deleted = 0
-    </delete>
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_ying_huankuan
+        SET deleted = 1, tsu = current_timestamp
+        WHERE id = #{id}
+    </update>
 
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuankuan" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO hs_ying_huankuan (
@@ -94,7 +95,8 @@
             #{tsc,jdbcType=TIMESTAMP})
     </insert>
 
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuankuan"  keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuankuan" keyProperty="id"
+            useGeneratedKeys="true">
         insert into hs_ying_huankuan
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -131,6 +133,7 @@
             <if test="huankuanInterest != null">huankuanInterest = #{huankuanInterest,jdbcType=DECIMAL},</if>
             <if test="huankuanFee != null">huankuanFee = #{huankuanFee,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -142,7 +145,8 @@
             skCompanyId    = #{skCompanyId,jdbcType=BIGINT},
             huankuankDate  = #{huankuankDate,jdbcType=TIMESTAMP},
             huankuanAmount = #{huankuanAmount,jdbcType=DECIMAL},
-            tsc            = #{tsc,jdbcType=TIMESTAMP}
+            tsc            = #{tsc,jdbcType=TIMESTAMP},
+            tsu            = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 

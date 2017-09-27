@@ -151,7 +151,7 @@
     <!-- 逻辑删除 -->
     <update id="delete">
         UPDATE hs_ying_huikuan
-        SET deleted = 1
+        SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 
@@ -221,71 +221,33 @@
             <if test="huikuanBusinessPaperDate != null">#{huikuanBusinessPaperDate,jdbcType=TIMESTAMP},</if>
             <if test="huikuanBusinessDiscount != null">#{huikuanBusinessDiscount,jdbcType=BIT},</if>
             <if test="huikuanBusinessDiscountRate != null">#{huikuanBusinessDiscountRate,jdbcType=DECIMAL},</if>
-            <if test="huikuanBusinessPaperExpire != null">
-                #{huikuanBusinessPaperExpire,jdbcType=TIMESTAMP},
-            </if>
-            <if test="tsc != null">
-                #{tsc,jdbcType=TIMESTAMP},
+            <if test="huikuanBusinessPaperExpire != null"> #{huikuanBusinessPaperExpire,jdbcType=TIMESTAMP}, </if>
+            <if test="tsc != null"> #{tsc,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingHuikuan">
         update hs_ying_huikuan
         <set>
-            <if test="orderId != null">
-                orderId = #{orderId,jdbcType=BIGINT},
-            </if>
-            <if test="hsId != null">
-                hsId = #{hsId,jdbcType=BIGINT},
-            </if>
-            <if test="huikuanCompanyId != null">
-                huikuanCompanyId = #{huikuanCompanyId,jdbcType=BIGINT},
-            </if>
-            <if test="huikuanDate != null">
-                huikuanDate = #{huikuanDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="huikuanAmount != null">
-                huikuanAmount = #{huikuanAmount,jdbcType=DECIMAL},
-            </if>
-            <if test="huikuanUsage != null">
-                huikuanUsage = #{huikuanUsage,jdbcType=VARCHAR},
-            </if>
-            <if test="huikuanMode != null">
-                huikuanMode = #{huikuanMode,jdbcType=VARCHAR},
-            </if>
-            <if test="huikuanBankPaper != null">
-                huikuanBankPaper = #{huikuanBankPaper,jdbcType=BIT},
-            </if>
-            <if test="huikuanBankPaperDate != null">
-                huikuanBankPaperDate = #{huikuanBankPaperDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="huikuanBankDiscount != null">
-                huikuanBankDiscount = #{huikuanBankDiscount,jdbcType=BIT},
-            </if>
-            <if test="huikuanBankDiscountRate != null">
-                huikuanBankDiscountRate = #{huikuanBankDiscountRate,jdbcType=DECIMAL},
-            </if>
-            <if test="huikuanBankPaperExpire != null">
-                huikuanBankPaperExpire = #{huikuanBankPaperExpire,jdbcType=TIMESTAMP},
-            </if>
-            <if test="huikuanBusinessPaper != null">
-                huikuanBusinessPaper = #{huikuanBusinessPaper,jdbcType=BIT},
-            </if>
-            <if test="huikuanBusinessPaperDate != null">
-                huikuanBusinessPaperDate = #{huikuanBusinessPaperDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="huikuanBusinessDiscount != null">
-                huikuanBusinessDiscount = #{huikuanBusinessDiscount,jdbcType=BIT},
-            </if>
-            <if test="huikuanBusinessDiscountRate != null">
-                huikuanBusinessDiscountRate = #{huikuanBusinessDiscountRate,jdbcType=DECIMAL},
-            </if>
-            <if test="huikuanBusinessPaperExpire != null">
-                huikuanBusinessPaperExpire = #{huikuanBusinessPaperExpire,jdbcType=TIMESTAMP},
-            </if>
-            <if test="tsc != null">
-                tsc = #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="orderId != null"> orderId = #{orderId,jdbcType=BIGINT}, </if>
+            <if test="hsId != null"> hsId = #{hsId,jdbcType=BIGINT}, </if>
+            <if test="huikuanCompanyId != null"> huikuanCompanyId = #{huikuanCompanyId,jdbcType=BIGINT}, </if>
+            <if test="huikuanDate != null"> huikuanDate = #{huikuanDate,jdbcType=TIMESTAMP}, </if>
+            <if test="huikuanAmount != null"> huikuanAmount = #{huikuanAmount,jdbcType=DECIMAL}, </if>
+            <if test="huikuanUsage != null"> huikuanUsage = #{huikuanUsage,jdbcType=VARCHAR}, </if>
+            <if test="huikuanMode != null"> huikuanMode = #{huikuanMode,jdbcType=VARCHAR}, </if>
+            <if test="huikuanBankPaper != null"> huikuanBankPaper = #{huikuanBankPaper,jdbcType=BIT}, </if>
+            <if test="huikuanBankPaperDate != null"> huikuanBankPaperDate = #{huikuanBankPaperDate,jdbcType=TIMESTAMP}, </if>
+            <if test="huikuanBankDiscount != null"> huikuanBankDiscount = #{huikuanBankDiscount,jdbcType=BIT}, </if>
+            <if test="huikuanBankDiscountRate != null"> huikuanBankDiscountRate = #{huikuanBankDiscountRate,jdbcType=DECIMAL}, </if>
+            <if test="huikuanBankPaperExpire != null"> huikuanBankPaperExpire = #{huikuanBankPaperExpire,jdbcType=TIMESTAMP}, </if>
+            <if test="huikuanBusinessPaper != null"> huikuanBusinessPaper = #{huikuanBusinessPaper,jdbcType=BIT}, </if>
+            <if test="huikuanBusinessPaperDate != null"> huikuanBusinessPaperDate = #{huikuanBusinessPaperDate,jdbcType=TIMESTAMP}, </if>
+            <if test="huikuanBusinessDiscount != null"> huikuanBusinessDiscount = #{huikuanBusinessDiscount,jdbcType=BIT}, </if>
+            <if test="huikuanBusinessDiscountRate != null"> huikuanBusinessDiscountRate = #{huikuanBusinessDiscountRate,jdbcType=DECIMAL}, </if>
+            <if test="huikuanBusinessPaperExpire != null"> huikuanBusinessPaperExpire = #{huikuanBusinessPaperExpire,jdbcType=TIMESTAMP}, </if>
+            <if test="tsc != null"> tsc = #{tsc,jdbcType=TIMESTAMP}, </if>
+            <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -308,7 +270,9 @@
             huikuanBusinessDiscount     = #{huikuanBusinessDiscount,jdbcType=BIT},
             huikuanBusinessDiscountRate = #{huikuanBusinessDiscountRate,jdbcType=DECIMAL},
             huikuanBusinessPaperExpire  = #{huikuanBusinessPaperExpire,jdbcType=TIMESTAMP},
-            tsc                         = #{tsc,jdbcType=TIMESTAMP}
+            tsc                         = #{tsc,jdbcType=TIMESTAMP},
+            tsu = current_timestamp
+
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

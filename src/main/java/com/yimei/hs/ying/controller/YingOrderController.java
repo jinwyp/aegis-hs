@@ -41,7 +41,7 @@ public class YingOrderController {
     public ResponseEntity<PageResult<YingOrder>> list(
             PageYingOrderDTO pageYingOrderDTO
     ) {
-        System.out.println("paging order dto = " + pageYingOrderDTO);
+        // System.out.println("paging order dto = " + pageYingOrderDTO);
         return PageResult.ok(yingOrderService.getPage(pageYingOrderDTO));
     }
 

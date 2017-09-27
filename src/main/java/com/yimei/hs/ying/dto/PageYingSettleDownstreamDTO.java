@@ -29,8 +29,6 @@ public class PageYingSettleDownstreamDTO extends BaseFilter<PageYingSettleDownst
     @Override
     public String getCountSql(String sql) {
 
-        System.out.println("orignal sql = " + sql);
-
         String nsql = new SQL() {{
             SELECT("*");
             FROM("hs_ying_settle_downstream");
@@ -41,7 +39,7 @@ public class PageYingSettleDownstreamDTO extends BaseFilter<PageYingSettleDownst
         }}.toString();
 
         String countSql = super.getCountSql(nsql);
-        System.out.println("count sql = " + countSql);
+        // System.out.println("count sql = " + countSql);
         return countSql;
     }
 
