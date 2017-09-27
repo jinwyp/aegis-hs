@@ -65,4 +65,24 @@ public class YingLogAspect {
         }
         return;
     }
+
+    /**
+     *
+     */
+    @After("execution(* com.yimei.hs.ying.service..*.delete(..))")
+    public void deleteYing() {
+        Object arg = null;
+        if (arg instanceof YingOrder) {
+        } else if (arg instanceof YingFayun) {
+        } else if (arg instanceof YingFukuan) {
+        } else if (arg instanceof YingHuikuan) {
+        } else if (arg instanceof YingHuankuan) {
+        } else if (arg instanceof YingSettleDownstream) {
+        } else if (arg instanceof YingSettleUpstream) {
+        } else if (arg instanceof YingSettleTraffic) {
+        } else if (arg instanceof YingFee) {
+        } else if (arg instanceof YingInvoice) {
+        }
+        return;
+    }
 }
