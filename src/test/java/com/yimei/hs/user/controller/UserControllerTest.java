@@ -419,7 +419,7 @@ public class UserControllerTest extends YingTestBase {
         variablesHuikuan.put("huikuanCompanyId", yingOrderResult.getData().getDownstreamId());
         variablesHuikuan.put("pageSize", 5);
         variablesHuikuan.put("pageNo", 1);
-        PageResult<YingHuikuan> huikuanPageResult = client.exchange(huikuanPageUrl, HttpMethod.GET,  HttpEntity.EMPTY, typeReferenceHuikuanPage).getBody();
+        PageResult<YingHuikuan> huikuanPageResult = client.exchange(huikuanPageUrl, HttpMethod.GET,  HttpEntity.EMPTY, typeReferenceHuikuanPage, variablesHuikuan).getBody();
         if (huikuanPageResult.getSuccess()) {
             logger.info("创建分页成功\n GET {}\nrequest = {}\nresponse = {}", huikuanPageUrl, "", printJson(huikuanPageResult.getData()));
         } else {
