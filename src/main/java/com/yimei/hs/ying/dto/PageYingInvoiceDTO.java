@@ -1,6 +1,7 @@
 package com.yimei.hs.ying.dto;
 
 import com.yimei.hs.boot.persistence.BaseFilter;
+import com.yimei.hs.enums.InvoiceType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.ibatis.jdbc.SQL;
@@ -18,7 +19,7 @@ public class PageYingInvoiceDTO extends BaseFilter<PageYingInvoiceDTO> {
 
     private Long hsId;
 
-    private String invoiceType;
+    private InvoiceType invoiceType;
 
     private LocalDateTime openDate;
 

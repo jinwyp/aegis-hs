@@ -41,9 +41,9 @@
             downstreamShip, tsc
         FROM hs_ying_fayun
         <where>
-            <if test="orderId!=null">orderId = #{orderId,jdbcType=BIGINT}</if>
-            <if test="fyDate!=null">fyDate = #{fyDate, jdbcType=TIMESTAMP}</if>
-            <if test="hsId!=null">hsId = #{hsId, jdbcType=VARCHAR}</if>
+            <if test="orderId!=null"> and orderId = #{orderId,jdbcType=BIGINT}</if>
+            <if test="fyDate!=null"> and fyDate = #{fyDate, jdbcType=TIMESTAMP}</if>
+            <if test="hsId!=null"> and hsId = #{hsId, jdbcType=VARCHAR}</if>
         </where>
     </select>
 

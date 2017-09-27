@@ -29,9 +29,9 @@
         <include refid="Base_Column_List"/>
         FROM hs_ying_settle_downstream
         <where>
-            <if test="orderId!=null">orderId = #{orderId, jdbcType=BIGINT}</if>
-            <if test="hsId!=null">hsId = #{hsId, jdbcType=BIGINT}</if>
-            <if test="settleDate!=null">settleDate = #{settleDate, jdcbType=TIMESTAMP}</if>
+            <if test="orderId!=null">  AND orderId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="hsId!=null">   AND hsId = #{hsId, jdbcType=BIGINT}</if>
+            <if test="settleDate!=null">  AND settleDate = #{settleDate, jdcbType=TIMESTAMP}</if>
         </where>
     </select>
 

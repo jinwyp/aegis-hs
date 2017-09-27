@@ -50,11 +50,11 @@
         LEFT JOIN hs_ying_huankuan_map map on t1.id = map.huankuanId
         LEFT JOIN hs_ying_fukuan t2 on map.fukuanId = t2.id
         <where>
-            <if test="orderId!=null">t1.orderId=#{orderId}</if>
-            <if test="hsId!=null">t1.hsId=#{hsId}</if>
-            <if test="skCompanyId!=null">t1.skCompanyId=#{skCompanyId}</if>
-            <if test="huankuanDate!=null">t1.huankuanDate=#{huankuanDate}</if>
-            <if test="huankuanAmount!=null">t1.huankuanAmount=#{huankuanAmount}</if>
+            <if test="orderId!=null"> AND t1.orderId=#{orderId}</if>
+            <if test="hsId!=null"> AND t1.hsId=#{hsId}</if>
+            <if test="skCompanyId!=null"> AND t1.skCompanyId=#{skCompanyId}</if>
+            <if test="huankuanDate!=null"> AND t1.huankuanDate=#{huankuanDate}</if>
+            <if test="huankuanAmount!=null">  AND t1.huankuanAmount=#{huankuanAmount}</if>
         </where>
     </select>
 
