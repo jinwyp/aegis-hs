@@ -6,6 +6,7 @@ import com.yimei.hs.enums.CustomerType;
 import com.yimei.hs.enums.OrderStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * Created by hary on 2017/9/21.
@@ -13,6 +14,8 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
+
 public class PageYingOrderPartyDTO extends BaseFilter<PageYingOrderPartyDTO> {
 
     private Long orderId;

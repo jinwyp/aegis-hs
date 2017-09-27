@@ -3,6 +3,7 @@ package com.yimei.hs.ying.dto;
 import com.yimei.hs.boot.persistence.BaseFilter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,8 @@ import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
+
 public class PageYingSettleDownstreamDTO extends BaseFilter<PageYingSettleDownstreamDTO> {
     private Long orderId;
     private Long hsId;
