@@ -44,6 +44,10 @@ public class Result<T> {
         return new ResponseEntity<>(new Result<>(true, m, null), headers, HttpStatus.OK);
     }
 
+    public Result(int code, String msg) {
+        this.error = new Error(code, msg);
+        this.success = false;
+    }
 }
 
 
