@@ -65,7 +65,8 @@ public class GlobalHandlerExceptionResolver {
             }
             return;
         }
-        response.setStatus(400);
+        response.setStatus(401);
+        response.setContentType("application/json; charset=UTF-8");
         om.writeValue(response.getOutputStream(), Result.error(4001, "无权访问", HttpStatus.UNAUTHORIZED));
     }
 
