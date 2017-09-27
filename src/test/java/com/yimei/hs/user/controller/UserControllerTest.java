@@ -381,12 +381,16 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 4. 更新
-        fayun.setArriveStatus(CargoArriveStatus.ARRIVE);
-        fayun.setOrderId(yingOrderResult.getData().getId());
-        fayun.setId(fayunCreateResult.getData().getId());
+
+
+        YingFayun updateFayun = new YingFayun();
+        updateFayun.setOrderId(yingOrderResult.getData().getId());
+        updateFayun.setId(fayunCreateResult.getData().getId());
+        updateFayun.setArriveStatus(CargoArriveStatus.ARRIVE);
+
         String fayunUpdateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns/" + fayunCreateResult.getData().getId();
 
-        Result<Integer> yingFayunUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<YingFayun>(fayun), typeReferenceInteger).getBody();
+        Result<Integer> yingFayunUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<YingFayun>(updateFayun), typeReferenceInteger).getBody();
         if (yingFayunUpdateResult.getSuccess()) {
             logger.info("发运更新成功\nPUT {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(fayun), printJson(yingFayunUpdateResult.getData()));
         } else {
