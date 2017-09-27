@@ -298,12 +298,13 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 3. 核算月分页查询  query by orderId
-        Map<String, Object> variablesHs = new HashMap<>();
-        variablesHs.put("orderId", "" + yingOrderResult.getData().getId());
+
+        Map<String, Object> variablesHs = WebUtils.getUrlVariables(PageYingOrderConfigDTO.class);
+//        variablesHs.put("orderId", "" + yingOrderResult.getData().getId());
+        variablesHs.put("orderId", "2" );
         PageYingOrderConfigDTO configDTO = new PageYingOrderConfigDTO();
         configDTO.setOrderId(yingOrderResult.getData().getId());
-
-        String configPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/configs";
+        String configPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/configs"+WebUtils.getUrlTemplate(PageYingOrderDTO.class);
         PageResult<YingOrderConfig> yingOrderConfigPageResult = client.exchange(configPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderConfigPage, variablesHs).getBody();
         if (yingOrderConfigPageResult.getSuccess()) {
             logger.info("获取核算月配置分页成功 GET /api/yings request: {}\nresponse:\n{}", variablesHs, printJson(yingOrderConfigPageResult.getData()));
