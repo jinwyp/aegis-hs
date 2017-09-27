@@ -1,6 +1,8 @@
 package com.yimei.hs.ying.service;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.YingEntityType;
+import com.yimei.hs.ying.entity.YingLog;
 import com.yimei.hs.ying.entity.YingOrder;
 import com.yimei.hs.ying.entity.YingOrderConfig;
 import com.yimei.hs.ying.entity.YingOrderParty;
@@ -107,11 +109,21 @@ public class YingOrderService {
      * @param to
      * @return
      */
-    public int transfer(Long orderId, Long from, Long to) {
-        return 1; // todo
+    public int updateTransfer(Long orderId, Long from, Long to) {
+        int rtn = yingOrderMapper.transfer(orderId, from, to);
+        if (rtn == 1) {
+            yingLogService.create(new YingLog(null, orderId, null, orderId, YingEntityType.order, "转移订单", null));
+        }
+        return rtn;
     }
 
-    public boolean orderIsExists(long ownerId,long orderId){
+    /**
+     *  ownerId是否拥有orderId
+     * @param ownerId
+     * @param orderId
+     * @return
+     */
+    public boolean hasOrder(long ownerId, long orderId){
         return yingOrderMapper.orderIsExists(ownerId,orderId) ;
     }
 

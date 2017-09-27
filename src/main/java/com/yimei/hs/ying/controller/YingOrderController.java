@@ -19,9 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * Created by hary on 2017/9/15.
  */
@@ -115,7 +112,7 @@ public class YingOrderController {
             @PathVariable("orderId") Long orderId,
             @PathVariable("toId") Long toId
     ) {
-        int cnt =  yingOrderService.transfer(orderId,user.getId(), toId);
+        int cnt =  yingOrderService.updateTransfer(orderId,user.getId(), toId);
         if (cnt != 1) {
             return Result.error(4001, "转移失败", HttpStatus.NOT_FOUND);
         }
