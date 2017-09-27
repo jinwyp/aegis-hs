@@ -54,6 +54,7 @@ public class GlobalHandlerExceptionResolver {
             response.sendRedirect("/400");
         }
         response.setStatus(400);
+        response.setContentType("application/json; charset=UTF-8");
         om.writeValue(response.getOutputStream(), new Result(4001, "客户端错误"));
     }
 
