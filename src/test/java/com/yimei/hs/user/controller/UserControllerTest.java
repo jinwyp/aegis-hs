@@ -44,7 +44,7 @@ import java.util.Map;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = HsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional(readOnly = true)
+// @Transactional(readOnly = true)
 public class UserControllerTest extends YingTestBase {
 
     @Autowired

@@ -45,7 +45,7 @@
 
     <sql id="Base_Column_List">
         id, deptId, teamId, creatorId, ownerId, mainAccounting, line, cargoType, upstreamId,
-        upstreamSettleMode, downstreamId, downstreamSettleMode, deleted, status, tsc, tsu
+        upstreamSettleMode, downstreamId, downstreamSettleMode, deleted, status, tsc, tsu, deleted
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="YingOrderResultMap">
@@ -108,6 +108,7 @@
         t1.status,
         t1.tsc,
         t1.tsu,
+        t1.deleted,
 
         t2.id AS t2id,
         t2.orderId,
@@ -143,15 +144,22 @@
         </where>
 
     </select>
-    <select id="orderIsExists" resultType="java.lang.Boolean">
+    <select id="hasOrder" resultType="java.lang.Boolean">
         SELECT count(id)
         FROM hs_ying_order
         WHERE ownerId = #{ownerId} AND id = #{orderId}
     </select>
 
-
+    <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_order
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 逻辑删除 -->
+    <delete id="delete" parameterType="java.lang.Long">
+        UPDATE hs_ying_order
+        SET deleted = #{deleted,jdbcType=TINYINT}
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
@@ -170,7 +178,8 @@
             downstreamId,
             downstreamSettleMode,
             status,
-            tsc)
+            tsc
+        )
         VALUES (
             #{id,jdbcType=BIGINT},
             #{deptId,jdbcType=BIGINT},

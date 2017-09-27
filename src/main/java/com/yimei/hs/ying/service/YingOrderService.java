@@ -124,7 +124,7 @@ public class YingOrderService {
      * @return
      */
     public boolean hasOrder(long ownerId, long orderId){
-        return yingOrderMapper.orderIsExists(ownerId,orderId) ;
+        return yingOrderMapper.hasOrder(ownerId,orderId) ;
     }
 
     @Autowired
