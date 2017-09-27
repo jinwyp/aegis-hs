@@ -57,7 +57,11 @@ public class YingOrderController {
         if (order == null) {
             return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
         } else {
-            return Result.ok(order);
+            if (order.getDeleted()) {
+                return Result.error(4002, "记录已经删除", HttpStatus.NOT_FOUND);
+            } else {
+                return Result.ok(order);
+            }
         }
     }
 

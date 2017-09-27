@@ -16,6 +16,7 @@
         <result column="downstreamId" jdbcType="BIGINT" property="downstreamId"/>
         <result column="downstreamSettleMode" jdbcType="VARCHAR" property="downstreamSettleMode"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="deleted" jdbcType="TINYINT" property="deleted"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
         <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
     </resultMap>
@@ -44,7 +45,7 @@
 
     <sql id="Base_Column_List">
         id, deptId, teamId, creatorId, ownerId, mainAccounting, line, cargoType, upstreamId,
-        upstreamSettleMode, downstreamId, downstreamSettleMode, status, tsc, tsu
+        upstreamSettleMode, downstreamId, downstreamSettleMode, deleted, status, tsc, tsu
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="YingOrderResultMap">
@@ -61,6 +62,7 @@
             t1.upstreamSettleMode,
             t1.downstreamId,
             t1.downstreamSettleMode,
+            t1.deleted,
             t1.status,
             t1.tsc,
             t1.tsu,
@@ -85,7 +87,8 @@
         FROM hs_ying_order t1
             LEFT JOIN hs_ying_order_config t2 ON t1.id = t2.orderId
             LEFT JOIN hs_ying_order_party t3 ON t1.id = t2.orderId
-        WHERE t1.id = #{id, jdbcType=BIGINT}
+        WHERE
+            t1.id = #{id, jdbcType=BIGINT}
     </select>
 
     <select id="getPage" resultMap="YingOrderResultMap">
@@ -136,6 +139,7 @@
             <if test="downstreamId!=null">AND downstreamId = #{downstreamId, jdbcType=BIGINT}</if>
             <if test="mainAccounting!=null">AND mainAccounting = #{mainAccounting, jdbcType=BIGINT}</if>
             <if test="status!=null">AND status = #{status, jdbcType=VARCHAR}</if>
+            <if test="deleted!=null">AND deleted = #{deleted, jdbcType=TINYINT}</if>
         </where>
 
     </select>
@@ -150,13 +154,25 @@
         DELETE FROM hs_ying_order
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
+
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingOrder" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO hs_ying_order (id, deptId, teamId,
-                                   creatorId, ownerId, mainAccounting,
-                                   line, cargoType, upstreamId,
-                                   upstreamSettleMode, downstreamId, downstreamSettleMode,
-                                   status, tsc)
-        VALUES (#{id,jdbcType=BIGINT},
+        INSERT INTO hs_ying_order (
+            id,
+            deptId,
+            teamId,
+            creatorId,
+            ownerId,
+            mainAccounting,
+            line,
+            cargoType,
+            upstreamId,
+            upstreamSettleMode,
+            downstreamId,
+            downstreamSettleMode,
+            status,
+            tsc)
+        VALUES (
+            #{id,jdbcType=BIGINT},
             #{deptId,jdbcType=BIGINT},
             #{teamId,jdbcType=BIGINT},
             #{creatorId,jdbcType=BIGINT},
@@ -165,28 +181,31 @@
             #{line,jdbcType=VARCHAR},
             #{cargoType,jdbcType=VARCHAR},
             #{upstreamId,jdbcType=BIGINT},
-            #{upstreamSettleMode,jdbcType=VARCHAR}, #{downstreamId,jdbcType=BIGINT},
-                #{downstreamSettleMode,jdbcType=VARCHAR},
-                #{status,jdbcType=VARCHAR},
-                #{tsc,jdbcType=TIMESTAMP})
+            #{upstreamSettleMode,jdbcType=VARCHAR},
+            #{downstreamId,jdbcType=BIGINT},
+            #{downstreamSettleMode,jdbcType=VARCHAR},
+            #{status,jdbcType=VARCHAR},
+            #{tsc,jdbcType=TIMESTAMP}
+        )
     </insert>
     <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingOrder" useGeneratedKeys="true"
             keyProperty="id">
         insert into hs_ying_order
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null"> id, </if>
-            <if test="deptId != null"> deptId, </if>
-            <if test="teamId != null"> teamId, </if>
-            <if test="creatorId != null"> creatorId, </if>
-            <if test="ownerId != null"> ownerId, </if>
-            <if test="mainAccounting != null"> mainAccounting, </if>
-            <if test="line != null"> line, </if>
-            <if test="cargoType != null"> cargoType, </if>
-            <if test="upstreamId != null"> upstreamId, </if>
-            <if test="upstreamSettleMode != null"> upstreamSettleMode, </if>
-            <if test="downstreamId != null"> downstreamId, </if>
-            <if test="downstreamSettleMode != null"> downstreamSettleMode, </if>
-            <if test="status != null"> status, </if>
+            <if test="id != null">id,</if>
+            <if test="deptId != null">deptId,</if>
+            <if test="teamId != null">teamId,</if>
+            <if test="creatorId != null">creatorId,</if>
+            <if test="ownerId != null">ownerId,</if>
+            <if test="mainAccounting != null">mainAccounting,</if>
+            <if test="line != null">line,</if>
+            <if test="cargoType != null">cargoType,</if>
+            <if test="upstreamId != null">upstreamId,</if>
+            <if test="upstreamSettleMode != null">upstreamSettleMode,</if>
+            <if test="downstreamId != null">downstreamId,</if>
+            <if test="downstreamSettleMode != null">downstreamSettleMode,</if>
+            <if test="status != null">status,</if>
+            <if test="deleted != null">deleted,</if>
             <if test="tsc != null">tsc,</if>
             <if test="tsu != null">tsu,</if>
         </trim>
@@ -205,6 +224,7 @@
             <if test="downstreamSettleMode != null">#{downstreamSettleMode,jdbcType=VARCHAR},</if>
             <if test="status != null">#{status,jdbcType=VARCHAR},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="deleted != null">#{deleted,jdbcType=TINYINT},</if>
             <if test="tsu != null">#{tsu,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
@@ -224,11 +244,13 @@
             <if test="downstreamSettleMode != null">downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR},
             </if>
             <if test="status != null">status = #{status,jdbcType=VARCHAR},</if>
+            <if test="deleted != null">deleted = #{deleted,jdbcType=TINYINT},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
             tsu = current_timestamp
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingOrder">
         UPDATE hs_ying_order
         SET deptId               = #{deptId,jdbcType=BIGINT},
@@ -244,15 +266,20 @@
             downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR},
             status               = #{status,jdbcType=VARCHAR},
             tsc                  = #{tsc,jdbcType=TIMESTAMP},
-            tsu                  = current_timestamp
+            tsu                  = current_timestamp,
+            deleted              = #{deleted,jdbcType=TINYINT}
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 
     <update id="transfer">
-        UPDATE hs_ying_order
-        SET ownerId = #{to,jdbcType=BIGINT},
+        UPDATE
+            hs_ying_order
+        SET
+            ownerId = #{to,jdbcType=BIGINT},
             tsu     = current_timestamp
-        WHERE orderId = #{orderId, jdbcType=BIGINT} AND ownerId = #{from,jdbcType=BIGINT}
+        WHERE
+            orderId = #{orderId, jdbcType=BIGINT}
+            AND ownerId = #{from,jdbcType=BIGINT}
     </update>
 
 </mapper>

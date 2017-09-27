@@ -15,6 +15,7 @@ create table hs_ying_order (
    downstreamId  bigint(20)         not null comment '下游id',
    downstreamSettleMode varchar(20) not null comment '下游结算方式',
    status varchar(32)               not null comment '订单状态: 完结, 未完结',
+   deleted tinyint(1)               not null default 0 comment '是否删除',
    tsc timestamp                    not null default current_timestamp,
    tsu timestamp,
    primary key (id)

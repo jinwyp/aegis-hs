@@ -260,7 +260,7 @@ public class UserControllerTest extends YingTestBase {
         if (yingOrderResult1.getSuccess()) {
             logger.info("查询订单成功\nGET {}\nrequest = {}\nresponse = {}", kurl, "", printJson(yingOrderResult1.getData()));
         } else {
-            logger.error("查询订单失败: {}", yingOrderResult1.getError());
+            logger.error("查询订单失败\nGET {}\nrequest = {}\nerror = {}", kurl, "", yingOrderResult1.getError());
             System.exit(-1);
         }
 

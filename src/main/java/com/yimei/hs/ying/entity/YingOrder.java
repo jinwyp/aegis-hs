@@ -23,7 +23,6 @@ import java.util.List;
 @AllArgsConstructor
 public class YingOrder implements Serializable {
 
-
     @NotNull(groups = {UpdateGroup.class}, message = "id不能为空")
     private Long id;
 
@@ -57,6 +56,8 @@ public class YingOrder implements Serializable {
 
     @NotNull(groups = {CreateGroup.class}, message = "下游结算方式不能为空")
     private SettleMode downstreamSettleMode;
+
+    private Boolean deleted;
 
     private OrderStatus status;
 

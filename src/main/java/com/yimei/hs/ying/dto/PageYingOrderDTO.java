@@ -35,6 +35,8 @@ public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
 
     private OrderStatus status;
 
+    private Boolean deleted;
+
     @Override
     public String getCountSql(String sql) {
         String nsql = new SQL() {
@@ -50,6 +52,7 @@ public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
                 if (upstreamId != null ) { WHERE( "upstreamId = ?"); }
                 if (downstreamId != null ) { WHERE( "downstreamId = ?"); }
                 if (status != null ) { WHERE( "status = ?"); }
+                if (status != null ) { WHERE( "deleted = ?"); }
             }
         }.toString();
         String countSql =  super.getCountSql(nsql);
