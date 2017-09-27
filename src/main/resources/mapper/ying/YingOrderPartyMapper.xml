@@ -24,7 +24,7 @@
         <include refid="Base_Column_List"/>
         from hs_ying_order_party
         <where>
-            <if test="orderId!=null"> orderId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="orderId!=null">orderId = #{orderId, jdbcType=BIGINT}</if>
 
         </where>
     </select>
@@ -35,64 +35,46 @@
     </delete>
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingOrderParty" useGeneratedKeys="true"
             keyProperty="id">
-        INSERT INTO hs_ying_order_party (id, orderId, custType,
-                                         customerId, tsc)
-        VALUES (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{custType,jdbcType=VARCHAR},
-                #{customerId,jdbcType=BIGINT}, #{tsc,jdbcType=TIMESTAMP})
+        INSERT INTO hs_ying_order_party (
+            id,
+            orderId,
+            custType,
+            customerId,
+            tsc
+        )
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{custType,jdbcType=VARCHAR},
+            #{customerId,jdbcType=BIGINT},
+            #{tsc,jdbcType=TIMESTAMP}
+        )
     </insert>
     <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingOrderParty" useGeneratedKeys="true"
             keyProperty="id">
         insert into hs_ying_order_party
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="orderId != null">
-                orderId,
-            </if>
-            <if test="custType != null">
-                custType,
-            </if>
-            <if test="customerId != null">
-                customerId,
-            </if>
-            <if test="tsc != null">
-                tsc,
-            </if>
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="custType != null">custType,</if>
+            <if test="customerId != null">customerId,</if>
+            <if test="tsc != null">tsc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=BIGINT},
-            </if>
-            <if test="orderId != null">
-                #{orderId,jdbcType=BIGINT},
-            </if>
-            <if test="custType != null">
-                #{custType,jdbcType=VARCHAR},
-            </if>
-            <if test="customerId != null">
-                #{customerId,jdbcType=BIGINT},
-            </if>
-            <if test="tsc != null">
-                #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="custType != null">#{custType,jdbcType=VARCHAR},</if>
+            <if test="customerId != null">#{customerId,jdbcType=BIGINT},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingOrderParty">
         update hs_ying_order_party
         <set>
-            <if test="orderId != null">
-                orderId = #{orderId,jdbcType=BIGINT},
-            </if>
-            <if test="custType != null">
-                custType = #{custType,jdbcType=VARCHAR},
-            </if>
-            <if test="customerId != null">
-                customerId = #{customerId,jdbcType=BIGINT},
-            </if>
-            <if test="tsc != null">
-                tsc = #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="custType != null">custType = #{custType,jdbcType=VARCHAR},</if>
+            <if test="customerId != null">customerId = #{customerId,jdbcType=BIGINT},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>

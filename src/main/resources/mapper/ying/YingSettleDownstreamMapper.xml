@@ -25,7 +25,8 @@
 
     <!-- 下游结算分页 -->
     <select id="getPage" resultType="com.yimei.hs.ying.entity.YingSettleDownstream">
-       select <include refid="Base_Column_List"/>
+        select
+        <include refid="Base_Column_List"/>
         FROM hs_ying_settle_downstream
         <where>
             <if test="orderId!=null">  AND orderId = #{orderId, jdbcType=BIGINT}</if>
@@ -39,16 +40,32 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleDownstream"  keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO hs_ying_settle_downstream (id, orderId, hsId,
-                                               settleDate, amount, money,
-                                               settleGap, tsc)
-        VALUES (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT},
-                #{settleDate,jdbcType=TIMESTAMP}, #{amount,jdbcType=DECIMAL}, #{money,jdbcType=DECIMAL},
-                #{settleGap,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP})
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleDownstream" keyProperty="id"
+            useGeneratedKeys="true">
+        INSERT INTO hs_ying_settle_downstream (
+            id,
+            orderId,
+            hsId,
+            settleDate,
+            amount,
+            money,
+            settleGap,
+            tsc
+        )
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{hsId,jdbcType=BIGINT},
+            #{settleDate,jdbcType=TIMESTAMP},
+            #{amount,jdbcType=DECIMAL},
+            #{money,jdbcType=DECIMAL},
+            #{settleGap,jdbcType=DECIMAL},
+            #{tsc,jdbcType=TIMESTAMP}
+        )
     </insert>
 
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingSettleDownstream"  keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingSettleDownstream" keyProperty="id"
+            useGeneratedKeys="true">
         insert into hs_ying_settle_downstream
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>

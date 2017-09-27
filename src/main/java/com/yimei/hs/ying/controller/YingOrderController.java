@@ -42,13 +42,8 @@ public class YingOrderController {
      */
     @GetMapping
     public ResponseEntity<PageResult<YingOrder>> list(
-            HttpServletRequest request,
             PageYingOrderDTO pageYingOrderDTO
     ) {
-        String uri = request.getRequestURI();
-        String query = request.getQueryString();
-        logger.info("page ying order args: {}, url = {}", pageYingOrderDTO, uri);
-        System.out.println("query = " + query);
         return PageResult.ok(yingOrderService.getPage(pageYingOrderDTO));
     }
 
@@ -82,7 +77,7 @@ public class YingOrderController {
         order.setStatus(OrderStatus.UNCOMPLETED);
         logger.info("my order = {}", order);
         yingOrderService.create(order);
-        return Result.ok(order);
+        return Result.created(order);
     }
 
 

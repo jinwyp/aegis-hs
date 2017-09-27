@@ -9,7 +9,11 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * Created by xiangyang on 2016/11/18.
@@ -71,6 +75,21 @@ public class WebUtils {
             return IP;
         }
         return request.getRemoteAddr();
+    }
+
+
+    public static String getUrlTemplate(Class<?> clazz) {
+        Field[] fields = clazz.getDeclaredFields();
+
+        List<String> names = new ArrayList<>();
+        names.add("pageSize={pageSize}");
+        names.add("pageNo={pageNo}");
+
+        for (Field f : fields) {
+            names.add(f.getName() + "={" + f.getName() +"}");
+        }
+
+        return String.join("&", names);
     }
 }
 

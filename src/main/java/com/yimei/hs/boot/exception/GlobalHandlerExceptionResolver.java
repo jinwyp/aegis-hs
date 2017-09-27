@@ -4,6 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.util.WebUtils;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
@@ -51,11 +54,15 @@ public class GlobalHandlerExceptionResolver {
             response.sendRedirect("/400");
         }
         response.setStatus(400);
-        om.writeValue(response.getOutputStream(), Result.error(4001, "客户端错误", HttpStatus.BAD_REQUEST));
+        om.writeValue(response.getOutputStream(), new Result(4001, "客户端错误"));
     }
 
-    //户登录异常处理
-    @ExceptionHandler({NoJwtTokenException.class, UnAuthorizedException.class})
+    @ExceptionHandler({
+            SignatureException.class,
+            UnsupportedJwtException.class,
+            NoJwtTokenException.class,
+            UnAuthorizedException.class,
+            MalformedJwtException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public void process401Error(HttpServletRequest request, HttpServletResponse response, Exception ex) throws IOException {
         response.setStatus(401);
@@ -67,7 +74,7 @@ public class GlobalHandlerExceptionResolver {
         }
         response.setStatus(401);
         response.setContentType("application/json; charset=UTF-8");
-        om.writeValue(response.getOutputStream(), Result.error(4001, "无权访问", HttpStatus.UNAUTHORIZED));
+        om.writeValue(response.getOutputStream(), new Result(4001, "无权访问"));
     }
 
 
@@ -83,7 +90,7 @@ public class GlobalHandlerExceptionResolver {
             errMsg = "系统错误";
         }
         response.setStatus(400);
-        om.writeValue(response.getOutputStream(), Result.error(5000, errMsg));
+        om.writeValue(response.getOutputStream(), new Result(5001, errMsg));
     }
 
 

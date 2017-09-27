@@ -12,6 +12,7 @@ import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
+import com.yimei.hs.util.WebUtils;
 import com.yimei.hs.ying.dto.*;
 import com.yimei.hs.ying.entity.*;
 import org.apache.tomcat.jni.Local;
@@ -225,9 +226,11 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 8. 分页查询order
-        Map<String, String> variables = new HashMap<>();
-        variables.put("ownerId", userResult.getData().getId().toString());
-        PageResult<YingOrder> yingOrderPageResult = client.exchange("/api/yings", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
+
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("ownerId", userResult.getData().getId());
+        String orderPageUrl = "/api/yings?" + WebUtils.getUrlTemplate(PageYingOrderDTO.class);
+        PageResult<YingOrder> yingOrderPageResult = client.exchange(orderPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
         if (yingOrderPageResult.getSuccess()) {
             logger.info("获取应收订单分页成功\nGET {}\nrequest = {}\nresponse:\n{}", "/api/yings", printJson(variables), printJson(yingOrderPageResult.getData()));
         } else {
