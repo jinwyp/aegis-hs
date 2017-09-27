@@ -51,6 +51,9 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
 
             if (isAdmin) {
                 if (user.getIsAdmin() == null || user.getIsAdmin() == false) {
+                    response.setStatus(401);
+                    response.setContentType("application/json;charset=UTF-8");
+                    om.writeValue(response.getOutputStream(), new Result(4001, "管理员才能访问"));
                     return false;
                 }
             } else {
