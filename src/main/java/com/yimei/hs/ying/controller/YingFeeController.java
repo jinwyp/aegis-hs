@@ -78,7 +78,7 @@ public class YingFeeController {
     ) {
         int rtn = yingFeeService.create(yingFee);
         if (rtn != 1) {
-            return Result.error(5001, "创建失败");
+            return Result.error(5001, "创建失败", HttpStatus.NOT_ACCEPTABLE);
         }
         return Result.ok(yingFee);
     }
@@ -99,7 +99,7 @@ public class YingFeeController {
         yingFee.setId(id);
         int rtn = yingFeeService.update(yingFee);
         if (rtn != 1) {
-            return Result.error(5001, "更新失败");
+            return Result.error(5001, "更新失败", HttpStatus.NOT_FOUND);
         }
         return Result.ok(1);
     }

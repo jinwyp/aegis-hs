@@ -111,6 +111,10 @@ public class YingOrderService {
         return 1; // todo
     }
 
+    public boolean orderIsExists(long ownerId,long orderId){
+        return yingOrderMapper.orderIsExists(ownerId,orderId) ;
+    }
+
     @Autowired
     private YingLogService yingLogService;
 }

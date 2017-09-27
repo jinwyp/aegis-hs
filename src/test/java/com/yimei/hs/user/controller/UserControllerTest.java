@@ -225,11 +225,12 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 8. 分页查询order
-        Map<String, String> variables = new HashMap<>();
-        variables.put("ownerId", userResult.getData().getId().toString());
-        PageResult<YingOrder> yingOrderPageResult = client.exchange("/api/yings", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("ownerId", userResult.getData().getId());
+        String orderPageUrl = "/api/yings?ownerId={ownerId}";
+        PageResult<YingOrder> yingOrderPageResult = client.exchange(orderPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
         if (yingOrderPageResult.getSuccess()) {
-            logger.info("获取应收订单分页成功\nGET {}\nrequest = {}\nresponse:\n{}", "/api/yings", printJson(variables), printJson(yingOrderPageResult.getData()));
+            logger.info("获取应收订单分页成功\nGET {}\nrequest = {}\nresponse:\n{}", orderPageUrl, printJson(variables), printJson(yingOrderPageResult.getData()));
         } else {
             logger.error("获取应收订单分页失败: {}", yingOrderPageResult.getError());
             System.exit(-1);

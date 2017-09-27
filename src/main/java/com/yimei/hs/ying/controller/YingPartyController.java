@@ -8,6 +8,7 @@ import com.yimei.hs.ying.dto.PageYingOrderPartyDTO;
 import com.yimei.hs.ying.entity.YingOrderParty;
 import com.yimei.hs.ying.service.YingPartyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,7 @@ public class YingPartyController {
         if (status == 1) {
             return Result.ok(1);
         } else {
-            return Result.error(5003, "操作失败");
+            return Result.error(5003, "操作失败", HttpStatus.NOT_FOUND);
         }
 
     }

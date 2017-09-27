@@ -55,7 +55,7 @@ public class YingOrderConfigController {
         yingOrderConfig.setOrderId(orderId);
         int rtn = yingOrderConfigService.create(yingOrderConfig);
         if (rtn != 1) {
-            return Result.error(5001, "创建失败");
+            return Result.error(5001, "创建失败", HttpStatus.NOT_FOUND);
         } else {
             return Result.ok(yingOrderConfig);
         }
@@ -95,7 +95,7 @@ public class YingOrderConfigController {
         if (status == 1) {
             return Result.ok(1);
         } else {
-            return Result.error(5003, "更新失败");
+            return Result.error(5003, "更新失败", HttpStatus.NOT_FOUND);
         }
 
     }

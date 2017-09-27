@@ -96,7 +96,7 @@ public class YingSettleDownstreamController {
         assert (yingSettleDownstream.getOrderId() == orderId);
         int rtn = yingSettleService.updateDownstream(yingSettleDownstream);
         if (rtn != 1) {
-            return Result.error(4001, "更新失败");
+            return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
         }
 
         return Result.ok(1);
