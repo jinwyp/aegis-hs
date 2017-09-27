@@ -6,8 +6,10 @@ import com.yimei.hs.boot.api.UpdateGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -32,6 +34,7 @@ public class YingFee implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "金额不能为空")
     private BigDecimal amount;
 
+    @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;

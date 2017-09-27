@@ -15,4 +15,7 @@ public class YingLogService {
 
     @Autowired
     private YingLogMapper yingLogMapper;
+
+    public void log(Long orderId, Long hsId, String entityType, Long entityId, String memo) {
+    }
 }

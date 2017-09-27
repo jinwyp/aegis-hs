@@ -1,8 +1,6 @@
 package com.yimei.hs.ying.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,14 +11,20 @@ import java.time.LocalDateTime;
 public class YingLog implements Serializable {
     private Long id;
 
+
+    @NonNull
     private Long orderId;
 
+    @NonNull
     private Long hsId;
 
+    @NonNull
     private Long entityId;
 
+    @NonNull
     private String entityType;
 
+    @NonNull
     private String memo;
 
     private LocalDateTime tsc;

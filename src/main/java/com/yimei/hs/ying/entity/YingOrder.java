@@ -8,10 +8,12 @@ import com.yimei.hs.boot.api.UpdateGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -47,15 +49,18 @@ public class YingOrder implements Serializable {
     @NotNull(groups = {CreateGroup.class }, message = "上游不能为空")
     private Long upstreamId;
 
+    @NotNull(groups = {CreateGroup.class}, message = "上游结算方式不能为空")
     private SettleMode upstreamSettleMode;
 
     @NotNull(groups = {CreateGroup.class }, message = "下游不能为空")
     private Long downstreamId;
 
+    @NotNull(groups = {CreateGroup.class}, message = "下游结算方式不能为空")
     private SettleMode downstreamSettleMode;
 
     private OrderStatus status;
 
+    @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
 
     @Valid()

@@ -7,6 +7,7 @@ import com.yimei.hs.enums.ReceivePaymentPurpose;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -37,11 +38,14 @@ public class YingHuikuan implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "回款日期不能为空")
     private LocalDateTime huikuanDate;
 
-    @Null(groups = {UpdateGroup.class})  // 更新回款时不能更新金额
+    @Null(groups = {UpdateGroup.class}, message = "更新回款时不能更新余额")  // 更新回款时不能更新金额
+    @NotNull(groups = {CreateGroup.class}, message = "回款金额不能为空")
     private BigDecimal huikuanAmount;
 
+    @NotNull(groups = {CreateGroup.class}, message = "回款用途不能为空")
     private ReceivePaymentPurpose huikuanUsage;
 
+    @NotNull(groups = {CreateGroup.class}, message = "回款方式不能为空")
     private PayMode huikuanMode;
 
     private Boolean huikuanBankPaper;
@@ -64,6 +68,7 @@ public class YingHuikuan implements Serializable {
 
     private LocalDateTime huikuanBusinessPaperExpire;
 
+    @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
 
     private List<YingFukuan> fukuanList;
