@@ -6,3 +6,10 @@
 exports.path = {
     urlApi : 'http://localhost:8080'
 }
+
+
+exports.headers = {
+    'Accept': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest'
+}
+
