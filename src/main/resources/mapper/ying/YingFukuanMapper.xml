@@ -35,10 +35,10 @@
         <include refid="Base_Column_List"/>
         from hs_ying_fukuan
         <where>
-            <if test="orderId!=null">orderId = #{orderId, jdbcType=BIGINT}</if>
-            <if test="hsId!=null">hsId = #{hsId, jdbcType=BIGINT}</if>
-            <if test="payDate!=null">payDate = #{payDate, jdbcType=TIMESTAMP}</if>
-            <if test="receiveCompanyId!=null">receiveCompanyId = #{receiveCompanyId, jdbcType=BIGINT}</if>
+            <if test="orderId!=null"> and orderId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="hsId!=null">and hsId = #{hsId, jdbcType=BIGINT}</if>
+            <if test="payDate!=null">and payDate = #{payDate, jdbcType=TIMESTAMP}</if>
+            <if test="receiveCompanyId!=null">and  receiveCompanyId = #{receiveCompanyId, jdbcType=BIGINT}</if>
         </where>
     </select>
 

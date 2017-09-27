@@ -27,9 +27,9 @@
         <include refid="Base_Column_List"/>
         from hs_ying_settle_traffic
         <where>
-            <if test="orderId != null"> orderId=#{orderId,jdbcType=BIGINT}</if>
-            <if test="hsId != null"> hsId=#{hsId,jdbcType=BIGINT} </if>
-            <if test="settleDate != null">settleDate= #{settleDate,jdbcType=DATE} </if>
+            <if test="orderId != null">  AND  orderId=#{orderId,jdbcType=BIGINT}</if>
+            <if test="hsId != null">  AND  hsId=#{hsId,jdbcType=BIGINT} </if>
+            <if test="settleDate != null">  AND settleDate= #{settleDate,jdbcType=DATE} </if>
         </where>
     </select>
 

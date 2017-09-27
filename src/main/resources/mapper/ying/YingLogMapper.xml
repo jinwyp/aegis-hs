@@ -29,9 +29,9 @@
         <include refid="Base_Column_List"/>
         from hs_ying_log
         <where>
-            <if test="orderId"> orderId = #{orderId, jdbcType=BIGINT}</if>
-            <if test="hsId"> hsId = #{orderId, jdbcType=BIGINT}</if>
-            <if test="entityType"> entityType = #{entityType, jdbcType=VARCHAR}</if>
+            <if test="orderId"> AND  orderId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="hsId">  AND hsId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="entityType">  AND entityType = #{entityType, jdbcType=VARCHAR}</if>
         </where>
     </select>
 

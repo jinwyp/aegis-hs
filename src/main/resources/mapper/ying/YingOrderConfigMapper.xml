@@ -29,7 +29,7 @@
         <include refid="Base_Column_List"/>
         from hs_ying_order_config
         <where>
-            <if test="orderId!=null">orderId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="orderId!=null">  AND orderId = #{orderId, jdbcType=BIGINT}</if>
         </where>
     </select>
 

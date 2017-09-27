@@ -26,8 +26,8 @@
         <include refid="Base_Column_List"/>
         from hs_ying_transfer
         <where>
-            <if test="orderId"> orderId = #{orderId, jdcbType=BIGINT}</if>
-            <if test="fromUserID"> fromUserID = #{fromUserID, jdcbType=BIGINT}</if>
+            <if test="orderId">  AND orderId = #{orderId, jdcbType=BIGINT}</if>
+            <if test="fromUserID">  AND fromUserID = #{fromUserID, jdcbType=BIGINT}</if>
         </where>
     </select>
 
