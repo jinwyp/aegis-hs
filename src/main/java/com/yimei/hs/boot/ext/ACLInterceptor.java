@@ -53,9 +53,10 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
               // 在数据表hs_ying_order/hs_cang_order里找  ownerId = user.getId() && id = {orderId}
                 // 如果找到， return true;
                 // 如果找不到 throw new UnAuthorizedException("你不是这条业务线的主人");
-                response.setStatus(400);
-                om.writeValue(response.getOutputStream(), Result.error(4001, "你不是这条业务线的主人", HttpStatus.UNAUTHORIZED));
-                return false;
+//                response.setStatus(400);
+//                response.setContentType("application/json");
+//                om.writeValue(response.getOutputStream(), Result.error(4001, "你不是这条业务线的主人", HttpStatus.UNAUTHORIZED));
+//                return false;
             }
         }
         return true;

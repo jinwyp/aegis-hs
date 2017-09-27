@@ -5,6 +5,7 @@ import com.yimei.hs.boot.api.UpdateGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class YingSettleDownstream implements Serializable {
 
     @NotNull(groups = {UpdateGroup.class}, message = "记录id不能为空")
@@ -35,6 +37,7 @@ public class YingSettleDownstream implements Serializable {
 
     private BigDecimal settleGap;
 
+    @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;

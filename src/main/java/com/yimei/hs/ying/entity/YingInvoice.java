@@ -7,8 +7,10 @@ import com.yimei.hs.enums.InvoiceType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,8 +41,10 @@ public class YingInvoice implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "开票公司不能为空")
     private Long openCompanyId;
 
+    @NotNull(groups = {CreateGroup.class}, message = "收票单位不能为空")
     private Long receiverId;
 
+    @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
 
     List<YingInvoiceDetail> details;
