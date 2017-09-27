@@ -49,6 +49,7 @@
         <include refid="Base_Column_List"/>
         from hs_ying_fukuan
         where orderId = #{orderId,jdbcType=BIGINT} and deleted = 0
+        order by payDate asc
     </select>
 
     <!-- 物理删除 -->
