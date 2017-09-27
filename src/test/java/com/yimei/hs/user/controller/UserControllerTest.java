@@ -81,9 +81,9 @@ public class UserControllerTest extends YingTestBase {
     public void userTest() throws JsonProcessingException {
         user();
         order();
-        config();
+//        config();
 //        fayun();
-        fukuan();
+//        fukuan();
 //        huikuan();
 //        huankuan();
 //        upstream();
@@ -226,9 +226,12 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 8. 分页查询order
-        Map<String, Object> variables = new HashMap<>();
+        Map<String, Object> variables = WebUtils.getUrlVariables(PageYingOrderDTO.class);
         variables.put("ownerId", userResult.getData().getId());
+        variables.put("pageSize", 5);
+        variables.put("pageNo", 1);
         String orderPageUrl = "/api/yings?" + WebUtils.getUrlTemplate(PageYingOrderDTO.class);
+        logger.info("page order variables = {}, url = {}", variables, orderPageUrl);
         PageResult<YingOrder> yingOrderPageResult = client.exchange(orderPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
         if (yingOrderPageResult.getSuccess()) {
             logger.info("获取应收订单分页成功\nGET {}\nrequest = {}\nresponse:\n{}", orderPageUrl, printJson(variables), printJson(yingOrderPageResult.getData()));

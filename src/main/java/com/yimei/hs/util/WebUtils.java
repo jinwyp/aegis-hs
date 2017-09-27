@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -90,6 +92,17 @@ public class WebUtils {
         }
 
         return String.join("&", names);
+    }
+
+    public static Map<String, Object> getUrlVariables(Class<?> clazz) {
+        Field[] fields = clazz.getDeclaredFields();
+        Map<String, Object> map = new HashMap<>();
+        map.put("pageSize", null);
+        map.put("pageNo", null);
+        for (Field f : fields) {
+            map.put(f.getName(), null);
+        }
+        return map;
     }
 }
 

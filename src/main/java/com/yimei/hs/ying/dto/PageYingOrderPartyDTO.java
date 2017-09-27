@@ -18,23 +18,4 @@ public class PageYingOrderPartyDTO extends BaseFilter<PageYingOrderPartyDTO> {
     private Long orderId;
     private CustomerType custType;
 
-    /**
-     * @param sql
-     * @return
-     */
-    @Override
-    public String getCountSql(String sql) {
-        System.out.println("orignal sql = " + sql);
-        StringBuilder sb = new StringBuilder("select * from hs_ying_order_party ");
-        if (orderId != null) {
-            sb.append(" where orderId = ?");
-        }
-        if (custType != null) {
-            sb.append(" where custType = ?");
-        }
-        String countSql = super.getCountSql(sb.toString());
-        System.out.println("count sql = " + countSql);
-        return countSql;
-    }
-
 }
