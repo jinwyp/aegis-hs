@@ -2,7 +2,6 @@ package com.yimei.hs.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.regexp.internal.RE;
 import com.yimei.hs.HsApplication;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
@@ -12,9 +11,9 @@ import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
+import com.yimei.hs.util.WebUtils;
 import com.yimei.hs.ying.dto.*;
 import com.yimei.hs.ying.entity.*;
-import org.apache.tomcat.jni.Local;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,12 +27,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.IntrospectionException;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -227,7 +222,7 @@ public class UserControllerTest extends YingTestBase {
         // 8. 分页查询order
         Map<String, Object> variables = new HashMap<>();
         variables.put("ownerId", userResult.getData().getId());
-        String orderPageUrl = "/api/yings?ownerId={ownerId}";
+        String orderPageUrl = "/api/yings?" + WebUtils.getUrlTemplate(PageYingOrderDTO.class);
         PageResult<YingOrder> yingOrderPageResult = client.exchange(orderPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
         if (yingOrderPageResult.getSuccess()) {
             logger.info("获取应收订单分页成功\nGET {}\nrequest = {}\nresponse:\n{}", orderPageUrl, printJson(variables), printJson(yingOrderPageResult.getData()));

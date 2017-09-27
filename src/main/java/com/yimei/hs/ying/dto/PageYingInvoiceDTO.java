@@ -49,4 +49,8 @@ public class PageYingInvoiceDTO extends BaseFilter<PageYingInvoiceDTO> {
         return countSql;
     }
 
+//    static public String getUrlTemplate() {
+//        return "orderId=order"
+//    }
+
 }
