@@ -39,7 +39,12 @@ public class YingHuankuanController {
     public ResponseEntity<PageResult<YingHuankuan>> list(
             @PathVariable("orderId") Long orderId,
             PageYingHuankuanDTO pageYingHuankuanDTO) {
-        pageYingHuankuanDTO.setOrderId(orderId);
+
+//        pageYingHuankuanDTO.setOrderId(orderId);
+//        System.out.println("-------------------------------------------");
+//        System.out.println(pageYingHuankuanDTO);
+//        System.out.println("-------------------------------------------");
+
         return PageResult.ok(yingHuankuanService.getPage(pageYingHuankuanDTO));
     }
 
