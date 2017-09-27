@@ -75,7 +75,6 @@ public class YingInvoiceController {
     public ResponseEntity<Result<YingInvoice>> create(
        @RequestBody @Validated(CreateGroup.class) YingInvoice yingInvoice
     ) {
-        // 创建发表记录 todo
         yingInvoiceService.create(yingInvoice);
         return Result.ok(yingInvoice);
     }

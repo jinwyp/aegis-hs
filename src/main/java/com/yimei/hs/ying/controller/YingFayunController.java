@@ -80,6 +80,9 @@ public class YingFayunController {
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingFayun yingFayun
     ) {
+
+        // todo 依据上下游发运方式， 校验yingFayun
+
         yingFayun.setOrderId(morderId);
         yingFayunService.create(yingFayun);
         logger.info("created fayn: {}", yingFayun);

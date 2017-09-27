@@ -93,6 +93,7 @@ public class YingHuankuanController {
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) YingHuankuan yingHuankuan
     ) {
+        //
         yingHuankuan.setId(id);
         assert (morderId == yingHuankuan.getOrderId());
         int cnt = yingHuankuanService.update(yingHuankuan);

@@ -389,6 +389,17 @@ public class UserControllerTest extends YingTestBase {
             logger.error("发运更新失败: {}", yingFayunUpdateResult.getError());
             System.exit(-2);
         }
+
+        // 测异常!!!
+        // 添加发运 - 一致性校验
+        // if ( result.getSuccess() == false) {
+        //      result.getError().getMessage().equals("adfadsfasdfasasf")
+        // } else{
+        //      log.error("should fail here");
+        //      System.exit(-1);
+        // }
+        //
+
     }
 
     private void huikuan() throws JsonProcessingException {
@@ -488,7 +499,7 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
 
-        // 4. 更新 todo
+        // 4. 更新 todo  timestamp
     }
 
     private void fukuan() throws JsonProcessingException {
