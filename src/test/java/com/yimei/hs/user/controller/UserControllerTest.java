@@ -345,11 +345,7 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
 
-
-
         //发运更新
-
-
         fayun.setFyAmount(null);
         fayun.setOrderId(yingOrderResult.getData().getId());
         fayun.setId(fayunCreateResult.getData().getId());
@@ -365,9 +361,7 @@ public class UserControllerTest extends YingTestBase {
     }
 
     private void huikuan() throws JsonProcessingException {
-
         // 回款 创建
-
         String huikuanCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huikuans";
         YingHuikuan huikuan = new YingHuikuan(){{
             setOrderId(yingOrderResult.getData().getId());
@@ -412,9 +406,6 @@ public class UserControllerTest extends YingTestBase {
     }
 
     private void huankuan() throws JsonProcessingException {
-
-
-
         // 还款 - 创建
         String huankuanCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huankuans";
         YingHuankuan huankuan = new YingHuankuan(){{
@@ -585,7 +576,6 @@ public class UserControllerTest extends YingTestBase {
         }
     }
 
-
     private void downstream() throws JsonProcessingException {
 
         //创建下游结算
@@ -752,7 +742,6 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-2);
         }
     }
-
 
     private  List<YingInvoiceDetail> invoiceDetail() {
         List<YingInvoiceDetail> listVoiceDetail = Lists.newArrayList(
