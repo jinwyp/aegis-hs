@@ -827,14 +827,14 @@ public class UserControllerTest extends YingTestBase {
         String invoiceUpdateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices/" + invoiceCreateResult.getData().getId();
         yingInvoice.setId(invoiceCreateResult.getData().getId());
         yingInvoice.setInvoiceDirection(InvoiceDirection.INCOME);
-//
-//        Result<YingInvoice> invoiceUpdateResult = client.exchange(invoiceFindUrl, HttpMethod.PUT, new HttpEntity<YingInvoice>(yingInvoice), typeReferenceInvoice).getBody();
-//        if (invoiceFindResult.getSuccess()) {
-//            logger.info("更新发票成功\nPUT {}\nrequest = {}\nresponse = {}", invoiceUpdateUrl, "", printJson(invoiceUpdateResult.getData()));
-//        } else {
-//            logger.info("更新发票失败: {}", invoiceUpdateResult.getError());
-//            System.exit(-1);
-//        }
+
+        Result<Integer> invoiceUpdateResult = client.exchange(invoiceFindUrl, HttpMethod.PUT, new HttpEntity<YingInvoice>(yingInvoice), typeReferenceInteger).getBody();
+        if (invoiceFindResult.getSuccess()) {
+            logger.info("更新发票成功\nPUT {}\nrequest = {}\nresponse = {}", invoiceUpdateUrl, "", printJson(invoiceUpdateResult.getData()));
+        } else {
+            logger.info("更新发票失败: {}", invoiceUpdateResult.getError());
+            System.exit(-1);
+        }
 
     }
 
