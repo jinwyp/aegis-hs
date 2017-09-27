@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 public interface YingOrderMapper {
     int deleteByPrimaryKey(Long id);
 
+    int delete(Long id);
+
     int insert(YingOrder record);
 
     int insertSelective(YingOrder record);
