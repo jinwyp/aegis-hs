@@ -135,6 +135,11 @@
         </where>
 
     </select>
+    <select id="orderIsExists" resultType="java.lang.Boolean">
+        SELECT count(id)
+        FROM hs_ying_order
+        WHERE ownerId = #{orderId} AND id = #{orderId}
+    </select>
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
