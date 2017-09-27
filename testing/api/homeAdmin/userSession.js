@@ -56,6 +56,7 @@ describe('当前登陆用户信息', function () {
     })
 
 
+/*
 
     it('修改当前用户信息 PUT: /api/user/session', function (done) {
         server.put('/api/user/session')
@@ -73,5 +74,6 @@ describe('当前登陆用户信息', function () {
                 done()
             })
     })
+*/
 
 })

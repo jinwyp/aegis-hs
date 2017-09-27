@@ -47,9 +47,16 @@ export class HSOrderService {
     }
 
 
-    getOrderUnitListByID(orderId: any): Observable<any> {
+    getOrderUnitListByID(orderId: number): Observable<any> {
 
-        return this.http.get(apiPath.hsGetOrderList + '/' + orderId + '/units' )
+        return this.http.get(apiPath.hsGetOrderList + '/' + orderId + '/configs' )
+    }
+    createNewOrderUnit(orderId: number, unit: any): Observable<any> {
+
+        return this.http.post(apiPath.hsGetOrderList + '/' + orderId + '/configs', unit )
+    }
+    modifyOrderUnit(orderId: number, unitId: number, unit: any, ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + orderId + '/configs/' + unitId.toString(), unit)
     }
 
 }
