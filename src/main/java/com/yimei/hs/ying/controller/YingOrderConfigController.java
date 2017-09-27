@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by hary on 2017/9/25.
  */
 @RestController
-@RequestMapping("/api/yings")
+@RequestMapping("/api/ying")
 public class YingOrderConfigController {
 
 
