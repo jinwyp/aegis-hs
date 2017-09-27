@@ -14,6 +14,7 @@ import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.ying.dto.*;
 import com.yimei.hs.ying.entity.*;
+import org.apache.tomcat.jni.Local;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,8 +28,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.IntrospectionException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,9 +87,10 @@ public class UserControllerTest extends YingTestBase {
         huankuan();
         upstream();
         downstream();
-        traffic();
-        fee();
-        invoice();
+//        traffic();
+//        fee();
+//        invoice();
+
     }
 
     private void user() throws JsonProcessingException {
@@ -306,6 +312,7 @@ public class UserControllerTest extends YingTestBase {
 
     private void fayun() throws JsonProcessingException {
         String fayunCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns";
+
         YingFayun fayun = new YingFayun() {{
             setOrderId(yingOrderResult.getData().getId());
             setDownstreamCars(166);
@@ -315,7 +322,7 @@ public class UserControllerTest extends YingTestBase {
             setFyAmount(new BigDecimal("1510.60"));
             setArriveStatus(CargoArriveStatus.ARRIVE);
             setHsId(yingOrderConfigResult.getData().getId());
-            setFyDate(LocalDateTime.now());
+            setFyDate(stringToTime("2017-6-20"));
         }};
         Result<YingFayun> fayunCreateResult = client.exchange(fayunCreateUrl, HttpMethod.POST, new HttpEntity<>(fayun), typeReferenceFayun).getBody();
         if (fayunCreateResult.getSuccess()) {
@@ -363,10 +370,10 @@ public class UserControllerTest extends YingTestBase {
     private void huikuan() throws JsonProcessingException {
         // 回款 创建
         String huikuanCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huikuans";
-        YingHuikuan huikuan = new YingHuikuan(){{
+        YingHuikuan huikuan = new YingHuikuan() {{
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
-            setHuikuanDate(LocalDateTime.now());
+            setHuikuanDate(stringToTime("2017-7-28"));
             setHuikuanCompanyId(yingOrderResult.getData().getDownstreamId());
             setHuikuanAmount(new BigDecimal("569968.26"));
             setHuikuanMode(PayMode.ELEC_REMITTANCE);
@@ -380,7 +387,7 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
 
-           // 回款 - 分页
+        // 回款 - 分页
         String huikuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huikuans";
         PageYingHuikuanDTO pageYingHuikuanDTO = new PageYingHuikuanDTO();
         pageYingHuikuanDTO.setHsId(yingOrderConfigResult.getData().getId());
@@ -408,11 +415,11 @@ public class UserControllerTest extends YingTestBase {
     private void huankuan() throws JsonProcessingException {
         // 还款 - 创建
         String huankuanCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huankuans";
-        YingHuankuan huankuan = new YingHuankuan(){{
+        YingHuankuan huankuan = new YingHuankuan() {{
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
             setSkCompanyId(17l);
-            setHuankuankDate( LocalDateTime.now());
+            setHuankuankDate(stringToTime("2017-7-26"));
             setHuankuanAmount(new BigDecimal("511700.02"));
             setHuankuanFee(new BigDecimal("560"));
             setHuankuanInterest(new BigDecimal("1700.02"));
@@ -430,7 +437,7 @@ public class UserControllerTest extends YingTestBase {
         // 还款 - 分页
         String huankuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huankuans";
         PageYingHuankuanDTO pageYingHuankuanDTO = new PageYingHuankuanDTO();
-        pageYingHuankuanDTO.setOrderId( yingOrderResult.getData().getId());
+        pageYingHuankuanDTO.setOrderId(yingOrderResult.getData().getId());
         pageYingHuankuanDTO.setHsId(yingOrderConfigResult.getData().getId());
         PageResult<YingHuankuan> huankuanPageResult = client.exchange(huankuanPageUrl, HttpMethod.GET, new HttpEntity<PageYingHuankuanDTO>(pageYingHuankuanDTO), typeReferenceHuankuanPage).getBody();
         if (huankuanPageResult.getSuccess()) {
@@ -461,7 +468,7 @@ public class UserControllerTest extends YingTestBase {
 
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
-            setPayDate(LocalDateTime.now());
+            setPayDate(stringToTime("2017-7-6"));
             setReceiveCompanyId(yingOrderResult.getData().getUpstreamId());
             setPayUsage(PaymentPurpose.DEPOSITECASH);
             setPayMode(PayMode.ELEC_REMITTANCE);
@@ -475,7 +482,7 @@ public class UserControllerTest extends YingTestBase {
 
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
-            setPayDate(LocalDateTime.now());
+            setPayDate(stringToTime("2017-8-10"));
             setReceiveCompanyId(yingOrderResult.getData().getUpstreamId());
             setPayUsage(PaymentPurpose.FIAL_PAYMENT);
             setPayMode(PayMode.ELEC_REMITTANCE);
@@ -514,13 +521,13 @@ public class UserControllerTest extends YingTestBase {
     }
 
     private void upstream() throws JsonProcessingException {
-        
+
         // 上游结算 - 创建
         String upstreamCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settleupstream";
         YingSettleUpstream upstream = new YingSettleUpstream() {
             {
                 setHsId(yingOrderConfigResult.getData().getId());
-                setSettleDate(LocalDateTime.now());
+                setSettleDate(stringToTime("2017-8-4"));
                 setMoney(new BigDecimal("565994.59"));
                 setDiscountType(DiscountMode.NO_DISCOUNT);
                 setAmount(new BigDecimal("1510.61"));
@@ -581,12 +588,12 @@ public class UserControllerTest extends YingTestBase {
         //创建下游结算
         String downstreamCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settledownstream";
         YingSettleDownstream downstream = new YingSettleDownstream(
-        ){{
+        ) {{
             setAmount(new BigDecimal("1510.61"));
-            setMoney( new BigDecimal("55968.26"));
-            setHsId( yingOrderConfigResult.getData().getId());
-            setOrderId( yingOrderResult.getData().getId());
-            setSettleDate( LocalDateTime.now());
+            setMoney(new BigDecimal("55968.26"));
+            setHsId(yingOrderConfigResult.getData().getId());
+            setOrderId(yingOrderResult.getData().getId());
+            setSettleDate(stringToTime("2017-07-07"));
             setSettleGap(new BigDecimal("0"));
         }};
         Result<YingSettleDownstream> downstreamCreateResult = client.exchange(downstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(downstream), typeReferenceSettleDownstream).getBody();
@@ -605,7 +612,6 @@ public class UserControllerTest extends YingTestBase {
         dto.setOrderId(yingOrderResult.getData().getId());
 
 
-
         PageResult<YingSettleDownstream> downstreamPageResult = client.exchange(downstreamPageUrl, HttpMethod.GET, new HttpEntity<PageYingSettleDownstreamDTO>(dto), typeReferenceSettleDownstreamPage).getBody();
         if (downstreamPageResult.getSuccess()) {
             logger.info("下游结算分页成功\nGET {}\nrequest = {}\nresponse = {}", downstreamPageUrl, "", printJson(downstreamPageResult.getData()));
@@ -615,7 +621,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 下游结算 - 查询
-        String downstreamFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settledownstream/"+downstreamCreateResult.getData().getId();
+        String downstreamFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settledownstream/" + downstreamCreateResult.getData().getId();
         Result<YingSettleDownstream> downstreamFindResult = client.exchange(downstreamFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleDownstream).getBody();
         if (downstreamFindResult.getSuccess()) {
             logger.info("下游结算查询成功\n Get {}\nrequest = {}\nresponse = {}", downstreamFindUrl, "", printJson(downstreamFindResult.getData()));
@@ -626,6 +632,7 @@ public class UserControllerTest extends YingTestBase {
 
     }
 
+    //此订单无运输方结算
     private void traffic() throws JsonProcessingException {
 
         // 运输方结算 - 创建
@@ -694,7 +701,7 @@ public class UserControllerTest extends YingTestBase {
 
         // 费用 - 创建
         String feeCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fees";
-        YingFee fee = new YingFee(){{
+        YingFee fee = new YingFee() {{
             setHsId(yingOrderConfigResult.getData().getId());
             setOrderId(yingOrderResult.getData().getId());
             setAmount(new BigDecimal("100"));
@@ -743,30 +750,26 @@ public class UserControllerTest extends YingTestBase {
         }
     }
 
-    private  List<YingInvoiceDetail> invoiceDetail() {
+    private List<YingInvoiceDetail> invoiceDetail() {
         List<YingInvoiceDetail> listVoiceDetail = Lists.newArrayList(
-                new YingInvoiceDetail(){{
+                new YingInvoiceDetail() {{
                     setInvoiceNumber("66661234");
                     setCargoAmount(new BigDecimal("10000"));
                     setTaxRate(new BigDecimal("0.17"));
                     setPriceAndTax(new BigDecimal("340000"));
                 }},
-                new YingInvoiceDetail(){{
+                new YingInvoiceDetail() {{
                     setInvoiceNumber("66661235");
                     setCargoAmount(new BigDecimal("367"));
                     setTaxRate(new BigDecimal("0.17"));
                     setPriceAndTax(new BigDecimal("170000"));
-                }},
-                new YingInvoiceDetail(){{
-                    setInvoiceNumber("66661236");
-                    setCargoAmount(new BigDecimal("143.67"));
-                    setTaxRate(new BigDecimal("0.17"));
-                    setPriceAndTax(new BigDecimal("565994.5995"));
                 }}
+
         );
         return listVoiceDetail;
 
     }
+
     private void invoice() throws JsonProcessingException {
 
         // 发票 - 创建
@@ -777,11 +780,29 @@ public class UserControllerTest extends YingTestBase {
                 yingOrderConfigResult.getData().getId(),
                 InvoiceDirection.INCOME,
                 InvoiceType.GOODS_INVOICE,
-                LocalDateTime.now(),
+                stringToTime("2017-7-6"),
                 yingOrderResult.getData().getUpstreamId(),
                 yingOrderResult.getData().getMainAccounting(),
                 null,
                 invoiceDetail()
+        );
+        YingInvoice yingInvoiceSecond= new YingInvoice(
+                null,
+                yingOrderResult.getData().getId(),
+                yingOrderConfigResult.getData().getId(),
+                InvoiceDirection.INCOME,
+                InvoiceType.GOODS_INVOICE,
+                stringToTime("2017-8-4"),
+                yingOrderResult.getData().getUpstreamId(),
+                yingOrderResult.getData().getMainAccounting(),
+                null,
+                Lists.newArrayList(
+                        new YingInvoiceDetail() {{
+                            setInvoiceNumber("66661236");
+                            setCargoAmount(new BigDecimal("143.67"));
+                            setTaxRate(new BigDecimal("0.17"));
+                            setPriceAndTax(new BigDecimal("565994.5995"));
+                        }})
         );
         Result<YingInvoice> invoiceCreateResult = client.exchange(invoiceCreateUrl, HttpMethod.POST, new HttpEntity<YingInvoice>(yingInvoice), typeReferenceInvoice).getBody();
         if (invoiceCreateResult.getSuccess()) {
@@ -791,12 +812,19 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
 
+         //第二笔发票记录
+       client.exchange(invoiceCreateUrl, HttpMethod.POST, new HttpEntity<YingInvoice>(yingInvoiceSecond), typeReferenceInvoice).getBody();
+
 //        // 发票 - 分页
         String invoicePageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices";
+
         PageYingInvoiceDTO pageYingInvoiceDTO = new PageYingInvoiceDTO();
         pageYingInvoiceDTO.setOrderId(yingOrderResult.getData().getId());
 
-        PageResult<YingInvoice> invoicePageResult = client.exchange(invoicePageUrl, HttpMethod.GET, new HttpEntity<PageYingInvoiceDTO>(pageYingInvoiceDTO), typeReferenceInvoicePage).getBody();
+        Map<String, Object> invoiceVariablesPage = new HashMap<>();
+        invoiceVariablesPage.put("orderId", "" + yingOrderResult.getData().getId());
+        invoiceVariablesPage.put("invoiceType", invoiceCreateResult.getData().getInvoiceType());
+        PageResult<YingInvoice> invoicePageResult = client.exchange(invoicePageUrl, HttpMethod.GET, new HttpEntity<PageYingInvoiceDTO>(pageYingInvoiceDTO), typeReferenceInvoicePage, invoiceVariablesPage).getBody();
         if (invoicePageResult.getSuccess()) {
             logger.info("创建分页成功\nGET {}\nrequest = {}\nresponse = {}", invoicePageUrl, "", printJson(invoicePageResult.getData()));
         } else {
@@ -814,7 +842,7 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
 
-        // 发票 - 更新 TODO error put 方法不支持
+        // 发票 - 更新
         String invoiceUpdateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices/" + invoiceCreateResult.getData().getId();
         yingInvoice.setId(invoiceCreateResult.getData().getId());
         yingInvoice.setInvoiceDirection(InvoiceDirection.INCOME);
@@ -827,6 +855,19 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
 
+    }
+
+    /**
+     * @param strData 格式Y
+     * @return
+     */
+    public LocalDateTime stringToTime(String strData) {
+        try {
+            String[] data = strData.split("-");
+            return LocalDateTime.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]), 0, 0, 0);
+        } catch (Exception e) {
+            return LocalDateTime.now();
+        }
     }
 
 
