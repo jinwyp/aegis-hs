@@ -41,6 +41,12 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
                 if ( user.getIsAdmin() == null || user.getIsAdmin() == false) {
                     return false;
                 }
+            } else {
+              // todo    /api/ying/{orderId}/.*
+                // todo  /api/cang/{orderId}/.*
+              // 在数据表hs_ying_order/hs_cang_order里找  ownerId = user.getId() && id = {orderId}
+                // 如果找到， return true;
+                // 如果找不到 throw new UnAuthorizedException("你不是这条业务线的主人");
             }
         }
         return true;
