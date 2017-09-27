@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.util.WebUtils;
 import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
@@ -55,7 +57,12 @@ public class GlobalHandlerExceptionResolver {
         om.writeValue(response.getOutputStream(), new Result(4001, "客户端错误"));
     }
 
-    @ExceptionHandler({NoJwtTokenException.class, UnAuthorizedException.class, MalformedJwtException.class})
+    @ExceptionHandler({
+            SignatureException.class,
+            UnsupportedJwtException.class,
+            NoJwtTokenException.class,
+            UnAuthorizedException.class,
+            MalformedJwtException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public void process401Error(HttpServletRequest request, HttpServletResponse response, Exception ex) throws IOException {
         response.setStatus(401);
