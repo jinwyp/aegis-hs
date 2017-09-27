@@ -201,8 +201,8 @@ public class UserControllerTest extends YingTestBase {
         yingOrder.setCargoType(CargoType.COAL);
         yingOrder.setUpstreamId(partyIds.get(0));   // 上游
         yingOrder.setDownstreamId(partyIds.get(1));  // 下游
-        yingOrder.setMainAccounting(2L);
-        yingOrder.setLine("博泰-鲤鱼江");
+        yingOrder.setMainAccounting(1L);
+        yingOrder.setLine("郴州博太-晋和-华润鲤鱼江");
         yingOrder.setUpstreamSettleMode(SettleMode.ONE_PAPER_SETTLE);
         yingOrder.setDownstreamSettleMode(SettleMode.ONE_PAPER_SETTLE);
         yingOrder.setOrderConfigList(Lists.newArrayList(
@@ -217,6 +217,10 @@ public class UserControllerTest extends YingTestBase {
                 }}
         ));
         yingOrder.setOrderPartyList(Lists.newArrayList(
+                new YingOrderParty() {{
+                    setCustomerId(18L);
+                    setCustType(CustomerType.FUNDER);
+                }},
                 new YingOrderParty() {{
                     setCustomerId(17L);
                     setCustType(CustomerType.FUNDER);
@@ -288,7 +292,7 @@ public class UserControllerTest extends YingTestBase {
         YingOrderConfig yingOrderConfig = new YingOrderConfig() {{
             setOrderId(yingOrderResult.getData().getId());
             setId(yingOrderConfigResult.getData().getId());
-            setHsMonth("201711");
+            setHsMonth("201706");
             setContractBaseInterest(new BigDecimal("0.20"));
             setMaxPrepayRate(new BigDecimal("0.90"));
             setUnInvoicedRate(new BigDecimal("0.7"));
@@ -335,7 +339,7 @@ public class UserControllerTest extends YingTestBase {
             setUpstreamTrafficMode(TrafficMode.RAIL);
             setUpstreamJHH("1000001");
             setFyAmount(new BigDecimal("1510.60"));
-            setArriveStatus(CargoArriveStatus.ARRIVE);
+            setArriveStatus(CargoArriveStatus.UNARRIVE);
             setHsId(yingOrderConfigResult.getData().getId());
             setFyDate(stringToTime("2017-6-20"));
         }};
@@ -375,7 +379,7 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 4. 更新
-        fayun.setFyAmount(null);
+        fayun.setArriveStatus(CargoArriveStatus.ARRIVE);
         fayun.setOrderId(yingOrderResult.getData().getId());
         fayun.setId(fayunCreateResult.getData().getId());
         String fayunUpdateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns/" + fayunCreateResult.getData().getId();
@@ -416,10 +420,11 @@ public class UserControllerTest extends YingTestBase {
         String huikuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huikuans?"+WebUtils.getUrlTemplate(PageYingHuikuanDTO.class);
 
         Map<String, Object> variablesHuikuan = WebUtils.getUrlVariables(PageYingHuikuanDTO.class);
-        variablesHuikuan.put("huikuanCompanyId", yingOrderResult.getData().getDownstreamId());
+        variablesHuikuan.put("orderId", yingOrderResult.getData().getId());
         variablesHuikuan.put("pageSize", 5);
         variablesHuikuan.put("pageNo", 1);
-        PageResult<YingHuikuan> huikuanPageResult = client.exchange(huikuanPageUrl, HttpMethod.GET,  HttpEntity.EMPTY, typeReferenceHuikuanPage).getBody();
+        variablesHuikuan.put("huikuanCompanyId", yingOrderResult.getData().getDownstreamId());
+        PageResult<YingHuikuan> huikuanPageResult = client.exchange(huikuanPageUrl, HttpMethod.GET,  HttpEntity.EMPTY, typeReferenceHuikuanPage,variablesHuikuan).getBody();
         if (huikuanPageResult.getSuccess()) {
             logger.info("创建分页成功\n GET {}\nrequest = {}\nresponse = {}", huikuanPageUrl, "", printJson(huikuanPageResult.getData()));
         } else {
@@ -446,7 +451,7 @@ public class UserControllerTest extends YingTestBase {
         YingHuankuan huankuan = new YingHuankuan() {{
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
-            setSkCompanyId(17l);
+            setSkCompanyId(yingOrderResult.getData().getOrderPartyList().get(0).getCustomerId());
             setHuankuankDate(stringToTime("2017-7-26"));
             setHuankuanAmount(new BigDecimal("511700.02"));
             setHuankuanFee(new BigDecimal("560"));
@@ -512,7 +517,7 @@ public class UserControllerTest extends YingTestBase {
             setPayUsage(PaymentPurpose.FIAL_PAYMENT);
             setPayMode(PayMode.ELEC_REMITTANCE);
             setPayAmount(new BigDecimal("54291.93"));
-            setCapitalId(17l);
+            setCapitalId(yingOrderResult.getData().getMainAccounting());
         }};
         Result<YingFukuan> fukuanResult = client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuan), typeReferenceFukuan).getBody();
         if (fukuanResult.getSuccess()) {
