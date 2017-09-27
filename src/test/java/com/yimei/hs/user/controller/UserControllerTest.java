@@ -80,9 +80,9 @@ public class UserControllerTest extends YingTestBase {
 
     @Test
     public void adminTest() throws JsonProcessingException {
-        user();
-        PageResult<User> pageUserResult = client.exchange("/api/users", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceUserPage).getBody();
-        logger.info("page user = {}", pageUserResult);
+        // user();
+        // PageResult<User> pageUserResult = client.exchange("/api/users", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceUserPage).getBody();
+        // logger.info("page user = {}", pageUserResult);
     }
 
     @Test

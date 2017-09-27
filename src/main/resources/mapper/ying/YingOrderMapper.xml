@@ -138,7 +138,7 @@
     <select id="orderIsExists" resultType="java.lang.Boolean">
         SELECT count(id)
         FROM hs_ying_order
-        WHERE ownerId = #{orderId} AND id = #{orderId}
+        WHERE ownerId = #{ownerId} AND id = #{orderId}
     </select>
 
 
