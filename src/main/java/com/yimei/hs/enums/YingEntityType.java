@@ -5,18 +5,18 @@ package com.yimei.hs.enums;
  */
 public enum YingEntityType {
 
-    YING_ORDER("应收业务线"),
-    YING_ORDER_CONFIG("应收业务线-配置"),
-    YING_ORDER_PARTY("应收业务线-参与方"),
-    YING_ORDER_FAYUN("应收业务线-发运"),
-    YING_ORDER_HUANKUAN("应收业务线-还款"),
-    YING_ORDER_FUKUAN("应收业务线-付款"),
-    YING_ORDER_HUIKUAN("应收业务线-回款"),
-    YING_ORDER_SETTLE_UP("应收业务线-上游结算"),
-    YING_ORDER_SETTLE_DOWN("应收业务线-下游结算"),
-    YING_ORDER_SETTLE_TRAFFIC("应收业务线-运输方结算"),
-    YING_ORDER_FEE("应收业务线-费用"),
-    YING_ORDER_INVOICE("应收业务线-发票");
+    order("应收业务线"),
+    config("应收业务线-配置"),
+    party("应收业务线-参与方"),
+    fayun("应收业务线-发运"),
+    huankuan("应收业务线-还款"),
+    fukuan("应收业务线-付款"),
+    huikuan("应收业务线-回款"),
+    settleupstream("应收业务线-上游结算"),
+    settledown("应收业务线-下游结算"),
+    settletraffic("应收业务线-运输方结算"),
+    fee("应收业务线-费用"),
+    invoice("应收业务线-发票");
 
     private String value;
     YingEntityType(String value) {

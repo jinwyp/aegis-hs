@@ -1,12 +1,13 @@
 package com.yimei.hs.aop;
 
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.Around;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yimei.hs.ying.entity.*;
+import com.yimei.hs.ying.service.YingLogService;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -19,41 +20,97 @@ public class LogAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
-    @Pointcut("execution(* com.yimei.hs..*.service..*.*(..))")
-    public void service() {
-    }
+    @Autowired
+    YingLogService yingLogService;
 
-    @Pointcut("execution(* com.yimei.hs..*.controller..*.*(..))")
-    public void controller() {
-    }
+    @Autowired
+    ObjectMapper om;
 
-//    @Around("service()")
-//    public Object doAroundService(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-//        return doLog(proceedingJoinPoint, "service");
-//    }
-
-    @Around("controller()")
-    public Object doAroundController(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        return doLog(proceedingJoinPoint, "controller");
-    }
-
-    private Object doLog(ProceedingJoinPoint proceedingJoinPoint, String name) throws Throwable {
-
-//        Object othis = proceedingJoinPoint.getThis();
-//        Logger ologger = (Logger)othis.getClass().getField("logger").get(othis);
-//        logger.info("原始logger");
-
-        Signature sigature = proceedingJoinPoint.getSignature();
-        logger.info("{} {} called with following args", name, sigature.toShortString());
-        Object[] args = proceedingJoinPoint.getArgs();
-        for (Object arg : args) {
-            logger.info("{}", arg);
+    /**
+     *
+     */
+    @After("execution(* com.yimei.hs.ying.service..*.create(..))")
+    public void createYing() {
+        // todo
+        // 1.  找出切点的参数,
+        Object arg = null;
+        if (arg instanceof YingOrder) {
+        } else if (arg instanceof YingFayun) {
+        } else if (arg instanceof YingFukuan) {
+        } else if (arg instanceof YingHuikuan) {
+        } else if (arg instanceof YingHuankuan) {
+        } else if (arg instanceof YingSettleDownstream) {
+        } else if (arg instanceof YingSettleUpstream) {
+        } else if (arg instanceof YingSettleTraffic) {
+        } else if (arg instanceof YingFee) {
+        } else if (arg instanceof YingInvoice) {
         }
 
-        Object o = proceedingJoinPoint.proceed();
-        logger.info("{} {} return with {}", name, sigature.toShortString(), o);
-        return o;
+        return;
+
     }
 
+    /**
+     *
+     */
+    @After("execution(* com.yimei.hs.ying.service..*.update*(..))")
+    public void updateYing() {
+        Object arg = null;
+        if (arg instanceof YingOrder) {
+        } else if (arg instanceof YingFayun) {
+        } else if (arg instanceof YingFukuan) {
+        } else if (arg instanceof YingHuikuan) {
+        } else if (arg instanceof YingHuankuan) {
+        } else if (arg instanceof YingSettleDownstream) {
+        } else if (arg instanceof YingSettleUpstream) {
+        } else if (arg instanceof YingSettleTraffic) {
+        } else if (arg instanceof YingFee) {
+        } else if (arg instanceof YingInvoice) {
+        }
+        return;
+    }
+
+
+    /**
+     *
+     */
+    @After("execution(* com.yimei.hs.cang.service..*.create(..))")
+    public void createCang() {
+        // todo
+        // 1.  找出切点的参数,
+        Object arg = null;
+        if (arg instanceof YingOrder) {
+        } else if (arg instanceof YingFayun) {
+        } else if (arg instanceof YingFukuan) {
+        } else if (arg instanceof YingHuikuan) {
+        } else if (arg instanceof YingHuankuan) {
+        } else if (arg instanceof YingSettleDownstream) {
+        } else if (arg instanceof YingSettleUpstream) {
+        } else if (arg instanceof YingSettleTraffic) {
+        } else if (arg instanceof YingFee) {
+        } else if (arg instanceof YingInvoice) {
+        }
+    }
+
+
+    /**
+     *
+     */
+    @After("execution(* com.yimei.hs.cang.service..*.update*(..))")
+    public void updateCang() {
+        Object arg = null;
+        if (arg instanceof YingOrder) {
+        } else if (arg instanceof YingFayun) {
+        } else if (arg instanceof YingFukuan) {
+        } else if (arg instanceof YingHuikuan) {
+        } else if (arg instanceof YingHuankuan) {
+        } else if (arg instanceof YingSettleDownstream) {
+        } else if (arg instanceof YingSettleUpstream) {
+        } else if (arg instanceof YingSettleTraffic) {
+        } else if (arg instanceof YingFee) {
+        } else if (arg instanceof YingInvoice) {
+        }
+        return;
+    }
 }
 

@@ -6,7 +6,6 @@ import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.ying.service.YingOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -64,7 +63,7 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
                     long orderId = Long.parseLong(m.group(2));
 
                     if ( business.equals("ying")) {
-                        if (!yingOrderService.orderIsExists(user.getId(), orderId)) {
+                        if (!yingOrderService.hasOrder(user.getId(), orderId)) {
                             response.setStatus(401);
                             response.setContentType("application/json;charset=UTF-8");
                             om.writeValue(response.getOutputStream(), new Result(4001, "你不是这条业务线的主人"));
@@ -72,7 +71,7 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
                         }
 
                     } else if (business.equals("cang")) {
-                        if (!yingOrderService.orderIsExists(user.getId(), orderId)) {
+                        if (!yingOrderService.hasOrder(user.getId(), orderId)) {
                             response.setStatus(401);
                             response.setContentType("application/json;charset=UTF-8");
                             om.writeValue(response.getOutputStream(), new Result(4001, "你不是这条业务线的主人"));

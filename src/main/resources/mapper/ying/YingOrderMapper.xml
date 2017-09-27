@@ -124,14 +124,14 @@
         LEFT JOIN hs_ying_order_party t3 ON t1.id = t2.orderId
 
         <where>
-            <if test="deptId!=null">  AND deptId = #{deptId, jdbcType=BIGINT}</if>
-            <if test="cargoType!=null">  AND cargoType = #{cargoType, jdbcType=VARCHAR}</if>
-            <if test="creatorId!=null">  AND creatorId = #{creatorId, jdbcType=BIGINT}</if>
-            <if test="ownerId!=null">  AND ownerId = #{ownerId, jdbcType=BIGINT}</if>
-            <if test="upstreamId!=null">  AND upstreamId = #{upstreamId, jdbcType=BIGINT}</if>
-            <if test="downstreamId!=null">  AND downstreamId = #{downstreamId, jdbcType=BIGINT}</if>
-            <if test="mainAccounting!=null">  AND mainAccounting = #{mainAccounting, jdbcType=BIGINT}</if>
-            <if test="status!=null">  AND status = #{status, jdbcType=VARCHAR}</if>
+            <if test="deptId!=null">AND deptId = #{deptId, jdbcType=BIGINT}</if>
+            <if test="cargoType!=null">AND cargoType = #{cargoType, jdbcType=VARCHAR}</if>
+            <if test="creatorId!=null">AND creatorId = #{creatorId, jdbcType=BIGINT}</if>
+            <if test="ownerId!=null">AND ownerId = #{ownerId, jdbcType=BIGINT}</if>
+            <if test="upstreamId!=null">AND upstreamId = #{upstreamId, jdbcType=BIGINT}</if>
+            <if test="downstreamId!=null">AND downstreamId = #{downstreamId, jdbcType=BIGINT}</if>
+            <if test="mainAccounting!=null">AND mainAccounting = #{mainAccounting, jdbcType=BIGINT}</if>
+            <if test="status!=null">AND status = #{status, jdbcType=VARCHAR}</if>
         </where>
 
     </select>
@@ -253,4 +253,11 @@
             tsc                  = #{tsc,jdbcType=TIMESTAMP}
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
+
+    <update id="transfer">
+        UPDATE hs_ying_order
+        SET ownerId = #{to,jdbcType=BIGINT}
+        WHERE orderId = #{orderId, jdbcType=BIGINT} and ownerId = #{from,jdbcType=BIGINT}
+    </update>
+
 </mapper>

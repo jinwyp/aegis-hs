@@ -21,4 +21,6 @@ public interface YingOrderMapper {
     Page<YingOrder> getPage(PageYingOrderDTO pageYingOrderDTO);
 
     boolean orderIsExists(@Param("ownerId") long ownerId, @Param("orderId") long orderId);
+
+    int transfer(@Param("orderId") Long orderId, @Param("from") Long from, @Param("to") Long to);
 }
