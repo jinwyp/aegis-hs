@@ -168,8 +168,8 @@ describe('应收订单', function () {
 
 
 
-    it('新建核算单元 POST: /api/ying/1/configs', function (done) {
-        server.post('/api/ying/1/configs')
+    it('新建核算单元 POST: /api/ying/1/units', function (done) {
+        server.post('/api/ying/1/units')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
