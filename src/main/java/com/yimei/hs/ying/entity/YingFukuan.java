@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Update;
 
 import javax.annotation.security.DenyAll;
 import javax.validation.constraints.NotNull;
@@ -31,6 +32,7 @@ public class YingFukuan implements Serializable {
     private Long hsId;
 
     @NotNull(groups = {CreateGroup.class}, message = "付款日期不能为空")
+    @Null(groups = {UpdateGroup.class}, message = "付款日期不能更新")
     private LocalDateTime payDate;
 
     @NotNull(groups = { CreateGroup.class}, message = "收款公司不能为空")
