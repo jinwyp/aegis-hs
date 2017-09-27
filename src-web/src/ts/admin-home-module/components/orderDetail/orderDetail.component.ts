@@ -209,6 +209,7 @@ export class OrderDetailComponent implements OnInit {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
+                    this.getOrderUnitList()
                     this.showForm()
 
                 },
@@ -221,6 +222,7 @@ export class OrderDetailComponent implements OnInit {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
 
+                    this.getOrderUnitList()
                     this.showForm()
 
                 },
