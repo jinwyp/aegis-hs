@@ -143,7 +143,8 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
     }
 
     set value(val: any) {
-        console.log('Setter: ', val)
+        // console.log('Setter: ', val)
+
         this.interValueDate = val
 
         this.onChange(val)
@@ -214,7 +215,6 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
                 this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
                 this.inputDisplayValue =  this.displayFormatter(this.interValueDate)
 
-                console.log('value', value, this.interValueDate)
             }
 
 

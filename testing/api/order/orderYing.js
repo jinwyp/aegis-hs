@@ -168,7 +168,7 @@ describe('应收订单', function () {
 
 
 
-    it('新建核算单元 POST: /api/ying/1/units', function (done) {
+    it('新建核算单元1 POST: /api/ying/1/units', function (done) {
         server.post('/api/ying/1/units')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -193,6 +193,30 @@ describe('应收订单', function () {
             })
     })
 
+    it('新建核算单元2 POST: /api/ying/1/units', function (done) {
+        server.post('/api/ying/1/units')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                "hsMonth"           : "201710",
+                "maxPrepayRate"        : "0.9",
+                "unInvoicedRate"       : "0.7",
+                "contractBaseInterest" : "0.2",
+                "expectHKDays"         : "50",
+                "tradeAddPrice"        : "0",
+                "weightedPrice"        : "500"
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id).to.be.a('number')
+                expect(res.body.data.hsMonth).to.include('201709')
+                done()
+            })
+    })
 
 
 

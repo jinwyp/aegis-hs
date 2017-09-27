@@ -215,6 +215,7 @@ export class OrderDetailComponent implements OnInit {
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
+            // postData.id = this.currentOrderUnitId
             this.hsOrderService.modifyOrderUnit(this.currentOrderId, this.currentOrderUnitId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
@@ -223,7 +224,9 @@ export class OrderDetailComponent implements OnInit {
                     this.showForm()
 
                 },
-                error => {this.httpService.errorHandler(error) }
+                error => {
+                    // this.httpService.errorHandler(error)
+                }
             )
         }
 

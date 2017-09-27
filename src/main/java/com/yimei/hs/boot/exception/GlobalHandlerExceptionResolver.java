@@ -49,7 +49,7 @@ public class GlobalHandlerExceptionResolver {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void process400Error(HttpServletRequest request, HttpServletResponse response, Exception ex) throws IOException {
         logger.error("400Exception:", ex);
-        if (WebUtils.isAjaxRequest(request)) {
+        if (!WebUtils.isAjaxRequest(request)) {
             response.setStatus(400);
             response.sendRedirect("/400");
         }
