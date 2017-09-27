@@ -57,9 +57,6 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
                     return false;
                 }
             } else {
-                // validate /api/ying/{orderId}/.*
-                // todo  /api/cang/{orderId}/.*
-                // validate /api/ying/{orderId}/.*
                 Matcher m = p.matcher(request.getRequestURI());
                 if (m.matches()) {
                     String business = m.group(1);

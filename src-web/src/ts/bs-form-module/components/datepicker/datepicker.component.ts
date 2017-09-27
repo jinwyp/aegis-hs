@@ -2,6 +2,11 @@ import {Component, OnInit, Input, forwardRef, ElementRef, ViewChild} from '@angu
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
 import {isUndefined} from 'util'
 
+import { I18n, CustomDatepickerI18n } from './datepicker-i18n'
+import {NgbDatepickerI18n} from '../ngb-datepicker/datepicker-i18n'
+
+
+
 @Component({
     selector: 'bs-datepicker',
     templateUrl: './datepicker.component.html',
@@ -14,7 +19,9 @@ import {isUndefined} from 'util'
             provide     : NG_VALUE_ACCESSOR,
             useExisting : forwardRef(() => DatePickerComponent),
             multi       : true
-        }
+        },
+        I18n,
+        {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n}
     ]
 })
 export class DatePickerComponent implements OnInit, ControlValueAccessor {
@@ -28,6 +35,12 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
 
     @Input('labelclass') labelClass: string = 'col-2'
     @Input('inputclass') inputClass: string = 'col-3'
+
+
+    @Input() maxDate: any = {year: 3900, month: 12, day: 31}
+    @Input() minDate: any = {year: 1900, month: 1, day: 1}
+
+    @Input() format: any = 'yyyy-m-d'
 
     @ViewChild('datepicker') datePickerEl: ElementRef
 
@@ -56,7 +69,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
     getDate(event : any) {
 
         this.value = event
-        this.inputDisplayValue = event.year + '-' + event.month + '-' + event.day
+        this.inputDisplayValue = this.displayFormatter(this.interValueDate)
     }
 
     onKeyChange(textValue : string) {
@@ -92,7 +105,34 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
         }
     }
 
+    displayFormatter (currentDate: any) {
 
+        let result = currentDate.year + '-' + currentDate.month + '-' + currentDate.day
+
+        function plus0 (text : string) {
+            if (text.length === 1) {
+                return '0' + text
+            }
+            return text
+        }
+
+        if (currentDate) {
+
+            if (this.format === 'yyyy-mm-dd') {
+                result = currentDate.year + '-' + plus0(currentDate.month) + '-' + currentDate.day
+            }
+
+            if (this.format === 'yyyy-mm') {
+                result = currentDate.year + '-' + plus0(currentDate.month)
+            }
+
+            if (this.format === 'yyyymm') {
+                result = currentDate.year.toString() + plus0(currentDate.month.toString())
+            }
+        }
+
+        return result
+    }
 
     onChange (value : any) { return }
     onTouched () { return }
@@ -104,6 +144,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
 
     set value(val: any) {
         // console.log('Setter: ', val)
+
         this.interValueDate = val
 
         this.onChange(val)
@@ -145,7 +186,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
                         now = new Date( Number(tempArray[0]), Number(tempArray[1]) - 1, Number(tempArray[2]) )
 
                         this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
-                        this.inputDisplayValue = this.interValueDate.year + '-' + this.interValueDate.month + '-' + this.interValueDate.day
+                        this.inputDisplayValue =  this.displayFormatter(this.interValueDate)
                     }
                 }
 
@@ -164,12 +205,27 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
                 }
             }
 
+
+            if ( (typeof value === 'string' || value instanceof String) && value.length === 6 ) {
+
+                isValid = true
+
+                now = new Date( Number(value.substr(0,4)), Number(value.substr(4,2)) - 1 )
+
+                this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
+                this.inputDisplayValue =  this.displayFormatter(this.interValueDate)
+
+            }
+
+
             if (typeof value === 'object' && value.year && value.month && value.day ) {
 
                 isValid = true
                 this.value = value
-                this.inputDisplayValue = this.interValueDate.year + '-' + this.interValueDate.month + '-' + this.interValueDate.day
+                this.inputDisplayValue =  this.displayFormatter(this.interValueDate)
             }
+
+
 
         }
 

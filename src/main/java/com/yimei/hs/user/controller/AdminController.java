@@ -2,6 +2,7 @@ package com.yimei.hs.user.controller;
 
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
+import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.user.dto.PageUserDTO;
 import com.yimei.hs.user.entity.User;
@@ -29,8 +30,11 @@ public class AdminController {
      * @return
      */
     @PostMapping("/users")
-    public ResponseEntity<Result<User>> create(@RequestBody @Validated User user) {
-        User nuser = userService.create(user);
+    public ResponseEntity<Result<User>> create(
+            @CurrentUser User admin,
+            @RequestBody @Validated User user
+    ) {
+        User nuser = userService.create(user, admin);
         if (nuser == null) {
             return Result.error(4001, "创建用户失败");
         } else {

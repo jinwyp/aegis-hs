@@ -17,12 +17,14 @@
         <result column="downstreamSettleMode" jdbcType="VARCHAR" property="downstreamSettleMode"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+        <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
     </resultMap>
 
 
     <!-- 一个订单记录: 包含的多个核算月配置， 以及多个参与方-->
     <resultMap id="YingOrderResultMap" type="com.yimei.hs.ying.entity.YingOrder" autoMapping="true">
         <result property="id" column="t1id"/>
+        <result property="tsu" column="t1tsu"/>
 
         <collection property="orderConfigList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingOrderConfig"
                     autoMapping="true">
@@ -30,19 +32,19 @@
             <id property="tsc" column="t2tsc"/>
         </collection>
 
-        <!--<collection property="orderPartyList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingOrderParty"-->
-        <!--autoMapping="true">-->
-        <!--<id property="id" column="t3id"/>-->
-        <!--<id property="tsc" column="t3tsc"/>-->
-        <!--<id property="orderId" column="t3orderId"/>-->
-        <!--</collection>-->
+        <collection property="orderPartyList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingOrderParty"
+                    autoMapping="true">
+            <id property="id" column="t3id"/>
+            <id property="tsc" column="t3tsc"/>
+            <id property="orderId" column="t3orderId"/>
+        </collection>
 
     </resultMap>
 
 
     <sql id="Base_Column_List">
         id, deptId, teamId, creatorId, ownerId, mainAccounting, line, cargoType, upstreamId,
-        upstreamSettleMode, downstreamId, downstreamSettleMode, status, tsc
+        upstreamSettleMode, downstreamId, downstreamSettleMode, status, tsc, tsu
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="YingOrderResultMap">
@@ -61,6 +63,7 @@
             t1.downstreamSettleMode,
             t1.status,
             t1.tsc,
+            t1.tsu,
 
             t2.id      AS t2id,
             t2.orderId,
@@ -101,6 +104,7 @@
         t1.downstreamSettleMode,
         t1.status,
         t1.tsc,
+        t1.tsu,
 
         t2.id AS t2id,
         t2.orderId,
@@ -170,136 +174,58 @@
             keyProperty="id">
         insert into hs_ying_order
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="deptId != null">
-                deptId,
-            </if>
-            <if test="teamId != null">
-                teamId,
-            </if>
-            <if test="creatorId != null">
-                creatorId,
-            </if>
-            <if test="ownerId != null">
-                ownerId,
-            </if>
-            <if test="mainAccounting != null">
-                mainAccounting,
-            </if>
-            <if test="line != null">
-                line,
-            </if>
-            <if test="cargoType != null">
-                cargoType,
-            </if>
-            <if test="upstreamId != null">
-                upstreamId,
-            </if>
-            <if test="upstreamSettleMode != null">
-                upstreamSettleMode,
-            </if>
-            <if test="downstreamId != null">
-                downstreamId,
-            </if>
-            <if test="downstreamSettleMode != null">
-                downstreamSettleMode,
-            </if>
-            <if test="status != null">
-                status,
-            </if>
-            <if test="tsc != null">
-                tsc,
-            </if>
+            <if test="id != null"> id, </if>
+            <if test="deptId != null"> deptId, </if>
+            <if test="teamId != null"> teamId, </if>
+            <if test="creatorId != null"> creatorId, </if>
+            <if test="ownerId != null"> ownerId, </if>
+            <if test="mainAccounting != null"> mainAccounting, </if>
+            <if test="line != null"> line, </if>
+            <if test="cargoType != null"> cargoType, </if>
+            <if test="upstreamId != null"> upstreamId, </if>
+            <if test="upstreamSettleMode != null"> upstreamSettleMode, </if>
+            <if test="downstreamId != null"> downstreamId, </if>
+            <if test="downstreamSettleMode != null"> downstreamSettleMode, </if>
+            <if test="status != null"> status, </if>
+            <if test="tsc != null">tsc,</if>
+            <if test="tsu != null">tsu,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=BIGINT},
-            </if>
-            <if test="deptId != null">
-                #{deptId,jdbcType=BIGINT},
-            </if>
-            <if test="teamId != null">
-                #{teamId,jdbcType=BIGINT},
-            </if>
-            <if test="creatorId != null">
-                #{creatorId,jdbcType=BIGINT},
-            </if>
-            <if test="ownerId != null">
-                #{ownerId,jdbcType=BIGINT},
-            </if>
-            <if test="mainAccounting != null">
-                #{mainAccounting,jdbcType=BIGINT},
-            </if>
-            <if test="line != null">
-                #{line,jdbcType=VARCHAR},
-            </if>
-            <if test="cargoType != null">
-                #{cargoType,jdbcType=VARCHAR},
-            </if>
-            <if test="upstreamId != null">
-                #{upstreamId,jdbcType=BIGINT},
-            </if>
-            <if test="upstreamSettleMode != null">
-                #{upstreamSettleMode,jdbcType=VARCHAR},
-            </if>
-            <if test="downstreamId != null">
-                #{downstreamId,jdbcType=BIGINT},
-            </if>
-            <if test="downstreamSettleMode != null">
-                #{downstreamSettleMode,jdbcType=VARCHAR},
-            </if>
-            <if test="status != null">
-                #{status,jdbcType=VARCHAR},
-            </if>
-            <if test="tsc != null">
-                #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="deptId != null">#{deptId,jdbcType=BIGINT},</if>
+            <if test="teamId != null">#{teamId,jdbcType=BIGINT},</if>
+            <if test="creatorId != null">#{creatorId,jdbcType=BIGINT},</if>
+            <if test="ownerId != null">#{ownerId,jdbcType=BIGINT},</if>
+            <if test="mainAccounting != null">#{mainAccounting,jdbcType=BIGINT},</if>
+            <if test="line != null">#{line,jdbcType=VARCHAR},</if>
+            <if test="cargoType != null">#{cargoType,jdbcType=VARCHAR},</if>
+            <if test="upstreamId != null">#{upstreamId,jdbcType=BIGINT},</if>
+            <if test="upstreamSettleMode != null">#{upstreamSettleMode,jdbcType=VARCHAR},</if>
+            <if test="downstreamId != null">#{downstreamId,jdbcType=BIGINT},</if>
+            <if test="downstreamSettleMode != null">#{downstreamSettleMode,jdbcType=VARCHAR},</if>
+            <if test="status != null">#{status,jdbcType=VARCHAR},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="tsu != null">#{tsu,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingOrder">
         update hs_ying_order
         <set>
-            <if test="deptId != null">
-                deptId = #{deptId,jdbcType=BIGINT},
+            <if test="deptId != null">deptId = #{deptId,jdbcType=BIGINT},</if>
+            <if test="teamId != null">teamId = #{teamId,jdbcType=BIGINT},</if>
+            <if test="creatorId != null">creatorId = #{creatorId,jdbcType=BIGINT},</if>
+            <if test="ownerId != null">ownerId = #{ownerId,jdbcType=BIGINT},</if>
+            <if test="mainAccounting != null">mainAccounting = #{mainAccounting,jdbcType=BIGINT},</if>
+            <if test="line != null">line = #{line,jdbcType=VARCHAR},</if>
+            <if test="cargoType != null">cargoType = #{cargoType,jdbcType=VARCHAR},</if>
+            <if test="upstreamId != null">upstreamId = #{upstreamId,jdbcType=BIGINT},</if>
+            <if test="upstreamSettleMode != null">upstreamSettleMode = #{upstreamSettleMode,jdbcType=VARCHAR},</if>
+            <if test="downstreamId != null">downstreamId = #{downstreamId,jdbcType=BIGINT},</if>
+            <if test="downstreamSettleMode != null">downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR},
             </if>
-            <if test="teamId != null">
-                teamId = #{teamId,jdbcType=BIGINT},
-            </if>
-            <if test="creatorId != null">
-                creatorId = #{creatorId,jdbcType=BIGINT},
-            </if>
-            <if test="ownerId != null">
-                ownerId = #{ownerId,jdbcType=BIGINT},
-            </if>
-            <if test="mainAccounting != null">
-                mainAccounting = #{mainAccounting,jdbcType=BIGINT},
-            </if>
-            <if test="line != null">
-                line = #{line,jdbcType=VARCHAR},
-            </if>
-            <if test="cargoType != null">
-                cargoType = #{cargoType,jdbcType=VARCHAR},
-            </if>
-            <if test="upstreamId != null">
-                upstreamId = #{upstreamId,jdbcType=BIGINT},
-            </if>
-            <if test="upstreamSettleMode != null">
-                upstreamSettleMode = #{upstreamSettleMode,jdbcType=VARCHAR},
-            </if>
-            <if test="downstreamId != null">
-                downstreamId = #{downstreamId,jdbcType=BIGINT},
-            </if>
-            <if test="downstreamSettleMode != null">
-                downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR},
-            </if>
-            <if test="status != null">
-                status = #{status,jdbcType=VARCHAR},
-            </if>
-            <if test="tsc != null">
-                tsc = #{tsc,jdbcType=TIMESTAMP},
-            </if>
+            <if test="status != null">status = #{status,jdbcType=VARCHAR},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            tsu = current_timestamp
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -317,14 +243,16 @@
             downstreamId         = #{downstreamId,jdbcType=BIGINT},
             downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR},
             status               = #{status,jdbcType=VARCHAR},
-            tsc                  = #{tsc,jdbcType=TIMESTAMP}
+            tsc                  = #{tsc,jdbcType=TIMESTAMP},
+            tsu                  = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 
     <update id="transfer">
         UPDATE hs_ying_order
-        SET ownerId = #{to,jdbcType=BIGINT}
-        WHERE orderId = #{orderId, jdbcType=BIGINT} and ownerId = #{from,jdbcType=BIGINT}
+        SET ownerId = #{to,jdbcType=BIGINT},
+            tsu     = current_timestamp
+        WHERE orderId = #{orderId, jdbcType=BIGINT} AND ownerId = #{from,jdbcType=BIGINT}
     </update>
 
 </mapper>

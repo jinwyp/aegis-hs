@@ -171,12 +171,13 @@ public class UserControllerTest extends YingTestBase {
 
         // 5.1 更新用户
         User updateUser = new User();
+        updateUser.setId(userResult.getData().getId());
         updateUser.setIsActive(true);
         updateUser.setDeptId(userResult.getData().getDeptId());
         String updateUserURL = "/api/users/" + userResult.getData().getId();
         Result<Integer> updateUserRtn = client.exchange(updateUserURL, HttpMethod.PUT, new HttpEntity<User>(updateUser), typeReferenceInteger).getBody();
         if (updateUserRtn.getSuccess()) {
-            logger.info("更新用户成功\nPUT {}\nrequest = {}\nresponse = {}", "/api/users", updateUserURL, printJson(updateUser), printJson(updateUserRtn.getData()));
+            logger.info("更新用户成功\nPUT {}\nrequest = {}\nresponse = {}", updateUserURL, printJson(updateUser), printJson(updateUserRtn.getData()));
         } else {
             logger.error("更新用户失败: {}", updateUserRtn.getError());
             System.exit(-2);
@@ -247,7 +248,7 @@ public class UserControllerTest extends YingTestBase {
         logger.info("page order variables = {}, url = {}", variables, orderPageUrl);
         PageResult<YingOrder> yingOrderPageResult = client.exchange(orderPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
         if (yingOrderPageResult.getSuccess()) {
-            logger.info("获取应收订单分页成功\nGET {}\nrequest = {}\nresponse:\n{}", "/api/yings", printJson(variables), printJson(yingOrderPageResult.getData()));
+            logger.info("获取应收订单分页成功\nGET {}\nrequest = {}\nresponse:\n{}", orderPageUrl, printJson(variables), printJson(yingOrderPageResult.getData()));
         } else {
             logger.error("获取应收订单分页失败: {}", yingOrderPageResult.getError());
             System.exit(-1);
@@ -269,7 +270,8 @@ public class UserControllerTest extends YingTestBase {
     private void config() throws JsonProcessingException {
 
         // 1. 增加核算月配置
-        String configCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/configs";
+        logger.info("开始增加核算月配置");
+        String configCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/units";
 
         YingOrderConfig config = new YingOrderConfig() {{
             setHsMonth("201712");
@@ -300,7 +302,7 @@ public class UserControllerTest extends YingTestBase {
             setTradeAddPrice(new BigDecimal("0"));
             setWeightedPrice(new BigDecimal("700"));
         }};
-        String configUpdateUrl = "/api/ying/" + yingOrderConfigResult.getData().getOrderId() + "/configs/" + yingOrderConfigResult.getData().getId();
+        String configUpdateUrl = "/api/ying/" + yingOrderConfigResult.getData().getOrderId() + "/units/" + yingOrderConfigResult.getData().getId();
         Result<Integer> yingOrderConfigUpdateResult = client.exchange(configUpdateUrl, HttpMethod.PUT, new HttpEntity<YingOrderConfig>(yingOrderConfig), typeReferenceInteger).getBody();
         if (yingOrderConfigUpdateResult.getSuccess()) {
             logger.info("更新核算月配置成功\nPOST {}\nrequest = {}\nresponse = {}", configUpdateUrl, printJson(yingOrderConfig), printJson(yingOrderConfigUpdateResult.getData()));
@@ -315,10 +317,10 @@ public class UserControllerTest extends YingTestBase {
         variablesHs.put("orderId", "" + yingOrderResult.getData().getId());
         variablesHs.put("pageSize", 5);
         variablesHs.put("pageNo", 1);
-        String configPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/configs?"+WebUtils.getUrlTemplate(PageYingOrderConfigDTO.class);
+        String configPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/units?"+WebUtils.getUrlTemplate(PageYingOrderConfigDTO.class);
         PageResult<YingOrderConfig> yingOrderConfigPageResult = client.exchange(configPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderConfigPage, variablesHs).getBody();
         if (yingOrderConfigPageResult.getSuccess()) {
-            logger.info("获取核算月配置分页成功 GET /api/yings request: {}\nresponse:\n{}", variablesHs, printJson(yingOrderConfigPageResult.getData()));
+            logger.info("获取核算月配置分页成功\nGET /api/ying\nrequest: {}\nresponse:\n{}", variablesHs, printJson(yingOrderConfigPageResult.getData()));
         } else {
             logger.error("获取核算月配置分页失败: {}", yingOrderConfigPageResult.getError());
             System.exit(-1);
@@ -362,9 +364,9 @@ public class UserControllerTest extends YingTestBase {
         String fayunPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns?"+WebUtils.getUrlTemplate(PageYingFayunDTO.class);
         PageResult<YingFayun> fayunPageResult = client.exchange(fayunPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFayunPage,variablesFayun).getBody();
         if (fayunPageResult.getSuccess()) {
-            logger.info("创建分页成功\nPOST {}\nrequest = {}\nresponse = {}", fayunPageUrl, "", printJson(fayunPageResult.getData()));
+            logger.info("分页成功\nPOST {}\nrequest = {}\nresponse = {}", fayunPageUrl, variablesFayun, printJson(fayunPageResult.getData()));
         } else {
-            logger.info("创建分页失败: {}", fayunPageResult.getError());
+            logger.info("分页失败: {}", fayunPageResult.getError());
             System.exit(-1);
         }
 
@@ -391,6 +393,17 @@ public class UserControllerTest extends YingTestBase {
             logger.error("发运更新失败: {}", yingFayunUpdateResult.getError());
             System.exit(-2);
         }
+
+        // 测异常!!!
+        // 添加发运 - 一致性校验
+        // if ( result.getSuccess() == false) {
+        //      result.getError().getMessage().equals("adfadsfasdfasasf")
+        // } else{
+        //      log.error("should fail here");
+        //      System.exit(-1);
+        // }
+        //
+
     }
 
     private void huikuan() throws JsonProcessingException {
@@ -423,8 +436,10 @@ public class UserControllerTest extends YingTestBase {
         variablesHuikuan.put("orderId", yingOrderResult.getData().getId());
         variablesHuikuan.put("pageSize", 5);
         variablesHuikuan.put("pageNo", 1);
-        variablesHuikuan.put("huikuanCompanyId", yingOrderResult.getData().getDownstreamId());
-        PageResult<YingHuikuan> huikuanPageResult = client.exchange(huikuanPageUrl, HttpMethod.GET,  HttpEntity.EMPTY, typeReferenceHuikuanPage,variablesHuikuan).getBody();
+
+
+        PageResult<YingHuikuan> huikuanPageResult = client.exchange(huikuanPageUrl, HttpMethod.GET,  HttpEntity.EMPTY, typeReferenceHuikuanPage, variablesHuikuan).getBody();
+
         if (huikuanPageResult.getSuccess()) {
             logger.info("创建分页成功\n GET {}\nrequest = {}\nresponse = {}", huikuanPageUrl, "", printJson(huikuanPageResult.getData()));
         } else {
@@ -491,7 +506,7 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
 
-        // 4. 更新 todo
+        // 4. 更新 todo  timestamp
     }
 
     private void fukuan() throws JsonProcessingException {

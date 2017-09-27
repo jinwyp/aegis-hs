@@ -40,12 +40,12 @@ public class YingFayunController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/fayuns")
+    @GetMapping("/{morderId}/fayuns")
     public ResponseEntity<PageResult<YingFayun>> list(
             @CurrentUser User user,
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             PageYingFayunDTO pageYingFayunDTO) {
-        pageYingFayunDTO.setOrderId(orderId);
+        pageYingFayunDTO.setOrderId(morderId);
         Page<YingFayun> page = yingFayunService.getPage(pageYingFayunDTO);
         return PageResult.ok(page);
     }
@@ -56,9 +56,9 @@ public class YingFayunController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/fayuns/{id}")
+    @GetMapping("/{morderId}/fayuns/{id}")
     public ResponseEntity<Result<YingFayun>> read(
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id) {
 
         YingFayun fayun = yingFayunService.findOne(id);
@@ -74,13 +74,16 @@ public class YingFayunController {
      *
      * @return
      */
-    @PostMapping("/{orderId}/fayuns")
+    @PostMapping("/{morderId}/fayuns")
     @Transactional(readOnly =  false)
     public ResponseEntity<Result<YingFayun>> create(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingFayun yingFayun
     ) {
-        yingFayun.setOrderId(orderId);
+
+        // todo 依据上下游发运方式， 校验yingFayun
+
+        yingFayun.setOrderId(morderId);
         yingFayunService.create(yingFayun);
         logger.info("created fayn: {}", yingFayun);
         return Result.ok(yingFayun);
@@ -91,14 +94,12 @@ public class YingFayunController {
      *
      * @return
      */
-    @PutMapping("/{orderId}/fayuns/{id}")
+    @PutMapping("/{morderId}/fayuns/{id}")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>>update(
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id,
             @RequestBody @Validated(UpdateGroup.class) YingFayun yingFayun) {
-
-        assert (orderId == orderId);
         yingFayun.setId(id);
         int cnt = yingFayunService.update(yingFayun);
         if (cnt != 1) {
@@ -116,9 +117,9 @@ public class YingFayunController {
     /**
      *  发运统计
      */
-    @GetMapping("/{orderId}/fayuns-stat")
+    @GetMapping("/{morderId}/fayuns-stat")
     public ResponseEntity<Result<FayunStat>> stat(
-            @PathVariable("orderId") long orderId
+            @PathVariable("morderId") Long morderId
     ) {
         return Result.ok(null);
     }

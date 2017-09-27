@@ -32,6 +32,10 @@ import { HSUserService } from '../services/hsUser.service'
 import { HSOrderService } from '../services/hsOrder.service'
 
 
+import { PipeSubstringId, PipeOrderStatus} from './pipes/order'
+
+
+
 
 const userHomeRoutes: Routes = [
     {path : '', redirectTo : '/info/basic', pathMatch : 'full'},
@@ -51,6 +55,9 @@ const userHomeRoutes: Routes = [
 
 @NgModule({
     declarations : [
+        PipeOrderStatus,
+
+
         AdminHomeComponent,
         BasicInfoComponent,
         ModifyPasswordComponent,

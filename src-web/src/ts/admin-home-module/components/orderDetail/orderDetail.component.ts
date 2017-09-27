@@ -25,7 +25,8 @@ import { HSOrderService } from '../../../services/hsOrder.service'
 export class OrderDetailComponent implements OnInit {
 
     currentOrder : any
-    currentOrderId : any
+    currentOrderId : number
+    currentOrderUnitId : number
 
     orderUnitForm: FormGroup
     ignoreDirty: boolean = false
@@ -63,7 +64,7 @@ export class OrderDetailComponent implements OnInit {
     ngOnInit(): void {
 
         this.route.paramMap.switchMap( (params: ParamMap) => {
-            this.currentOrderId = params.get('orderId')
+            this.currentOrderId = Number(params.get('orderId'))
             return this.hsOrderService.getOrderByID(this.currentOrderId)
         }).subscribe(
             data => {
@@ -92,7 +93,7 @@ export class OrderDetailComponent implements OnInit {
     getOrderUnitList () {
         this.hsOrderService.getOrderUnitListByID(this.currentOrderId).subscribe(
             data => {
-                this.unitList = data.data
+                this.unitList = data.data.results
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -129,11 +130,26 @@ export class OrderDetailComponent implements OnInit {
 
     orderUnitFormError : any = {}
     orderUnitFormValidationMessages: any = {
-        'name'  : {
+        'hsMonth'  : {
             'required'      : '请填写名称!'
         },
-        'deptId'  : {
-            'required'      : '请选择事业部门!'
+        'maxPrepayRate'  : {
+            'required'      : '请填写比例!'
+        },
+        'unInvoicedRate'  : {
+            'required'      : '请填写比例!'
+        },
+        'contractBaseInterest'  : {
+            'required'      : '请填写利率!'
+        },
+        'expectHKDays'  : {
+            'required'      : '请填写天数!'
+        },
+        'tradeAddPrice'  : {
+            'required'      : '请填写加价!'
+        },
+        'weightedPrice'  : {
+            'required'      : '请填写价格!'
         }
     }
 
@@ -154,6 +170,8 @@ export class OrderDetailComponent implements OnInit {
             'weightedPrice'    : ['', [Validators.required ] ]
         } )
 
+
+
         this.orderUnitForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
             this.orderUnitFormInputChange(data)
@@ -173,8 +191,20 @@ export class OrderDetailComponent implements OnInit {
 
         const postData = this.orderUnitForm.value
 
+
+        if (typeof this.orderUnitForm.value.hsMonth === "object" ) {
+            if ( this.orderUnitForm.value.hsMonth.month.toString().length === 1) {
+                postData.hsMonth = this.orderUnitForm.value.hsMonth.year.toString() + '0' + this.orderUnitForm.value.hsMonth.month.toString()
+            } else {
+                postData.hsMonth = this.orderUnitForm.value.hsMonth.year.toString() + this.orderUnitForm.value.hsMonth.month.toString()
+            }
+        }
+
+
+        console.log(postData)
+
         if (this.isAddNew) {
-            this.hsOrderService.createNewOrder(postData).subscribe(
+            this.hsOrderService.createNewOrderUnit(this.currentOrderId, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -185,7 +215,8 @@ export class OrderDetailComponent implements OnInit {
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
-            this.hsOrderService.modifyOrder(this.currentOrderId, postData).subscribe(
+            // postData.id = this.currentOrderUnitId
+            this.hsOrderService.modifyOrderUnit(this.currentOrderId, this.currentOrderUnitId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
@@ -193,7 +224,9 @@ export class OrderDetailComponent implements OnInit {
                     this.showForm()
 
                 },
-                error => {this.httpService.errorHandler(error) }
+                error => {
+                    // this.httpService.errorHandler(error)
+                }
             )
         }
 
@@ -204,6 +237,7 @@ export class OrderDetailComponent implements OnInit {
 
         if (isAddNew) {
             this.isAddNew = true
+            this.currentOrderUnitId = 0
 
             this.orderUnitForm.patchValue({
                 'hsMonth'    : '',
@@ -219,6 +253,7 @@ export class OrderDetailComponent implements OnInit {
 
         } else {
             this.isAddNew = false
+            this.currentOrderUnitId = unit.id
 
             this.orderUnitForm.patchValue(unit)
         }

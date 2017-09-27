@@ -35,12 +35,12 @@ public class YingHuikuanController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/huikuans")
+    @GetMapping("/{morderId}/huikuans")
     public ResponseEntity<PageResult<YingHuikuan>> list(
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             PageYingHuikuanDTO pageYingHuikuanDTO)
     {
-        pageYingHuikuanDTO.setOrderId(orderId);
+        pageYingHuikuanDTO.setOrderId(morderId);
         return PageResult.ok(yingHuikuanService.getPage(pageYingHuikuanDTO));
     }
 
@@ -50,9 +50,9 @@ public class YingHuikuanController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/huikuans/{id}")
+    @GetMapping("/{morderId}/huikuans/{id}")
     public ResponseEntity<Result<YingHuikuan>> read(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
         YingHuikuan huikuan = yingHuikuanService.findOne(id);
@@ -68,13 +68,14 @@ public class YingHuikuanController {
      *
      * @return
      */
-    @PostMapping("/{orderId}/huikuans")
+    @PostMapping("/{morderId}/huikuans")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<YingHuikuan>> create(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingHuikuan  yingHuikuan
     ) {
-        yingHuikuan.setOrderId(orderId);
+        // todo 增加校验
+        yingHuikuan.setOrderId(morderId);
         int cnt = yingHuikuanService.create(yingHuikuan);
         return Result.ok(yingHuikuan);
     }
@@ -84,14 +85,14 @@ public class YingHuikuanController {
      *
      * @return
      */
-    @PutMapping("/{orderId}/huikuans/:id")
+    @PutMapping("/{morderId}/huikuans/:id")
     @Transactional(readOnly =  false)
     public ResponseEntity<Result<Integer>> update(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) YingHuikuan yingHuikuan
     ) {
-        assert (yingHuikuan.getOrderId() == orderId);
+        assert (yingHuikuan.getOrderId() == morderId);
         yingHuikuan.setId(id);
         int cnt = yingHuikuanService.update(yingHuikuan);
 

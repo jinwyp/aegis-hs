@@ -36,12 +36,12 @@ public class YingInvoiceController {
      *
      * @return
      */
-    @GetMapping("/{orderId}/invoices")
+    @GetMapping("/{morderId}/invoices")
     public ResponseEntity<PageResult<YingInvoice>> list(
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             PageYingInvoiceDTO pageYingInvoiceDTO
     ) {
-        pageYingInvoiceDTO.setOrderId(orderId);
+        pageYingInvoiceDTO.setOrderId(morderId);
         Page<YingInvoice> page = yingInvoiceService.getPage(pageYingInvoiceDTO);
         return PageResult.ok(page);
     }
@@ -52,9 +52,9 @@ public class YingInvoiceController {
      * @param id
      * @return
      */
-    @GetMapping("/{orderId}/invoices/{id}")
+    @GetMapping("/{morderId}/invoices/{id}")
     public ResponseEntity<Result<YingInvoice>> read(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
         YingInvoice invoice = yingInvoiceService.findOne(id);
@@ -70,12 +70,11 @@ public class YingInvoiceController {
      *
      * @return
      */
-    @PostMapping("/{orderId}/invoices")
+    @PostMapping("/{morderId}/invoices")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<YingInvoice>> create(
        @RequestBody @Validated(CreateGroup.class) YingInvoice yingInvoice
     ) {
-        // 创建发表记录 todo
         yingInvoiceService.create(yingInvoice);
         return Result.ok(yingInvoice);
     }
@@ -85,15 +84,15 @@ public class YingInvoiceController {
      *
      * @return
      */
-    @PutMapping("/{orderId}/invoices/{id}")
+    @PutMapping("/{morderId}/invoices/{id}")
     @Transactional(readOnly =  false)
     public ResponseEntity<Result<Integer>> update(
-            @PathVariable("orderId") long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) YingInvoice yingInvoice
     ) {
-        assert (yingInvoice.getOrderId() == orderId);
-        yingInvoice.setOrderId(orderId);
+        assert (yingInvoice.getOrderId() == morderId);
+        yingInvoice.setOrderId(morderId);
         int rtn = yingInvoiceService.update(yingInvoice);
         if (rtn != 1) {
             return Result.error(4001, "更新错误", HttpStatus.NOT_FOUND);

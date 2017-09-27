@@ -36,6 +36,7 @@ const apiPath = {
 
 
     hsGetOrderList : '/api/yings',
+    hsGetOrderConfig : '/api/ying',
 }
 
 

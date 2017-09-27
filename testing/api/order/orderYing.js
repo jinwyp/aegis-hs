@@ -28,7 +28,7 @@ describe('应收订单', function () {
     before(function (done) {
 
         server.post('/api/login')
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .send({
                 phone: "13022117050",
                 password: "123456"
@@ -48,7 +48,7 @@ describe('应收订单', function () {
     it('新建应收订单1 POST: /api/yings', function (done) {
         server.post('/api/yings')
             .set('Authorization', Authorization)
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .send({
                 "deptId":2,
                 "teamId":1,
@@ -61,7 +61,7 @@ describe('应收订单', function () {
                 "downstreamId":3
             })
             .expect('Content-Type', /json/)
-            .expect(200)
+            .expect(201)
             .end(function(err, res) {
                 if (err) return done(err)
                 expect(res.body.success).to.equal(true)
@@ -76,7 +76,7 @@ describe('应收订单', function () {
     it('新建应收订单2 POST: /api/yings', function (done) {
         server.post('/api/yings')
             .set('Authorization', Authorization)
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .send({
                 "deptId":2,
                 "teamId":1,
@@ -89,7 +89,7 @@ describe('应收订单', function () {
                 "downstreamId":3
             })
             .expect('Content-Type', /json/)
-            .expect(200)
+            .expect(201)
             .end(function(err, res) {
                 if (err) return done(err)
                 expect(res.body.success).to.equal(true)
@@ -105,7 +105,7 @@ describe('应收订单', function () {
     it('获取应收订单列表 GET: /api/yings?pageNo=1&pageSize=2', function (done) {
         server.get('/api/yings?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -125,7 +125,7 @@ describe('应收订单', function () {
     it('获取某个ID的应收订单信息 GET: /api/yings/1', function (done) {
         server.get('/api/yings/1')
             .set('Authorization', Authorization)
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -142,8 +142,9 @@ describe('应收订单', function () {
     it('修改某个ID的应收订单名称 PUT: /api/yings/1', function (done) {
         server.put('/api/yings/1')
             .set('Authorization', Authorization)
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .send({
+                "id":1,
                 "deptId":2,
                 "teamId":2,
                 "line":"那曲 - 晋和 - 嘉瑞",
@@ -164,6 +165,58 @@ describe('应收订单', function () {
             })
     })
 
+
+
+
+    it('新建核算单元1 POST: /api/ying/1/units', function (done) {
+        server.post('/api/ying/1/units')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                "hsMonth"           : "201709",
+                "maxPrepayRate"        : "0.9",
+                "unInvoicedRate"       : "0.7",
+                "contractBaseInterest" : "0.2",
+                "expectHKDays"         : "45",
+                "tradeAddPrice"        : "0",
+                "weightedPrice"        : "700"
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id).to.be.a('number')
+                expect(res.body.data.hsMonth).to.include('201709')
+                done()
+            })
+    })
+
+    it('新建核算单元2 POST: /api/ying/1/units', function (done) {
+        server.post('/api/ying/1/units')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                "hsMonth"           : "201710",
+                "maxPrepayRate"        : "0.9",
+                "unInvoicedRate"       : "0.7",
+                "contractBaseInterest" : "0.2",
+                "expectHKDays"         : "50",
+                "tradeAddPrice"        : "0",
+                "weightedPrice"        : "500"
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id).to.be.a('number')
+                expect(res.body.data.hsMonth).to.include('201709')
+                done()
+            })
+    })
 
 
 

@@ -9,7 +9,7 @@
 
         <p class="ngb-error" *ngIf="errorFormatInfo"> {{errorFormatInfo}}</p>
 
-        <ngb-datepicker *ngIf="isShowDatePicker" [(ngModel)]="interValueDate" (ngModelChange)="getDate($event)"> </ngb-datepicker>
+        <ngb-datepicker *ngIf="isShowDatePicker" [(ngModel)]="interValueDate" (ngModelChange)="getDate($event)" [minDate]="minDate" [maxDate]="maxDate"> </ngb-datepicker>
 
         <div class="invalid-feedback d-block" *ngIf="error">
             <span *ngIf="error"> {{error}} </span>

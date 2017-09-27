@@ -101,7 +101,7 @@ public class YingOrderController {
 
     /**
      * 将order转移
-     * @param orderId
+     * @param morderId
      * @param toId
      * @return
      */
@@ -109,10 +109,10 @@ public class YingOrderController {
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> transfer(
             @CurrentUser User user,
-            @PathVariable("orderId") Long orderId,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("toId") Long toId
     ) {
-        int cnt =  yingOrderService.updateTransfer(orderId,user.getId(), toId);
+        int cnt =  yingOrderService.updateTransfer(morderId,user.getId(), toId);
         if (cnt != 1) {
             return Result.error(4001, "转移失败", HttpStatus.NOT_FOUND);
         }
