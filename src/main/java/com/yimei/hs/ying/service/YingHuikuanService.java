@@ -2,7 +2,6 @@ package com.yimei.hs.ying.service;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.YingFukuan;
-import com.yimei.hs.ying.entity.YingHuankuanMap;
 import com.yimei.hs.ying.entity.YingHuikuan;
 import com.yimei.hs.ying.dto.PageYingHuikuanDTO;
 import com.yimei.hs.ying.entity.YingHuikuanMap;
@@ -52,6 +51,7 @@ public class YingHuikuanService {
     }
 
     public int create(YingHuikuan yingHuikuan) {
+        List<YingHuikuan> huikuanList = yingHuikuanMapper.loadAll(yingHuikuan.getOrderId());
         // 插入还款记录
         int rtn = yingHuikuanMapper.insert(yingHuikuan);
         if (rtn != 1) {
@@ -65,63 +65,82 @@ public class YingHuikuanService {
         List<YingFukuan> fukuanList = yingFukuanMapper.getList(yingHuikuan.getOrderId());
 
         // 待添加的记录 todo
-        List<YingHuikuanMap> toAdd = new ArrayList<>();
-        if (huikuanMap == null||huikuanMap.size()==0) {
-            BigDecimal templateAmount = yingHuikuan.getHuikuanAmount();
-            logger.info("value===> {}\n id==> {}",templateAmount);
-            for (YingFukuan fukuan : fukuanList) {
-                BigDecimal currentFukuan = fukuan.getAmount();
-                //付款款额度大于回款额度
-                if (fukuan.getPayAmount().subtract(yingHuikuan.getHuikuanAmount()).doubleValue() > 0) {
-                    toAdd.add(new YingHuikuanMap() {{
-                        setOrderId(yingHuikuan.getOrderId());
-                        setFukuanId(fukuan.getId());
-                        setHuikuanId(yingHuikuan.getId());
-                        setAmount(yingHuikuan.getHuikuanAmount());
-                    }});
-                    break;
-                } else {
-                    //付款额度小于还款额度
+        ArrayList<YingHuikuanMap> toAdd = new ArrayList<>();
+        //从未添加过
+        if (huikuanMap == null || huikuanMap.size() == 0) {
 
-                    //剩余额度大于本次付款额度
-                    if (templateAmount.subtract(fukuan.getPayAmount()).doubleValue() > 0) {
-                        logger.info("value===> {}\n id==> {}",templateAmount,fukuan.getId());
-                        toAdd.add(new YingHuikuanMap() {{
-                            setOrderId(yingHuikuan.getOrderId());
-                            setFukuanId(fukuan.getId());
-                            setHuikuanId(yingHuikuan.getId());
-                            setAmount(fukuan.getPayAmount());
-                        }});
-                        templateAmount = templateAmount.subtract(fukuan.getPayAmount());
+            toAdd.addAll(doHelp(yingHuikuan, (ArrayList<YingFukuan>) fukuanList));
 
-                        //剩余额度小于本次付款数目 但是不等于0
-                    } else if (templateAmount.subtract(fukuan.getPayAmount()).doubleValue() < 0 && templateAmount.subtract(new BigDecimal("0")).doubleValue() >= 1) {
-                        BigDecimal tempinner = templateAmount;
+        } else {
+            //匹配数据中最后一组数据id 是否与 回款  最后一组数据一致
+            if (huikuanMap.get(0).getHuikuanId() == huikuanList.get(huikuanList.size() - 1).getId()) {
 
-                        toAdd.add(new YingHuikuanMap() {{
-                            setOrderId(yingHuikuan.getOrderId());
-                            setFukuanId(fukuan.getId());
-                            setHuikuanId(yingHuikuan.getId());
-                            setAmount(tempinner);
+                //已匹配总额
+                BigDecimal mapAmount = new BigDecimal("0");
+                for (YingHuikuanMap huimap : huikuanMap) {
+                    mapAmount.add(huimap.getAmount());
+                }
+                //付款总额
+                BigDecimal fukuanAmount = new BigDecimal("0");
+                for (YingFukuan fukuan : fukuanList) {
+                    fukuanAmount.add(fukuan.getAmount());
+                }
 
-                        }});
-                        templateAmount = templateAmount.subtract(templateAmount);
-                        break;
+                if (fukuanAmount.subtract(mapAmount).doubleValue()!=0) {
+                    //匹配数据中最后一组数据id 是否与 付款最后一组数据一致
+                    fukuanList.get(fukuanList.size() - 1).setAmount(fukuanAmount.subtract(mapAmount));
+                    //todo fukuanList 移除已经匹配过的数据
+                    toAdd.addAll(doHelp(yingHuikuan, (ArrayList<YingFukuan>) fukuanList));
+                }
+
+                //
+            } else {
+                //历史数据需要匹配
+                //找关键点
+                long lastFukuanMapId = huikuanMap.get(0).getFukuanId();
+                long lastHuikuanMapId = huikuanMap.get(0).getHuikuanId();
+                BigDecimal mapHuikuanSuplus = new BigDecimal("0");
+                BigDecimal mapHuikuan = new BigDecimal("0");
+                BigDecimal mapFukuanSuplus = new BigDecimal("0");
+                BigDecimal mapFukuan = new BigDecimal("0");
+                for (YingHuikuanMap huiMap:huikuanMap) {
+                    if (lastFukuanMapId==huiMap.getFukuanId()) {
+                        mapFukuan.add(huiMap.getAmount());
                     }
                 }
-            }
-        } else {
 
-            //
-            huikuanMap.get(0).getFukuanId();
+                for (YingHuikuanMap huiMap:huikuanMap) {
+                    if (lastHuikuanMapId==huiMap.getHuikuanId()) {
+                        mapHuikuan.add(huiMap.getAmount());
+                    }
+                }
+                mapHuikuanSuplus = yingHuikuanMapper.selectByPrimaryKey(lastHuikuanMapId).getHuikuanAmount().subtract(mapHuikuan);
+                mapFukuanSuplus = yingFukuanMapper.selectByPrimaryKey(lastFukuanMapId).getPayAmount().subtract(mapFukuan);
+//                if (mapHuikuanSuplus <= 0) {
+//                    fukuanList.remove(1);
+//                    for (YingHuikuan huikuan : huikuanList) {
+//                        if (mapFukuanSuplus <= 0) {
+//                            //从当前位置的下个开始匹配
+//                            doHelp(huikuan, (ArrayList<YingFukuan>) fukuanList);
+//                        } else {
+//                            //从当前位置开始匹配 amount=mapFukuanSuplus
+//                            doHelp(huikuan, (ArrayList<YingFukuan>) fukuanList);
+//                        }
+//                    }
+//                } else {
+//
+//                }
+            }
+
+
         }
         //case 1 fukuan>=huikuan
 
 
         //case 2fukuan<huikuan
 
-        for ( YingHuikuanMap item: toAdd) {
-              yingHuikuanMapMapper.insert(item);
+        for (YingHuikuanMap item : toAdd) {
+            yingHuikuanMapMapper.insert(item);
         }
 
         return rtn;
@@ -130,6 +149,7 @@ public class YingHuikuanService {
 
     /**
      * 重建 回款-付款-映射
+     *
      * @param orderId
      * @return
      */
@@ -143,6 +163,7 @@ public class YingHuikuanService {
     /**
      * todo 陆彪 check
      * 逻辑删除
+     *
      * @param id
      * @return
      */
@@ -152,4 +173,63 @@ public class YingHuikuanService {
         this.createMap(orderId);
         return yingHuikuanMapper.delete(id);
     }
+
+
+    /**
+     * @param yingHuikuan
+     * @param fukuanList
+     * @return
+     */
+    public ArrayList<YingHuikuanMap> doHelp(YingHuikuan yingHuikuan, ArrayList<YingFukuan> fukuanList) {
+        ArrayList<YingHuikuanMap> toAdd = new ArrayList<YingHuikuanMap>();
+        BigDecimal templateAmount = yingHuikuan.getHuikuanAmount();
+
+        for (YingFukuan fukuan : fukuanList) {
+            BigDecimal currentFukuan = fukuan.getAmount();
+            //付款款额度大于回款额度
+            if (fukuan.getPayAmount().subtract(yingHuikuan.getHuikuanAmount()).doubleValue() > 0) {
+                toAdd.add(new YingHuikuanMap() {{
+                    setOrderId(yingHuikuan.getOrderId());
+                    setFukuanId(fukuan.getId());
+                    setHuikuanId(yingHuikuan.getId());
+                    setAmount(yingHuikuan.getHuikuanAmount());
+                }});
+                break;
+            } else {
+                //付款额度小于还款额度
+
+                //剩余额度大于本次付款额度
+                if (templateAmount.subtract(fukuan.getPayAmount()).doubleValue() > 0) {
+                    logger.info("value===> {}\n id==> {}", templateAmount, fukuan.getId());
+                    toAdd.add(new YingHuikuanMap() {{
+                        setOrderId(yingHuikuan.getOrderId());
+                        setFukuanId(fukuan.getId());
+                        setHuikuanId(yingHuikuan.getId());
+                        setAmount(fukuan.getPayAmount());
+                    }});
+                    templateAmount = templateAmount.subtract(fukuan.getPayAmount());
+
+                    //剩余额度小于本次付款数目 但是不等于0
+                } else if (templateAmount.subtract(fukuan.getPayAmount()).doubleValue() < 0 && templateAmount.subtract(new BigDecimal("0")).doubleValue() >= 1) {
+                    BigDecimal tempinner = templateAmount;
+
+                    toAdd.add(new YingHuikuanMap() {{
+                        setOrderId(yingHuikuan.getOrderId());
+                        setFukuanId(fukuan.getId());
+                        setHuikuanId(yingHuikuan.getId());
+                        setAmount(tempinner);
+
+                    }});
+                    templateAmount = templateAmount.subtract(templateAmount);
+                    break;
+                }
+            }
+
+        }
+        return toAdd;
+    }
+
 }
+
+
+

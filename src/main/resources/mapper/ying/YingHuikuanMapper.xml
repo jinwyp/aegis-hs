@@ -141,6 +141,12 @@
             <if test="huikuanDate!=null">AND t1.huikuanDate=#{huikuanDate}</if>
         </where>
     </select>
+    <select id="loadAll" resultType="com.yimei.hs.ying.entity.YingHuikuan">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM hs_ying_huikuan
+        WHERE orderId=#{orderId}
+    </select>
 
     <!-- 物理删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

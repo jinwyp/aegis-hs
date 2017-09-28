@@ -423,8 +423,8 @@ public class UserControllerTest extends YingTestBase {
             setHsId(yingOrderConfigResult.getData().getId());
             setHuikuanDate(stringToTime("2017-7-28"));
             setHuikuanCompanyId(yingOrderResult.getData().getDownstreamId());
-//            setHuikuanAmount(new BigDecimal("569968.26"));
-            setHuikuanAmount(new BigDecimal("1000"));
+            setHuikuanAmount(new BigDecimal("569968.26"));
+//            setHuikuanAmount(new BigDecimal("1000"));
             setHuikuanMode(PayMode.ELEC_REMITTANCE);
             setHuikuanUsage(ReceivePaymentPurpose.PAYMENT_FOR_GOODS);
         }};
