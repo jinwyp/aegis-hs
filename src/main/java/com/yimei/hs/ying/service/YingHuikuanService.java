@@ -83,7 +83,7 @@ public class YingHuikuanService {
                 //付款总额
                 BigDecimal fukuanAmount = new BigDecimal("0");
                 for (YingFukuan fukuan : fukuanList) {
-                    fukuanAmount.add(fukuan.getAmount());
+                    fukuanAmount.add(fukuan.getPayAmount());
                 }
 
                 if (fukuanAmount.subtract(mapAmount).doubleValue()!=0) {
