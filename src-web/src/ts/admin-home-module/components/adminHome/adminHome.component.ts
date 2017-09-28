@@ -95,6 +95,20 @@ export class AdminHomeComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+
+        this.orderService.getEnumList('CargoArriveStatus').subscribe(
+            data => {
+                saveEnum('CargoArriveStatus', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+        this.orderService.getEnumList('TrafficMode').subscribe(
+            data => {
+                saveEnum('TrafficMode', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
     }
 
 }

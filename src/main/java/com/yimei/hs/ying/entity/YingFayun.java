@@ -30,9 +30,9 @@ public class YingFayun implements Serializable {
     private Long hsId;
 
     @NotNull(groups = {CreateGroup.class}, message = "发运日期不能为空")
-    private LocalDateTime fyDate;
+    private LocalDateTime ;
 
-    @Null(groups = {UpdateGroup.class}, message = "发运吨数不能更新")
+    @Null(groups = {UpdateGfyDateroup.class}, message = "发运吨数不能更新")
     private BigDecimal fyAmount;
 
     @NotNull(groups = {CreateGroup.class}, message = "到场状态不能为空")

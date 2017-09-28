@@ -21,6 +21,7 @@ import { PartyManagementComponent } from './components/partyManagement/partyMana
 
 import { OrderComponent } from './components/order/order.component'
 import { OrderDetailComponent } from './components/orderDetail/orderDetail.component'
+import { ShippingOrderComponent } from './components/orderDetail/shippingOrder/shippingOrder.component'
 
 
 
@@ -32,7 +33,7 @@ import { HSUserService } from '../services/hsUser.service'
 import { HSOrderService } from '../services/hsOrder.service'
 
 
-import { PipeSubstringId, PipeOrderStatus, PipePaymentSettleMode, PipeCargoType, PipeCustomerType} from './pipes/order'
+import { PipeSubstringId, PipeOrderStatus, PipePaymentSettleMode, PipeCargoType, PipeCustomerType, PipeCargoArriveStatus, PipeTrafficMode} from './pipes/order'
 
 
 
@@ -59,6 +60,8 @@ const userHomeRoutes: Routes = [
         PipePaymentSettleMode,
         PipeCargoType,
         PipeCustomerType,
+        PipeCargoArriveStatus,
+        PipeTrafficMode,
 
 
         AdminHomeComponent,
@@ -71,7 +74,8 @@ const userHomeRoutes: Routes = [
         PartyManagementComponent,
 
         OrderComponent,
-        OrderDetailComponent
+        OrderDetailComponent,
+        ShippingOrderComponent
     ],
     imports      : [
         BrowserModule,

@@ -107,17 +107,6 @@ public class YingHuankuanController {
      * 删除还款
      * @return
      */
-    @Transactional(readOnly =  false)
-    @DeleteMapping("/{morderId}/huankuans/{id}")
-    public ResponseEntity<Result<Integer>> update(
-            @PathVariable("morderId") Long morderId,
-            @PathVariable("id") long id
-    ) {
-        int cnt = yingHuankuanService.delete(morderId, id);
-        if (cnt != 1) {
-            return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
-        }
-        return Result.ok(1);
-    }
+
 }
 

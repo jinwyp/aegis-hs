@@ -1,10 +1,7 @@
 
 
         <h3>
-            核算详情 - {{currentOrderId}}
-
-
-
+            核算详情  ID:{{currentOrderId}} - 业务线: {{currentOrder?.line}}
         </h3>
 
 
@@ -36,6 +33,7 @@
         </ul>
 
 
+
         <ul class="list-group" *ngIf="currentTabIndex === 1">
             <li class="list-group-item">事业部门: {{currentOrder?.deptId | findKey : departmentList : 'name'}}</li>
             <li class="list-group-item">业务团队: {{currentOrder?.teamId | findKey : teamList : 'name'}}</li>
@@ -54,7 +52,6 @@
 
 
         <div *ngIf="currentTabIndex === 2">
-
 
             <form [formGroup]="orderUnitForm" (ngSubmit)="orderUnitFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
@@ -75,7 +72,6 @@
                     </div>
                 </div>
             </form>
-
 
 
             <div *ngIf="!isShowForm">
@@ -117,8 +113,7 @@
             <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加新核算月</button>
 
 
-
-
         </div>
 
 
+        <app-shipping  *ngIf="currentTabIndex === 3" [currentOrder]="currentOrder"></app-shipping>
