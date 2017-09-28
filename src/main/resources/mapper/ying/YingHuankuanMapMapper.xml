@@ -34,7 +34,14 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
-    <!-- 逻辑删除  -->
+    <!-- 逻辑删除某一笔还款对应的map记录 -->
+    <update id="deleteByHuankuanId" parameterType="java.lang.Long">
+        UPDATE hs_ying_huankuan_map
+        SET deleted = 1, tsu = current_timestamp
+        WHERE huankuanId = #{huankuanId,jdbcType=BIGINT}
+    </update>
+
+    <!-- 逻辑删除订单所有的 还款-付款-map 记录-->
     <update id="deleteByOrderId" parameterType="java.lang.Long">
         UPDATE hs_ying_huankuan_map
         SET deleted = 1, tsu = current_timestamp

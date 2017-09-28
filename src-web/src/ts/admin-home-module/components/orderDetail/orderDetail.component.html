@@ -15,7 +15,42 @@
             <li class="nav-item">
                 <a class="nav-link" [class.active]="currentTabIndex === 2" (click)="changeTab(2)">核算月管理</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="currentTabIndex === 3" (click)="changeTab(3)">发运单管理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="currentTabIndex === 4" (click)="changeTab(4)">付款管理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="currentTabIndex === 5" (click)="changeTab(5)">还款管理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="currentTabIndex === 6" (click)="changeTab(6)">结算单管理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="currentTabIndex === 7" (click)="changeTab(7)">费用管理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="currentTabIndex === 8" (click)="changeTab(8)">发票管理</a>
+            </li>
         </ul>
+
+
+        <ul class="list-group" *ngIf="currentTabIndex === 1">
+            <li class="list-group-item">事业部门: {{currentOrder?.deptId | findKey : departmentList : 'name'}}</li>
+            <li class="list-group-item">业务团队: {{currentOrder?.teamId | findKey : teamList : 'name'}}</li>
+            <li class="list-group-item">业务线名称: {{currentOrder?.line }}</li>
+            <li class="list-group-item">上游结算方式: {{currentOrder?.upstreamSettleMode | settleMode }}</li>
+            <li class="list-group-item">下游结算方式: {{currentOrder?.downstreamSettleMode | settleMode}}</li>
+            <li class="list-group-item">商品品类: {{currentOrder?.cargoType | cargoType }}</li>
+            <li class="list-group-item">主账务公司: {{currentOrder?.mainAccounting | findKey:partyList:'name' }}</li>
+            <li class="list-group-item">上游供应商: {{currentOrder?.upstreamId | findKey:partyList:'name' }}</li>
+            <li class="list-group-item">下游客户: {{currentOrder?.downstreamId | findKey:partyList:'name' }}</li>
+        </ul>
+        <ul class="list-group" *ngIf="currentTabIndex === 1">
+            <li class="list-group-item" *ngFor="let company of currentOrder?.orderPartyList">事业部门: {{company.custType | customerType}} - {{company.customerId | findKey : partyList : 'name'}}</li>
+        </ul>
+
 
 
         <div *ngIf="currentTabIndex === 2">

@@ -18,9 +18,6 @@ public class YingFayunService {
     private YingFayunMapper yingFayunMapper;
 
     @Autowired
-    private YingSettleDownstreamMapMapper yingSettleDownstreamMapMapper;
-
-    @Autowired
     private YingLogService yingLogService;
 
     /**
@@ -67,7 +64,6 @@ public class YingFayunService {
      * @return
      */
     public int delete(Long orderId, long id) {
-        yingSettleDownstreamMapMapper.deleteByOrderId(orderId); // todo
         return yingFayunMapper.delete(id);
     }
 }

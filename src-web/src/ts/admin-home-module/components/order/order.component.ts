@@ -182,9 +182,9 @@ export class OrderComponent implements OnInit {
         this.orderForm = this.fb.group({
             'deptId'    : ['', [Validators.required ] ],
             'teamId'    : ['', [Validators.required ] ],
-
             'line'    : ['', [Validators.required ] ],
             'cargoType'    : ['', [Validators.required ] ],
+
             'upstreamSettleMode'    : ['', [Validators.required ] ],
             'downstreamSettleMode'    : ['', [Validators.required ] ],
 
@@ -210,6 +210,8 @@ export class OrderComponent implements OnInit {
         }
 
         const postData = this.orderForm.value
+
+        postData.orderPartyList = this.otherPartyList
 
         if (this.isAddNew) {
             this.hsOrderService.createNewOrder(postData).subscribe(
@@ -246,6 +248,7 @@ export class OrderComponent implements OnInit {
         if (isAddNew) {
             this.isAddNew = true
 
+            this.otherPartyList = []
             this.orderForm.patchValue({
                 'deptId'    : '',
                 'teamId'    : '',
@@ -266,6 +269,8 @@ export class OrderComponent implements OnInit {
             this.currentOrderId = order.id
 
             this.orderForm.patchValue(order)
+
+            this.otherPartyList = order.orderPartyList
         }
 
 

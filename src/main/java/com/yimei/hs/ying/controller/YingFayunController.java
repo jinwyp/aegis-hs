@@ -31,7 +31,6 @@ public class YingFayunController {
 
     private static final Logger logger = LoggerFactory.getLogger(YingFayunController.class);
 
-
     @Autowired
     YingFayunService yingFayunService;
 
@@ -42,7 +41,6 @@ public class YingFayunController {
      */
     @GetMapping("/{morderId}/fayuns")
     public ResponseEntity<PageResult<YingFayun>> list(
-            @CurrentUser User user,
             @PathVariable("morderId") Long morderId,
             PageYingFayunDTO pageYingFayunDTO) {
         pageYingFayunDTO.setOrderId(morderId);
@@ -80,9 +78,6 @@ public class YingFayunController {
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingFayun yingFayun
     ) {
-
-        // todo 依据上下游发运方式， 校验yingFayun
-
         yingFayun.setOrderId(morderId);
         yingFayunService.create(yingFayun);
         logger.info("created fayn: {}", yingFayun);

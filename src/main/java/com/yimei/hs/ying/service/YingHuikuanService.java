@@ -134,18 +134,22 @@ public class YingHuikuanService {
      * @return
      */
     public int createMap(long orderId) {
-        // todo
+        // todo 陆彪
+        // 1. 删除orderId的所有 hs_ying_huikuan_map记录
+        // 2. 重建orderId的所有 hs_ying_huikuan_map记录
         return 1;
     }
 
     /**
+     * todo 陆彪 check
      * 逻辑删除
      * @param id
      * @return
      */
     public int delete(long orderId, long id) {
+        // 由于回款时自动对应到付款的, 删除回款记录, 需要重建整个业务线的 回款-付款-map记录
         yingHuikuanMapMapper.deleteByOrderId(orderId);
-        // todo 重建所有的map记录
+        this.createMap(orderId);
         return yingHuikuanMapper.delete(id);
     }
 }

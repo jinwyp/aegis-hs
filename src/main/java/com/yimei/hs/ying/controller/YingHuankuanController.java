@@ -104,8 +104,7 @@ public class YingHuankuanController {
     }
 
     /**
-     * 更新huikuan
-     *
+     * 删除还款
      * @return
      */
     @Transactional(readOnly =  false)

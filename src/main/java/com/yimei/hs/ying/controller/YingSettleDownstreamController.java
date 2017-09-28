@@ -103,7 +103,7 @@ public class YingSettleDownstreamController {
     }
 
     /**
-     * 更新下游结算
+     * 删除下游结算
      *
      * @return
      */

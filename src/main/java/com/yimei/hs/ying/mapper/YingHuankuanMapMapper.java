@@ -20,4 +20,6 @@ public interface YingHuankuanMapMapper {
     int updateByPrimaryKey(YingHuankuanMap record);
 
     List<YingHuankuanMap> loadAll(Long orderId);
+
+    int deleteByHuankuanId(long huankuanId);
 }

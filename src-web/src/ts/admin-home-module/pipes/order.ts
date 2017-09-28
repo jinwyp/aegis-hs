@@ -46,3 +46,53 @@ export class PipeOrderStatus implements PipeTransform {
     }
 }
 
+
+@Pipe({name: 'settleMode'})
+export class PipePaymentSettleMode implements PipeTransform {
+    transform(value: string, exponent: string): string {
+
+        let text: string = '无状态'
+
+        if (value === 'ONE_PAPER_SETTLE') { text = '一票结算' }
+        if (value === 'TWO_PAPER_SETTLE') { text = '两票结算' }
+
+        return text
+
+    }
+}
+
+
+@Pipe({name: 'cargoType'})
+export class PipeCargoType implements PipeTransform {
+    transform(value: string, exponent: string): string {
+
+        let text: string = '无状态'
+
+        if (value === 'COAL') { text = '煤炭' }
+        if (value === 'STEELS') { text = '钢材' }
+
+        return text
+
+    }
+}
+
+
+
+@Pipe({name: 'customerType'})
+export class PipeCustomerType implements PipeTransform {
+    transform(value: string, exponent: string): string {
+
+        let text: string = '无状态'
+
+        if (value === 'UPSTREAM') { text = '上游' }
+        if (value === 'DOWNSTREAM') { text = '下游' }
+        if (value === 'TRAFFICKCER') { text = '贸易公司' }
+        if (value === 'FUNDER') { text = '资金方' }
+        if (value === 'TRANSPORT_COMPANY') { text = '运输方' }
+        if (value === 'ACCOUNTING_COMPANY') { text = '账务公司' }
+
+        return text
+
+    }
+}
+

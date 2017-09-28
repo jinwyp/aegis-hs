@@ -173,12 +173,17 @@ public class YingSettleService {
     }
 
     /**
+     * 重建所有对应关系
+     * @param orderId
+     * @return
+     */
+
+    /**
      *  逻辑删除
      * @param id
      * @return
      */
     public int deleteDownstream(long id) {
-        // todo 如何删除对应关系
         return yingSettleDownstreamMapper.delete(id);
     }
 
