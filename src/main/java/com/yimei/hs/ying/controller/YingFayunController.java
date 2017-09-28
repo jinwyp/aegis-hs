@@ -80,7 +80,7 @@ public class YingFayunController {
     ) {
         yingFayun.setOrderId(morderId);
         yingFayunService.create(yingFayun);
-        logger.info("created fayn: {}", yingFayun);
+        // logger.info("created fayn: {}", yingFayun);
         return Result.ok(yingFayun);
     }
 
