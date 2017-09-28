@@ -95,15 +95,15 @@ public class UserControllerTest extends YingTestBase {
         user();
         order();
         config();
-        fayun();
+//        fayun();
         fukuan();
         huikuan();
-        huankuan();
-        upstream();
-        downstream();
-        traffic();
-        fee();
-        invoice();
+//        huankuan();
+//        upstream();
+//        downstream();
+//        traffic();
+//        fee();
+//        invoice();
 
     }
 
@@ -423,7 +423,8 @@ public class UserControllerTest extends YingTestBase {
             setHsId(yingOrderConfigResult.getData().getId());
             setHuikuanDate(stringToTime("2017-7-28"));
             setHuikuanCompanyId(yingOrderResult.getData().getDownstreamId());
-            setHuikuanAmount(new BigDecimal("569968.26"));
+//            setHuikuanAmount(new BigDecimal("569968.26"));
+            setHuikuanAmount(new BigDecimal("1000"));
             setHuikuanMode(PayMode.ELEC_REMITTANCE);
             setHuikuanUsage(ReceivePaymentPurpose.PAYMENT_FOR_GOODS);
         }};
@@ -539,7 +540,7 @@ public class UserControllerTest extends YingTestBase {
             setReceiveCompanyId(yingOrderResult.getData().getUpstreamId());
             setPayUsage(PaymentPurpose.FIAL_PAYMENT);
             setPayMode(PayMode.ELEC_REMITTANCE);
-            setPayAmount(new BigDecimal("54291.93"));
+            setPayAmount(new BigDecimal("54294.93"));
             setCapitalId(yingOrderResult.getData().getMainAccounting());
         }};
         Result<YingFukuan> fukuanResult = client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuan), typeReferenceFukuan).getBody();
@@ -550,7 +551,9 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
         client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuantwo), typeReferenceFukuan).getBody();
+        yingFukuantwo.setPayAmount(new BigDecimal("5680"));
 
+        client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuantwo), typeReferenceFukuan).getBody();
         // 2. 分页
         String fukuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans?"+WebUtils.getUrlTemplate(PageYingFukuanDTO.class);
 
@@ -892,9 +895,9 @@ public class UserControllerTest extends YingTestBase {
 
         Map<String, Object> invoiceVariables = WebUtils.getUrlVariables(PageYingInvoiceDTO.class);
         invoiceVariables.put("orderId",yingOrderResult.getData().getId());
-        invoiceVariables.put("invoiceType", InvoiceType.FRIGHT_INVOICE);
         invoiceVariables.put("pageSize", 5);
         invoiceVariables.put("pageNo", 1);
+        invoiceVariables.put("invoiceType", InvoiceType.GOODS_INVOICE);
 
         PageResult<YingInvoice> invoicePageResult = client.exchange(invoicePageUrl, HttpMethod.GET,   HttpEntity.EMPTY, typeReferenceInvoicePage, invoiceVariables).getBody();
         if (invoicePageResult.getSuccess()) {

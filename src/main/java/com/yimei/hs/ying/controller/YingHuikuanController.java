@@ -75,6 +75,7 @@ public class YingHuikuanController {
             @RequestBody @Validated(CreateGroup.class) YingHuikuan  yingHuikuan
     ) {
         // todo 增加校验
+
         yingHuikuan.setOrderId(morderId);
         int cnt = yingHuikuanService.create(yingHuikuan);
         return Result.ok(yingHuikuan);
