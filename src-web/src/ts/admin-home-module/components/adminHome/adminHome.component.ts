@@ -113,6 +113,13 @@ export class AdminHomeComponent implements OnInit {
             error => {this.httpService.errorHandler(error) }
         )
 
+        this.orderService.getEnumList('ReceivePaymentPurpose').subscribe(
+            data => {
+                saveEnum('ReceivePaymentPurpose', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
         this.orderService.getEnumList('PayMode').subscribe(
             data => {
                 saveEnum('PayMode', data.data)

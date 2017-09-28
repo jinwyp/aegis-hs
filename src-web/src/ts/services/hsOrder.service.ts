@@ -122,4 +122,23 @@ export class HSOrderService {
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/fukuans/' + paymentId.toString() , payment)
     }
 
+
+    getRepaymentListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+        const params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
+
+        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/huikuans', {params: params} )
+    }
+    createNewRepayment(orderId: number, repayment: any): Observable<any> {
+
+        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/huikuans', repayment )
+    }
+    modifyRepayment(orderId: number, repaymentId: number, repayment: any, ): Observable<any> {
+
+        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/huikuans/' + repaymentId.toString() , repayment)
+    }
+
+
+
 }

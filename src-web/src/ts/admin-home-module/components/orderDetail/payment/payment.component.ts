@@ -22,7 +22,7 @@ import {getEnum} from '../../../../services/localStorage'
 export class PaymentComponent implements OnInit {
 
     @Input() currentOrder : any
-    currentPaymentId : number = 1
+    currentPaymentId : number = 0
 
     paymentForm: FormGroup
     ignoreDirty: boolean = false

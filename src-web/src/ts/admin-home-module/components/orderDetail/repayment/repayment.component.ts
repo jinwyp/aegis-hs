@@ -7,6 +7,7 @@ import { HttpService } from '../../../../bs-form-module/services/http.service'
 
 import { formErrorHandler, isMobilePhone, isMatched, checkFieldIsExist } from '../../../../bs-form-module/validators/validator'
 
+import { HSUserService } from '../../../../services/hsUser.service'
 import { HSOrderService } from '../../../../services/hsOrder.service'
 
 
@@ -14,27 +15,29 @@ import {getEnum} from '../../../../services/localStorage'
 
 
 @Component({
-  selector: 'app-repayment',
-  templateUrl: './repayment.component.html',
-  styleUrls: ['./repayment.component.css']
+    selector: 'app-repayment',
+    templateUrl: './repayment.component.html',
+    styleUrls: ['./repayment.component.css']
 })
 export class RepaymentComponent implements OnInit {
 
     @Input() currentOrder : any
-    currentShippingOrderId : number = 1
 
-    shippingForm: FormGroup
+    currentRepaymentId : number = 1
+
+    repaymentForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
 
-    shippingList : any[] = []
+    repaymentList : any[] = []
+    partyList : any[] = []
 
     unitList : any[] = []
 
-    arriveStatusList : any[] = getEnum('CargoArriveStatus')
-    trafficModeList : any[] = getEnum('TrafficMode')
+    purposeList : any[] = getEnum('ReceivePaymentPurpose')
+    payModeList : any[] = getEnum('PayMode')
 
 
     pagination: any = {
@@ -43,11 +46,16 @@ export class RepaymentComponent implements OnInit {
         total : 1
     }
 
+    dataIsGot : any [] = [
+        { id : true , name : '是'},
+        { id : false , name : '否'}
+    ]
 
 
     constructor(
         private httpService: HttpService,
         private fb: FormBuilder,
+        private hsUserService: HSUserService,
         private hsOrderService: HSOrderService
 
     ) {
@@ -58,9 +66,9 @@ export class RepaymentComponent implements OnInit {
 
     ngOnInit(): void {
 
-
-        this.getShippingList()
-        this.createShippingForm()
+        this.getPartyList()
+        this.getRepaymentList()
+        this.createRepaymentForm()
 
         if (this.currentOrder) {
             if (Array.isArray(this.currentOrder.orderConfigList)) {
@@ -82,10 +90,21 @@ export class RepaymentComponent implements OnInit {
     }
 
 
-    getShippingList () {
-        this.hsOrderService.getShippingListByID(this.currentOrder.id).subscribe(
+    getRepaymentList () {
+        this.hsOrderService.getRepaymentListByID(this.currentOrder.id).subscribe(
             data => {
-                this.shippingList = data.data.results
+                this.repaymentList = data.data.results
+
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
+
+    getPartyList () {
+
+        this.hsUserService.getPartyList().subscribe(
+            data => {
+                this.partyList = data.data.results
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -94,55 +113,61 @@ export class RepaymentComponent implements OnInit {
 
 
 
-    shippingFormError : any = {}
-    shippingFormValidationMessages: any = {
+    repaymentFormError : any = {}
+    repaymentFormValidationMessages: any = {
         'hsId'  : {
             'required'      : '请选择核算月!'
         },
-        'fyDate'  : {
-            'required'      : '请填写发运日期!'
+
+        'huikuanCompanyId'  : {
+            'required'      : '请填写回款公司!'
         },
-        'fyAmount'  : {
-            'required'      : '请填写发运吨数!'
+        'huikuanDate'  : {
+            'required'      : '请填写回款日期!'
         },
-        'arriveStatus'  : {
-            'required'      : '请填写到场状态!'
+        'huikuanAmount'  : {
+            'required'      : '请填写回款金额!'
         },
-        'upstreamTrafficMode'  : {
-            'required'      : '请填写天数!'
+        'huikuanUsage'  : {
+            'required'      : '请填写回款用途!'
         },
-        'downstreamTrafficMode'  : {
-            'required'      : '请填写加价!'
+        'huikuanMode'  : {
+            'required'      : '请填写回款方式!'
         }
     }
 
-    shippingFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.shippingFormError = formErrorHandler(formInputData, this.shippingForm, this.shippingFormValidationMessages, ignoreDirty)
+    repaymentFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
+        this.repaymentFormError = formErrorHandler(formInputData, this.repaymentForm, this.repaymentFormValidationMessages, ignoreDirty)
     }
 
-    createShippingForm(): void {
+    createRepaymentForm(): void {
 
-        this.shippingForm = this.fb.group({
+        this.repaymentForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
-            'fyDate'    : ['', [Validators.required ] ],
-            'fyAmount'    : ['', [Validators.required ] ],
-            'arriveStatus'    : ['', [Validators.required ] ],
 
-            'upstreamTrafficMode'    : ['', [Validators.required ] ],
-            'upstreamCars'    : ['', [ ] ],
-            'upstreamJHH'    : ['', [ ] ],
-            'upstreamShip'    : ['', [ ] ],
+            'huikuanCompanyId'    : ['', [Validators.required ] ],
+            'huikuanDate'    : ['', [Validators.required ] ],
+            'huikuanAmount'    : ['', [Validators.required ] ],
+            'huikuanUsage'    : ['', [Validators.required ] ],
+            'huikuanMode'    : ['', [Validators.required ] ],
 
-            'downstreamTrafficMode'    : ['', [Validators.required ] ],
-            'downstreamCars'    : ['', [ ] ],
-            'downstreamJHH'    : ['', [ ] ],
-            'downstreamShip'    : ['', [ ] ],
+            'huikuanBankPaper'    : ['', [] ],
+            'huikuanBankPaperDate'    : ['', [] ],
+            'huikuanBankDiscount'    : ['', [] ],
+            'huikuanBankDiscountRate'    : ['', [] ],
+            'huikuanBankPaperExpire'    : ['', [] ],
+
+            'huikuanBusinessPaper'    : ['', [] ],
+            'huikuanBusinessPaperDate'    : ['', [] ],
+            'huikuanBusinessDiscount'    : ['', [] ],
+            'huikuanBusinessDiscountRate'    : ['', [] ],
+            'huikuanBusinessPaperExpire'    : ['', [ ] ]
         } )
 
 
-        this.shippingForm.valueChanges.subscribe(data => {
+        this.repaymentForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
-            this.shippingFormInputChange(data)
+            this.repaymentFormInputChange(data)
         })
     }
 
@@ -150,46 +175,59 @@ export class RepaymentComponent implements OnInit {
 
 
 
-    shippingFormSubmit() {
+    repaymentFormSubmit() {
 
-        if (this.shippingForm.invalid) {
-            this.shippingFormInputChange(this.shippingForm.value, true)
+        if (this.repaymentForm.invalid) {
+            this.repaymentFormInputChange(this.repaymentForm.value, true)
             this.ignoreDirty = true
 
-            console.log('当前信息: ', this.shippingForm, this.shippingFormError)
+            console.log('当前信息: ', this.repaymentForm, this.repaymentFormError)
             return
         }
 
-        const postData = this.shippingForm.value
+        const postData = this.repaymentForm.value
         postData.orderId = this.currentOrder.id
 
-        if (typeof this.shippingForm.value.fyDate === "object" ) {
-            postData.fyDate = this.hsOrderService.formatDateTime(this.shippingForm.value.fyDate)
+        if (typeof this.repaymentForm.value.huikuanDate === "object" ) {
+            postData.huikuanDate = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanDate)
         }
 
+        if (typeof this.repaymentForm.value.huikuanBankPaperDate === "object" ) {
+            postData.huikuanBankPaperDate = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBankPaperDate)
+        }
+        if (typeof this.repaymentForm.value.huikuanBankPaperExpire === "object" ) {
+            postData.huikuanBankPaperExpire = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBankPaperExpire)
+        }
+
+        if (typeof this.repaymentForm.value.huikuanBusinessPaperDate === "object" ) {
+            postData.huikuanBusinessPaperDate = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBusinessPaperDate)
+        }
+        if (typeof this.repaymentForm.value.huikuanBusinessPaperExpire === "object" ) {
+            postData.huikuanBusinessPaperExpire = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBusinessPaperExpire)
+        }
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewShipping(this.currentOrder.id, postData).subscribe(
+            this.hsOrderService.createNewRepayment(this.currentOrder.id, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getShippingList()
+                    this.getRepaymentList()
                     this.showForm()
 
                 },
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
-            postData.id = this.currentShippingOrderId
-            delete postData.fyAmount
+            postData.id = this.currentRepaymentId
+            delete postData.huikuanAmount
 
-            this.hsOrderService.modifyShipping(this.currentOrder.id, this.currentShippingOrderId, postData).subscribe(
+            this.hsOrderService.modifyRepayment(this.currentOrder.id, this.currentRepaymentId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getShippingList()
+                    this.getRepaymentList()
                     this.showForm()
 
                 },
@@ -200,35 +238,39 @@ export class RepaymentComponent implements OnInit {
     }
 
 
-    showForm(isAddNew : boolean = true, shippingOrder?: any ) {
+    showForm(isAddNew : boolean = true, repayment?: any ) {
 
         if (isAddNew) {
             this.isAddNew = true
-            this.currentShippingOrderId = 0
+            this.currentRepaymentId = 0
 
-            this.shippingForm.patchValue({
+            this.repaymentForm.patchValue({
                 'hsId'    : '',
-                'fyDate'    : '',
-                'fyAmount'    : '',
-                'arriveStatus'    : '',
 
-                'upstreamTrafficMode'    : '',
-                'upstreamCars'    : '',
-                'upstreamJHH'    : '',
-                'upstreamShip'    : '',
+                'huikuanCompanyId'    : '',
+                'huikuanDate'    : '',
+                'huikuanAmount'    : '',
+                'huikuanUsage'    : '',
+                'huikuanMode'    : '',
 
-                'downstreamTrafficMode'    : '',
-                'downstreamCars'    : '',
-                'downstreamJHH'    : '',
-                'downstreamShip'    : ''
+                'huikuanBankPaper'    : '',
+                'huikuanBankPaperDate'    : '',
+                'huikuanBankDiscount'    : '',
+                'huikuanBankDiscountRate'    : '',
+                'huikuanBankPaperExpire'    : '',
+
+                'huikuanBusinessPaper'    : '',
+                'huikuanBusinessPaperDate'    : '',
+                'huikuanBusinessDiscount'    : '',
+                'huikuanBusinessDiscountRate'    : '',
+                'huikuanBusinessPaperExpire'    : ''
             })
-
 
         } else {
             this.isAddNew = false
-            this.currentShippingOrderId = shippingOrder.id
+            this.currentRepaymentId = repayment.id
 
-            this.shippingForm.patchValue(shippingOrder)
+            this.repaymentForm.patchValue(repayment)
         }
 
 
