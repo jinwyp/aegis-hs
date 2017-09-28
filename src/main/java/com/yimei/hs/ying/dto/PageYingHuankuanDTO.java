@@ -43,7 +43,7 @@ public class PageYingHuankuanDTO extends BaseFilter<PageYingHuankuanDTO> {
         }}.toString();
 
         String countSql = super.getCountSql(nsql);
-        System.out.println("count sql = " + countSql);
+        // System.out.println("count sql = " + countSql);
         return countSql;
     }
 

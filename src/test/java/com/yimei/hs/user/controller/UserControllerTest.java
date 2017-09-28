@@ -65,6 +65,11 @@ public class UserControllerTest extends YingTestBase {
     }
 
 
+    @Override
+    public Logger getLogger() {
+        return logger;
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(UserControllerTest.class);
 
     List<Long> partyIds = null;
@@ -245,7 +250,7 @@ public class UserControllerTest extends YingTestBase {
         variables.put("pageSize", 5);
         variables.put("pageNo", 1);
         String orderPageUrl = "/api/yings?" + WebUtils.getUrlTemplate(PageYingOrderDTO.class);
-        logger.info("page order variables = {}, url = {}", variables, orderPageUrl);
+        // logger.info("page order variables = {}, url = {}", variables, orderPageUrl);
         PageResult<YingOrder> yingOrderPageResult = client.exchange(orderPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
         if (yingOrderPageResult.getSuccess()) {
             logger.info("获取应收订单分页成功\nGET {}\nrequest = {}\nresponse:\n{}", orderPageUrl, printJson(variables), printJson(yingOrderPageResult.getData()));
@@ -270,7 +275,6 @@ public class UserControllerTest extends YingTestBase {
     private void config() throws JsonProcessingException {
 
         // 1. 增加核算月配置
-        logger.info("开始增加核算月配置");
         String configCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/units";
 
         YingOrderConfig config = new YingOrderConfig() {{

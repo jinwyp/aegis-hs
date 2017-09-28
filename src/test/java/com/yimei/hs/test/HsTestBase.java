@@ -10,6 +10,7 @@ import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.util.Digests;
 import com.yimei.hs.util.Encodes;
+import org.slf4j.Logger;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -32,6 +33,7 @@ abstract public class HsTestBase {
 
     public abstract ObjectMapper getObjectMapper();
     public abstract TestRestTemplate getTestRestTemplate();
+    public abstract Logger getLogger();
 
     public <T> String printJson(T m) throws JsonProcessingException {
         return getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(m);
@@ -87,20 +89,20 @@ abstract public class HsTestBase {
         user.setCreateDate(LocalDateTime.now());
         user.setCreateBy("sys");
 
-        System.out.println("create user: " + user);
+        // System.out.println("create user: " + user);
     }
 
 
-    protected List<Long> createParties(List<Party> parties) {
+    protected List<Long> createParties(List<Party> parties) throws JsonProcessingException {
         List<Long> rtn = new ArrayList<Long>();
         for (Party p : parties) {
 
             Result<Party> pt = getTestRestTemplate().exchange("/api/parties", HttpMethod.POST, new HttpEntity<Party>(p), typeReferenceParty).getBody();
             if (pt.getSuccess()) {
-                System.out.println("创建party成功: " + pt.getData());
+                getLogger().info("创建party成功\nPOST {}\nrequest = {}\nresponse = {} ", "/api/parties", printJson(p), printJson(pt.getData()));
                 rtn.add(pt.getData().getId());
             } else {
-                System.out.println("创建party失败: " + pt.getError());
+                getLogger().info("创建party失败: " + pt.getError());
                 System.exit(-1);
             }
         }
