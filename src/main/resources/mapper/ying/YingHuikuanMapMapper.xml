@@ -26,7 +26,7 @@
         select
         <include refid="Base_Column_List"/>
         from hs_ying_huikuan_map
-        where order_id = #{orderId,jdbcType=BIGINT}
+        where orderId = #{orderId,jdbcType=BIGINT} Group By tsc desc
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

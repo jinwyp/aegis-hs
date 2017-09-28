@@ -74,6 +74,7 @@ public class YingHuikuanController {
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingHuikuan  yingHuikuan
     ) {
+
         // todo 陆彪 增加校验
         yingHuikuan.setOrderId(morderId);
         int cnt = yingHuikuanService.create(yingHuikuan);
