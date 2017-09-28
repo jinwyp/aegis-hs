@@ -74,7 +74,7 @@ public class YingHuikuanController {
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingHuikuan  yingHuikuan
     ) {
-        // todo 增加校验
+        // todo 陆彪 增加校验
         yingHuikuan.setOrderId(morderId);
         int cnt = yingHuikuanService.create(yingHuikuan);
         return Result.ok(yingHuikuan);
@@ -95,10 +95,6 @@ public class YingHuikuanController {
         assert (yingHuikuan.getOrderId() == morderId);
         yingHuikuan.setId(id);
         int cnt = yingHuikuanService.update(yingHuikuan);
-
-        // 删除以前的对应记录
-        // 重新插入对应记录  todo
-
         if (cnt != 1) {
             return Result.error(4001, "更新失败");
         }
@@ -118,10 +114,6 @@ public class YingHuikuanController {
             @PathVariable("id") long id
     ) {
         int cnt = yingHuikuanService.delete(morderId, id);
-
-        // 删除以前的对应记录
-        // 重新插入对应记录  todo
-
         if (cnt != 1) {
             return Result.error(4001, "更新失败");
         }

@@ -184,7 +184,6 @@ public class YingSettleService {
      * @return
      */
     public int deleteDownstream(long id) {
-        // todo 如何删除对应关系
         return yingSettleDownstreamMapper.delete(id);
     }
 

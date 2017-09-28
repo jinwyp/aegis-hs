@@ -9,6 +9,11 @@ public interface YingHuikuanMapMapper {
 
     int insert(YingHuikuanMap record);
 
+    /**
+     *  删除业务线orderId
+     * @param orderId
+     * @return
+     */
     int deleteByOrderId(long orderId);
 
     int insertSelective(YingHuikuanMap record);

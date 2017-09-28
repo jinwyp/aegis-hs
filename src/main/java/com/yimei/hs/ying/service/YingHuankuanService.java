@@ -101,9 +101,10 @@ public class YingHuankuanService {
      * @param id
      * @return
      */
-    public int delete(long orderId, long id) {
-        yingHuankuanMapMapper.deleteByOrderId(orderId);
-        this.createMap(orderId);
+    public int delete(long id) {
+        // 还款是手动对应的， 删除还款记录，
+        // 需要同时删除其map
+        yingHuankuanMapMapper.deleteByHuankuanId(id);
         return yingHuankuanMapper.delete(id);
     }
 }
