@@ -1,5 +1,7 @@
 package com.yimei.hs.boot;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.boot.ext.ACLInterceptor;
 import com.yimei.hs.boot.support.Java8TimeModule;
@@ -54,6 +56,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     @PostConstruct
     private void jacksonConfig() {
         objectMapper.registerModule(new Java8TimeModule());
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
     @Bean(name = "validator")
