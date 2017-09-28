@@ -47,7 +47,6 @@ public class YingFukuanService {
      * @return
      */
     public int create(YingFukuan yingFukuan) {
-        logger.info("createfukuan {}",yingFukuan);
         return yingFukuanMapper.insert(yingFukuan);
     }
 

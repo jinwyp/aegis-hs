@@ -73,7 +73,6 @@ public class YingOrderController {
         order.setOwnerId(user.getId());
         order.setDeptId(user.getDeptId());
         order.setStatus(OrderStatus.UNCOMPLETED);
-        logger.info("my order = {}", order);
         yingOrderService.create(order);
         return Result.created(order);
     }

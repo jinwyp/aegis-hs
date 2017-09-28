@@ -84,7 +84,6 @@ public class YingOrderService {
                 @Override
                 public void accept(YingOrderConfig yingOrderConfig) {
                     yingOrderConfig.setOrderId(order.getId());
-                    logger.error("weightedPrice========>"+yingOrderConfig.getWeightedPrice());
                     yingOrderConfigMapper.insert(yingOrderConfig);
                 }
             });
