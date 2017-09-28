@@ -3,12 +3,17 @@ package com.yimei.hs.ying.service;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.YingInvoice;
 import com.yimei.hs.ying.dto.PageYingInvoiceDTO;
+import com.yimei.hs.ying.entity.YingInvoiceDetail;
+import com.yimei.hs.ying.entity.YingOrder;
 import com.yimei.hs.ying.mapper.YingInvoiceDetailMapper;
 import com.yimei.hs.ying.mapper.YingInvoiceMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by hary on 2017/9/15.
@@ -37,7 +42,24 @@ public class YingInvoiceService {
     }
 
     public int create(YingInvoice yingInvoice) {
-        return yingInvoiceMapper.insert(yingInvoice);
+
+
+        int rtn=0;
+
+        List<YingInvoiceDetail> detailsList = yingInvoice.getDetails();
+
+        if (detailsList!=null) {
+             rtn = yingInvoiceMapper.insert(yingInvoice);
+            detailsList.forEach(new Consumer<YingInvoiceDetail>() {
+                @Override
+                public void accept(YingInvoiceDetail yingInvoiceDetail) {
+                    yingInvoiceDetail.setInvoiceId(yingInvoice.getId());
+                    yingInvoiceDetailMapper.insert(yingInvoiceDetail);
+                }
+            });
+        }
+
+        return rtn;
     }
 
     public int update(YingInvoice yingInvoice) {
