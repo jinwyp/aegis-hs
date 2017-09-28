@@ -106,4 +106,20 @@ export class HSOrderService {
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/fayuns/' + shippingId.toString() , shipping)
     }
 
+    getPaymentListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+        const params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
+
+        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/fukuans', {params: params} )
+    }
+    createNewPayment(orderId: number, payment: any): Observable<any> {
+
+        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/fukuans', payment )
+    }
+    modifyPayment(orderId: number, paymentId: number, payment: any, ): Observable<any> {
+
+        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/fukuans/' + paymentId.toString() , payment)
+    }
+
 }

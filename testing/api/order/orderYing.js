@@ -103,6 +103,33 @@ describe('应收订单', function () {
             })
     })
 
+    it('应收订单 - 新建应收订单3 POST: /api/yings', function (done) {
+        server.post('/api/yings')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                "deptId":2,
+                "teamId":1,
+                "line":"那曲 - 晋和 - 嘉瑞",
+                "cargoType":"COAL",
+                "upstreamSettleMode":"ONE_PAPER_SETTLE",
+                "downstreamSettleMode":"ONE_PAPER_SETTLE",
+                "mainAccounting":1,
+                "upstreamId":2,
+                "downstreamId":3
+            })
+            .expect('Content-Type', /json/)
+            .expect(201)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id).to.be.a('number')
+                expect(res.body.data.line).to.include('那曲')
+                done()
+            })
+    })
+
     it('应收订单 - 获取应收订单列表 GET: /api/yings?pageNo=1&pageSize=2', function (done) {
         server.get('/api/yings?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)

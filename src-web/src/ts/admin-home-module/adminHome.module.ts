@@ -23,6 +23,10 @@ import { OrderComponent } from './components/order/order.component'
 import { OrderDetailComponent } from './components/orderDetail/orderDetail.component'
 import { ShippingOrderComponent } from './components/orderDetail/shippingOrder/shippingOrder.component'
 
+import { PaymentComponent } from './components/orderDetail/payment/payment.component'
+import { RepaymentComponent } from './components/orderDetail/repayment/repayment.component'
+import { RepaymentHuanKuanComponent } from './components/orderDetail/repaymentHuanKuan/repaymentHuanKuan.component'
+
 
 
 
@@ -75,7 +79,11 @@ const userHomeRoutes: Routes = [
 
         OrderComponent,
         OrderDetailComponent,
-        ShippingOrderComponent
+        ShippingOrderComponent,
+
+        PaymentComponent,
+        RepaymentComponent,
+        RepaymentHuanKuanComponent
     ],
     imports      : [
         BrowserModule,

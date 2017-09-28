@@ -1,0 +1,70 @@
+
+
+            <form [formGroup]="paymentForm" (ngSubmit)="paymentFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+
+                <bs-select formControlName="hsId" [fc]="paymentForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="paymentFormError.hsId"></bs-select>
+                <bs-datepicker formControlName="payDate" [fc]="paymentForm.get('payDate')" [label]="'付款日期:'" [error]="paymentFormError.payDate"></bs-datepicker>
+
+                <bs-select formControlName ="receiveCompanyId" [fc]="paymentForm.get('receiveCompanyId')" [label]="'收款单位:'" [options]="partyList" [error]="paymentFormError.receiveCompanyId"></bs-select>
+                <bs-select formControlName="payUsage" [fc]="paymentForm.get('payUsage')" [label]="'付款用途:'"  [options]="purposeList" [error]="paymentFormError.payUsage"></bs-select>
+                <bs-text-input formControlName="payAmount" [fc]="paymentForm.get('payAmount')" [type]="'number'" [label]="'付款金额:'" [dirty]="ignoreDirty" [error]="paymentFormError.payAmount"></bs-text-input>
+                <bs-select formControlName="payMode" [fc]="paymentForm.get('payMode')" [label]="'付款方式:'"  [options]="payModeList" [error]="paymentFormError.payMode"></bs-select>
+
+                <bs-select formControlName ="capitalId" [fc]="paymentForm.get('capitalId')" [label]="'资金方:'" [options]="partyList" [error]="paymentFormError.capitalId"></bs-select>
+                <bs-text-input formControlName="useInterest" [fc]="paymentForm.get('useInterest')" [type]="'number'" [label]="'外部资金使用利率:'" [dirty]="ignoreDirty" [error]="paymentFormError.useInterest"></bs-text-input>
+                <bs-text-input formControlName="useDays" [fc]="paymentForm.get('useDays')" [type]="'number'" [label]="'外部资金使用天数:'" [dirty]="ignoreDirty" [error]="paymentFormError.useDays"></bs-text-input>
+
+
+                <div class="form-group row">
+                    <div class="col-10 ml-auto">
+                        <button type="submit" class="btn btn-info" >保存</button>
+                        <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
+                    </div>
+                </div>
+            </form>
+
+
+
+            <div *ngIf="!isShowForm">
+                <table class="table table-bordered table-hover table-responsive" >
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>核算月</th>
+                        <th>付款日期</th>
+
+                        <th>收款单位</th>
+                        <th>付款用途</th>
+                        <th>付款金额</th>
+                        <th>付款方式</th>
+
+                        <th>资金方</th>
+                        <th>外部资金使用利率/天数</th>
+
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let payment of paymentList; trackBy: trackByFn">
+                        <td> {{payment.id}}</td>
+                        <td> {{payment.hsId | findKey : unitList : 'name'}}</td>
+                        <td> {{payment.payDate }}</td>
+
+                        <td> {{payment.receiveCompanyId | findKey : partyList : 'name' }}</td>
+                        <td> {{payment.payUsage | findKey : purposeList : 'name' }}</td>
+                        <td> {{payment.payAmount  }}</td>
+                        <td> {{payment.payMode | findKey : payModeList : 'name' }}</td>
+
+                        <td> {{payment.capitalId | findKey : partyList : 'name'}}</td>
+                        <td> {{payment.useInterest }} / {{payment.useDays }} </td>
+
+                        <td> <button class="btn btn-info btn-sm" (click)="showForm(false, payment)"> 修改 </button></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
+            <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加付款单</button>
