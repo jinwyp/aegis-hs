@@ -9,6 +9,7 @@ import 'rxjs/add/operator/switchMap'
 import { HttpService } from '../../../bs-form-module/services/http.service'
 
 import { formErrorHandler, isMobilePhone, isMatched, checkFieldIsExist } from '../../../bs-form-module/validators/validator'
+
 import { UserInfoService } from '../../../services/userInfo.service'
 import { HSUserService } from '../../../services/hsUser.service'
 import { HSOrderService } from '../../../services/hsOrder.service'
@@ -35,8 +36,9 @@ export class OrderDetailComponent implements OnInit {
     isAddNew: boolean = true
 
     unitList : any[] = []
+
+    departmentList : any[] = []
     teamList : any[] = []
-    filterTeamList : any[] = []
     partyList : any[] = []
 
 
@@ -68,6 +70,7 @@ export class OrderDetailComponent implements OnInit {
             return this.hsOrderService.getOrderByID(this.currentOrderId)
         }).subscribe(
             data => {
+                console.log(data)
                 if (data) {
                     this.currentOrder = data.data
                 }
@@ -79,8 +82,9 @@ export class OrderDetailComponent implements OnInit {
             error => {this.httpService.errorHandler(error) }
         )
 
-        this.getPartyList()
 
+        this.getPartyList()
+        this.getDepartmentList()
         this.getTeamList()
         this.createOrderUnitForm()
     }
@@ -89,7 +93,14 @@ export class OrderDetailComponent implements OnInit {
         return item ? item.id : undefined
     }
 
-
+    getOrder () {
+        this.hsOrderService.getOrderByID(this.currentOrderId).subscribe(
+            data => {
+                this.currentOrder = data.data
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
     getOrderUnitList () {
         this.hsOrderService.getOrderUnitListByID(this.currentOrderId).subscribe(
             data => {
@@ -100,6 +111,15 @@ export class OrderDetailComponent implements OnInit {
         )
     }
 
+    getDepartmentList () {
+        this.hsUserService.getDepartmentList().subscribe(
+            data => {
+                this.departmentList = data.data.results
+
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
     getTeamList () {
         this.hsUserService.getTeamList().subscribe(
             data => {
@@ -110,11 +130,7 @@ export class OrderDetailComponent implements OnInit {
         )
     }
 
-    filterTeams (event : any) {
-        this.filterTeamList = this.teamList.filter( team => {
-            return team.deptId === event.id
-        })
-    }
+
 
     getPartyList () {
 
@@ -200,8 +216,6 @@ export class OrderDetailComponent implements OnInit {
             }
         }
 
-
-        console.log(postData)
 
         if (this.isAddNew) {
             this.hsOrderService.createNewOrderUnit(this.currentOrderId, postData).subscribe(
