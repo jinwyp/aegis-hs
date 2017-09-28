@@ -171,51 +171,78 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
 
         if (value) {
 
-            if (typeof value === 'string' || value instanceof String) {
+            if ( typeof value === 'string' || value instanceof String) {
 
-                const tempArray : string[] = value.split('-')
+                if (value.length <= 6 ) {
+                    // example : 201709
 
-                if (tempArray.length === 3) {
+                    isValid = true
 
-                    if ( Number(tempArray[0]) > 1900 && Number(tempArray[0]) < 4000
-                        && Number(tempArray[1]) >= 1 && Number(tempArray[1]) <= 12
-                        && Number(tempArray[2]) >= 1 && Number(tempArray[2]) <= 31
-                    ) {
-                        isValid = true
+                    now = new Date( Number(value.substr(0,4)), Number(value.substr(4,2)) - 1 )
 
-                        now = new Date( Number(tempArray[0]), Number(tempArray[1]) - 1, Number(tempArray[2]) )
+                    this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
+                    this.inputDisplayValue =  this.displayFormatter(this.interValueDate)
+                }else if (value.length <= 9) {
 
-                        this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
-                        this.inputDisplayValue =  this.displayFormatter(this.interValueDate)
+                    // example : 2017-09-01
+
+                    const tempArray : string[] = value.split('-')
+                    if (tempArray.length === 3) {
+
+                        if ( Number(tempArray[0]) > 1900 && Number(tempArray[0]) < 4000
+                            && Number(tempArray[1]) >= 1 && Number(tempArray[1]) <= 12
+                            && Number(tempArray[2]) >= 1 && Number(tempArray[2]) <= 31
+                        ) {
+                            isValid = true
+
+                            now = new Date( Number(tempArray[0]), Number(tempArray[1]) - 1, Number(tempArray[2]) )
+
+                            this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
+                            this.inputDisplayValue =  this.displayFormatter(this.interValueDate)
+                        }
                     }
+
+                    if (tempArray.length === 2) {
+
+                        if ( Number(tempArray[0]) > 1900 && Number(tempArray[0]) < 4000
+                            && Number(tempArray[1]) >= 1 && Number(tempArray[1]) <= 12
+                        ) {
+                            isValid = true
+
+                            now = new Date( Number(tempArray[0]), Number(tempArray[1]) - 1, 1 )
+
+                            this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
+                            this.inputDisplayValue = this.interValueDate.year + '-' + this.interValueDate.month
+                        }
+                    }
+
+                } else  {
+                    const tempArray : string[] = value.split(' ')
+                    const date : string = tempArray[0]
+                    const time : string = tempArray[1]
+
+                    const tempDate : string[] = date.split('-')
+                    if (tempDate.length === 3) {
+
+                        if ( Number(tempDate[0]) > 1900 && Number(tempDate[0]) < 4000
+                            && Number(tempDate[1]) >= 1 && Number(tempDate[1]) <= 12
+                            && Number(tempDate[2]) >= 1 && Number(tempDate[2]) <= 31
+                        ) {
+                            isValid = true
+
+                            now = new Date( Number(tempDate[0]), Number(tempDate[1]) - 1, Number(tempDate[2]) )
+
+                            this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
+                            this.inputDisplayValue =  this.displayFormatter(this.interValueDate)
+                        }
+                    }
+
                 }
 
-                if (tempArray.length === 2) {
 
-                    if ( Number(tempArray[0]) > 1900 && Number(tempArray[0]) < 4000
-                        && Number(tempArray[1]) >= 1 && Number(tempArray[1]) <= 12
-                    ) {
-                        isValid = true
-
-                        now = new Date( Number(tempArray[0]), Number(tempArray[1]) - 1, 1 )
-
-                        this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
-                        this.inputDisplayValue = this.interValueDate.year + '-' + this.interValueDate.month
-                    }
-                }
             }
 
 
-            if ( (typeof value === 'string' || value instanceof String) && value.length === 6 ) {
-
-                isValid = true
-
-                now = new Date( Number(value.substr(0,4)), Number(value.substr(4,2)) - 1 )
-
-                this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
-                this.inputDisplayValue =  this.displayFormatter(this.interValueDate)
-
-            }
 
 
             if (typeof value === 'object' && value.year && value.month && value.day ) {

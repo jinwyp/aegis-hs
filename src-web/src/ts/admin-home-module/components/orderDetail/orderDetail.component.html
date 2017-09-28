@@ -1,10 +1,7 @@
 
 
         <h3>
-            核算详情 - {{currentOrderId}}
-
-
-
+            核算详情  ID:{{currentOrderId}} - 业务线: {{currentOrder?.line}}
         </h3>
 
 
@@ -22,18 +19,22 @@
                 <a class="nav-link" [class.active]="currentTabIndex === 4" (click)="changeTab(4)">付款管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentTabIndex === 5" (click)="changeTab(5)">还款管理</a>
+                <a class="nav-link" [class.active]="currentTabIndex === 5" (click)="changeTab(5)">回款管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentTabIndex === 6" (click)="changeTab(6)">结算单管理</a>
+                <a class="nav-link" [class.active]="currentTabIndex === 6" (click)="changeTab(6)">还款管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentTabIndex === 7" (click)="changeTab(7)">费用管理</a>
+                <a class="nav-link" [class.active]="currentTabIndex === 7" (click)="changeTab(7)">结算单管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentTabIndex === 8" (click)="changeTab(8)">发票管理</a>
+                <a class="nav-link" [class.active]="currentTabIndex === 8" (click)="changeTab(8)">费用管理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="currentTabIndex === 9" (click)="changeTab(9)">发票管理</a>
             </li>
         </ul>
+
 
 
         <ul class="list-group" *ngIf="currentTabIndex === 1">
@@ -55,7 +56,6 @@
 
         <div *ngIf="currentTabIndex === 2">
 
-
             <form [formGroup]="orderUnitForm" (ngSubmit)="orderUnitFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
                 <bs-datepicker formControlName="hsMonth" [fc]="orderUnitForm.get('hsMonth')" [label]="'核算月名称:'" [format]="'yyyymm'" [error]="orderUnitFormError.hsMonth"></bs-datepicker>
@@ -75,7 +75,6 @@
                     </div>
                 </div>
             </form>
-
 
 
             <div *ngIf="!isShowForm">
@@ -117,8 +116,10 @@
             <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加新核算月</button>
 
 
-
-
         </div>
 
 
+        <app-shipping  *ngIf="currentTabIndex === 3" [currentOrder]="currentOrder"></app-shipping>
+        <app-payment  *ngIf="currentTabIndex === 4" [currentOrder]="currentOrder"></app-payment>
+        <app-repayment  *ngIf="currentTabIndex === 5" [currentOrder]="currentOrder"></app-repayment>
+        <app-huankuan  *ngIf="currentTabIndex === 6" [currentOrder]="currentOrder"></app-huankuan>

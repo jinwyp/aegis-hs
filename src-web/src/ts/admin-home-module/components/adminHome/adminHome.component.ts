@@ -67,12 +67,7 @@ export class AdminHomeComponent implements OnInit {
 
 
     getDictionary () {
-        this.orderService.getEnumList('PayMode').subscribe(
-            data => {
-                saveEnum('PayMode', data.data)
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
+
 
         this.orderService.getEnumList('SettleMode').subscribe(
             data => {
@@ -92,6 +87,35 @@ export class AdminHomeComponent implements OnInit {
         this.orderService.getEnumList('CargoType').subscribe(
             data => {
                 saveEnum('CargoType', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+        this.orderService.getEnumList('CargoArriveStatus').subscribe(
+            data => {
+                saveEnum('CargoArriveStatus', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+        this.orderService.getEnumList('TrafficMode').subscribe(
+            data => {
+                saveEnum('TrafficMode', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+
+        this.orderService.getEnumList('PaymentPurpose').subscribe(
+            data => {
+                saveEnum('PaymentPurpose', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+        this.orderService.getEnumList('PayMode').subscribe(
+            data => {
+                saveEnum('PayMode', data.data)
             },
             error => {this.httpService.errorHandler(error) }
         )

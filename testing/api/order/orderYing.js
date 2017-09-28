@@ -45,7 +45,7 @@ describe('应收订单', function () {
 
 
 
-    it('新建应收订单1 POST: /api/yings', function (done) {
+    it('应收订单 - 新建应收订单1 POST: /api/yings', function (done) {
         server.post('/api/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -72,8 +72,7 @@ describe('应收订单', function () {
             })
     })
 
-
-    it('新建应收订单2 POST: /api/yings', function (done) {
+    it('应收订单 - 新建应收订单2 POST: /api/yings', function (done) {
         server.post('/api/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -104,9 +103,34 @@ describe('应收订单', function () {
             })
     })
 
+    it('应收订单 - 新建应收订单3 POST: /api/yings', function (done) {
+        server.post('/api/yings')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                "deptId":2,
+                "teamId":1,
+                "line":"那曲 - 晋和 - 嘉瑞",
+                "cargoType":"COAL",
+                "upstreamSettleMode":"ONE_PAPER_SETTLE",
+                "downstreamSettleMode":"ONE_PAPER_SETTLE",
+                "mainAccounting":1,
+                "upstreamId":2,
+                "downstreamId":3
+            })
+            .expect('Content-Type', /json/)
+            .expect(201)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id).to.be.a('number')
+                expect(res.body.data.line).to.include('那曲')
+                done()
+            })
+    })
 
-
-    it('获取应收订单列表 GET: /api/yings?pageNo=1&pageSize=2', function (done) {
+    it('应收订单 - 获取应收订单列表 GET: /api/yings?pageNo=1&pageSize=2', function (done) {
         server.get('/api/yings?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -124,10 +148,7 @@ describe('应收订单', function () {
             })
     })
 
-
-
-
-    it('获取某个ID的应收订单信息 GET: /api/yings/1', function (done) {
+    it('应收订单 - 获取某个ID的应收订单信息 GET: /api/yings/1', function (done) {
         server.get('/api/yings/1')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -143,8 +164,7 @@ describe('应收订单', function () {
             })
     })
 
-
-    it('修改某个ID的应收订单名称 PUT: /api/yings/1', function (done) {
+    it('应收订单 - 修改某个ID的应收订单名称 PUT: /api/yings/1', function (done) {
         server.put('/api/yings/1')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -173,7 +193,7 @@ describe('应收订单', function () {
 
 
 
-    it('新建核算单元1 POST: /api/ying/1/units', function (done) {
+    it('核算单元 - 新建核算单元1 POST: /api/ying/1/units', function (done) {
         server.post('/api/ying/1/units')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -198,7 +218,7 @@ describe('应收订单', function () {
             })
     })
 
-    it('新建核算单元2 POST: /api/ying/1/units', function (done) {
+    it('核算单元 - 新建核算单元2 POST: /api/ying/1/units', function (done) {
         server.post('/api/ying/1/units')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -223,9 +243,7 @@ describe('应收订单', function () {
             })
     })
 
-
-
-    it('获取应收订单核算单元列表 GET: /api/ying/1/units?pageNo=1&pageSize=2', function (done) {
+    it('核算单元 - 获取应收订单核算单元列表 GET: /api/ying/1/units?pageNo=1&pageSize=2', function (done) {
         server.get('/api/ying/1/units?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -242,7 +260,23 @@ describe('应收订单', function () {
             })
     })
 
-    it('修改某个ID的应收订单核算单元 PUT: /api/ying/1/units/1', function (done) {
+    it('核算单元 - 获取某个ID的核算单元信息 GET: /api/ying/1/units/1', function (done) {
+        server.get('/api/ying/1/units/1')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id).to.be.a('number')
+                expect(res.body.data.hsMonth).to.include('201709')
+                done()
+            })
+    })
+
+    it('核算单元 - 修改某个ID的应收订单核算单元 PUT: /api/ying/1/units/1', function (done) {
         server.put('/api/ying/1/units/1')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -266,6 +300,134 @@ describe('应收订单', function () {
             })
     })
 
+
+
+
+    it('发运单 - 新建发运单1 POST: /api/ying/1/fayuns', function (done) {
+        server.post('/api/ying/1/fayuns')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                "hsId"               : 1,
+                "fyDate"                : "2017-09-02 00:00:00",
+                "fyAmount"              : "2000",
+                "arriveStatus"          : "ARRIVE",
+                "upstreamTrafficMode"   : "MOTOR",
+                "upstreamCars"          : 200,
+                "upstreamJHH"           : "",
+                "upstreamShip"          : "",
+                "downstreamTrafficMode" : "SHIP",
+                "downstreamCars"        : "",
+                "downstreamJHH"         : "",
+                "downstreamShip"        : "x1000",
+                "orderId"               : 1
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id).to.be.a('number')
+                expect(res.body.data.fyDate).to.include('2017')
+                done()
+            })
+    })
+
+    it('发运单 - 新建发运单2 POST: /api/ying/1/fayuns', function (done) {
+        server.post('/api/ying/1/fayuns')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                "hsId"               : 1,
+                "fyDate"                : "2017-10-01 00:00:00",
+                "fyAmount"              : "40000",
+                "arriveStatus"          : "ARRIVE",
+                "upstreamTrafficMode"   : "MOTOR",
+                "upstreamCars"          : 200,
+                "upstreamJHH"           : "",
+                "upstreamShip"          : "",
+                "downstreamTrafficMode" : "SHIP",
+                "downstreamCars"        : "",
+                "downstreamJHH"         : "",
+                "downstreamShip"        : "x1003",
+                "orderId"               : 1
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id).to.be.a('number')
+                expect(res.body.data.fyDate).to.include('2017')
+                done()
+            })
+    })
+
+    it('发运单 - 获取应收订单发运单列表 GET: /api/ying/1/fayuns?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/ying/1/fayuns?pageNo=1&pageSize=2')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.pageNo).to.equal(1)
+                expect(res.body.data.pageSize).to.equal(2)
+                expect(res.body.data.results.length).to.equal(2)
+                done()
+            })
+    })
+
+    it('发运单 - 获取某个ID的发运单信息 GET: /api/ying/1/fayuns/1', function (done) {
+        server.get('/api/ying/1/fayuns/1')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id).to.be.a('number')
+                expect(res.body.data.fyDate).to.include('2017')
+                done()
+            })
+    })
+
+    it('发运单 - 修改某个ID的发运单 PUT: /api/ying/1/fayuns/1', function (done) {
+        server.put('/api/ying/1/fayuns/1')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "id" : 1,
+                    "hsId"               : 1,
+                    "fyDate"                : "2017-09-02 00:00:00",
+                    "arriveStatus"          : "ARRIVE",
+                    "upstreamTrafficMode"   : "MOTOR",
+                    "upstreamCars"          : 300,
+                    "upstreamJHH"           : "",
+                    "upstreamShip"          : "",
+                    "downstreamTrafficMode" : "SHIP",
+                    "downstreamCars"        : "",
+                    "downstreamJHH"         : "",
+                    "downstreamShip"        : "x3000",
+                    "orderId"               : 1
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.equal(1)
+                done()
+            })
+    })
 
 
 })

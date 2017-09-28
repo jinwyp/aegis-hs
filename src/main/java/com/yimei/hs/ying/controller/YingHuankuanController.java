@@ -120,4 +120,3 @@ public class YingHuankuanController {
         return Result.ok(1);
     }
 }
-

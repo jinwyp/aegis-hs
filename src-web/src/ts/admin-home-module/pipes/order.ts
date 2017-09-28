@@ -76,6 +76,19 @@ export class PipeCargoType implements PipeTransform {
     }
 }
 
+@Pipe({name: 'arriveStatus'})
+export class PipeCargoArriveStatus implements PipeTransform {
+    transform(value: string, exponent: string): string {
+
+        let text: string = '无状态'
+
+        if (value === 'ARRIVE') { text = '已到场' }
+        if (value === 'UNARRIVE') { text = '未到场' }
+
+        return text
+
+    }
+}
 
 
 @Pipe({name: 'customerType'})
@@ -90,6 +103,21 @@ export class PipeCustomerType implements PipeTransform {
         if (value === 'FUNDER') { text = '资金方' }
         if (value === 'TRANSPORT_COMPANY') { text = '运输方' }
         if (value === 'ACCOUNTING_COMPANY') { text = '账务公司' }
+
+        return text
+
+    }
+}
+
+@Pipe({name: 'trafficMode'})
+export class PipeTrafficMode implements PipeTransform {
+    transform(value: string, exponent: string): string {
+
+        let text: string = '无状态'
+
+        if (value === 'MOTOR') { text = '汽运' }
+        if (value === 'SHIP') { text = '船运' }
+        if (value === 'RAIL') { text = '火运' }
 
         return text
 
