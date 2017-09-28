@@ -1,84 +1,88 @@
 
+        <form [formGroup]="repaymentForm" (ngSubmit)="repaymentFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-            <form [formGroup]="shippingForm" (ngSubmit)="shippingFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+            <bs-select formControlName="hsId" [fc]="repaymentForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="repaymentFormError.hsId"></bs-select>
 
-                <bs-select formControlName="hsId" [fc]="shippingForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="shippingFormError.hsId"></bs-select>
-                <bs-datepicker formControlName="fyDate" [fc]="shippingForm.get('fyDate')" [label]="'发运日期:'" [error]="shippingFormError.fyDate"></bs-datepicker>
-
-                <bs-text-input formControlName="fyAmount" [fc]="shippingForm.get('fyAmount')" [type]="'number'" [label]="'发运吨数:'" [dirty]="ignoreDirty" [error]="shippingFormError.fyAmount"></bs-text-input>
-                <bs-select formControlName="arriveStatus" [fc]="shippingForm.get('arriveStatus')" [label]="'到场状态:'"  [options]="arriveStatusList" [error]="shippingFormError.arriveStatus"></bs-select>
-
-                <bs-radio formControlName ="upstreamTrafficMode" [fc]="shippingForm.get('upstreamTrafficMode')" [label]="'上游运输方式:'" [sourceList]="trafficModeList" [error]="shippingFormError.upstreamTrafficMode" ></bs-radio>
-
-                <bs-text-input formControlName="upstreamCars" [fc]="shippingForm.get('upstreamCars')" [type]="'number'" [label]="'上游汽运情况下的车数:'" [dirty]="ignoreDirty" [error]="shippingFormError.upstreamCars" [hidden]="shippingForm.get('upstreamTrafficMode').value !=='MOTOR'"></bs-text-input>
-                <bs-text-input formControlName="upstreamJHH" [fc]="shippingForm.get('upstreamJHH')" [type]="'text'" [label]="'上游火运情况下的计划号:'" [dirty]="ignoreDirty" [error]="shippingFormError.upstreamJHH" [hidden]="shippingForm.get('upstreamTrafficMode').value !=='RAIL'"></bs-text-input>
-                <bs-text-input formControlName="upstreamShip" [fc]="shippingForm.get('upstreamShip')" [type]="'text'" [label]="'上游船运情况下的船号:'" [dirty]="ignoreDirty" [error]="shippingFormError.upstreamShip" [hidden]="shippingForm.get('upstreamTrafficMode').value !=='SHIP'"></bs-text-input>
+            <bs-select formControlName ="huikuanCompanyId" [fc]="repaymentForm.get('huikuanCompanyId')" [label]="'回款公司:'" [options]="partyList" [error]="repaymentFormError.huikuanCompanyId"></bs-select>
+            <bs-datepicker formControlName="huikuanDate" [fc]="repaymentForm.get('huikuanDate')" [label]="'回款日期:'" [error]="repaymentFormError.huikuanDate"></bs-datepicker>
+            <bs-text-input formControlName="huikuanAmount" [fc]="repaymentForm.get('huikuanAmount')" [type]="'number'" [label]="'回款总额:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanAmount"></bs-text-input>
+            <bs-select formControlName="huikuanUsage" [fc]="repaymentForm.get('huikuanUsage')" [label]="'回款用途:'"  [options]="purposeList" [error]="repaymentFormError.huikuanUsage"></bs-select>
+            <bs-select formControlName="huikuanMode" [fc]="repaymentForm.get('huikuanMode')" [label]="'回款方式:'"  [options]="payModeList" [error]="repaymentFormError.huikuanMode"></bs-select>
 
 
-                <bs-radio formControlName ="downstreamTrafficMode" [fc]="shippingForm.get('downstreamTrafficMode')" [label]="'下游运输方式:'" [sourceList]="trafficModeList" [error]="shippingFormError.downstreamTrafficMode" ></bs-radio>
-
-                <bs-text-input formControlName="downstreamCars" [fc]="shippingForm.get('downstreamCars')" [type]="'number'" [label]="'下游汽运情况下的车数:'" [dirty]="ignoreDirty" [error]="shippingFormError.downstreamCars" [hidden]="shippingForm.get('downstreamTrafficMode').value !=='MOTOR'"></bs-text-input>
-                <bs-text-input formControlName="downstreamJHH" [fc]="shippingForm.get('downstreamJHH')" [type]="'text'" [label]="'下游火运情况下的计划号:'" [dirty]="ignoreDirty" [error]="shippingFormError.downstreamJHH" [hidden]="shippingForm.get('downstreamTrafficMode').value !=='RAIL'"></bs-text-input>
-                <bs-text-input formControlName="downstreamShip" [fc]="shippingForm.get('downstreamShip')" [type]="'text'" [label]="'下游船运情况下的船号:'" [dirty]="ignoreDirty" [error]="shippingFormError.downstreamShip" [hidden]="shippingForm.get('downstreamTrafficMode').value !=='SHIP'"></bs-text-input>
-
-
-                <div class="form-group row">
-                    <div class="col-10 ml-auto">
-                        <button type="submit" class="btn btn-info" >保存</button>
-                        <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
-                    </div>
-                </div>
-            </form>
-
-
-
-            <div *ngIf="!isShowForm">
-                <table class="table table-bordered table-hover table-responsive" >
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>核算月</th>
-                        <th>发运日期</th>
-                        <th>发运吨数</th>
-                        <th>到场状态</th>
-
-                        <th>上游运输方式</th>
-                        <th>上游运输详细</th>
-
-                        <th>下游运输方式</th>
-                        <th>下游运输详细</th>
-
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let shipping of shippingList; trackBy: trackByFn">
-                        <td> {{shipping.id}}</td>
-                        <td> {{shipping.hsId | findKey : unitList : 'name'}}</td>
-                        <td> {{shipping.fyDate }}</td>
-                        <td> {{shipping.fyAmount }}</td>
-                        <td> {{shipping.arriveStatus | arriveStatus }}</td>
-
-                        <td> {{shipping.upstreamTrafficMode}}</td>
-                        <td>
-                            <span *ngIf="shipping.upstreamTrafficMode==='MOTOR'">上游汽运情况下的车数: {{shipping.upstreamCars}}</span>
-                            <span *ngIf="shipping.upstreamTrafficMode==='RAIL'">上游火运情况下的计划号: {{shipping.upstreamJHH}}</span>
-                            <span *ngIf="shipping.upstreamTrafficMode==='SHIP'">上游船运情况下的船号: {{shipping.upstreamShip}}</span>
-                        </td>
-
-                        <td> {{shipping.downstreamTrafficMode }}</td>
-                        <td>
-                            <span *ngIf="shipping.downstreamTrafficMode==='MOTOR'">下游汽运情况下的车数: {{shipping.downstreamCars}}</span>
-                            <span *ngIf="shipping.downstreamTrafficMode==='RAIL'">下游火运情况下的计划号: {{shipping.downstreamJHH}}</span>
-                            <span *ngIf="shipping.downstreamTrafficMode==='SHIP'">下游船运情况下的船号: {{shipping.downstreamShip}}</span>
-                        </td>
-                        <td> <button class="btn btn-info btn-sm" (click)="showForm(false, shipping)"> 修改 </button></td>
-                    </tr>
-                    </tbody>
-                </table>
-
+            <div [hidden]="repaymentForm.get('huikuanMode').value !== 'BANK_ACCEPTANCE'">
+                <bs-radio formControlName ="huikuanBankPaper" [sourceList]="dataIsGot" [label]="'是否收到票据:'" [error]="repaymentFormError.huikuanBankPaper"></bs-radio>
+                <bs-datepicker formControlName="huikuanBankPaperDate" [fc]="repaymentForm.get('huikuanBankPaperDate')" [label]="'收到票据原件日期:'" [error]="repaymentFormError.huikuanBankPaperDate"></bs-datepicker>
+                <bs-datepicker formControlName="huikuanBankPaperExpire" [fc]="repaymentForm.get('huikuanBankPaperExpire')" [label]="'票据到期日:'" [error]="repaymentFormError.huikuanBankPaperExpire"></bs-datepicker>
+                <bs-radio formControlName ="huikuanBankDiscount" [sourceList]="dataIsGot" [label]="'是否贴息:'" [error]="repaymentFormError.huikuanBankDiscount"></bs-radio>
+                <bs-text-input formControlName="huikuanBankDiscountRate" [fc]="repaymentForm.get('huikuanBankDiscountRate')" [type]="'number'" [label]="'贴息率:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBankDiscountRate"></bs-text-input>
             </div>
 
 
+            <div [hidden]="repaymentForm.get('huikuanMode').value !== 'BUSINESS_ACCEPTANCE'">
+                <bs-radio formControlName ="huikuanBusinessPaper" [sourceList]="dataIsGot" [label]="'是否收到票据:'" [error]="repaymentFormError.huikuanBusinessPaper"></bs-radio>
+                <bs-datepicker formControlName="huikuanBusinessPaperDate" [fc]="repaymentForm.get('huikuanBusinessPaperDate')" [label]="'收到票据原件日期:'" [error]="repaymentFormError.huikuanBusinessPaperDate"></bs-datepicker>
+                <bs-datepicker formControlName="huikuanBusinessPaperExpire" [fc]="repaymentForm.get('huikuanBusinessPaperExpire')" [label]="'票据到期日:'" [error]="repaymentFormError.huikuanBusinessPaperExpire"></bs-datepicker>
+                <bs-radio formControlName ="huikuanBusinessDiscount" [sourceList]="dataIsGot" [label]="'是否贴息:'" [error]="repaymentFormError.huikuanBusinessDiscount"></bs-radio>
+                <bs-text-input formControlName="huikuanBusinessPaperExpire" [fc]="repaymentForm.get('huikuanBusinessPaperExpire')" [type]="'number'" [label]="'贴息率:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBusinessPaperExpire"></bs-text-input>
+            </div>
 
-            <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加发运单</button>
+
+            <div class="form-group row">
+                <div class="col-10 ml-auto">
+                    <button type="submit" class="btn btn-info" >保存</button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
+                </div>
+            </div>
+        </form>
+
+
+        <div *ngIf="!isShowForm">
+            <table class="table table-bordered table-hover table-responsive" >
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>核算月</th>
+
+                    <th>回款公司</th>
+                    <th>回款日期</th>
+                    <th>回款总额</th>
+                    <th>回款用途</th>
+                    <th>回款方式</th>
+
+                    <th>银行承兑详细</th>
+                    <th>商业承兑</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let repayment of repaymentList; trackBy: trackByFn">
+                    <td> {{repayment.id}}</td>
+                    <td> {{repayment.hsId | findKey : unitList : 'name'}}</td>
+
+                    <td> {{repayment.huikuanCompanyId | findKey : partyList : 'name' }}</td>
+                    <td> {{repayment.huikuanDate | findKey : purposeList : 'name' }}</td>
+                    <td> {{repayment.huikuanAmount  }}</td>
+                    <td> {{repayment.huikuanUsage | findKey : purposeList : 'name' }}</td>
+                    <td> {{repayment.huikuanMode | findKey : payModeList : 'name' }}</td>
+
+                    <td>
+                        收到票据:{{repayment.huikuanBankPaper ? '是' : '否'}} / 票据原件日期:{{repayment.huikuanBankPaperDate}} / 票据到期日:{{repayment.huikuanBankPaperExpire}}
+                        / 贴息:{{repayment.huikuanBankDiscount}} / 贴息率:{{repayment.huikuanBankDiscountRate}}
+                    </td>
+                    <td>
+                        收到票据:{{repayment.huikuanBusinessPaper ? '是' : '否'}} / 票据原件日期:{{repayment.huikuanBusinessPaperDate}} / 票据到期日:{{repayment.huikuanBusinessPaperExpire}}
+                        / 贴息:{{repayment.huikuanBusinessDiscount}} / 贴息率:{{repayment.huikuanBusinessDiscountRate}}
+                    </td>
+
+                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, repayment)"> 修改 </button></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+        <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加回款</button>
