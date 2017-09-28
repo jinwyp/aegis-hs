@@ -81,7 +81,9 @@ public class YingHuikuanService {
      * @return
      */
     public int createMap(long orderId) {
-        // todo
+        // todo 陆彪
+        // 1. 删除orderId的所有 hs_ying_huikuan_map记录
+        // 2. 重建orderId的所有 hs_ying_huikuan_map记录
         return 1;
     }
 
@@ -92,7 +94,7 @@ public class YingHuikuanService {
      */
     public int delete(long orderId, long id) {
         yingHuikuanMapMapper.deleteByOrderId(orderId);
-        // todo 重建所有的map记录
+        this.createMap(orderId);
         return yingHuikuanMapper.delete(id);
     }
 }

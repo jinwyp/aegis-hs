@@ -30,6 +30,12 @@ public class YingFukuanService {
     private YingHuankuanMapMapper yingHuankuanMapMapper;
 
     @Autowired
+    private YingHuikuanService yingHuikuanService;
+
+    @Autowired
+    private YingHuankuanService yingHuankuanService;
+
+    @Autowired
     private YingLogService yingLogService;
 
     /**
@@ -59,14 +65,14 @@ public class YingFukuanService {
     }
 
     /**
-     *
+     * 删除指定订单的付款记录， 这时候， 需要重建所有 回款-付款-map,  还款-付款-map
      * @param orderId
      * @param id
      * @return
      */
     public int delete(Long orderId, long id) {
-        yingHuankuanMapMapper.deleteByOrderId(orderId);
-        yingHuikuanMapMapper.deleteByOrderId(orderId);
+        yingHuikuanService.createMap(orderId);
+        yingHuankuanService.createMap(orderId);
         return yingFukuanMapper.delete(id);
     }
 }

@@ -173,6 +173,12 @@ public class YingSettleService {
     }
 
     /**
+     * 重建所有对应关系
+     * @param orderId
+     * @return
+     */
+
+    /**
      *  逻辑删除
      * @param id
      * @return

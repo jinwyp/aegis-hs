@@ -76,12 +76,14 @@ public class YingHuankuanService {
     }
 
     /**
+     * todo 陆彪
      *  重建 还款-付款-映射
      * @param orderId
      * @return
      */
     public int createMap(long orderId) {
-        // todo 重建
+        // 1. 删除所有的orderId的 hs_ying_huankuan_map记录
+        // 2. 重建所有的orderId的 hs_ying_huankuan_map记录
         return 1;
     }
 
@@ -101,7 +103,7 @@ public class YingHuankuanService {
      */
     public int delete(long orderId, long id) {
         yingHuankuanMapMapper.deleteByOrderId(orderId);
-        // todo 重新计算所有 map记录
+        this.createMap(orderId);
         return yingHuankuanMapper.delete(id);
     }
 }
