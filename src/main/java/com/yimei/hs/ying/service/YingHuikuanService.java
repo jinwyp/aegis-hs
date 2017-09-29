@@ -57,15 +57,27 @@ public class YingHuikuanService {
         if (rtn != 1) {
             return 0;
         }
+        // 待添加的记录 todo
+        List<YingHuikuanMap> toAdd = new ArrayList<>();// createMapById(yingHuikuan, huikuanList);
 
+        for (YingHuikuanMap item : toAdd) {
+            yingHuikuanMapMapper.insert(item);
+        }
+
+        return rtn;
+    }
+
+    private List<YingHuikuanMap> createMapById(YingHuikuan yingHuikuan, List<YingHuikuan> huikuanList) {
+
+        List<YingHuikuanMap> toAdd = new ArrayList<>();
 
         // 查询出当前订单的所有与付款的对应记录
         List<YingHuikuanMap> huikuanMap = yingHuikuanMapMapper.loadAll(yingHuikuan.getOrderId());
+
         // 当前订单的所有付款记录
         List<YingFukuan> fukuanList = yingFukuanMapper.getList(yingHuikuan.getOrderId());
 
-        // 待添加的记录 todo
-        ArrayList<YingHuikuanMap> toAdd = new ArrayList<>();
+
         //从未添加过
         if (huikuanMap == null || huikuanMap.size() == 0) {
 
@@ -138,12 +150,7 @@ public class YingHuikuanService {
 
 
         //case 2fukuan<huikuan
-
-        for (YingHuikuanMap item : toAdd) {
-            yingHuikuanMapMapper.insert(item);
-        }
-
-        return rtn;
+        return toAdd;
     }
 
 
