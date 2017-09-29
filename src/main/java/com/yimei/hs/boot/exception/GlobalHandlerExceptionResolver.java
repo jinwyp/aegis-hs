@@ -45,7 +45,12 @@ public class GlobalHandlerExceptionResolver {
 
     private static final String adminUnAuth_flag = "adminUnauthorized";
 
-    @ExceptionHandler({BindException.class, TypeMismatchException.class, MissingServletRequestParameterException.class, MethodArgumentNotValidException.class})
+    @ExceptionHandler({
+            BindException.class,
+            TypeMismatchException.class,
+            MissingServletRequestParameterException.class,
+            MethodArgumentNotValidException.class
+    })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void process400Error(HttpServletRequest request, HttpServletResponse response, Exception ex) throws IOException {
         logger.error("400Exception:", ex);
