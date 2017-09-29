@@ -30,7 +30,7 @@ describe('事业部门', function () {
                 expect(res.body.data).to.not.equal(null)
                 expect(res.body.data.pageNo).to.equal(1)
                 expect(res.body.data.pageSize).to.equal(2)
-                expect(res.body.data.results.length).to.equal(2)
+                expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
                 done()
             })
     })
