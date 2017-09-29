@@ -51,7 +51,6 @@ public class YingHuikuanService {
     }
 
     public int create(YingHuikuan yingHuikuan) {
-        List<YingHuikuan> huikuanList = yingHuikuanMapper.loadAll(yingHuikuan.getOrderId());
         // 插入还款记录
         int rtn = yingHuikuanMapper.insert(yingHuikuan);
         if (rtn != 1) {
@@ -67,9 +66,17 @@ public class YingHuikuanService {
         return rtn;
     }
 
-    private List<YingHuikuanMap> createMapById(YingHuikuan yingHuikuan, List<YingHuikuan> huikuanList) {
+    /**
+     * 为指定的回款记录， 创建map记录
+     * @param yingHuikuan
+     * @return
+     */
+    private List<YingHuikuanMap> createMapById(YingHuikuan yingHuikuan) {
 
         List<YingHuikuanMap> toAdd = new ArrayList<>();
+
+        //
+        List<YingHuikuan> huikuanList = yingHuikuanMapper.loadAll(yingHuikuan.getOrderId());
 
         // 查询出当前订单的所有与付款的对应记录
         List<YingHuikuanMap> huikuanMap = yingHuikuanMapMapper.loadAll(yingHuikuan.getOrderId());
