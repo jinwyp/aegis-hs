@@ -159,6 +159,61 @@ export class HSOrderService {
 
 
 
+
+    getSettleUpstreamListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+        const params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
+
+        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/settleupstream', {params: params} )
+    }
+    createNewSettleUpstream(orderId: number, settle: any): Observable<any> {
+
+        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/settleupstream', settle )
+    }
+    modifySettleUpstream(orderId: number, settleId: number, settle: any, ): Observable<any> {
+
+        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/settleupstream/' + settleId.toString() , settle)
+    }
+
+
+    getSettleDownstreamListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+        const params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
+
+        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/settledownstream', {params: params} )
+    }
+    createNewSettleDownstream(orderId: number, settle: any): Observable<any> {
+
+        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/settledownstream', settle )
+    }
+    modifySettleDownstream(orderId: number, settleId: number, settle: any, ): Observable<any> {
+
+        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/settledownstream/' + settleId.toString() , settle)
+    }
+
+
+    getSettleTrafficListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+        const params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
+
+        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/settletraffic', {params: params} )
+    }
+    createNewSettleTraffic(orderId: number, settle: any): Observable<any> {
+
+        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/settletraffic', settle )
+    }
+    modifySettleTraffic(orderId: number, settleId: number, settle: any, ): Observable<any> {
+
+        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/settletraffic/' + settleId.toString() , settle)
+    }
+
+
+
+
+
     getExpenseListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)

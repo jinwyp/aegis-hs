@@ -147,6 +147,13 @@ export class AdminHomeComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+
+        this.orderService.getEnumList('DiscountMode').subscribe(
+            data => {
+                saveEnum('DiscountMode', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
     }
 
 }
