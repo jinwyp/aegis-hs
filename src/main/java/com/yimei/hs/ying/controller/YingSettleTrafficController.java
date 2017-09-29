@@ -75,7 +75,11 @@ public class YingSettleTrafficController {
     public ResponseEntity<Result<YingSettleTraffic>> create( @PathVariable("morderId") Long morderId,  @RequestBody YingSettleTraffic yingSettleTraffic) {
         yingSettleTraffic.setOrderId(morderId);
 
-        yingSettleService.createTraffic(yingSettleTraffic);
+        int rtn = yingSettleService.createTraffic(yingSettleTraffic);
+        if (rtn != 1) {
+            logger.error("创建失败: {}", yingSettleTraffic);
+            return Result.error(4001, "创建失败");
+        }
         return Result.ok(yingSettleTraffic);
     }
 

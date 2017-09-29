@@ -7,6 +7,8 @@ import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.user.dto.PageUserDTO;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.user.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @Logined(isAdmin = true)
 public class AdminController {
 
+    public static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @Autowired
     UserService userService;
@@ -34,11 +37,12 @@ public class AdminController {
             @CurrentUser User admin,
             @RequestBody @Validated User user
     ) {
-        User nuser = userService.create(user, admin);
-        if (nuser == null) {
+        int rtn = userService.create(user, admin);
+        if (rtn != 1) {
+            logger.error("创建用户失败: {}", user);
             return Result.error(4001, "创建用户失败");
         } else {
-            return Result.ok(nuser);
+            return Result.ok(user);
         }
     }
 

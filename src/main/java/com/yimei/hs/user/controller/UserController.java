@@ -36,7 +36,11 @@ public class UserController {
      */
     @PostMapping(value = "/api/register")
     public ResponseEntity<Result<Boolean>> register(@RequestBody @Validated User user) {
-        userService.create(user, null);
+        int rtn = userService.create(user, null);
+        if (rtn != 1) {
+            logger.error("用户创建失败: {}", user);
+            return Result.error(4001, "创建是白");
+        }
         return Result.ok(true);
     }
 

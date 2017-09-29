@@ -602,6 +602,7 @@ public class UserControllerTest extends YingTestBase {
         String upstreamCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settleupstream";
         YingSettleUpstream upstream = new YingSettleUpstream() {
             {
+                setOrderId(yingOrderResult.getData().getId());
                 setHsId(yingOrderConfigResult.getData().getId());
                 setSettleDate(stringToTime("2017-8-4"));
                 setMoney(new BigDecimal("565994.59"));

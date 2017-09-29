@@ -75,10 +75,12 @@ public class YingFukuanController {
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingFukuan yingFukuan
     ) {
-        // todo 增加校验
-
         yingFukuan.setOrderId(morderId);
-        yingFukuanService.create(yingFukuan);
+        int rtn = yingFukuanService.create(yingFukuan);
+        if (rtn != 1) {
+            logger.error("创建失败: {}", yingFukuan);
+            return Result.error(4001, "创建失败");
+        }
         return Result.ok(yingFukuan);
     }
 

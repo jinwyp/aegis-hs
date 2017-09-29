@@ -78,6 +78,7 @@ public class YingFeeController {
     ) {
         int rtn = yingFeeService.create(yingFee);
         if (rtn != 1) {
+            logger.error("创建失败: {}", yingFee);
             return Result.error(5001, "创建失败", HttpStatus.NOT_ACCEPTABLE);
         }
         return Result.created(yingFee);

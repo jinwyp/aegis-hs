@@ -58,7 +58,11 @@ public class DeptController {
     @PostMapping("/departments")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Dept>> create(@RequestBody Dept dept) {
-        deptService.create(dept);
+        int rtn = deptService.create(dept);
+        if (rtn != 1) {
+            logger.error("创建部门失败: {}", dept);
+            return Result.error(4001, "创建失败");
+        }
         return Result.ok(dept);
     }
 

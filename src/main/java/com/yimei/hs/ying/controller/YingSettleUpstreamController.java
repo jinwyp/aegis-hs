@@ -69,9 +69,15 @@ public class YingSettleUpstreamController {
      */
     @Transactional(readOnly = false)
     @PostMapping("/{morderId}/settleupstream")
-    public ResponseEntity<Result<YingSettleUpstream>> create(@PathVariable("morderId") Long morderId, @RequestBody YingSettleUpstream yingSettleUpstream) {
+    public ResponseEntity<Result<YingSettleUpstream>> create(
+            @PathVariable("morderId") Long morderId,
+            @RequestBody @Validated(CreateGroup.class) YingSettleUpstream yingSettleUpstream) {
         yingSettleUpstream.setOrderId(morderId);
-        yingSettleService.createUpstream(yingSettleUpstream);
+        int rtn = yingSettleService.createUpstream(yingSettleUpstream);
+        if (rtn != 1) {
+            logger.error("创建失败: {}", yingSettleUpstream);
+            return Result.error(4001, "创建失败");
+        }
         return Result.ok(yingSettleUpstream);
     }
 
@@ -90,6 +96,7 @@ public class YingSettleUpstreamController {
         yingSettleUpstream.setId(id);
         int rtn = yingSettleService.updateUpstream(yingSettleUpstream);
         if (rtn != 1) {
+            logger.error("更新失败: {}", yingSettleUpstream);
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
         }
         return Result.ok(1);
@@ -107,6 +114,7 @@ public class YingSettleUpstreamController {
     ) {
         int rtn = yingSettleService.deleteUpstream(id);
         if (rtn != 1) {
+            logger.error("删除失败: {}", id);
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
         }
         return Result.ok(1);

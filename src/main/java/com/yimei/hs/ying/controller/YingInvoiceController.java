@@ -77,6 +77,7 @@ public class YingInvoiceController {
     ) {
         int rtn = yingInvoiceService.create(yingInvoice);
         if (rtn != 1) {
+            logger.error("创建失败: {}", yingInvoice);
             return Result.error(4001, "创建失败");
         }
         return Result.ok(yingInvoice);

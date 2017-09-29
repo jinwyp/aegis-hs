@@ -77,7 +77,11 @@ public class YingHuankuanController {
     public ResponseEntity<Result<YingHuankuan>> create(
             @RequestBody @Validated(CreateGroup.class) YingHuankuan yingHuankuan
     ) {
-        yingHuankuanService.create(yingHuankuan);
+        int rtn = yingHuankuanService.create(yingHuankuan);
+        if (rtn != 1) {
+            logger.error("创建失败: {}", yingHuankuan);
+            return Result.error(4001, "创建失败");
+        }
         return Result.ok(yingHuankuan);
     }
 

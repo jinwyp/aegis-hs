@@ -45,7 +45,7 @@ public class UserService {
 
 
     @Transactional(readOnly = false)
-    public User create(User user, User admin) {
+    public int create(User user, User admin) {
 
         byte[] passwordSalt = Digests.generateSalt(SALT_SIZE);
         byte[] hashPassword = Digests.sha1(user.getPassword().getBytes(), passwordSalt, HASH_INTERATIONS);
@@ -61,8 +61,7 @@ public class UserService {
         } else {
             user.setCreateBy(admin.getPhone().toString());
         }
-        userMapper.insert(user);
-        return user;
+        return userMapper.insert(user);
 
     }
 

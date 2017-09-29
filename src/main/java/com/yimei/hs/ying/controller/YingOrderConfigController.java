@@ -58,6 +58,7 @@ public class YingOrderConfigController {
         yingOrderConfig.setOrderId(morderId);
         int rtn = yingOrderConfigService.create(yingOrderConfig);
         if (rtn != 1) {
+            logger.error("创建失败: {}", yingOrderConfig);
             return Result.error(5001, "创建失败", HttpStatus.NOT_FOUND);
         } else {
             return Result.ok(yingOrderConfig);
