@@ -1,0 +1,57 @@
+
+        <form [formGroup]="invoiceForm" (ngSubmit)="invoiceFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+
+            <bs-select formControlName="hsId" [fc]="invoiceForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="invoiceFormError.hsId"></bs-select>
+            <bs-select formControlName="invoiceDirection" [fc]="invoiceForm.get('invoiceDirection')" [label]="'进项或销项:'"  [options]="invoiceDirectionList" [error]="invoiceFormError.invoiceDirection"></bs-select>
+            <bs-select formControlName="invoiceType" [fc]="invoiceForm.get('invoiceType')" [label]="'发票类型:'"  [options]="invoiceTypeList" [error]="invoiceFormError.invoiceType"></bs-select>
+            <bs-datepicker formControlName="openDate" [fc]="invoiceForm.get('openDate')" [label]="'开票日期:'" [error]="invoiceFormError.openDate"></bs-datepicker>
+
+            <bs-select formControlName ="openCompanyId" [fc]="invoiceForm.get('openCompanyId')" [label]="'开票单位:'" [options]="partyList" [error]="invoiceFormError.openCompanyId"></bs-select>
+            <bs-select formControlName ="receiverId" [fc]="invoiceForm.get('receiverId')" [label]="'收票单位:'" [options]="partyList" [error]="invoiceFormError.receiverId"></bs-select>
+
+            <div class="form-group row">
+                <div class="col-10 ml-auto">
+                    <button type="submit" class="btn btn-info" >保存</button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
+                </div>
+            </div>
+        </form>
+
+
+        <div *ngIf="!isShowForm">
+            <table class="table table-bordered table-hover table-responsive" >
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>核算月</th>
+
+                    <th>进销项</th>
+                    <th>发票类型</th>
+                    <th>开票日期</th>
+                    <th>开票单位</th>
+                    <th>收票单位</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let invoice of invoiceList; trackBy: trackByFn">
+                    <td> {{invoice.id}}</td>
+                    <td> {{invoice.hsId | findKey : unitList : 'name'}}</td>
+
+                    <td> {{invoice.invoiceDirection | findKey : invoiceDirectionList : 'name' }}</td>
+                    <td> {{invoice.invoiceType | findKey : invoiceTypeList : 'name' }}</td>
+                    <td> {{invoice.openDate }}</td>
+                    <td> {{invoice.openCompanyId | findKey : partyList : 'name' }}</td>
+                    <td> {{invoice.receiverId | findKey : partyList : 'name' }}</td>
+
+                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, invoice)"> 修改 </button></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+        <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加发票</button>
