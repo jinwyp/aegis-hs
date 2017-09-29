@@ -199,6 +199,12 @@ public class UserControllerTest extends YingTestBase {
         setClientInterceptor(loginResult.getData());
     }
 
+
+//    private void deleteUserAbout()throws JsonProcessingException{
+//
+//        Result<String> result = client.exchange("/api/login", HttpMethod.POST, new HttpEntity<User>(admin), typeReferenceString).getBody();
+//    }
+
     private void order() throws JsonProcessingException {
 
         // 7. 创建应收订单
@@ -321,7 +327,7 @@ public class UserControllerTest extends YingTestBase {
         variablesHs.put("orderId", "" + yingOrderResult.getData().getId());
         variablesHs.put("pageSize", 5);
         variablesHs.put("pageNo", 1);
-        String configPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/units?"+WebUtils.getUrlTemplate(PageYingOrderConfigDTO.class);
+        String configPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/units?" + WebUtils.getUrlTemplate(PageYingOrderConfigDTO.class);
         PageResult<YingOrderConfig> yingOrderConfigPageResult = client.exchange(configPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderConfigPage, variablesHs).getBody();
         if (yingOrderConfigPageResult.getSuccess()) {
             logger.info("获取核算月配置分页成功\nGET /api/ying \nrequest: {}\nresponse:\n{}", printJson(variablesHs), printJson(yingOrderConfigPageResult.getData()));
@@ -331,6 +337,10 @@ public class UserControllerTest extends YingTestBase {
         }
 
         this.yingOrderConfigResult = new Result<YingOrderConfig>(true, yingOrderConfigPageResult.getData().getResults().get(0), null);
+
+        String configDelUrl = "/api/yings/" + yingOrderResult.getData().getId();
+
+
     }
 
     private void fayun() throws JsonProcessingException {
@@ -350,7 +360,7 @@ public class UserControllerTest extends YingTestBase {
             setFyDate(stringToTime("2017-6-20"));
         }};
 
-        Result<YingFayun> fayunCreateResult = client.exchange(fayunCreateUrl, HttpMethod.POST, new HttpEntity<>(fayun), typeReferenceFayun).getBody();
+        fayunCreateResult = client.exchange(fayunCreateUrl, HttpMethod.POST, new HttpEntity<>(fayun), typeReferenceFayun).getBody();
         if (fayunCreateResult.getSuccess()) {
             logger.info("创建发运成功\nPOST {}\nrequest = {}\nresponse = {}", fayunCreateUrl, printJson(fayun), printJson(fayunCreateResult.getData()));
         } else {
@@ -365,8 +375,8 @@ public class UserControllerTest extends YingTestBase {
         variablesFayun.put("orderId", yingOrderResult.getData().getId());
         variablesFayun.put("pageNo", 1);
 
-        String fayunPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns?"+WebUtils.getUrlTemplate(PageYingFayunDTO.class);
-        PageResult<YingFayun> fayunPageResult = client.exchange(fayunPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFayunPage,variablesFayun).getBody();
+        String fayunPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns?" + WebUtils.getUrlTemplate(PageYingFayunDTO.class);
+        PageResult<YingFayun> fayunPageResult = client.exchange(fayunPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFayunPage, variablesFayun).getBody();
         if (fayunPageResult.getSuccess()) {
             logger.info("发运分页成功\nGET {}\nrequest = {}\nresponse = {}", fayunPageUrl, variablesFayun, printJson(fayunPageResult.getData()));
         } else {
@@ -428,7 +438,7 @@ public class UserControllerTest extends YingTestBase {
             setHuikuanMode(PayMode.ELEC_REMITTANCE);
             setHuikuanUsage(ReceivePaymentPurpose.PAYMENT_FOR_GOODS);
         }};
-        Result<YingHuikuan> huikuanCreateResult = client.exchange(huikuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huikuan), typeReferenceHuikuan).getBody();
+        huikuanCreateResult = client.exchange(huikuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huikuan), typeReferenceHuikuan).getBody();
         if (huikuanCreateResult.getSuccess()) {
             logger.info("创建回款成功\nPOST {}\nrequest = {}\nresponse = {}", huikuanCreateUrl, printJson(huikuan), printJson(huikuanCreateResult.getData()));
         } else {
@@ -439,7 +449,7 @@ public class UserControllerTest extends YingTestBase {
 
         // 回款 - 分页
 
-        String huikuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huikuans?"+WebUtils.getUrlTemplate(PageYingHuikuanDTO.class);
+        String huikuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huikuans?" + WebUtils.getUrlTemplate(PageYingHuikuanDTO.class);
 
         Map<String, Object> variablesHuikuan = WebUtils.getUrlVariables(PageYingHuikuanDTO.class);
         variablesHuikuan.put("orderId", yingOrderResult.getData().getId());
@@ -447,7 +457,7 @@ public class UserControllerTest extends YingTestBase {
         variablesHuikuan.put("pageNo", 1);
 
 
-        PageResult<YingHuikuan> huikuanPageResult = client.exchange(huikuanPageUrl, HttpMethod.GET,  HttpEntity.EMPTY, typeReferenceHuikuanPage, variablesHuikuan).getBody();
+        PageResult<YingHuikuan> huikuanPageResult = client.exchange(huikuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceHuikuanPage, variablesHuikuan).getBody();
 
         if (huikuanPageResult.getSuccess()) {
             logger.info("创建分页成功\n GET {}\nrequest = {}\nresponse = {}", huikuanPageUrl, "", printJson(huikuanPageResult.getData()));
@@ -482,7 +492,7 @@ public class UserControllerTest extends YingTestBase {
             setHuankuanInterest(new BigDecimal("1700.02"));
 
         }};
-        Result<YingHuankuan> huankuanCreateResult = client.exchange(huankuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huankuan), typeReferenceHuankuan).getBody();
+        huankuanCreateResult = client.exchange(huankuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huankuan), typeReferenceHuankuan).getBody();
         if (huankuanCreateResult.getSuccess()) {
             logger.info("创建还款成功\nPOST {}\nrequest = {}\nresponse = {}", huankuanCreateUrl, printJson(huankuan), printJson(huankuanCreateResult.getData()));
         } else {
@@ -491,13 +501,13 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 2. 分页
-        String huankuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huankuans?"+WebUtils.getUrlTemplate(PageYingHuankuanDTO.class);
+        String huankuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huankuans?" + WebUtils.getUrlTemplate(PageYingHuankuanDTO.class);
         Map<String, Object> variableshuankuan = WebUtils.getUrlVariables(PageYingHuankuanDTO.class);
         variableshuankuan.put("orderId", yingOrderResult.getData().getId());
         variableshuankuan.put("pageSize", 5);
         variableshuankuan.put("pageNo", 1);
 
-        PageResult<YingHuankuan> huankuanPageResult = client.exchange(huankuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceHuankuanPage,variableshuankuan).getBody();
+        PageResult<YingHuankuan> huankuanPageResult = client.exchange(huankuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceHuankuanPage, variableshuankuan).getBody();
         if (huankuanPageResult.getSuccess()) {
             logger.info("还款  分页成功\n GET {}\nrequest = {}\nresponse = {}", huankuanPageUrl, "", printJson(huankuanPageResult.getData()));
         } else {
@@ -543,7 +553,7 @@ public class UserControllerTest extends YingTestBase {
             setPayAmount(new BigDecimal("54294.93"));
             setCapitalId(yingOrderResult.getData().getMainAccounting());
         }};
-        Result<YingFukuan> fukuanResult = client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuan), typeReferenceFukuan).getBody();
+        fukuanResult = client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuan), typeReferenceFukuan).getBody();
         if (fukuanResult.getSuccess()) {
             logger.info("创建付款成功\nPOST {}\nrequest = {}\nresponse = {}", fukuanCreateUrl, printJson(yingFukuan), printJson(fukuanResult.getData()));
         } else {
@@ -555,7 +565,7 @@ public class UserControllerTest extends YingTestBase {
 
         client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuantwo), typeReferenceFukuan).getBody();
         // 2. 分页
-        String fukuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans?"+WebUtils.getUrlTemplate(PageYingFukuanDTO.class);
+        String fukuanPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans?" + WebUtils.getUrlTemplate(PageYingFukuanDTO.class);
 
         Map<String, Object> fukuanVariablesPage = WebUtils.getUrlVariables(PageYingFukuanDTO.class);
         fukuanVariablesPage.put("orderId", yingOrderResult.getData().getId());
@@ -600,7 +610,7 @@ public class UserControllerTest extends YingTestBase {
             }
         };
 
-        Result<YingSettleUpstream> upstreamCreateResult = client.exchange(upstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(upstream), typeReferenceSettleUpstream).getBody();
+        upstreamCreateResult = client.exchange(upstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(upstream), typeReferenceSettleUpstream).getBody();
         if (upstreamCreateResult.getSuccess()) {
             logger.info("创建上游结算成功\nPOST {}\nrequest = {}\nresponse = {}", upstreamCreateUrl, printJson(upstream), printJson(upstreamCreateResult.getData()));
         } else {
@@ -609,14 +619,14 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 2. 分页
-        String upstreamPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settleupstream?"+WebUtils.getUrlTemplate(PageYingSettleUpstreamDTO.class);
+        String upstreamPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settleupstream?" + WebUtils.getUrlTemplate(PageYingSettleUpstreamDTO.class);
 
         Map<String, Object> upstreamVariables = WebUtils.getUrlVariables(PageYingSettleUpstreamDTO.class);
         upstreamVariables.put("orderId", yingOrderResult.getData().getId());
         upstreamVariables.put("pageSize", 5);
         upstreamVariables.put("pageNo", 1);
 
-        PageResult<YingSettleUpstream> upstreamPageResult = client.exchange(upstreamPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleUpstreamPage,upstreamVariables).getBody();
+        PageResult<YingSettleUpstream> upstreamPageResult = client.exchange(upstreamPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleUpstreamPage, upstreamVariables).getBody();
         if (upstreamPageResult.getSuccess()) {
             logger.info("创建分页成功\nGET {}\nrequest = {}\nresponse = {}", upstreamPageUrl, "", printJson(upstreamPageResult.getData()));
         } else {
@@ -661,7 +671,7 @@ public class UserControllerTest extends YingTestBase {
 
             setSettleGap(new BigDecimal("0"));
         }};
-        Result<YingSettleDownstream> downstreamCreateResult = client.exchange(downstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(downstream), typeReferenceSettleDownstream).getBody();
+        downstreamCreateResult = client.exchange(downstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(downstream), typeReferenceSettleDownstream).getBody();
         if (downstreamCreateResult.getSuccess()) {
             logger.info("创建下游结算成功\nPOST {}\nrequest = {}\nresponse = {}", downstreamCreateUrl, printJson(downstream), printJson(downstreamCreateResult.getData()));
         } else {
@@ -670,15 +680,14 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 2. 分页
-        String downstreamPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settledownstream?"+WebUtils.getUrlTemplate(PageYingSettleDownstreamDTO.class);
+        String downstreamPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settledownstream?" + WebUtils.getUrlTemplate(PageYingSettleDownstreamDTO.class);
         Map<String, Object> downstreamVariables = WebUtils.getUrlVariables(PageYingSettleDownstreamDTO.class);
-        downstreamVariables.put("orderId",yingOrderResult.getData().getId());
+        downstreamVariables.put("orderId", yingOrderResult.getData().getId());
         downstreamVariables.put("pageSize", 5);
         downstreamVariables.put("pageNo", 1);
 
 
-
-        PageResult<YingSettleDownstream> downstreamPageResult = client.exchange(downstreamPageUrl, HttpMethod.GET,   HttpEntity.EMPTY, typeReferenceSettleDownstreamPage,downstreamVariables).getBody();
+        PageResult<YingSettleDownstream> downstreamPageResult = client.exchange(downstreamPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleDownstreamPage, downstreamVariables).getBody();
         if (downstreamPageResult.getSuccess()) {
             logger.info("下游结算分页成功\nGET {}\nrequest = {}\nresponse = {}", downstreamPageUrl, "", printJson(downstreamPageResult.getData()));
         } else {
@@ -715,7 +724,7 @@ public class UserControllerTest extends YingTestBase {
             setTrafficCompanyId(yingOrderResult.getData().getMainAccounting());
 
         }};
-        Result<YingSettleTraffic> trafficCreateResult = client.exchange(trafficCreateUrl, HttpMethod.POST, new HttpEntity<>(traffic), typeReferenceSettleTraffic).getBody();
+        trafficCreateResult = client.exchange(trafficCreateUrl, HttpMethod.POST, new HttpEntity<>(traffic), typeReferenceSettleTraffic).getBody();
         if (trafficCreateResult.getSuccess()) {
             logger.info("创建运输方结算成功\n POST {}\nrequest = {}\nresponse = {}", trafficCreateUrl, printJson(traffic), printJson(trafficCreateResult.getData()));
         } else {
@@ -724,10 +733,10 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 2. 分页
-        String trafficPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settletraffic?"+WebUtils.getUrlTemplate(PageYingTransferDTO.class);
+        String trafficPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settletraffic?" + WebUtils.getUrlTemplate(PageYingTransferDTO.class);
 
         Map<String, Object> trafficVariables = WebUtils.getUrlVariables(PageYingTransferDTO.class);
-        trafficVariables.put("orderId",yingOrderResult.getData().getId());
+        trafficVariables.put("orderId", yingOrderResult.getData().getId());
         trafficVariables.put("pageSize", 5);
         trafficVariables.put("pageNo", 1);
 
@@ -783,15 +792,16 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
 
+
         // 2. 分页
-        String feePageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fees?"+WebUtils.getUrlTemplate(PageYingFeeDTO.class);
+        String feePageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fees?" + WebUtils.getUrlTemplate(PageYingFeeDTO.class);
 
         Map<String, Object> feeVariables = WebUtils.getUrlVariables(PageYingFeeDTO.class);
-        feeVariables.put("orderId",yingOrderResult.getData().getId());
+        feeVariables.put("orderId", yingOrderResult.getData().getId());
         feeVariables.put("pageSize", 5);
         feeVariables.put("pageNo", 1);
 
-        PageResult<YingFee> feePageResult = client.exchange(feePageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFeePage,feeVariables).getBody();
+        PageResult<YingFee> feePageResult = client.exchange(feePageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFeePage, feeVariables).getBody();
         if (feePageResult.getSuccess()) {
             logger.info("费用分页查询成功\nGET {}\nrequest = {}\nresponse = {}", feePageUrl, "", printJson(feePageResult.getData()));
         } else {
@@ -800,8 +810,8 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 3. 查询
-        String feeFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fees";
-        Result<YingFee> feeFindResult = client.exchange(feeFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFee).getBody();
+        String feeFindUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fees/" + feeCreateResult.getData().getId();
+        feeFindResult = client.exchange(feeFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFee).getBody();
         if (feeFindResult.getSuccess()) {
             logger.info("费用查询成功\nGET {}\nrequest = {}\nresponse = {}", feeFindUrl, "", printJson(feeFindResult.getData()));
         } else {
@@ -810,13 +820,13 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 4. 更新
-        String fayunUpdateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fees/" + yingOrderResult.getData().getId();
+        String fayunUpdateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fees/" + feeFindResult.getData().getId();
         fee.setAmount(new BigDecimal("9999"));
         fee.setOrderId(yingOrderResult.getData().getId());
         fee.setId(feeCreateResult.getData().getId());
         Result<Integer> yingFayunUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<YingFee>(fee), typeReferenceInteger).getBody();
         if (yingFayunUpdateResult.getSuccess()) {
-            logger.info("更新费用成功\nPOST {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(fee), printJson(yingFayunUpdateResult.getData()));
+            logger.info("更新费用成功\nPUT {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(fee), printJson(yingFayunUpdateResult.getData()));
         } else {
             logger.error("更新费用失败: {}", yingFayunUpdateResult.getError());
             System.exit(-2);
@@ -843,6 +853,7 @@ public class UserControllerTest extends YingTestBase {
 
     }
 
+
     private void invoice() throws JsonProcessingException {
 
         // 1. 添加发票发票
@@ -859,7 +870,7 @@ public class UserControllerTest extends YingTestBase {
                 null,
                 invoiceDetail()
         );
-        YingInvoice yingInvoiceSecond= new YingInvoice(
+        YingInvoice yingInvoiceSecond = new YingInvoice(
                 null,
                 yingOrderResult.getData().getId(),
                 yingOrderConfigResult.getData().getId(),
@@ -877,7 +888,7 @@ public class UserControllerTest extends YingTestBase {
                             setPriceAndTax(new BigDecimal("565994.5995"));
                         }})
         );
-        Result<YingInvoice> invoiceCreateResult = client.exchange(invoiceCreateUrl, HttpMethod.POST, new HttpEntity<YingInvoice>(yingInvoice), typeReferenceInvoice).getBody();
+        invoiceCreateResult = client.exchange(invoiceCreateUrl, HttpMethod.POST, new HttpEntity<YingInvoice>(yingInvoice), typeReferenceInvoice).getBody();
         if (invoiceCreateResult.getSuccess()) {
             logger.info("创建发票成功\nPOST {}\nrequest = {}\nresponse = {}", invoiceCreateUrl, printJson(yingInvoice), printJson(invoiceCreateResult.getData()));
         } else {
@@ -885,21 +896,21 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
 
-         //第二笔发票记录
-       client.exchange(invoiceCreateUrl, HttpMethod.POST, new HttpEntity<YingInvoice>(yingInvoiceSecond), typeReferenceInvoice).getBody();
+        //第二笔发票记录
+        client.exchange(invoiceCreateUrl, HttpMethod.POST, new HttpEntity<YingInvoice>(yingInvoiceSecond), typeReferenceInvoice).getBody();
 
 //        // 发票 - 分页
 
         // 2. 分页
-        String invoicePageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices?"+WebUtils.getUrlTemplate(PageYingInvoiceDTO.class);
+        String invoicePageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices?" + WebUtils.getUrlTemplate(PageYingInvoiceDTO.class);
 
         Map<String, Object> invoiceVariables = WebUtils.getUrlVariables(PageYingInvoiceDTO.class);
-        invoiceVariables.put("orderId",yingOrderResult.getData().getId());
+        invoiceVariables.put("orderId", yingOrderResult.getData().getId());
         invoiceVariables.put("pageSize", 5);
         invoiceVariables.put("pageNo", 1);
         invoiceVariables.put("invoiceType", InvoiceType.GOODS_INVOICE);
 
-        PageResult<YingInvoice> invoicePageResult = client.exchange(invoicePageUrl, HttpMethod.GET,   HttpEntity.EMPTY, typeReferenceInvoicePage, invoiceVariables).getBody();
+        PageResult<YingInvoice> invoicePageResult = client.exchange(invoicePageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceInvoicePage, invoiceVariables).getBody();
         if (invoicePageResult.getSuccess()) {
             logger.info("创建分页成功\nGET {}\nrequest = {}\nresponse = {}", invoicePageUrl, "", printJson(invoicePageResult.getData()));
         } else {
@@ -928,7 +939,139 @@ public class UserControllerTest extends YingTestBase {
             logger.info("更新发票失败: {}", invoiceUpdateResult.getError());
             System.exit(-1);
         }
+
+        deleteTest();
     }
+
+    Result<YingInvoice> invoiceCreateResult = null;
+    Result<YingFee> feeFindResult = null;
+    Result<YingSettleTraffic> trafficCreateResult = null;
+    Result<YingSettleDownstream> downstreamCreateResult = null;
+    Result<YingSettleUpstream> upstreamCreateResult = null;
+    Result<YingFukuan> fukuanResult = null;
+    Result<YingHuankuan> huankuanCreateResult = null;
+    Result<YingHuikuan> huikuanCreateResult = null;
+    Result<YingFayun> fayunCreateResult = null;
+
+    public void deleteTest() throws JsonProcessingException {
+//        //发票删除
+//        String invoiceDelUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices/" + invoiceCreateResult.getData().getId();
+//        Result<Integer> yingnvoiceDelResult = client.exchange(invoiceDelUrl, HttpMethod.DELETE,  HttpEntity.EMPTY, typeReferenceInteger).getBody();
+//        if (yingnvoiceDelResult.getSuccess()) {
+//            logger.info("发票删除成功\n DELETE {}\nrequest = {}\nresponse = {}", invoiceDelUrl, "", printJson(yingnvoiceDelResult.getData()));
+//        } else {
+//            logger.error("发票删除失败: {}", yingnvoiceDelResult.getError());
+//            System.exit(-2);
+//        }
+
+
+        //费用删除
+        String feeDelUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fees/" + feeFindResult.getData().getId();
+
+        Result<Integer> yingfeeDelResult = client.exchange(feeDelUrl, HttpMethod.DELETE, HttpEntity.EMPTY, typeReferenceInteger).getBody();
+        if (yingfeeDelResult.getSuccess()) {
+            logger.info("费用删除成功\n DELETE {}\nrequest = {}\nresponse = {}", feeDelUrl, "", printJson(yingfeeDelResult.getData()));
+        } else {
+            logger.error("费用删除失败: {}", yingfeeDelResult.getError());
+            System.exit(-2);
+        }
+        //运输发结算删除
+        String settletrafficDeleteUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settletraffic/" + trafficCreateResult.getData().getId();
+
+        Result<Integer> settletrafficDelResult = client.exchange(settletrafficDeleteUrl, HttpMethod.DELETE, HttpEntity.EMPTY, typeReferenceInteger).getBody();
+        if (settletrafficDelResult.getSuccess()) {
+            logger.info("运输发结算删除成功\n DELETE {}\nrequest = {}\nresponse = {}", settletrafficDeleteUrl, "", printJson(settletrafficDelResult.getData()));
+        } else {
+            logger.error("运输发结算删除失败: {}", settletrafficDelResult.getError());
+            System.exit(-2);
+        }
+        //下游结算
+        String downstreamDeleteUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settledownstream/" + downstreamCreateResult.getData().getId();
+
+        Result<Integer> downstreamDelResult = client.exchange(downstreamDeleteUrl, HttpMethod.DELETE, HttpEntity.EMPTY, typeReferenceInteger).getBody();
+        if (downstreamDelResult.getSuccess()) {
+            logger.info("下游结算删除成功\n DELETE {}\nrequest = {}\nresponse = {}", downstreamDeleteUrl, "", printJson(downstreamDelResult.getData()));
+        } else {
+            logger.error("下游结算删除失败: {}", downstreamDelResult.getError());
+            System.exit(-2);
+        }
+        //上游结算
+        String upstreamDeleteUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settleupstream/" + upstreamCreateResult.getData().getId();
+
+
+        Result<Integer> upstreamDelResult = client.exchange(upstreamDeleteUrl, HttpMethod.DELETE, HttpEntity.EMPTY, typeReferenceInteger).getBody();
+        if (upstreamDelResult.getSuccess()) {
+            logger.info("上游结算删除成功\n DELETE {}\nrequest = {}\nresponse = {}", upstreamDeleteUrl, "", printJson(upstreamDelResult.getData()));
+        } else {
+            logger.error("上游结算删除失败: {}", upstreamDelResult.getError());
+            System.exit(-2);
+        }
+        //付款删除
+        String fukuanDeleteUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans/" + fukuanResult.getData().getId();
+
+        Result<Integer> fukuanDelResult = client.exchange(fukuanDeleteUrl, HttpMethod.DELETE, HttpEntity.EMPTY, typeReferenceInteger).getBody();
+        if (fukuanDelResult.getSuccess()) {
+            logger.info("付款删除成功\n DELETE {}\nrequest = {}\nresponse = {}", fukuanDeleteUrl, "", printJson(fukuanDelResult.getData()));
+        } else {
+            logger.error("付款删除失败: {}", fukuanDelResult.getError());
+            System.exit(-2);
+        }
+        //回款删除
+        String huikuanDeleteUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huikuans/" + huikuanCreateResult.getData().getId();
+
+        Result<Integer> huikuanDelResult = client.exchange(huikuanDeleteUrl, HttpMethod.DELETE, HttpEntity.EMPTY, typeReferenceInteger).getBody();
+        if (huikuanDelResult.getSuccess()) {
+            logger.info("回款删除成功\n DELETE {}\nrequest = {}\nresponse = {}", huikuanDeleteUrl, "", printJson(huikuanDelResult.getData()));
+        } else {
+            logger.error("回款删除失败: {}", huikuanDelResult.getError());
+            System.exit(-2);
+        }
+        //还款删除
+        String huankuanDeleteUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huankuans/" + huankuanCreateResult.getData().getId();
+
+        Result<Integer> huankuanDelResult = client.exchange(huankuanDeleteUrl, HttpMethod.DELETE, HttpEntity.EMPTY, typeReferenceInteger).getBody();
+        if (huankuanDelResult.getSuccess()) {
+            logger.info("还款删除成功\n DELETE {}\nrequest = {}\nresponse = {}", huankuanDeleteUrl, "", printJson(huankuanDelResult.getData()));
+        } else {
+            logger.error("还款删除失败: {}", huankuanDelResult.getError());
+            System.exit(-2);
+        }
+        //发运删除
+
+        String fayunDeleteUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns/" + fayunCreateResult.getData().getId();
+
+
+        Result<Integer> fayunDelResult = client.exchange(fayunDeleteUrl, HttpMethod.DELETE, HttpEntity.EMPTY, typeReferenceInteger).getBody();
+        if (fayunDelResult.getSuccess()) {
+            logger.info("发运删除成功\n DELETE {}\nrequest = {}\nresponse = {}", fayunDeleteUrl, "", printJson(fayunDelResult.getData()));
+        } else {
+            logger.error("发运删除失败: {}", fayunDelResult.getError());
+            System.exit(-2);
+        }
+        //核算月配置删除
+//        String configDeleteUrl = "/api/ying/" + yingOrderConfigResult.getData().getOrderId() + "/units/" + yingOrderConfigResult.getData().getId();
+//
+//        Result<Integer> configDelResult = client.exchange(configDeleteUrl, HttpMethod.DELETE, HttpEntity.EMPTY, typeReferenceInteger).getBody();
+//        if (configDelResult.getSuccess()) {
+//            logger.info("核算月配置删除成功\n DELETE {}\nrequest = {}\nresponse = {}", configDeleteUrl, "", printJson(configDelResult.getData()));
+//        } else {
+//            logger.error("核算月配置删除失败: {}", configDelResult.getError());
+//            System.exit(-2);
+//        }
+        //订单删除
+        String orderDelUrl = "/api/yings/" + yingOrderResult.getData().getId();
+        Result<Integer> yingOrderDelResult = client.exchange(orderDelUrl, HttpMethod.DELETE, HttpEntity.EMPTY, typeReferenceInteger).getBody();
+        if (yingOrderDelResult.getSuccess()) {
+            logger.info("订单删除成功\n DELETE {}\nrequest = {}\nresponse = {}", orderDelUrl, "", printJson(yingOrderDelResult.getData()));
+        } else {
+            logger.error("订单删除失败: {}", yingOrderDelResult.getError());
+            System.exit(-2);
+        }
+        //用户删除
+
+
+    }
+
 
     /**
      * @param strData 格式Y

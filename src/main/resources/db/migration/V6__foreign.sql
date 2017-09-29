@@ -41,9 +41,6 @@ alter table hs_ying_settle_upstream add foreign key(hsId)    references hs_ying_
 alter table hs_ying_settle_downstream add foreign key(orderId) references hs_ying_order(id);
 alter table hs_ying_settle_downstream add foreign key(hsId)    references hs_ying_order_config(id);
 
-alter table hs_ying_settle_downstream_map add foreign key(settleId) references hs_ying_settle_downstream(id);
-alter table hs_ying_settle_downstream_map add foreign key(fyId) references hs_ying_fayun(id);
-
 alter table hs_ying_settle_traffic add foreign key(orderId) references hs_ying_order(id);
 alter table hs_ying_settle_traffic add foreign key(hsId)    references hs_ying_order_config(id);
 alter table hs_ying_settle_traffic add foreign key(trafficCompanyId) references hs_party(id);

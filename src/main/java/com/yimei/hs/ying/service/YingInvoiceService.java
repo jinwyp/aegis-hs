@@ -72,7 +72,7 @@ public class YingInvoiceService {
      * @return
      */
     public int delete(long id) {
-        yingInvoiceDetailMapper.deleteByInvoiceId(id);
-        return yingInvoiceMapper.delete(id);
+          yingInvoiceMapper.delete(id);
+        return yingInvoiceDetailMapper.deleteByInvoiceId(id);
     }
 }

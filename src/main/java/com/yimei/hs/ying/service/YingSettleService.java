@@ -32,8 +32,6 @@ public class YingSettleService {
     @Autowired
     YingSettleDownstreamMapper yingSettleDownstreamMapper;
 
-    @Autowired
-    YingSettleDownstreamMapMapper yingSettleDownstreamMapMapper;
 
     @Autowired
     YingSettleTrafficMapper yingSettleTrafficMapper;
@@ -100,32 +98,9 @@ public class YingSettleService {
             return 0;
         }
 
-        // 查询出当前订单的所有与付款的对应记录
-        List<YingSettleDownstreamMap> huankuanMap = yingSettleDownstreamMapMapper.loadAll(yingSettleDownstream.getOrderId());
-
-        // 当前订单的所有发运记录
-        List<YingFayun> hukuanList = yingFayunMapper.getList(yingSettleDownstream.getOrderId());
-
-        // 待添加的记录 todo
-        List<YingSettleDownstreamMap> toAdd = new ArrayList<>();
-
-        //
-        for ( YingSettleDownstreamMap item: toAdd) {
-            yingSettleDownstreamMapMapper.insert(item);
-        }
-
         return rtn;
     }
 
-    /**
-     * 重建 下游结算-发运-映射
-     * @param orderId
-     * @return
-     */
-    public int createDownstreamMap(long orderId) {
-        // todo
-        return 1;
-    }
 
     /**
      *

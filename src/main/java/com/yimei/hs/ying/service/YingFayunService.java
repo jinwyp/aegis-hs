@@ -4,7 +4,6 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.YingFayun;
 import com.yimei.hs.ying.dto.PageYingFayunDTO;
 import com.yimei.hs.ying.mapper.YingFayunMapper;
-import com.yimei.hs.ying.mapper.YingSettleDownstreamMapMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
