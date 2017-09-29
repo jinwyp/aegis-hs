@@ -60,6 +60,8 @@ public class GlobalHandlerExceptionResolver {
         }
         response.setStatus(400);
         response.setContentType("application/json; charset=UTF-8");
+        if (ex instanceof MethodArgumentNotValidException) {
+        }
         om.writeValue(response.getOutputStream(), new Result(4001, "客户端错误"));
     }
 
