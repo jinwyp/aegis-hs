@@ -87,7 +87,7 @@
     </delete>
 
     <update id="delete" parameterType="java.lang.Long">
-        UPDATE hs_ying_invoice
+        UPDATE   hs_ying_invoice
         SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
