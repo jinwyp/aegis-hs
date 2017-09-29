@@ -75,7 +75,10 @@ public class YingInvoiceController {
     public ResponseEntity<Result<YingInvoice>> create(
        @RequestBody @Validated(CreateGroup.class) YingInvoice yingInvoice
     ) {
-        yingInvoiceService.create(yingInvoice);
+        int rtn = yingInvoiceService.create(yingInvoice);
+        if (rtn != 1) {
+            return Result.error(4001, "创建失败");
+        }
         return Result.ok(yingInvoice);
     }
 
