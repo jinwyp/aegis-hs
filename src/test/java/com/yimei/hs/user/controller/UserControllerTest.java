@@ -378,7 +378,7 @@ public class UserControllerTest extends YingTestBase {
         String fayunPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fayuns?" + WebUtils.getUrlTemplate(PageYingFayunDTO.class);
         PageResult<YingFayun> fayunPageResult = client.exchange(fayunPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFayunPage, variablesFayun).getBody();
         if (fayunPageResult.getSuccess()) {
-            logger.info("发运分页成功\n  GET {}\nrequest = {}\nresponse = {}", fayunPageUrl, variablesFayun, printJson(fayunPageResult.getData()));
+            logger.info("发运分页成功\nGET {}\nrequest = {}\nresponse = {}", fayunPageUrl, variablesFayun, printJson(fayunPageResult.getData()));
         } else {
             logger.info("发运分页失败: {}", fayunPageResult.getError());
             System.exit(-1);
@@ -934,7 +934,7 @@ public class UserControllerTest extends YingTestBase {
         yingInvoice.setInvoiceDirection(InvoiceDirection.INCOME);
         Result<Integer> invoiceUpdateResult = client.exchange(invoiceFindUrl, HttpMethod.PUT, new HttpEntity<YingInvoice>(yingInvoice), typeReferenceInteger).getBody();
         if (invoiceFindResult.getSuccess()) {
-            logger.info("更新发票成功\nPUT {}\nrequest = {}\nresponse = {}", invoiceUpdateUrl, "", printJson(invoiceUpdateResult.getData()));
+            logger.info("更新发票成功\nPUT {}\nrequest = {}\nresponse = {}", invoiceUpdateUrl, printJson(yingInvoice), printJson(invoiceUpdateResult.getData()));
         } else {
             logger.info("更新发票失败: {}", invoiceUpdateResult.getError());
             System.exit(-1);
