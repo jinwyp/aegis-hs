@@ -23,21 +23,23 @@ export class SettleOrderComponent implements OnInit {
 
     @Input() currentOrder : any
 
-    currentRepaymentId : number = 1
+    currentSettleId : number = 1
 
-    repaymentForm: FormGroup
+    settleForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
 
-    repaymentList : any[] = []
+    settleUpstreamList : any[] = []
+    settleDownstreamList : any[] = []
+    settleTrafficList : any[] = []
+
     partyList : any[] = []
 
     unitList : any[] = []
 
-    purposeList : any[] = getEnum('ReceivePaymentPurpose')
-    payModeList : any[] = getEnum('PayMode')
+    settleDiscountModeList : any[] = getEnum('DiscountMode')
 
 
     pagination: any = {
@@ -46,9 +48,10 @@ export class SettleOrderComponent implements OnInit {
         total : 1
     }
 
-    dataIsGot : any [] = [
-        { id : true , name : '是'},
-        { id : false , name : '否'}
+    settleTypeList : any[] = [
+        { id : 'upstream', name : '上游结算'},
+        { id : 'downstream', name : '下游结算'},
+        { id : 'traffic', name : '运输方结算'},
     ]
 
 
@@ -67,8 +70,8 @@ export class SettleOrderComponent implements OnInit {
     ngOnInit(): void {
 
         this.getPartyList()
-        this.getRepaymentList()
-        this.createRepaymentForm()
+        this.getSettleList()
+        this.createSettleForm()
 
         if (this.currentOrder) {
             if (Array.isArray(this.currentOrder.orderConfigList)) {
@@ -90,10 +93,24 @@ export class SettleOrderComponent implements OnInit {
     }
 
 
-    getRepaymentList () {
-        this.hsOrderService.getRepaymentListByID(this.currentOrder.id).subscribe(
+    getSettleList () {
+        this.hsOrderService.getSettleUpstreamListByID(this.currentOrder.id).subscribe(
             data => {
-                this.repaymentList = data.data.results
+                this.settleUpstreamList = data.data.results
+
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+        this.hsOrderService.getSettleDownstreamListByID(this.currentOrder.id).subscribe(
+            data => {
+                this.settleDownstreamList = data.data.results
+
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+        this.hsOrderService.getSettleTrafficListByID(this.currentOrder.id).subscribe(
+            data => {
+                this.settleTrafficList = data.data.results
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -112,62 +129,78 @@ export class SettleOrderComponent implements OnInit {
     }
 
 
-
-    repaymentFormError : any = {}
-    repaymentFormValidationMessages: any = {
+    settleFormError : any = {}
+    settleFormValidationMessages: any = {
+        'tempSettleType'  : {
+            'required'      : '请选择结算类型!'
+        },
         'hsId'  : {
             'required'      : '请选择核算月!'
         },
 
-        'huikuanCompanyId'  : {
-            'required'      : '请填写回款公司!'
+        'settleDate'  : {
+            'required'      : '请填写结算日期!'
         },
-        'huikuanDate'  : {
-            'required'      : '请填写回款日期!'
+        'amount'  : {
+            'required'      : '请填写结算数量(吨)!'
         },
-        'huikuanAmount'  : {
-            'required'      : '请填写回款金额!'
+        'money'  : {
+            'required'      : '请填写结算金额!'
         },
-        'huikuanUsage'  : {
-            'required'      : '请填写回款用途!'
+
+        'discountType'  : {
+            'required'      : '请填写折扣类型!'
         },
-        'huikuanMode'  : {
-            'required'      : '请填写回款方式!'
+        'discountInterest'  : {
+            'required'      : '请填写利率折扣!'
+        },
+        'discountDays'  : {
+            'required'      : '请填写利率折扣天数!'
+        },
+        'discountAmount'  : {
+            'required'      : '请填写折扣金额!'
+        },
+
+        'settleGap'  : {
+            'required'      : '结算扣吨!'
+        },
+
+        'trafficCompanyId'  : {
+            'required'      : '与哪个运输方结算!'
         }
+
     }
 
-    repaymentFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.repaymentFormError = formErrorHandler(formInputData, this.repaymentForm, this.repaymentFormValidationMessages, ignoreDirty)
+
+    settleFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
+        this.settleFormError = formErrorHandler(formInputData, this.settleForm, this.settleFormValidationMessages, ignoreDirty)
     }
 
-    createRepaymentForm(): void {
+    createSettleForm(): void {
 
-        this.repaymentForm = this.fb.group({
+        this.settleForm = this.fb.group({
+            'tempSettleType'    : ['upstream', [Validators.required ] ],
             'hsId'    : ['', [Validators.required ] ],
+            'settleDate'    : [null, [Validators.required ] ],
+            'amount'    : ['', [Validators.required ] ],
+            'money'    : ['', [Validators.required ] ],
 
-            'huikuanCompanyId'    : ['', [Validators.required ] ],
-            'huikuanDate'    : [null, [Validators.required ] ],
-            'huikuanAmount'    : ['', [Validators.required ] ],
-            'huikuanUsage'    : ['', [Validators.required ] ],
-            'huikuanMode'    : ['', [Validators.required ] ],
 
-            'huikuanBankPaper'    : ['', [] ],
-            'huikuanBankPaperDate'    : [null, [] ],
-            'huikuanBankDiscount'    : ['', [] ],
-            'huikuanBankDiscountRate'    : ['', [] ],
-            'huikuanBankPaperExpire'    : [null, [] ],
+            'discountType'    : ['', [Validators.required ] ],
+            'discountInterest'    : ['', [] ],
+            'discountDays'    : ['', [] ],
+            'discountAmount'    : ['', [] ],
 
-            'huikuanBusinessPaper'    : ['', [] ],
-            'huikuanBusinessPaperDate'    : [null, [] ],
-            'huikuanBusinessDiscount'    : ['', [] ],
-            'huikuanBusinessDiscountRate'    : ['', [] ],
-            'huikuanBusinessPaperExpire'    : [null, [ ] ]
+            'settleGap'    : ['', [Validators.required ] ],
+
+            'trafficCompanyId'    : ['', [Validators.required ] ]
+
         } )
 
 
-        this.repaymentForm.valueChanges.subscribe(data => {
+        this.settleForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
-            this.repaymentFormInputChange(data)
+            this.settleFormInputChange(data)
         })
     }
 
@@ -175,104 +208,164 @@ export class SettleOrderComponent implements OnInit {
 
 
 
-    repaymentFormSubmit() {
+    settleFormSubmit() {
 
-        if (this.repaymentForm.invalid) {
-            this.repaymentFormInputChange(this.repaymentForm.value, true)
+        if (!this.settleForm.value.discountType) {
+            this.settleForm.patchValue({ discountType : '99999999' })
+        }
+        if (!this.settleForm.value.settleGap) {
+            this.settleForm.patchValue({settleGap : 99999999})
+        }
+        if (!this.settleForm.value.trafficCompanyId) {
+            this.settleForm.patchValue({trafficCompanyId : 99999999})
+        }
+
+
+        if (this.settleForm.invalid) {
+            this.settleFormInputChange(this.settleForm.value, true)
             this.ignoreDirty = true
 
-            console.log('当前信息: ', this.repaymentForm, this.repaymentFormError)
+            console.log('当前信息: ', this.settleForm, this.settleFormError)
             return
         }
 
-        const postData = this.repaymentForm.value
+        const postData = this.settleForm.value
         postData.orderId = this.currentOrder.id
 
 
-        if (this.repaymentForm.value.huikuanDate && typeof this.repaymentForm.value.huikuanDate === "object" ) {
-            postData.huikuanDate = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanDate)
-        }
-        if (this.repaymentForm.value.huikuanBankPaperDate && typeof this.repaymentForm.value.huikuanBankPaperDate === "object" ) {
-            postData.huikuanBankPaperDate = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBankPaperDate)
-        }
-        if (typeof this.repaymentForm.value.huikuanBankPaperExpire && typeof this.repaymentForm.value.huikuanBankPaperExpire === "object" ) {
-            postData.huikuanBankPaperExpire = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBankPaperExpire)
+        if (this.settleForm.value.settleDate && typeof this.settleForm.value.settleDate === "object" ) {
+            postData.settleDate = this.hsOrderService.formatDateTime(this.settleForm.value.settleDate)
         }
 
-        if (typeof this.repaymentForm.value.huikuanBusinessPaperDate && typeof this.repaymentForm.value.huikuanBusinessPaperDate === "object" ) {
-            postData.huikuanBusinessPaperDate = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBusinessPaperDate)
-        }
-        if (typeof this.repaymentForm.value.huikuanBusinessPaperExpire && typeof this.repaymentForm.value.huikuanBusinessPaperExpire === "object" ) {
-            postData.huikuanBusinessPaperExpire = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBusinessPaperExpire)
-        }
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewRepayment(this.currentOrder.id, postData).subscribe(
-                data => {
-                    console.log('保存成功: ', data)
-                    this.httpService.successHandler(data)
 
-                    this.getRepaymentList()
-                    this.showForm()
+            if (this.settleForm.value.tempSettleType === 'upstream') {
+                this.hsOrderService.createNewSettleUpstream(this.currentOrder.id, postData).subscribe(
+                    data => {
+                        console.log('保存成功: ', data)
+                        this.httpService.successHandler(data)
 
-                },
-                error => {this.httpService.errorHandler(error) }
-            )
+                        this.getSettleList()
+                        this.showForm()
+
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
+
+            if (this.settleForm.value.tempSettleType === 'downstream') {
+                this.hsOrderService.createNewSettleDownstream(this.currentOrder.id, postData).subscribe(
+                    data => {
+                        console.log('保存成功: ', data)
+                        this.httpService.successHandler(data)
+
+                        this.getSettleList()
+                        this.showForm()
+
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
+
+            if (this.settleForm.value.tempSettleType === 'traffic') {
+                this.hsOrderService.createNewSettleTraffic(this.currentOrder.id, postData).subscribe(
+                    data => {
+                        console.log('保存成功: ', data)
+                        this.httpService.successHandler(data)
+
+                        this.getSettleList()
+                        this.showForm()
+
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
+
+
         } else {
-            postData.id = this.currentRepaymentId
-            delete postData.huikuanAmount
+            postData.id = this.currentSettleId
 
-            this.hsOrderService.modifyRepayment(this.currentOrder.id, this.currentRepaymentId, postData).subscribe(
-                data => {
-                    console.log('修改成功: ', data)
-                    this.httpService.successHandler(data)
 
-                    this.getRepaymentList()
-                    this.showForm()
+            if (this.settleForm.value.tempSettleType === 'upstream') {
+                this.hsOrderService.modifySettleUpstream(this.currentOrder.id, this.currentSettleId, postData).subscribe(
+                    data => {
+                        console.log('修改成功: ', data)
+                        this.httpService.successHandler(data)
 
-                },
-                error => {this.httpService.errorHandler(error) }
-            )
+                        this.getSettleList()
+                        this.showForm()
+
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
+
+            if (this.settleForm.value.tempSettleType === 'downstream') {
+                delete postData.amount
+                this.hsOrderService.modifySettleDownstream(this.currentOrder.id, this.currentSettleId, postData).subscribe(
+                    data => {
+                        console.log('修改成功: ', data)
+                        this.httpService.successHandler(data)
+
+                        this.getSettleList()
+                        this.showForm()
+
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
+
+            if (this.settleForm.value.tempSettleType === 'traffic') {
+                this.hsOrderService.modifySettleTraffic(this.currentOrder.id, this.currentSettleId, postData).subscribe(
+                    data => {
+                        console.log('修改成功: ', data)
+                        this.httpService.successHandler(data)
+
+                        this.getSettleList()
+                        this.showForm()
+
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
         }
 
     }
 
 
-    showForm(isAddNew : boolean = true, repayment?: any ) {
+    showForm(isAddNew : boolean = true, settle?: any, settleType?: string ) {
 
         this.ignoreDirty = false
 
         if (isAddNew) {
             this.isAddNew = true
-            this.currentRepaymentId = 0
+            this.currentSettleId = 0
 
-            this.repaymentForm.patchValue({
+            this.settleForm.patchValue({
+                'tempSettleType' : 'upstream',
                 'hsId'    : '',
+                'settleDate'    : null,
+                'amount'    : '',
+                'money'    : '',
 
-                'huikuanCompanyId'    : '',
-                'huikuanDate'    : null,
-                'huikuanAmount'    : '',
-                'huikuanUsage'    : '',
-                'huikuanMode'    : '',
 
-                'huikuanBankPaper'    : '',
-                'huikuanBankPaperDate'    : null,
-                'huikuanBankDiscount'    : '',
-                'huikuanBankDiscountRate'    : '',
-                'huikuanBankPaperExpire'    : null,
+                'discountType'    : '',
+                'discountInterest'    : '',
+                'discountDays'    : '',
+                'discountAmount'    : '',
 
-                'huikuanBusinessPaper'    : '',
-                'huikuanBusinessPaperDate'    : null,
-                'huikuanBusinessDiscount'    : '',
-                'huikuanBusinessDiscountRate'    : '',
-                'huikuanBusinessPaperExpire'    : null
+                'settleGap'    : '',
+
+                'trafficCompanyId'    : ''
             })
 
         } else {
             this.isAddNew = false
-            this.currentRepaymentId = repayment.id
+            this.currentSettleId = settle.id
+            settle.tempSettleType = settleType
 
-            this.repaymentForm.patchValue(repayment)
+            this.settleForm.patchValue(settle)
         }
 
 

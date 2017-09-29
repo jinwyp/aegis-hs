@@ -1,32 +1,27 @@
 
-        <form [formGroup]="repaymentForm" (ngSubmit)="repaymentFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+        <form [formGroup]="settleForm" (ngSubmit)="settleFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-            <bs-select formControlName="hsId" [fc]="repaymentForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="repaymentFormError.hsId"></bs-select>
-
-            <bs-select formControlName ="huikuanCompanyId" [fc]="repaymentForm.get('huikuanCompanyId')" [label]="'回款公司:'" [options]="partyList" [error]="repaymentFormError.huikuanCompanyId"></bs-select>
-            <bs-datepicker formControlName="huikuanDate" [fc]="repaymentForm.get('huikuanDate')" [label]="'回款日期:'" [error]="repaymentFormError.huikuanDate"></bs-datepicker>
-            <bs-text-input formControlName="huikuanAmount" [fc]="repaymentForm.get('huikuanAmount')" [type]="'number'" [label]="'回款总额:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanAmount"></bs-text-input>
-            <bs-select formControlName="huikuanUsage" [fc]="repaymentForm.get('huikuanUsage')" [label]="'回款用途:'"  [options]="purposeList" [error]="repaymentFormError.huikuanUsage"></bs-select>
-            <bs-select formControlName="huikuanMode" [fc]="repaymentForm.get('huikuanMode')" [label]="'回款方式:'"  [options]="payModeList" [error]="repaymentFormError.huikuanMode"></bs-select>
+            <bs-radio formControlName ="tempSettleType" [sourceList]="settleTypeList" [label]="'结算类型:'" [error]="settleFormError.tempSettleType" [hidden]="!isAddNew"></bs-radio>
+            <bs-select formControlName="hsId" [fc]="settleForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="settleFormError.hsId"></bs-select>
+            <bs-datepicker formControlName="settleDate" [fc]="settleForm.get('settleDate')" [label]="'结算日期:'" [error]="settleFormError.settleDate"></bs-datepicker>
+            <bs-text-input formControlName="amount" [fc]="settleForm.get('amount')" [type]="'number'" [label]="'结算数量(吨):'" [dirty]="ignoreDirty" [error]="settleFormError.amount"></bs-text-input>
+            <bs-text-input formControlName="money" [fc]="settleForm.get('money')" [type]="'number'" [label]="'结算金额:'" [dirty]="ignoreDirty" [error]="settleFormError.money"></bs-text-input>
 
 
-            <div [hidden]="repaymentForm.get('huikuanMode').value !== 'BANK_ACCEPTANCE'">
-                <bs-radio formControlName ="huikuanBankPaper" [sourceList]="dataIsGot" [label]="'是否收到票据:'" [error]="repaymentFormError.huikuanBankPaper"></bs-radio>
-                <bs-datepicker formControlName="huikuanBankPaperDate" [fc]="repaymentForm.get('huikuanBankPaperDate')" [label]="'收到票据原件日期:'" [error]="repaymentFormError.huikuanBankPaperDate"></bs-datepicker>
-                <bs-datepicker formControlName="huikuanBankPaperExpire" [fc]="repaymentForm.get('huikuanBankPaperExpire')" [label]="'票据到期日:'" [error]="repaymentFormError.huikuanBankPaperExpire"></bs-datepicker>
-                <bs-radio formControlName ="huikuanBankDiscount" [sourceList]="dataIsGot" [label]="'是否贴息:'" [error]="repaymentFormError.huikuanBankDiscount"></bs-radio>
-                <bs-text-input formControlName="huikuanBankDiscountRate" [fc]="repaymentForm.get('huikuanBankDiscountRate')" [type]="'number'" [label]="'贴息率:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBankDiscountRate"></bs-text-input>
+            <div [hidden]="settleForm.get('tempSettleType').value !== 'upstream'">
+                <bs-select formControlName ="discountType" [fc]="settleForm.get('discountType')" [label]="'折扣类型:'" [options]="settleDiscountModeList" [error]="settleFormError.discountType"></bs-select>
+                <bs-text-input formControlName="discountInterest" [fc]="settleForm.get('discountInterest')" [type]="'number'" [label]="'利率折扣:'" [dirty]="ignoreDirty" [error]="settleFormError.discountInterest"></bs-text-input>
+                <bs-text-input formControlName="discountDays" [fc]="settleForm.get('discountDays')" [type]="'number'" [label]="'利率折扣天数:'" [dirty]="ignoreDirty" [error]="settleFormError.discountDays"></bs-text-input>
+                <bs-text-input formControlName="discountAmount" [fc]="settleForm.get('discountAmount')" [type]="'number'" [label]="'折扣金额:'" [dirty]="ignoreDirty" [error]="settleFormError.discountAmount"></bs-text-input>
             </div>
 
-
-            <div [hidden]="repaymentForm.get('huikuanMode').value !== 'BUSINESS_ACCEPTANCE'">
-                <bs-radio formControlName ="huikuanBusinessPaper" [sourceList]="dataIsGot" [label]="'是否收到票据:'" [error]="repaymentFormError.huikuanBusinessPaper"></bs-radio>
-                <bs-datepicker formControlName="huikuanBusinessPaperDate" [fc]="repaymentForm.get('huikuanBusinessPaperDate')" [label]="'收到票据原件日期:'" [error]="repaymentFormError.huikuanBusinessPaperDate"></bs-datepicker>
-                <bs-datepicker formControlName="huikuanBusinessPaperExpire" [fc]="repaymentForm.get('huikuanBusinessPaperExpire')" [label]="'票据到期日:'" [error]="repaymentFormError.huikuanBusinessPaperExpire"></bs-datepicker>
-                <bs-radio formControlName ="huikuanBusinessDiscount" [sourceList]="dataIsGot" [label]="'是否贴息:'" [error]="repaymentFormError.huikuanBusinessDiscount"></bs-radio>
-                <bs-text-input formControlName="huikuanBusinessPaperExpire" [fc]="repaymentForm.get('huikuanBusinessPaperExpire')" [type]="'number'" [label]="'贴息率:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBusinessPaperExpire"></bs-text-input>
+            <div [hidden]="settleForm.get('tempSettleType').value !== 'downstream'">
+                <bs-text-input formControlName="settleGap" [fc]="settleForm.get('settleGap')" [type]="'number'" [label]="'结算扣吨:'" [dirty]="ignoreDirty" [error]="settleFormError.settleGap"></bs-text-input>
             </div>
 
+            <div [hidden]="settleForm.get('tempSettleType').value !== 'traffic'">
+                <bs-select formControlName ="trafficCompanyId" [fc]="settleForm.get('trafficCompanyId')" [label]="'与哪个运输方结算:'" [options]="partyList" [error]="settleFormError.trafficCompanyId"></bs-select>
+            </div>
 
             <div class="form-group row">
                 <div class="col-10 ml-auto">
@@ -41,42 +36,96 @@
             <table class="table table-bordered table-hover table-responsive" >
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>上游结算ID</th>
                     <th>核算月</th>
+                    <th>结算日期</th>
+                    <th>结算数量(吨)</th>
+                    <th>结算金额</th>
 
-                    <th>回款公司</th>
-                    <th>回款日期</th>
-                    <th>回款总额</th>
-                    <th>回款用途</th>
-                    <th>回款方式</th>
-
-                    <th>银行承兑详细</th>
-                    <th>商业承兑</th>
+                    <th>折扣类型</th>
+                    <th>利率折扣</th>
+                    <th>利率折扣天数</th>
+                    <th>折扣金额</th>
 
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let repayment of repaymentList; trackBy: trackByFn">
-                    <td> {{repayment.id}}</td>
-                    <td> {{repayment.hsId | findKey : unitList : 'name'}}</td>
+                <tr *ngFor="let settle of settleUpstreamList; trackBy: trackByFn">
+                    <td> {{settle.id}}</td>
+                    <td> {{settle.hsId | findKey : unitList : 'name'}}</td>
 
-                    <td> {{repayment.huikuanCompanyId | findKey : partyList : 'name' }}</td>
-                    <td> {{repayment.huikuanDate | findKey : purposeList : 'name' }}</td>
-                    <td> {{repayment.huikuanAmount  }}</td>
-                    <td> {{repayment.huikuanUsage | findKey : purposeList : 'name' }}</td>
-                    <td> {{repayment.huikuanMode | findKey : payModeList : 'name' }}</td>
+                    <td> {{settle.settleDate }}</td>
+                    <td> {{settle.amount }}</td>
+                    <td> {{settle.money }}</td>
 
-                    <td>
-                        收到票据:{{repayment.huikuanBankPaper ? '是' : '否'}} / 票据原件日期:{{repayment.huikuanBankPaperDate}} / 票据到期日:{{repayment.huikuanBankPaperExpire}}
-                        / 贴息:{{repayment.huikuanBankDiscount}} / 贴息率:{{repayment.huikuanBankDiscountRate}}
-                    </td>
-                    <td>
-                        收到票据:{{repayment.huikuanBusinessPaper ? '是' : '否'}} / 票据原件日期:{{repayment.huikuanBusinessPaperDate}} / 票据到期日:{{repayment.huikuanBusinessPaperExpire}}
-                        / 贴息:{{repayment.huikuanBusinessDiscount}} / 贴息率:{{repayment.huikuanBusinessDiscountRate}}
-                    </td>
 
-                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, repayment)"> 修改 </button></td>
+                    <td> {{settle?.discountType | findKey : settleDiscountModeList : 'name' }}</td>
+                    <td> {{settle.discountInterest }}</td>
+                    <td> {{settle.discountDays }}</td>
+                    <td> {{settle.discountAmount }}</td>
+
+                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, settle, 'upstream')"> 修改 </button></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-bordered table-hover table-responsive" >
+                <thead>
+                <tr>
+                    <th>下游结算ID</th>
+                    <th>核算月</th>
+                    <th>结算日期</th>
+                    <th>结算数量(吨)</th>
+                    <th>结算金额</th>
+
+                    <th>与哪个运输方结算</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let settle of settleDownstreamList; trackBy: trackByFn">
+                    <td> {{settle.id}}</td>
+                    <td> {{settle.hsId | findKey : unitList : 'name'}}</td>
+
+                    <td> {{settle.settleDate }}</td>
+                    <td> {{settle.amount }}</td>
+                    <td> {{settle.money }}</td>
+
+                    <td> {{settle.settleGap }}</td>
+
+                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, settle, 'downstream')"> 修改 </button></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-bordered table-hover table-responsive" >
+                <thead>
+                <tr>
+                    <th>运输方结算ID</th>
+                    <th>核算月</th>
+                    <th>结算日期</th>
+                    <th>结算数量(吨)</th>
+                    <th>结算金额</th>
+
+                    <th>结算扣吨</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let settle of settleTrafficList; trackBy: trackByFn">
+                    <td> {{settle.id}}</td>
+                    <td> {{settle.hsId | findKey : unitList : 'name'}}</td>
+
+                    <td> {{settle.settleDate }}</td>
+                    <td> {{settle.amount }}</td>
+                    <td> {{settle.money }}</td>
+
+                    <td> {{settle.trafficCompanyId | findKey : partyList : 'name'}}</td>
+
+                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, settle, 'traffic')"> 修改 </button></td>
                 </tr>
                 </tbody>
             </table>
@@ -85,4 +134,4 @@
 
 
 
-        <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加回款</button>
+        <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加结算</button>
