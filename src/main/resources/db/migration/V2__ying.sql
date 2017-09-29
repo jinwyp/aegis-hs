@@ -212,21 +212,21 @@ create table hs_ying_settle_downstream (
    primary key (id)
 )engine=InnoDB default charset=utf8;
 
--- 应收订单 - 下游结算-发运map
-create table hs_ying_settle_downstream_map (
-   id bigint(20)             not null auto_increment,
-  orderId bigint(20)         not null ,
-
-   settleId bigint(20)       not null comment '下游结算id',
-   fyId bigint(20)           not null comment '对应发运id',
-   deduction decimal(10,2)   not null comment '抵扣发运吨数',
-
-   deleted tinyint(1)               not null default 0 comment '是否删除',
-   tsc timestamp             not null default current_timestamp,
-   tsu timestamp,
-
-   primary key (id)
-)engine=InnoDB default charset=utf8;
+---- 应收订单 - 下游结算-发运map
+--create table hs_ying_settle_downstream_map (
+--   id bigint(20)             not null auto_increment,
+--  orderId bigint(20)         not null ,
+--
+--   settleId bigint(20)       not null comment '下游结算id',
+--   fyId bigint(20)           not null comment '对应发运id',
+--   deduction decimal(10,2)   not null comment '抵扣发运吨数',
+--
+--   deleted tinyint(1)               not null default 0 comment '是否删除',
+--   tsc timestamp             not null default current_timestamp,
+--   tsu timestamp,
+--
+--   primary key (id)
+--)engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 运输方结算
 create table hs_ying_settle_traffic (
