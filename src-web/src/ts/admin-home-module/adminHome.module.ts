@@ -19,7 +19,7 @@ import { TeamManagementComponent } from './components/teamManagement/teamManagem
 import { PartyManagementComponent } from './components/partyManagement/partyManagement.component'
 
 
-import { OrderComponent } from './components/order/order.component'
+import { OrderComponent } from './components/orderList/order.component'
 import { OrderDetailComponent } from './components/orderDetail/orderDetail.component'
 import { ShippingOrderComponent } from './components/orderDetail/shippingOrder/shippingOrder.component'
 

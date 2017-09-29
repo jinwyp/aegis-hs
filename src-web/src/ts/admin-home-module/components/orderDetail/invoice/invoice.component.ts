@@ -26,10 +26,15 @@ export class InvoiceComponent implements OnInit {
     currentInvoiceId : number = 1
 
     invoiceForm: FormGroup
+    invoiceDetailForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
+
+
+    invoiceDetailList : any[] = []
+
 
     invoiceList : any[] = []
     partyList : any[] = []
@@ -64,6 +69,7 @@ export class InvoiceComponent implements OnInit {
         this.getPartyList()
         this.getInvoiceList()
         this.createInvoiceForm()
+        this.createInvoiceDetailForm()
 
         if (this.currentOrder) {
             if (Array.isArray(this.currentOrder.orderConfigList)) {
@@ -135,9 +141,26 @@ export class InvoiceComponent implements OnInit {
         this.invoiceFormError = formErrorHandler(formInputData, this.invoiceForm, this.invoiceFormValidationMessages, ignoreDirty)
     }
 
+    invoiceDetailFormError : any = {}
+    invoiceDetailFormValidationMessages: any = {
+        'invoiceNumber'  : {
+            'required'      : '请填写发票号!'
+        },
+        'cargoAmount'  : {
+            'required'      : '请填写发票对应的货物数量(吨)!'
+        },
+        'taxRate'  : {
+            'required'      : '请填写税率!'
+        },
+        'priceAndTax'  : {
+            'required'      : '请填写价税合计!'
+        }
+    }
+    invoiceDetailFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
+        this.invoiceDetailFormError = formErrorHandler(formInputData, this.invoiceDetailForm, this.invoiceDetailFormValidationMessages, ignoreDirty)
+    }
+
     createInvoiceForm(): void {
-
-
         this.invoiceForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
             'invoiceDirection'    : ['', [Validators.required ] ],
@@ -155,6 +178,21 @@ export class InvoiceComponent implements OnInit {
         })
     }
 
+    createInvoiceDetailForm(): void {
+
+        this.invoiceDetailForm = this.fb.group({
+            'invoiceNumber'    : ['', [Validators.required ] ],
+            'cargoAmount'    : ['', [Validators.required ] ],
+            'taxRate'        : ['', [Validators.required ] ],
+            'priceAndTax'    : ['', [Validators.required ] ]
+        } )
+
+
+        this.invoiceDetailForm.valueChanges.subscribe(data => {
+            this.ignoreDirty = false
+            this.invoiceDetailFormInputChange(data)
+        })
+    }
 
 
 
@@ -177,6 +215,7 @@ export class InvoiceComponent implements OnInit {
             postData.openDate = this.hsOrderService.formatDateTime(this.invoiceForm.value.openDate)
         }
 
+        postData.details = this.invoiceDetailList
 
         if (this.isAddNew) {
             this.hsOrderService.createNewInvoice(this.currentOrder.id, postData).subscribe(
@@ -217,6 +256,7 @@ export class InvoiceComponent implements OnInit {
         if (isAddNew) {
             this.isAddNew = true
             this.currentInvoiceId = 0
+            this.invoiceDetailList = []
 
             this.invoiceForm.patchValue({
                 'hsId'    : '',
@@ -234,6 +274,7 @@ export class InvoiceComponent implements OnInit {
             this.currentInvoiceId = invoice.id
 
             this.invoiceForm.patchValue(invoice)
+            this.invoiceDetailList = invoice.details
         }
 
 
@@ -241,6 +282,23 @@ export class InvoiceComponent implements OnInit {
     }
 
 
+
+
+    createInvoiceDetail () {
+        if (this.invoiceDetailForm.invalid) {
+            this.invoiceDetailFormInputChange(this.invoiceDetailForm.value, true)
+            this.ignoreDirty = true
+
+            return
+        }
+
+        this.invoiceDetailList.push(this.invoiceDetailForm.value)
+    }
+    delInvoiceDetail (detailInvoice: any) {
+
+        const index = this.invoiceDetailList.indexOf(detailInvoice)
+        this.invoiceDetailList.splice(index, 1)
+    }
 
 }
 

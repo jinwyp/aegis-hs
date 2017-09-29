@@ -36,7 +36,7 @@
             <bs-select formControlName ="downstreamId" [fc]="orderForm.get('downstreamId')" [label]="'下游客户:'" [options]="partyList" [error]="orderFormError.downstreamId" (change)="lineName()"></bs-select>
 
 
-            <div class="form-group row" *ngIf="isShowForm">
+            <div class="form-group row">
                 <label class="col-2 col-form-label" >其他参与方:</label>
 
                 <div class="col-8">
