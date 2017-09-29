@@ -141,7 +141,7 @@ export class PaymentComponent implements OnInit {
 
         this.paymentForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
-            'payDate'    : ['', [Validators.required ] ],
+            'payDate'    : [null, [Validators.required ] ],
             'receiveCompanyId'    : ['', [Validators.required ] ],
 
             'payUsage'    : ['', [Validators.required ] ],
@@ -177,7 +177,7 @@ export class PaymentComponent implements OnInit {
         const postData = this.paymentForm.value
         postData.orderId = this.currentOrder.id
 
-        if (typeof this.paymentForm.value.payDate === "object" ) {
+        if (this.paymentForm.value.payDate && typeof this.paymentForm.value.payDate === "object" ) {
             postData.payDate = this.hsOrderService.formatDateTime(this.paymentForm.value.payDate)
         }
 
@@ -223,7 +223,7 @@ export class PaymentComponent implements OnInit {
 
             this.paymentForm.patchValue({
                 'hsId'    : '',
-                'payDate'    : '',
+                'payDate'    : null,
                 'receiveCompanyId'    : '',
 
                 'payUsage'    : '',

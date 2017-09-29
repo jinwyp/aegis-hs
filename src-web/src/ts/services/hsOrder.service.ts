@@ -28,7 +28,7 @@ export class HSOrderService {
         // protected static final DateTimeFormatter dateTimeWithHmformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         let result = ''
 
-        if (typeof date === 'object') {
+        if (date && typeof date === 'object') {
             if ( date.month.toString().length === 1) {
                 result = date.year.toString() + '-0' + date.month.toString()
             } else {
@@ -140,5 +140,58 @@ export class HSOrderService {
     }
 
 
+    getRepaymentHKListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+        const params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
+
+        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/huankuans', {params: params} )
+    }
+    createNewRepaymentHK(orderId: number, repayment: any): Observable<any> {
+
+        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/huankuans', repayment )
+    }
+    modifyRepaymentHK(orderId: number, repaymentId: number, repayment: any, ): Observable<any> {
+
+        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/huankuans/' + repaymentId.toString() , repayment)
+    }
+
+
+
+
+    getExpenseListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+        const params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
+
+        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/fees', {params: params} )
+    }
+    createNewExpense(orderId: number, expense: any): Observable<any> {
+
+        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/fees', expense )
+    }
+    modifyExpense(orderId: number, expenseId: number, expense: any, ): Observable<any> {
+
+        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/fees/' + expenseId.toString() , expense)
+    }
+
+
+    getInvoiceListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+        const params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
+
+        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/invoices', {params: params} )
+    }
+    createNewInvoice(orderId: number, invoice: any): Observable<any> {
+
+        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/invoices', invoice )
+    }
+    modifyInvoice(orderId: number, invoiceId: number, invoice: any, ): Observable<any> {
+
+        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/invoices/' + invoiceId.toString() , invoice)
+    }
+
 
 }
+

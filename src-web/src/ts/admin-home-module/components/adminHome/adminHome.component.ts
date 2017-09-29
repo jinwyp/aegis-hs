@@ -126,6 +126,27 @@ export class AdminHomeComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+
+        this.orderService.getEnumList('FeeClass').subscribe(
+            data => {
+                saveEnum('FeeClass', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+
+        this.orderService.getEnumList('InvoiceDirection').subscribe(
+            data => {
+                saveEnum('InvoiceDirection', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+        this.orderService.getEnumList('InvoiceType').subscribe(
+            data => {
+                saveEnum('InvoiceType', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
     }
 
 }

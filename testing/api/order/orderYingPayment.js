@@ -352,4 +352,118 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
+
+
+
+    it('还款单 - 新建还款单1 POST: /api/ying/1/huankuans', function (done) {
+        server.post('/api/ying/1/huankuans')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : 1,
+                    "skCompanyId" : 1,
+                    "huankuankDate" : "2017-09-01 00:00:00",
+                    "huankuanAmount" : "10000",
+                    "huankuanInterest" : "100",
+                    "huankuanFee" : "10",
+                    "orderId" : 1
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id).to.be.a('number')
+                expect(res.body.data.huankuankDate).to.include('2017')
+                done()
+            })
+    })
+
+    it('还款单 - 新建还款单2 POST: /api/ying/1/huankuans', function (done) {
+        server.post('/api/ying/1/huankuans')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : 1,
+                    "skCompanyId" : 1,
+                    "huankuankDate" : "2017-09-01 00:00:00",
+                    "huankuanAmount" : "10000",
+                    "huankuanInterest" : "100",
+                    "huankuanFee" : "10",
+                    "orderId" : 1
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id).to.be.a('number')
+                expect(res.body.data.huankuankDate).to.include('2017')
+                done()
+            })
+    })
+
+    it('还款单 - 获取应收订单还款单列表 GET: /api/ying/1/huankuans?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/ying/1/huankuans?pageNo=1&pageSize=2')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.pageNo).to.equal(1)
+                expect(res.body.data.pageSize).to.equal(2)
+                expect(res.body.data.results.length).to.equal(2)
+                done()
+            })
+    })
+
+    it('还款单 - 获取某个ID的还款单信息 GET: /api/ying/1/huankuans/1', function (done) {
+        server.get('/api/ying/1/huankuans/1')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id).to.be.a('number')
+                expect(res.body.data.huankuankDate).to.include('2017')
+                done()
+            })
+    })
+
+    it('还款单 - 修改某个ID的还款单 PUT: /api/ying/1/huankuans/1', function (done) {
+        server.put('/api/ying/1/huankuans/1')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : 1,
+                    "skCompanyId" : 1,
+                    "huankuankDate" : "2017-09-01 00:00:00",
+                    "huankuanInterest" : 100,
+                    "huankuanFee" : 3000,
+                    "orderId" : 1,
+                    "id" : 1
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.equal(1)
+                done()
+            })
+    })
 })

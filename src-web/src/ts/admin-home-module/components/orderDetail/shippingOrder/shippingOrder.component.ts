@@ -124,7 +124,7 @@ export class ShippingOrderComponent implements OnInit {
 
         this.shippingForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
-            'fyDate'    : ['', [Validators.required ] ],
+            'fyDate'    : [null, [Validators.required ] ],
             'fyAmount'    : ['', [Validators.required ] ],
             'arriveStatus'    : ['', [Validators.required ] ],
 
@@ -163,7 +163,7 @@ export class ShippingOrderComponent implements OnInit {
         const postData = this.shippingForm.value
         postData.orderId = this.currentOrder.id
 
-        if (typeof this.shippingForm.value.fyDate === "object" ) {
+        if (this.shippingForm.value.fyDate && typeof this.shippingForm.value.fyDate === "object" ) {
             postData.fyDate = this.hsOrderService.formatDateTime(this.shippingForm.value.fyDate)
         }
 
@@ -208,7 +208,7 @@ export class ShippingOrderComponent implements OnInit {
 
             this.shippingForm.patchValue({
                 'hsId'    : '',
-                'fyDate'    : '',
+                'fyDate'    : null,
                 'fyAmount'    : '',
                 'arriveStatus'    : '',
 

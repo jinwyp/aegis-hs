@@ -1,26 +1,14 @@
 
 
-            <form [formGroup]="shippingForm" (ngSubmit)="shippingFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+            <form [formGroup]="repaymentHKForm" (ngSubmit)="repaymentHKFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-                <bs-select formControlName="hsId" [fc]="shippingForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="shippingFormError.hsId"></bs-select>
-                <bs-datepicker formControlName="fyDate" [fc]="shippingForm.get('fyDate')" [label]="'发运日期:'" [error]="shippingFormError.fyDate"></bs-datepicker>
+                <bs-select formControlName="hsId" [fc]="repaymentHKForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="repaymentHKFormError.hsId"></bs-select>
+                <bs-select formControlName="skCompanyId" [fc]="repaymentHKForm.get('skCompanyId')" [label]="'资金方:'"  [options]="partyList" [error]="repaymentHKFormError.skCompanyId"></bs-select>
+                <bs-datepicker formControlName="huankuankDate" [fc]="repaymentHKForm.get('huankuankDate')" [label]="'还款日期:'" [error]="repaymentHKFormError.huankuankDate"></bs-datepicker>
 
-                <bs-text-input formControlName="fyAmount" [fc]="shippingForm.get('fyAmount')" [type]="'number'" [label]="'发运吨数:'" [dirty]="ignoreDirty" [error]="shippingFormError.fyAmount"></bs-text-input>
-                <bs-select formControlName="arriveStatus" [fc]="shippingForm.get('arriveStatus')" [label]="'到场状态:'"  [options]="arriveStatusList" [error]="shippingFormError.arriveStatus"></bs-select>
-
-                <bs-radio formControlName ="upstreamTrafficMode" [fc]="shippingForm.get('upstreamTrafficMode')" [label]="'上游运输方式:'" [sourceList]="trafficModeList" [error]="shippingFormError.upstreamTrafficMode" ></bs-radio>
-
-                <bs-text-input formControlName="upstreamCars" [fc]="shippingForm.get('upstreamCars')" [type]="'number'" [label]="'上游汽运情况下的车数:'" [dirty]="ignoreDirty" [error]="shippingFormError.upstreamCars" [hidden]="shippingForm.get('upstreamTrafficMode').value !=='MOTOR'"></bs-text-input>
-                <bs-text-input formControlName="upstreamJHH" [fc]="shippingForm.get('upstreamJHH')" [type]="'text'" [label]="'上游火运情况下的计划号:'" [dirty]="ignoreDirty" [error]="shippingFormError.upstreamJHH" [hidden]="shippingForm.get('upstreamTrafficMode').value !=='RAIL'"></bs-text-input>
-                <bs-text-input formControlName="upstreamShip" [fc]="shippingForm.get('upstreamShip')" [type]="'text'" [label]="'上游船运情况下的船号:'" [dirty]="ignoreDirty" [error]="shippingFormError.upstreamShip" [hidden]="shippingForm.get('upstreamTrafficMode').value !=='SHIP'"></bs-text-input>
-
-
-                <bs-radio formControlName ="downstreamTrafficMode" [fc]="shippingForm.get('downstreamTrafficMode')" [label]="'下游运输方式:'" [sourceList]="trafficModeList" [error]="shippingFormError.downstreamTrafficMode" ></bs-radio>
-
-                <bs-text-input formControlName="downstreamCars" [fc]="shippingForm.get('downstreamCars')" [type]="'number'" [label]="'下游汽运情况下的车数:'" [dirty]="ignoreDirty" [error]="shippingFormError.downstreamCars" [hidden]="shippingForm.get('downstreamTrafficMode').value !=='MOTOR'"></bs-text-input>
-                <bs-text-input formControlName="downstreamJHH" [fc]="shippingForm.get('downstreamJHH')" [type]="'text'" [label]="'下游火运情况下的计划号:'" [dirty]="ignoreDirty" [error]="shippingFormError.downstreamJHH" [hidden]="shippingForm.get('downstreamTrafficMode').value !=='RAIL'"></bs-text-input>
-                <bs-text-input formControlName="downstreamShip" [fc]="shippingForm.get('downstreamShip')" [type]="'text'" [label]="'下游船运情况下的船号:'" [dirty]="ignoreDirty" [error]="shippingFormError.downstreamShip" [hidden]="shippingForm.get('downstreamTrafficMode').value !=='SHIP'"></bs-text-input>
-
+                <bs-text-input formControlName="huankuanAmount" [fc]="repaymentHKForm.get('huankuanAmount')" [type]="'number'" [label]="'还款总额:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanAmount"></bs-text-input>
+                <bs-text-input formControlName="huankuanInterest" [fc]="repaymentHKForm.get('huankuanInterest')" [type]="'number'" [label]="'还款利息:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanInterest" ></bs-text-input>
+                <bs-text-input formControlName="huankuanFee" [fc]="repaymentHKForm.get('huankuanFee')" [type]="'text'" [label]="'还款服务费:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanFee" ></bs-text-input>
 
                 <div class="form-group row">
                     <div class="col-10 ml-auto">
@@ -38,16 +26,12 @@
                     <tr>
                         <th>ID</th>
                         <th>核算月</th>
-                        <th>发运日期</th>
-                        <th>发运吨数</th>
-                        <th>到场状态</th>
+                        <th>资金方</th>
 
-                        <th>上游运输方式</th>
-                        <th>上游运输详细</th>
-
-                        <th>下游运输方式</th>
-                        <th>下游运输详细</th>
-
+                        <th>还款日期</th>
+                        <th>还款总额</th>
+                        <th>还款利息</th>
+                        <th>还款服务费</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -55,23 +39,13 @@
                     <tr *ngFor="let shipping of shippingList; trackBy: trackByFn">
                         <td> {{shipping.id}}</td>
                         <td> {{shipping.hsId | findKey : unitList : 'name'}}</td>
-                        <td> {{shipping.fyDate }}</td>
-                        <td> {{shipping.fyAmount }}</td>
-                        <td> {{shipping.arriveStatus | arriveStatus }}</td>
+                        <td> {{shipping.skCompanyId | findKey : partyList : 'name'}}</td>
 
-                        <td> {{shipping.upstreamTrafficMode}}</td>
-                        <td>
-                            <span *ngIf="shipping.upstreamTrafficMode==='MOTOR'">上游汽运情况下的车数: {{shipping.upstreamCars}}</span>
-                            <span *ngIf="shipping.upstreamTrafficMode==='RAIL'">上游火运情况下的计划号: {{shipping.upstreamJHH}}</span>
-                            <span *ngIf="shipping.upstreamTrafficMode==='SHIP'">上游船运情况下的船号: {{shipping.upstreamShip}}</span>
-                        </td>
+                        <td> {{shipping.huankuankDate }}</td>
+                        <td> {{shipping.huankuanAmount }}</td>
+                        <td> {{shipping.huankuanInterest }}</td>
+                        <td> {{shipping.huankuanFee}}</td>
 
-                        <td> {{shipping.downstreamTrafficMode }}</td>
-                        <td>
-                            <span *ngIf="shipping.downstreamTrafficMode==='MOTOR'">下游汽运情况下的车数: {{shipping.downstreamCars}}</span>
-                            <span *ngIf="shipping.downstreamTrafficMode==='RAIL'">下游火运情况下的计划号: {{shipping.downstreamJHH}}</span>
-                            <span *ngIf="shipping.downstreamTrafficMode==='SHIP'">下游船运情况下的船号: {{shipping.downstreamShip}}</span>
-                        </td>
                         <td> <button class="btn btn-info btn-sm" (click)="showForm(false, shipping)"> 修改 </button></td>
                     </tr>
                     </tbody>
@@ -81,4 +55,4 @@
 
 
 
-            <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加发运单</button>
+            <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加还款</button>

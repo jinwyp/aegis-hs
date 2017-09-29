@@ -146,22 +146,22 @@ export class RepaymentComponent implements OnInit {
             'hsId'    : ['', [Validators.required ] ],
 
             'huikuanCompanyId'    : ['', [Validators.required ] ],
-            'huikuanDate'    : ['', [Validators.required ] ],
+            'huikuanDate'    : [null, [Validators.required ] ],
             'huikuanAmount'    : ['', [Validators.required ] ],
             'huikuanUsage'    : ['', [Validators.required ] ],
             'huikuanMode'    : ['', [Validators.required ] ],
 
             'huikuanBankPaper'    : ['', [] ],
-            'huikuanBankPaperDate'    : ['', [] ],
+            'huikuanBankPaperDate'    : [null, [] ],
             'huikuanBankDiscount'    : ['', [] ],
             'huikuanBankDiscountRate'    : ['', [] ],
-            'huikuanBankPaperExpire'    : ['', [] ],
+            'huikuanBankPaperExpire'    : [null, [] ],
 
             'huikuanBusinessPaper'    : ['', [] ],
-            'huikuanBusinessPaperDate'    : ['', [] ],
+            'huikuanBusinessPaperDate'    : [null, [] ],
             'huikuanBusinessDiscount'    : ['', [] ],
             'huikuanBusinessDiscountRate'    : ['', [] ],
-            'huikuanBusinessPaperExpire'    : ['', [ ] ]
+            'huikuanBusinessPaperExpire'    : [null, [ ] ]
         } )
 
 
@@ -188,21 +188,21 @@ export class RepaymentComponent implements OnInit {
         const postData = this.repaymentForm.value
         postData.orderId = this.currentOrder.id
 
-        if (typeof this.repaymentForm.value.huikuanDate === "object" ) {
+
+        if (this.repaymentForm.value.huikuanDate && typeof this.repaymentForm.value.huikuanDate === "object" ) {
             postData.huikuanDate = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanDate)
         }
-
-        if (typeof this.repaymentForm.value.huikuanBankPaperDate === "object" ) {
+        if (this.repaymentForm.value.huikuanBankPaperDate && typeof this.repaymentForm.value.huikuanBankPaperDate === "object" ) {
             postData.huikuanBankPaperDate = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBankPaperDate)
         }
-        if (typeof this.repaymentForm.value.huikuanBankPaperExpire === "object" ) {
+        if (typeof this.repaymentForm.value.huikuanBankPaperExpire && typeof this.repaymentForm.value.huikuanBankPaperExpire === "object" ) {
             postData.huikuanBankPaperExpire = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBankPaperExpire)
         }
 
-        if (typeof this.repaymentForm.value.huikuanBusinessPaperDate === "object" ) {
+        if (typeof this.repaymentForm.value.huikuanBusinessPaperDate && typeof this.repaymentForm.value.huikuanBusinessPaperDate === "object" ) {
             postData.huikuanBusinessPaperDate = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBusinessPaperDate)
         }
-        if (typeof this.repaymentForm.value.huikuanBusinessPaperExpire === "object" ) {
+        if (typeof this.repaymentForm.value.huikuanBusinessPaperExpire && typeof this.repaymentForm.value.huikuanBusinessPaperExpire === "object" ) {
             postData.huikuanBusinessPaperExpire = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBusinessPaperExpire)
         }
 
@@ -240,6 +240,8 @@ export class RepaymentComponent implements OnInit {
 
     showForm(isAddNew : boolean = true, repayment?: any ) {
 
+        this.ignoreDirty = false
+
         if (isAddNew) {
             this.isAddNew = true
             this.currentRepaymentId = 0
@@ -248,22 +250,22 @@ export class RepaymentComponent implements OnInit {
                 'hsId'    : '',
 
                 'huikuanCompanyId'    : '',
-                'huikuanDate'    : '',
+                'huikuanDate'    : null,
                 'huikuanAmount'    : '',
                 'huikuanUsage'    : '',
                 'huikuanMode'    : '',
 
                 'huikuanBankPaper'    : '',
-                'huikuanBankPaperDate'    : '',
+                'huikuanBankPaperDate'    : null,
                 'huikuanBankDiscount'    : '',
                 'huikuanBankDiscountRate'    : '',
-                'huikuanBankPaperExpire'    : '',
+                'huikuanBankPaperExpire'    : null,
 
                 'huikuanBusinessPaper'    : '',
-                'huikuanBusinessPaperDate'    : '',
+                'huikuanBusinessPaperDate'    : null,
                 'huikuanBusinessDiscount'    : '',
                 'huikuanBusinessDiscountRate'    : '',
-                'huikuanBusinessPaperExpire'    : ''
+                'huikuanBusinessPaperExpire'    : null
             })
 
         } else {

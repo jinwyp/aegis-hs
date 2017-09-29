@@ -7,6 +7,7 @@ import { HttpService } from '../../../../bs-form-module/services/http.service'
 
 import { formErrorHandler, isMobilePhone, isMatched, checkFieldIsExist } from '../../../../bs-form-module/validators/validator'
 
+import { HSUserService } from '../../../../services/hsUser.service'
 import { HSOrderService } from '../../../../services/hsOrder.service'
 
 
@@ -21,20 +22,18 @@ import {getEnum} from '../../../../services/localStorage'
 export class RepaymentHuanKuanComponent implements OnInit {
 
     @Input() currentOrder : any
-    currentShippingOrderId : number = 1
+    currentHuanKuanId : number = 1
 
-    shippingForm: FormGroup
+    repaymentHKForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
 
     shippingList : any[] = []
+    partyList : any[] = []
 
     unitList : any[] = []
-
-    arriveStatusList : any[] = getEnum('CargoArriveStatus')
-    trafficModeList : any[] = getEnum('TrafficMode')
 
 
     pagination: any = {
@@ -48,6 +47,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
     constructor(
         private httpService: HttpService,
         private fb: FormBuilder,
+        private hsUserService: HSUserService,
         private hsOrderService: HSOrderService
 
     ) {
@@ -58,9 +58,9 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
     ngOnInit(): void {
 
-
-        this.getShippingList()
-        this.createShippingForm()
+        this.getPartyList()
+        this.getRepaymentHKList()
+        this.createHKForm()
 
         if (this.currentOrder) {
             if (Array.isArray(this.currentOrder.orderConfigList)) {
@@ -82,10 +82,20 @@ export class RepaymentHuanKuanComponent implements OnInit {
     }
 
 
-    getShippingList () {
-        this.hsOrderService.getShippingListByID(this.currentOrder.id).subscribe(
+    getRepaymentHKList () {
+        this.hsOrderService.getRepaymentHKListByID(this.currentOrder.id).subscribe(
             data => {
                 this.shippingList = data.data.results
+
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
+    getPartyList () {
+
+        this.hsUserService.getPartyList().subscribe(
+            data => {
+                this.partyList = data.data.results
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -94,55 +104,48 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
 
 
-    shippingFormError : any = {}
-    shippingFormValidationMessages: any = {
+    repaymentHKFormError : any = {}
+    repaymentHKFormValidationMessages: any = {
         'hsId'  : {
             'required'      : '请选择核算月!'
         },
-        'fyDate'  : {
-            'required'      : '请填写发运日期!'
+        'skCompanyId'  : {
+            'required'      : '请填写资金方!'
         },
-        'fyAmount'  : {
-            'required'      : '请填写发运吨数!'
+        'huankuankDate'  : {
+            'required'      : '请填写还款日期!'
         },
-        'arriveStatus'  : {
-            'required'      : '请填写到场状态!'
+        'huankuanAmount'  : {
+            'required'      : '请填写还款总额!'
         },
-        'upstreamTrafficMode'  : {
-            'required'      : '请填写天数!'
+        'huankuanInterest'  : {
+            'required'      : '请填写还款利息!'
         },
-        'downstreamTrafficMode'  : {
-            'required'      : '请填写加价!'
+        'huankuanFee'  : {
+            'required'      : '请填写还款服务费!'
         }
     }
 
-    shippingFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.shippingFormError = formErrorHandler(formInputData, this.shippingForm, this.shippingFormValidationMessages, ignoreDirty)
+    repaymentHKFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
+        this.repaymentHKFormError = formErrorHandler(formInputData, this.repaymentHKForm, this.repaymentHKFormValidationMessages, ignoreDirty)
     }
 
-    createShippingForm(): void {
 
-        this.shippingForm = this.fb.group({
+    createHKForm(): void {
+
+        this.repaymentHKForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
-            'fyDate'    : ['', [Validators.required ] ],
-            'fyAmount'    : ['', [Validators.required ] ],
-            'arriveStatus'    : ['', [Validators.required ] ],
-
-            'upstreamTrafficMode'    : ['', [Validators.required ] ],
-            'upstreamCars'    : ['', [ ] ],
-            'upstreamJHH'    : ['', [ ] ],
-            'upstreamShip'    : ['', [ ] ],
-
-            'downstreamTrafficMode'    : ['', [Validators.required ] ],
-            'downstreamCars'    : ['', [ ] ],
-            'downstreamJHH'    : ['', [ ] ],
-            'downstreamShip'    : ['', [ ] ],
+            'skCompanyId'    : ['', [Validators.required ] ],
+            'huankuankDate'    : [null, [Validators.required ] ],
+            'huankuanAmount'    : ['', [Validators.required ] ],
+            'huankuanInterest'    : ['', [Validators.required ] ],
+            'huankuanFee'    : ['', [Validators.required ] ]
         } )
 
 
-        this.shippingForm.valueChanges.subscribe(data => {
+        this.repaymentHKForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
-            this.shippingFormInputChange(data)
+            this.repaymentHKFormInputChange(data)
         })
     }
 
@@ -150,46 +153,46 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
 
 
-    shippingFormSubmit() {
+    repaymentHKFormSubmit() {
 
-        if (this.shippingForm.invalid) {
-            this.shippingFormInputChange(this.shippingForm.value, true)
+        if (this.repaymentHKForm.invalid) {
+            this.repaymentHKFormInputChange(this.repaymentHKForm.value, true)
             this.ignoreDirty = true
 
-            console.log('当前信息: ', this.shippingForm, this.shippingFormError)
+            console.log('当前信息: ', this.repaymentHKForm, this.repaymentHKFormError)
             return
         }
 
-        const postData = this.shippingForm.value
+        const postData = this.repaymentHKForm.value
         postData.orderId = this.currentOrder.id
 
-        if (typeof this.shippingForm.value.fyDate === "object" ) {
-            postData.fyDate = this.hsOrderService.formatDateTime(this.shippingForm.value.fyDate)
+        if (this.repaymentHKForm.value.huankuankDate && typeof this.repaymentHKForm.value.huankuankDate === "object" ) {
+            postData.huankuankDate = this.hsOrderService.formatDateTime(this.repaymentHKForm.value.huankuankDate)
         }
 
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewShipping(this.currentOrder.id, postData).subscribe(
+            this.hsOrderService.createNewRepaymentHK(this.currentOrder.id, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getShippingList()
+                    this.getRepaymentHKList()
                     this.showForm()
 
                 },
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
-            postData.id = this.currentShippingOrderId
-            delete postData.fyAmount
+            postData.id = this.currentHuanKuanId
+            delete postData.huankuanAmount
 
-            this.hsOrderService.modifyShipping(this.currentOrder.id, this.currentShippingOrderId, postData).subscribe(
+            this.hsOrderService.modifyRepaymentHK(this.currentOrder.id, this.currentHuanKuanId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getShippingList()
+                    this.getRepaymentHKList()
                     this.showForm()
 
                 },
@@ -200,35 +203,29 @@ export class RepaymentHuanKuanComponent implements OnInit {
     }
 
 
-    showForm(isAddNew : boolean = true, shippingOrder?: any ) {
+    showForm(isAddNew : boolean = true, repaymentHKOrder?: any ) {
+
+        this.ignoreDirty = false
 
         if (isAddNew) {
             this.isAddNew = true
-            this.currentShippingOrderId = 0
+            this.currentHuanKuanId = 0
 
-            this.shippingForm.patchValue({
+            this.repaymentHKForm.patchValue({
                 'hsId'    : '',
-                'fyDate'    : '',
-                'fyAmount'    : '',
-                'arriveStatus'    : '',
-
-                'upstreamTrafficMode'    : '',
-                'upstreamCars'    : '',
-                'upstreamJHH'    : '',
-                'upstreamShip'    : '',
-
-                'downstreamTrafficMode'    : '',
-                'downstreamCars'    : '',
-                'downstreamJHH'    : '',
-                'downstreamShip'    : ''
+                'skCompanyId'    : '',
+                'huankuankDate'    : null,
+                'huankuanAmount'    : '',
+                'huankuanInterest'    : '',
+                'huankuanFee'    : ''
             })
 
 
         } else {
             this.isAddNew = false
-            this.currentShippingOrderId = shippingOrder.id
+            this.currentHuanKuanId = repaymentHKOrder.id
 
-            this.shippingForm.patchValue(shippingOrder)
+            this.repaymentHKForm.patchValue(repaymentHKOrder)
         }
 
 
