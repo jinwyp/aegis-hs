@@ -43,13 +43,12 @@ public class YingInvoiceService {
 
     public int create(YingInvoice yingInvoice) {
 
-
-        int rtn=0;
+        int rtn = 0;
 
         List<YingInvoiceDetail> detailsList = yingInvoice.getDetails();
 
-        if (detailsList!=null) {
-             rtn = yingInvoiceMapper.insert(yingInvoice);
+        if (detailsList != null) {
+            rtn = yingInvoiceMapper.insert(yingInvoice);
             detailsList.forEach(new Consumer<YingInvoiceDetail>() {
                 @Override
                 public void accept(YingInvoiceDetail yingInvoiceDetail) {
@@ -68,11 +67,12 @@ public class YingInvoiceService {
 
     /**
      * 逻辑删除
+     *
      * @param id
      * @return
      */
     public int delete(long id) {
-          yingInvoiceMapper.delete(id);
+        yingInvoiceMapper.delete(id);
         return yingInvoiceDetailMapper.deleteByInvoiceId(id);
     }
 }
