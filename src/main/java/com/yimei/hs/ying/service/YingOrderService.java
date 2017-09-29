@@ -79,7 +79,7 @@ public class YingOrderService {
         }
 
         // 插入核算月配置
-        if (partyList != null) {
+        if (configList != null) {
             configList.forEach(new Consumer<YingOrderConfig>() {
                 @Override
                 public void accept(YingOrderConfig yingOrderConfig) {
