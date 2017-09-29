@@ -28,11 +28,13 @@ public class YingSettleDownstream implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "核算月不能为空")
     private Long hsId;
 
+    @NotNull(groups = {CreateGroup.class}, message = "结算日期不能为空")
     private LocalDateTime settleDate;
 
     @Null(groups = {UpdateGroup.class}, message = "下游结算不能更新金额")
     private BigDecimal amount;
 
+    @NotNull(groups = {CreateGroup.class}, message = "结算金额不能为空")
     private BigDecimal money;
 
     private BigDecimal settleGap;

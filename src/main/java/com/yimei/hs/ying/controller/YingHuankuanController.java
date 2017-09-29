@@ -69,7 +69,7 @@ public class YingHuankuanController {
     }
 
     /**
-     * 创建huikuan
+     * 创建还款, 还款需要手动对应到付款
      *
      * @return
      */
