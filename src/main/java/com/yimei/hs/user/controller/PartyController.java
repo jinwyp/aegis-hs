@@ -57,8 +57,11 @@ public class PartyController {
     @PostMapping("/parties")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Party>> create(@RequestBody Party party) {
-        logger.warn(party.getName()+"简称"+party.getShortName());
-        partyService.create(party);
+        int rtn = partyService.create(party);
+        if (rtn != 1) {
+            logger.error("创建party失败: {}", party);
+            return Result.error(4001, "创建参与方失败");
+        }
         return Result.ok(party);
     }
 
