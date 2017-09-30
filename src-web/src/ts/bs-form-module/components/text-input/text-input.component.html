@@ -38,7 +38,7 @@
         <small class="form-text text-muted" *ngIf="hint">{{hint}}</small>
     </div>
 
-    <div class="{{additionalClass}}">
+    <div class="{{additionalClass}}" *ngIf="additionalContent">
         <ng-content></ng-content>
     </div>
 </div>

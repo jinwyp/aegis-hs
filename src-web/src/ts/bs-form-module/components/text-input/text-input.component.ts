@@ -25,7 +25,8 @@ export class TextInputComponent implements ControlValueAccessor, OnInit, OnChang
 
     @Input('labelclass') labelClass: string = 'col-2'
     @Input('inputclass') inputClass: string = 'col-6'
-    @Input('additionalClass') additionalClass: string = 'col-4'
+    @Input() additionalClass: string = 'col-4'
+    @Input() additionalContent : boolean = false
 
 
     interValue: string | number = ''

@@ -15,10 +15,10 @@ import {getEnum} from '../../../services/localStorage'
 
 @Component({
   selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css']
+  templateUrl: './orderList.component.html',
+  styleUrls: ['./orderList.component.css']
 })
-export class OrderComponent implements OnInit {
+export class OrderListComponent implements OnInit {
 
     sessionUser : any
     currentOrderId : any
@@ -159,6 +159,25 @@ export class OrderComponent implements OnInit {
         },
         'line'  : {
             'required'      : '请选择相关公司完成业务线名称!'
+        },
+
+        'cargoType'  : {
+            'required'      : '请选择货物种类!'
+        },
+        'upstreamSettleMode'  : {
+            'required'      : '请选择结算方式!'
+        },
+        'downstreamSettleMode'  : {
+            'required'      : '请选择结算方式!'
+        },
+        'mainAccounting'  : {
+            'required'      : '请选择公司!'
+        },
+        'upstreamId'  : {
+            'required'      : '请选择公司!'
+        },
+        'downstreamId'  : {
+            'required'      : '请选择公司!'
         },
 
         'custType'  : {

@@ -19,7 +19,7 @@ import { TeamManagementComponent } from './components/teamManagement/teamManagem
 import { PartyManagementComponent } from './components/partyManagement/partyManagement.component'
 
 
-import { OrderComponent } from './components/orderList/order.component'
+import { OrderListComponent } from './components/orderList/orderList.component'
 import { OrderDetailComponent } from './components/orderDetail/orderDetail.component'
 import { ShippingOrderComponent } from './components/orderDetail/shippingOrder/shippingOrder.component'
 
@@ -56,7 +56,7 @@ const userHomeRoutes: Routes = [
     {path : 'teams', component : TeamManagementComponent},
     {path : 'companies', component : PartyManagementComponent},
 
-    {path : 'orders', component : OrderComponent},
+    {path : 'orders', component : OrderListComponent},
     {path : 'orders/:orderId', component : OrderDetailComponent},
     {path : '**', redirectTo : '/info/basic', pathMatch : 'full'},
 ]
@@ -81,7 +81,7 @@ const userHomeRoutes: Routes = [
         TeamManagementComponent,
         PartyManagementComponent,
 
-        OrderComponent,
+        OrderListComponent,
         OrderDetailComponent,
         ShippingOrderComponent,
 

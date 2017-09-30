@@ -13,7 +13,7 @@
                     <bs-select formControlName ="deptId" [fc]="orderForm.get('deptId')" [label]="'事业部门:'" [labelclass]="'col-4'" [options]="departmentList" [error]="orderFormError.deptId" (change)="filterTeams($event)" ></bs-select>
                 </div>
                 <div class="col">
-                    <bs-select formControlName ="teamId" [fc]="orderForm.get('teamId')" [label]="'团队:'" [options]="filterTeamList" [error]="orderFormError.teamId"></bs-select>
+                    <bs-select formControlName ="teamId" [fc]="orderForm.get('teamId')" [label]="'团队:'" [labelclass]="'col-4'" [options]="filterTeamList" [error]="orderFormError.teamId"></bs-select>
                 </div>
             </div>
 
@@ -22,7 +22,7 @@
                     <bs-select formControlName ="upstreamSettleMode" [fc]="orderForm.get('upstreamSettleMode')" [label]="'上游结算方式:'" [labelclass]="'col-4'" [options]="payModeList" [error]="orderFormError.upstreamSettleMode"></bs-select>
                 </div>
                 <div class="col">
-                    <bs-select formControlName ="downstreamSettleMode" [fc]="orderForm.get('downstreamSettleMode')" [label]="'下游结算方式:'" [options]="payModeList" [error]="orderFormError.downstreamSettleMode"></bs-select>
+                    <bs-select formControlName ="downstreamSettleMode" [fc]="orderForm.get('downstreamSettleMode')" [label]="'下游结算方式:'" [labelclass]="'col-4'" [options]="payModeList" [error]="orderFormError.downstreamSettleMode"></bs-select>
                 </div>
             </div>
 
@@ -47,7 +47,7 @@
                             <div class="col-8" >
 
                                 <ul class="list-group" >
-                                    <li class="list-group-item" *ngFor=" let company of otherPartyList">
+                                    <li class="list-group-item mb-2" *ngFor=" let company of otherPartyList">
                                         {{company.custType | findKey:customerType:'name'}}:  {{company.customerId| findKey:partyList:'name'}} ({{company.customerId| findKey:partyList:'shortName'}})
                                         <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delOtherParty(company)"> x </button>
                                     </li>
@@ -111,7 +111,7 @@
                     <td> {{order.deptId | findKey : departmentList : 'name'}}</td>
                     <td> {{order.teamId | findKey : teamList : 'name'}}</td>
 
-                    <td> {{order.cargoType}}</td>
+                    <td> {{order.cargoType | findKey : cargoTypeList : 'name'}}</td>
                     <td> {{order.mainAccounting | findKey : partyList : 'name' }}</td>
                     <td> {{order.status | orderStatus}}</td>
                     <td> {{order.tsc }}</td>
