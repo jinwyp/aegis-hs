@@ -206,7 +206,7 @@ export class OrderDetailComponent implements OnInit {
         }
 
         const postData = this.orderUnitForm.value
-        
+
         if (this.isAddNew) {
             this.hsOrderService.createNewOrderUnit(this.currentOrderId, postData).subscribe(
                 data => {

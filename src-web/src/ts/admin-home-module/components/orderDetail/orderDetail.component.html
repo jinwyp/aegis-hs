@@ -38,18 +38,15 @@
 
 
         <ul class="list-group" *ngIf="currentTabIndex === 1">
-            <li class="list-group-item">事业部门: {{currentOrder?.deptId | findKey : departmentList : 'name'}}</li>
-            <li class="list-group-item">业务团队: {{currentOrder?.teamId | findKey : teamList : 'name'}}</li>
+            <li class="list-group-item">事业部门: {{currentOrder?.deptId | findKey : departmentList : 'name'}} -- 业务团队: {{currentOrder?.teamId | findKey : teamList : 'name'}}</li>
             <li class="list-group-item">业务线名称: {{currentOrder?.line }}</li>
-            <li class="list-group-item">上游结算方式: {{currentOrder?.upstreamSettleMode | settleMode }}</li>
-            <li class="list-group-item">下游结算方式: {{currentOrder?.downstreamSettleMode | settleMode}}</li>
+            <li class="list-group-item">上游结算方式: {{currentOrder?.upstreamSettleMode | settleMode }} -- 下游结算方式: {{currentOrder?.downstreamSettleMode | settleMode}}</li>
             <li class="list-group-item">商品品类: {{currentOrder?.cargoType | cargoType }}</li>
-            <li class="list-group-item">主账务公司: {{currentOrder?.mainAccounting | findKey:partyList:'name' }}</li>
-            <li class="list-group-item">上游供应商: {{currentOrder?.upstreamId | findKey:partyList:'name' }}</li>
-            <li class="list-group-item">下游客户: {{currentOrder?.downstreamId | findKey:partyList:'name' }}</li>
+            <li class="list-group-item">主账务公司: {{currentOrder?.mainAccounting | findKey:partyList:'name' }} -- 上游供应商: {{currentOrder?.upstreamId | findKey:partyList:'name' }} -- 下游客户: {{currentOrder?.downstreamId | findKey:partyList:'name' }}</li>
         </ul>
-        <ul class="list-group" *ngIf="currentTabIndex === 1">
-            <li class="list-group-item" *ngFor="let company of currentOrder?.orderPartyList">事业部门: {{company.custType | customerType}} - {{company.customerId | findKey : partyList : 'name'}}</li>
+
+        <ul class="list-group mt-2" *ngIf="currentTabIndex === 1">
+            <li class="list-group-item" *ngFor="let company of currentOrder?.orderPartyList">参与方公司: {{company.custType | customerType}} - {{company.customerId | findKey : partyList : 'name'}}</li>
         </ul>
 
 
