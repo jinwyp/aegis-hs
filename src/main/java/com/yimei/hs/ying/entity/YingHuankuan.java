@@ -51,6 +51,9 @@ public class YingHuankuan implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private List<YingFukuan> fukuanList;
+    private List<YingFukuan> fukuanList;   //  都还了哪些款
+
+    private List<YingHuankuanMap> huankuanMapList;  // 还款明细
+
 }
 

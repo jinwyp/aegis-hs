@@ -22,10 +22,13 @@ public class YingHuankuanMap implements Serializable {
 
     private Long huankuanId;
 
+    @NotNull(groups = {CreateGroup.class}, message = "付款记录不能为空")
     private Long fukuanId;
 
+    @NotNull(groups = {CreateGroup.class}, message = "还款本金不能为空")
     private BigDecimal principal;
 
+    @NotNull(groups = {CreateGroup.class}, message = "还款(本金+利息)不能为控")
     private BigDecimal amount;
 
     private LocalDateTime tsc;
