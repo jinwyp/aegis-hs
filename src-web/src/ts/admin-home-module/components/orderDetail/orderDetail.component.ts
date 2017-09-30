@@ -206,17 +206,7 @@ export class OrderDetailComponent implements OnInit {
         }
 
         const postData = this.orderUnitForm.value
-
-
-        if (typeof this.orderUnitForm.value.hsMonth === "object" ) {
-            if ( this.orderUnitForm.value.hsMonth.month.toString().length === 1) {
-                postData.hsMonth = this.orderUnitForm.value.hsMonth.year.toString() + '0' + this.orderUnitForm.value.hsMonth.month.toString()
-            } else {
-                postData.hsMonth = this.orderUnitForm.value.hsMonth.year.toString() + this.orderUnitForm.value.hsMonth.month.toString()
-            }
-        }
-
-
+        
         if (this.isAddNew) {
             this.hsOrderService.createNewOrderUnit(this.currentOrderId, postData).subscribe(
                 data => {
