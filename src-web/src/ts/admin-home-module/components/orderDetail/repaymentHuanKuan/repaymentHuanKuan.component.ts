@@ -166,10 +166,6 @@ export class RepaymentHuanKuanComponent implements OnInit {
         const postData = this.repaymentHKForm.value
         postData.orderId = this.currentOrder.id
 
-        if (this.repaymentHKForm.value.huankuankDate && typeof this.repaymentHKForm.value.huankuankDate === "object" ) {
-            postData.huankuankDate = this.hsOrderService.formatDateTime(this.repaymentHKForm.value.huankuankDate)
-        }
-
 
         if (this.isAddNew) {
             this.hsOrderService.createNewRepaymentHK(this.currentOrder.id, postData).subscribe(

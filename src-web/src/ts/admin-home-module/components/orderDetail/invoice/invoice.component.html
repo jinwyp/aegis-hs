@@ -4,7 +4,7 @@
             <bs-select formControlName="hsId" [fc]="invoiceForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="invoiceFormError.hsId"></bs-select>
             <bs-select formControlName="invoiceDirection" [fc]="invoiceForm.get('invoiceDirection')" [label]="'进项或销项:'"  [options]="invoiceDirectionList" [error]="invoiceFormError.invoiceDirection"></bs-select>
             <bs-select formControlName="invoiceType" [fc]="invoiceForm.get('invoiceType')" [label]="'发票类型:'"  [options]="invoiceTypeList" [error]="invoiceFormError.invoiceType"></bs-select>
-            <bs-datepicker formControlName="openDate" [fc]="invoiceForm.get('openDate')" [label]="'开票日期:'" [error]="invoiceFormError.openDate"></bs-datepicker>
+            <bs-datepicker formControlName="openDate" [fc]="invoiceForm.get('openDate')" [label]="'开票日期:'" [error]="invoiceFormError.openDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
 
             <bs-select formControlName ="openCompanyId" [fc]="invoiceForm.get('openCompanyId')" [label]="'开票单位:'" [options]="partyList" [error]="invoiceFormError.openCompanyId"></bs-select>
             <bs-select formControlName ="receiverId" [fc]="invoiceForm.get('receiverId')" [label]="'收票单位:'" [options]="partyList" [error]="invoiceFormError.receiverId"></bs-select>
@@ -21,7 +21,7 @@
                             <div class="col-8" >
 
                                 <ul class="list-group" >
-                                    <li class="list-group-item" *ngFor=" let detailInvoice of invoiceDetailList">
+                                    <li class="list-group-item mb-2" *ngFor=" let detailInvoice of invoiceDetailList">
                                         票号:{{detailInvoice.invoiceNumber }} | 货物数量:{{detailInvoice.cargoAmount}} | 税率:{{detailInvoice.taxRate }} | 价税合计:{{detailInvoice.priceAndTax }} |
                                         <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delInvoiceDetail(detailInvoice)"> x </button>
                                     </li>

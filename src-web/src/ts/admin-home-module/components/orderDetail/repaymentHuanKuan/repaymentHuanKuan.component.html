@@ -4,7 +4,7 @@
 
                 <bs-select formControlName="hsId" [fc]="repaymentHKForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="repaymentHKFormError.hsId"></bs-select>
                 <bs-select formControlName="skCompanyId" [fc]="repaymentHKForm.get('skCompanyId')" [label]="'资金方:'"  [options]="partyList" [error]="repaymentHKFormError.skCompanyId"></bs-select>
-                <bs-datepicker formControlName="huankuankDate" [fc]="repaymentHKForm.get('huankuankDate')" [label]="'还款日期:'" [error]="repaymentHKFormError.huankuankDate"></bs-datepicker>
+                <bs-datepicker formControlName="huankuankDate" [fc]="repaymentHKForm.get('huankuankDate')" [label]="'还款日期:'" [error]="repaymentHKFormError.huankuankDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
 
                 <bs-text-input formControlName="huankuanAmount" [fc]="repaymentHKForm.get('huankuanAmount')" [type]="'number'" [label]="'还款总额:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanAmount"></bs-text-input>
                 <bs-text-input formControlName="huankuanInterest" [fc]="repaymentHKForm.get('huankuanInterest')" [type]="'number'" [label]="'还款利息:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanInterest" ></bs-text-input>

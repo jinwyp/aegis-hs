@@ -189,23 +189,6 @@ export class RepaymentComponent implements OnInit {
         postData.orderId = this.currentOrder.id
 
 
-        if (this.repaymentForm.value.huikuanDate && typeof this.repaymentForm.value.huikuanDate === "object" ) {
-            postData.huikuanDate = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanDate)
-        }
-        if (this.repaymentForm.value.huikuanBankPaperDate && typeof this.repaymentForm.value.huikuanBankPaperDate === "object" ) {
-            postData.huikuanBankPaperDate = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBankPaperDate)
-        }
-        if (typeof this.repaymentForm.value.huikuanBankPaperExpire && typeof this.repaymentForm.value.huikuanBankPaperExpire === "object" ) {
-            postData.huikuanBankPaperExpire = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBankPaperExpire)
-        }
-
-        if (typeof this.repaymentForm.value.huikuanBusinessPaperDate && typeof this.repaymentForm.value.huikuanBusinessPaperDate === "object" ) {
-            postData.huikuanBusinessPaperDate = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBusinessPaperDate)
-        }
-        if (typeof this.repaymentForm.value.huikuanBusinessPaperExpire && typeof this.repaymentForm.value.huikuanBusinessPaperExpire === "object" ) {
-            postData.huikuanBusinessPaperExpire = this.hsOrderService.formatDateTime(this.repaymentForm.value.huikuanBusinessPaperExpire)
-        }
-
         if (this.isAddNew) {
             this.hsOrderService.createNewRepayment(this.currentOrder.id, postData).subscribe(
                 data => {

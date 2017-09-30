@@ -4,7 +4,7 @@
             <bs-select formControlName="hsId" [fc]="repaymentForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="repaymentFormError.hsId"></bs-select>
 
             <bs-select formControlName ="huikuanCompanyId" [fc]="repaymentForm.get('huikuanCompanyId')" [label]="'回款公司:'" [options]="partyList" [error]="repaymentFormError.huikuanCompanyId"></bs-select>
-            <bs-datepicker formControlName="huikuanDate" [fc]="repaymentForm.get('huikuanDate')" [label]="'回款日期:'" [error]="repaymentFormError.huikuanDate"></bs-datepicker>
+            <bs-datepicker formControlName="huikuanDate" [fc]="repaymentForm.get('huikuanDate')" [label]="'回款日期:'" [error]="repaymentFormError.huikuanDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
             <bs-text-input formControlName="huikuanAmount" [fc]="repaymentForm.get('huikuanAmount')" [type]="'number'" [label]="'回款总额:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanAmount"></bs-text-input>
             <bs-select formControlName="huikuanUsage" [fc]="repaymentForm.get('huikuanUsage')" [label]="'回款用途:'"  [options]="purposeList" [error]="repaymentFormError.huikuanUsage"></bs-select>
             <bs-select formControlName="huikuanMode" [fc]="repaymentForm.get('huikuanMode')" [label]="'回款方式:'"  [options]="payModeList" [error]="repaymentFormError.huikuanMode"></bs-select>
@@ -12,8 +12,8 @@
 
             <div [hidden]="repaymentForm.get('huikuanMode').value !== 'BANK_ACCEPTANCE'">
                 <bs-radio formControlName ="huikuanBankPaper" [sourceList]="dataIsGot" [label]="'是否收到票据:'" [error]="repaymentFormError.huikuanBankPaper"></bs-radio>
-                <bs-datepicker formControlName="huikuanBankPaperDate" [fc]="repaymentForm.get('huikuanBankPaperDate')" [label]="'收到票据原件日期:'" [error]="repaymentFormError.huikuanBankPaperDate"></bs-datepicker>
-                <bs-datepicker formControlName="huikuanBankPaperExpire" [fc]="repaymentForm.get('huikuanBankPaperExpire')" [label]="'票据到期日:'" [error]="repaymentFormError.huikuanBankPaperExpire"></bs-datepicker>
+                <bs-datepicker formControlName="huikuanBankPaperDate" [fc]="repaymentForm.get('huikuanBankPaperDate')" [label]="'收到票据原件日期:'" [error]="repaymentFormError.huikuanBankPaperDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
+                <bs-datepicker formControlName="huikuanBankPaperExpire" [fc]="repaymentForm.get('huikuanBankPaperExpire')" [label]="'票据到期日:'" [error]="repaymentFormError.huikuanBankPaperExpire" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
                 <bs-radio formControlName ="huikuanBankDiscount" [sourceList]="dataIsGot" [label]="'是否贴息:'" [error]="repaymentFormError.huikuanBankDiscount"></bs-radio>
                 <bs-text-input formControlName="huikuanBankDiscountRate" [fc]="repaymentForm.get('huikuanBankDiscountRate')" [type]="'number'" [label]="'贴息率:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBankDiscountRate"></bs-text-input>
             </div>
@@ -21,8 +21,8 @@
 
             <div [hidden]="repaymentForm.get('huikuanMode').value !== 'BUSINESS_ACCEPTANCE'">
                 <bs-radio formControlName ="huikuanBusinessPaper" [sourceList]="dataIsGot" [label]="'是否收到票据:'" [error]="repaymentFormError.huikuanBusinessPaper"></bs-radio>
-                <bs-datepicker formControlName="huikuanBusinessPaperDate" [fc]="repaymentForm.get('huikuanBusinessPaperDate')" [label]="'收到票据原件日期:'" [error]="repaymentFormError.huikuanBusinessPaperDate"></bs-datepicker>
-                <bs-datepicker formControlName="huikuanBusinessPaperExpire" [fc]="repaymentForm.get('huikuanBusinessPaperExpire')" [label]="'票据到期日:'" [error]="repaymentFormError.huikuanBusinessPaperExpire"></bs-datepicker>
+                <bs-datepicker formControlName="huikuanBusinessPaperDate" [fc]="repaymentForm.get('huikuanBusinessPaperDate')" [label]="'收到票据原件日期:'" [error]="repaymentFormError.huikuanBusinessPaperDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
+                <bs-datepicker formControlName="huikuanBusinessPaperExpire" [fc]="repaymentForm.get('huikuanBusinessPaperExpire')" [label]="'票据到期日:'" [error]="repaymentFormError.huikuanBusinessPaperExpire" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
                 <bs-radio formControlName ="huikuanBusinessDiscount" [sourceList]="dataIsGot" [label]="'是否贴息:'" [error]="repaymentFormError.huikuanBusinessDiscount"></bs-radio>
                 <bs-text-input formControlName="huikuanBusinessPaperExpire" [fc]="repaymentForm.get('huikuanBusinessPaperExpire')" [type]="'number'" [label]="'贴息率:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBusinessPaperExpire"></bs-text-input>
             </div>

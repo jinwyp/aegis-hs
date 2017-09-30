@@ -3,7 +3,7 @@
             <form [formGroup]="paymentForm" (ngSubmit)="paymentFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
                 <bs-select formControlName="hsId" [fc]="paymentForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="paymentFormError.hsId"></bs-select>
-                <bs-datepicker formControlName="payDate" [fc]="paymentForm.get('payDate')" [label]="'付款日期:'" [error]="paymentFormError.payDate"></bs-datepicker>
+                <bs-datepicker formControlName="payDate" [fc]="paymentForm.get('payDate')" [label]="'付款日期:'" [error]="paymentFormError.payDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
 
                 <bs-select formControlName ="receiveCompanyId" [fc]="paymentForm.get('receiveCompanyId')" [label]="'收款单位:'" [options]="partyList" [error]="paymentFormError.receiveCompanyId"></bs-select>
                 <bs-select formControlName="payUsage" [fc]="paymentForm.get('payUsage')" [label]="'付款用途:'"  [options]="purposeList" [error]="paymentFormError.payUsage"></bs-select>

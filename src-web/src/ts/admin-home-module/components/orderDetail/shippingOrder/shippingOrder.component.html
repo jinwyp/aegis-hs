@@ -3,7 +3,7 @@
             <form [formGroup]="shippingForm" (ngSubmit)="shippingFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
                 <bs-select formControlName="hsId" [fc]="shippingForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="shippingFormError.hsId"></bs-select>
-                <bs-datepicker formControlName="fyDate" [fc]="shippingForm.get('fyDate')" [label]="'发运日期:'" [error]="shippingFormError.fyDate"></bs-datepicker>
+                <bs-datepicker formControlName="fyDate" [fc]="shippingForm.get('fyDate')" [label]="'发运日期:'" [error]="shippingFormError.fyDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
 
                 <bs-text-input formControlName="fyAmount" [fc]="shippingForm.get('fyAmount')" [type]="'number'" [label]="'发运吨数:'" [dirty]="ignoreDirty" [error]="shippingFormError.fyAmount"></bs-text-input>
                 <bs-select formControlName="arriveStatus" [fc]="shippingForm.get('arriveStatus')" [label]="'到场状态:'"  [options]="arriveStatusList" [error]="shippingFormError.arriveStatus"></bs-select>

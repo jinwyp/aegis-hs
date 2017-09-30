@@ -143,23 +143,6 @@ export class ExpenseComponent implements OnInit {
         postData.orderId = this.currentOrder.id
 
 
-        if (this.expenseForm.value.huikuanDate && typeof this.expenseForm.value.huikuanDate === "object" ) {
-            postData.huikuanDate = this.hsOrderService.formatDateTime(this.expenseForm.value.huikuanDate)
-        }
-        if (this.expenseForm.value.huikuanBankPaperDate && typeof this.expenseForm.value.huikuanBankPaperDate === "object" ) {
-            postData.huikuanBankPaperDate = this.hsOrderService.formatDateTime(this.expenseForm.value.huikuanBankPaperDate)
-        }
-        if (typeof this.expenseForm.value.huikuanBankPaperExpire && typeof this.expenseForm.value.huikuanBankPaperExpire === "object" ) {
-            postData.huikuanBankPaperExpire = this.hsOrderService.formatDateTime(this.expenseForm.value.huikuanBankPaperExpire)
-        }
-
-        if (typeof this.expenseForm.value.huikuanBusinessPaperDate && typeof this.expenseForm.value.huikuanBusinessPaperDate === "object" ) {
-            postData.huikuanBusinessPaperDate = this.hsOrderService.formatDateTime(this.expenseForm.value.huikuanBusinessPaperDate)
-        }
-        if (typeof this.expenseForm.value.huikuanBusinessPaperExpire && typeof this.expenseForm.value.huikuanBusinessPaperExpire === "object" ) {
-            postData.huikuanBusinessPaperExpire = this.hsOrderService.formatDateTime(this.expenseForm.value.huikuanBusinessPaperExpire)
-        }
-
         if (this.isAddNew) {
             this.hsOrderService.createNewExpense(this.currentOrder.id, postData).subscribe(
                 data => {
@@ -174,7 +157,7 @@ export class ExpenseComponent implements OnInit {
             )
         } else {
             postData.id = this.currentExpenseId
-            delete postData.huikuanAmount
+            // delete postData.huikuanAmount
 
             this.hsOrderService.modifyExpense(this.currentOrder.id, this.currentExpenseId, postData).subscribe(
                 data => {

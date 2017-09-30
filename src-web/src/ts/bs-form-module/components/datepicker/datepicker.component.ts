@@ -114,7 +114,8 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
             // }
 
             result = formatText.replace(token, function (match) {
-                console.log('match', match, flags[match])
+                // console.log('match', match, flags[match])
+
                 if (match in flags) {
                     return flags[match]
                 }

@@ -210,11 +210,6 @@ export class InvoiceComponent implements OnInit {
         const postData = this.invoiceForm.value
         postData.orderId = this.currentOrder.id
 
-
-        if (this.invoiceForm.value.openDate && typeof this.invoiceForm.value.openDate === "object" ) {
-            postData.openDate = this.hsOrderService.formatDateTime(this.invoiceForm.value.openDate)
-        }
-
         postData.details = this.invoiceDetailList
 
         if (this.isAddNew) {
@@ -231,7 +226,7 @@ export class InvoiceComponent implements OnInit {
             )
         } else {
             postData.id = this.currentInvoiceId
-            delete postData.huikuanAmount
+            // delete postData.huikuanAmount
 
             this.hsOrderService.modifyInvoice(this.currentOrder.id, this.currentInvoiceId, postData).subscribe(
                 data => {

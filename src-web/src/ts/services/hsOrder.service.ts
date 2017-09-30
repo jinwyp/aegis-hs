@@ -21,31 +21,6 @@ export class HSOrderService {
     ) {
     }
 
-    formatDateTime (date: any) {
-
-        // protected  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        // protected static final DateTimeFormatter dateTimeformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        // protected static final DateTimeFormatter dateTimeWithHmformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        let result = ''
-
-        if (date && typeof date === 'object') {
-            if ( date.month.toString().length === 1) {
-                result = date.year.toString() + '-0' + date.month.toString()
-            } else {
-                result = date.year.toString() + '-' + date.month.toString()
-            }
-
-            if ( date.day.toString().length === 1) {
-                result = result + '-0' + date.day.toString() + ' 00:00:00'
-            } else {
-                result = result + '-' + date.day.toString() + ' 00:00:00'
-            }
-
-        }
-
-        return result
-    }
-
 
     getEnumList(path: string): Observable<any> {
         return this.http.get(apiPath.dictionary + '/' + path)

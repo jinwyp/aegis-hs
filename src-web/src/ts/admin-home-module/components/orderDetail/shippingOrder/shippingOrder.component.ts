@@ -163,10 +163,6 @@ export class ShippingOrderComponent implements OnInit {
         const postData = this.shippingForm.value
         postData.orderId = this.currentOrder.id
 
-        if (this.shippingForm.value.fyDate && typeof this.shippingForm.value.fyDate === "object" ) {
-            postData.fyDate = this.hsOrderService.formatDateTime(this.shippingForm.value.fyDate)
-        }
-
 
         if (this.isAddNew) {
             this.hsOrderService.createNewShipping(this.currentOrder.id, postData).subscribe(

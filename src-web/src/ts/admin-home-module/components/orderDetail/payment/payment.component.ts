@@ -177,10 +177,6 @@ export class PaymentComponent implements OnInit {
         const postData = this.paymentForm.value
         postData.orderId = this.currentOrder.id
 
-        if (this.paymentForm.value.payDate && typeof this.paymentForm.value.payDate === "object" ) {
-            postData.payDate = this.hsOrderService.formatDateTime(this.paymentForm.value.payDate)
-        }
-
 
         if (this.isAddNew) {
             this.hsOrderService.createNewPayment(this.currentOrder.id, postData).subscribe(

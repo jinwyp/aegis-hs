@@ -3,7 +3,7 @@
 
             <bs-radio formControlName ="tempSettleType" [sourceList]="settleTypeList" [label]="'结算类型:'" [error]="settleFormError.tempSettleType" [hidden]="!isAddNew"></bs-radio>
             <bs-select formControlName="hsId" [fc]="settleForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="settleFormError.hsId"></bs-select>
-            <bs-datepicker formControlName="settleDate" [fc]="settleForm.get('settleDate')" [label]="'结算日期:'" [error]="settleFormError.settleDate"></bs-datepicker>
+            <bs-datepicker formControlName="settleDate" [fc]="settleForm.get('settleDate')" [label]="'结算日期:'" [error]="settleFormError.settleDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
             <bs-text-input formControlName="amount" [fc]="settleForm.get('amount')" [type]="'number'" [label]="'结算数量(吨):'" [dirty]="ignoreDirty" [error]="settleFormError.amount"></bs-text-input>
             <bs-text-input formControlName="money" [fc]="settleForm.get('money')" [type]="'number'" [label]="'结算金额:'" [dirty]="ignoreDirty" [error]="settleFormError.money"></bs-text-input>
 

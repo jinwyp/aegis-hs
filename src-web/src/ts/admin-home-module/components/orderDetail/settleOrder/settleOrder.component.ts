@@ -233,11 +233,6 @@ export class SettleOrderComponent implements OnInit {
         postData.orderId = this.currentOrder.id
 
 
-        if (this.settleForm.value.settleDate && typeof this.settleForm.value.settleDate === "object" ) {
-            postData.settleDate = this.hsOrderService.formatDateTime(this.settleForm.value.settleDate)
-        }
-
-
         if (this.isAddNew) {
 
             if (this.settleForm.value.tempSettleType === 'upstream') {
