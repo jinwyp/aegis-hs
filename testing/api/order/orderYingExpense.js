@@ -163,13 +163,27 @@ describe('应收订单 - 费用/发票 : ', function () {
             .set(config.headers)
             .send(
                 {
-                    "hsId" : 2,
+                    "hsId" : 1,
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
-                    "openDate" : "2017-09-02 00:00:00",
+                    "openDate" : "2017-09-01 00:00:00",
                     "openCompanyId" : 1,
-                    "receiverId" : 2,
-                    "orderId" : 1
+                    "receiverId" : 1,
+                    "orderId" : 1,
+                    "details" : [
+                        {
+                            "invoiceNumber" : "2000",
+                            "cargoAmount"   : "1000",
+                            "taxRate"       : "0.2",
+                            "priceAndTax"   : "100"
+                        },
+                        {
+                            "invoiceNumber" : "2000",
+                            "cargoAmount" : "1000",
+                            "taxRate" : "0.2",
+                            "priceAndTax" : "100"
+                        }
+                    ]
                 }
             )
             .expect('Content-Type', /json/)
@@ -190,13 +204,27 @@ describe('应收订单 - 费用/发票 : ', function () {
             .set(config.headers)
             .send(
                 {
-                    "hsId" : 2,
-                    "invoiceDirection" : "OUTOUT",
-                    "invoiceType" : "FRIGHT_INVOICE",
-                    "openDate" : "2017-09-08 00:00:00",
-                    "openCompanyId" : 2,
+                    "hsId" : 1,
+                    "invoiceDirection" : "INCOME",
+                    "invoiceType" : "GOODS_INVOICE",
+                    "openDate" : "2017-09-01 00:00:00",
+                    "openCompanyId" : 1,
                     "receiverId" : 1,
-                    "orderId" : 1
+                    "orderId" : 1,
+                    "details" : [
+                        {
+                            "invoiceNumber" : "2000",
+                            "cargoAmount"   : "1000",
+                            "taxRate"       : "0.2",
+                            "priceAndTax"   : "100"
+                        },
+                        {
+                            "invoiceNumber" : "2000",
+                            "cargoAmount" : "1000",
+                            "taxRate" : "0.2",
+                            "priceAndTax" : "100"
+                        }
+                    ]
                 }
             )
             .expect('Content-Type', /json/)
