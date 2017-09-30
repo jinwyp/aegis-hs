@@ -20,7 +20,3 @@ genmapper.sh 重新生成所有mybatis的mapper dao entity
 [chai]: http://chaijs.com/
 [superagent]: https://github.com/visionmedia/superagent
 
-
-// TODO
-
-4 下拉框 建议搜索
