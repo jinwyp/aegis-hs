@@ -25,6 +25,7 @@ export class OrderListComponent implements OnInit {
 
     orderForm: FormGroup
     orderOtherPartyForm: FormGroup
+    orderSearchForm: FormGroup
     ignoreDirty: boolean = false
 
     otherPartyList : any[] = []
@@ -38,6 +39,7 @@ export class OrderListComponent implements OnInit {
     filterTeamList : any[] = []
     partyList : any[] = []
 
+    orderStatusList : any[] = getEnum('OrderStatus')
     payModeList : any[] = getEnum('SettleMode')
     customerType : any[] = getEnum('CustomerType')
     cargoTypeList : any[] = getEnum('CargoType')
@@ -65,13 +67,16 @@ export class OrderListComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.createOrderForm()
+        this.createOrderOtherPartyForm()
+        this.createOrderSearchForm()
+
         this.getPartyList()
         this.getDepartmentList()
         this.getTeamList()
         this.getOrderList()
         this.getSessionUserInfo()
-        this.createOrderForm()
-        this.createOrderOtherPartyForm()
+
     }
 
     trackByFn(index: any, item: any) {
@@ -92,11 +97,14 @@ export class OrderListComponent implements OnInit {
 
     getOrderList () {
 
-        const query : any = {
+        let query : any = {
             pageSize: this.pagination.pageSize,
             pageNo: this.pagination.pageNo
         }
 
+        query = Object.assign(query, this.orderSearchForm.value)
+
+        console.log(query)
         this.hsOrderService.getOrderList(query).subscribe(
             data => {
                 this.orderList = data.data.results
@@ -145,6 +153,18 @@ export class OrderListComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+    }
+
+
+    createOrderSearchForm(): void {
+
+        this.orderSearchForm = this.fb.group({
+            'teamId'    : ['' ],
+            'mainAccounting'    : ['' ],
+            'createDateStart'    : [null ],
+            'createDateEnd'    : [null ],
+            'status'    : ['' ]
+        } )
     }
 
 

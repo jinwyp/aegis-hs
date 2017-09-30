@@ -25,6 +25,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
     @Input('fc') currentFormControl: FormControl = new FormControl()
     @Input() label: string
     @Input() prompt: string = ''
+    @Input() addAllOptions: boolean = false
 
     @Input('options') optionList: any[]
 
@@ -50,6 +51,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
     ngOnInit(): void {
         // console.log('ngOnInit', this.el.nativeElement)
+
     }
 
 
@@ -68,6 +70,11 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
                 // }
 
                 if (propertyName === 'optionList' && currentChangeObject.currentValue && Array.isArray(currentChangeObject.currentValue)) {
+
+                    if (this.addAllOptions) {
+                        this.optionList.unshift({ id : '' , name : '全部' })
+                    }
+
                     this.writeValue(this.interValueCurrentSelected.id)
                 }
             }

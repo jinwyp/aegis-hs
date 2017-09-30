@@ -52,9 +52,15 @@ export class HSOrderService {
     }
 
     getOrderList(query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.teamId) { params = params.append('teamId', query.teamId)}
+        if (query.mainAccounting) { params = params.append('mainAccounting', query.mainAccounting)}
+        if (query.createDateStart) { params = params.append('createDateStart', query.createDateStart)}
+        if (query.createDateEnd) { params = params.append('createDateEnd', query.createDateEnd)}
+        if (query.status) { params = params.append('status', query.status)}
 
         return this.http.get(apiPath.hsGetOrderList, {params: params})
     }

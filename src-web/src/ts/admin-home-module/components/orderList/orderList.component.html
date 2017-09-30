@@ -27,8 +27,6 @@
             </div>
 
             <bs-text-input formControlName="line" [fc]="orderForm.get('line')" [type]="'text'" [label]="'业务线名称:'" [readOnly]="true" [dirty]="ignoreDirty" [error]="orderFormError.line"></bs-text-input>
-
-
             <bs-select formControlName ="cargoType" [fc]="orderForm.get('cargoType')" [label]="'货物种类:'" [options]="cargoTypeList" [error]="orderFormError.cargoType"></bs-select>
 
             <bs-select formControlName ="mainAccounting" [fc]="orderForm.get('mainAccounting')" [label]="'主账务公司:'" [options]="partyList" [error]="orderFormError.mainAccounting" (change)="lineName()"></bs-select>
@@ -89,6 +87,38 @@
 
 
         <div *ngIf="!isShowForm">
+
+            <form [formGroup]="orderSearchForm"  (keydown.enter)="$event.preventDefault()">
+
+                <div class="form-row ">
+                    <div class="col-6">
+                        <bs-select formControlName ="teamId" [fc]="orderSearchForm.get('teamId')" [label]="'团队:'"  [options]="teamList" [addAllOptions]="true"  ></bs-select>
+                    </div>
+                    <div class="col-6">
+                        <bs-select formControlName ="mainAccounting" [fc]="orderSearchForm.get('mainAccounting')" [label]="'主账务公司:'" [options]="partyList" [addAllOptions]="true"></bs-select>
+                    </div>
+                </div>
+
+                <div class="form-row ">
+                    <div class="col-3">
+                        <bs-datepicker formControlName="createDateStart" [fc]="orderSearchForm.get('createDateStart')" [label]="'创建时间:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
+                    </div>
+                    <div class="col-3">
+                        <bs-datepicker formControlName="createDateEnd" [fc]="orderSearchForm.get('createDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
+                    </div>
+                    <div class="col-6">
+                        <bs-select formControlName ="status" [fc]="orderSearchForm.get('status')" [label]="'状态:'" [options]="orderStatusList" [addAllOptions]="true"></bs-select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-11 ml-auto">
+                        <button type="button" class="btn btn-info " (click)="getOrderList()"  >查询</button>
+                    </div>
+                </div>
+            </form>
+
+
             <table class="table table-bordered table-hover table-responsive" >
                 <thead>
                 <tr>

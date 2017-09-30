@@ -40,7 +40,8 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
     @Input() maxDate: any = {year: 3900, month: 12, day: 31}
     @Input() minDate: any = {year: 1900, month: 1, day: 1}
 
-    @Input() format: any = 'yyyy-m-d'
+    @Input() format: any = ''
+    @Input() displayFormat: any = 'yyyy-m-d'
 
     @ViewChild('datepicker') datePickerEl: ElementRef
 
@@ -62,6 +63,70 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
 
     }
 
+    dateFormatter (currentDate: any, formatText : string) {
+
+        if (!formatText) {
+            return currentDate
+        }
+
+
+        let result = currentDate
+
+        function plus0 (text : string) {
+            if (text.length === 1) {
+                return '0' + text
+            }
+            return text
+        }
+
+        if (currentDate) {
+
+            const flags = {
+                d : currentDate.day,
+                dd : plus0(currentDate.day.toString()),
+                m : currentDate.month,
+                mm : plus0(currentDate.month.toString()),
+                yy : String(currentDate.year).slice(2),
+                yyyy : currentDate.year,
+
+                h :    0,
+                hh :   '00',
+                M :    0,
+                MM :   '00',
+                s :    0,
+                ss :   '00'
+
+            }
+
+            // https://github.com/felixge/node-dateformat/blob/master/lib/dateformat.js
+            const token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZWN]|'[^']*'|'[^']*'/g
+
+            // if (formatText === 'yyyy-mm-dd') {
+            //     result = currentDate.year + '-' + plus0(currentDate.month) + '-' + currentDate.day
+            // }
+            //
+            // if (formatText === 'yyyy-mm') {
+            //     result = currentDate.year + '-' + plus0(currentDate.month)
+            // }
+            //
+            // if (formatText === 'yyyymm') {
+            //     result = currentDate.year.toString() + plus0(currentDate.month.toString())
+            // }
+
+            result = formatText.replace(token, function (match) {
+                console.log('match', match, flags[match])
+                if (match in flags) {
+                    return flags[match]
+                }
+                return match.slice(1, match.length - 1);
+            })
+
+        }
+
+        return result
+    }
+
+
     showDatePicker() {
         this.isShowDatePicker = !this.isShowDatePicker
     }
@@ -69,7 +134,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
     getDate(event : any) {
 
         this.value = event
-        this.inputDisplayValue = this.displayFormatter(this.interValueDate)
+        this.inputDisplayValue = this.dateFormatter(this.interValueDate, this.displayFormat)
     }
 
     onKeyChange(textValue : string) {
@@ -105,34 +170,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
         }
     }
 
-    displayFormatter (currentDate: any) {
 
-        let result = currentDate.year + '-' + currentDate.month + '-' + currentDate.day
-
-        function plus0 (text : string) {
-            if (text.length === 1) {
-                return '0' + text
-            }
-            return text
-        }
-
-        if (currentDate) {
-
-            if (this.format === 'yyyy-mm-dd') {
-                result = currentDate.year + '-' + plus0(currentDate.month) + '-' + currentDate.day
-            }
-
-            if (this.format === 'yyyy-mm') {
-                result = currentDate.year + '-' + plus0(currentDate.month)
-            }
-
-            if (this.format === 'yyyymm') {
-                result = currentDate.year.toString() + plus0(currentDate.month.toString())
-            }
-        }
-
-        return result
-    }
 
     onChange (value : any) { return }
     onTouched () { return }
@@ -147,7 +185,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
 
         this.interValueDate = val
 
-        this.onChange(val)
+        this.onChange(this.dateFormatter(val, this.format))
         this.onTouched()
     }
 
@@ -181,7 +219,8 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
                     now = new Date( Number(value.substr(0,4)), Number(value.substr(4,2)) - 1 )
 
                     this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
-                    this.inputDisplayValue =  this.displayFormatter(this.interValueDate)
+                    this.inputDisplayValue =  this.dateFormatter(this.interValueDate, this.displayFormat)
+
                 }else if (value.length <= 9) {
 
                     // example : 2017-09-01
@@ -198,9 +237,11 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
                             now = new Date( Number(tempArray[0]), Number(tempArray[1]) - 1, Number(tempArray[2]) )
 
                             this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
-                            this.inputDisplayValue =  this.displayFormatter(this.interValueDate)
+                            this.inputDisplayValue = this.dateFormatter(this.interValueDate, this.displayFormat)
                         }
                     }
+
+                    // example : 2017-09
 
                     if (tempArray.length === 2) {
 
@@ -217,6 +258,9 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
                     }
 
                 } else  {
+
+                    // example : 2017-09-11 00:00:00
+
                     const tempArray : string[] = value.split(' ')
                     const date : string = tempArray[0]
                     const time : string = tempArray[1]
@@ -233,15 +277,13 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
                             now = new Date( Number(tempDate[0]), Number(tempDate[1]) - 1, Number(tempDate[2]) )
 
                             this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
-                            this.inputDisplayValue =  this.displayFormatter(this.interValueDate)
+                            this.inputDisplayValue =  this.dateFormatter(this.interValueDate, this.displayFormat)
                         }
                     }
 
                 }
 
-
             }
-
 
 
 
@@ -249,10 +291,8 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
 
                 isValid = true
                 this.value = value
-                this.inputDisplayValue =  this.displayFormatter(this.interValueDate)
+                this.inputDisplayValue = this.dateFormatter(this.interValueDate, this.displayFormat)
             }
-
-
 
         }
 
