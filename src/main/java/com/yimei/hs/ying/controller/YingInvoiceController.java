@@ -43,6 +43,7 @@ public class YingInvoiceController {
     ) {
         pageYingInvoiceDTO.setOrderId(morderId);
         Page<YingInvoice> page = yingInvoiceService.getPage(pageYingInvoiceDTO);
+        logger.info("my invoice page = {}", page) ;
         return PageResult.ok(page);
     }
 
