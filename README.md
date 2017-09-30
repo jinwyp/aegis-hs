@@ -23,7 +23,4 @@ genmapper.sh 重新生成所有mybatis的mapper dao entity
 
 // TODO
 
-1 测试 增加500
-2 查询条件
-3 日期格式化
 4 下拉框 建议搜索

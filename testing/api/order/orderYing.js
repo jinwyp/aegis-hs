@@ -155,10 +155,8 @@ describe('应收订单', function () {
             .expect(400)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.success).to.equal(false)
+                expect(res.body.data).to.equal(null)
                 done()
             })
     })
@@ -188,10 +186,8 @@ describe('应收订单', function () {
             .expect(400)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.success).to.equal(false)
+                expect(res.body.data).to.equal(null)
                 done()
             })
     })
@@ -222,10 +218,8 @@ describe('应收订单', function () {
             .expect(400)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.success).to.equal(false)
+                expect(res.body.data).to.equal(null)
                 done()
             })
     })
@@ -255,10 +249,8 @@ describe('应收订单', function () {
             .expect(400)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.success).to.equal(false)
+                expect(res.body.data).to.equal(null)
                 done()
             })
     })
@@ -436,6 +428,7 @@ describe('应收订单', function () {
 
 
 
+
     it('发运单 - 新建发运单1 POST: /api/ying/1/fayuns', function (done) {
         server.post('/api/ying/1/fayuns')
             .set('Authorization', Authorization)
@@ -494,6 +487,35 @@ describe('应收订单', function () {
                 expect(res.body.data).to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.fyDate).to.include('2017')
+                done()
+            })
+    })
+
+    it('发运单 - 新建发运单3 非法输入不存在的核算单元ID hsId:99999, POST: /api/ying/1/fayuns', function (done) {
+        server.post('/api/ying/1/fayuns')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                "hsId"               : 99999,
+                "fyDate"                : "2017-10-01 00:00:00",
+                "fyAmount"              : "40000",
+                "arriveStatus"          : "ARRIVE",
+                "upstreamTrafficMode"   : "MOTOR",
+                "upstreamCars"          : 200,
+                "upstreamJHH"           : "",
+                "upstreamShip"          : "",
+                "downstreamTrafficMode" : "SHIP",
+                "downstreamCars"        : "",
+                "downstreamJHH"         : "",
+                "downstreamShip"        : "x1003",
+                "orderId"               : 1
+            })
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(false)
+                expect(res.body.data).to.equal(null)
                 done()
             })
     })
