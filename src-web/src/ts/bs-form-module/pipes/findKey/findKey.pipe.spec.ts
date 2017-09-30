@@ -5,7 +5,7 @@
 
 import {FindKeyPipe} from './findKey.pipe'
 
-describe('MaxPipe', () => {
+describe('FindKeyPipe', () => {
     let pipe: FindKeyPipe
     const testString: string = 'test'
 

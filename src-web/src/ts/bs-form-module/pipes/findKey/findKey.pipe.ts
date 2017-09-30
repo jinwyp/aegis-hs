@@ -7,13 +7,13 @@ import {Pipe, PipeTransform} from '@angular/core'
 
 
 /*
- * 截取字符串长度
+ * 从数组中查找指定的key的值
  * Takes an exponent argument that defaults to 1.
  * Usage:
  *   value | findKey: sourceData : keyName
  * Example:
- *   {{ 1 | findKey:'name' }}
- *   formats to: 1024
+ *   {{ 1 | findKey : [{id : 1, name : '上海'}] 'name' }}
+ *   formats to: 上海
  */
 
 

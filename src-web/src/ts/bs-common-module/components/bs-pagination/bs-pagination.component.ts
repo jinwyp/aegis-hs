@@ -10,6 +10,9 @@ import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, S
 })
 export class BSPaginationComponent implements OnInit, OnChanges {
 
+    /**
+     *  Number of pages.
+     */
     _totalPageCount: number = 1
 
     _pageArrayLeft :  number[] = []

@@ -1,5 +1,5 @@
 
-<nav *ngIf="">
+<nav *ngIf="collectionSize">
     <ul class="pagination" [class.pagination-lg]="size === 'lg'" [class.pagination-sm]="size === 'sm'"
         [class.justify-content-center]="alignment === 'center'" [class.justify-content-end]="alignment === 'right'">
 
