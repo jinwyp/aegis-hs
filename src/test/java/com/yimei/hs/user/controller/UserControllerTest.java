@@ -941,7 +941,7 @@ public class UserControllerTest extends YingTestBase {
             System.exit(-1);
         }
 
-        deleteTest();
+//        deleteTest();
     }
 
     Result<YingInvoice> invoiceCreateResult = null;
