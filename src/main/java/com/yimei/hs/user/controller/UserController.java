@@ -85,7 +85,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PutMapping(value = "/api/change_password")
+    @PutMapping(value = "/api/change_password", consumes ="application/json", produces = "application/json")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Boolean>> change(
             @CurrentUser User user,
@@ -94,13 +94,17 @@ public class UserController {
         User record = userService.getUserByPhone(StringUtils.trim(user.getPhone()));
         if (record == null) {
             return Result.error(4001, "账号不存在", HttpStatus.UNAUTHORIZED);
-        } else if (!userService.validPasswordEquals(record, userUpdate.getPassword())) {
+        } else if (!userService.validPasswordEquals(record, userUpdate.getOldPassword())) {
             return Result.error(4002, "密码错误", HttpStatus.UNAUTHORIZED);
         } else if (!record.getIsActive()) {
             return Result.error(4003, "用户已经禁用", HttpStatus.UNAUTHORIZED);
         } else {
             userUpdate.setId(user.getId());
-            return Result.ok(userService.changePassword(userUpdate));
+            int rtn  =  userService.changePassword(userUpdate);
+            if (rtn != 1) {
+                return Result.error(4001, "更新密码失败");
+            }
+            return Result.ok(true);
         }
     }
 

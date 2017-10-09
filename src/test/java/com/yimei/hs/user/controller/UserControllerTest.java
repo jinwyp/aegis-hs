@@ -92,18 +92,20 @@ public class UserControllerTest extends YingTestBase {
 
     @Test
     public void userTest() throws JsonProcessingException {
+
         user();
-        order();
-        config();
-        fayun();
-        fukuan();
-        huikuan();
-        huankuan();
-        upstream();
-        downstream();
-        traffic();
-        fee();
-        invoice();
+//        order();
+//        config();
+//        fayun();
+//        fukuan();
+//        huikuan();
+//        huankuan();
+//        upstream();
+//        downstream();
+//        traffic();
+//        fee();
+//        invoice();
+
 
     }
 
@@ -189,7 +191,6 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 6. 用户登录
-        // Result<String> loginResult = post("/api/login", newUser, String.class);
         Result<String> loginResult = client.exchange("/api/login", HttpMethod.POST, new HttpEntity<User>(newUser), typeReferenceString).getBody();
         if (loginResult.getSuccess()) {
             logger.info("登录成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/login", printJson(newUser), printJson(loginResult.getData()));
@@ -197,6 +198,28 @@ public class UserControllerTest extends YingTestBase {
             logger.error("登录失败: {}", loginResult.getError());
         }
         setClientInterceptor(loginResult.getData());
+
+        // 6.1 更改密码
+        User changeUser = new User();
+        changeUser.setOldPassword("123456");
+        changeUser.setPassword("1234567");
+        Result<Boolean> changeResult = client.exchange("/api/change_password", HttpMethod.PUT, new HttpEntity<User>(changeUser), typeReferenceBoolean).getBody();
+        if (changeResult.getSuccess()) {
+            logger.info("修改密码成功\nPUT {}\nrequest = {}\nresponse = {}", "/api/change_password", printJson(changeUser), changeResult.getData());
+        } else {
+            logger.info("修改密码失败: {}", changeResult.getError());
+        }
+
+        // 6.2 再登录一次, 用新密码登录
+        newUser.setPassword("1234567");
+        loginResult = client.exchange("/api/login", HttpMethod.POST, new HttpEntity<User>(newUser), typeReferenceString).getBody();
+        if (loginResult.getSuccess()) {
+            logger.info("登录成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/login", printJson(newUser), printJson(loginResult.getData()));
+        } else {
+            logger.error("登录失败: {}", loginResult.getError());
+        }
+        setClientInterceptor(loginResult.getData());
+
     }
 
 
