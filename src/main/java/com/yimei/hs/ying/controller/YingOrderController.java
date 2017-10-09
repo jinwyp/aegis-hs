@@ -73,8 +73,19 @@ public class YingOrderController {
         order.setOwnerId(user.getId());
         order.setDeptId(user.getDeptId());
         order.setStatus(OrderStatus.UNCOMPLETED);
-        yingOrderService.create(order);
-        return Result.created(order);
+
+        int rtn;
+        try {
+            rtn = yingOrderService.create(order);
+        } catch (Exception e) {
+            System.out.println("------------------------------------------");
+            return Result.error(4001, "创建失败", HttpStatus.BAD_REQUEST);
+        }
+        if (rtn == 1) {
+            return Result.created(order);
+        } else {
+            return Result.error(4001, "创建失败", HttpStatus.BAD_REQUEST);
+        }
     }
 
 

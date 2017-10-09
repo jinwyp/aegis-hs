@@ -55,7 +55,7 @@ public class UserController {
     public ResponseEntity<Result<String>> login(@RequestBody User user) {
         User record = userService.getUserByPhone(StringUtils.trim(user.getPhone()));
         if (record == null) {
-            return Result.error(4001, "账号不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "账号不存在", HttpStatus.UNAUTHORIZED);
         } else if (!userService.validPasswordEquals(record, user.getPassword())) {
             return Result.error(4002, "密码错误", HttpStatus.UNAUTHORIZED);
         } else if (!record.getIsActive()) {

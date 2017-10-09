@@ -79,8 +79,15 @@ public class YingFayunController {
             @RequestBody @Validated(CreateGroup.class) YingFayun yingFayun
     ) {
         yingFayun.setOrderId(morderId);
-        yingFayunService.create(yingFayun);
-        // logger.info("created fayn: {}", yingFayun);
+        int rtn;
+        try {
+            rtn = yingFayunService.create(yingFayun);
+        } catch (Exception e) {
+            return Result.error(4001, "创建失败", HttpStatus.BAD_REQUEST);
+        }
+        if (rtn != 1) {
+            return Result.error(4001, "创建失败", HttpStatus.BAD_REQUEST);
+        }
         return Result.ok(yingFayun);
     }
 

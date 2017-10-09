@@ -37,6 +37,7 @@ public class YingOrderService {
 
     /**
      * 获取一页订单
+     *
      * @param pageYingOrderDTO
      * @return
      */
@@ -46,6 +47,7 @@ public class YingOrderService {
 
     /**
      * 获取指定订单
+     *
      * @param id
      * @return
      */
@@ -55,6 +57,7 @@ public class YingOrderService {
 
     /**
      * 创建订单
+     *
      * @param order
      * @return
      */
@@ -63,37 +66,47 @@ public class YingOrderService {
         // 插入业务线
         int rtn = yingOrderMapper.insert(order);
 
+        if (rtn == 0) {
+            return 0;
+        }
+
         List<YingOrderConfig> configList = order.getOrderConfigList();
 
         List<YingOrderParty> partyList = order.getOrderPartyList();
 
+        int failed = 0;
+
         // 插入参与方
-        if (partyList != null ) {
-            partyList.forEach(new Consumer<YingOrderParty>() {
-                @Override
-                public void accept(YingOrderParty yingOrderParty) {
-                    yingOrderParty.setOrderId(order.getId());
-                    yingOrderPartyMapper.insert(yingOrderParty);
+        if (partyList != null) {
+
+            for (YingOrderParty yingOrderParty : partyList) {
+                yingOrderParty.setOrderId(order.getId());
+                if (yingOrderPartyMapper.insert(yingOrderParty) != 1) {
+                    failed++;
                 }
-            });
+            }
         }
 
         // 插入核算月配置
         if (configList != null) {
-            configList.forEach(new Consumer<YingOrderConfig>() {
-                @Override
-                public void accept(YingOrderConfig yingOrderConfig) {
-                    yingOrderConfig.setOrderId(order.getId());
-                    yingOrderConfigMapper.insert(yingOrderConfig);
+            for (YingOrderConfig yingOrderConfig : configList) {
+                yingOrderConfig.setOrderId(order.getId());
+                if( yingOrderConfigMapper.insert(yingOrderConfig) !=  1) {
+                    failed++;
                 }
-            });
+            }
+        }
+
+        if (failed > 0) {
+            return 0;
         }
 
         return rtn;
     }
 
     /**
-     *  更新订单
+     * 更新订单
+     *
      * @param record
      * @return
      */
@@ -102,7 +115,6 @@ public class YingOrderService {
     }
 
     /**
-     *
      * @param orderId
      * @param from
      * @param to
@@ -117,13 +129,14 @@ public class YingOrderService {
     }
 
     /**
-     *  ownerId是否拥有orderId
+     * ownerId是否拥有orderId
+     *
      * @param ownerId
      * @param orderId
      * @return
      */
-    public boolean hasOrder(long ownerId, long orderId){
-        return yingOrderMapper.hasOrder(ownerId,orderId) ;
+    public boolean hasOrder(long ownerId, long orderId) {
+        return yingOrderMapper.hasOrder(ownerId, orderId);
     }
 
     @Autowired
@@ -131,6 +144,7 @@ public class YingOrderService {
 
     /**
      * 逻辑删除
+     *
      * @param id
      * @return
      */
