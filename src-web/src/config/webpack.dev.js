@@ -44,10 +44,6 @@ module.exports = function (env) {
             publicPath : "/static/js/",
 
             proxy : {
-                "/apx"    : {
-                    "target" : "http://localhost:3000",
-                    "secure" : false
-                },
                 "/api"    : {
                     "target" : "http://localhost:8080",
                     "secure" : false

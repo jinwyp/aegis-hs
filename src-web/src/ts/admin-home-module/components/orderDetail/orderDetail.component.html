@@ -55,7 +55,7 @@
 
             <form [formGroup]="orderUnitForm" (ngSubmit)="orderUnitFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-                <bs-datepicker formControlName="hsMonth" [fc]="orderUnitForm.get('hsMonth')" [label]="'核算月名称:'" [format]="'yyyymm'" [error]="orderUnitFormError.hsMonth"></bs-datepicker>
+                <bs-datepicker formControlName="hsMonth" [fc]="orderUnitForm.get('hsMonth')" [label]="'核算月名称:'" [format]="'yyyymm'" [displayFormat]="'yyyymm'" [error]="orderUnitFormError.hsMonth"></bs-datepicker>
                 <bs-text-input formControlName="maxPrepayRate" [fc]="orderUnitForm.get('maxPrepayRate')" [type]="'number'" [label]="'最高预付款比例:'" [dirty]="ignoreDirty" [error]="orderUnitFormError.maxPrepayRate"></bs-text-input>
                 <bs-text-input formControlName="unInvoicedRate" [fc]="orderUnitForm.get('unInvoicedRate')" [type]="'number'" [label]="'未开票款付款比例:'" [dirty]="ignoreDirty" [error]="orderUnitFormError.unInvoicedRate"></bs-text-input>
                 <bs-text-input formControlName="contractBaseInterest" [fc]="orderUnitForm.get('contractBaseInterest')" [type]="'number'" [label]="'合同基准利率:'" [dirty]="ignoreDirty" [error]="orderUnitFormError.contractBaseInterest"></bs-text-input>

@@ -8,7 +8,7 @@ import 'rxjs/add/operator/switchMap'
 
 import { HttpService } from '../../../bs-form-module/services/http.service'
 
-import { formErrorHandler, isMobilePhone, isMatched, checkFieldIsExist } from '../../../bs-form-module/validators/validator'
+import { formErrorHandler, isInt, isMatched, checkFieldIsExist } from '../../../bs-form-module/validators/validator'
 
 import { UserInfoService } from '../../../services/userInfo.service'
 import { HSUserService } from '../../../services/hsUser.service'
@@ -159,7 +159,8 @@ export class OrderDetailComponent implements OnInit {
             'required'      : '请填写利率!'
         },
         'expectHKDays'  : {
-            'required'      : '请填写天数!'
+            'required'      : '请填写天数!',
+            'int'      : '请填写整数!'
         },
         'tradeAddPrice'  : {
             'required'      : '请填写加价!'
@@ -181,7 +182,7 @@ export class OrderDetailComponent implements OnInit {
             'unInvoicedRate'    : ['', [Validators.required ] ],
             'contractBaseInterest'    : ['', [Validators.required ] ],
 
-            'expectHKDays'    : ['', [Validators.required ] ],
+            'expectHKDays'    : ['', [Validators.required, isInt(),  ] ],
             'tradeAddPrice'    : ['', [Validators.required ] ],
             'weightedPrice'    : ['', [Validators.required ] ]
         } )
@@ -206,6 +207,7 @@ export class OrderDetailComponent implements OnInit {
         }
 
         const postData = this.orderUnitForm.value
+        postData.expectHKDays = Number(this.orderUnitForm.value.expectHKDays)
 
         if (this.isAddNew) {
             this.hsOrderService.createNewOrderUnit(this.currentOrderId, postData).subscribe(
