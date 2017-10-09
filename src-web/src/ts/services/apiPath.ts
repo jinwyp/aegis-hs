@@ -17,7 +17,7 @@ const apiPath = {
 
 
     saveUserInfo : prefix + '/users/session/info',
-    modifyUserPassword : prefix + '/users/session/password',
+
 
     getUserAddressList : prefix + '/users/address',
     saveUserAddressList : prefix + '/users/address',
@@ -28,6 +28,8 @@ const apiPath = {
     login : prefix + '/login',
 
     getUserInfo : prefix + '/user/session',
+    modifyUserPassword : prefix + '/change_password',
+
 
     hsGetUserList : prefix + '/users',
     hsGetDepartmentList : prefix + '/departments',

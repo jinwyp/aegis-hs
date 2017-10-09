@@ -99,7 +99,11 @@ export class ModifyPasswordComponent implements OnInit {
             return
         }
 
-        this.userService.modifyPassword(this.passwordForm.value).subscribe(
+        const postData = {
+            oldPassword : this.passwordForm.value.oldPassword,
+            password : this.passwordForm.value.newPassword
+        }
+        this.userService.modifyPassword(postData).subscribe(
             data => {
                 console.log('保存密码成功: ', data)
                 this.httpService.successHandler(data)

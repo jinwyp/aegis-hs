@@ -73,7 +73,20 @@ class HttpService {
             // console.log(`Observable 发生后端请求错误!! ${error.status}, body was: ${error.error}`)
 
             if (error && error.status === 401 ) {
-                window.location.href = '/web/login'
+
+                if ( error.url.indexOf('api/login') === -1) {
+                    window.location.href = '/web/login'
+                }else {
+                    this.notificationService.error( '登陆失败!',  '用户名或密码错误',
+                        {
+                            showProgressBar: false,
+                            pauseOnHover: true,
+                            clickToClose: true,
+                            timeOut: 5000
+                        }
+                    )
+                }
+
             } else {
                 if (error && error.status === 400) {
                     console.log('Http 400 请求发生错误!! ', error.error || error.message)
@@ -111,7 +124,7 @@ class HttpService {
                         showProgressBar: false,
                         pauseOnHover: true,
                         clickToClose: true,
-                        timeOut: 10000
+                        timeOut: 5000
                     }
                 )
             }
@@ -124,18 +137,18 @@ class HttpService {
                 showProgressBar: false,
                 pauseOnHover: true,
                 clickToClose: true,
-                timeOut: 10000
+                timeOut: 3000
             }
         )
     }
 
     errorMessage (error: any, message? : string) {
-        this.notificationService.error( message || '保存成功!', '提示: 点击后提示消失',
+        this.notificationService.error( message || '保存失败!', '提示: 点击后提示消失',
             {
                 showProgressBar: false,
                 pauseOnHover: true,
                 clickToClose: true,
-                timeOut: 10000
+                timeOut: 5000
             }
         )
     }
