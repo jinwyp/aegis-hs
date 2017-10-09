@@ -87,46 +87,14 @@
             AND t1.deleted = 0
     </select>
 
-    <select id="getPage" resultMap="YingOrderResultMap">
+    <select id="getPage"  resultType="com.yimei.hs.ying.entity.YingOrder">
         SELECT
-        t1.id as t1id,
-        t1.deptId,
-        t1.teamId,
-        t1.creatorId,
-        t1.ownerId,
-        t1.mainAccounting,
-        t1.line,
-        t1.cargoType,
-        t1.upstreamId,
-        t1.upstreamSettleMode,
-        t1.downstreamId,
-        t1.downstreamSettleMode,
-        t1.status,
-        t1.tsc,
+        <include refid="Base_Column_List"/>
 
-        t2.id AS t2id,
-        t2.orderId,
-        t2.hsMonth,
-        t2.maxPrepayRate,
-        t2.unInvoicedRate,
-        t2.contractBaseInterest,
-        t2.expectHKDays,
-        t2.tradeAddPrice,
-        t2.weightedPrice,
-        t2.tsc AS t2tsc,
-
-        t3.id as t3id,
-        t3.orderId as t3orderId,
-        t3.custType,
-        t3.customerId,
-        t3.tsc as t3tsc
-
-        FROM hs_ying_order t1
-        LEFT JOIN hs_ying_order_config t2 ON t1.id = t2.orderId
-        LEFT JOIN hs_ying_order_party t3 ON t1.id = t2.orderId
+        FROM hs_ying_order
 
         <where>
-            <if test="1==1">AND t1.deleted = 0</if>
+            <if test="1==1">AND deleted = 0</if>
             <if test="deptId!=null">AND deptId = #{deptId, jdbcType=BIGINT}</if>
             <if test="cargoType!=null">AND cargoType = #{cargoType, jdbcType=VARCHAR}</if>
             <if test="creatorId!=null">AND creatorId = #{creatorId, jdbcType=BIGINT}</if>
