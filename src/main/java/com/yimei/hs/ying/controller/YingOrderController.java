@@ -39,9 +39,14 @@ public class YingOrderController {
      */
     @GetMapping
     public ResponseEntity<PageResult<YingOrder>> list(
+            @CurrentUser User user,
             PageYingOrderDTO pageYingOrderDTO
     ) {
-        // System.out.println("paging order dto = " + pageYingOrderDTO);
+        // 如果不是管理员， 就只展示自己的订单
+        if(!user.getIsAdmin()) {
+            pageYingOrderDTO.setOwnerId(user.getId());
+        }
+
         return PageResult.ok(yingOrderService.getPage(pageYingOrderDTO));
     }
 
