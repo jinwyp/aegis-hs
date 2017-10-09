@@ -996,15 +996,15 @@ public class UserControllerTest extends YingTestBase {
     Result<YingFayun> fayunCreateResult = null;
 
     public void deleteTest() throws JsonProcessingException {
-//        //发票删除
-//        String invoiceDelUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices/" + invoiceCreateResult.getData().getId();
-//        Result<Integer> yingnvoiceDelResult = client.exchange(invoiceDelUrl, HttpMethod.DELETE,  HttpEntity.EMPTY, typeReferenceInteger).getBody();
-//        if (yingnvoiceDelResult.getSuccess()) {
-//            logger.info("发票删除成功\n DELETE {}\nrequest = {}\nresponse = {}", invoiceDelUrl, "", printJson(yingnvoiceDelResult.getData()));
-//        } else {
-//            logger.error("发票删除失败: {}", yingnvoiceDelResult.getError());
-//            System.exit(-2);
-//        }
+        //发票删除
+        String invoiceDelUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/invoices/" + invoiceCreateResult.getData().getId();
+        Result<Integer> yingnvoiceDelResult = client.exchange(invoiceDelUrl, HttpMethod.DELETE,  HttpEntity.EMPTY, typeReferenceInteger).getBody();
+        if (yingnvoiceDelResult.getSuccess()) {
+            logger.info("发票删除成功\n DELETE {}\nrequest = {}\nresponse = {}", invoiceDelUrl, "", printJson(yingnvoiceDelResult.getData()));
+        } else {
+            logger.error("发票删除失败: {}", yingnvoiceDelResult.getError());
+            System.exit(-2);
+        }
 
 
         //费用删除

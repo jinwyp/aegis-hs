@@ -36,7 +36,7 @@
     <update id="deleteByInvoiceId" parameterType="java.lang.Long">
          UPDATE hs_ying_invoice_detail
          SET deleted = 1, tsu = current_timestamp
-         WHERE invoiceId = = #{invoiceId,jdbcType=BIGINT}
+         WHERE invoiceId =  #{invoiceId,jdbcType=BIGINT}
     </update>
 
     <!-- 逻辑删除 -->
