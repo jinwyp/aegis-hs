@@ -25,4 +25,5 @@ public interface YingHuankuanMapper {
     Page<YingHuankuan> getPage(PageYingHuankuanDTO pageYingHuankuanDTO);
 
     List<YingHuankuan> getListByFukuanId(@Param("fukuanId") Long fukuanId);
+
 }

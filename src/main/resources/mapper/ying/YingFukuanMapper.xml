@@ -141,6 +141,7 @@
             <if test="payDate!=null">and payDate = #{payDate, jdbcType=TIMESTAMP}</if>
             <if test="receiveCompanyId!=null">and receiveCompanyId = #{receiveCompanyId, jdbcType=BIGINT}</if>
         </where>
+        order by payDate asc
     </select>
 
     <!-- 获取某个业务线的所有付款 -->

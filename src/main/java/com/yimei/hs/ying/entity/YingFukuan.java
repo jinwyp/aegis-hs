@@ -67,11 +67,13 @@ public class YingFukuan implements Serializable {
 
     // 所关联的回款关联记录
     private List<YingHuikuanMap> huikuanMap;
+    private BigDecimal huikuanTotal;
 
     // 关联的还款记录
     private List<YingHuankuan> huankuanList;
 
     // 所关联的还款关联记录
     private List<YingHuankuanMap> huankuanMap;
+    private BigDecimal huankuanTotal;
 }
 

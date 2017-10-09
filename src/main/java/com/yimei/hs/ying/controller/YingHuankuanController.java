@@ -3,10 +3,12 @@ package com.yimei.hs.ying.controller;
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
+import com.yimei.hs.ying.entity.YingFukuan;
 import com.yimei.hs.ying.entity.YingHuankuan;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.ying.dto.PageYingHuankuanDTO;
+import com.yimei.hs.ying.service.YingFukuanService;
 import com.yimei.hs.ying.service.YingHuankuanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by hary on 2017/9/22.
@@ -29,6 +34,9 @@ public class YingHuankuanController {
 
     @Autowired
     private YingHuankuanService yingHuankuanService;
+
+    @Autowired
+    private YingFukuanService yingFukuanService;
 
     /**
      * 获取所有huikuan
@@ -77,6 +85,26 @@ public class YingHuankuanController {
     public ResponseEntity<Result<YingHuankuan>> create(
             @RequestBody @Validated(CreateGroup.class) YingHuankuan yingHuankuan
     ) {
+
+
+        // 2. 找出当前订单付款记录-还款尚未对应完成的记录j
+        List<YingFukuan> fukuans = yingFukuanService.huankuanUnfinished(yingHuankuan.getOrderId());
+
+
+//        // 3. 校验 1
+//        BigDecimal inTotal = yingHuankuan.getHuankuanMapList().stream().map(m -> m.getAmount()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
+//        if (inTotal.compareTo(yingHuankuan.getHuankuanAmount()) != 0) {
+//            return Result.error(4001, "invalid request");
+//        }
+//
+//        // 3. 校验 2
+//        BigDecimal pTotal = yingHuankuan.getHuankuanMapList().stream().map(m -> m.getPrincipal()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
+//        if (pTotal.compareTo(yingHuankuan.getHuankuanAmount()
+//                .subtract(yingHuankuan.getHuankuanInterest())
+//                .subtract(yingHuankuan.getHuankuanFee())) != 0) {
+//            return Result.error(4001, "invalid request");
+//        }
+
         int rtn = yingHuankuanService.create(yingHuankuan);
         if (rtn != 1) {
             logger.error("创建失败: {}", yingHuankuan);
@@ -90,7 +118,7 @@ public class YingHuankuanController {
      *
      * @return
      */
-    @Transactional(readOnly =  false)
+    @Transactional(readOnly = false)
     @PutMapping("/{morderId}/huankuans/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
@@ -109,9 +137,10 @@ public class YingHuankuanController {
 
     /**
      * 删除还款
+     *
      * @return
      */
-    @Transactional(readOnly =  false)
+    @Transactional(readOnly = false)
     @DeleteMapping("/{morderId}/huankuans/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,

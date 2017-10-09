@@ -60,31 +60,6 @@ public class YingFukuanController {
         pageYingFukuanDTO.setOrderId(morderId);
         Page<YingFukuan> page = yingFukuanService.getPage(pageYingFukuanDTO);
 
-        List<YingFukuan> filter1 = new ArrayList<>();
-        if (pageYingFukuanDTO.getHuankuanUnfinished()) {
-            for (YingFukuan fukuan: page.getResults()) {
-                List<YingHuankuanMap> huankuanMap = fukuan.getHuankuanMap();
-                BigDecimal total = huankuanMap.stream().map(m -> m.getPrincipal()).reduce(BigDecimal.ZERO, (a,b) -> a.add(b));
-                if (!total.equals(fukuan.getPayAmount())) {
-                    filter1.add(fukuan);
-                }
-            }
-            page.setResults(filter1);
-        }
-
-
-        List<YingFukuan> filter2 = new ArrayList<>();
-        if (pageYingFukuanDTO.getHuikuanUnfinished()) {
-            for (YingFukuan fukuan: page.getResults()) {
-                List<YingHuikuanMap> huikuanMap = fukuan.getHuikuanMap();
-                BigDecimal total = huikuanMap.stream().map(m -> m.getAmount()).reduce(BigDecimal.ZERO, (a,b) -> a.add(b));
-                if (!total.equals(fukuan.getPayAmount())) {
-                    filter2.add(fukuan);
-                }
-            }
-            page.setResults(filter2);
-        }
-
         return PageResult.ok(page);
     }
 

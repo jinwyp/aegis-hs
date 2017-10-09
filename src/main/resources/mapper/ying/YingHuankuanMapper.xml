@@ -24,7 +24,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, skCompanyId, huankuankDate, huankuanAmount, huankuanInterest, huankuanFee, tsc
+        id, orderId, hsId, skCompanyId, huankuankDate, huankuanAmount, huankuanInterest, huankuanFee, tsc, tsu
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -61,12 +61,15 @@
 
     <!---->
     <select id="getListByFukuanId" resultType="com.yimei.hs.ying.entity.YingHuankuan">
-       select
+        select
         <include refid="Base_Column_List"></include>
         from hs_ying_huankuan_map huankuanmap
         LEFT JOIN hs_ying_huankuan huankuan on huankuanmap.huankuanId = huankuan.id
         where huankuanmap.fukuanId = #{fukuanId, jdbcType=BIGINT}
     </select>
+
+
+
 
     <!-- -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

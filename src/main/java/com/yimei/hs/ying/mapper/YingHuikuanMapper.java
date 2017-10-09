@@ -27,4 +27,6 @@ public interface YingHuikuanMapper {
     List<YingHuikuan> loadAll(long orderId);
 
     List<YingHuikuan> getListByFukuanID(@Param("fukuanId") Long fukuanId);
+
+    List<YingHuikuan> getUnfinshedByOrderId(Long orderId);
 }

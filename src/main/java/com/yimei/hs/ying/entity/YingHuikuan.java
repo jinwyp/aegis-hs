@@ -76,5 +76,7 @@ public class YingHuikuan implements Serializable {
 
     private List<YingFukuan> fukuanList;
 
+    private BigDecimal fukuanTotal;  // 对应掉的付款总额
+
     private static final long serialVersionUID = 1L;
 }

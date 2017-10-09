@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class YingHuankuanService {
 
     private static final Logger logger = LoggerFactory.getLogger(YingHuankuanService.class);
 
+    @Autowired YingFukuanService yingFukuanService;
 
     @Autowired
     private YingHuankuanMapper yingHuankuanMapper;
@@ -52,27 +54,18 @@ public class YingHuankuanService {
      */
     public int create(YingHuankuan yingHuankuan) {
 
-        // 插入还款记录
+        // 1. 插入还款记录
         int rtn = yingHuankuanMapper.insert(yingHuankuan);
         if (rtn != 1) {
             return 0;
         }
 
-        // 查询出当前订单的所有与付款的对应记录
-        List<YingHuankuanMap> huankuanMap = yingHuankuanMapMapper.loadAll(yingHuankuan.getOrderId());
 
-        // 当前订单的所有付款记录
-        List<YingFukuan> hukuanList = yingFukuanMapper.getList(yingHuankuan.getOrderId());
 
-        // 待添加的记录 todo
-        List<YingHuankuanMap> toAdd = new ArrayList<>();
-
-        for ( YingHuankuanMap item: toAdd) {
-            yingHuankuanMapMapper.insert(item);
+        for (YingHuankuanMap map : yingHuankuan.getHuankuanMapList()) {
+            yingHuankuanMapMapper.insert(map);
         }
-
         return rtn;
-
     }
 
     /**

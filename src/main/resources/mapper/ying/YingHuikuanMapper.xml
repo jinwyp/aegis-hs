@@ -157,6 +157,39 @@
         where huikuanmap.fukuanId = #{fukuanId,jdbcType=BIGINT}
     </select>
 
+    <select id="getUnfinshedByOrderId" resultType="com.yimei.hs.ying.entity.YingHuikuan">
+
+        select
+        huikuan.id,
+        huikuan.orderId,
+        huikuan.hsId,
+        huikuan.huikuanCompanyId,
+        huikuan.huikuanDate,
+        huikuan.huikuanAmount,
+        huikuan.huikuanUsage,
+        huikuan.huikuanMode,
+        huikuan.huikuanBankPaper,
+        huikuan.huikuanBankPaperDate,
+        huikuan.huikuanBankDiscount,
+        huikuan.huikuanBankDiscountRate,
+        huikuan.huikuanBankPaperExpire,
+        huikuan.huikuanBusinessPaper,
+        huikuan.huikuanBusinessPaperDate,
+        huikuan.huikuanBusinessDiscount,
+        huikuan.huikuanBusinessDiscountRate,
+        huikuan.huikuanBusinessPaperExpire,
+        huikuan.tsc,
+        huikuan.tsu,
+        sum(map.amount) AS fukuanTotal
+        FROM hs_ying_huikuan_map map
+        LEFT JOIN hs_ying_huikuan huikuan ON map.huikuanId = huikuan.id
+        WHERE huikuan.orderId = #{orderId, jdbcType=BIGINT}
+        GROUP BY huikuan.id
+         <!-- having fukuanTotal lt huikuan.huikuanAmount -->
+        order by huikuan.huikuanDate
+
+    </select>
+
     <!-- 物理删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_huikuan
