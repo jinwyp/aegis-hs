@@ -107,7 +107,7 @@ public class YingHuikuanService {
 
                 if (fukuanAmount.subtract(mapAmount).doubleValue()!=0) {
                     //匹配数据中最后一组数据id 是否与 付款最后一组数据一致
-                    fukuanList.get(fukuanList.size() - 1).setAmount(fukuanAmount.subtract(mapAmount));
+                    // fukuanList.get(fukuanList.size() - 1).setHuikuanTotal(fukuanAmount.subtract(mapAmount));
                     //todo fukuanList 移除已经匹配过的数据
                     toAdd.addAll(doHelp(yingHuikuan, (ArrayList<YingFukuan>) fukuanList));
                 }
@@ -142,7 +142,7 @@ public class YingHuikuanService {
 //                            //从当前位置的下个开始匹配
 //                            doHelp(huikuan, (ArrayList<YingFukuan>) fukuanList);
 //                        } else {
-//                            //从当前位置开始匹配 amount=mapFukuanSuplus
+//                            //从当前位置开始匹配 huikuanTotal=mapFukuanSuplus
 //                            doHelp(huikuan, (ArrayList<YingFukuan>) fukuanList);
 //                        }
 //                    }
@@ -199,7 +199,7 @@ public class YingHuikuanService {
         BigDecimal templateAmount = yingHuikuan.getHuikuanAmount();
 
         for (YingFukuan fukuan : fukuanList) {
-            BigDecimal currentFukuan = fukuan.getAmount();
+            // BigDecimal currentFukuan = fukuan.getHuikuanTotal();
             //付款款额度大于回款额度
             if (fukuan.getPayAmount().subtract(yingHuikuan.getHuikuanAmount()).doubleValue() > 0) {
                 toAdd.add(new YingHuikuanMap() {{

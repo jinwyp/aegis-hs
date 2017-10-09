@@ -16,6 +16,7 @@ import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -57,11 +58,20 @@ public class YingFukuan implements Serializable {
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
 
+    private LocalDateTime tsu;
+
     private static final long serialVersionUID = 1L;
 
-    // for hs_ying_huikuan_map
-    // for hs_ying_huankuan_map
-    //
-    private BigDecimal amount;
+    // 关联的回款记录
+    private List<YingHuikuan> huikuanList;
+
+    // 所关联的回款关联记录
+    private List<YingHuikuanMap> huikuanMap;
+
+    // 关联的还款记录
+    private List<YingHuankuan> huankuanList;
+
+    // 所关联的还款关联记录
+    private List<YingHuankuanMap> huankuanMap;
 }
 

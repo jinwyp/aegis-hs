@@ -6,13 +6,13 @@
     <result column="orderId" jdbcType="BIGINT" property="orderId" />
     <result column="hsId" jdbcType="BIGINT" property="hsId" />
     <result column="settleDate" jdbcType="DATE" property="settleDate" />
-    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="huikuanTotal" jdbcType="DECIMAL" property="amount" />
     <result column="money" jdbcType="DECIMAL" property="money" />
     <result column="trafficCompanyId" jdbcType="BIGINT" property="trafficCompanyId" />
     <result column="tsc" jdbcType="TIMESTAMP" property="tsc" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, orderId, hsId, settleDate, amount, money, trafficCompanyId, tsc
+    id, orderId, hsId, settleDate, huikuanTotal, money, trafficCompanyId, tsc
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -26,7 +26,7 @@
   </delete>
   <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangSettleTraffic">
     insert into hs_cang_settle_traffic (id, orderId, hsId, 
-      settleDate, amount, money, 
+      settleDate, huikuanTotal, money,
       trafficCompanyId, tsc)
     values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT}, 
       #{settleDate,jdbcType=DATE}, #{amount,jdbcType=DECIMAL}, #{money,jdbcType=DECIMAL}, 
@@ -47,8 +47,8 @@
       <if test="settleDate != null">
         settleDate,
       </if>
-      <if test="amount != null">
-        amount,
+      <if test="huikuanTotal != null">
+        huikuanTotal,
       </if>
       <if test="money != null">
         money,
@@ -73,7 +73,7 @@
       <if test="settleDate != null">
         #{settleDate,jdbcType=DATE},
       </if>
-      <if test="amount != null">
+      <if test="huikuanTotal != null">
         #{amount,jdbcType=DECIMAL},
       </if>
       <if test="money != null">
@@ -99,8 +99,8 @@
       <if test="settleDate != null">
         settleDate = #{settleDate,jdbcType=DATE},
       </if>
-      <if test="amount != null">
-        amount = #{amount,jdbcType=DECIMAL},
+      <if test="huikuanTotal != null">
+        huikuanTotal = #{amount,jdbcType=DECIMAL},
       </if>
       <if test="money != null">
         money = #{money,jdbcType=DECIMAL},
@@ -119,7 +119,7 @@
     set orderId = #{orderId,jdbcType=BIGINT},
       hsId = #{hsId,jdbcType=BIGINT},
       settleDate = #{settleDate,jdbcType=DATE},
-      amount = #{amount,jdbcType=DECIMAL},
+      huikuanTotal = #{amount,jdbcType=DECIMAL},
       money = #{money,jdbcType=DECIMAL},
       trafficCompanyId = #{trafficCompanyId,jdbcType=BIGINT},
       tsc = #{tsc,jdbcType=TIMESTAMP}

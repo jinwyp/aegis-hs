@@ -6,13 +6,13 @@
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
         <result column="settleDate" jdbcType="DATE" property="settleDate"/>
-        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="huikuanTotal" jdbcType="DECIMAL" property="amount"/>
         <result column="money" jdbcType="DECIMAL" property="money"/>
         <result column="trafficCompanyId" jdbcType="BIGINT" property="trafficCompanyId"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, orderId, hsId, settleDate, amount, money, trafficCompanyId, tsc
+        id, orderId, hsId, settleDate, huikuanTotal, money, trafficCompanyId, tsc
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -52,7 +52,7 @@
             orderId,
             hsId,
             settleDate,
-            amount,
+            huikuanTotal,
             money,
             trafficCompanyId,
             tsc
@@ -76,7 +76,7 @@
             <if test="orderId != null">orderId,</if>
             <if test="hsId != null">hsId,</if>
             <if test="settleDate != null">settleDate,</if>
-            <if test="amount != null">amount,</if>
+            <if test="huikuanTotal != null">huikuanTotal,</if>
             <if test="money != null">money,</if>
             <if test="trafficCompanyId != null">trafficCompanyId,</if>
             <if test="tsc != null">tsc,</if>
@@ -86,7 +86,7 @@
             <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
             <if test="settleDate != null">#{settleDate,jdbcType=DATE},</if>
-            <if test="amount != null">#{amount,jdbcType=DECIMAL},</if>
+            <if test="huikuanTotal != null">#{amount,jdbcType=DECIMAL},</if>
             <if test="money != null">#{money,jdbcType=DECIMAL},</if>
             <if test="trafficCompanyId != null">#{trafficCompanyId,jdbcType=BIGINT},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
@@ -98,7 +98,7 @@
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
             <if test="settleDate != null">settleDate = #{settleDate,jdbcType=DATE},</if>
-            <if test="amount != null">amount = #{amount,jdbcType=DECIMAL},</if>
+            <if test="huikuanTotal != null">huikuanTotal = #{amount,jdbcType=DECIMAL},</if>
             <if test="money != null">money = #{money,jdbcType=DECIMAL},</if>
             <if test="trafficCompanyId != null">trafficCompanyId = #{trafficCompanyId,jdbcType=BIGINT},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
@@ -111,7 +111,7 @@
         SET orderId          = #{orderId,jdbcType=BIGINT},
             hsId             = #{hsId,jdbcType=BIGINT},
             settleDate       = #{settleDate,jdbcType=DATE},
-            amount           = #{amount,jdbcType=DECIMAL},
+            huikuanTotal           = #{amount,jdbcType=DECIMAL},
             money            = #{money,jdbcType=DECIMAL},
             trafficCompanyId = #{trafficCompanyId,jdbcType=BIGINT},
             tsc              = #{tsc,jdbcType=TIMESTAMP},

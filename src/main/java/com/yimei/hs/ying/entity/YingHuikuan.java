@@ -72,6 +72,8 @@ public class YingHuikuan implements Serializable {
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
 
+    private LocalDateTime tsu;
+
     private List<YingFukuan> fukuanList;
 
     private static final long serialVersionUID = 1L;
