@@ -148,6 +148,15 @@
         WHERE orderId=#{orderId}
     </select>
 
+    <!-- 依据付款id， 查询所有和此付款id关联的回款 -->
+    <select id="getListByFukuanID" resultType="com.yimei.hs.ying.entity.YingHuikuan">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_ying_huikuan_map huikuanmap
+        LEFT JOIN hs_ying_huikuan huikuan  on huikuanmap.huikuanId = huikuan.id
+        where huikuanmap.fukuanId = #{fukuanId,jdbcType=BIGINT}
+    </select>
+
     <!-- 物理删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_huikuan

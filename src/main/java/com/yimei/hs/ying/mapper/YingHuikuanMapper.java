@@ -3,6 +3,7 @@ package com.yimei.hs.ying.mapper;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.YingHuikuan;
 import com.yimei.hs.ying.dto.PageYingHuikuanDTO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface YingHuikuanMapper {
     Page<YingHuikuan> getPage(PageYingHuikuanDTO pageYingHuikuanDTO);
 
     List<YingHuikuan> loadAll(long orderId);
+
+    List<YingHuikuan> getListByFukuanID(@Param("fukuanId") Long fukuanId);
 }

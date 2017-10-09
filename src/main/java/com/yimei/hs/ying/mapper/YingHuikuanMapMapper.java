@@ -29,4 +29,6 @@ public interface YingHuikuanMapMapper {
     List<YingHuikuanMap> loadAll(Long orderId);
 
     List<YingFukuan> getList(Long huikuanid);
+
+    List<YingHuikuanMap> getListByFukuanId(Long fukuanId);
 }

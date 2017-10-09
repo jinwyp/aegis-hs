@@ -1,16 +1,15 @@
 package com.yimei.hs.ying.service;
 
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.ying.entity.YingFukuan;
+import com.yimei.hs.ying.entity.*;
 import com.yimei.hs.ying.dto.PageYingFukuanDTO;
-import com.yimei.hs.ying.entity.YingHuikuan;
-import com.yimei.hs.ying.mapper.YingFukuanMapper;
-import com.yimei.hs.ying.mapper.YingHuankuanMapMapper;
-import com.yimei.hs.ying.mapper.YingHuikuanMapMapper;
+import com.yimei.hs.ying.mapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by hary on 2017/9/15.
@@ -25,6 +24,12 @@ public class YingFukuanService {
 
     @Autowired
     private YingHuikuanMapMapper yingHuikuanMapMapper;
+
+    @Autowired
+    private YingHuikuanMapper yingHuikuanMapper;
+
+    @Autowired
+    private YingHuankuanMapper yingHuankuanMapper;
 
     @Autowired
     private YingHuankuanMapMapper yingHuankuanMapMapper;
@@ -44,7 +49,20 @@ public class YingFukuanService {
      * @return
      */
     public Page<YingFukuan> getPage(PageYingFukuanDTO pageYingFukuanDTO) {
-        return yingFukuanMapper.getPage(pageYingFukuanDTO);
+        Page<YingFukuan> page = yingFukuanMapper.getPage(pageYingFukuanDTO);
+        for (YingFukuan yingFukuan : page.getResults()) {
+
+            List<YingHuikuan> huikuanList = yingHuikuanMapper.getListByFukuanID(yingFukuan.getId());
+            List<YingHuikuanMap> huikuanMap = yingHuikuanMapMapper.getListByFukuanId(yingFukuan.getId());
+            yingFukuan.setHuikuanList(huikuanList);
+            yingFukuan.setHuikuanMap(huikuanMap);
+
+            List<YingHuankuan> huankuanList = yingHuankuanMapper.getListByFukuanId(yingFukuan.getId());
+            List<YingHuankuanMap> huankuanMap = yingHuankuanMapMapper.getListByFukuanId(yingFukuan.getId());
+            yingFukuan.setHuankuanList(huankuanList);
+            yingFukuan.setHuankuanMap(huankuanMap);
+        }
+        return page;
     }
 
     /**

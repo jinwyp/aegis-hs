@@ -29,6 +29,18 @@
         WHERE orderId = #{orderId,jdbcType=BIGINT}
     </select>
 
+    <select id="getListByFukuanId" resultType="com.yimei.hs.ying.entity.YingHuankuanMap">
+       select
+           huankuanId,
+           principal,
+           amount
+        from
+            hs_ying_huankuan_map
+        where
+            fukuanId = #{fukuanId,jdbcType=BIGINT}
+
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_huankuan_map
         WHERE id = #{id,jdbcType=BIGINT}

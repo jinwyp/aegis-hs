@@ -59,6 +59,15 @@
         </where>
     </select>
 
+    <!---->
+    <select id="getListByFukuanId" resultType="com.yimei.hs.ying.entity.YingHuankuan">
+       select
+        <include refid="Base_Column_List"></include>
+        from hs_ying_huankuan_map huankuanmap
+        LEFT JOIN hs_ying_huankuan huankuan on huankuanmap.huankuanId = huankuan.id
+        where huankuanmap.fukuanId = #{fukuanId, jdbcType=BIGINT}
+    </select>
+
     <!-- -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_huankuan

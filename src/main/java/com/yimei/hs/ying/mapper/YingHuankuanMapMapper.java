@@ -22,4 +22,6 @@ public interface YingHuankuanMapMapper {
     List<YingHuankuanMap> loadAll(Long orderId);
 
     int deleteByHuankuanId(long huankuanId);
+
+    List<YingHuankuanMap> getListByFukuanId(Long fukuanId);
 }
