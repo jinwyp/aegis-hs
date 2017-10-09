@@ -30,7 +30,7 @@
                     <a class="nav-link menu" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu" href="/api/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                    <a class="nav-link menu" (click)="logout()" ><i class="fa fa-sign-out" aria-hidden="true"></i></a>
                 </li>
             </ul>
 
@@ -87,7 +87,7 @@
 
             <div id="collapse3" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
                 <ul class="list-group">
-                    <li routerLinkActive="active" > <a routerLink="/users" (click)="clickMenu('31')">用户管理</a> </li>
+                    <li routerLinkActive="active" *ngIf="currentUser?.isAdmin"> <a routerLink="/users" (click)="clickMenu('31')">用户管理</a> </li>
                     <li routerLinkActive="active"> <a routerLink="/departments" (click)="clickMenu('32')">事业部门管理</a> </li>
                     <li routerLinkActive="active"> <a routerLink="/teams" (click)="clickMenu('33')">业务团队管理</a> </li>
                     <li routerLinkActive="active"> <a routerLink="/companies" (click)="clickMenu('34')">参与商公司管理</a> </li>

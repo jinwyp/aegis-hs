@@ -82,7 +82,7 @@ public class YingOrderController {
             return Result.error(4001, "创建失败", HttpStatus.BAD_REQUEST);
         }
         if (rtn == 1) {
-            return Result.created(order);
+            return Result.ok(order);
         } else {
             return Result.error(4001, "创建失败", HttpStatus.BAD_REQUEST);
         }

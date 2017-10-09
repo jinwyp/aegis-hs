@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,13 +37,13 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "/api/register")
-    public ResponseEntity<Result<Boolean>> register(@RequestBody @Validated User user) {
+    public ResponseEntity<Result<Integer>> register(@RequestBody @Validated User user) {
         int rtn = userService.create(user, null);
         if (rtn != 1) {
             logger.error("用户创建失败: {}", user);
             return Result.error(4001, "创建是白");
         }
-        return Result.ok(true);
+        return Result.ok(1);
     }
 
 
@@ -73,8 +74,8 @@ public class UserController {
      * @return
      */
     @GetMapping(value = "/api/logout")
-    public ResponseEntity<Result<Boolean>> logout(@CurrentUser User user) {
-        return Result.ok(true);
+    public ResponseEntity<Result<Integer>> logout(@CurrentUser User user) {
+        return Result.ok(1);
     }
 
 
@@ -84,20 +85,26 @@ public class UserController {
      * @param user
      * @return
      */
-    @PutMapping(value = "/api/change_password")
-    public ResponseEntity<Result<Boolean>> change(
-            @RequestBody @Validated(User.ChangePassword.class) User user
+    @PutMapping(value = "/api/change_password", consumes ="application/json", produces = "application/json")
+    @Transactional(readOnly = false)
+    public ResponseEntity<Result<Integer>> change(
+            @CurrentUser User user,
+            @RequestBody @Validated(User.ChangePassword.class) User userUpdate
     ) {
         User record = userService.getUserByPhone(StringUtils.trim(user.getPhone()));
         if (record == null) {
             return Result.error(4001, "账号不存在", HttpStatus.UNAUTHORIZED);
-        } else if (!userService.validPasswordEquals(record, user.getPassword())) {
-            return Result.error(4002, "密码错误", HttpStatus.UNAUTHORIZED);
+        } else if (!userService.validPasswordEquals(record, userUpdate.getOldPassword())) {
+            return Result.error(4002, "密码错误", HttpStatus.BAD_REQUEST);
         } else if (!record.getIsActive()) {
             return Result.error(4003, "用户已经禁用", HttpStatus.UNAUTHORIZED);
         } else {
-            record.setPassword(user.getPassword());
-            return this.register(record);
+            userUpdate.setId(user.getId());
+            int rtn  =  userService.changePassword(userUpdate);
+            if (rtn != 1) {
+                return Result.error(4001, "更新密码失败");
+            }
+            return Result.ok(1);
         }
     }
 

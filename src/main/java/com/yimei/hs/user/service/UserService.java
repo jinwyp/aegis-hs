@@ -37,7 +37,7 @@ public class UserService {
     //生成jwt token
     public String genAuthorization(User user) {
         return "Bearer " + Jwts.builder()
-                .setSubject(JsonMapper.nonDefaultMapper().toJson(user))
+                .setSubject(JsonMapper.nonEmptyMapper().toJson(user))
                 .compressWith(CompressionCodecs.DEFLATE)
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
@@ -103,5 +103,19 @@ public class UserService {
      */
     public int update(User user) {
         return userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    public int changePassword(User userUpdate) {
+
+        byte[] passwordSalt = Digests.generateSalt(SALT_SIZE);
+        byte[] hashPassword = Digests.sha1(userUpdate.getPassword().getBytes(), passwordSalt, HASH_INTERATIONS);
+
+        userUpdate.setPassword(Encodes.encodeHex(hashPassword));
+        userUpdate.setPasswordSalt(Encodes.encodeHex(passwordSalt));
+
+        int rtn = userMapper.updateByPrimaryKeySelective(userUpdate);
+
+        return rtn;
+
     }
 }

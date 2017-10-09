@@ -36,8 +36,7 @@ describe('当前登陆用户信息', function () {
                 done()
             })
 
-    });
-
+    })
 
 
     it('获取当前登陆信息 GET: /api/user/session', function (done) {
@@ -56,9 +55,44 @@ describe('当前登陆用户信息', function () {
     })
 
 
+    it('修改当前用户的密码 PUT: /api/change_password', function (done) {
+        server.put('/api/change_password')
+            .set('Authorization', Authorization)
+            .set('Accept', 'application/json')
+            .send({
+                password: "123456",
+                oldPassword : "123456"
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.equal(1)
+                done()
+            })
+    })
+
+
+    it('退出登陆 GET: /api/logout', function (done) {
+        server.get('/api/logout')
+            .set('Authorization', Authorization)
+            .set('Accept', 'application/json')
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.equal(1)
+                done()
+            })
+    })
+
+
 /*
 
-    it('修改当前用户信息 PUT: /api/user/session', function (done) {
+    it('修改当前用户的信息 PUT: /api/user/session', function (done) {
         server.put('/api/user/session')
             .set('Authorization', Authorization)
             .set('Accept', 'application/json')
@@ -75,5 +109,6 @@ describe('当前登陆用户信息', function () {
             })
     })
 */
+
 
 })

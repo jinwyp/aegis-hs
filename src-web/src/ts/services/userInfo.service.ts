@@ -53,8 +53,15 @@ export class UserInfoService {
 
     modifyPassword(user : any): Observable<any> {
 
-        return this.http.post(apiPath.modifyUserPassword, user)
+        return this.http.put(apiPath.modifyUserPassword, user)
     }
+
+    userLogout(): Observable<any> {
+
+        return this.http.get(apiPath.logout)
+    }
+
+
 
     getUserAddressList(query: any): Observable<any> {
         const params = new HttpParams()

@@ -20,4 +20,5 @@ public interface UserMapper {
     Page<User> getPage(PageUserDTO pageUserDTO);
 
     User loadByPhone(String phone);
+
 }
