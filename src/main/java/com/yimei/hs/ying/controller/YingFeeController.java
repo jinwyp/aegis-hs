@@ -81,7 +81,7 @@ public class YingFeeController {
             logger.error("创建失败: {}", yingFee);
             return Result.error(5001, "创建失败", HttpStatus.NOT_ACCEPTABLE);
         }
-        return Result.created(yingFee);
+        return Result.ok(yingFee);
     }
 
     /**

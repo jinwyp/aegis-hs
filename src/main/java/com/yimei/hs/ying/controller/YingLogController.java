@@ -48,7 +48,7 @@ public class YingLogController {
             @RequestBody YingLog log
     ) {
         int rtn = yingLogService.create(log);
-        return Result.created(log);
+        return Result.ok(log);
     }
 
     /**
