@@ -7,7 +7,7 @@ import { HttpService } from '../../../bs-form-module/services/http.service'
 import {UserInfoService} from '../../../services/userInfo.service'
 import {HSOrderService} from '../../../services/hsOrder.service'
 
-import {saveEnum} from '../../../services/localStorage'
+import {saveAccessToken, saveEnum} from '../../../services/localStorage'
 
 
 
@@ -158,6 +158,16 @@ export class AdminHomeComponent implements OnInit {
         this.orderService.getEnumList('DiscountMode').subscribe(
             data => {
                 saveEnum('DiscountMode', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
+
+    logout (){
+        this.userService.userLogout().subscribe(
+            data => {
+                saveAccessToken('')
+                window.location.href = '/web/login'
             },
             error => {this.httpService.errorHandler(error) }
         )
