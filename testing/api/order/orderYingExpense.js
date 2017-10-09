@@ -63,7 +63,7 @@ describe('应收订单 - 费用/发票 : ', function () {
                 }
             )
             .expect('Content-Type', /json/)
-            .expect(201)
+            .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
                 expect(res.body.success).to.equal(true)
@@ -87,7 +87,7 @@ describe('应收订单 - 费用/发票 : ', function () {
                 }
             )
             .expect('Content-Type', /json/)
-            .expect(201)
+            .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
                 expect(res.body.success).to.equal(true)

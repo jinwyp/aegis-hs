@@ -18,10 +18,30 @@ const server = supertest(config.path.urlApi)
 
 describe('参与商公司', function () {
 
+    let Authorization = ''
+
+    before(function (done) {
+
+        server.post('/api/login')
+            .set(config.headers)
+            .send({
+                phone: "13022117050",
+                password: "123456"
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                Authorization = res.body.data
+                done()
+            })
+    });
+
 
     it('获取参与商公司列表 GET: /api/parties?pageNo=1&pageSize=2', function (done) {
         server.get('/api/parties?pageNo=1&pageSize=2')
-            .set('Accept', 'application/json')
+            .set('Authorization', Authorization)
+            .set(config.headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -38,7 +58,8 @@ describe('参与商公司', function () {
 
     it('新建参与商 POST: /api/parties', function (done) {
         server.post('/api/parties')
-            .set('Accept', 'application/json')
+            .set('Authorization', Authorization)
+            .set(config.headers)
             .send({
                 name: "新的参与商公司" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
                 shortName : '新的参与商公司简称',
@@ -60,7 +81,8 @@ describe('参与商公司', function () {
 
     it('获取某个ID的参与商信息 GET: /api/parties/1', function (done) {
         server.get('/api/parties/1')
-            .set('Accept', 'application/json')
+            .set('Authorization', Authorization)
+            .set(config.headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -76,7 +98,8 @@ describe('参与商公司', function () {
 
     it('修改某个ID的参与商信息 PUT: /api/parties/19', function (done) {
         server.put('/api/parties/19')
-            .set('Accept', 'application/json')
+            .set('Authorization', Authorization)
+            .set(config.headers)
             .send({
                 name: "新的参与商公司" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
                 partyType : 1,

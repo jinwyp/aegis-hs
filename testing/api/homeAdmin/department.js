@@ -18,10 +18,31 @@ const server = supertest(config.path.urlApi)
 
 describe('事业部门', function () {
 
+    let Authorization = ''
+
+    before(function (done) {
+
+        server.post('/api/login')
+            .set(config.headers)
+            .send({
+                phone: "13022117050",
+                password: "123456"
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                Authorization = res.body.data
+                done()
+            })
+    });
+
+
 
     it('获取部门列表 GET: /api/departments?pageNo=1&pageSize=2', function (done) {
         server.get('/api/departments?pageNo=1&pageSize=2')
-            .set('Accept', 'application/json')
+            .set('Authorization', Authorization)
+            .set(config.headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -38,7 +59,8 @@ describe('事业部门', function () {
 
     it('新建部门 POST: /api/departments', function (done) {
         server.post('/api/departments')
-            .set('Accept', 'application/json')
+            .set('Authorization', Authorization)
+            .set(config.headers)
             .send({
                 name: "新的部门" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
             })
@@ -57,7 +79,8 @@ describe('事业部门', function () {
 
     it('获取某个ID的部门信息 GET: /api/departments/1', function (done) {
         server.get('/api/departments/1')
-            .set('Accept', 'application/json')
+            .set('Authorization', Authorization)
+            .set(config.headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -73,7 +96,8 @@ describe('事业部门', function () {
 
     it('修改某个ID的部门名称 PUT: /api/departments/3', function (done) {
         server.put('/api/departments/3')
-            .set('Accept', 'application/json')
+            .set('Authorization', Authorization)
+            .set(config.headers)
             .send({
                 name: "新的部门" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
             })
