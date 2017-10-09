@@ -108,6 +108,8 @@ public class UserController {
      */
     @GetMapping(value = "/api/user/session")
     public ResponseEntity<Result<User>> authorization(@CurrentUser User user) {
+        user.setPassword(null);
+        user.setPasswordSalt(null);
         return Result.ok(user);
     }
 
