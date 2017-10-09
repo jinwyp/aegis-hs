@@ -11,6 +11,41 @@
                 <bs-text-input formControlName="huankuanFee" [fc]="repaymentHKForm.get('huankuanFee')" [type]="'text'" [label]="'还款服务费:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanFee" ></bs-text-input>
 
                 <div class="form-group row">
+                    <label class="col-2 col-form-label" >对应付款:</label>
+
+                    <div class="col-8">
+
+                        <form [formGroup]="paymentForm"  (keydown.enter)="$event.preventDefault()">
+
+                            <div class="form-row ">
+                                <div class="col-8" >
+
+                                    <ul class="list-group" >
+                                        <li class="list-group-item mb-2" *ngFor=" let payment of paymentPostList">
+                                            ID:{{payment.id}} 日期:{{payment.payDate}} 收款单位:{{payment.receiveCompanyId | findKey:partyList:'name'}} 金额:{{payment.payAmount}} 付款方式:{{payment.payMode}}
+                                            <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delPayment(payment)"> x </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            <div class="form-row ">
+                                <div class="col-8">
+                                    <bs-select formControlName ="id" [fc]="paymentForm.get('id')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择付款:'" [options]="paymentDropDownList" [error]="paymentFormError.id"></bs-select>
+                                </div>
+
+                                <div class="col-2">
+                                    <button type="button" class="btn btn-info" (click)="createNewPayment()">添加</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
                     <div class="col-10 ml-auto">
                         <button type="submit" class="btn btn-info" >保存</button>
                         <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>

@@ -25,6 +25,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
     currentHuanKuanId : number = 1
 
     repaymentHKForm: FormGroup
+    paymentForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
@@ -32,8 +33,12 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
     shippingList : any[] = []
     partyList : any[] = []
+    partyListObject : any = {}
 
     unitList : any[] = []
+    paymentDropDownList : any[] = []
+    paymentPostList : any[] = []
+    paymentListObject : any = {}
 
 
     pagination: any = {
@@ -60,7 +65,9 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
         this.getPartyList()
         this.getRepaymentHKList()
+
         this.createHKForm()
+        this.createPaymentForm()
 
         if (this.currentOrder) {
             if (Array.isArray(this.currentOrder.orderConfigList)) {
@@ -91,20 +98,50 @@ export class RepaymentHuanKuanComponent implements OnInit {
             error => {this.httpService.errorHandler(error) }
         )
     }
+
     getPartyList () {
 
         this.hsUserService.getPartyList().subscribe(
             data => {
                 this.partyList = data.data.results
 
+                if (Array.isArray(data.data.results)) {
+                    data.data.results.forEach( (company) => {
+                        this.partyListObject[company.id] = company
+                    })
+                }
+
+                this.getPaymentList()
+
             },
             error => {this.httpService.errorHandler(error) }
         )
     }
 
+    getPaymentList () {
+        this.hsOrderService.getPaymentListByID(this.currentOrder.id).subscribe(
+            data => {
 
+                if (Array.isArray(data.data.results)) {
+                    data.data.results.forEach( (payment) => {
+                        if (payment) {
+                            this.paymentDropDownList.push ({
+                                id : payment.id,
+                                name : 'ID:' + payment.id + ' 日期:' + payment.payDate + ' 收款单位:' + this.partyListObject[payment.receiveCompanyId].name + ' 金额:' + payment.payAmount + ' 付款方式:' + payment.payMode
+                            })
+                        }
+
+                        this.paymentListObject[payment.id] = payment
+                    })
+                }
+
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
 
     repaymentHKFormError : any = {}
+    paymentFormError : any = {}
     repaymentHKFormValidationMessages: any = {
         'hsId'  : {
             'required'      : '请选择核算月!'
@@ -123,13 +160,20 @@ export class RepaymentHuanKuanComponent implements OnInit {
         },
         'huankuanFee'  : {
             'required'      : '请填写还款服务费!'
-        }
+        },
+
+
+        'id'  : {
+            'required'      : '请选择付款!'
+        },
     }
 
     repaymentHKFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
         this.repaymentHKFormError = formErrorHandler(formInputData, this.repaymentHKForm, this.repaymentHKFormValidationMessages, ignoreDirty)
     }
-
+    paymentFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
+        this.paymentFormError = formErrorHandler(formInputData, this.paymentForm, this.repaymentHKFormValidationMessages, ignoreDirty)
+    }
 
     createHKForm(): void {
 
@@ -150,6 +194,17 @@ export class RepaymentHuanKuanComponent implements OnInit {
     }
 
 
+    createPaymentForm(): void {
+
+        this.paymentForm = this.fb.group({
+            'id'    : ['', [Validators.required ] ]
+        } )
+
+        this.paymentForm.valueChanges.subscribe(data => {
+            this.ignoreDirty = false
+            this.paymentFormInputChange(data)
+        })
+    }
 
 
 
@@ -165,7 +220,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
         const postData = this.repaymentHKForm.value
         postData.orderId = this.currentOrder.id
-
+        postData.paymentPostList = this.paymentPostList
 
         if (this.isAddNew) {
             this.hsOrderService.createNewRepaymentHK(this.currentOrder.id, postData).subscribe(
@@ -229,6 +284,21 @@ export class RepaymentHuanKuanComponent implements OnInit {
     }
 
 
+    createNewPayment () {
+        if (this.paymentForm.invalid) {
+            this.paymentFormInputChange(this.paymentForm.value, true)
+            this.ignoreDirty = true
+
+            return
+        }
+
+        this.paymentPostList.push(this.paymentListObject[this.paymentForm.value.id] )
+    }
+
+    delPayment (payment: any) {
+        const index = this.paymentPostList.indexOf(payment)
+        this.paymentPostList.splice(index, 1)
+    }
 
 }
 
