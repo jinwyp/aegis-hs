@@ -3,6 +3,8 @@ package com.yimei.hs.ying.controller;
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
+import com.yimei.hs.enums.PayMode;
+import com.yimei.hs.enums.TrafficMode;
 import com.yimei.hs.ying.entity.YingHuikuan;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
@@ -16,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 /**
  * Created by hary on 2017/9/15.
@@ -74,7 +78,34 @@ public class YingHuikuanController {
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingHuikuan  yingHuikuan
     ) {
-        // todo 陆彪 增加校验
+        if (yingHuikuan.getHuikuanMode().equals(PayMode.BANK_ACCEPTANCE) && yingHuikuan.getHuikuanBankPaper() == true) {
+
+            if (yingHuikuan.getHuikuanBankPaperDate() == null) {
+                return Result.error(4001, "银行承兑收到票据原件日期不能为空", HttpStatus.BAD_REQUEST);
+            } else if (yingHuikuan.getHuikuanBankDiscount()!=null&&yingHuikuan.getHuikuanBankDiscount() == true &&
+                    yingHuikuan.getHuikuanBankDiscountRate() == null) {
+                return Result.error(4001, "银行承兑贴息率不能为空", HttpStatus.BAD_REQUEST);
+            } else if (yingHuikuan.getHuikuanBankPaperExpire() == null) {
+                return Result.error(4001, "银行承兑票据到期日不能为空", HttpStatus.BAD_REQUEST);
+            } else if (yingHuikuan.getHuikuanBankDiscountRate() != null&&yingHuikuan.getHuikuanBankDiscountRate().compareTo(new BigDecimal(0)) == -1) {
+                return Result.error(4001, "银行承兑贴息率不能为负数", HttpStatus.BAD_REQUEST);
+            }
+
+        } else if (yingHuikuan.getHuikuanMode().equals(PayMode.BUSINESS_ACCEPTANCE) && yingHuikuan.getHuikuanBusinessPaper() == true) {
+            if (yingHuikuan.getHuikuanBusinessPaperDate() == null) {
+                return Result.error(4001, "商业承兑收到票据原件日期不能为空", HttpStatus.BAD_REQUEST);
+            } else if (yingHuikuan.getHuikuanBusinessDiscount()!=null&&yingHuikuan.getHuikuanBusinessDiscount() == true &&
+                    yingHuikuan.getHuikuanBusinessDiscountRate() == null&&
+                    yingHuikuan.getHuikuanBusinessDiscountRate().subtract(new BigDecimal(0)).doubleValue()<=0) {
+                return Result.error(4001, "商业承兑贴息率不能为空", HttpStatus.BAD_REQUEST);
+            } else if (yingHuikuan.getHuikuanBusinessPaperExpire() == null) {
+                return Result.error(4001, "商业承兑票据到期日不能为空", HttpStatus.BAD_REQUEST);
+            } else if (yingHuikuan.getHuikuanBusinessDiscountRate() != null&&yingHuikuan.getHuikuanBusinessDiscountRate().compareTo(new BigDecimal(0)) == -1) {
+                return Result.error(4001, "商业承兑贴息率不能为负数", HttpStatus.BAD_REQUEST);
+            }
+
+        }
+
         yingHuikuan.setOrderId(morderId);
         int cnt = yingHuikuanService.create(yingHuikuan);
         if (cnt != 1) {

@@ -18,10 +18,30 @@ const server = supertest(config.path.urlApi)
 
 describe('业务团队', function () {
 
+    let Authorization = ''
+
+    before(function (done) {
+
+        server.post('/api/login')
+            .set(config.headers)
+            .send({
+                phone: "13022117050",
+                password: "123456"
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                Authorization = res.body.data
+                done()
+            })
+    });
+
 
     it('获取团队列表 GET: /api/teams?pageNo=1&pageSize=2', function (done) {
         server.get('/api/teams?pageNo=1&pageSize=2')
-            .set('Accept', 'application/json')
+            .set('Authorization', Authorization)
+            .set(config.headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -38,7 +58,8 @@ describe('业务团队', function () {
 
     it('新建团队 POST: /api/teams', function (done) {
         server.post('/api/teams')
-            .set('Accept', 'application/json')
+            .set('Authorization', Authorization)
+            .set(config.headers)
             .send({
                 name: "新的团队" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
                 deptId : 2
@@ -58,7 +79,8 @@ describe('业务团队', function () {
 
     it('获取某个ID的团队信息 GET: /api/teams/16', function (done) {
         server.get('/api/teams/16')
-            .set('Accept', 'application/json')
+            .set('Authorization', Authorization)
+            .set(config.headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -74,7 +96,8 @@ describe('业务团队', function () {
 
     it('修改某个ID的团队名称 PUT: /api/teams/16', function (done) {
         server.put('/api/teams/16')
-            .set('Accept', 'application/json')
+            .set('Authorization', Authorization)
+            .set(config.headers)
             .send({
                 name: "新的团队" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
                 deptId : 2

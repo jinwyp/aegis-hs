@@ -24,4 +24,6 @@ public interface YingFayunMapper {
     Page<YingFayun> getPage(PageYingFayunDTO pageYingFayunDTO);
 
     List<YingFayun> getList(Long orderId);
+
+    List<YingFayun> getListMapper(Long downStreamId);
 }

@@ -1,8 +1,11 @@
 package com.yimei.hs.ying.mapper;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.ying.entity.YingFayun;
 import com.yimei.hs.ying.entity.YingSettleDownstream;
 import com.yimei.hs.ying.dto.PageYingSettleDownstreamDTO;
+
+import java.util.List;
 
 public interface YingSettleDownstreamMapper {
     int deleteByPrimaryKey(Long id);
@@ -22,4 +25,6 @@ public interface YingSettleDownstreamMapper {
 
 
     int delete(long id);
+
+
 }

@@ -42,7 +42,7 @@ describe('当前登陆用户信息', function () {
     it('获取当前登陆信息 GET: /api/user/session', function (done) {
         server.get('/api/user/session')
             .set('Authorization', Authorization)
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -58,7 +58,7 @@ describe('当前登陆用户信息', function () {
     it('修改当前用户的密码 PUT: /api/change_password', function (done) {
         server.put('/api/change_password')
             .set('Authorization', Authorization)
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .send({
                 password: "123456",
                 oldPassword : "123456"
@@ -77,7 +77,7 @@ describe('当前登陆用户信息', function () {
     it('退出登陆 GET: /api/logout', function (done) {
         server.get('/api/logout')
             .set('Authorization', Authorization)
-            .set('Accept', 'application/json')
+            .set(config.headers)
             .send({})
             .expect('Content-Type', /json/)
             .expect(200)

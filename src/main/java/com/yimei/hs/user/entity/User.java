@@ -28,7 +28,7 @@ public class User implements Serializable {
     private String createBy;
 
     private Boolean isAdmin;
-
+    
     private Boolean isActive;
 
     private static final long serialVersionUID = 1L;

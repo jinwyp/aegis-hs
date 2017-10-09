@@ -75,7 +75,7 @@ class HttpService {
             if (error && error.status === 401 ) {
 
                 if ( error.url.indexOf('api/login') === -1) {
-                    window.location.href = '/web/login'
+                    // window.location.href = '/web/login'
                 }else {
                     this.notificationService.error( '登陆失败!',  '用户名或密码错误',
                         {
