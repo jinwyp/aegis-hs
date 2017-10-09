@@ -81,7 +81,11 @@ export class LoginComponent implements OnInit {
             data => {
                 console.log('登陆成功: ', data)
                 saveAccessToken(data.data)
-                window.location.href = '/web/index'
+
+                setTimeout(function() {
+                    window.location.href = '/web/index'
+                }, 1000)
+
                 // this.httpService.successHandler(data)
             },
             error => {this.httpService.errorHandler(error) }
