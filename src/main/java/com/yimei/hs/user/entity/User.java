@@ -1,7 +1,7 @@
 package com.yimei.hs.user.entity;
 
+import com.yimei.hs.boot.api.CreateGroup;
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 public class User implements Serializable {
     private Long id;
 
-    @NotNull(message = "部门不能为空")
+    @NotNull(groups = {CreateGroup.class}, message = "部门不能为空")
     private Long deptId;
 
-    @NotEmpty(message = "手机号不能为空")
+    @NotEmpty(groups = {CreateGroup.class}, message="手机号不能为空")
     private String phone;
 
-    @NotEmpty(message = "密码不能为空")
+    @NotEmpty(groups = {ChangePassword.class, CreateGroup.class}, message = "密码不能为空")
     private String password;
 
     private String passwordSalt;
@@ -32,5 +32,15 @@ public class User implements Serializable {
     private Boolean isActive;
 
     private static final long serialVersionUID = 1L;
+
+    // for change password
+    @NotEmpty(groups = {ChangePassword.class}, message = "旧密码必须存在")
+    private String oldPassword;
+
+    /**
+     * Created by hary on 2017/10/9.
+     */
+    public static interface ChangePassword {
+    }
 }
 
