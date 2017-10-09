@@ -33,6 +33,14 @@
         </where>
     </select>
 
+    <select id="getList" resultType="com.yimei.hs.ying.entity.YingOrderConfig">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from hs_ying_order_config
+        WHERE
+        orderId = #{orderId, jdbcType=BIGINT}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_order_config
         WHERE id = #{id,jdbcType=BIGINT}

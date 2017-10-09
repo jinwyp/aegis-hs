@@ -4,6 +4,8 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.dto.PageYingOrderConfigDTO;
 import com.yimei.hs.ying.entity.YingOrderConfig;
 
+import java.util.List;
+
 public interface YingOrderConfigMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -20,4 +22,6 @@ public interface YingOrderConfigMapper {
     int updateByPrimaryKey(YingOrderConfig record);
 
     Page<YingOrderConfig> getPage(PageYingOrderConfigDTO pageYingOrerConfigDTO);
+
+    List<YingOrderConfig> getList(Long orderId);
 }

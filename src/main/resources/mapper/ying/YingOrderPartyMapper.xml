@@ -30,6 +30,13 @@
         </where>
     </select>
 
+    <select id="getList" resultType="com.yimei.hs.ying.entity.YingOrderParty">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_ying_order_party
+       WHERE  orderId=#{orderId,jdbcType=BIGINT}
+    </select>
+
     <!-- 物理删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_ying_order_party

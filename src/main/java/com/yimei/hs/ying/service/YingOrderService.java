@@ -42,7 +42,15 @@ public class YingOrderService {
      * @return
      */
     public Page<YingOrder> getPage(PageYingOrderDTO pageYingOrderDTO) {
-        return yingOrderMapper.getPage(pageYingOrderDTO);
+
+
+        Page<YingOrder> yingOrderPages = yingOrderMapper.getPage(pageYingOrderDTO);
+
+        for (YingOrder yingOrder : yingOrderPages.getResults()) {
+            yingOrder.setOrderPartyList(yingOrderPartyMapper.getList(yingOrder.getId()));
+            yingOrder.setOrderConfigList(yingOrderConfigMapper.getList(yingOrder.getId()));
+        }
+        return yingOrderPages;
     }
 
     /**
