@@ -113,7 +113,7 @@
         huankuan.huankuanInterest,
         huankuan.huankuanFee,
         huankuan.tsc as huankuan_tsc,
-        huankuan.tsu as huankuan_tsu,
+        huankuan.tsu as huankuan_tsu
 
 
 
