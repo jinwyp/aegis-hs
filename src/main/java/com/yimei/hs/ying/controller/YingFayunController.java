@@ -5,6 +5,7 @@ import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.TrafficMode;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.ying.entity.YingFayun;
 import com.yimei.hs.boot.api.PageResult;
@@ -12,6 +13,7 @@ import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.ying.dto.PageYingFayunDTO;
 import com.yimei.hs.ying.service.YingFayunService;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +80,28 @@ public class YingFayunController {
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingFayun yingFayun
     ) {
+
+        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.MOTOR)&&yingFayun.getUpstreamCars()>0) {
+            return Result.error(4001, "上游汽运数量不匹配", HttpStatus.BAD_REQUEST);
+        }
+        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.SHIP)&& StringUtils.isEmpty(yingFayun.getUpstreamShip())) {
+            return Result.error(4001, "上游船运名称不能为空", HttpStatus.BAD_REQUEST);
+        }
+        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.RAIL) && StringUtils.isEmpty(yingFayun.getUpstreamJHH())) {
+
+            return Result.error(4001, "上游船运计划号不能为空", HttpStatus.BAD_REQUEST);
+        }
+
+        if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.MOTOR)&&yingFayun.getDownstreamCars()>0) {
+            return Result.error(4001, "下游汽运数量不匹配", HttpStatus.BAD_REQUEST);
+        }
+        if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.SHIP)&& StringUtils.isEmpty(yingFayun.getDownstreamShip())) {
+            return Result.error(4001, "下游船运名称不能为空", HttpStatus.BAD_REQUEST);
+        }
+        if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.RAIL) && StringUtils.isEmpty(yingFayun.getDownstreamJHH())) {
+
+            return Result.error(4001, "下游船运计划号不能为空", HttpStatus.BAD_REQUEST);
+        }
         yingFayun.setOrderId(morderId);
         int rtn;
         try {
