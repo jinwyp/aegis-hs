@@ -3,10 +3,14 @@ package com.yimei.hs.ying.controller;
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.YingFukuan;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.ying.dto.PageYingFukuanDTO;
+import com.yimei.hs.ying.entity.YingHuankuan;
+import com.yimei.hs.ying.entity.YingHuankuanMap;
+import com.yimei.hs.ying.entity.YingHuikuanMap;
 import com.yimei.hs.ying.service.YingFukuanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +20,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BinaryOperator;
+import java.util.stream.Stream;
 
 /**
  * Created by hary on 2017/9/15.
@@ -41,8 +51,41 @@ public class YingFukuanController {
     public ResponseEntity<PageResult<YingFukuan>> list(
             @PathVariable("morderId") Long morderId,
             PageYingFukuanDTO pageYingFukuanDTO) {
+
+        //
+        if (pageYingFukuanDTO.getHuankuanUnfinished() && pageYingFukuanDTO.getHuikuanUnfinished()) {
+            return  PageResult.error(4001, "参数非法");
+        }
+
         pageYingFukuanDTO.setOrderId(morderId);
-        return PageResult.ok(yingFukuanService.getPage(pageYingFukuanDTO));
+        Page<YingFukuan> page = yingFukuanService.getPage(pageYingFukuanDTO);
+
+        List<YingFukuan> filter1 = new ArrayList<>();
+        if (pageYingFukuanDTO.getHuankuanUnfinished()) {
+            for (YingFukuan fukuan: page.getResults()) {
+                List<YingHuankuanMap> huankuanMap = fukuan.getHuankuanMap();
+                BigDecimal total = huankuanMap.stream().map(m -> m.getPrincipal()).reduce(BigDecimal.ZERO, (a,b) -> a.add(b));
+                if (!total.equals(fukuan.getPayAmount())) {
+                    filter1.add(fukuan);
+                }
+            }
+            page.setResults(filter1);
+        }
+
+
+        List<YingFukuan> filter2 = new ArrayList<>();
+        if (pageYingFukuanDTO.getHuikuanUnfinished()) {
+            for (YingFukuan fukuan: page.getResults()) {
+                List<YingHuikuanMap> huikuanMap = fukuan.getHuikuanMap();
+                BigDecimal total = huikuanMap.stream().map(m -> m.getAmount()).reduce(BigDecimal.ZERO, (a,b) -> a.add(b));
+                if (!total.equals(fukuan.getPayAmount())) {
+                    filter2.add(fukuan);
+                }
+            }
+            page.setResults(filter2);
+        }
+
+        return PageResult.ok(page);
     }
 
     /**

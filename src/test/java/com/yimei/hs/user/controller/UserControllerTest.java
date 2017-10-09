@@ -94,8 +94,10 @@ public class UserControllerTest extends YingTestBase {
     public void userTest() throws JsonProcessingException {
 
         user();
-//        order();
-//        config();
+        order();
+        config();
+        fukuanTest();
+
 //        fayun();
 //        fukuan();
 //        huikuan();
@@ -1114,6 +1116,12 @@ public class UserControllerTest extends YingTestBase {
 
     }
 
+    // todo:  fukuan, huikuan huankuan 数据准备
+    // 测试 /api/ying/:orderId/fukuans  分页
+    //      /api/ying/:orderId/fukuans/:id
+    public void fukuanTest() throws JsonProcessingException {
+        return;
+    }
 
     /**
      * @param strData 格式Y
