@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
@@ -65,7 +66,40 @@ public class UserController {
         }
     }
 
+    /**
+     * 登出
+     *
+     * @param user
+     * @return
+     */
+    @GetMapping(value = "/api/logout")
+    public ResponseEntity<Result<Boolean>> logout(@CurrentUser User user) {
+        return Result.ok(true);
+    }
 
+
+    /**
+     * 修改密码
+     *
+     * @param user
+     * @return
+     */
+    @PutMapping(value = "/api/change_password")
+    public ResponseEntity<Result<Boolean>> change(
+            @RequestBody @Validated(User.ChangePassword.class) User user
+    ) {
+        User record = userService.getUserByPhone(StringUtils.trim(user.getPhone()));
+        if (record == null) {
+            return Result.error(4001, "账号不存在", HttpStatus.UNAUTHORIZED);
+        } else if (!userService.validPasswordEquals(record, user.getPassword())) {
+            return Result.error(4002, "密码错误", HttpStatus.UNAUTHORIZED);
+        } else if (!record.getIsActive()) {
+            return Result.error(4003, "用户已经禁用", HttpStatus.UNAUTHORIZED);
+        } else {
+            record.setPassword(user.getPassword());
+            return this.register(record);
+        }
+    }
 
     /**
      * jwt example
@@ -74,6 +108,8 @@ public class UserController {
      */
     @GetMapping(value = "/api/user/session")
     public ResponseEntity<Result<User>> authorization(@CurrentUser User user) {
+        user.setPassword(null);
+        user.setPasswordSalt(null);
         return Result.ok(user);
     }
 
