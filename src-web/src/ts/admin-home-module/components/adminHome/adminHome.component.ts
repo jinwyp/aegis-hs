@@ -166,8 +166,13 @@ export class AdminHomeComponent implements OnInit {
     logout (){
         this.userService.userLogout().subscribe(
             data => {
+                console.log('退出登陆成功: ', data)
                 saveAccessToken('')
-                window.location.href = '/web/login'
+
+                setTimeout(function() {
+                    window.location.href = '/web/login'
+                }, 1000)
+
             },
             error => {this.httpService.errorHandler(error) }
         )
