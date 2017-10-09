@@ -26,6 +26,7 @@ const apiPath = {
 
     dictionary : prefix + '/enums',
     login : prefix + '/login',
+    logout : prefix + '/logout',
 
     getUserInfo : prefix + '/user/session',
     modifyUserPassword : prefix + '/change_password',

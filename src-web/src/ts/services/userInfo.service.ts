@@ -56,6 +56,13 @@ export class UserInfoService {
         return this.http.put(apiPath.modifyUserPassword, user)
     }
 
+    userLogout(): Observable<any> {
+
+        return this.http.get(apiPath.logout)
+    }
+
+
+
     getUserAddressList(query: any): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
