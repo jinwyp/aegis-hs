@@ -35,8 +35,6 @@ public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
 
     private OrderStatus status;
 
-    private Boolean deleted;
-
     @Override
     public String getCountSql(String sql) {
         String nsql = new SQL() {

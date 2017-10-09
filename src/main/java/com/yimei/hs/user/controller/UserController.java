@@ -66,6 +66,17 @@ public class UserController {
         }
     }
 
+    /**
+     * 登出
+     *
+     * @param user
+     * @return
+     */
+    @GetMapping(value = "/api/logout")
+    public ResponseEntity<Result<Boolean>> logout(@CurrentUser User user) {
+        return Result.ok(true);
+    }
+
 
     /**
      * 修改密码
