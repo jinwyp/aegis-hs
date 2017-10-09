@@ -34,7 +34,12 @@ public class YingInvoiceService {
     private YingLogService yingLogService;
 
     public Page<YingInvoice> getPage(PageYingInvoiceDTO pageYingInvoiceDTO) {
-        return yingInvoiceMapper.getPage(pageYingInvoiceDTO);
+        Page<YingInvoice> yingInvoicePage = yingInvoiceMapper.getPage(pageYingInvoiceDTO);
+        for (YingInvoice invoice : yingInvoicePage.getResults()) {
+            List<YingInvoiceDetail> details = yingInvoiceDetailMapper.getList(invoice.getId());
+            invoice.setDetails(details);
+        }
+        return yingInvoicePage;
     }
 
     public YingInvoice findOne(long id) {
