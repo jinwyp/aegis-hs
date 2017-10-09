@@ -103,6 +103,8 @@
             <if test="downstreamId!=null">AND downstreamId = #{downstreamId, jdbcType=BIGINT}</if>
             <if test="mainAccounting!=null">AND mainAccounting = #{mainAccounting, jdbcType=BIGINT}</if>
             <if test="status!=null">AND status = #{status, jdbcType=VARCHAR}</if>
+            <if test="createDateStart!=null"> AND not tsc lt #{createDateStart, jdbcType=TIMESTAMP}</if>
+            <if test="createDateEnd!=null"> AND not tsc gt  #{createDateEnd, jdbcType=TIMESTAMP}</if>
         </where>
 
     </select>

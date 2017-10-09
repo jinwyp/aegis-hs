@@ -8,6 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.ibatis.jdbc.SQL;
 
+import java.time.LocalDateTime;
+
 /**
  * Created by hary on 2017/9/21.
  */
@@ -35,6 +37,11 @@ public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
 
     private OrderStatus status;
 
+    //
+    private LocalDateTime createDateStart;
+
+    private LocalDateTime createDateEnd;
+
     @Override
     public String getCountSql(String sql) {
         String nsql = new SQL() {
@@ -50,6 +57,8 @@ public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
                 if (upstreamId != null ) { WHERE( "upstreamId = ?"); }
                 if (downstreamId != null ) { WHERE( "downstreamId = ?"); }
                 if (status != null ) { WHERE( "status = ?"); }
+                if (createDateStart != null) { WHERE( "tsc >= ?"); }
+                if (createDateEnd != null) { WHERE( "tsc <= ?"); }
                 WHERE( "deleted = 0");
             }
         }.toString();
