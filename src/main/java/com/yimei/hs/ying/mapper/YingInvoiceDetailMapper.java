@@ -2,6 +2,8 @@ package com.yimei.hs.ying.mapper;
 
 import com.yimei.hs.ying.entity.YingInvoiceDetail;
 
+import java.util.List;
+
 public interface YingInvoiceDetailMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -18,4 +20,6 @@ public interface YingInvoiceDetailMapper {
     int updateByPrimaryKey(YingInvoiceDetail record);
 
     int deleteByInvoiceId(long invoiceId);
+
+    List<YingInvoiceDetail> getList(Long invoiceId);
 }

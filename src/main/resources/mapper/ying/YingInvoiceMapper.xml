@@ -52,10 +52,9 @@
     </select>
 
     <!-- 获取发票分页 -->
-    <select id="getPage" resultMap="YingInvoiceResultMap">
+    <select id="getPage" resultType="com.yimei.hs.ying.entity.YingInvoice">
         SELECT
-            t1.id  t1Id,
-            t2.id  t2Id,
+            t1.id,
             t1.orderId,
             t1.hsId,
             t1.invoiceDirection,
@@ -63,14 +62,8 @@
             t1.openDate,
             t1.openCompanyId,
             t1.receiverId,
-            t1.tsc,
-            t2.invoiceId,
-            t2.invoiceNumber,
-            t2.cargoAmount,
-            t2.taxRate,
-            t2.priceAndTax,
-            t2.tsc t2tsc
-        FROM hs_ying_invoice t1 LEFT JOIN hs_ying_invoice_detail t2 ON t1.id = t2.invoiceId
+            t1.tsc
+        FROM hs_ying_invoice t1
         <where>
             <if test="1==1">AND t1.deleted = 0</if>
             <if test="orderId!=null"> AND  orderId=#{orderId,jdbcType=BIGINT}</if>

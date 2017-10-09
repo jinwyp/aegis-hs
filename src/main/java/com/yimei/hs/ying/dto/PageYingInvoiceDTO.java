@@ -33,7 +33,7 @@ public class PageYingInvoiceDTO extends BaseFilter<PageYingInvoiceDTO> {
     @Override
     public String getCountSql(String sql) {
 
-        // System.out.println("orignal sql = " + sql);
+       System.out.println("orignal sql = " + sql);
         String nsql = new SQL() {
             {
                 SELECT("*");
@@ -49,7 +49,7 @@ public class PageYingInvoiceDTO extends BaseFilter<PageYingInvoiceDTO> {
         }.toString();
 
         String countSql =  super.getCountSql(nsql);
-        // System.out.println("count sql = " + countSql);
+         System.out.println("count sql = " + countSql);
         return countSql;
     }
 
