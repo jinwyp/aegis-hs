@@ -99,6 +99,7 @@
             <if test="cargoType!=null">AND cargoType = #{cargoType, jdbcType=VARCHAR}</if>
             <if test="creatorId!=null">AND creatorId = #{creatorId, jdbcType=BIGINT}</if>
             <if test="ownerId!=null">AND ownerId = #{ownerId, jdbcType=BIGINT}</if>
+            <if test="teamId!=null">AND teamId = #{teamId, jdbcType=BIGINT}</if>
             <if test="upstreamId!=null">AND upstreamId = #{upstreamId, jdbcType=BIGINT}</if>
             <if test="downstreamId!=null">AND downstreamId = #{downstreamId, jdbcType=BIGINT}</if>
             <if test="mainAccounting!=null">AND mainAccounting = #{mainAccounting, jdbcType=BIGINT}</if>
