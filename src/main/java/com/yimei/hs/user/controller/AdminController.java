@@ -29,6 +29,7 @@ public class AdminController {
     UserService userService;
 
     /**
+     * 创建用户
      * @param user
      * @return
      */

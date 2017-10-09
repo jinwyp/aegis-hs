@@ -84,7 +84,7 @@
             t2.useDays,
             t2.tsc     AS t2tsc,
 
-            map.amount
+            map.huikuanTotal
 
         FROM hs_ying_huikuan t1 LEFT JOIN hs_ying_huikuan_map map ON t1.id = map.huikuanId
             LEFT JOIN hs_ying_fukuan t2 ON map.fukuanId = t2.id
@@ -128,7 +128,7 @@
         t2.useDays,
         t2.tsc as t2tsc,
 
-        map.amount
+        map.huikuanTotal
 
         FROM hs_ying_huikuan t1 LEFT JOIN hs_ying_huikuan_map map ON t1.id = map.huikuanId
         LEFT JOIN hs_ying_fukuan t2 ON map.fukuanId = t2.id

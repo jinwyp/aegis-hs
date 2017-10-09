@@ -15,17 +15,116 @@
         <result column="useInterest" jdbcType="DECIMAL" property="useInterest"/>
         <result column="useDays" jdbcType="INTEGER" property="useDays"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+        <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
+    </resultMap>
+
+
+    <!-- todo -->
+    <resultMap id="YingFukuanResultMap" type="com.yimei.hs.ying.entity.YingFukuan" autoMapping="true">
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="hsId" jdbcType="BIGINT" property="hsId"/>
+        <result column="payDate" jdbcType="TIMESTAMP" property="payDate"/>
+        <result column="receiveCompanyId" jdbcType="BIGINT" property="receiveCompanyId"/>
+        <result column="payUsage" jdbcType="VARCHAR" property="payUsage"/>
+        <result column="payAmount" jdbcType="DECIMAL" property="payAmount"/>
+        <result column="payMode" jdbcType="VARCHAR" property="payMode"/>
+        <result column="capitalId" jdbcType="BIGINT" property="capitalId"/>
+        <result column="useInterest" jdbcType="DECIMAL" property="useInterest"/>
+        <result column="useDays" jdbcType="INTEGER" property="useDays"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+        <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
+
+        <!-- 关联的回款记录 -->
+        <collection property="huikuanList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingHuikuan" autoMapping="true">
+            <id property="id" column="huikuan_Id"/>
+            <id property="orderId" column="huikuan_orderId"/>
+            <id property="hsId" column="huikuan_hsId"/>
+            <id property="tsc" column="huikuan_tsc"/>
+            <id property="tsu" column="huikuan_tsu"/>
+        </collection>
+
+        <!-- 关联记录-->
+        <collection property="huikuanMap" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingHuikuanMap" autoMapping="true">
+            <id property="huikuanId" column="huikuanId"/>
+            <id property="amount" column="amount"/>
+        </collection>
+
+        <!-- 关联的还款记录-->
+        <collection property="huankuanList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingHuankuan" autoMapping="true">
+            <id property="id" column="huankuan_id"/>
+            <id property="orderId" column="huankuan_orderId"/>
+            <id property="hsId" column="huankuan_hsId"/>
+            <id property="tsc" column="huankuan_tsc"/>
+            <id property="tsu" column="huankuan_tsu"/>
+        </collection>
+
+        <!-- 关联记录-->
+        <collection property="huankuanMap" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingHuankuanMap"
+                    autoMapping="true">
+            <id property="huankuanId" column="huankuanId"/>
+            <id property="principal" column="principal"/>
+            <id property="amount" column="huankuanmap_amount"/>      <!-- 本金+利息 -->
+        </collection>
+
     </resultMap>
 
     <sql id="Base_Column_List">
         id, orderId, hsId, payDate, receiveCompanyId, payUsage, payAmount, payMode, capitalId,
-        useInterest, useDays, tsc
+        useInterest, useDays, tsc, tsu
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from hs_ying_fukuan
+
+        huikuanmap.amount as huikuanmap_amount,
+
+        huikuan.id as huikuan_id,
+        huikuan.orderId as huikuan_orderId,
+        huikuan.hsId as huikuan_hsId,
+        huikuan.huikuanCompanyId,
+        huikuan.huikuanDate,
+        huikuan.huikuanAmount,
+        huikuan.huikuanUsage,
+        huikuan.huikuanMode,
+        huikuan.huikuanBankPaper,
+        huikuan.huikuanBankPaperDate,
+        huikuan.huikuanBankDiscount,
+        huikuan.huikuanBankDiscountRate,
+        huikuan.huikuanBankPaperExpire,
+        huikuan.huikuanBusinessPaper,
+        huikuan.huikuanBusinessPaperDate,
+        huikuan.huikuanBusinessDiscount,
+        huikuan.huikuanBusinessDiscountRate,
+        huikuan.huikuanBusinessPaperExpire,
+        huikuan.tsc as huikuan_tsc,
+        huikuan.tsu as huikuan_tsu,
+
+
+        huankuanmap.principal,
+        huankuanmap.amount as huankuanmap_amount,
+
+        huankuan.id as huankuan_id,
+        huankuan.orderId as huankuan_orderId,
+        huankuan.hsId as huankuan_hsId,
+        huankuan.skCompanyId,
+        huankuan.huankuankDate,
+        huankuan.huankuanAmount,
+        huankuan.huankuanInterest,
+        huankuan.huankuanFee,
+        huankuan.tsc as huankuan_tsc,
+        huankuan.tsu as huankuan_tsu
+
+
+
+
+        from hs_ying_fukuan fukuan
+        LEFT JOIN hs_ying_huikuan_map huikuanmap on fukuan.id = huikuanmap.fukuanId
+        LEFT JOIN hs_ying_huikuan huikuan on huikuanmap.huikuanId = huikuan.id
+
+        LEFT JOIN hs_ying_huankuan_map huankuanmap on fukuan.id = huankuanmap.fukuanId
+        LEFT JOIN hs_ying_huankuan huankuan on huankuanmap.huankuanId = huankuan.id
+
         where id = #{id,jdbcType=BIGINT} and deleted = 0
     </select>
 
@@ -33,7 +132,8 @@
     <select id="getPage" resultType="com.yimei.hs.ying.entity.YingFukuan">
         select
         <include refid="Base_Column_List"/>
-        from hs_ying_fukuan
+
+        from hs_ying_fukuan t1 LEFT JOIN hs_ying_huankuan_map map on t1.id = map.fukuanId
         <where>
             <if test="1==1">deleted = 0</if>
             <if test="orderId!=null">and orderId = #{orderId, jdbcType=BIGINT}</if>

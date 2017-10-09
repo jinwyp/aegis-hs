@@ -6,12 +6,12 @@
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="huikuanTotal" jdbcType="DECIMAL" property="amount"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, name, amount, tsc
+        id, orderId, hsId, name, huikuanTotal, tsc
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -28,7 +28,7 @@
 
     <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangFee">
         INSERT INTO hs_cang_fee (id, orderId, hsId,
-                                 name, amount, tsc
+                                 name, huikuanTotal, tsc
         )
         VALUES (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT},
                 #{name,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP}
@@ -42,7 +42,7 @@
             <if test="orderId != null">orderId,</if>
             <if test="hsId != null">hsId,</if>
             <if test="name != null">name,</if>
-            <if test="amount != null">amount,</if>
+            <if test="huikuanTotal != null">huikuanTotal,</if>
             <if test="tsc != null">tsc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -50,7 +50,7 @@
             <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
             <if test="name != null">#{name,jdbcType=VARCHAR},</if>
-            <if test="amount != null">#{amount,jdbcType=DECIMAL},</if>
+            <if test="huikuanTotal != null">#{amount,jdbcType=DECIMAL},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
@@ -61,7 +61,7 @@
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
             <if test="name != null">name = #{name,jdbcType=VARCHAR},</if>
-            <if test="amount != null">amount = #{amount,jdbcType=DECIMAL},</if>
+            <if test="huikuanTotal != null">huikuanTotal = #{amount,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
@@ -71,7 +71,7 @@
         SET orderId = #{orderId,jdbcType=BIGINT},
             hsId    = #{hsId,jdbcType=BIGINT},
             name    = #{name,jdbcType=VARCHAR},
-            amount  = #{amount,jdbcType=DECIMAL},
+            huikuanTotal  = #{amount,jdbcType=DECIMAL},
             tsc     = #{tsc,jdbcType=TIMESTAMP}
         WHERE id = #{id,jdbcType=BIGINT}
     </update>

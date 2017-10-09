@@ -19,4 +19,10 @@ public class PageYingFukuanDTO extends BaseFilter<PageYingFukuanDTO> {
 
     private LocalDateTime payDate;
     private Long receiveCompanyId;
+
+    // 还款是否完成
+    private Boolean huankuanFinished;
+
+    // 回款是否完成
+    private Boolean huikuanFinished;
 }

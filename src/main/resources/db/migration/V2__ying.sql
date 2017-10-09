@@ -335,9 +335,9 @@ create table hs_ying_log (
 --       select
 --         orderId,
 --         hsId,
---         sum(amount) as amount,
+--         sum(huikuanTotal) as huikuanTotal,
 --         sum(money) as money,
---         (sum(amount) - sum(settleGap)) * t2.tradeAddPrice + sum(t1.money) as salesAll
+--         (sum(huikuanTotal) - sum(settleGap)) * t2.tradeAddPrice + sum(t1.money) as salesAll
 --       from hs_ying_settle_downstream t1
 --     LEFT JOIN hs_ying_order_config t2 on  t1.orderId = t2.orderId and t1.hsId = t2.id
 --     GROUP BY orderId, hsId
@@ -349,7 +349,7 @@ create table hs_ying_log (
 --     select
 --       orderId,
 --       hsId,
---       sum(amount) as amount,
+--       sum(huikuanTotal) as huikuanTotal,
 --       sum(money) as money,
 --       sum(discountDays) as discountDays
 --    from hs_ying_settle_upstream

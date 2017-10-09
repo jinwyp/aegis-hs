@@ -31,7 +31,7 @@ public class UserController {
 
 
     /**
-     * 注册， 当做添加用户的接口
+     * 注册
      *
      * @param user
      * @return
@@ -40,8 +40,8 @@ public class UserController {
     public ResponseEntity<Result<Integer>> register(@RequestBody @Validated User user) {
         int rtn = userService.create(user, null);
         if (rtn != 1) {
-            logger.error("用户创建失败: {}", user);
-            return Result.error(4001, "创建是白");
+            logger.error("用户注册失败: {}", user);
+            return Result.error(4001, "创建失败");
         }
         return Result.ok(1);
     }
