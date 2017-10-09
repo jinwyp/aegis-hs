@@ -1,7 +1,7 @@
 
 
 
-        <h3 > 基本信息 - {{currentUser?.username}}</h3>
+        <h3 > 基本信息 - {{currentUser?.phone}}</h3>
 
         <form [formGroup]="userInfoForm" (ngSubmit)="userInfoFormSubmit()" (keydown.enter)="$event.preventDefault()">
 
@@ -37,9 +37,6 @@
                     <input type="text" readonly class="form-control-plaintext form-input-readonly" value="{{currentUser?.email || '暂无'}}">
                 </div>
             </div>
--->
-
-
 
 
 
@@ -48,4 +45,6 @@
                     <button type="submit" class="btn btn-info" >保存</button>
                 </div>
             </div>
+
+-->
         </form>

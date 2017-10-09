@@ -123,7 +123,6 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
             })
 
         }
-
         return result
     }
 
