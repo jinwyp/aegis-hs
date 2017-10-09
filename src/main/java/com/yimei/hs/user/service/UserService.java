@@ -104,4 +104,16 @@ public class UserService {
     public int update(User user) {
         return userMapper.updateByPrimaryKeySelective(user);
     }
+
+    public Boolean changePassword(User userUpdate) {
+
+        byte[] passwordSalt = Digests.generateSalt(SALT_SIZE);
+        byte[] hashPassword = Digests.sha1(userUpdate.getPassword().getBytes(), passwordSalt, HASH_INTERATIONS);
+
+        userUpdate.setPassword(Encodes.encodeHex(hashPassword));
+        userUpdate.setPasswordSalt(Encodes.encodeHex(passwordSalt));
+
+        userMapper.updateByPrimaryKeySelective(userUpdate);
+        return true;
+    }
 }

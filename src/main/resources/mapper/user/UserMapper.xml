@@ -132,4 +132,5 @@
             isActive     = #{isActive,jdbcType=BIT}
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
+
 </mapper>
