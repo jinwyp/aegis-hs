@@ -89,6 +89,7 @@ public class UserController {
             @RequestBody @Validated(User.ChangePassword.class) User user
     ) {
         User record = userService.getUserByPhone(StringUtils.trim(user.getPhone()));
+        record.setIsActive(false);
         if (record == null) {
             return Result.error(4001, "账号不存在", HttpStatus.UNAUTHORIZED);
         } else if (!userService.validPasswordEquals(record, user.getPassword())) {

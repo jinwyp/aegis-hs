@@ -37,7 +37,7 @@ public class UserService {
     //生成jwt token
     public String genAuthorization(User user) {
         return "Bearer " + Jwts.builder()
-                .setSubject(JsonMapper.nonDefaultMapper().toJson(user))
+                .setSubject(JsonMapper.nonEmptyMapper().toJson(user))
                 .compressWith(CompressionCodecs.DEFLATE)
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();

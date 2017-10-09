@@ -36,7 +36,7 @@ public class JwtSupport {
             if (m.matches()) {
                 String token = m.group(1);
                 String userJson = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-                return JsonMapper.nonDefaultMapper().fromJson(userJson, User.class);
+                return JsonMapper.nonEmptyMapper().fromJson(userJson, User.class);
             } else {
                 throw new NoJwtTokenException("缺少jwtToken异常");
             }
