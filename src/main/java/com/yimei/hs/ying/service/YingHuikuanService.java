@@ -39,7 +39,13 @@ public class YingHuikuanService {
     private YingLogService yingLogService;
 
     public Page<YingHuikuan> getPage(PageYingHuikuanDTO pageYingHuikuanDTO) {
-        return yingHuikuanMapper.getPage(pageYingHuikuanDTO);
+
+        Page<YingHuikuan> yingHuikuanPage=yingHuikuanMapper.getPage(pageYingHuikuanDTO);
+
+        for (YingHuikuan yingHuikuan:yingHuikuanPage.getResults()) {
+            yingHuikuan.setFukuanList(yingHuikuanMapMapper.getList(yingHuikuan.getId()));
+        }
+        return yingHuikuanPage;
     }
 
     public YingHuikuan findOne(long id) {
@@ -153,10 +159,7 @@ public class YingHuikuanService {
 
 
         }
-        //case 1 fukuan>=huikuan
 
-
-        //case 2fukuan<huikuan
         return toAdd;
     }
 
