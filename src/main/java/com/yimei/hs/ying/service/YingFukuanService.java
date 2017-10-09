@@ -184,8 +184,9 @@ public class YingFukuanService {
      * @return
      */
     public int delete(Long orderId, long id) {
-        yingHuikuanService.createMap(orderId);
-        yingHuankuanService.createMap(orderId);
+        yingHuikuanService.createMapping(orderId);
+
+        // todo
         return yingFukuanMapper.delete(id);
     }
 }
