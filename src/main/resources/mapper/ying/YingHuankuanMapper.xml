@@ -61,14 +61,21 @@
 
     <!---->
     <select id="getListByFukuanId" resultType="com.yimei.hs.ying.entity.YingHuankuan">
-        select
-        <include refid="Base_Column_List"></include>
-        from hs_ying_huankuan_map huankuanmap
-        LEFT JOIN hs_ying_huankuan huankuan on huankuanmap.huankuanId = huankuan.id
-        where huankuanmap.fukuanId = #{fukuanId, jdbcType=BIGINT}
+        SELECT
+            huankuan.id,
+            huankuan.orderId,
+            huankuan.hsId,
+            huankuan.skCompanyId,
+            huankuan.huankuankDate,
+            huankuan.huankuanAmount,
+            huankuan.huankuanInterest,
+            huankuan.huankuanFee,
+            huankuan.tsc,
+            huankuan.tsu
+        FROM hs_ying_huankuan_map huankuanmap
+            LEFT JOIN hs_ying_huankuan huankuan ON huankuanmap.huankuanId = huankuan.id
+        WHERE huankuanmap.fukuanId = #{fukuanId, jdbcType=BIGINT}
     </select>
-
-
 
 
     <!-- -->
@@ -94,7 +101,9 @@
             huankuanAmount,
             huankuanInterest,
             huankuanFee,
-            tsc)
+            tsc,
+            tsu
+        )
         VALUES (
             #{id,jdbcType=BIGINT},
             #{orderId,jdbcType=BIGINT},
@@ -104,7 +113,9 @@
             #{huankuanAmount,jdbcType=DECIMAL},
             #{huankuanInterest,jdbcType=DECIMAL},
             #{huankuanFee,jdbcType=DECIMAL},
-            #{tsc,jdbcType=TIMESTAMP})
+            #{tsc,jdbcType=TIMESTAMP},
+            current_timestamp
+        )
     </insert>
 
     <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuankuan" keyProperty="id"
