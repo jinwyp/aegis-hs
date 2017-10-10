@@ -27,7 +27,7 @@ export class FindKeyPipe implements PipeTransform {
         if (!value || !key || !sourceData || !Array.isArray(sourceData)) { return value }
 
 
-        let result : string | number = '';
+        let result : string | number = ''
 
         sourceData.forEach( item => {
             if (item.id === value) {

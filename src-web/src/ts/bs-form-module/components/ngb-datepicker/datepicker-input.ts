@@ -56,7 +56,7 @@ const NGB_DATEPICKER_VALIDATOR = {
 })
 export class NgbInputDatepicker implements OnChanges,
     OnDestroy, ControlValueAccessor, Validator {
-  private _cRef: ComponentRef<NgbDatepicker> = null
+  private _cRef: ComponentRef<any> = null
   private _model: NgbDate
   private _zoneSubscription: any
 

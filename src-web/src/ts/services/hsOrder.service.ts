@@ -65,7 +65,7 @@ export class HSOrderService {
 
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/units', unit )
     }
-    modifyOrderUnit(orderId: number, unitId: number, unit: any, ): Observable<any> {
+    modifyOrderUnit(orderId: number, unitId: number, unit: any ): Observable<any> {
 
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/units/' + unitId.toString() , unit)
     }
@@ -82,7 +82,7 @@ export class HSOrderService {
 
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/fayuns', shipping )
     }
-    modifyShipping(orderId: number, shippingId: number, shipping: any, ): Observable<any> {
+    modifyShipping(orderId: number, shippingId: number, shipping: any ): Observable<any> {
 
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/fayuns/' + shippingId.toString() , shipping)
     }
@@ -98,7 +98,7 @@ export class HSOrderService {
 
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/fukuans', payment )
     }
-    modifyPayment(orderId: number, paymentId: number, payment: any, ): Observable<any> {
+    modifyPayment(orderId: number, paymentId: number, payment: any ): Observable<any> {
 
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/fukuans/' + paymentId.toString() , payment)
     }
@@ -115,7 +115,7 @@ export class HSOrderService {
 
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/huikuans', repayment )
     }
-    modifyRepayment(orderId: number, repaymentId: number, repayment: any, ): Observable<any> {
+    modifyRepayment(orderId: number, repaymentId: number, repayment: any ): Observable<any> {
 
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/huikuans/' + repaymentId.toString() , repayment)
     }
@@ -132,7 +132,7 @@ export class HSOrderService {
 
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/huankuans', repayment )
     }
-    modifyRepaymentHK(orderId: number, repaymentId: number, repayment: any, ): Observable<any> {
+    modifyRepaymentHK(orderId: number, repaymentId: number, repayment: any ): Observable<any> {
 
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/huankuans/' + repaymentId.toString() , repayment)
     }
@@ -152,7 +152,7 @@ export class HSOrderService {
 
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/settleupstream', settle )
     }
-    modifySettleUpstream(orderId: number, settleId: number, settle: any, ): Observable<any> {
+    modifySettleUpstream(orderId: number, settleId: number, settle: any ): Observable<any> {
 
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/settleupstream/' + settleId.toString() , settle)
     }
@@ -169,7 +169,7 @@ export class HSOrderService {
 
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/settledownstream', settle )
     }
-    modifySettleDownstream(orderId: number, settleId: number, settle: any, ): Observable<any> {
+    modifySettleDownstream(orderId: number, settleId: number, settle: any ): Observable<any> {
 
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/settledownstream/' + settleId.toString() , settle)
     }
@@ -186,7 +186,7 @@ export class HSOrderService {
 
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/settletraffic', settle )
     }
-    modifySettleTraffic(orderId: number, settleId: number, settle: any, ): Observable<any> {
+    modifySettleTraffic(orderId: number, settleId: number, settle: any ): Observable<any> {
 
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/settletraffic/' + settleId.toString() , settle)
     }
@@ -206,7 +206,7 @@ export class HSOrderService {
 
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/fees', expense )
     }
-    modifyExpense(orderId: number, expenseId: number, expense: any, ): Observable<any> {
+    modifyExpense(orderId: number, expenseId: number, expense: any ): Observable<any> {
 
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/fees/' + expenseId.toString() , expense)
     }
@@ -223,7 +223,7 @@ export class HSOrderService {
 
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/invoices', invoice )
     }
-    modifyInvoice(orderId: number, invoiceId: number, invoice: any, ): Observable<any> {
+    modifyInvoice(orderId: number, invoiceId: number, invoice: any ): Observable<any> {
 
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/invoices/' + invoiceId.toString() , invoice)
     }

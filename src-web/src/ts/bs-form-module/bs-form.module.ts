@@ -16,6 +16,7 @@ import { SelectDropdownComponent } from './components/selectDropdown/selectDropd
 import { RadioComponent } from './components/radio/radio.component'
 import { DatePickerComponent } from './components/datepicker/datepicker.component'
 import { AddressDropdownComponent } from './components/addressDropdown/addressDropdown.component'
+import { CheckboxComponent } from './components/checkbox/checkbox.component'
 
 
 import {ForbiddenValidatorDirective} from './validators/custom-validator'
@@ -40,7 +41,7 @@ import {HttpService} from './services/http.service'
         RadioComponent,
         DatePickerComponent,
         AddressDropdownComponent,
-
+        CheckboxComponent,
 
         ForbiddenValidatorDirective
     ],
@@ -74,7 +75,8 @@ import {HttpService} from './services/http.service'
         RadioComponent,
         DatePickerComponent,
         RadioComponent,
-        AddressDropdownComponent
+        AddressDropdownComponent,
+        CheckboxComponent
     ],
     bootstrap    : []
 })
