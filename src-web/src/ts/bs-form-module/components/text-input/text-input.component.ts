@@ -17,7 +17,9 @@ export class TextInputComponent implements ControlValueAccessor, OnInit, OnChang
     @Input('fc') currentFormControl: FormControl = new FormControl()
     @Input() type: string = 'text'
     @Input() label: string = '标签文字:'
+    @Input() prompt: string = ''
     @Input() hint: string = ''
+
     @Input() error: string = ''
     @Input() dirty: boolean = false
     @Input() readOnly: boolean = false
