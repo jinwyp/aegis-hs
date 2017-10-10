@@ -234,7 +234,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
         const postData = this.repaymentHKForm.value
         postData.orderId = this.currentOrder.id
         postData.huankuanMapList = this.paymentPostList.map( payment => {
-            return {orderId: payment.orderId, fukuanId : payment.id, principal : payment.principal, interest : payment.interest}
+            return { fukuanId : payment.id, principal : Number(payment.principal), interest : Number(payment.interest)}
         })
 
         if (this.isAddNew) {
@@ -291,6 +291,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             this.isAddNew = false
             this.currentHuanKuanId = repaymentHKOrder.id
 
+            this.paymentPostList = []
             this.repaymentHKForm.patchValue(repaymentHKOrder)
         }
 
@@ -311,7 +312,9 @@ export class RepaymentHuanKuanComponent implements OnInit {
             return
         }
 
-        this.paymentPostList.push(<any>Object.assign(this.paymentListObject[this.paymentForm.value.id], {fukuanId : this.paymentForm.value.id, principal : this.paymentForm.value.principal, interest : this.paymentForm.value.interest}) )
+        this.paymentPostList.push(<any>Object.assign( {}, this.paymentListObject[this.paymentForm.value.id],
+            {fukuanId : this.paymentForm.value.id, principal : this.paymentForm.value.principal, interest : this.paymentForm.value.interest}) )
+
         this.ignoreDirtyPayment = false
     }
 
