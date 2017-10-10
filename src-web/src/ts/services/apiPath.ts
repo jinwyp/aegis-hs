@@ -30,6 +30,7 @@ const apiPath = {
 
     getUserInfo : prefix + '/user/session',
     modifyUserPassword : prefix + '/change_password',
+    getUserListInSameDepartment: prefix + '/user/list_dept_user',
 
 
     hsGetUserList : prefix + '/users',
