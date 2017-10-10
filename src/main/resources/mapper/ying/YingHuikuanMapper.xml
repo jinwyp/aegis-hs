@@ -150,11 +150,31 @@
 
     <!-- 依据付款id， 查询所有和此付款id关联的回款 -->
     <select id="getListByFukuanID" resultType="com.yimei.hs.ying.entity.YingHuikuan">
-        select
-        <include refid="Base_Column_List"/>
-        from hs_ying_huikuan_map huikuanmap
-        LEFT JOIN hs_ying_huikuan huikuan on huikuanmap.huikuanId = huikuan.id
-        where huikuanmap.fukuanId = #{fukuanId,jdbcType=BIGINT}
+        SELECT
+            huikuan.id,
+            huikuan.orderId,
+            huikuan.hsId,
+            huikuan.huikuanCompanyId,
+            huikuan.huikuanDate,
+            huikuan.huikuanAmount,
+            huikuan.huikuanUsage,
+            huikuan.huikuanMode,
+            huikuan.huikuanBankPaper,
+            huikuan.huikuanBankPaperDate,
+            huikuan.huikuanBankDiscount,
+            huikuan.huikuanBankDiscountRate,
+            huikuan.huikuanBankPaperExpire,
+            huikuan.huikuanBusinessPaper,
+            huikuan.huikuanBusinessPaperDate,
+            huikuan.huikuanBusinessDiscount,
+            huikuan.huikuanBusinessDiscountRate,
+            huikuan.huikuanBusinessPaperExpire,
+            huikuan.tsc,
+            huikuan.tsu
+        FROM
+            hs_ying_huikuan_map huikuanmap
+            LEFT JOIN hs_ying_huikuan huikuan ON huikuanmap.huikuanId = huikuan.id
+        WHERE huikuanmap.fukuanId = #{fukuanId,jdbcType=BIGINT}
     </select>
 
     <select id="getUnfinshedByOrderId" resultType="com.yimei.hs.ying.entity.YingHuikuan">
@@ -204,22 +224,30 @@
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingHuikuan" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO hs_ying_huikuan (id,
-                                     orderId,
-                                     hsId,
-                                     huikuanCompanyId,
-                                     huikuanDate,
-                                     huikuanAmount,
-                                     huikuanUsage, huikuanMode, huikuanBankPaper,
-                                     huikuanBankPaperDate, huikuanBankDiscount,
-                                     huikuanBankDiscountRate, huikuanBankPaperExpire,
-                                     huikuanBusinessPaper, huikuanBusinessPaperDate,
-                                     huikuanBusinessDiscount, huikuanBusinessDiscountRate,
-                                     huikuanBusinessPaperExpire,
-                                     tsc,
-                                     tsu
+        INSERT INTO hs_ying_huikuan (
+            id,
+            orderId,
+            hsId,
+            huikuanCompanyId,
+            huikuanDate,
+            huikuanAmount,
+            huikuanUsage,
+            huikuanMode,
+            huikuanBankPaper,
+            huikuanBankPaperDate,
+            huikuanBankDiscount,
+            huikuanBankDiscountRate,
+            huikuanBankPaperExpire,
+            huikuanBusinessPaper,
+            huikuanBusinessPaperDate,
+            huikuanBusinessDiscount,
+            huikuanBusinessDiscountRate,
+            huikuanBusinessPaperExpire,
+            tsc,
+            tsu
         )
-        VALUES (#{id,jdbcType=BIGINT},
+        VALUES (
+            #{id,jdbcType=BIGINT},
             #{orderId,jdbcType=BIGINT},
             #{hsId,jdbcType=BIGINT},
             #{huikuanCompanyId,jdbcType=BIGINT},
@@ -230,15 +258,15 @@
             #{huikuanBankPaper,jdbcType=BIT},
             #{huikuanBankPaperDate,jdbcType=TIMESTAMP},
             #{huikuanBankDiscount,jdbcType=BIT},
-                #{huikuanBankDiscountRate,jdbcType=DECIMAL},
-                #{huikuanBankPaperExpire,jdbcType=TIMESTAMP},
-                #{huikuanBusinessPaper,jdbcType=BIT},
-                #{huikuanBusinessPaperDate,jdbcType=TIMESTAMP},
-                #{huikuanBusinessDiscount,jdbcType=BIT},
-                #{huikuanBusinessDiscountRate,jdbcType=DECIMAL},
-                #{huikuanBusinessPaperExpire,jdbcType=TIMESTAMP},
-                #{tsc,jdbcType=TIMESTAMP},
-                #{tsu,jdbcType=TIMESTAMP}
+            #{huikuanBankDiscountRate,jdbcType=DECIMAL},
+            #{huikuanBankPaperExpire,jdbcType=TIMESTAMP},
+            #{huikuanBusinessPaper,jdbcType=BIT},
+            #{huikuanBusinessPaperDate,jdbcType=TIMESTAMP},
+            #{huikuanBusinessDiscount,jdbcType=BIT},
+            #{huikuanBusinessDiscountRate,jdbcType=DECIMAL},
+            #{huikuanBusinessPaperExpire,jdbcType=TIMESTAMP},
+            #{tsc,jdbcType=TIMESTAMP},
+            current_timestamp
         )
     </insert>
     <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingHuikuan" keyProperty="id"
@@ -285,8 +313,8 @@
             <if test="huikuanBusinessDiscount != null">#{huikuanBusinessDiscount,jdbcType=BIT},</if>
             <if test="huikuanBusinessDiscountRate != null">#{huikuanBusinessDiscountRate,jdbcType=DECIMAL},</if>
             <if test="huikuanBusinessPaperExpire != null">#{huikuanBusinessPaperExpire,jdbcType=TIMESTAMP},</if>
-            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP}, </if>
-            <if test="tsu != null">#{tsu,jdbcType=TIMESTAMP}, </if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="tsu != null">#{tsu,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingHuikuan">
