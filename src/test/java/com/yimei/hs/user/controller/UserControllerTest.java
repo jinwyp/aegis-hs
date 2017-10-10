@@ -87,20 +87,20 @@ public class UserControllerTest extends YingTestBase {
     public void userTest() throws JsonProcessingException {
 
         user();
-        order();
-        config();
-        fukuanTest();
-
-        fayun();
-        fukuan();
-        huikuan();
-        huankuan();
-        upstream();
-        downstream();
-        traffic();
-        fee();
-
-        invoice();
+//        order();
+//        config();
+//        fukuanTest();
+//
+//        fayun();
+//        fukuan();
+//        huikuan();
+//        huankuan();
+//        upstream();
+//        downstream();
+//        traffic();
+//        fee();
+//
+//        invoice();
 
 
     }
@@ -233,6 +233,16 @@ public class UserControllerTest extends YingTestBase {
             logger.error("登录失败: {}", loginResult.getError());
         }
         setClientInterceptor(loginResult.getData());
+
+        //
+        // 6.5 再次查询同一部门
+        Result<Page<User>> sameDeptResult = client.exchange("/api/user/list_dept_user", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceUserPage).getBody();
+        if (logoutResult.getSuccess()) {
+            logger.info("登出成功\nGET {}\nrequest = {}\nresponse = {}", "/api/user/list_dept_user\"", "", sameDeptResult.getData());
+        } else {
+            logger.error("登出失败: {}", logoutResult.getError());
+        }
+
 
     }
 

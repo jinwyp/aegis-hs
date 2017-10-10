@@ -41,6 +41,7 @@ import java.util.Map;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = HsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Ignore
 public class YingIntegrationA extends HsTestBase {
 
     public static final Logger logger = LoggerFactory.getLogger(YingIntegrationA.class);
