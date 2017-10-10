@@ -2,8 +2,10 @@ package com.yimei.hs.demo.controller;
 
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.BusinessType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,14 +17,16 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/demo")
+@RequestMapping("/demo/{businessType}")
 public class DemoController {
 
     /**
      * @return
      */
     @GetMapping(value = "/normal")
-    public ResponseEntity<Result<Integer>> normal() {
+    public ResponseEntity<Result<Integer>> normal(
+            @PathVariable("businessType") BusinessType businessType
+            ) {
         return Result.ok(1);
     }
 

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yimei.hs.ying.mapper.YingOrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.yimei.hs.same.entity.Order">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="deptId" jdbcType="BIGINT" property="deptId"/>
+        <result column="teamId" jdbcType="BIGINT" property="teamId"/>
+        <result column="creatorId" jdbcType="BIGINT" property="creatorId"/>
+        <result column="ownerId" jdbcType="BIGINT" property="ownerId"/>
+        <result column="mainAccounting" jdbcType="BIGINT" property="mainAccounting"/>
+        <result column="line" jdbcType="VARCHAR" property="line"/>
+        <result column="cargoType" jdbcType="VARCHAR" property="cargoType"/>
+        <result column="upstreamId" jdbcType="BIGINT" property="upstreamId"/>
+        <result column="upstreamSettleMode" jdbcType="VARCHAR" property="upstreamSettleMode"/>
+        <result column="downstreamId" jdbcType="BIGINT" property="downstreamId"/>
+        <result column="downstreamSettleMode" jdbcType="VARCHAR" property="downstreamSettleMode"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+    </resultMap>
+
+
+    <!-- 一个订单记录: 包含的多个核算月配置， 以及多个参与方-->
+    <resultMap id="YingOrderResultMap" type="com.yimei.hs.same.entity.Order" autoMapping="true">
+        <result property="id" column="t1id"/>
+
+        <collection property="orderConfigList" javaType="ArrayList" ofType="com.yimei.hs.same.entity.OrderConfig"
+                    autoMapping="true">
+            <id property="id" column="t2id"/>
+            <id property="tsc" column="t2tsc"/>
+        </collection>
+
+        <collection property="orderPartyList" javaType="ArrayList" ofType="com.yimei.hs.same.entity.OrderParty"
+                    autoMapping="true">
+            <id property="id" column="t3id"/>
+            <id property="tsc" column="t3tsc"/>
+            <id property="orderId" column="t3orderId"/>
+        </collection>
+
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id, deptId, teamId, creatorId, ownerId, mainAccounting, line, cargoType, upstreamId,
+        upstreamSettleMode, downstreamId, downstreamSettleMode, status, tsc, tsu
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="YingOrderResultMap">
+        SELECT
+            t1.id      AS t1id,
+            t1.deptId,
+            t1.teamId,
+            t1.creatorId,
+            t1.ownerId,
+            t1.mainAccounting,
+            t1.line,
+            t1.cargoType,
+            t1.upstreamId,
+            t1.upstreamSettleMode,
+            t1.downstreamId,
+            t1.downstreamSettleMode,
+            t1.status,
+            t1.tsc,
+
+            t2.id      AS t2id,
+            t2.orderId,
+            t2.hsMonth,
+            t2.maxPrepayRate,
+            t2.unInvoicedRate,
+            t2.contractBaseInterest,
+            t2.expectHKDays,
+            t2.tradeAddPrice,
+            t2.weightedPrice,
+            t2.tsc     AS t2tsc,
+
+            t3.id      AS t3id,
+            t3.orderId AS t3orderId,
+            t3.custType,
+            t3.customerId,
+            t3.tsc     AS t3tsc
+
+        FROM hs_ying_order t1
+            LEFT JOIN hs_ying_order_config t2 ON t1.id = t2.orderId
+            LEFT JOIN hs_ying_order_party t3 ON t1.id = t2.orderId
+        WHERE
+            t1.id = #{id, jdbcType=BIGINT}
+            AND t1.deleted = 0
+    </select>
+
+    <select id="getPage"  resultType="com.yimei.hs.same.entity.Order">
+        SELECT
+        <include refid="Base_Column_List"/>
+
+        FROM hs_ying_order
+
+        <where>
+            <if test="true">AND deleted = 0</if>
+            <if test="deptId!=null">AND deptId = #{deptId, jdbcType=BIGINT}</if>
+            <if test="cargoType!=null">AND cargoType = #{cargoType, jdbcType=VARCHAR}</if>
+            <if test="creatorId!=null">AND creatorId = #{creatorId, jdbcType=BIGINT}</if>
+            <if test="ownerId!=null">AND ownerId = #{ownerId, jdbcType=BIGINT}</if>
+            <if test="teamId!=null">AND teamId = #{teamId, jdbcType=BIGINT}</if>
+            <if test="upstreamId!=null">AND upstreamId = #{upstreamId, jdbcType=BIGINT}</if>
+            <if test="downstreamId!=null">AND downstreamId = #{downstreamId, jdbcType=BIGINT}</if>
+            <if test="mainAccounting!=null">AND mainAccounting = #{mainAccounting, jdbcType=BIGINT}</if>
+            <if test="status!=null">AND status = #{status, jdbcType=VARCHAR}</if>
+            <if test="createDateStart!=null"> AND not tsc lt #{createDateStart, jdbcType=TIMESTAMP}</if>
+            <if test="createDateEnd!=null"> AND not tsc gt  #{createDateEnd, jdbcType=TIMESTAMP}</if>
+        </where>
+
+    </select>
+
+    <select id="hasOrder" resultType="java.lang.Boolean">
+        SELECT count(id)
+        FROM hs_ying_order
+        WHERE ownerId = #{ownerId} AND id = #{orderId}
+              AND deleted = 0
+    </select>
+
+    <!-- 物理删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM hs_ying_order
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 逻辑删除 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_ying_order
+        SET deleted = 1, tsu = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <insert id="insert" parameterType="com.yimei.hs.same.entity.Order" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO hs_ying_order (
+            id,
+            deptId,
+            teamId,
+            creatorId,
+            ownerId,
+            mainAccounting,
+            line,
+            cargoType,
+            upstreamId,
+            upstreamSettleMode,
+            downstreamId,
+            downstreamSettleMode,
+            status,
+            tsc
+        )
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{deptId,jdbcType=BIGINT},
+            #{teamId,jdbcType=BIGINT},
+            #{creatorId,jdbcType=BIGINT},
+            #{ownerId,jdbcType=BIGINT},
+            #{mainAccounting,jdbcType=BIGINT},
+            #{line,jdbcType=VARCHAR},
+            #{cargoType,jdbcType=VARCHAR},
+            #{upstreamId,jdbcType=BIGINT},
+            #{upstreamSettleMode,jdbcType=VARCHAR},
+            #{downstreamId,jdbcType=BIGINT},
+            #{downstreamSettleMode,jdbcType=VARCHAR},
+            #{status,jdbcType=VARCHAR},
+            #{tsc,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.Order" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into hs_ying_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="deptId != null">deptId,</if>
+            <if test="teamId != null">teamId,</if>
+            <if test="creatorId != null">creatorId,</if>
+            <if test="ownerId != null">ownerId,</if>
+            <if test="mainAccounting != null">mainAccounting,</if>
+            <if test="line != null">line,</if>
+            <if test="cargoType != null">cargoType,</if>
+            <if test="upstreamId != null">upstreamId,</if>
+            <if test="upstreamSettleMode != null">upstreamSettleMode,</if>
+            <if test="downstreamId != null">downstreamId,</if>
+            <if test="downstreamSettleMode != null">downstreamSettleMode,</if>
+            <if test="status != null">status,</if>
+            <if test="tsc != null">tsc,</if>
+            <if test="tsu != null">tsu,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="deptId != null">#{deptId,jdbcType=BIGINT},</if>
+            <if test="teamId != null">#{teamId,jdbcType=BIGINT},</if>
+            <if test="creatorId != null">#{creatorId,jdbcType=BIGINT},</if>
+            <if test="ownerId != null">#{ownerId,jdbcType=BIGINT},</if>
+            <if test="mainAccounting != null">#{mainAccounting,jdbcType=BIGINT},</if>
+            <if test="line != null">#{line,jdbcType=VARCHAR},</if>
+            <if test="cargoType != null">#{cargoType,jdbcType=VARCHAR},</if>
+            <if test="upstreamId != null">#{upstreamId,jdbcType=BIGINT},</if>
+            <if test="upstreamSettleMode != null">#{upstreamSettleMode,jdbcType=VARCHAR},</if>
+            <if test="downstreamId != null">#{downstreamId,jdbcType=BIGINT},</if>
+            <if test="downstreamSettleMode != null">#{downstreamSettleMode,jdbcType=VARCHAR},</if>
+            <if test="status != null">#{status,jdbcType=VARCHAR},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="tsu != null">#{tsu,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.same.entity.Order">
+        update hs_ying_order
+        <set>
+            <if test="deptId != null">deptId = #{deptId,jdbcType=BIGINT},</if>
+            <if test="teamId != null">teamId = #{teamId,jdbcType=BIGINT},</if>
+            <if test="creatorId != null">creatorId = #{creatorId,jdbcType=BIGINT},</if>
+            <if test="ownerId != null">ownerId = #{ownerId,jdbcType=BIGINT},</if>
+            <if test="mainAccounting != null">mainAccounting = #{mainAccounting,jdbcType=BIGINT},</if>
+            <if test="line != null">line = #{line,jdbcType=VARCHAR},</if>
+            <if test="cargoType != null">cargoType = #{cargoType,jdbcType=VARCHAR},</if>
+            <if test="upstreamId != null">upstreamId = #{upstreamId,jdbcType=BIGINT},</if>
+            <if test="upstreamSettleMode != null">upstreamSettleMode = #{upstreamSettleMode,jdbcType=VARCHAR},</if>
+            <if test="downstreamId != null">downstreamId = #{downstreamId,jdbcType=BIGINT},</if>
+            <if test="downstreamSettleMode != null">downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR}, </if>
+            <if test="status != null">status = #{status,jdbcType=VARCHAR},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.Order">
+        UPDATE hs_ying_order
+        SET deptId               = #{deptId,jdbcType=BIGINT},
+            teamId               = #{teamId,jdbcType=BIGINT},
+            creatorId            = #{creatorId,jdbcType=BIGINT},
+            ownerId              = #{ownerId,jdbcType=BIGINT},
+            mainAccounting       = #{mainAccounting,jdbcType=BIGINT},
+            line                 = #{line,jdbcType=VARCHAR},
+            cargoType            = #{cargoType,jdbcType=VARCHAR},
+            upstreamId           = #{upstreamId,jdbcType=BIGINT},
+            upstreamSettleMode   = #{upstreamSettleMode,jdbcType=VARCHAR},
+            downstreamId         = #{downstreamId,jdbcType=BIGINT},
+            downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR},
+            status               = #{status,jdbcType=VARCHAR},
+            tsc                  = #{tsc,jdbcType=TIMESTAMP},
+            tsu                  = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="transfer">
+        UPDATE
+            hs_ying_order
+        SET
+            ownerId = #{to,jdbcType=BIGINT},
+            tsu     = current_timestamp
+        WHERE
+            orderId = #{orderId, jdbcType=BIGINT}
+            AND ownerId = #{from,jdbcType=BIGINT}
+    </update>
+
+</mapper>
