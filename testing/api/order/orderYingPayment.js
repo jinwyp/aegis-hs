@@ -364,13 +364,12 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
                     "hsId" : 1,
                     "skCompanyId" : 1,
                     "huankuankDate" : "2017-09-01 00:00:00",
-                    "huankuanAmount" : "10000",
+                    "huankuanPrincipal" : "10000",
                     "huankuanInterest" : "100",
                     "huankuanFee" : "10",
                     "orderId" : 1,
                     "huankuanMapList" : [
                         {
-                            "orderId" : 1,
                             "fukuanId" : 1,
                             "principal" : 10000,
                             "interest" : 10000.2,
@@ -399,13 +398,12 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
                     "hsId" : 1,
                     "skCompanyId" : 1,
                     "huankuankDate" : "2017-09-01 00:00:00",
-                    "huankuanAmount" : "10000",
+                    "huankuanPrincipal" : "10000",
                     "huankuanInterest" : "100",
                     "huankuanFee" : "10",
                     "orderId" : 1,
                     "huankuanMapList" : [
                         {
-                            "orderId" : 1,
                             "fukuanId" : 1,
                             "principal" : 10000,
                             "interest" : 10000.2

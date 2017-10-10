@@ -6,7 +6,7 @@
                 <bs-select formControlName="skCompanyId" [fc]="repaymentHKForm.get('skCompanyId')" [label]="'资金方:'" [dirty]="ignoreDirty" [options]="partyList" [error]="repaymentHKFormError.skCompanyId"></bs-select>
                 <bs-datepicker formControlName="huankuankDate" [fc]="repaymentHKForm.get('huankuankDate')" [label]="'还款日期:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuankDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
 
-                <bs-text-input formControlName="huankuanAmount" [fc]="repaymentHKForm.get('huankuanAmount')" [type]="'number'" [label]="'还款总额:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanAmount"></bs-text-input>
+                <bs-text-input formControlName="huankuanPrincipal" [fc]="repaymentHKForm.get('huankuanPrincipal')" [type]="'number'" [label]="'还款本金:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanPrincipal"></bs-text-input>
                 <bs-text-input formControlName="huankuanInterest" [fc]="repaymentHKForm.get('huankuanInterest')" [type]="'number'" [label]="'还款利息:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanInterest" ></bs-text-input>
                 <bs-text-input formControlName="huankuanFee" [fc]="repaymentHKForm.get('huankuanFee')" [type]="'text'" [label]="'还款服务费:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanFee" ></bs-text-input>
 
@@ -75,7 +75,7 @@
                         <th>资金方</th>
 
                         <th>还款日期</th>
-                        <th>还款总额</th>
+                        <th>还款本金</th>
                         <th>还款利息</th>
                         <th>还款服务费</th>
                         <th></th>
@@ -88,7 +88,7 @@
                         <td> {{shipping.skCompanyId | findKey : partyList : 'name'}}</td>
 
                         <td> {{shipping.huankuankDate }}</td>
-                        <td> {{shipping.huankuanAmount }}</td>
+                        <td> {{shipping.huankuanPrincipal }}</td>
                         <td> {{shipping.huankuanInterest }}</td>
                         <td> {{shipping.huankuanFee}}</td>
 
