@@ -42,27 +42,4 @@ public class PageYingOrderDTO extends BaseFilter<PageYingOrderDTO> {
 
     private LocalDateTime createDateEnd;
 
-    @Override
-    public String getCountSql(String sql) {
-        String nsql = new SQL() {
-            {
-                SELECT("*");
-                FROM("hs_ying_order");
-                if (deptId != null) { WHERE("deptId = ?"); }
-                if (teamId != null) { WHERE( "teamId = ?"); }
-                if (creatorId != null ) { WHERE( "creatorId = ?"); }
-                if (ownerId != null ) { WHERE( "ownerId = ?"); }
-                if (mainAccounting != null ) { WHERE( "mainAccounting = ?"); }
-                if (cargoType != null ) { WHERE( "cargoType = ?"); }
-                if (upstreamId != null ) { WHERE( "upstreamId = ?"); }
-                if (downstreamId != null ) { WHERE( "downstreamId = ?"); }
-                if (status != null ) { WHERE( "status = ?"); }
-                if (createDateStart != null) { WHERE( "tsc >= ?"); }
-                if (createDateEnd != null) { WHERE( "tsc <= ?"); }
-                WHERE( "deleted = 0");
-            }
-        }.toString();
-        String countSql =  super.getCountSql(nsql);
-        return countSql;
-    }
 }

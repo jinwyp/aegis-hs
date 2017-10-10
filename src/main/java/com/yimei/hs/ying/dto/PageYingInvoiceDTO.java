@@ -30,31 +30,8 @@ public class PageYingInvoiceDTO extends BaseFilter<PageYingInvoiceDTO> {
 
     private Long receiverId;
 
-    @Override
-    public String getCountSql(String sql) {
 
-       System.out.println("orignal sql = " + sql);
-        String nsql = new SQL() {
-            {
-                SELECT("*");
-                FROM("hs_ying_invoice");
-                if (orderId != null) { WHERE("orderId = ?"); }
-                if (hsId != null) { WHERE("hsId = ?"); }
-                if (invoiceType != null) { WHERE("invoiceType = ?"); }
-                if (openDate != null) { WHERE( "openDate = ?"); }
-                if (openCompanyId != null) { WHERE("openCompanyId = ?"); }
-                if (receiverId != null) { WHERE("receiverId = ?"); }
-                WHERE( "deleted = 0");
-            }
-        }.toString();
 
-        String countSql =  super.getCountSql(nsql);
-         System.out.println("count sql = " + countSql);
-        return countSql;
-    }
 
-//    static public String getUrlTemplate() {
-//        return "orderId=order"
-//    }
 
 }
