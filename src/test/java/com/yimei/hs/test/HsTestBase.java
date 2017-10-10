@@ -4,12 +4,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.same.entity.Order;
+import com.yimei.hs.same.entity.OrderConfig;
+import com.yimei.hs.same.entity.OrderParty;
 import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.util.Digests;
 import com.yimei.hs.util.Encodes;
+import com.yimei.hs.ying.entity.*;
 import org.slf4j.Logger;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
@@ -68,6 +72,17 @@ abstract public class HsTestBase {
     protected ParameterizedTypeReference<Result<Page<Team>>> typeReferenceTeamPage  = new ParameterizedTypeReference<Result<Page<Team>>>() {};
     protected ParameterizedTypeReference<Result<Page<Dept>>> typeReferenceDeptPage  = new ParameterizedTypeReference<Result<Page<Dept>>>() {};
     protected ParameterizedTypeReference<Result<Page<Party>>> typeReferencePartyPage  = new ParameterizedTypeReference<Result<Page<Party>>>() {};
+
+
+
+    protected ParameterizedTypeReference<Result<Order>> typeReferenceOrder  = new ParameterizedTypeReference<Result<Order>>() {};
+    protected ParameterizedTypeReference<Result<OrderConfig>> typeReferenceOrderConfig  = new ParameterizedTypeReference<Result<OrderConfig>>() {};
+    protected ParameterizedTypeReference<Result<OrderParty>> typeReferenceOrderParty  = new ParameterizedTypeReference<Result<OrderParty>>() {};
+
+    protected ParameterizedTypeReference<Result<Page<Order>>> typeReferenceOrderPage  = new ParameterizedTypeReference<Result<Page<Order>>>() {};
+    protected ParameterizedTypeReference<Result<Page<OrderConfig>>> typeReferenceOrderConfigPage  = new ParameterizedTypeReference<Result<Page<OrderConfig>>>() {};
+    protected ParameterizedTypeReference<Result<Page<OrderParty>>> typeReferenceOrderPartyPage  = new ParameterizedTypeReference<Result<Page<OrderParty>>>() {};
+
 
     public void createUser(String phone, String password) {
 

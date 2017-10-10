@@ -15,6 +15,7 @@ import com.yimei.hs.util.WebUtils;
 import com.yimei.hs.ying.dto.*;
 import com.yimei.hs.ying.entity.*;
 import org.assertj.core.util.Lists;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -37,7 +38,6 @@ import java.util.Map;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = HsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-// @Transactional(readOnly = true)
 public class UserControllerTest extends YingTestBase {
 
     @Autowired
