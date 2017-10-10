@@ -24,27 +24,6 @@ public class PageYingHuankuanDTO extends BaseFilter<PageYingHuankuanDTO> {
     private LocalDateTime huankuanDate;
     private BigDecimal huankuanPrincipal;
 
-    /**
-     * @param sql
-     * @return
-     */
-    @Override
-    public String getCountSql(String sql) {
 
-        String nsql = new SQL() {{
-            SELECT("*");
-            FROM("hs_ying_huankuan");
-            if (orderId != null) { WHERE("orderId = ?"); }
-            if (hsId != null) { WHERE("hsId = ?"); }
-            if (skCompanyId != null) { WHERE("skCompanyId = ?"); }
-            if (huankuanDate != null) { WHERE("huankuanDate =?"); }
-            if (huankuanPrincipal != null) { WHERE("huankuanPrincipal = ?"); }
-            WHERE( "deleted = 0");
-        }}.toString();
-
-        String countSql = super.getCountSql(nsql);
-        // System.out.println("count sql = " + countSql);
-        return countSql;
-    }
 
 }
