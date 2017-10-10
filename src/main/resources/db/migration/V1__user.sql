@@ -30,6 +30,8 @@ create table hs_team (
   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
+alter table hs_team add foreign key(deptId) references hs_dept(id);
+
 
 -- 外部客户: 上游、下游、贸易商, 运输方, 资金方, ccs账务公司
 create table hs_party (
