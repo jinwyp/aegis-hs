@@ -527,7 +527,7 @@ public class UserControllerTest extends YingTestBase {
             // todo 陆彪
             List<YingHuankuanMap> hukuanMapList = new ArrayList<>();
             YingHuankuanMap map = new YingHuankuanMap();
-            map.setOrderId(1L);
+            // map.setOrderId(1L);
             map.setFukuanId(1L);
             map.setPrincipal(new BigDecimal("510000"));
             map.setInterest(new BigDecimal("1700.02"));
