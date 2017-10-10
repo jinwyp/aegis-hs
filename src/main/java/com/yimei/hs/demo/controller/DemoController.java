@@ -20,6 +20,18 @@ import java.util.List;
 @RequestMapping("/demo/{businessType}")
 public class DemoController {
 
+
+    /**
+     * @return
+     */
+    @GetMapping(value = "/normal/{bt}s/abc")
+    public ResponseEntity<Result<Integer>> bt(
+            @PathVariable("bt") BusinessType businessType
+    ) {
+        return Result.ok(1);
+    }
+
+
     /**
      * @return
      */

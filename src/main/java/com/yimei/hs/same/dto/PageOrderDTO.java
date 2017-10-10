@@ -1,6 +1,7 @@
 package com.yimei.hs.same.dto;
 
 import com.yimei.hs.boot.persistence.BaseFilter;
+import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.OrderStatus;
 import lombok.Data;
@@ -17,6 +18,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class PageOrderDTO extends BaseFilter<PageOrderDTO> {
+
+    private BusinessType businessType;
 
     private Long deptId;
 

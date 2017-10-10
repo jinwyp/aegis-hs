@@ -16,8 +16,8 @@ public class OrderConfigService {
     @Autowired
     OrderConfigMapper orderConfigMapper;
 
-    public Page<OrderConfig> getPage(PageOrderConfigDTO pageOrerConfigDTO) {
-        return orderConfigMapper.getPage(pageOrerConfigDTO);
+    public Page<OrderConfig> getPage(PageOrderConfigDTO pageOrderConfigDTO) {
+        return orderConfigMapper.getPage(pageOrderConfigDTO);
     }
 
     public int create(OrderConfig orderConfig) {

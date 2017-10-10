@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.ying.mapper.YingOrderConfigMapper">
+<mapper namespace="com.yimei.hs.same.mapper.OrderConfigMapper">
     <resultMap id="BaseResultMap" type="com.yimei.hs.same.entity.OrderConfig">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
@@ -20,14 +20,14 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from hs_ying_order_config
+        from hs_same_order_config
         where id = #{id,jdbcType=BIGINT}
     </select>
 
     <select id="getPage" resultType="com.yimei.hs.same.entity.OrderConfig">
         SELECT
         <include refid="Base_Column_List"/>
-        from hs_ying_order_config
+        from hs_same_order_config
         <where>
             <if test="orderId!=null">AND orderId = #{orderId, jdbcType=BIGINT}</if>
         </where>
@@ -36,26 +36,26 @@
     <select id="getList" resultType="com.yimei.hs.same.entity.OrderConfig">
         SELECT
         <include refid="Base_Column_List"/>
-        from hs_ying_order_config
+        from hs_same_order_config
         WHERE
         orderId = #{orderId, jdbcType=BIGINT}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        DELETE FROM hs_ying_order_config
+        DELETE FROM hs_same_order_config
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
     <!-- 逻辑删除 按业务线-->
     <update id="deleteByOrderId" parameterType="java.lang.Long">
-        UPDATE hs_ying_order_config
+        UPDATE hs_same_order_config
         SET deleted = 1, tsu = current_timestamp
         WHERE orderId = #{orderId,jdbcType=BIGINT}
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.same.entity.OrderConfig" useGeneratedKeys="true"
             keyProperty="id">
-        INSERT INTO hs_ying_order_config (
+        INSERT INTO hs_same_order_config (
             id,
             orderId,
             hsMonth,
@@ -81,7 +81,7 @@
 
     <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.OrderConfig" useGeneratedKeys="true"
             keyProperty="id">
-        insert into hs_ying_order_config
+        insert into hs_same_order_config
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="orderId != null">orderId,</if>
@@ -108,7 +108,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.same.entity.OrderConfig">
-        update hs_ying_order_config
+        update hs_same_order_config
         <set>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="hsMonth != null">hsMonth = #{hsMonth,jdbcType=CHAR},</if>
@@ -125,7 +125,7 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.OrderConfig">
-        UPDATE hs_ying_order_config
+        UPDATE hs_same_order_config
         SET
             hsMonth              = #{hsMonth,jdbcType=CHAR},
             maxPrepayRate        = #{maxPrepayRate,jdbcType=DECIMAL},

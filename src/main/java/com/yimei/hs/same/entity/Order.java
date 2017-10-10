@@ -2,6 +2,7 @@ package com.yimei.hs.same.entity;
 
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
+import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.OrderStatus;
 import com.yimei.hs.enums.SettleMode;
@@ -24,6 +25,9 @@ public class Order implements Serializable {
 
     @NotNull(groups = {UpdateGroup.class}, message = "id不能为空")
     private Long id;
+
+    @NotNull(groups = {CreateGroup.class}, message = "业务线类型不能为空")
+    private BusinessType businessType;
 
     @NotNull(groups = {CreateGroup.class}, message = "部门编号不能为空")
     private Long deptId;

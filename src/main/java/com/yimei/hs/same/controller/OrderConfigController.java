@@ -48,7 +48,7 @@ public class OrderConfigController {
     /**
      * 创建核算月配置
      *
-     * @param yingOrderConfig
+     * @param orderConfig
      * @return
      */
     @PostMapping("/{morderId}/units")
@@ -56,15 +56,15 @@ public class OrderConfigController {
     public ResponseEntity<Result<OrderConfig>> create(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
-            @RequestBody OrderConfig yingOrderConfig) {
+            @RequestBody OrderConfig orderConfig) {
 
-        yingOrderConfig.setOrderId(morderId);
-        int rtn = orderConfigService.create(yingOrderConfig);
+        orderConfig.setOrderId(morderId);
+        int rtn = orderConfigService.create(orderConfig);
         if (rtn != 1) {
-            logger.error("创建失败: {}", yingOrderConfig);
+            logger.error("创建失败: {}", orderConfig);
             return Result.error(5001, "创建失败", HttpStatus.NOT_FOUND);
         } else {
-            return Result.ok(yingOrderConfig);
+            return Result.ok(orderConfig);
         }
     }
 
@@ -80,12 +80,12 @@ public class OrderConfigController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id
     ) {
-        OrderConfig yingOrderConfig = orderConfigService.findOne(id);
+        OrderConfig orderConfig = orderConfigService.findOne(id);
 
-        if (yingOrderConfig == null) {
+        if (orderConfig == null) {
             return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
         } else {
-            return Result.ok(yingOrderConfig);
+            return Result.ok(orderConfig);
         }
     }
 
@@ -95,15 +95,15 @@ public class OrderConfigController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id,
-            @RequestBody @Validated(UpdateGroup.class) OrderConfig yingOrderConfig) {
+            @RequestBody @Validated(UpdateGroup.class) OrderConfig orderConfig) {
 
 
-        logger.debug("yingOrderConfig-====>" + id);
-        yingOrderConfig.setId(id);
-        yingOrderConfig.setOrderId(morderId);
+        logger.debug("orderConfig-====>" + id);
+        orderConfig.setId(id);
+        orderConfig.setOrderId(morderId);
 
-        logger.debug("yingOrderConfig-====>" + yingOrderConfig);
-        int status = orderConfigService.update(yingOrderConfig);
+        logger.debug("orderConfig-====>" + orderConfig);
+        int status = orderConfigService.update(orderConfig);
         if (status == 1) {
             return Result.ok(1);
         } else {

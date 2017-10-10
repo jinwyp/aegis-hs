@@ -1,7 +1,6 @@
 package com.yimei.hs.same.service;
 
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.same.mapper.OrderPartyMapper;
 import com.yimei.hs.same.dto.PageOrderPartyDTO;
 import com.yimei.hs.same.entity.OrderParty;
 import com.yimei.hs.same.mapper.OrderPartyMapper;

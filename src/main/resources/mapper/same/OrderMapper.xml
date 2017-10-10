@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.ying.mapper.YingOrderMapper">
+<mapper namespace="com.yimei.hs.same.mapper.OrderMapper">
 
     <resultMap id="BaseResultMap" type="com.yimei.hs.same.entity.Order">
         <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="businessType" jdbcType="VARCHAR" property="businessType"/>
         <result column="deptId" jdbcType="BIGINT" property="deptId"/>
         <result column="teamId" jdbcType="BIGINT" property="teamId"/>
         <result column="creatorId" jdbcType="BIGINT" property="creatorId"/>
@@ -21,7 +22,7 @@
 
 
     <!-- 一个订单记录: 包含的多个核算月配置， 以及多个参与方-->
-    <resultMap id="YingOrderResultMap" type="com.yimei.hs.same.entity.Order" autoMapping="true">
+    <resultMap id="OrderResultMap" type="com.yimei.hs.same.entity.Order" autoMapping="true">
         <result property="id" column="t1id"/>
 
         <collection property="orderConfigList" javaType="ArrayList" ofType="com.yimei.hs.same.entity.OrderConfig"
@@ -41,11 +42,11 @@
 
 
     <sql id="Base_Column_List">
-        id, deptId, teamId, creatorId, ownerId, mainAccounting, line, cargoType, upstreamId,
+        id, businessType, deptId, teamId, creatorId, ownerId, mainAccounting, line, cargoType, upstreamId,
         upstreamSettleMode, downstreamId, downstreamSettleMode, status, tsc, tsu
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="YingOrderResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="OrderResultMap">
         SELECT
             t1.id      AS t1id,
             t1.deptId,
@@ -79,22 +80,23 @@
             t3.customerId,
             t3.tsc     AS t3tsc
 
-        FROM hs_ying_order t1
-            LEFT JOIN hs_ying_order_config t2 ON t1.id = t2.orderId
-            LEFT JOIN hs_ying_order_party t3 ON t1.id = t2.orderId
+        FROM hs_same_order t1
+            LEFT JOIN hs_same_order_config t2 ON t1.id = t2.orderId
+            LEFT JOIN hs_same_order_party t3 ON t1.id = t2.orderId
         WHERE
             t1.id = #{id, jdbcType=BIGINT}
-            AND t1.deleted = 0
+            AND t1.deleted = 0 AND t1.businessType = #{businessType,jdbcType=VARCHAR}
     </select>
 
     <select id="getPage"  resultType="com.yimei.hs.same.entity.Order">
         SELECT
         <include refid="Base_Column_List"/>
 
-        FROM hs_ying_order
+        FROM hs_same_order
 
         <where>
             <if test="true">AND deleted = 0</if>
+            <if test="businessType!=null">AND businessType = #{businessType, jdbcType=BIGINT}</if>
             <if test="deptId!=null">AND deptId = #{deptId, jdbcType=BIGINT}</if>
             <if test="cargoType!=null">AND cargoType = #{cargoType, jdbcType=VARCHAR}</if>
             <if test="creatorId!=null">AND creatorId = #{creatorId, jdbcType=BIGINT}</if>
@@ -112,27 +114,28 @@
 
     <select id="hasOrder" resultType="java.lang.Boolean">
         SELECT count(id)
-        FROM hs_ying_order
+        FROM hs_same_order
         WHERE ownerId = #{ownerId} AND id = #{orderId}
               AND deleted = 0
     </select>
 
     <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        DELETE FROM hs_ying_order
+        DELETE FROM hs_same_order
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
     <!-- 逻辑删除 -->
     <update id="delete" parameterType="java.lang.Long">
-        UPDATE hs_ying_order
+        UPDATE hs_same_order
         SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.same.entity.Order" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO hs_ying_order (
+        INSERT INTO hs_same_order (
             id,
+            businessType,
             deptId,
             teamId,
             creatorId,
@@ -149,6 +152,7 @@
         )
         VALUES (
             #{id,jdbcType=BIGINT},
+            #{businessType},
             #{deptId,jdbcType=BIGINT},
             #{teamId,jdbcType=BIGINT},
             #{creatorId,jdbcType=BIGINT},
@@ -166,7 +170,7 @@
     </insert>
     <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.Order" useGeneratedKeys="true"
             keyProperty="id">
-        insert into hs_ying_order
+        insert into hs_same_order
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="deptId != null">deptId,</if>
@@ -203,7 +207,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.same.entity.Order">
-        update hs_ying_order
+        update hs_same_order
         <set>
             <if test="deptId != null">deptId = #{deptId,jdbcType=BIGINT},</if>
             <if test="teamId != null">teamId = #{teamId,jdbcType=BIGINT},</if>
@@ -224,7 +228,7 @@
     </update>
 
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.Order">
-        UPDATE hs_ying_order
+        UPDATE hs_same_order
         SET deptId               = #{deptId,jdbcType=BIGINT},
             teamId               = #{teamId,jdbcType=BIGINT},
             creatorId            = #{creatorId,jdbcType=BIGINT},
@@ -244,7 +248,7 @@
 
     <update id="transfer">
         UPDATE
-            hs_ying_order
+            hs_same_order
         SET
             ownerId = #{to,jdbcType=BIGINT},
             tsu     = current_timestamp

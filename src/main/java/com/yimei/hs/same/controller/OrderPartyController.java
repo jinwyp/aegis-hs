@@ -4,6 +4,7 @@ import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.ying.dto.PageYingOrderPartyDTO;
 import com.yimei.hs.ying.entity.YingOrderParty;
 import com.yimei.hs.ying.service.YingPartyService;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by hary on 2017/9/25.
  */
 
-@RequestMapping("/api/ying")
+@RequestMapping("/api/business/{businessType}")
 @RestController
 @Logined
 public class OrderPartyController {
@@ -33,6 +34,7 @@ public class OrderPartyController {
      */
     @GetMapping("/{morderId}/parties")
     public ResponseEntity<Result<Page<YingOrderParty>>> list(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             PageYingOrderPartyDTO pageYingOrderPartyDTO
     ) {
@@ -46,6 +48,7 @@ public class OrderPartyController {
      */
     @PutMapping("/{morderId}/parties/{id}")
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id,
             @RequestBody @Validated(UpdateGroup.class) YingOrderParty yingOrderParty
@@ -67,6 +70,7 @@ public class OrderPartyController {
      */
     @DeleteMapping("/{morderId}/parties/{id}")
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id
     ) {

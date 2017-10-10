@@ -6,11 +6,12 @@ import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.OrderStatus;
+import com.yimei.hs.same.dto.PageOrderDTO;
+import com.yimei.hs.same.entity.Order;
+import com.yimei.hs.same.service.OrderService;
 import com.yimei.hs.user.entity.User;
-import com.yimei.hs.ying.dto.PageYingOrderDTO;
-import com.yimei.hs.ying.entity.YingOrder;
-import com.yimei.hs.ying.service.YingOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by hary on 2017/9/15.
  */
-@RequestMapping("/api/yings")
+@RequestMapping("/api/business/{businessType}s")
 @RestController
 @Logined
 public class OrderController {
@@ -31,7 +32,7 @@ public class OrderController {
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
     @Autowired
-    private YingOrderService yingOrderService;
+    private OrderService orderService;
 
     /**
      * 获取订单分页数据
@@ -39,16 +40,17 @@ public class OrderController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<Result<Page<YingOrder>>> list(
+    public ResponseEntity<Result<Page<Order>>> list(
             @CurrentUser User user,
-            PageYingOrderDTO pageYingOrderDTO
+            @PathVariable("businessType") BusinessType businessType,
+            PageOrderDTO pageOrderDTO
     ) {
         // 如果不是管理员， 就只展示自己的订单
         if (!user.getIsAdmin()) {
-            pageYingOrderDTO.setOwnerId(user.getId());
+            pageOrderDTO.setOwnerId(user.getId());
         }
 
-        return Result.ok(yingOrderService.getPage(pageYingOrderDTO));
+        return Result.ok(orderService.getPage(pageOrderDTO));
     }
 
     /**
@@ -58,8 +60,11 @@ public class OrderController {
      * @return
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Result<YingOrder>> read(@PathVariable("id") long id) {
-        YingOrder order = yingOrderService.findOne(id);
+    public ResponseEntity<Result<Order>> read(
+            @PathVariable("businessType") BusinessType businessType,
+            @PathVariable("id") long id
+    ) {
+        Order order = orderService.findOne(id);
         if (order == null) {
             return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
         } else {
@@ -74,9 +79,10 @@ public class OrderController {
      */
     @PostMapping
     @Transactional(readOnly = false)
-    public ResponseEntity<Result<YingOrder>> create(
+    public ResponseEntity<Result<Order>> create(
             @CurrentUser User user,
-            @RequestBody @Validated(CreateGroup.class) YingOrder order) {
+            @PathVariable("businessType") BusinessType businessType,
+            @RequestBody @Validated(CreateGroup.class) Order order) {
         order.setCreatorId(user.getId());
         order.setOwnerId(user.getId());
         order.setDeptId(user.getDeptId());
@@ -84,7 +90,7 @@ public class OrderController {
 
         int rtn;
         try {
-            rtn = yingOrderService.create(order);
+            rtn = orderService.create(order);
         } catch (Exception e) {
             System.out.println("------------------------------------------");
             return Result.error(4001, "创建失败", HttpStatus.BAD_REQUEST);
@@ -106,11 +112,11 @@ public class OrderController {
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("id") long id,
-            @RequestBody @Validated(UpdateGroup.class) YingOrder yingOrder
+            @RequestBody @Validated(UpdateGroup.class) Order order
     ) {
-        yingOrder.setId(id);
-        int rtn = yingOrderService.update(yingOrder);
-        logger.error("yingOrder" + yingOrder);
+        order.setId(id);
+        int rtn = orderService.update(order);
+        logger.error("order" + order);
         if (rtn != 1) {
             return Result.error(4001, "更新失败");
         }
@@ -131,7 +137,7 @@ public class OrderController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("toId") Long toId
     ) {
-        int cnt = yingOrderService.updateTransfer(morderId, user.getId(), toId);
+        int cnt = orderService.updateTransfer(morderId, user.getId(), toId);
         if (cnt != 1) {
             return Result.error(4001, "转移失败", HttpStatus.NOT_FOUND);
         }
@@ -149,7 +155,7 @@ public class OrderController {
     public ResponseEntity<Result<Integer>> delete(
             @PathVariable("id") Long id
     ) {
-        int rtn = yingOrderService.delete(id);
+        int rtn = orderService.delete(id);
         return Result.ok(1);
     }
 
