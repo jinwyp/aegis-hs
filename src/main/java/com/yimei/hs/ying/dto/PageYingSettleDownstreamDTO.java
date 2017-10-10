@@ -22,25 +22,5 @@ public class PageYingSettleDownstreamDTO extends BaseFilter<PageYingSettleDownst
     private Long hsId;
     private LocalDateTime settleDate;
 
-    /**
-     * @param sql
-     * @return
-     */
-    @Override
-    public String getCountSql(String sql) {
-
-        String nsql = new SQL() {{
-            SELECT("*");
-            FROM("hs_ying_settle_downstream");
-            if (orderId != null) { WHERE("orderId = ?"); }
-            if (hsId != null) { WHERE("hsId = ？"); }
-            if (settleDate != null) { WHERE("settleDate = ？"); }
-            WHERE( "deleted = 0");
-        }}.toString();
-
-        String countSql = super.getCountSql(nsql);
-        // System.out.println("count sql = " + countSql);
-        return countSql;
-    }
 
 }
