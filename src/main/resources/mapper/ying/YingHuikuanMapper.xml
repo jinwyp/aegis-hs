@@ -163,7 +163,7 @@
         fukuan.capitalId,
         fukuan.useInterest,
         fukuan.useDays,
-        fukuan.tsc
+        fukuan.tsc,
         fukuan.tsu
         FROM hs_ying_huikuan_map map
         LEFT JOIN hs_ying_fukuan fukuan ON map.fukuanId = fukuan.id
