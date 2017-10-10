@@ -152,9 +152,9 @@
     <!-- 依据回款id, 找出回款对应的付款列表-->
     <select id="getFukuanListByHuikuanId" resultType="com.yimei.hs.ying.entity.YingFukuan">
         SELECT
-        fukuan.id
-        fukuan.orderId
-        fukuan.hsId
+        fukuan.id,
+        fukuan.orderId,
+        fukuan.hsId,
         fukuan.payDate,
         fukuan.receiveCompanyId,
         fukuan.payUsage,
