@@ -66,7 +66,7 @@
                     autoMapping="true">
             <id property="huankuanId" column="huankuanId"/>
             <id property="principal" column="principal"/>
-            <id property="amount" column="huankuanmap_amount"/>      <!-- 本金+利息 -->
+            <id property="interest" column="huankuanmap_interest"/>      <!-- 利息 -->
         </collection>
 
     </resultMap>
@@ -119,14 +119,14 @@
 
 
             huankuanmap.principal,
-            huankuanmap.amount AS huankuanmap_amount,
+            huankuanmap.interest AS huankuanmap_interest,
 
             huankuan.id        AS huankuan_id,
             huankuan.orderId   AS huankuan_orderId,
             huankuan.hsId      AS huankuan_hsId,
             huankuan.skCompanyId,
             huankuan.huankuankDate,
-            huankuan.huankuanAmount,
+            huankuan.huankuanPrincipal,
             huankuan.huankuanInterest,
             huankuan.huankuanFee,
             huankuan.tsc       AS huankuan_tsc,

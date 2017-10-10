@@ -185,7 +185,7 @@ create table hs_ying_huankuan (
 
    skCompanyId bigint(20)  not null comment '收款单位(资金方), 只有外部资金的情况, 才存在还款',
    huankuankDate datetime  not null comment '还款日期',
-   huankuanAmount decimal(10,2)  not null comment '还款总额',
+   huankuanPrincipal decimal(10,2)  not null comment '还款本金',
    huankuanInterest decimal(10, 2) not null comment '还款利息',
    huankuanFee decimal(10, 2) not null comment '还款服务费',
    deleted tinyint(1)               not null default 0 comment '是否删除',
@@ -209,7 +209,7 @@ create table hs_ying_huankuan_map (
   huankuanId bigint(20)    not null comment '还款id',
   fukuanId  bigint(20)     not null comment '还款对应的付款id',
   principal decimal(10, 2) not null comment '本金',
-  amount decimal(10, 2)    not null comment '本金+利息',
+  interest decimal(10, 2)    not null comment '利息',
   deleted tinyint(1)               not null default 0 comment '是否删除',
   tsc timestamp            not null default current_timestamp,
   tsu timestamp not null default current_timestamp,

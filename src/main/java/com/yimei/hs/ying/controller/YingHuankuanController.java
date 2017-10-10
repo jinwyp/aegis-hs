@@ -91,8 +91,9 @@ public class YingHuankuanController {
 
 
         // 2. 校验 所有还款map明细的amount汇总校验
-        BigDecimal inTotal = yingHuankuan.getHuankuanMapList().stream().map(m -> m.getAmount()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
-        if (inTotal.compareTo(yingHuankuan.getHuankuanAmount()) != 0) {
+        BigDecimal inTotal = yingHuankuan.getHuankuanMapList().stream().map(m -> m.getPrincipal()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
+
+        if (inTotal.compareTo(yingHuankuan.getHuankuanPrincipal()) != 0) {
             return Result.error(4001, "invalid request: 所有还款map明细的amount汇总校验");
         }
 
