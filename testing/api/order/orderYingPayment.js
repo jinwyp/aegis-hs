@@ -367,7 +367,14 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
                     "huankuanAmount" : "10000",
                     "huankuanInterest" : "100",
                     "huankuanFee" : "10",
-                    "orderId" : 1
+                    "orderId" : 1,
+                    "huankuanMapList" : [
+                        {
+                            "fukuanId" : 1,
+                            "principal" : 10000,
+                            "amount" : 10000.2,
+                        }
+                    ]
                 }
             )
             .expect('Content-Type', /json/)
@@ -394,7 +401,14 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
                     "huankuanAmount" : "10000",
                     "huankuanInterest" : "100",
                     "huankuanFee" : "10",
-                    "orderId" : 1
+                    "orderId" : 1,
+                    "huankuanMapList" : [
+                        {
+                            "fukuanId" : 1,
+                            "principal" : 10000,
+                            "amount" : 10000.2,
+                        }
+                    ]
                 }
             )
             .expect('Content-Type', /json/)
