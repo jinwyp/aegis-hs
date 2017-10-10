@@ -1,5 +1,6 @@
 package com.yimei.hs.ying.controller;
 
+import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
@@ -73,7 +74,9 @@ public class YingOrderController {
      */
     @PostMapping
     @Transactional(readOnly = false)
-    public ResponseEntity<Result<YingOrder>> create(@CurrentUser User user, @RequestBody YingOrder order) {
+    public ResponseEntity<Result<YingOrder>> create(
+            @CurrentUser User user,
+            @RequestBody @Validated(CreateGroup.class) YingOrder order) {
         order.setCreatorId(user.getId());
         order.setOwnerId(user.getId());
         order.setDeptId(user.getDeptId());

@@ -13,7 +13,6 @@
 
     <groupId>com.yimei</groupId>
     <artifactId>aegis-hs</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>aegis-hs</name>
