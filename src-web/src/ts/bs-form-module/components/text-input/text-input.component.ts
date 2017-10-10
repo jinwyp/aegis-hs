@@ -45,7 +45,7 @@ export class TextInputComponent implements ControlValueAccessor, OnInit, OnChang
     }
 
     ngOnInit() {
-        // console.log('ngOnInit')
+        // console.log('ngOnInit', this.additionalContent)
         this.labelId = 'id_' + this.getRandomInt()
     }
 
@@ -57,11 +57,11 @@ export class TextInputComponent implements ControlValueAccessor, OnInit, OnChang
             if (changes.hasOwnProperty(propertyName)) {
                 const currentChangeObject = changes[propertyName]
 
-                if (currentChangeObject.currentValue && currentChangeObject.isFirstChange) {
-                    // console.log('currentChangeObject firstChange: ', currentChangeObject)
-                }else {
-                    // console.log('currentChangeObject secondChange: ', currentChangeObject)
-                }
+                // if (currentChangeObject.currentValue && currentChangeObject.isFirstChange) {
+                //     console.log('currentChangeObject firstChange: ', propertyName, currentChangeObject)
+                // }else {
+                //     console.log('currentChangeObject secondChange: ', propertyName, currentChangeObject)
+                // }
 
             }
         }

@@ -1,0 +1,21 @@
+<div class="form-group row" >
+    <label class="{{labelClass}} col-form-label">{{label}}</label>
+    <div class="{{inputClass}}">
+
+        <label class="custom-control custom-checkbox" *ngFor="let item of optionListCopy" >
+            <input type="checkbox" class="custom-control-input" [checked]="item.checked" (click)="getCurrentOption(item)">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">{{item.name}}</span>
+        </label>
+
+
+
+        <div class="invalid-feedback" *ngIf="error">
+            <span *ngIf="error"> {{error}} </span>
+            <span *ngIf="!error">
+                <span *ngIf="currentFormControl.hasError('required')"> 该项是必填项！</span>
+            </span>
+        </div>
+    </div>
+
+</div>

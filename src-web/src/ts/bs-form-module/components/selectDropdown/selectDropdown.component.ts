@@ -1,7 +1,4 @@
-import {
-    Component, OnInit, Input, Output, forwardRef, ElementRef, ViewChild, OnChanges, SimpleChange,
-    EventEmitter
-} from '@angular/core'
+import {Component, OnInit, Input, Output, forwardRef, ElementRef, ViewChild, OnChanges, SimpleChange, EventEmitter} from '@angular/core'
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
 
 @Component({
@@ -24,24 +21,31 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
     @Input('fc') currentFormControl: FormControl = new FormControl()
     @Input() label: string
-    @Input() prompt: string = ''
+    @Input() prompt: string = '请选择'
     @Input() addAllOptions: boolean = false
 
+
     @Input('options') optionList: any[]
+
+    @Input() editable: boolean = false
 
     @Input() error: string = ''
 
     @Input('labelclass') labelClass: string = 'col-2'
     @Input('inputclass') inputClass: string = 'col-6'
 
-    @Output() change: any                = new EventEmitter<any>()
+
+    @Output() change: any = new EventEmitter<any>()
 
     @ViewChild('optionsListEl') optionsListEl: ElementRef
 
-    interValueCurrentSelected : any = { id : -1 , name : this.prompt || '请选择'}
+    interValueCurrentSelected : any = { id : -1 , name : '请选择'}
 
     isShowSelectOptionList: boolean = false
-    currentSelectByKeyboard: number =  -1
+    currentSelectIndexByKeyboard: number =  -1
+
+    filterOptionList: any = []
+
 
     constructor(
         private el: ElementRef
@@ -51,7 +55,6 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
     ngOnInit(): void {
         // console.log('ngOnInit', this.el.nativeElement)
-
     }
 
 
@@ -75,10 +78,11 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
                         this.optionList.unshift({ id : '' , name : '全部' })
                     }
 
+                    this.filterOptionList = this.optionList.slice()
+
                     this.writeValue(this.interValueCurrentSelected.id)
                 }
             }
-
         }
     }
 
@@ -87,22 +91,65 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
         this.isShowSelectOptionList = !this.isShowSelectOptionList
     }
 
+    filterOptions(event: KeyboardEvent) {
 
+        if (event.keyCode !== 13 && event.keyCode !== 38 && event.keyCode !== 40)  {
+            this.isShowSelectOptionList = true
 
-    getCurrentOption(currentOption: any) {
-        this.value = currentOption
-        this.isShowSelectOptionList = false
-        this.currentSelectByKeyboard = this.optionList.indexOf(currentOption)
+            const inputText: string = (<HTMLInputElement>event.target).value
+            const tempOptions: any[] = this.optionList.slice()
 
-        this.change.emit(currentOption)
+            if (inputText.trim()) {
+
+                for (let i = this.optionList.length - 1; i >= 0; i --) {
+
+                    if ( this.optionList[i].name.indexOf(inputText) === -1 ) {
+                        tempOptions.splice(i, 1)
+                    }
+                }
+            }
+
+            this.filterOptionList = tempOptions
+
+            if (tempOptions.length === 0) {
+                this.currentSelectIndexByKeyboard = -1
+            } else {
+                this.currentSelectIndexByKeyboard = 0
+            }
+
+        }
+
     }
 
 
-    //点击选择框以外区域,select选择框隐藏
+    clickOption(currentOption: any) {
+        this.value = currentOption
+        this.isShowSelectOptionList = false
+        this.currentSelectIndexByKeyboard = this.filterOptionList.indexOf(currentOption)
+
+        if (this.currentSelectIndexByKeyboard === -1) {
+            this.filterOptionList = this.optionList.slice()
+        }
+
+        this.change.emit(currentOption)
+
+        // console.log('clickCurrentOption', currentOption, this.currentSelectIndexByKeyboard)
+    }
+
+
+    //点击选择框以外区域,select选择框隐藏, 并重置数据
     onClickHideSelect(event: any) {
 
         if (!this.optionsListEl.nativeElement.contains(event.target)) {
             this.isShowSelectOptionList = false
+
+
+            if (this.currentSelectIndexByKeyboard === -1 ) {
+                this.clickOption({ id : -1 , name : ''})
+
+            } else {
+                this.clickOption(this.filterOptionList[this.currentSelectIndexByKeyboard])
+            }
         }
     }
 
@@ -111,37 +158,43 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
         if ( this.isShowSelectOptionList) {
 
-            const optionsLength = this.optionList.length
+            const optionsLength = this.filterOptionList.length
+
             if ( event.keyCode === 40) {
                 //下
 
-                if ( this.currentSelectByKeyboard < optionsLength - 1) {
-                    this.currentSelectByKeyboard ++
+                if ( this.currentSelectIndexByKeyboard < optionsLength - 1) {
+                    this.currentSelectIndexByKeyboard ++
 
                 }else {
-                    this.currentSelectByKeyboard = 0
+                    this.currentSelectIndexByKeyboard = 0
                 }
             }else if (event.keyCode === 38) {
                 //上
 
-                if ( this.currentSelectByKeyboard < 1) {
-                    this.currentSelectByKeyboard = optionsLength - 1
+                if ( this.currentSelectIndexByKeyboard < 1) {
+                    this.currentSelectIndexByKeyboard = optionsLength - 1
                 }else {
-                    this.currentSelectByKeyboard --
+                    this.currentSelectIndexByKeyboard --
                 }
 
             }else if (event.keyCode === 13) {
                 //enter
 
-                this.getCurrentOption(this.optionList[this.currentSelectByKeyboard])
+                if (this.currentSelectIndexByKeyboard === -1 ) {
+                    this.clickOption({ id : -1 , name : ''})
+
+                } else {
+                    this.clickOption(this.filterOptionList[this.currentSelectIndexByKeyboard])
+                }
             }
 
         }
     }
 
 
-    onChange (value : any) {}
-    onTouched () {}
+    onChange (value : any) { return }
+    onTouched () { return }
 
     get value() {
         // console.log('getter: ', this.interValueCurrentSelected)
@@ -172,7 +225,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
         if (Array.isArray(this.optionList)) {
 
-            let tempValue = { id : -1 , name : this.prompt || '请选择'}
+            let tempValue = { id : -1 , name : ''}
 
             this.optionList.forEach( option => {
                 if (option.id === value) {
@@ -181,7 +234,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
             })
 
             this.value = tempValue
-            this.currentSelectByKeyboard = this.optionList.indexOf(this.value)
+            this.currentSelectIndexByKeyboard = this.optionList.indexOf(this.value)
         }
     }
 
