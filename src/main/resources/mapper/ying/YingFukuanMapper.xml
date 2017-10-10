@@ -77,56 +77,70 @@
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
+        SELECT
 
-        huikuanmap.amount as huikuanmap_amount,
-
-        huikuan.id as huikuan_id,
-        huikuan.orderId as huikuan_orderId,
-        huikuan.hsId as huikuan_hsId,
-        huikuan.huikuanCompanyId,
-        huikuan.huikuanDate,
-        huikuan.huikuanAmount,
-        huikuan.huikuanUsage,
-        huikuan.huikuanMode,
-        huikuan.huikuanBankPaper,
-        huikuan.huikuanBankPaperDate,
-        huikuan.huikuanBankDiscount,
-        huikuan.huikuanBankDiscountRate,
-        huikuan.huikuanBankPaperExpire,
-        huikuan.huikuanBusinessPaper,
-        huikuan.huikuanBusinessPaperDate,
-        huikuan.huikuanBusinessDiscount,
-        huikuan.huikuanBusinessDiscountRate,
-        huikuan.huikuanBusinessPaperExpire,
-        huikuan.tsc as huikuan_tsc,
-        huikuan.tsu as huikuan_tsu,
+            fukuan.id,
+            fukuan.orderId,
+            fukuan.hsId,
+            fukuan.payDate,
+            fukuan.receiveCompanyId,
+            fukuan.payUsage,
+            fukuan.payAmount,
+            fukuan.payMode,
+            fukuan.capitalId,
+            fukuan.useInterest,
+            fukuan.useDays,
+            fukuan.tsc,
+            fukuan.tsu,
 
 
-        huankuanmap.principal,
-        huankuanmap.amount as huankuanmap_amount,
+            huikuanmap.amount  AS huikuanmap_amount,
 
-        huankuan.id as huankuan_id,
-        huankuan.orderId as huankuan_orderId,
-        huankuan.hsId as huankuan_hsId,
-        huankuan.skCompanyId,
-        huankuan.huankuankDate,
-        huankuan.huankuanAmount,
-        huankuan.huankuanInterest,
-        huankuan.huankuanFee,
-        huankuan.tsc as huankuan_tsc,
-        huankuan.tsu as huankuan_tsu
+            huikuan.id         AS huikuan_id,
+            huikuan.orderId    AS huikuan_orderId,
+            huikuan.hsId       AS huikuan_hsId,
+            huikuan.huikuanCompanyId,
+            huikuan.huikuanDate,
+            huikuan.huikuanAmount,
+            huikuan.huikuanUsage,
+            huikuan.huikuanMode,
+            huikuan.huikuanBankPaper,
+            huikuan.huikuanBankPaperDate,
+            huikuan.huikuanBankDiscount,
+            huikuan.huikuanBankDiscountRate,
+            huikuan.huikuanBankPaperExpire,
+            huikuan.huikuanBusinessPaper,
+            huikuan.huikuanBusinessPaperDate,
+            huikuan.huikuanBusinessDiscount,
+            huikuan.huikuanBusinessDiscountRate,
+            huikuan.huikuanBusinessPaperExpire,
+            huikuan.tsc        AS huikuan_tsc,
+            huikuan.tsu        AS huikuan_tsu,
 
 
-        from hs_ying_fukuan fukuan
-        LEFT JOIN hs_ying_huikuan_map huikuanmap on fukuan.id = huikuanmap.fukuanId
-        LEFT JOIN hs_ying_huikuan huikuan on huikuanmap.huikuanId = huikuan.id
+            huankuanmap.principal,
+            huankuanmap.amount AS huankuanmap_amount,
 
-        LEFT JOIN hs_ying_huankuan_map huankuanmap on fukuan.id = huankuanmap.fukuanId
-        LEFT JOIN hs_ying_huankuan huankuan on huankuanmap.huankuanId = huankuan.id
+            huankuan.id        AS huankuan_id,
+            huankuan.orderId   AS huankuan_orderId,
+            huankuan.hsId      AS huankuan_hsId,
+            huankuan.skCompanyId,
+            huankuan.huankuankDate,
+            huankuan.huankuanAmount,
+            huankuan.huankuanInterest,
+            huankuan.huankuanFee,
+            huankuan.tsc       AS huankuan_tsc,
+            huankuan.tsu       AS huankuan_tsu
 
-        where id = #{id,jdbcType=BIGINT} and deleted = 0
+
+        FROM hs_ying_fukuan fukuan
+            LEFT JOIN hs_ying_huikuan_map huikuanmap ON fukuan.id = huikuanmap.fukuanId
+            LEFT JOIN hs_ying_huikuan huikuan ON huikuanmap.huikuanId = huikuan.id
+
+            LEFT JOIN hs_ying_huankuan_map huankuanmap ON fukuan.id = huankuanmap.fukuanId
+            LEFT JOIN hs_ying_huankuan huankuan ON huankuanmap.huankuanId = huankuan.id
+
+        WHERE fukuan.id = #{id,jdbcType=BIGINT} AND fukuan.deleted = 0
     </select>
 
     <!-- 获取付款分页 -->
@@ -190,7 +204,8 @@
             payMode, capitalId,
             useInterest,
             useDays,
-            tsc
+            tsc,
+            tsu
         )
         VALUES (
             #{id,jdbcType=BIGINT},
@@ -204,7 +219,8 @@
             #{capitalId,jdbcType=BIGINT},
             #{useInterest,jdbcType=DECIMAL},
             #{useDays,jdbcType=INTEGER},
-            #{tsc,jdbcType=TIMESTAMP}
+            #{tsc,jdbcType=TIMESTAMP},
+            current_timestamp
         )
     </insert>
     <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingFukuan" keyProperty="id"
@@ -223,6 +239,7 @@
             <if test="useInterest != null">useInterest,</if>
             <if test="useDays != null">useDays,</if>
             <if test="tsc != null">tsc,</if>
+            <if test="tsu != null">tsu,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id,jdbcType=BIGINT},</if>
@@ -237,6 +254,7 @@
             <if test="useInterest != null">#{useInterest,jdbcType=DECIMAL},</if>
             <if test="useDays != null">#{useDays,jdbcType=INTEGER},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+            current_timestamp
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingFukuan">
@@ -253,7 +271,7 @@
             <if test="useInterest != null">useInterest = #{useInterest,jdbcType=DECIMAL},</if>
             <if test="useDays != null">useDays = #{useDays,jdbcType=INTEGER},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
-            <if test="true">tsc = current_timestamp,</if>
+            <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>

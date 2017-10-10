@@ -104,55 +104,8 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 
-    <resultMap id="YingHuikuanResultMap" type="com.yimei.hs.ying.entity.YingHuikuan" autoMapping="true">
-
-        <result property="id" column="t1Id"/>
-        <result property="orderId" column="t1orderId"/>
-        <result property="tsc" column="t1tsc"/>
-
-        <collection property="fukuanList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingFukuan"
-                    autoMapping="true">
-            <id property="id" column="t2Id"/>
-            <id property="orderId" column="t2orderId"/>
-            <id property="hsId" column="t2hsId"/>
-            <id property="tsc" column="t2tsc"/>
-        </collection>
-
-    </resultMap>
 
 
-    <select id="getList" resultMap="YingHuikuanResultMap">
-
-        SELECT
-        id AS t1id,
-        orderId as t1orderId,
-        huikuanId,
-        fukuanId,
-        amount,
-        t1.tsc as t1tsc,
-
-
-        t2.id as t2id,
-        t2.orderId as t2orderId,
-        t2.hsId as t2hsId,
-        t2.payDate,
-        t2.receiveCompanyId,
-        t2.payUsage,
-        t2.payAmount,
-        t2.payMode,
-        t2.capitalId,
-        t2.useInterest,
-        t2.useDays,
-        t2.tsc as t2tsc,
-
-
-        FROM hs_ying_huikuan_map t1
-        LEFT JOIN hs_ying_fukuan t2 ON t1.fukuanId = t2.id
-        <where>
-            <if test="1==1">t1.deleted = 0</if>
-            <if test="orderId!=null">AND t1.huikuanid=#{huikuanid}</if>
-        </where>
-    </select>
 
     <select id="getListByFukuanId" resultType="com.yimei.hs.ying.entity.YingHuikuanMap">
         SELECT

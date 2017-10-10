@@ -38,12 +38,20 @@ public class YingHuikuanService {
     @Autowired
     private YingLogService yingLogService;
 
+    /**
+     *
+     * @param pageYingHuikuanDTO
+     * @return
+     */
     public Page<YingHuikuan> getPage(PageYingHuikuanDTO pageYingHuikuanDTO) {
 
+        // 获取回款列表
         Page<YingHuikuan> yingHuikuanPage=yingHuikuanMapper.getPage(pageYingHuikuanDTO);
 
+        // 对每一笔回款， 获取对应的付款列表
         for (YingHuikuan yingHuikuan:yingHuikuanPage.getResults()) {
-            yingHuikuan.setFukuanList(yingHuikuanMapMapper.getList(yingHuikuan.getId()));
+            List<YingFukuan> fukuans = yingHuikuanMapper.getFukuanListByHuikuanId(yingHuikuan.getId());
+            yingHuikuan.setFukuanList(fukuans);
         }
         return yingHuikuanPage;
     }
