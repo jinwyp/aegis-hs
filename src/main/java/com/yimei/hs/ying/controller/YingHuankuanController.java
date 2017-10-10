@@ -86,24 +86,23 @@ public class YingHuankuanController {
             @RequestBody @Validated(CreateGroup.class) YingHuankuan yingHuankuan
     ) {
 
-
-        // 2. 找出当前订单付款记录-还款尚未对应完成的记录j
+        // 1. 找出当前订单付款记录-还款尚未对应完成的记录j
         List<YingFukuan> fukuans = yingFukuanService.huankuanUnfinished(yingHuankuan.getOrderId());
 
 
-//        // 3. 校验 1
-//        BigDecimal inTotal = yingHuankuan.getHuankuanMapList().stream().map(m -> m.getAmount()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
-//        if (inTotal.compareTo(yingHuankuan.getHuankuanAmount()) != 0) {
-//            return Result.error(4001, "invalid request");
-//        }
-//
-//        // 3. 校验 2
-//        BigDecimal pTotal = yingHuankuan.getHuankuanMapList().stream().map(m -> m.getPrincipal()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
-//        if (pTotal.compareTo(yingHuankuan.getHuankuanAmount()
-//                .subtract(yingHuankuan.getHuankuanInterest())
-//                .subtract(yingHuankuan.getHuankuanFee())) != 0) {
-//            return Result.error(4001, "invalid request");
-//        }
+        // 2. 校验 1
+        BigDecimal inTotal = yingHuankuan.getHuankuanMapList().stream().map(m -> m.getAmount()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
+        if (inTotal.compareTo(yingHuankuan.getHuankuanAmount()) != 0) {
+            return Result.error(4001, "invalid request");
+        }
+
+        // 3. 校验 2
+        BigDecimal pTotal = yingHuankuan.getHuankuanMapList().stream().map(m -> m.getPrincipal()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
+        if (pTotal.compareTo(yingHuankuan.getHuankuanAmount()
+                .subtract(yingHuankuan.getHuankuanInterest())
+                .subtract(yingHuankuan.getHuankuanFee())) != 0) {
+            return Result.error(4001, "invalid request");
+        }
 
         int rtn = yingHuankuanService.create(yingHuankuan);
         if (rtn != 1) {

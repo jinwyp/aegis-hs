@@ -17,7 +17,7 @@ create table hs_ying_order (
    status varchar(32)               not null comment '订单状态: 完结, 未完结',
    deleted tinyint(1)               not null default 0 comment '是否删除',
    tsc timestamp                    not null default current_timestamp,
-   tsu timestamp,
+  tsu timestamp not null default current_timestamp,
    primary key (id)
 ) engine=InnoDB default charset=utf8;
 
@@ -31,7 +31,8 @@ create table hs_ying_order_party (
    customerId bigint(20) not null comment '业务线(订单)关联的其他账务公司',
    deleted tinyint(1)          not null default 0 comment '逻辑删除',
    tsc timestamp         not null default current_timestamp,
-   tsu timestamp,
+  tsu timestamp not null default current_timestamp,
+
    primary key (id)
 )engine=InnoDB default charset=utf8;
 
@@ -48,7 +49,8 @@ create table hs_ying_order_config (
    weightedPrice  decimal(10, 2)              not null comment '加权单价',
    deleted tinyint(1)          not null default 0 comment '逻辑删除',
    tsc timestamp                       not null default current_timestamp,
-   tsu timestamp,
+  tsu timestamp not null default current_timestamp,
+
    primary key (id)
 )engine=InnoDB default charset=utf8;
 
@@ -73,7 +75,8 @@ create table hs_ying_fayun (
 
   deleted tinyint(1)              not null default 0 comment '逻辑删除',
   tsc timestamp                   not null default current_timestamp,
-  tsu timestamp,
+  tsu timestamp not null default current_timestamp,
+
   primary key (id)
 )engine=InnoDB default charset=utf8;
 
@@ -93,7 +96,7 @@ create table hs_ying_fukuan (
   useDays int                             comment '当资金方为非自由资金时: 外部资金使用利率',
   deleted tinyint(1)               not null default 0 comment '是否删除',
   tsc timestamp                  not null default current_timestamp,
-  tsu timestamp,
+  tsu timestamp not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
 
@@ -123,7 +126,7 @@ create table hs_ying_huikuan (
 
    deleted tinyint(1)               not null default 0 comment '是否删除',
    tsc timestamp                    not null default current_timestamp,
-   tsu timestamp,
+   tsu timestamp not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
 
@@ -136,7 +139,8 @@ create table hs_ying_huikuan_map (
    amount decimal(10,2)  not null comment '回款-付款 对应金额',
    deleted tinyint(1)               not null default 0 comment '是否删除',
    tsc timestamp         not null default current_timestamp,
-   tsu timestamp,
+  tsu timestamp not null default current_timestamp,
+
    primary key (id)
 )engine=InnoDB default charset=utf8;
 
@@ -153,7 +157,8 @@ create table hs_ying_huankuan (
    huankuanFee decimal(10, 2) not null comment '还款服务费',
    deleted tinyint(1)               not null default 0 comment '是否删除',
    tsc timestamp           not null default current_timestamp,
-   tsu timestamp,
+  tsu timestamp not null default current_timestamp,
+
    primary key (id)
 )engine=InnoDB default charset=utf8;
 
@@ -169,7 +174,8 @@ create table hs_ying_huankuan_map (
   amount decimal(10, 2)    not null comment '本金+利息',
   deleted tinyint(1)               not null default 0 comment '是否删除',
   tsc timestamp            not null default current_timestamp,
-  tsu timestamp,
+  tsu timestamp not null default current_timestamp,
+
   primary key (id)
 )engine=InnoDB default charset=utf8;
 
@@ -190,7 +196,8 @@ create table hs_ying_settle_upstream (
 
    deleted tinyint(1)               not null default 0 comment '是否删除',
    tsc timestamp             not null default current_timestamp,
-   tsu timestamp,
+  tsu timestamp not null default current_timestamp,
+
    primary key (id)
 )engine=InnoDB default charset=utf8;
 
@@ -208,7 +215,8 @@ create table hs_ying_settle_downstream (
 
    deleted tinyint(1)               not null default 0 comment '是否删除',
    tsc timestamp             not null default current_timestamp,
-   tsu timestamp,
+  tsu timestamp not null default current_timestamp,
+
    primary key (id)
 )engine=InnoDB default charset=utf8;
 
@@ -241,7 +249,8 @@ create table hs_ying_settle_traffic (
 
   deleted tinyint(1)               not null default 0 comment '是否删除',
   tsc timestamp               not null default current_timestamp,
-  tsu timestamp,
+  tsu timestamp not null default current_timestamp,
+
   primary key (id)
 )engine=InnoDB default charset=utf8;
 
@@ -255,7 +264,7 @@ create table hs_ying_fee (
   amount decimal(10, 2)      not null comment '金额',
   deleted tinyint(1)          not null default 0 comment '逻辑删除',
   tsc timestamp              not null default current_timestamp,
-  tsu timestamp,
+  tsu timestamp not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
 
@@ -272,7 +281,8 @@ create table hs_ying_invoice (
   receiverId  bigint(20)        not null comment '收票单位',
   deleted tinyint(1)          not null default 0 comment '逻辑删除',
   tsc timestamp                 not null default current_timestamp,
-  tsu timestamp,
+  tsu timestamp not null default current_timestamp,
+
   primary key (id)
 )engine=InnoDB default charset=utf8;
 
@@ -286,7 +296,8 @@ create table hs_ying_invoice_detail (
   priceAndTax decimal(10,2)  not null comment '价税合计',
   deleted tinyint(1)          not null default 0 comment '逻辑删除',
   tsc timestamp              not null default current_timestamp,
-  tsu timestamp,
+  tsu timestamp not null default current_timestamp,
+
   primary key (id)
 )engine=InnoDB default charset=utf8;;
 
@@ -312,7 +323,8 @@ create table hs_ying_log (
   memo varchar(128)       not null comment '修改日志',
   deleted tinyint(1)          not null default 0 comment '逻辑删除',
   tsc timestamp           not null default current_timestamp,
-  tsu timestamp,
+  tsu timestamp not null default current_timestamp,
+
   primary key (id)
 )engine=InnoDB default charset=utf8;
 

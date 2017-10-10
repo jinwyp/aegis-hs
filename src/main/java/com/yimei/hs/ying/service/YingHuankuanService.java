@@ -60,8 +60,6 @@ public class YingHuankuanService {
             return 0;
         }
 
-
-
         for (YingHuankuanMap map : yingHuankuan.getHuankuanMapList()) {
             yingHuankuanMapMapper.insert(map);
         }
