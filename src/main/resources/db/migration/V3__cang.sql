@@ -24,7 +24,8 @@ alter table hs_cang_order add foreign key(downstreamId)   references hs_party(id
 alter table hs_cang_order add foreign key(mainAccounting) references hs_party(id);
 alter table hs_cang_order add foreign key(creatorId)      references hs_user(id);
 alter table hs_cang_order add foreign key(ownerId)        references hs_user(id);
-
+alter table hs_cang_order add foreign key(teamId)        references hs_team(id);
+alter table hs_cang_order add foreign key(deptId)        references hs_dept(id);
 
 
 -- 业务订单-其他参与方
