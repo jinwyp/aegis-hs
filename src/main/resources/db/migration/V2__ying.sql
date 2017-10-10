@@ -185,11 +185,7 @@ create table hs_ying_huankuan (
 
    skCompanyId bigint(20)  not null comment '收款单位(资金方), 只有外部资金的情况, 才存在还款',
    huankuankDate datetime  not null comment '还款日期',
-<<<<<<< HEAD
    huankuanPrincipal decimal(10,2)  not null comment '还款本金',
-=======
-   huankuanAmount decimal(10,2)  not null comment '还款总额 = 本金+利息',
->>>>>>> 79959e8db537acb816d49212e199c1e2455fd06d
    huankuanInterest decimal(10, 2) not null comment '还款利息',
    huankuanFee decimal(10, 2) not null comment '还款服务费',
    deleted tinyint(1)               not null default 0 comment '是否删除',
@@ -273,8 +269,8 @@ create table hs_ying_settle_downstream (
 alter table hs_ying_settle_downstream add foreign key(orderId) references hs_ying_order(id);
 alter table hs_ying_settle_downstream add foreign key(hsId)    references hs_ying_order_config(id);
 
----- 应收订单 - 下游结算-发运map
---create table hs_ying_settle_downstream_map (
+-- 应收订单 - 下游结算-发运map
+-- create table hs_ying_settle_downstream_map (
 --   id bigint(20)             not null auto_increment,
 --  orderId bigint(20)         not null ,
 --
@@ -287,7 +283,7 @@ alter table hs_ying_settle_downstream add foreign key(hsId)    references hs_yin
 --   tsu timestamp,
 --
 --   primary key (id)
---)engine=InnoDB default charset=utf8;
+-- )engine=InnoDB default charset=utf8;
 
 -- 应收订单 - 运输方结算
 create table hs_ying_settle_traffic (
