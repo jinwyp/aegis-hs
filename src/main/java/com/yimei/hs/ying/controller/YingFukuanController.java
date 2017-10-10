@@ -48,7 +48,7 @@ public class YingFukuanController {
      * @return
      */
     @GetMapping("/{morderId}/fukuans")
-    public ResponseEntity<PageResult<YingFukuan>> list(
+    public ResponseEntity<Result<Page<YingFukuan>>> list(
             @PathVariable("morderId") Long morderId,
             PageYingFukuanDTO pageYingFukuanDTO) {
 
@@ -58,13 +58,13 @@ public class YingFukuanController {
                 && pageYingFukuanDTO.getHuikuanUnfinished() != null
                 && pageYingFukuanDTO.getHuikuanUnfinished()
                 ) {
-            return PageResult.error(4001, "参数非法");
+            return Result.error(4001, "参数非法");
         }
 
         pageYingFukuanDTO.setOrderId(morderId);
         Page<YingFukuan> page = yingFukuanService.getPage(pageYingFukuanDTO);
 
-        return PageResult.ok(page);
+        return Result.ok(page);
     }
 
     /**

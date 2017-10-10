@@ -4,6 +4,7 @@ import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.dto.PageYingOrderPartyDTO;
 import com.yimei.hs.ying.entity.YingOrderParty;
 import com.yimei.hs.ying.service.YingPartyService;
@@ -32,12 +33,12 @@ public class YingPartyController {
      * @return
      */
     @GetMapping("/{morderId}/parties")
-    public ResponseEntity<PageResult<YingOrderParty>> list(
+    public ResponseEntity<Result<Page<YingOrderParty>>> list(
             @PathVariable("morderId") Long morderId,
             PageYingOrderPartyDTO pageYingOrderPartyDTO
     ) {
         pageYingOrderPartyDTO.setOrderId(morderId);
-        return PageResult.ok(yingPartyService.getPage(pageYingOrderPartyDTO));
+        return Result.ok(yingPartyService.getPage(pageYingOrderPartyDTO));
     }
 
 

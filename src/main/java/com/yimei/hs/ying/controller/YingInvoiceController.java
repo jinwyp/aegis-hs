@@ -37,14 +37,14 @@ public class YingInvoiceController {
      * @return
      */
     @GetMapping("/{morderId}/invoices")
-    public ResponseEntity<PageResult<YingInvoice>> list(
+    public ResponseEntity<Result<Page<YingInvoice>>> list(
             @PathVariable("morderId") Long morderId,
             PageYingInvoiceDTO pageYingInvoiceDTO
     ) {
         pageYingInvoiceDTO.setOrderId(morderId);
         Page<YingInvoice> page = yingInvoiceService.getPage(pageYingInvoiceDTO);
         logger.info("my invoice page = {}", page) ;
-        return PageResult.ok(page);
+        return Result.ok(page);
     }
 
     /**

@@ -5,6 +5,7 @@ import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.dto.PageYingSettleDownstreamDTO;
 import com.yimei.hs.ying.entity.YingSettleDownstream;
 import com.yimei.hs.ying.service.YingSettleService;
@@ -38,12 +39,12 @@ public class YingSettleDownstreamController {
      * @return
      */
     @GetMapping("/{morderId}/settledownstream")
-    public ResponseEntity<PageResult<YingSettleDownstream>> list(
+    public ResponseEntity<Result<Page<YingSettleDownstream>>> list(
             @PathVariable("morderId") Long morderId,
             PageYingSettleDownstreamDTO pageYingSettleDownstreamDTO
     ) {
         pageYingSettleDownstreamDTO.setOrderId(morderId);
-        return PageResult.ok(yingSettleService.getPageDownstream(pageYingSettleDownstreamDTO));
+        return Result.ok(yingSettleService.getPageDownstream(pageYingSettleDownstreamDTO));
     }
 
     /**

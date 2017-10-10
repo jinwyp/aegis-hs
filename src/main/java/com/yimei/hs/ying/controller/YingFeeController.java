@@ -39,12 +39,12 @@ public class YingFeeController {
      * @return
      */
     @GetMapping("/{morderId}/fees")
-    public ResponseEntity<PageResult<YingFee>> list(
+    public ResponseEntity<Result<Page<YingFee>>> list(
             @PathVariable("morderId") Long morderId,
             PageYingFeeDTO pageYingFeeDTO) {
         pageYingFeeDTO.setOrderId(morderId);
         Page<YingFee> page = yingFeeService.getPage(pageYingFeeDTO);
-        return PageResult.ok(page);
+        return Result.ok(page);
     }
 
     /**

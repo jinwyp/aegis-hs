@@ -55,7 +55,7 @@
             <if test="hsId!=null">AND t1.hsId=#{hsId}</if>
             <if test="skCompanyId!=null">AND t1.skCompanyId=#{skCompanyId}</if>
             <if test="huankuanDate!=null">AND t1.huankuanDate=#{huankuanDate}</if>
-            <if test="huankuanAmount!=null">AND t1.huankuanAmount=#{huankuanAmount}</if>
+            <if test="huankuanPrincipal!=null">AND t1.huankuanPrincipal=#{huankuanPrincipal}</if>
         </where>
     </select>
 

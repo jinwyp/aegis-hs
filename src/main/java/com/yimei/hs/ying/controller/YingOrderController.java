@@ -4,6 +4,7 @@ import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.ying.entity.YingOrder;
 import com.yimei.hs.boot.api.PageResult;
@@ -39,7 +40,7 @@ public class YingOrderController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<PageResult<YingOrder>> list(
+    public ResponseEntity<Result<Page<YingOrder>>> list(
             @CurrentUser User user,
             PageYingOrderDTO pageYingOrderDTO
     ) {
@@ -48,7 +49,7 @@ public class YingOrderController {
             pageYingOrderDTO.setOwnerId(user.getId());
         }
 
-        return PageResult.ok(yingOrderService.getPage(pageYingOrderDTO));
+        return Result.ok(yingOrderService.getPage(pageYingOrderDTO));
     }
 
     /**

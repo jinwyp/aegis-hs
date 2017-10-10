@@ -3,6 +3,7 @@ package com.yimei.hs.ying.controller;
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.PayMode;
 import com.yimei.hs.enums.TrafficMode;
 import com.yimei.hs.ying.entity.YingHuikuan;
@@ -40,12 +41,12 @@ public class YingHuikuanController {
      * @return
      */
     @GetMapping("/{morderId}/huikuans")
-    public ResponseEntity<PageResult<YingHuikuan>> list(
+    public ResponseEntity<Result<Page<YingHuikuan>>> list(
             @PathVariable("morderId") Long morderId,
             PageYingHuikuanDTO pageYingHuikuanDTO)
     {
         pageYingHuikuanDTO.setOrderId(morderId);
-        return PageResult.ok(yingHuikuanService.getPage(pageYingHuikuanDTO));
+        return Result.ok(yingHuikuanService.getPage(pageYingHuikuanDTO));
     }
 
     /**

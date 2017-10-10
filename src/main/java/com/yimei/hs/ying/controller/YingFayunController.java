@@ -42,12 +42,12 @@ public class YingFayunController {
      * @return
      */
     @GetMapping("/{morderId}/fayuns")
-    public ResponseEntity<PageResult<YingFayun>> list(
+    public ResponseEntity<Result<Page<YingFayun>>> list(
             @PathVariable("morderId") Long morderId,
             PageYingFayunDTO pageYingFayunDTO) {
         pageYingFayunDTO.setOrderId(morderId);
         Page<YingFayun> page = yingFayunService.getPage(pageYingFayunDTO);
-        return PageResult.ok(page);
+        return Result.ok(page);
     }
 
     /**
