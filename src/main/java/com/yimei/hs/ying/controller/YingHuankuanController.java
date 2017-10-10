@@ -47,12 +47,7 @@ public class YingHuankuanController {
     public ResponseEntity<Result<Page<YingHuankuan>>> list(
             @PathVariable("morderId") Long morderId,
             PageYingHuankuanDTO pageYingHuankuanDTO) {
-
-//        pageYingHuankuanDTO.setOrderId(morderId);
-//        System.out.println("-------------------------------------------");
-//        System.out.println(pageYingHuankuanDTO);
-//        System.out.println("-------------------------------------------");
-
+        pageYingHuankuanDTO.setOrderId(morderId);
         return Result.ok(yingHuankuanService.getPage(pageYingHuankuanDTO));
     }
 

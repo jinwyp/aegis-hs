@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class YingHuankuanMap implements Serializable {
     private Long id;
 
-    @NotNull(groups = {CreateGroup.class}, message = "业务线id不能为空")
+    // @NotNull(groups = {CreateGroup.class}, message = "业务线id不能为空")
     private Long orderId;
 
     private Long huankuanId;

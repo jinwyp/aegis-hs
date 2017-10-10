@@ -373,7 +373,7 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
                             "orderId" : 1,
                             "fukuanId" : 1,
                             "principal" : 10000,
-                            "amount" : 10000.2,
+                            "interest" : 10000.2,
                         }
                     ]
                 }
@@ -408,7 +408,7 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
                             "orderId" : 1,
                             "fukuanId" : 1,
                             "principal" : 10000,
-                            "amount" : 10000.2
+                            "interest" : 10000.2
                         }
                     ]
                 }

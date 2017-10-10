@@ -24,7 +24,7 @@
                                         <li class="list-group-item mb-2" *ngFor=" let payment of paymentPostList">
                                             ID:{{payment.id}} 付款日期:{{payment.payDate}} 收款单位:{{payment.receiveCompanyId | findKey:partyList:'name'}}
                                             金额:{{payment.payAmount}} 付款方式:{{payment.payMode}}
-                                            对应本金:{{payment.principal}} 对应总计:{{payment.amount}}
+                                            对应本金:{{payment.principal}} 对应利息:{{payment.interest}}
                                             <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delPayment(payment)"> x </button>
                                         </li>
                                     </ul>
@@ -41,7 +41,7 @@
                                     <bs-text-input formControlName="principal" [fc]="paymentForm.get('principal')" [type]="'text'" [prompt]="'本金:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyPayment" [error]="paymentFormError.principal"></bs-text-input>
                                 </div>
                                 <div class="col-2">
-                                    <bs-text-input formControlName="amount" [fc]="paymentForm.get('amount')" [type]="'text'" [prompt]="'总计:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyPayment" [error]="paymentFormError.amount"></bs-text-input>
+                                    <bs-text-input formControlName="interest" [fc]="paymentForm.get('interest')" [type]="'text'" [prompt]="'利息:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyPayment" [error]="paymentFormError.interest"></bs-text-input>
                                 </div>
 
                                 <div class="col-1">

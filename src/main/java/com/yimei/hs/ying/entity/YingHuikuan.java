@@ -74,9 +74,9 @@ public class YingHuikuan implements Serializable {
 
     private LocalDateTime tsu;
 
-    private List<YingFukuan> fukuanList;
+    private static final long serialVersionUID = 1L;
+
+    private List<YingFukuan> fukuanList;  // 对应的付款列表
 
     private BigDecimal fukuanTotal;  // 对应掉的付款总额
-
-    private static final long serialVersionUID = 1L;
 }
