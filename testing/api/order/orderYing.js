@@ -135,7 +135,7 @@ describe('应收订单', function () {
             .set(config.headers)
             .send(
                 {
-                    "deptId" : 2,
+                    "deptId" : 9999,
                     "teamId" : 1,
                     "line" : "嘉瑞 - 那曲 - 山瑞",
                     "cargoType" : "COAL",
@@ -166,8 +166,8 @@ describe('应收订单', function () {
             .set(config.headers)
             .send(
                 {
-                    "deptId" : 2,
-                    "teamId" : 1,
+                    "deptId" : 9999,
+                    "teamId" : 99999,
                     "line" : "嘉瑞 - 那曲 - 山瑞",
                     "cargoType" : "COAL",
                     "upstreamSettleMode" : "ONE_PAPER_SETTLE",

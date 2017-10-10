@@ -27,6 +27,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
     repaymentHKForm: FormGroup
     paymentForm: FormGroup
     ignoreDirty: boolean = false
+    ignoreDirty2: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
@@ -141,7 +142,10 @@ export class RepaymentHuanKuanComponent implements OnInit {
     }
 
     repaymentHKFormError : any = {}
-    paymentFormError : any = {}
+    paymentFormError : any = {
+        principal : 'aa',
+        amount : 'bb'
+    }
     repaymentHKFormValidationMessages: any = {
         'hsId'  : {
             'required'      : '请选择核算月!'
@@ -166,6 +170,12 @@ export class RepaymentHuanKuanComponent implements OnInit {
         'id'  : {
             'required'      : '请选择付款!'
         },
+        'principal'  : {
+            'required'      : '请填写本金!'
+        },
+        'amount'  : {
+            'required'      : '请填写总计!'
+        }
     }
 
     repaymentHKFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
@@ -197,11 +207,13 @@ export class RepaymentHuanKuanComponent implements OnInit {
     createPaymentForm(): void {
 
         this.paymentForm = this.fb.group({
-            'id'    : ['', [Validators.required ] ]
+            'id'    : ['', [Validators.required ] ],
+            'principal'    : ['', [Validators.required ] ],
+            'amount'    : ['', [Validators.required ] ]
         } )
 
         this.paymentForm.valueChanges.subscribe(data => {
-            this.ignoreDirty = false
+            this.ignoreDirty2 = false
             this.paymentFormInputChange(data)
         })
     }
@@ -285,14 +297,17 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
 
     createNewPayment () {
+        this.ignoreDirty2 = true
         if (this.paymentForm.invalid) {
             this.paymentFormInputChange(this.paymentForm.value, true)
-            this.ignoreDirty = true
 
+            this.ignoreDirty2 = true
+            console.log(this.paymentForm.invalid, this.paymentForm.value, this.paymentFormError, this.ignoreDirty2)
             return
         }
 
         this.paymentPostList.push(this.paymentListObject[this.paymentForm.value.id] )
+        // this.ignoreDirty2 = false
     }
 
     delPayment (payment: any) {

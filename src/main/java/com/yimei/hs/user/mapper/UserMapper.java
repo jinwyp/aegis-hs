@@ -3,6 +3,9 @@ package com.yimei.hs.user.mapper;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.user.dto.PageUserDTO;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Long id);
@@ -21,4 +24,5 @@ public interface UserMapper {
 
     User loadByPhone(String phone);
 
+    List<User> getUsersOfSameDept(User user);
 }

@@ -36,6 +36,7 @@ public class YingOrderConfig implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "合同基准利率不能为空")
     private BigDecimal contractBaseInterest;
 
+    @NotNull(groups = {CreateGroup.class}, message = "预计回款天数不能为空")
     private Integer expectHKDays;
 
     @NotNull(groups = {CreateGroup.class}, message = "贸易商加价不能为空")
