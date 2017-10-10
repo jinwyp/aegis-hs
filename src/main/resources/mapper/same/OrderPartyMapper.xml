@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yimei.hs.same.mapper.OrderPartyMapper">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.same.entity.OrderParty">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="custType" jdbcType="VARCHAR" property="custType"/>
+        <result column="customerId" jdbcType="BIGINT" property="customerId"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, orderId, custType, customerId, tsc
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_order_party
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
+    </select>
+
+    <!---->
+    <select id="getPage" resultType="com.yimei.hs.same.entity.OrderParty">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_order_party
+        <where>
+            <if test="true">deleted = 0</if>
+            <if test="orderId!=null">orderId = #{orderId, jdbcType=BIGINT}</if>
+        </where>
+    </select>
+
+    <select id="getList" resultType="com.yimei.hs.same.entity.OrderParty">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_order_party
+       WHERE  orderId=#{orderId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 物理删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM hs_same_order_party
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 逻辑删除 -->
+    <delete id="delete" parameterType="java.lang.Long">
+        UPDATE hs_same_order_party
+        SET deleted = 1, tsu = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.yimei.hs.same.entity.OrderParty" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO hs_same_order_party (
+            id,
+            orderId,
+            custType,
+            customerId,
+            tsc
+        )
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{custType,jdbcType=VARCHAR},
+            #{customerId,jdbcType=BIGINT},
+            #{tsc,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.OrderParty" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into hs_same_order_party
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="custType != null">custType,</if>
+            <if test="customerId != null">customerId,</if>
+            <if test="tsc != null">tsc,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="custType != null">#{custType,jdbcType=VARCHAR},</if>
+            <if test="customerId != null">#{customerId,jdbcType=BIGINT},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.same.entity.OrderParty">
+        update hs_same_order_party
+        <set>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="custType != null">custType = #{custType,jdbcType=VARCHAR},</if>
+            <if test="customerId != null">customerId = #{customerId,jdbcType=BIGINT},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.OrderParty">
+        UPDATE hs_same_order_party
+        SET orderId    = #{orderId,jdbcType=BIGINT},
+            custType   = #{custType,jdbcType=VARCHAR},
+            customerId = #{customerId,jdbcType=BIGINT},
+            tsc        = #{tsc,jdbcType=TIMESTAMP},
+        tsu = CURRENT_TIMESTAMP
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>
