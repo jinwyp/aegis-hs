@@ -75,32 +75,50 @@ public class YingFayunController {
      * @return
      */
     @PostMapping("/{morderId}/fayuns")
-    @Transactional(readOnly =  false)
+    @Transactional(readOnly = false)
     public ResponseEntity<Result<YingFayun>> create(
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingFayun yingFayun
     ) {
 
-        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.MOTOR)&&yingFayun.getUpstreamCars()==null||yingFayun.getUpstreamCars()<=0) {
-            return Result.error(4001, "上游汽运数量不匹配", HttpStatus.BAD_REQUEST);
-        }
-        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.SHIP)&& StringUtils.isEmpty(yingFayun.getUpstreamShip())) {
-            return Result.error(4001, "上游船运名称不能为空", HttpStatus.BAD_REQUEST);
-        }
-        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.RAIL) && StringUtils.isEmpty(yingFayun.getUpstreamJHH())) {
-
-            return Result.error(4001, "上游火运计划号不能为空", HttpStatus.BAD_REQUEST);
+        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.MOTOR)) {
+            if (yingFayun.getUpstreamCars() == null
+                    || yingFayun.getUpstreamCars() <= 0
+                    ) {
+                return Result.error(4001, "上游汽运数量不匹配", HttpStatus.BAD_REQUEST);
+            }
         }
 
-        if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.MOTOR)&&yingFayun.getDownstreamCars()==null||yingFayun.getDownstreamCars()<=0) {
-            return Result.error(4001, "下游汽运数量不匹配", HttpStatus.BAD_REQUEST);
+        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.SHIP)) {
+            if (StringUtils.isEmpty(yingFayun.getUpstreamShip())) {
+                return Result.error(4001, "上游船运名称不能为空", HttpStatus.BAD_REQUEST);
+            }
         }
-        if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.SHIP)&& StringUtils.isEmpty(yingFayun.getDownstreamShip())) {
-            return Result.error(4001, "下游船运名称不能为空", HttpStatus.BAD_REQUEST);
-        }
-        if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.RAIL) && StringUtils.isEmpty(yingFayun.getDownstreamJHH())) {
 
-            return Result.error(4001, "下游火运计划号不能为空", HttpStatus.BAD_REQUEST);
+        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.RAIL)) {
+            if (StringUtils.isEmpty(yingFayun.getUpstreamJHH())) {
+                return Result.error(4001, "上游火运计划号不能为空", HttpStatus.BAD_REQUEST);
+            }
+        }
+
+        if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.MOTOR)) {
+            if (yingFayun.getDownstreamCars() == null
+                    || yingFayun.getDownstreamCars() <= 0
+                    ) {
+                return Result.error(4001, "下游汽运数量不匹配", HttpStatus.BAD_REQUEST);
+            }
+        }
+
+        if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.SHIP)) {
+            if (StringUtils.isEmpty(yingFayun.getDownstreamShip())) {
+                return Result.error(4001, "下游船运名称不能为空", HttpStatus.BAD_REQUEST);
+            }
+        }
+
+        if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.RAIL)) {
+            if (StringUtils.isEmpty(yingFayun.getDownstreamJHH())) {
+                return Result.error(4001, "下游火运计划号不能为空", HttpStatus.BAD_REQUEST);
+            }
         }
         yingFayun.setOrderId(morderId);
         int rtn;
@@ -122,7 +140,7 @@ public class YingFayunController {
      */
     @PutMapping("/{morderId}/fayuns/{id}")
     @Transactional(readOnly = false)
-    public ResponseEntity<Result<Integer>>update(
+    public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id,
             @RequestBody @Validated(UpdateGroup.class) YingFayun yingFayun) {
@@ -136,13 +154,14 @@ public class YingFayunController {
 
     /**
      * 逻辑删除
+     *
      * @param morderId
      * @param id
      * @return
      */
     @DeleteMapping("/{morderId}/fayuns/{id}")
     @Transactional(readOnly = false)
-    public ResponseEntity<Result<Integer>>update(
+    public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id
     ) {
@@ -160,7 +179,7 @@ public class YingFayunController {
     }
 
     /**
-     *  发运统计
+     * 发运统计
      */
     @GetMapping("/{morderId}/fayuns-stat")
     public ResponseEntity<Result<FayunStat>> stat(
