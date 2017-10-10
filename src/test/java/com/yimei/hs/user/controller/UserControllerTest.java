@@ -101,12 +101,12 @@ public class UserControllerTest extends YingTestBase {
         fayun();
         fukuan();
         huikuan();
-        huankuan();
-        upstream();
-        downstream();
-        traffic();
-        fee();
-        invoice();
+//        huankuan();
+//        upstream();
+//        downstream();
+//        traffic();
+//        fee();
+//        invoice();
 
 
     }
@@ -523,6 +523,7 @@ public class UserControllerTest extends YingTestBase {
         // 4. 更新 todo
     }
 
+
     private void huankuan() throws JsonProcessingException {
         // 1. 添加还款
         String huankuanCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huankuans";
@@ -573,6 +574,7 @@ public class UserControllerTest extends YingTestBase {
     }
 
     private void fukuan() throws JsonProcessingException {
+
         // 1. 添加付款
         String fukuanCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/fukuans";
         YingFukuan yingFukuan = new YingFukuan() {{
@@ -615,6 +617,7 @@ public class UserControllerTest extends YingTestBase {
         fukuanVariablesPage.put("orderId", yingOrderResult.getData().getId());
         fukuanVariablesPage.put("pageSize", 5);
         fukuanVariablesPage.put("pageNo", 1);
+
 
         PageResult<YingFukuan> fukuanPageResult = client.exchange(fukuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFukuanPage, fukuanVariablesPage).getBody();
         if (fukuanPageResult.getSuccess()) {
