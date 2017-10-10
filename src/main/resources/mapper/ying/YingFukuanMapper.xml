@@ -147,13 +147,13 @@
         t1.tsu
         from hs_ying_fukuan t1 LEFT JOIN hs_ying_huankuan_map map on t1.id = map.fukuanId
         <where>
-            <if test="1==1">deleted = 0</if>
-            <if test="orderId!=null">and orderId = #{orderId, jdbcType=BIGINT}</if>
-            <if test="hsId!=null">and hsId = #{hsId, jdbcType=BIGINT}</if>
-            <if test="payDate!=null">and payDate = #{payDate, jdbcType=TIMESTAMP}</if>
-            <if test="receiveCompanyId!=null">and receiveCompanyId = #{receiveCompanyId, jdbcType=BIGINT}</if>
+            <if test="true">t1.deleted = 0</if>
+            <if test="orderId!=null">and t1.orderId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="hsId!=null">and t1.hsId = #{hsId, jdbcType=BIGINT}</if>
+            <if test="payDate!=null">and t1.payDate = #{payDate, jdbcType=TIMESTAMP}</if>
+            <if test="receiveCompanyId!=null">and t1.receiveCompanyId = #{receiveCompanyId, jdbcType=BIGINT}</if>
         </where>
-        order by payDate asc
+        order by t1.payDate asc
     </select>
 
     <!-- 获取某个业务线的所有付款 -->
