@@ -9,13 +9,13 @@ import {FormArray, FormGroup} from '@angular/forms'
 
 // Form Validations Error Message Handler
 
-export function formErrorHandler (formData: Object, fb: FormGroup, validationErrorMessage: Object, ignoreDirty : boolean = false) {
+export function formErrorHandler (formData: Object, fb: FormGroup, validationErrorMessage: Object) {
 
     if (!(fb instanceof FormGroup)) { return null }
 
     const errorMessageContainer: Object = {}
 
-    function getValidationErrorMessage (formGroupSource: any, errorMessageInput: any, errorMessageOutput: any,  needDirty : boolean = false) {
+    function getValidationErrorMessage (formGroupSource: any, errorMessageInput: any, errorMessageOutput: any) {
 
         for (const field in formGroupSource.controls) {
 
@@ -33,7 +33,7 @@ export function formErrorHandler (formData: Object, fb: FormGroup, validationErr
 
                     for (let i = 0; i < control.controls.length; i ++) {
                         errorMessageOutput[field].push({})
-                        getValidationErrorMessage(control.controls[i], errorMessageInput[field], errorMessageOutput[field][i], needDirty)
+                        getValidationErrorMessage(control.controls[i], errorMessageInput[field], errorMessageOutput[field][i])
                     }
 
 
@@ -45,29 +45,27 @@ export function formErrorHandler (formData: Object, fb: FormGroup, validationErr
                         errorMessageInput[field] = {}
                     }
 
-                    getValidationErrorMessage(control, errorMessageInput[field], errorMessageOutput[field], needDirty)
+                    getValidationErrorMessage(control, errorMessageInput[field], errorMessageOutput[field])
 
                 }else {
                     if (control && !control.valid) {
                         // console.log('control: ', field, control.errors)
 
-                        if (needDirty || control.dirty) {
+                        for (const key in control.errors) {
 
-                            for (const key in control.errors) {
+                            if (control.errors.hasOwnProperty(key)) {
+                                // console.log('control: ', field, key, control.errors)
 
-                                if (control.errors.hasOwnProperty(key)) {
-                                    // console.log('control: ', field, key, control.errors)
-
-                                    if (typeof errorMessageInput[field] === 'undefined') {
-                                        errorMessageInput[field] = {}
-                                    }
-                                    if (typeof errorMessageInput[field][key] === 'undefined') {
-                                        errorMessageInput[field][key] = field + '.' + key + ' 字段没有定义错误信息'
-                                    }
-                                    errorMessageOutput[field] = errorMessageInput[field][key] + ' '
+                                if (typeof errorMessageInput[field] === 'undefined') {
+                                    errorMessageInput[field] = {}
                                 }
+                                if (typeof errorMessageInput[field][key] === 'undefined') {
+                                    errorMessageInput[field][key] = field + '.' + key + ' 字段没有定义错误信息'
+                                }
+                                errorMessageOutput[field] = errorMessageInput[field][key] + ' '
                             }
                         }
+
                     }
                 }
 
@@ -75,7 +73,7 @@ export function formErrorHandler (formData: Object, fb: FormGroup, validationErr
         }
     }
 
-    getValidationErrorMessage(fb, validationErrorMessage, errorMessageContainer, ignoreDirty)
+    getValidationErrorMessage(fb, validationErrorMessage, errorMessageContainer)
     // console.log('message: ', errorMessageContainer)
 
     return errorMessageContainer
