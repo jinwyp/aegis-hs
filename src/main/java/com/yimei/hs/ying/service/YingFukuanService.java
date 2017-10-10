@@ -163,7 +163,7 @@ public class YingFukuanService {
         int rtn = yingFukuanMapper.insert(yingFukuan);
 
         // 2. 触发回款对应
-        yingHuikuanService.createMapping(yingFukuan.getOrderId());
+        // yingHuikuanService.createMapping(yingFukuan.getOrderId());
 
         return rtn;
     }
