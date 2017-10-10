@@ -90,19 +90,19 @@ public class YingHuankuanController {
         List<YingFukuan> fukuans = yingFukuanService.huankuanUnfinished(yingHuankuan.getOrderId());
 
 
-        // 2. 校验 1
+        // 2. 校验 所有还款map明细的amount汇总校验
         BigDecimal inTotal = yingHuankuan.getHuankuanMapList().stream().map(m -> m.getAmount()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
         if (inTotal.compareTo(yingHuankuan.getHuankuanAmount()) != 0) {
-            return Result.error(4001, "invalid request");
+            return Result.error(4001, "invalid request: 所有还款map明细的amount汇总校验");
         }
 
-        // 3. 校验 2
-        BigDecimal pTotal = yingHuankuan.getHuankuanMapList().stream().map(m -> m.getPrincipal()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
-        if (pTotal.compareTo(yingHuankuan.getHuankuanAmount()
-                .subtract(yingHuankuan.getHuankuanInterest())
-                .subtract(yingHuankuan.getHuankuanFee())) != 0) {
-            return Result.error(4001, "invalid request");
-        }
+//        // 3. 校验 所有还款map明细的本金汇总
+//        BigDecimal pTotal = yingHuankuan.getHuankuanMapList().stream().map(m -> m.getPrincipal()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
+//        if (pTotal.compareTo(yingHuankuan.getHuankuanAmount()
+//                .subtract(yingHuankuan.getHuankuanInterest())
+//                .subtract(yingHuankuan.getHuankuanFee())) != 0) {
+//            return Result.error(4001, "invalid request: 所有还款map明细的本金汇总");
+//        }
 
         int rtn = yingHuankuanService.create(yingHuankuan);
         if (rtn != 1) {

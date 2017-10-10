@@ -103,12 +103,12 @@ public class UserControllerTest extends YingTestBase {
         fukuan();
         huikuan();
         huankuan();
-//        upstream();
-//        downstream();
-//        traffic();
-//        fee();
+        upstream();
+        downstream();
+        traffic();
+        fee();
 
-//        invoice();
+        invoice();
 
 
     }
@@ -532,10 +532,13 @@ public class UserControllerTest extends YingTestBase {
         YingHuankuan huankuan = new YingHuankuan() {{
 
             // todo 陆彪
-            List<YingHuankuanMap> hukuanMap =new ArrayList<>();
-            hukuanMap.add(new YingHuankuanMap());
-            hukuanMap.add(new YingHuankuanMap());
-            hukuanMap.add(new YingHuankuanMap());
+            List<YingHuankuanMap> hukuanMapList =new ArrayList<>();
+            YingHuankuanMap map = new YingHuankuanMap();
+            map.setOrderId(1L);
+            map.setFukuanId(1L);
+            map.setPrincipal(new BigDecimal("510000"));
+            map.setAmount(new BigDecimal("511700.02"));
+            hukuanMapList.add(map);
 
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
@@ -544,7 +547,7 @@ public class UserControllerTest extends YingTestBase {
             setHuankuanAmount(new BigDecimal("511700.02"));
             setHuankuanFee(new BigDecimal("560"));
             setHuankuanInterest(new BigDecimal("1700.02"));
-            setHuankuanMapList(hukuanMap);
+            setHuankuanMapList(hukuanMapList);
 
         }};
         huankuanCreateResult = client.exchange(huankuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huankuan), typeReferenceHuankuan).getBody();
