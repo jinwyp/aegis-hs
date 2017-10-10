@@ -140,7 +140,7 @@
             LEFT JOIN hs_ying_huankuan_map huankuanmap ON fukuan.id = huankuanmap.fukuanId
             LEFT JOIN hs_ying_huankuan huankuan ON huankuanmap.huankuanId = huankuan.id
 
-        WHERE fukuan.id = #{id,jdbcType=BIGINT} AND deleted = 0
+        WHERE fukuan.id = #{id,jdbcType=BIGINT} AND fukuan.deleted = 0
     </select>
 
     <!-- 获取付款分页 -->
