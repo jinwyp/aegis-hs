@@ -94,7 +94,7 @@
         FROM hs_ying_order
 
         <where>
-            <if test="1==1">AND deleted = 0</if>
+            <if test="true">AND deleted = 0</if>
             <if test="deptId!=null">AND deptId = #{deptId, jdbcType=BIGINT}</if>
             <if test="cargoType!=null">AND cargoType = #{cargoType, jdbcType=VARCHAR}</if>
             <if test="creatorId!=null">AND creatorId = #{creatorId, jdbcType=BIGINT}</if>

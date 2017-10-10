@@ -11,6 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -91,6 +94,11 @@ public class YingHuikuanService {
     public void createMapping(Long orderId) {
         // 2. 找出付款尚未完成回款对应的付款记录
         List<YingFukuan> unfinishedFukuan = yingFukuanService.huikuanUnfinished(orderId);
+
+//        if (currentFukuan != null) {
+//            unfinishedFukuan.add(currentFukuan);
+//        }
+
         if (unfinishedFukuan.size() == 0) {
             return;
         }
@@ -100,8 +108,14 @@ public class YingHuikuanService {
 
         List<YingHuikuanMap> toAdd = new ArrayList<>();
 
-        // 1.  找出订单的还款记录 -  尚有未对应完的余额
+        // 1.  找出订单的回款记录 -  尚有未对应完的余额
         List<YingHuikuan> unfinished = yingHuikuanMapper.getUnfinshedByOrderId(orderId);
+
+//        if (current != null) {
+//            unfinished.add(current);
+//        }
+
+        Collections.sort(unfinished, (a, b) -> a.getHuikuanDate().compareTo(b.getHuikuanDate()));
 
         for (YingHuikuan huikuan : unfinished) {
 
@@ -129,6 +143,10 @@ public class YingHuikuanService {
                     break;
                 }
             }
+        }
+
+        for (YingHuikuanMap record : toAdd) {
+            yingHuikuanMapMapper.insert(record);
         }
     }
 }

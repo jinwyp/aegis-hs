@@ -54,7 +54,7 @@
         downstreamShip, tsc
         FROM hs_ying_fayun
         <where>
-            <if test="1==1">and deleted = 0</if>
+            <if test="true">and deleted = 0</if>
             <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
             <if test="fyDate!=null">and fyDate = #{fyDate, jdbcType=TIMESTAMP}</if>
             <if test="hsId!=null">and hsId = #{hsId, jdbcType=VARCHAR}</if>

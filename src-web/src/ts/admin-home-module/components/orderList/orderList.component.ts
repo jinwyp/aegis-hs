@@ -229,7 +229,7 @@ export class OrderListComponent implements OnInit {
 
             'mainAccounting'    : ['', [Validators.required ] ],
             'upstreamId'    : ['', [Validators.required ] ],
-            'downstreamId'    : ['', [Validators.required ] ],
+            'downstreamId'    : ['', [Validators.required ] ]
         } )
 
         this.orderForm.valueChanges.subscribe(data => {
@@ -322,7 +322,7 @@ export class OrderListComponent implements OnInit {
 
         this.orderOtherPartyForm = this.fb.group({
             'custType'    : ['', [Validators.required ] ],
-            'customerId'    : ['', [Validators.required ] ],
+            'customerId'    : ['', [Validators.required ] ]
         } )
 
         this.orderOtherPartyForm.valueChanges.subscribe(data => {
@@ -341,6 +341,7 @@ export class OrderListComponent implements OnInit {
 
         this.otherPartyList.push(this.orderOtherPartyForm.value)
     }
+
     delOtherParty (company: any) {
 
         const index = this.otherPartyList.indexOf(company)
@@ -348,7 +349,7 @@ export class OrderListComponent implements OnInit {
     }
 
 
-    lineName(){
+    lineName() {
         let lineName = ''
 
         if (this.orderForm.value.upstreamId && this.orderForm.value.mainAccounting && this.orderForm.value.downstreamId ) {

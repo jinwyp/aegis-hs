@@ -7,9 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -55,6 +57,9 @@ public class YingHuankuan implements Serializable {
 
     private List<YingFukuan> fukuanList;   //  都还了哪些款
 
+    @NotNull(groups = {CreateGroup.class}, message = "还款明细不能为空")
+    @Size(groups = { CreateGroup.class }, min = 1, message = "还款明细不能为空")
+    @Valid
     private List<YingHuankuanMap> huankuanMapList;  // 还款明细
 
 }

@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
@@ -48,8 +49,9 @@ public class YingInvoice implements Serializable {
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
 
-    @NotNull(groups = { CreateGroup.class}, message = "缺少发票明细")
-    @Size(groups = { CreateGroup.class}, min = 1, message = "缺少发票明细")
+    @NotNull(groups = {CreateGroup.class}, message = "缺少发票明细")
+    @Size(groups = {CreateGroup.class}, min = 1, message = "缺少发票明细")
+    @Valid
     List<YingInvoiceDetail> details;
 
 }

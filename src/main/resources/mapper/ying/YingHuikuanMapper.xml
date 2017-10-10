@@ -134,7 +134,7 @@
         FROM hs_ying_huikuan t1 LEFT JOIN hs_ying_huikuan_map map ON t1.id = map.huikuanId
         LEFT JOIN hs_ying_fukuan t2 ON map.fukuanId = t2.id
         <where>
-            <if test="1==1">t1.deleted = 0</if>
+            <if test="true">t1.deleted = 0</if>
             <if test="orderId!=null">AND t1.orderId=#{orderId}</if>
             <if test="hsId!=null">AND t1.hsId=#{hsId}</if>
             <if test="huikuanCompanyId!=null">AND t1.huikuanCompanyId=#{huikuanCompanyId}</if>
@@ -206,34 +206,33 @@
     <select id="getUnfinshedByOrderId" resultType="com.yimei.hs.ying.entity.YingHuikuan">
 
         SELECT
-        huikuan.id,
-        huikuan.orderId,
-        huikuan.hsId,
-        huikuan.huikuanCompanyId,
-        huikuan.huikuanDate,
-        huikuan.huikuanAmount,
-        huikuan.huikuanUsage,
-        huikuan.huikuanMode,
-        huikuan.huikuanBankPaper,
-        huikuan.huikuanBankPaperDate,
-        huikuan.huikuanBankDiscount,
-        huikuan.huikuanBankDiscountRate,
-        huikuan.huikuanBankPaperExpire,
-        huikuan.huikuanBusinessPaper,
-        huikuan.huikuanBusinessPaperDate,
-        huikuan.huikuanBusinessDiscount,
-        huikuan.huikuanBusinessDiscountRate,
-        huikuan.huikuanBusinessPaperExpire,
-        huikuan.tsc,
-        huikuan.tsu,
-        sum(map.amount) AS fukuanTotal
-        FROM hs_ying_huikuan_map map
-        LEFT JOIN hs_ying_huikuan huikuan ON map.huikuanId = huikuan.id
+            huikuan.id,
+            huikuan.orderId,
+            huikuan.hsId,
+            huikuan.huikuanCompanyId,
+            huikuan.huikuanDate,
+            huikuan.huikuanAmount,
+            huikuan.huikuanUsage,
+            huikuan.huikuanMode,
+            huikuan.huikuanBankPaper,
+            huikuan.huikuanBankPaperDate,
+            huikuan.huikuanBankDiscount,
+            huikuan.huikuanBankDiscountRate,
+            huikuan.huikuanBankPaperExpire,
+            huikuan.huikuanBusinessPaper,
+            huikuan.huikuanBusinessPaperDate,
+            huikuan.huikuanBusinessDiscount,
+            huikuan.huikuanBusinessDiscountRate,
+            huikuan.huikuanBusinessPaperExpire,
+            huikuan.tsc,
+            huikuan.tsu,
+            ifnull(sum(map.amount), 0) AS fukuanTotal
+        FROM hs_ying_huikuan huikuan
+        LEFT JOIN hs_ying_huikuan_map map ON map.huikuanId = huikuan.id
         WHERE huikuan.orderId = #{orderId, jdbcType=BIGINT}
         GROUP BY huikuan.id
-        <!-- having fukuanTotal lt huikuan.huikuanAmount -->
+        HAVING fukuanTotal <![CDATA[ <  ]]>  huikuan.huikuanAmount
         ORDER BY huikuan.huikuanDate
-
     </select>
 
     <!-- 物理删除-->

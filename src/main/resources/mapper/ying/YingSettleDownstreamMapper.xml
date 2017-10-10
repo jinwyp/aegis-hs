@@ -6,14 +6,14 @@
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
         <result column="settleDate" jdbcType="TIMESTAMP" property="settleDate"/>
-        <result column="huikuanTotal" jdbcType="DECIMAL" property="amount"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
         <result column="money" jdbcType="DECIMAL" property="money"/>
         <result column="settleGap" jdbcType="DECIMAL" property="settleGap"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, settleDate, huikuanTotal, money, settleGap, tsc
+        id, orderId, hsId, settleDate, amount, money, settleGap, tsc
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -29,7 +29,7 @@
         <include refid="Base_Column_List"/>
         FROM hs_ying_settle_downstream
         <where>
-            <if test="1==1">AND deleted = 0</if>
+            <if test="true">AND deleted = 0</if>
             <if test="orderId!=null">AND orderId = #{orderId, jdbcType=BIGINT}</if>
             <if test="hsId!=null">AND hsId = #{hsId, jdbcType=BIGINT}</if>
             <if test="settleDate!=null">AND settleDate = #{settleDate, jdcbType=TIMESTAMP}</if>
@@ -55,7 +55,7 @@
             orderId,
             hsId,
             settleDate,
-            huikuanTotal,
+            amount,
             money,
             settleGap,
             tsc
@@ -80,7 +80,7 @@
             <if test="orderId != null">orderId,</if>
             <if test="hsId != null">hsId,</if>
             <if test="settleDate != null">settleDate,</if>
-            <if test="huikuanTotal != null">huikuanTotal,</if>
+            <if test="amount != null">amount,</if>
             <if test="money != null">money,</if>
             <if test="settleGap != null">settleGap,</if>
             <if test="tsc != null">tsc,</if>
@@ -90,7 +90,7 @@
             <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
             <if test="settleDate != null">#{settleDate,jdbcType=TIMESTAMP},</if>
-            <if test="huikuanTotal != null">#{amount,jdbcType=DECIMAL},</if>
+            <if test="amount != null">#{amount,jdbcType=DECIMAL},</if>
             <if test="money != null">#{money,jdbcType=DECIMAL},</if>
             <if test="settleGap != null">#{settleGap,jdbcType=DECIMAL},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
@@ -103,7 +103,7 @@
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
             <if test="settleDate != null">settleDate = #{settleDate,jdbcType=TIMESTAMP},</if>
-            <if test="huikuanTotal != null">huikuanTotal = #{amount,jdbcType=DECIMAL},</if>
+            <if test="amount != null">amount = #{amount,jdbcType=DECIMAL},</if>
             <if test="money != null">money = #{money,jdbcType=DECIMAL},</if>
             <if test="settleGap != null">settleGap = #{settleGap,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
@@ -117,7 +117,7 @@
         SET orderId    = #{orderId,jdbcType=BIGINT},
             hsId       = #{hsId,jdbcType=BIGINT},
             settleDate = #{settleDate,jdbcType=TIMESTAMP},
-            huikuanTotal     = #{amount,jdbcType=DECIMAL},
+            amount     = #{amount,jdbcType=DECIMAL},
             money      = #{money,jdbcType=DECIMAL},
             settleGap  = #{settleGap,jdbcType=DECIMAL},
             tsc        = #{tsc,jdbcType=TIMESTAMP},

@@ -9,11 +9,11 @@
         </select>
 -->
         <i class="fa fa-angle-down select_input_arrow" aria-hidden="true" [class.arrow_up]="isShowSelectOptionList"></i>
-        <input type="text" class="form-control select_input" readonly [class.is-invalid]="error" (click)="showOptions()" [value]="interValueCurrentSelected.name">
+        <input type="text" class="form-control select_input" placeholder="{{prompt}}" [readonly]="!editable" [class.is-invalid]="error" [value]="interValueCurrentSelected.name" (click)="showOptions()" (keyup)="filterOptions($event)" >
 
 
         <ul class="list-group options_box"  [class.d-none]="!isShowSelectOptionList">
-            <li *ngFor="let option of optionList; let i = index" class="list-group-item" [class.active]="i === currentSelectByKeyboard" (click)="getCurrentOption(option)">{{option.name}}</li>
+            <li *ngFor="let option of filterOptionList; let i = index" class="list-group-item" [class.active]="i === currentSelectIndexByKeyboard" (click)="clickOption(option)">{{option.name}}</li>
         </ul>
 
         <div class="invalid-feedback" *ngIf="error">

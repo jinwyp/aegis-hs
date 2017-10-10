@@ -27,7 +27,7 @@
         <include refid="Base_Column_List"/>
         from hs_ying_settle_traffic
         <where>
-            <if test="1==1">deleted = 0</if>
+            <if test="true">deleted = 0</if>
             <if test="orderId != null">AND orderId=#{orderId,jdbcType=BIGINT}</if>
             <if test="hsId != null">AND hsId=#{hsId,jdbcType=BIGINT}</if>
             <if test="settleDate != null">AND settleDate= #{settleDate,jdbcType=DATE}</if>

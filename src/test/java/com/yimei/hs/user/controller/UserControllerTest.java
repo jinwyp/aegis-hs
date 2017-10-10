@@ -30,6 +30,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.beans.IntrospectionException;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -106,7 +107,7 @@ public class UserControllerTest extends YingTestBase {
         downstream();
         traffic();
         fee();
-//
+
         invoice();
 
 
@@ -529,6 +530,16 @@ public class UserControllerTest extends YingTestBase {
         // 1. 添加还款
         String huankuanCreateUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/huankuans";
         YingHuankuan huankuan = new YingHuankuan() {{
+
+            // todo 陆彪
+            List<YingHuankuanMap> hukuanMapList =new ArrayList<>();
+            YingHuankuanMap map = new YingHuankuanMap();
+            map.setOrderId(1L);
+            map.setFukuanId(1L);
+            map.setPrincipal(new BigDecimal("510000"));
+            map.setAmount(new BigDecimal("511700.02"));
+            hukuanMapList.add(map);
+
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
             setSkCompanyId(yingOrderResult.getData().getOrderPartyList().get(0).getCustomerId());
@@ -536,6 +547,7 @@ public class UserControllerTest extends YingTestBase {
             setHuankuanAmount(new BigDecimal("511700.02"));
             setHuankuanFee(new BigDecimal("560"));
             setHuankuanInterest(new BigDecimal("1700.02"));
+            setHuankuanMapList(hukuanMapList);
 
         }};
         huankuanCreateResult = client.exchange(huankuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huankuan), typeReferenceHuankuan).getBody();
