@@ -28,8 +28,8 @@ public class YingHuankuanMap implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "还款本金不能为空")
     private BigDecimal principal;
 
-    @NotNull(groups = {CreateGroup.class}, message = "还款(本金+利息)不能为控")
-    private BigDecimal amount;
+    @NotNull(groups = {CreateGroup.class}, message = "还款利息不能为空")
+    private BigDecimal interest;
 
     private LocalDateTime tsc;
 

@@ -40,7 +40,7 @@ public class YingHuankuan implements Serializable {
     private LocalDateTime huankuankDate;
 
     @Null(groups = {UpdateGroup.class}, message = "还款记录不能更新金额")
-    private BigDecimal huankuanAmount;
+    private BigDecimal huankuanPrincipal;
 
     @NotNull(groups = {CreateGroup.class}, message = "还款利息不能为空")
     private BigDecimal huankuanInterest;

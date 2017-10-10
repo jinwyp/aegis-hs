@@ -22,7 +22,7 @@ public class PageYingHuankuanDTO extends BaseFilter<PageYingHuankuanDTO> {
     private Long hsId;
     private Long skCompanyId;
     private LocalDateTime huankuanDate;
-    private BigDecimal huankuanAmount;
+    private BigDecimal huankuanPrincipal;
 
     /**
      * @param sql
@@ -38,7 +38,7 @@ public class PageYingHuankuanDTO extends BaseFilter<PageYingHuankuanDTO> {
             if (hsId != null) { WHERE("hsId = ?"); }
             if (skCompanyId != null) { WHERE("skCompanyId = ?"); }
             if (huankuanDate != null) { WHERE("huankuanDate =?"); }
-            if (huankuanAmount != null) { WHERE("huankuanAmount = ?"); }
+            if (huankuanPrincipal != null) { WHERE("huankuanPrincipal = ?"); }
             WHERE( "deleted = 0");
         }}.toString();
 

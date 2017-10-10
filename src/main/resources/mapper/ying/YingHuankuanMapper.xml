@@ -7,7 +7,7 @@
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
         <result column="skCompanyId" jdbcType="BIGINT" property="skCompanyId"/>
         <result column="huankuankDate" jdbcType="TIMESTAMP" property="huankuankDate"/>
-        <result column="huankuanAmount" jdbcType="DECIMAL" property="huankuanAmount"/>
+        <result column="huankuanPrincipal" jdbcType="DECIMAL" property="huankuanPrincipal"/>
         <result column="huankuanInterest" jdbcType="DECIMAL" property="huankuanInterest"/>
         <result column="huankuanFee" jdbcType="DECIMAL" property="huankuanFee"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
@@ -24,7 +24,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, skCompanyId, huankuankDate, huankuanAmount, huankuanInterest, huankuanFee, tsc, tsu
+        id, orderId, hsId, skCompanyId, huankuankDate, huankuanPrincipal, huankuanInterest, huankuanFee, tsc, tsu
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -42,7 +42,7 @@
         t1.hsId,
         t1.skCompanyId,
         t1.huankuankDate,
-        t1.huankuanAmount,
+        t1.huankuanPrincipal,
         t1.huankuanInterest,
         t1.huankuanFee,
         t1.tsc
@@ -67,7 +67,7 @@
             huankuan.hsId,
             huankuan.skCompanyId,
             huankuan.huankuankDate,
-            huankuan.huankuanAmount,
+            huankuan.huankuanPrincipal,
             huankuan.huankuanInterest,
             huankuan.huankuanFee,
             huankuan.tsc,
@@ -98,7 +98,7 @@
             hsId,
             skCompanyId,
             huankuankDate,
-            huankuanAmount,
+            huankuanPrincipal,
             huankuanInterest,
             huankuanFee,
             tsc,
@@ -110,7 +110,7 @@
             #{hsId,jdbcType=BIGINT},
             #{skCompanyId,jdbcType=BIGINT},
             #{huankuankDate,jdbcType=TIMESTAMP},
-            #{huankuanAmount,jdbcType=DECIMAL},
+            #{huankuanPrincipal,jdbcType=DECIMAL},
             #{huankuanInterest,jdbcType=DECIMAL},
             #{huankuanFee,jdbcType=DECIMAL},
             #{tsc,jdbcType=TIMESTAMP},
@@ -127,7 +127,7 @@
             <if test="hsId != null">hsId,</if>
             <if test="skCompanyId != null">skCompanyId,</if>
             <if test="huankuankDate != null">huankuankDate,</if>
-            <if test="huankuanAmount != null">huankuanAmount,</if>
+            <if test="huankuanPrincipal != null">huankuanPrincipal,</if>
             <if test="huankuanInterest != null">huankuanInterest,</if>
             <if test="huankuanFee != null">huankuanFee,</if>
             <if test="tsc != null">tsc,</if>
@@ -138,7 +138,7 @@
             <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
             <if test="skCompanyId != null">#{skCompanyId,jdbcType=BIGINT},</if>
             <if test="huankuankDate != null">#{huankuankDate,jdbcType=TIMESTAMP},</if>
-            <if test="huankuanAmount != null">#{huankuanAmount,jdbcType=DECIMAL},</if>
+            <if test="huankuanPrincipal != null">#{huankuanPrincipal,jdbcType=DECIMAL},</if>
             <if test="huankuanInterest != null">#{huankuanInterest,jdbcType=DECIMAL},</if>
             <if test="huankuanFee != null">#{huankuanFee,jdbcType=DECIMAL},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
@@ -152,7 +152,7 @@
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
             <if test="skCompanyId != null">skCompanyId = #{skCompanyId,jdbcType=BIGINT},</if>
             <if test="huankuankDate != null">huankuankDate = #{huankuankDate,jdbcType=TIMESTAMP},</if>
-            <if test="huankuanAmount != null">huankuanAmount = #{huankuanAmount,jdbcType=DECIMAL},</if>
+            <if test="huankuanPrincipal != null">huankuanPrincipal = #{huankuanPrincipal,jdbcType=DECIMAL},</if>
             <if test="huankuanInterest != null">huankuanInterest = #{huankuanInterest,jdbcType=DECIMAL},</if>
             <if test="huankuanFee != null">huankuanFee = #{huankuanFee,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
@@ -167,7 +167,7 @@
             hsId           = #{hsId,jdbcType=BIGINT},
             skCompanyId    = #{skCompanyId,jdbcType=BIGINT},
             huankuankDate  = #{huankuankDate,jdbcType=TIMESTAMP},
-            huankuanAmount = #{huankuanAmount,jdbcType=DECIMAL},
+            huankuanPrincipal = #{huankuanPrincipal,jdbcType=DECIMAL},
             tsc            = #{tsc,jdbcType=TIMESTAMP},
             tsu            = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
