@@ -35,7 +35,8 @@
         <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
 
         <!-- 关联的回款记录 -->
-        <collection property="huikuanList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingHuikuan" autoMapping="true">
+        <collection property="huikuanList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingHuikuan"
+                    autoMapping="true">
             <id property="id" column="huikuan_Id"/>
             <id property="orderId" column="huikuan_orderId"/>
             <id property="hsId" column="huikuan_hsId"/>
@@ -44,13 +45,15 @@
         </collection>
 
         <!-- 关联记录-->
-        <collection property="huikuanMap" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingHuikuanMap" autoMapping="true">
+        <collection property="huikuanMap" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingHuikuanMap"
+                    autoMapping="true">
             <id property="huikuanId" column="huikuanId"/>
             <id property="amount" column="amount"/>
         </collection>
 
         <!-- 关联的还款记录-->
-        <collection property="huankuanList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingHuankuan" autoMapping="true">
+        <collection property="huankuanList" javaType="ArrayList" ofType="com.yimei.hs.ying.entity.YingHuankuan"
+                    autoMapping="true">
             <id property="id" column="huankuan_id"/>
             <id property="orderId" column="huankuan_orderId"/>
             <id property="hsId" column="huankuan_hsId"/>
@@ -116,8 +119,6 @@
         huankuan.tsu as huankuan_tsu
 
 
-
-
         from hs_ying_fukuan fukuan
         LEFT JOIN hs_ying_huikuan_map huikuanmap on fukuan.id = huikuanmap.fukuanId
         LEFT JOIN hs_ying_huikuan huikuan on huikuanmap.huikuanId = huikuan.id
@@ -131,8 +132,19 @@
     <!-- 获取付款分页 -->
     <select id="getPage" resultType="com.yimei.hs.ying.entity.YingFukuan">
         select
-        <include refid="Base_Column_List"/>
-
+        t1.id,
+        t1.orderId,
+        t1.hsId,
+        t1.payDate,
+        t1.receiveCompanyId,
+        t1.payUsage,
+        t1.payAmount,
+        t1.payMode,
+        t1.capitalId,
+        t1.useInterest,
+        t1.useDays,
+        t1.tsc,
+        t1.tsu
         from hs_ying_fukuan t1 LEFT JOIN hs_ying_huankuan_map map on t1.id = map.fukuanId
         <where>
             <if test="1==1">deleted = 0</if>
