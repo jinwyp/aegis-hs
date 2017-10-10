@@ -82,6 +82,7 @@ public class YingHuikuanService {
 
     public void createMapping(Long orderId) {
         // 2. 找出付款尚未完成回款对应的付款记录
+
         List<YingFukuan> unfinishedFukuan = yingFukuanService.huikuanUnfinished(orderId);
         if (unfinishedFukuan.size() == 0) {
             return;

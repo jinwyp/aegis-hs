@@ -66,11 +66,11 @@ public class YingFukuanService {
             yingFukuan.setHuankuanMap(huankuanMap);
         }
 
-        if (pageYingFukuanDTO.getHuikuanUnfinished()) {
+        if (pageYingFukuanDTO.getHuikuanUnfinished()!=null&&pageYingFukuanDTO.getHuikuanUnfinished()) {
             page.setResults(this.getHuikuanUnifished(page.getResults()));
         }
 
-        if (pageYingFukuanDTO.getHuankuanUnfinished()) {
+        if (pageYingFukuanDTO.getHuankuanUnfinished()!=null&&pageYingFukuanDTO.getHuankuanUnfinished()) {
             page.setResults(this.getHuankuanUnfinished(page.getResults()));
         }
         return page;
@@ -163,7 +163,7 @@ public class YingFukuanService {
         int rtn = yingFukuanMapper.insert(yingFukuan);
 
         // 2. 触发回款对应
-        // yingHuikuanService.createMapping(yingFukuan.getOrderId());
+         yingHuikuanService.createMapping(yingFukuan.getOrderId());
 
         return rtn;
     }
