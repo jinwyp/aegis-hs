@@ -96,13 +96,13 @@ public class YingHuankuanController {
             return Result.error(4001, "invalid request: 所有还款map明细的amount汇总校验");
         }
 
-//        // 3. 校验 所有还款map明细的本金汇总
-//        BigDecimal pTotal = yingHuankuan.getHuankuanMapList().stream().map(m -> m.getPrincipal()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
-//        if (pTotal.compareTo(yingHuankuan.getHuankuanAmount()
-//                .subtract(yingHuankuan.getHuankuanInterest())
-//                .subtract(yingHuankuan.getHuankuanFee())) != 0) {
-//            return Result.error(4001, "invalid request: 所有还款map明细的本金汇总");
-//        }
+        // 3. 校验 所有还款map明细的本金汇总
+        BigDecimal pTotal = yingHuankuan.getHuankuanMapList().stream().map(m -> m.getPrincipal()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
+        if (pTotal.compareTo(
+                yingHuankuan.getHuankuanAmount().subtract(yingHuankuan.getHuankuanInterest())) != 0
+                ) {
+            return Result.error(4001, "invalid request: 所有还款map明细的本金汇总");
+        }
 
         int rtn = yingHuankuanService.create(yingHuankuan);
         if (rtn != 1) {
