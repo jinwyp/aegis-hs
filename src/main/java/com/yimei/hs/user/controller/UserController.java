@@ -1,5 +1,6 @@
 package com.yimei.hs.user.controller;
 
+import com.yimei.hs.boot.api.ListResult;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.user.entity.User;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 /**
  * Created by xiangyang on 2017/7/1.
@@ -121,4 +124,15 @@ public class UserController {
     }
 
 
+    /**
+     * 获取用户同部门的的用户列表
+     * @return
+     */
+    @GetMapping(value = "/api/user/list_dept_user")
+    public ResponseEntity<Result<List<User>>> userList(
+           @CurrentUser User user
+    ) {
+        List<User> userList = userService.getUsersOfSameDept(user);
+        return Result.ok(userList);
+    }
 }

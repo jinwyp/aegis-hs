@@ -30,9 +30,9 @@
         <include refid="Base_Column_List"/>
         from hs_user
         <where>
-            <if test="isAdmin != null">  AND isAdmin = #{isAdmin, jdbcType=TINYINT}</if>
-            <if test="isActive != null">  AND isActive = #{isActive, jdbcType=TINYINT}</if>
-            <if test="deptId != null">  AND deptId = #{deptId, jdbcType=BIGINT}</if>
+            <if test="isAdmin != null">AND isAdmin = #{isAdmin, jdbcType=TINYINT}</if>
+            <if test="isActive != null">AND isActive = #{isActive, jdbcType=TINYINT}</if>
+            <if test="deptId != null">AND deptId = #{deptId, jdbcType=BIGINT}</if>
         </where>
     </select>
 
@@ -42,6 +42,18 @@
         <include refid="Base_Column_List"/>
         from hs_user
         where phone = #{phone,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 获取用户通部门的用户 -->
+    <select id="getUsersOfSameDept" resultType="com.yimei.hs.user.entity.User">
+        SELECT
+            id,
+            phone
+        FROM
+            hs_user
+        WHERE
+            deptId = #{deptId, jdbcType=BIGINT}
+        AND id != #{id, jdbcType=BIGINT}
     </select>
 
     <!-- 依据用户主键删除 -->
