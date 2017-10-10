@@ -1,6 +1,7 @@
 package com.yimei.hs.ying.mapper;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.ying.entity.YingFukuan;
 import com.yimei.hs.ying.entity.YingHuikuan;
 import com.yimei.hs.ying.dto.PageYingHuikuanDTO;
 import org.apache.ibatis.annotations.Param;
@@ -29,4 +30,6 @@ public interface YingHuikuanMapper {
     List<YingHuikuan> getListByFukuanID(@Param("fukuanId") Long fukuanId);
 
     List<YingHuikuan> getUnfinshedByOrderId(Long orderId);
+
+    List<YingFukuan> getFukuanListByHuikuanId(Long huikuanId);
 }

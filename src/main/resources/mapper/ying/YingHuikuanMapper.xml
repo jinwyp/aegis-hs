@@ -149,6 +149,31 @@
         WHERE orderId=#{orderId}
     </select>
 
+    <!-- 依据回款id, 找出回款对应的付款列表-->
+    <select id="getFukuanListByHuikuanId" resultType="com.yimei.hs.ying.entity.YingFukuan">
+        SELECT
+        fukuan.id
+        fukuan.orderId
+        fukuan.hsId
+        fukuan.payDate,
+        fukuan.receiveCompanyId,
+        fukuan.payUsage,
+        fukuan.payAmount,
+        fukuan.payMode,
+        fukuan.capitalId,
+        fukuan.useInterest,
+        fukuan.useDays,
+        fukuan.tsc
+        fukuan.tsu
+        FROM hs_ying_huikuan_map map
+        LEFT JOIN hs_ying_fukuan fukuan ON map.fukuanId = fukuan.id
+        <where>
+            <if test="true">AND map.deleted = 0</if>
+            <if test="true">AND map.huikuanId=#{huikuanId}</if>
+        </where>
+    </select>
+
+
     <!-- 依据付款id， 查询所有和此付款id关联的回款 -->
     <select id="getListByFukuanID" resultType="com.yimei.hs.ying.entity.YingHuikuan">
         SELECT
