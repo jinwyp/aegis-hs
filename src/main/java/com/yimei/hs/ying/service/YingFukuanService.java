@@ -66,18 +66,23 @@ public class YingFukuanService {
             yingFukuan.setHuankuanMap(huankuanMap);
         }
 
-        if (pageYingFukuanDTO.getHuikuanUnfinished()!=null&&pageYingFukuanDTO.getHuikuanUnfinished()) {
+        if (
+                pageYingFukuanDTO.getHuikuanUnfinished() != null
+                        && pageYingFukuanDTO.getHuikuanUnfinished()
+                ) {
             page.setResults(this.getHuikuanUnifished(page.getResults()));
         }
 
-        if (pageYingFukuanDTO.getHuankuanUnfinished()!=null&&pageYingFukuanDTO.getHuankuanUnfinished()) {
+        if ( pageYingFukuanDTO.getHuankuanUnfinished() != null
+                        && pageYingFukuanDTO.getHuankuanUnfinished()
+                ) {
+
             page.setResults(this.getHuankuanUnfinished(page.getResults()));
         }
         return page;
     }
 
     /**
-     *
      * @param orderId
      * @return
      */
@@ -96,7 +101,6 @@ public class YingFukuanService {
     }
 
     /**
-     *
      * @param orderId
      * @return
      */
@@ -115,7 +119,6 @@ public class YingFukuanService {
 
 
     /**
-     *
      * @param fukuans
      * @return
      */
@@ -134,7 +137,6 @@ public class YingFukuanService {
 
 
     /**
-     *
      * @param fukuans
      * @return
      */
