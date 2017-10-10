@@ -538,14 +538,14 @@ public class UserControllerTest extends YingTestBase {
             map.setOrderId(1L);
             map.setFukuanId(1L);
             map.setPrincipal(new BigDecimal("510000"));
-            map.setAmount(new BigDecimal("511700.02"));
+            map.setInterest(new BigDecimal("1700.02"));
             hukuanMapList.add(map);
 
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
             setSkCompanyId(yingOrderResult.getData().getOrderPartyList().get(0).getCustomerId());
             setHuankuankDate(stringToTime("2017-7-26"));
-            setHuankuanAmount(new BigDecimal("511700.02"));
+            setHuankuanPrincipal(new BigDecimal("510000"));
             setHuankuanFee(new BigDecimal("560"));
             setHuankuanInterest(new BigDecimal("1700.02"));
             setHuankuanMapList(hukuanMapList);

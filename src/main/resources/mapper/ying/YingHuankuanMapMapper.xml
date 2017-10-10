@@ -7,12 +7,12 @@
         <result column="huankuanId" jdbcType="BIGINT" property="huankuanId"/>
         <result column="fukuanId" jdbcType="BIGINT" property="fukuanId"/>
         <result column="principal" jdbcType="DECIMAL" property="principal"/>
-        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="interest" jdbcType="DECIMAL" property="interest"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, huankuanId, fukuanId, principal, amount, tsc
+        id, orderId, huankuanId, fukuanId, principal, interest, tsc
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -33,7 +33,7 @@
        select
            huankuanId,
            principal,
-           amount
+           interest
         from
             hs_ying_huankuan_map
         where
@@ -68,7 +68,7 @@
             huankuanId,
             fukuanId,
             principal,
-            amount,
+            interest,
             tsc
         )
         VALUES (
@@ -77,7 +77,7 @@
             #{huankuanId,jdbcType=BIGINT},
             #{fukuanId,jdbcType=BIGINT},
             #{principal,jdbcType=DECIMAL},
-            #{amount,jdbcType=DECIMAL},
+            #{interest,jdbcType=DECIMAL},
             #{tsc,jdbcType=TIMESTAMP}
         )
     </insert>
@@ -90,7 +90,7 @@
             <if test="huankuanId != null">huankuanId,</if>
             <if test="fukuanId != null">fukuanId,</if>
             <if test="principal != null">principal,</if>
-            <if test="amount != null">amount,</if>
+            <if test="interest != null">interest,</if>
             <if test="tsc != null">tsc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -99,7 +99,7 @@
             <if test="huankuanId != null">#{huankuanId,jdbcType=BIGINT},</if>
             <if test="fukuanId != null">#{fukuanId,jdbcType=BIGINT},</if>
             <if test="principal != null">#{principal,jdbcType=DECIMAL},</if>
-            <if test="amount != null">#{amount,jdbcType=DECIMAL},</if>
+            <if test="interest != null">#{interest,jdbcType=DECIMAL},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
@@ -110,7 +110,7 @@
             <if test="huankuanId != null">huankuanId = #{huankuanId,jdbcType=BIGINT},</if>
             <if test="fukuanId != null">fukuanId = #{fukuanId,jdbcType=BIGINT},</if>
             <if test="principal != null">principal = #{principal,jdbcType=DECIMAL},</if>
-            <if test="amount != null">amount = #{amount,jdbcType=DECIMAL},</if>
+            <if test="interest != null">interest = #{interest,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
             <if test="true">tsu = current_timestamp</if>
         </set>
@@ -122,7 +122,7 @@
             orderId    = #{orderId,jdbcType=BIGINT},
             fukuanId   = #{fukuanId,jdbcType=BIGINT},
             principal  = #{principal,jdbcType=DECIMAL},
-            amount     = #{amount,jdbcType=DECIMAL},
+            interest     = #{interest,jdbcType=DECIMAL},
             tsc        = #{tsc,jdbcType=TIMESTAMP},
             tsu        = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
