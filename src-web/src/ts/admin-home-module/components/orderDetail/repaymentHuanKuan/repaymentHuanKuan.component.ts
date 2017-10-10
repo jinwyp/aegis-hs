@@ -173,8 +173,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
         'principal'  : {
             'required'      : '请填写本金!'
         },
-        'amount'  : {
-            'required'      : '请填写总计!'
+        'interest'  : {
+            'required'      : '请填写利息!'
         }
     }
 
@@ -210,7 +210,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
         this.paymentForm = this.fb.group({
             'id'    : ['', [Validators.required ] ],
             'principal'    : ['', [Validators.required ] ],
-            'amount'    : ['', [Validators.required ] ]
+            'interest'    : ['', [Validators.required ] ]
         } )
 
         this.paymentForm.valueChanges.subscribe(data => {
@@ -233,7 +233,9 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
         const postData = this.repaymentHKForm.value
         postData.orderId = this.currentOrder.id
-        postData.huankuanMapList = this.paymentPostList
+        postData.huankuanMapList = this.paymentPostList.map( payment => {
+            return {orderId: payment.orderId, fukuanId : payment.id, principal : payment.principal, interest : payment.interest}
+        })
 
         if (this.isAddNew) {
             this.hsOrderService.createNewRepaymentHK(this.currentOrder.id, postData).subscribe(
@@ -309,7 +311,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             return
         }
 
-        this.paymentPostList.push(<any>Object.assign(this.paymentListObject[this.paymentForm.value.id], {fukuanId : this.paymentForm.value.id, principal : this.paymentForm.value.principal, amount : this.paymentForm.value.amount}) )
+        this.paymentPostList.push(<any>Object.assign(this.paymentListObject[this.paymentForm.value.id], {fukuanId : this.paymentForm.value.id, principal : this.paymentForm.value.principal, interest : this.paymentForm.value.interest}) )
         this.ignoreDirtyPayment = false
     }
 
