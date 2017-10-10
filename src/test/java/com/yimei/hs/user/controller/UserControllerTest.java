@@ -397,6 +397,7 @@ public class UserControllerTest extends YingTestBase {
             setDownstreamTrafficMode(TrafficMode.MOTOR);
             setUpstreamTrafficMode(TrafficMode.RAIL);
             setUpstreamJHH("1000001");
+            setDownstreamCars(1234);
             setFyAmount(new BigDecimal("1510.60"));
             setArriveStatus(CargoArriveStatus.UNARRIVE);
             setHsId(yingOrderConfigResult.getData().getId());
@@ -1120,7 +1121,8 @@ public class UserControllerTest extends YingTestBase {
     // 测试 /api/ying/:orderId/fukuans  分页
     //      /api/ying/:orderId/fukuans/:id
     public void fukuanTest() throws JsonProcessingException {
-        return;
+
+
     }
 
     /**

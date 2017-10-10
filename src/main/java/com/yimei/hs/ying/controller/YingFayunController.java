@@ -81,7 +81,7 @@ public class YingFayunController {
             @RequestBody @Validated(CreateGroup.class) YingFayun yingFayun
     ) {
 
-        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.MOTOR)&&yingFayun.getUpstreamCars()>0) {
+        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.MOTOR)&&yingFayun.getUpstreamCars()<=0) {
             return Result.error(4001, "上游汽运数量不匹配", HttpStatus.BAD_REQUEST);
         }
         if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.SHIP)&& StringUtils.isEmpty(yingFayun.getUpstreamShip())) {
@@ -89,10 +89,10 @@ public class YingFayunController {
         }
         if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.RAIL) && StringUtils.isEmpty(yingFayun.getUpstreamJHH())) {
 
-            return Result.error(4001, "上游船运计划号不能为空", HttpStatus.BAD_REQUEST);
+            return Result.error(4001, "上游火运计划号不能为空", HttpStatus.BAD_REQUEST);
         }
 
-        if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.MOTOR)&&yingFayun.getDownstreamCars()>0) {
+        if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.MOTOR)&&yingFayun.getDownstreamCars()<=0) {
             return Result.error(4001, "下游汽运数量不匹配", HttpStatus.BAD_REQUEST);
         }
         if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.SHIP)&& StringUtils.isEmpty(yingFayun.getDownstreamShip())) {
@@ -100,7 +100,7 @@ public class YingFayunController {
         }
         if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.RAIL) && StringUtils.isEmpty(yingFayun.getDownstreamJHH())) {
 
-            return Result.error(4001, "下游船运计划号不能为空", HttpStatus.BAD_REQUEST);
+            return Result.error(4001, "下游火运计划号不能为空", HttpStatus.BAD_REQUEST);
         }
         yingFayun.setOrderId(morderId);
         int rtn;
