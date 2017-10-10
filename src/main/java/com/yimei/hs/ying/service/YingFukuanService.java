@@ -52,17 +52,30 @@ public class YingFukuanService {
      * @return
      */
     public Page<YingFukuan> getPage(PageYingFukuanDTO pageYingFukuanDTO) {
-        Page<YingFukuan> page = yingFukuanMapper.getPage(pageYingFukuanDTO);
-        for (YingFukuan yingFukuan : page.getResults()) {
 
+        // 1. 去除付款列表
+        Page<YingFukuan> page = yingFukuanMapper.getPage(pageYingFukuanDTO);
+
+        // 2. 对每一笔付款，
+        // 关联: 回款列表
+        //       回款map明细
+        //      还款列表
+        //      还款map明细
+        for (YingFukuan yingFukuan : page.getResults()) {
+            // 关联回款列表
             List<YingHuikuan> huikuanList = yingHuikuanMapper.getListByFukuanID(yingFukuan.getId());
-            List<YingHuikuanMap> huikuanMap = yingHuikuanMapMapper.getListByFukuanId(yingFukuan.getId());
             yingFukuan.setHuikuanList(huikuanList);
+
+            // 关联回款map明细
+            List<YingHuikuanMap> huikuanMap = yingHuikuanMapMapper.getListByFukuanId(yingFukuan.getId());
             yingFukuan.setHuikuanMap(huikuanMap);
 
+            // 关联还款列表
             List<YingHuankuan> huankuanList = yingHuankuanMapper.getListByFukuanId(yingFukuan.getId());
-            List<YingHuankuanMap> huankuanMap = yingHuankuanMapMapper.getListByFukuanId(yingFukuan.getId());
             yingFukuan.setHuankuanList(huankuanList);
+
+            // 关联还款map明细
+            List<YingHuankuanMap> huankuanMap = yingHuankuanMapMapper.getListByFukuanId(yingFukuan.getId());
             yingFukuan.setHuankuanMap(huankuanMap);
         }
 
@@ -83,6 +96,7 @@ public class YingFukuanService {
     }
 
     /**
+     * 找出当前订单的付款列表: (条件为: 回款尚未回完的付款)
      * @param orderId
      * @return
      */
@@ -101,32 +115,43 @@ public class YingFukuanService {
     }
 
     /**
+     * 找出当前订单所有的付款  (条件为: 付款未被还完)
      * @param orderId
      * @return
      */
     public List<YingFukuan> huankuanUnfinished(long orderId) {
+
         PageYingFukuanDTO dto = new PageYingFukuanDTO();
         dto.setPageSize(1000000000);
         dto.setPageNo(1);
         dto.setOrderId(orderId);
+
         Page<YingFukuan> page = yingFukuanMapper.getPage(dto);
         for (YingFukuan yingFukuan : page.getResults()) {
+
             List<YingHuankuanMap> huankuanMap = yingHuankuanMapMapper.getListByFukuanId(yingFukuan.getId());
-            yingFukuan.setHuankuanMap(huankuanMap);
+            yingFukuan.setHuankuanMap(huankuanMap);   // 付款被还的map明细
+
         }
+
+        // 实施过滤
         return getHuankuanUnfinished(page.getResults());
     }
 
 
     /**
+     * 过滤付款列表: 返回付款没有被回款完的付款列表
      * @param fukuans
      * @return
      */
     private List<YingFukuan> getHuikuanUnifished(List<YingFukuan> fukuans) {
         List<YingFukuan> filter = new ArrayList<>();
         for (YingFukuan fukuan : fukuans) {
+
+            // 计算此付款被回部分的总额
             List<YingHuikuanMap> huikuanMap = fukuan.getHuikuanMap();
             BigDecimal total = huikuanMap.stream().map(m -> m.getAmount()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
+
             fukuan.setHuikuanTotal(total);
             if (!total.equals(fukuan.getPayAmount())) {
                 filter.add(fukuan);
@@ -137,14 +162,19 @@ public class YingFukuanService {
 
 
     /**
+     * 过滤付款列表, 返回付款没有被还完的付款列表
      * @param fukuans
      * @return
      */
     private List<YingFukuan> getHuankuanUnfinished(List<YingFukuan> fukuans) {
+
         List<YingFukuan> filter = new ArrayList<>();
         for (YingFukuan fukuan : fukuans) {
+
+            // 计算此付款被换掉的总额
             List<YingHuankuanMap> huankuanMap = fukuan.getHuankuanMap();
             BigDecimal total = huankuanMap.stream().map(m -> m.getPrincipal()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
+
             fukuan.setHuankuanTotal(total);
             if (!total.equals(fukuan.getPayAmount())) {
                 filter.add(fukuan);
@@ -156,6 +186,7 @@ public class YingFukuanService {
 
 
     /**
+     * 创建付款 - 触发 回款-付款-对应关系的建立
      * @param yingFukuan
      * @return
      */
@@ -165,7 +196,7 @@ public class YingFukuanService {
         int rtn = yingFukuanMapper.insert(yingFukuan);
 
         // 2. 触发回款对应
-         yingHuikuanService.createMapping(yingFukuan.getOrderId());
+         yingHuikuanService.createMapping(yingFukuan.getOrderId(), null);
 
         return rtn;
     }
@@ -186,7 +217,7 @@ public class YingFukuanService {
      * @return
      */
     public int delete(Long orderId, long id) {
-        yingHuikuanService.createMapping(orderId);
+        yingHuikuanService.createMapping(orderId,null);
 
         // todo
         return yingFukuanMapper.delete(id);

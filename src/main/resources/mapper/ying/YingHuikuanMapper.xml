@@ -206,34 +206,33 @@
     <select id="getUnfinshedByOrderId" resultType="com.yimei.hs.ying.entity.YingHuikuan">
 
         SELECT
-        huikuan.id,
-        huikuan.orderId,
-        huikuan.hsId,
-        huikuan.huikuanCompanyId,
-        huikuan.huikuanDate,
-        huikuan.huikuanAmount,
-        huikuan.huikuanUsage,
-        huikuan.huikuanMode,
-        huikuan.huikuanBankPaper,
-        huikuan.huikuanBankPaperDate,
-        huikuan.huikuanBankDiscount,
-        huikuan.huikuanBankDiscountRate,
-        huikuan.huikuanBankPaperExpire,
-        huikuan.huikuanBusinessPaper,
-        huikuan.huikuanBusinessPaperDate,
-        huikuan.huikuanBusinessDiscount,
-        huikuan.huikuanBusinessDiscountRate,
-        huikuan.huikuanBusinessPaperExpire,
-        huikuan.tsc,
-        huikuan.tsu,
-        sum(map.amount) AS fukuanTotal
+            huikuan.id,
+            huikuan.orderId,
+            huikuan.hsId,
+            huikuan.huikuanCompanyId,
+            huikuan.huikuanDate,
+            huikuan.huikuanAmount,
+            huikuan.huikuanUsage,
+            huikuan.huikuanMode,
+            huikuan.huikuanBankPaper,
+            huikuan.huikuanBankPaperDate,
+            huikuan.huikuanBankDiscount,
+            huikuan.huikuanBankDiscountRate,
+            huikuan.huikuanBankPaperExpire,
+            huikuan.huikuanBusinessPaper,
+            huikuan.huikuanBusinessPaperDate,
+            huikuan.huikuanBusinessDiscount,
+            huikuan.huikuanBusinessDiscountRate,
+            huikuan.huikuanBusinessPaperExpire,
+            huikuan.tsc,
+            huikuan.tsu,
+            sum(map.amount) AS fukuanTotal
         FROM hs_ying_huikuan_map map
-        LEFT JOIN hs_ying_huikuan huikuan ON map.huikuanId = huikuan.id
+            LEFT JOIN hs_ying_huikuan huikuan ON map.huikuanId = huikuan.id
         WHERE huikuan.orderId = #{orderId, jdbcType=BIGINT}
         GROUP BY huikuan.id
-        <!-- having fukuanTotal lt huikuan.huikuanAmount -->
+        HAVING fukuanTotal <![CDATA[ <  ]]>  huikuan.huikuanAmount
         ORDER BY huikuan.huikuanDate
-
     </select>
 
     <!-- 物理删除-->
