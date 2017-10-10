@@ -226,9 +226,9 @@
             huikuan.huikuanBusinessPaperExpire,
             huikuan.tsc,
             huikuan.tsu,
-            sum(map.amount) AS fukuanTotal
-        FROM hs_ying_huikuan_map map
-            LEFT JOIN hs_ying_huikuan huikuan ON map.huikuanId = huikuan.id
+            ifnull(sum(map.amount), 0) AS fukuanTotal
+        FROM hs_ying_huikuan huikuan
+        LEFT JOIN hs_ying_huikuan_map map ON map.huikuanId = huikuan.id
         WHERE huikuan.orderId = #{orderId, jdbcType=BIGINT}
         GROUP BY huikuan.id
         HAVING fukuanTotal <![CDATA[ <  ]]>  huikuan.huikuanAmount

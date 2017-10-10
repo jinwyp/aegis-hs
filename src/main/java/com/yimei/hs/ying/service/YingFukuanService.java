@@ -86,8 +86,8 @@ public class YingFukuanService {
             page.setResults(this.getHuikuanUnifished(page.getResults()));
         }
 
-        if ( pageYingFukuanDTO.getHuankuanUnfinished() != null
-                        && pageYingFukuanDTO.getHuankuanUnfinished()
+        if (pageYingFukuanDTO.getHuankuanUnfinished() != null
+                && pageYingFukuanDTO.getHuankuanUnfinished()
                 ) {
 
             page.setResults(this.getHuankuanUnfinished(page.getResults()));
@@ -97,6 +97,7 @@ public class YingFukuanService {
 
     /**
      * 找出当前订单的付款列表: (条件为: 回款尚未回完的付款)
+     *
      * @param orderId
      * @return
      */
@@ -116,6 +117,7 @@ public class YingFukuanService {
 
     /**
      * 找出当前订单所有的付款  (条件为: 付款未被还完)
+     *
      * @param orderId
      * @return
      */
@@ -141,6 +143,7 @@ public class YingFukuanService {
 
     /**
      * 过滤付款列表: 返回付款没有被回款完的付款列表
+     *
      * @param fukuans
      * @return
      */
@@ -163,6 +166,7 @@ public class YingFukuanService {
 
     /**
      * 过滤付款列表, 返回付款没有被还完的付款列表
+     *
      * @param fukuans
      * @return
      */
@@ -187,6 +191,7 @@ public class YingFukuanService {
 
     /**
      * 创建付款 - 触发 回款-付款-对应关系的建立
+     *
      * @param yingFukuan
      * @return
      */
@@ -196,7 +201,8 @@ public class YingFukuanService {
         int rtn = yingFukuanMapper.insert(yingFukuan);
 
         // 2. 触发回款对应
-         yingHuikuanService.createMapping(yingFukuan.getOrderId(), null);
+        yingFukuan.setHuikuanTotal(BigDecimal.ZERO);
+        yingHuikuanService.createMapping(yingFukuan.getOrderId());
 
         return rtn;
     }
@@ -217,7 +223,7 @@ public class YingFukuanService {
      * @return
      */
     public int delete(Long orderId, long id) {
-        yingHuikuanService.createMapping(orderId,null);
+        yingHuikuanService.createMapping(orderId);
 
         // todo
         return yingFukuanMapper.delete(id);

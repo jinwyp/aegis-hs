@@ -72,8 +72,7 @@ public class YingHuikuanService {
         // 1. 插入回款记录
         int rtn = yingHuikuanMapper.insert(yingHuikuan);
 
-        yingHuikuan.setFukuanTotal(BigDecimal.ZERO);
-        this.createMapping(yingHuikuan.getOrderId(), yingHuikuan);
+        this.createMapping(yingHuikuan.getOrderId());
 
         return rtn;
     }
@@ -88,13 +87,18 @@ public class YingHuikuanService {
     public int delete(long orderId, long id) {
         // 由于回款时自动对应到付款的, 删除回款记录, 需要重建整个业务线的 回款-付款-map记录
         yingHuikuanMapMapper.deleteByOrderId(orderId);
-        this.createMapping(orderId, null);
+        this.createMapping(orderId);
         return yingHuikuanMapper.delete(id);
     }
 
-    public void createMapping(Long orderId, YingHuikuan current) {
+    public void createMapping(Long orderId) {
         // 2. 找出付款尚未完成回款对应的付款记录
         List<YingFukuan> unfinishedFukuan = yingFukuanService.huikuanUnfinished(orderId);
+
+//        if (currentFukuan != null) {
+//            unfinishedFukuan.add(currentFukuan);
+//        }
+
         if (unfinishedFukuan.size() == 0) {
             return;
         }
@@ -107,9 +111,10 @@ public class YingHuikuanService {
         // 1.  找出订单的回款记录 -  尚有未对应完的余额
         List<YingHuikuan> unfinished = yingHuikuanMapper.getUnfinshedByOrderId(orderId);
 
-        if (current != null) {
-            unfinished.add(current);
-        }
+//        if (current != null) {
+//            unfinished.add(current);
+//        }
+
         Collections.sort(unfinished, (a, b) -> a.getHuikuanDate().compareTo(b.getHuikuanDate()));
 
         for (YingHuikuan huikuan : unfinished) {
