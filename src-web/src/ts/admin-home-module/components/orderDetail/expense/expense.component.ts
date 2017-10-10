@@ -106,8 +106,8 @@ export class ExpenseComponent implements OnInit {
         }
     }
 
-    expenseFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.expenseFormError = formErrorHandler(formInputData, this.expenseForm, this.expenseFormValidationMessages, ignoreDirty)
+    expenseFormInputChange(formInputData : any) {
+        this.expenseFormError = formErrorHandler(formInputData, this.expenseForm, this.expenseFormValidationMessages)
     }
 
     createExpenseForm(): void {
@@ -132,7 +132,7 @@ export class ExpenseComponent implements OnInit {
     expenseFormSubmit() {
 
         if (this.expenseForm.invalid) {
-            this.expenseFormInputChange(this.expenseForm.value, true)
+            this.expenseFormInputChange(this.expenseForm.value)
             this.ignoreDirty = true
 
             console.log('当前信息: ', this.expenseForm, this.expenseFormError)

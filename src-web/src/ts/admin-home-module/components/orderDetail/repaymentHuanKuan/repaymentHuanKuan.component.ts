@@ -179,6 +179,12 @@ export class RepaymentHuanKuanComponent implements OnInit {
     }
 
 
+    repaymentHKFormInputChange(formInputData : any) {
+        this.repaymentHKFormError = formErrorHandler(formInputData, this.repaymentHKForm, this.repaymentHKFormValidationMessages)
+    }
+    paymentFormInputChange(formInputData : any) {
+        this.paymentFormError = formErrorHandler(formInputData, this.paymentForm, this.repaymentHKFormValidationMessages)
+    }
 
     createHKForm(): void {
 
@@ -194,7 +200,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
         this.repaymentHKForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
-            this.repaymentHKFormError = formErrorHandler(data, this.repaymentHKForm, this.repaymentHKFormValidationMessages)
+            this.repaymentHKFormInputChange(data)
         })
     }
 
@@ -209,7 +215,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
         this.paymentForm.valueChanges.subscribe(data => {
             this.ignoreDirtyPayment = false
-            this.paymentFormError = formErrorHandler(data, this.paymentForm, this.repaymentHKFormValidationMessages)
+            this.paymentFormInputChange(data)
         })
     }
 
@@ -219,7 +225,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
         if (this.repaymentHKForm.invalid) {
             this.ignoreDirty = true
-            this.repaymentHKFormError = formErrorHandler(this.repaymentHKForm.value, this.repaymentHKForm, this.repaymentHKFormValidationMessages)
+            this.repaymentHKFormInputChange(this.repaymentHKForm.value)
 
             console.log('当前信息: ', this.repaymentHKForm, this.repaymentHKFormError)
             return
@@ -294,7 +300,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
     createNewPayment () {
         if (this.paymentForm.invalid) {
 
-            this.paymentFormError = formErrorHandler(this.paymentForm.value, this.paymentForm, this.repaymentHKFormValidationMessages)
+            this.paymentFormInputChange(this.paymentForm.value)
 
             setTimeout( () => {
                 this.ignoreDirtyPayment = true

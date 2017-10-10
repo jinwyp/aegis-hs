@@ -137,8 +137,8 @@ export class InvoiceComponent implements OnInit {
         }
     }
 
-    invoiceFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.invoiceFormError = formErrorHandler(formInputData, this.invoiceForm, this.invoiceFormValidationMessages, ignoreDirty)
+    invoiceFormInputChange(formInputData : any) {
+        this.invoiceFormError = formErrorHandler(formInputData, this.invoiceForm, this.invoiceFormValidationMessages)
     }
 
     invoiceDetailFormError : any = {}
@@ -156,8 +156,8 @@ export class InvoiceComponent implements OnInit {
             'required'      : '请填写价税合计!'
         }
     }
-    invoiceDetailFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.invoiceDetailFormError = formErrorHandler(formInputData, this.invoiceDetailForm, this.invoiceDetailFormValidationMessages, ignoreDirty)
+    invoiceDetailFormInputChange(formInputData : any) {
+        this.invoiceDetailFormError = formErrorHandler(formInputData, this.invoiceDetailForm, this.invoiceDetailFormValidationMessages)
     }
 
     createInvoiceForm(): void {
@@ -200,7 +200,7 @@ export class InvoiceComponent implements OnInit {
     invoiceFormSubmit() {
 
         if (this.invoiceForm.invalid) {
-            this.invoiceFormInputChange(this.invoiceForm.value, true)
+            this.invoiceFormInputChange(this.invoiceForm.value)
             this.ignoreDirty = true
 
             console.log('当前信息: ', this.invoiceForm, this.invoiceFormError)
@@ -281,7 +281,7 @@ export class InvoiceComponent implements OnInit {
 
     createInvoiceDetail () {
         if (this.invoiceDetailForm.invalid) {
-            this.invoiceDetailFormInputChange(this.invoiceDetailForm.value, true)
+            this.invoiceDetailFormInputChange(this.invoiceDetailForm.value)
             this.ignoreDirty = true
 
             return

@@ -97,8 +97,8 @@ export class DepartmentManagementComponent implements OnInit {
         }
     }
 
-    departmentFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.departmentFormError = formErrorHandler(formInputData, this.departmentForm, this.departmentFormValidationMessages, ignoreDirty)
+    departmentFormInputChange(formInputData : any) {
+        this.departmentFormError = formErrorHandler(formInputData, this.departmentForm, this.departmentFormValidationMessages)
     }
 
     createUserForm(user: any = {}): void {
@@ -117,7 +117,7 @@ export class DepartmentManagementComponent implements OnInit {
     departmentFormSubmit() {
 
         if (this.departmentForm.invalid) {
-            this.departmentFormInputChange(this.departmentForm.value, true)
+            this.departmentFormInputChange(this.departmentForm.value)
             this.ignoreDirty = true
 
             console.log('当前信息: ', this.departmentForm, this.departmentFormError)

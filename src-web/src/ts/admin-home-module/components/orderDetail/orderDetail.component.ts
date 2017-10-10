@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core'
 import { FormBuilder, FormGroup, Validators} from '@angular/forms'
-import {ActivatedRoute, ParamMap} from "@angular/router"
+import {ActivatedRoute, ParamMap} from '@angular/router'
 
 
 import 'rxjs/add/operator/switchMap'
@@ -170,8 +170,8 @@ export class OrderDetailComponent implements OnInit {
         }
     }
 
-    orderUnitFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.orderUnitFormError = formErrorHandler(formInputData, this.orderUnitForm, this.orderUnitFormValidationMessages, ignoreDirty)
+    orderUnitFormInputChange(formInputData : any) {
+        this.orderUnitFormError = formErrorHandler(formInputData, this.orderUnitForm, this.orderUnitFormValidationMessages)
     }
 
     createOrderUnitForm(): void {
@@ -182,7 +182,7 @@ export class OrderDetailComponent implements OnInit {
             'unInvoicedRate'    : ['', [Validators.required ] ],
             'contractBaseInterest'    : ['', [Validators.required ] ],
 
-            'expectHKDays'    : ['', [Validators.required, isInt(),  ] ],
+            'expectHKDays'    : ['', [Validators.required, isInt() ] ],
             'tradeAddPrice'    : ['', [Validators.required ] ],
             'weightedPrice'    : ['', [Validators.required ] ]
         } )
@@ -199,7 +199,7 @@ export class OrderDetailComponent implements OnInit {
     orderUnitFormSubmit() {
 
         if (this.orderUnitForm.invalid) {
-            this.orderUnitFormInputChange(this.orderUnitForm.value, true)
+            this.orderUnitFormInputChange(this.orderUnitForm.value)
             this.ignoreDirty = true
 
             console.log('当前信息: ', this.orderUnitForm, this.orderUnitFormError)

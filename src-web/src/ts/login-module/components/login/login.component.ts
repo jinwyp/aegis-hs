@@ -53,8 +53,8 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    loginFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.loginFormError = formErrorHandler(formInputData, this.loginForm, this.loginFormValidationMessages, ignoreDirty)
+    loginFormInputChange(formInputData : any) {
+        this.loginFormError = formErrorHandler(formInputData, this.loginForm, this.loginFormValidationMessages)
     }
 
     createLoginForm(): void {
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
     loginFormSubmit() {
 
         if (this.loginForm.invalid) {
-            this.loginFormInputChange(this.loginForm.value, true)
+            this.loginFormInputChange(this.loginForm.value)
             this.ignoreDirty = true
             return
         }

@@ -112,8 +112,8 @@ export class TeamManagementComponent implements OnInit {
         }
     }
 
-    teamFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.teamFormError = formErrorHandler(formInputData, this.teamForm, this.teamFormValidationMessages, ignoreDirty)
+    teamFormInputChange(formInputData : any) {
+        this.teamFormError = formErrorHandler(formInputData, this.teamForm, this.teamFormValidationMessages)
     }
 
     createTeamForm(): void {
@@ -133,7 +133,7 @@ export class TeamManagementComponent implements OnInit {
     teamFormSubmit() {
 
         if (this.teamForm.invalid) {
-            this.teamFormInputChange(this.teamForm.value, true)
+            this.teamFormInputChange(this.teamForm.value)
             this.ignoreDirty = true
 
             console.log('当前信息: ', this.teamForm, this.teamFormError)

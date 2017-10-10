@@ -133,8 +133,8 @@ export class PaymentComponent implements OnInit {
         }
     }
 
-    paymentFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.paymentFormError = formErrorHandler(formInputData, this.paymentForm, this.paymentFormValidationMessages, ignoreDirty)
+    paymentFormInputChange(formInputData : any) {
+        this.paymentFormError = formErrorHandler(formInputData, this.paymentForm, this.paymentFormValidationMessages)
     }
 
     createPaymentForm(): void {
@@ -167,7 +167,7 @@ export class PaymentComponent implements OnInit {
     paymentFormSubmit() {
 
         if (this.paymentForm.invalid) {
-            this.paymentFormInputChange(this.paymentForm.value, true)
+            this.paymentFormInputChange(this.paymentForm.value)
             this.ignoreDirty = true
 
             console.log('当前信息: ', this.paymentForm, this.paymentFormError)
