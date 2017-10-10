@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by xiangyang on 2017/7/1.
@@ -117,5 +118,14 @@ public class UserService {
 
         return rtn;
 
+    }
+
+    /**
+     * 获取用户同部门的其他用户
+     * @param user
+     * @return
+     */
+    public List<User> getUsersOfSameDept(User user) {
+        return userMapper.getUsersOfSameDept(user);
     }
 }
