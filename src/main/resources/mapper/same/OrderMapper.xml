@@ -85,7 +85,7 @@
             LEFT JOIN hs_same_order_party t3 ON t1.id = t2.orderId
         WHERE
             t1.id = #{id, jdbcType=BIGINT}
-            AND t1.deleted = 0 AND t1.businessType = #{businessType,jdbcType=VARCHAR}
+            AND t1.deleted = 0
     </select>
 
     <select id="getPage"  resultType="com.yimei.hs.same.entity.Order">
@@ -152,7 +152,7 @@
         )
         VALUES (
             #{id,jdbcType=BIGINT},
-            #{businessType},
+            #{businessType, jdbcType=VARCHAR},
             #{deptId,jdbcType=BIGINT},
             #{teamId,jdbcType=BIGINT},
             #{creatorId,jdbcType=BIGINT},
@@ -173,6 +173,7 @@
         insert into hs_same_order
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
+            <if test="businessType != null">businessType,</if>
             <if test="deptId != null">deptId,</if>
             <if test="teamId != null">teamId,</if>
             <if test="creatorId != null">creatorId,</if>
@@ -190,6 +191,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="businessType != null">#{businessType,jdbcType=VARCHAR},</if>
             <if test="deptId != null">#{deptId,jdbcType=BIGINT},</if>
             <if test="teamId != null">#{teamId,jdbcType=BIGINT},</if>
             <if test="creatorId != null">#{creatorId,jdbcType=BIGINT},</if>
@@ -209,6 +211,7 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.same.entity.Order">
         update hs_same_order
         <set>
+            <if test="businessType != null">businessType = #{businessType,jdbcType=VARCHAR},</if>
             <if test="deptId != null">deptId = #{deptId,jdbcType=BIGINT},</if>
             <if test="teamId != null">teamId = #{teamId,jdbcType=BIGINT},</if>
             <if test="creatorId != null">creatorId = #{creatorId,jdbcType=BIGINT},</if>
@@ -230,6 +233,7 @@
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.Order">
         UPDATE hs_same_order
         SET deptId               = #{deptId,jdbcType=BIGINT},
+            businessType         = #{businessType,jdbcType=BIGINT},
             teamId               = #{teamId,jdbcType=BIGINT},
             creatorId            = #{creatorId,jdbcType=BIGINT},
             ownerId              = #{ownerId,jdbcType=BIGINT},

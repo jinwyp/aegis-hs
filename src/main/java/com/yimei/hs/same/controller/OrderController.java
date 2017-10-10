@@ -111,6 +111,7 @@ public class OrderController {
     @PutMapping("/{id}")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) Order order
     ) {
@@ -134,6 +135,7 @@ public class OrderController {
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> transfer(
             @CurrentUser User user,
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("toId") Long toId
     ) {
@@ -153,6 +155,7 @@ public class OrderController {
     @DeleteMapping("/{id}")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> delete(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("id") Long id
     ) {
         int rtn = orderService.delete(id);
