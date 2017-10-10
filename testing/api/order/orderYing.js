@@ -155,7 +155,7 @@ describe('应收订单', function () {
             .end(function(err, res) {
                 if (err) return done(err)
                 expect(res.body.success).to.equal(false)
-                expect(res.body.data).to.equal(null)
+                expect(res.body.data).to.equal(undefined)
                 done()
             })
     })
@@ -186,7 +186,7 @@ describe('应收订单', function () {
             .end(function(err, res) {
                 if (err) return done(err)
                 expect(res.body.success).to.equal(false)
-                expect(res.body.data).to.equal(null)
+                expect(res.body.data).to.equal(undefined)
                 done()
             })
     })

@@ -227,7 +227,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
         const postData = this.repaymentHKForm.value
         postData.orderId = this.currentOrder.id
-        postData.paymentPostList = this.paymentPostList
+        postData.huankuanMapList = this.paymentPostList
 
         if (this.isAddNew) {
             this.hsOrderService.createNewRepaymentHK(this.currentOrder.id, postData).subscribe(
@@ -303,7 +303,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             return
         }
 
-        this.paymentPostList.push(<any>Object.assign(this.paymentListObject[this.paymentForm.value.id], {principal : this.paymentForm.value.principal, amount : this.paymentForm.value.amount}) )
+        this.paymentPostList.push(<any>Object.assign(this.paymentListObject[this.paymentForm.value.id], {fukuanId : this.paymentForm.value.id, principal : this.paymentForm.value.principal, amount : this.paymentForm.value.amount}) )
         this.ignoreDirtyPayment = false
     }
 
