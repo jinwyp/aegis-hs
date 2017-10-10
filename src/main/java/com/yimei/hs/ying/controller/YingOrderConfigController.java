@@ -3,6 +3,7 @@ package com.yimei.hs.ying.controller;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.dto.PageYingOrderConfigDTO;
 import com.yimei.hs.ying.entity.YingOrderConfig;
 import com.yimei.hs.ying.service.YingOrderConfigService;
@@ -35,12 +36,12 @@ public class YingOrderConfigController {
      * @return
      */
     @GetMapping("/{morderId}/units")
-    public ResponseEntity<PageResult<YingOrderConfig>> list(
+    public ResponseEntity<Result<Page<YingOrderConfig>>> list(
             @PathVariable("morderId") Long morderId,
             PageYingOrderConfigDTO pageYingOrderConfigDTO
     ) {
         pageYingOrderConfigDTO.setOrderId(morderId);
-        return PageResult.ok(yingOrderConfigService.getPage(pageYingOrderConfigDTO));
+        return Result.ok(yingOrderConfigService.getPage(pageYingOrderConfigDTO));
     }
 
     /**

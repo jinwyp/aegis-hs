@@ -3,6 +3,7 @@ package com.yimei.hs.ying.controller;
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.YingSettleTraffic;
 import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
@@ -40,10 +41,10 @@ public class YingSettleTrafficController {
      * @return
      */
     @GetMapping("/{morderId}/settletraffic")
-    public ResponseEntity<PageResult<YingSettleTraffic>> list( @PathVariable("morderId") long morderId,  PageYingSettleTrafficDTO pageYingSettleTrafficDTO) {
+    public ResponseEntity<Result<Page<YingSettleTraffic>>> list(@PathVariable("morderId") long morderId, PageYingSettleTrafficDTO pageYingSettleTrafficDTO) {
 
         pageYingSettleTrafficDTO.setOrderId(morderId);
-        return PageResult.ok(yingSettleService.getPageTraffic(pageYingSettleTrafficDTO));
+        return Result.ok(yingSettleService.getPageTraffic(pageYingSettleTrafficDTO));
     }
 
     /**

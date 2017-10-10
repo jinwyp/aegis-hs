@@ -3,6 +3,7 @@ package com.yimei.hs.ying.controller;
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.YingFukuan;
 import com.yimei.hs.ying.entity.YingHuankuan;
 import com.yimei.hs.boot.api.PageResult;
@@ -44,7 +45,7 @@ public class YingHuankuanController {
      * @return
      */
     @GetMapping("/{morderId}/huankuans")
-    public ResponseEntity<PageResult<YingHuankuan>> list(
+    public ResponseEntity<Result<Page<YingHuankuan>>> list(
             @PathVariable("morderId") Long morderId,
             PageYingHuankuanDTO pageYingHuankuanDTO) {
 
@@ -53,7 +54,7 @@ public class YingHuankuanController {
 //        System.out.println(pageYingHuankuanDTO);
 //        System.out.println("-------------------------------------------");
 
-        return PageResult.ok(yingHuankuanService.getPage(pageYingHuankuanDTO));
+        return Result.ok(yingHuankuanService.getPage(pageYingHuankuanDTO));
     }
 
     /**

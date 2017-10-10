@@ -29,13 +29,13 @@ public class YingLogController {
      * @return
      */
     @GetMapping("/{morderId}/log/{entityType}")
-    public ResponseEntity<PageResult<YingLog>> getPage(
+    public ResponseEntity<Result<Page<YingLog>>> getPage(
             @PathVariable("morderId") Long morderId,
             @PathVariable("entityType") YingEntityType yingEntityType,
             PageYingLogDTO pageYingLogDTO
     ) {
         Page<YingLog> page = yingLogService.getPage(pageYingLogDTO);
-        return PageResult.ok(page);
+        return Result.ok(page);
     }
 
     /**
