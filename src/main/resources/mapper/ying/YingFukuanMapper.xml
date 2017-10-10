@@ -190,7 +190,8 @@
             payMode, capitalId,
             useInterest,
             useDays,
-            tsc
+            tsc,
+            tsu
         )
         VALUES (
             #{id,jdbcType=BIGINT},
@@ -204,7 +205,8 @@
             #{capitalId,jdbcType=BIGINT},
             #{useInterest,jdbcType=DECIMAL},
             #{useDays,jdbcType=INTEGER},
-            #{tsc,jdbcType=TIMESTAMP}
+            #{tsc,jdbcType=TIMESTAMP},
+            current_timestamp
         )
     </insert>
     <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingFukuan" keyProperty="id"
@@ -223,6 +225,8 @@
             <if test="useInterest != null">useInterest,</if>
             <if test="useDays != null">useDays,</if>
             <if test="tsc != null">tsc,</if>
+            <if test="tsc != null">tsc,</if>
+            <if test="tsu != null">tsu,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id,jdbcType=BIGINT},</if>
@@ -237,6 +241,7 @@
             <if test="useInterest != null">#{useInterest,jdbcType=DECIMAL},</if>
             <if test="useDays != null">#{useDays,jdbcType=INTEGER},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="tsu != null">#{tsu,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingFukuan">
