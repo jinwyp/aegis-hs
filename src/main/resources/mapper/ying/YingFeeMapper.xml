@@ -27,7 +27,7 @@
         <include refid="Base_Column_List"/>
         FROM hs_ying_fee
         <where>
-            <if test="1==1">deleted = 0</if>
+            <if test="true">deleted = 0</if>
             <if test="orderId!=null">AND orderId = #{orderId, jdbcType=BIGINT}</if>
             <if test="hsId!=null">AND hsId = #{hsId, jdbcType=BIGINT}</if>
             <if test="name!=null">AND name = #{name, jdbcType=VARCHAR}</if>

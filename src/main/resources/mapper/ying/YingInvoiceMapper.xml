@@ -65,7 +65,7 @@
             t1.tsc
         FROM hs_ying_invoice t1
         <where>
-            <if test="1==1">AND t1.deleted = 0</if>
+            <if test="true">AND t1.deleted = 0</if>
             <if test="orderId!=null"> AND  orderId=#{orderId,jdbcType=BIGINT}</if>
             <if test="hsId!=null">  AND hsId=#{hsId,jdbcType=BIGINT}</if>
             <if test="openCompanyId!=null"> AND  openCompanyId=#{openCompanyId,jdbcType=BIGINT}</if>
