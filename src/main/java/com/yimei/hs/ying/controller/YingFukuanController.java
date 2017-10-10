@@ -1,16 +1,12 @@
 package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.boot.api.CreateGroup;
+import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.ying.entity.YingFukuan;
-import com.yimei.hs.boot.api.PageResult;
-import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.ying.dto.PageYingFukuanDTO;
-import com.yimei.hs.ying.entity.YingHuankuan;
-import com.yimei.hs.ying.entity.YingHuankuanMap;
-import com.yimei.hs.ying.entity.YingHuikuanMap;
+import com.yimei.hs.ying.entity.YingFukuan;
 import com.yimei.hs.ying.service.YingFukuanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.BinaryOperator;
-import java.util.stream.Stream;
 
 /**
  * Created by hary on 2017/9/15.

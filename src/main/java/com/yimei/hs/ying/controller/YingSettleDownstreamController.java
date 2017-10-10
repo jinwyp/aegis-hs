@@ -1,7 +1,6 @@
 package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.boot.api.CreateGroup;
-import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;

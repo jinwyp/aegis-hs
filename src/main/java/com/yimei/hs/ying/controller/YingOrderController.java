@@ -1,16 +1,15 @@
 package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.boot.api.CreateGroup;
-import com.yimei.hs.boot.ext.annotation.CurrentUser;
+import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
+import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.user.entity.User;
-import com.yimei.hs.ying.entity.YingOrder;
-import com.yimei.hs.boot.api.PageResult;
-import com.yimei.hs.boot.api.Result;
-import com.yimei.hs.ying.dto.PageYingOrderDTO;
 import com.yimei.hs.enums.OrderStatus;
+import com.yimei.hs.user.entity.User;
+import com.yimei.hs.ying.dto.PageYingOrderDTO;
+import com.yimei.hs.ying.entity.YingOrder;
 import com.yimei.hs.ying.service.YingOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +44,7 @@ public class YingOrderController {
             PageYingOrderDTO pageYingOrderDTO
     ) {
         // 如果不是管理员， 就只展示自己的订单
-        if(!user.getIsAdmin()) {
+        if (!user.getIsAdmin()) {
             pageYingOrderDTO.setOwnerId(user.getId());
         }
 
@@ -141,6 +140,7 @@ public class YingOrderController {
 
     /**
      * 逻辑删除
+     *
      * @param id
      * @return
      */

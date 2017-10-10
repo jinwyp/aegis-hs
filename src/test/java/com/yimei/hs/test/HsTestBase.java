@@ -2,8 +2,8 @@ package com.yimei.hs.test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.entity.Team;
@@ -51,23 +51,23 @@ abstract public class HsTestBase {
     }
 
     protected ParameterizedTypeReference<Result<Boolean>> typeReferenceBoolean  = new ParameterizedTypeReference<Result<Boolean>>() {};
-    protected ParameterizedTypeReference<PageResult<Boolean>> typeReferenceBooleanPage  = new ParameterizedTypeReference<PageResult<Boolean>>() {};
+    protected ParameterizedTypeReference<Result<Page<Boolean>>> typeReferenceBooleanPage  = new ParameterizedTypeReference<Result<Page<Boolean>>>() {};
 
     protected ParameterizedTypeReference<Result<Integer>> typeReferenceInteger  = new ParameterizedTypeReference<Result<Integer>>() {};
-    protected ParameterizedTypeReference<PageResult<Integer>> typeReferenceIntegerPage  = new ParameterizedTypeReference<PageResult<Integer>>() {};
+    protected ParameterizedTypeReference<Result<Page<Integer>>> typeReferenceIntegerPage  = new ParameterizedTypeReference<Result<Page<Integer>>>() {};
 
     protected ParameterizedTypeReference<Result<String>> typeReferenceString  = new ParameterizedTypeReference<Result<String>>() {};
-    protected ParameterizedTypeReference<PageResult<String>> typeReferenceStringPage  = new ParameterizedTypeReference<PageResult<String>>() {};
+    protected ParameterizedTypeReference<Result<Page<String>>> typeReferenceStringPage  = new ParameterizedTypeReference<Result<Page<String>>>() {};
 
     protected ParameterizedTypeReference<Result<User>> typeReferenceUser  = new ParameterizedTypeReference<Result<User>>() {};
     protected ParameterizedTypeReference<Result<Team>> typeReferenceTeam  = new ParameterizedTypeReference<Result<Team>>() {};
     protected ParameterizedTypeReference<Result<Dept>> typeReferenceDept  = new ParameterizedTypeReference<Result<Dept>>() {};
     protected ParameterizedTypeReference<Result<Party>> typeReferenceParty  = new ParameterizedTypeReference<Result<Party>>() {};
 
-    protected ParameterizedTypeReference<PageResult<User>> typeReferenceUserPage  = new ParameterizedTypeReference<PageResult<User>>() {};
-    protected ParameterizedTypeReference<PageResult<Team>> typeReferenceTeamPage  = new ParameterizedTypeReference<PageResult<Team>>() {};
-    protected ParameterizedTypeReference<PageResult<Dept>> typeReferenceDeptPage  = new ParameterizedTypeReference<PageResult<Dept>>() {};
-    protected ParameterizedTypeReference<PageResult<Party>> typeReferencePartyPage  = new ParameterizedTypeReference<PageResult<Party>>() {};
+    protected ParameterizedTypeReference<Result<Page<User>>> typeReferenceUserPage  = new ParameterizedTypeReference<Result<Page<User>>>() {};
+    protected ParameterizedTypeReference<Result<Page<Team>>> typeReferenceTeamPage  = new ParameterizedTypeReference<Result<Page<Team>>>() {};
+    protected ParameterizedTypeReference<Result<Page<Dept>>> typeReferenceDeptPage  = new ParameterizedTypeReference<Result<Page<Dept>>>() {};
+    protected ParameterizedTypeReference<Result<Page<Party>>> typeReferencePartyPage  = new ParameterizedTypeReference<Result<Page<Party>>>() {};
 
     public void createUser(String phone, String password) {
 

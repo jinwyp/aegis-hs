@@ -1,13 +1,11 @@
 package com.yimei.hs.ying.controller;
 
-import com.yimei.hs.boot.api.CreateGroup;
+import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.ying.entity.YingSettleTraffic;
-import com.yimei.hs.boot.api.PageResult;
-import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.ying.dto.PageYingSettleTrafficDTO;
+import com.yimei.hs.ying.entity.YingSettleTraffic;
 import com.yimei.hs.ying.service.YingSettleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +39,10 @@ public class YingSettleTrafficController {
      * @return
      */
     @GetMapping("/{morderId}/settletraffic")
-    public ResponseEntity<Result<Page<YingSettleTraffic>>> list(@PathVariable("morderId") long morderId, PageYingSettleTrafficDTO pageYingSettleTrafficDTO) {
+    public ResponseEntity<Result<Page<YingSettleTraffic>>> list(
+            @PathVariable("morderId") long morderId,
+            PageYingSettleTrafficDTO pageYingSettleTrafficDTO
+    ) {
 
         pageYingSettleTrafficDTO.setOrderId(morderId);
         return Result.ok(yingSettleService.getPageTraffic(pageYingSettleTrafficDTO));
@@ -73,7 +74,7 @@ public class YingSettleTrafficController {
      */
     @PostMapping("/{morderId}/settletraffic")
     @Transactional(readOnly = false)
-    public ResponseEntity<Result<YingSettleTraffic>> create( @PathVariable("morderId") Long morderId,  @RequestBody YingSettleTraffic yingSettleTraffic) {
+    public ResponseEntity<Result<YingSettleTraffic>> create(@PathVariable("morderId") Long morderId, @RequestBody YingSettleTraffic yingSettleTraffic) {
         yingSettleTraffic.setOrderId(morderId);
 
         int rtn = yingSettleService.createTraffic(yingSettleTraffic);
@@ -106,6 +107,7 @@ public class YingSettleTrafficController {
 
     /**
      * 逻辑删除
+     *
      * @return
      */
     @Transactional(readOnly = false)

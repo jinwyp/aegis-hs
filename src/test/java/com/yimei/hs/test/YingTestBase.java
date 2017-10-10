@@ -1,7 +1,7 @@
 package com.yimei.hs.test;
 
-import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.*;
 import org.springframework.core.ParameterizedTypeReference;
 
@@ -24,18 +24,18 @@ abstract public class YingTestBase extends HsTestBase {
     protected ParameterizedTypeReference<Result<YingSettleTraffic>> typeReferenceSettleTraffic  = new ParameterizedTypeReference<Result<YingSettleTraffic>>() {};
     protected ParameterizedTypeReference<Result<YingFee>> typeReferenceFee = new ParameterizedTypeReference<Result<YingFee>>() {};
 
-    protected ParameterizedTypeReference<PageResult<YingOrder>> typeReferenceOrderPage  = new ParameterizedTypeReference<PageResult<YingOrder>>() {};
-    protected ParameterizedTypeReference<PageResult<YingOrderConfig>> typeReferenceOrderConfigPage  = new ParameterizedTypeReference<PageResult<YingOrderConfig>>() {};
-    protected ParameterizedTypeReference<PageResult<YingOrderParty>> typeReferenceOrderPartyPage  = new ParameterizedTypeReference<PageResult<YingOrderParty>>() {};
-    protected ParameterizedTypeReference<PageResult<YingInvoice>> typeReferenceInvoicePage  = new ParameterizedTypeReference<PageResult<YingInvoice>>() {};
-    protected ParameterizedTypeReference<PageResult<YingInvoiceDetail>> typeReferenceInvoiceDetailPage  = new ParameterizedTypeReference<PageResult<YingInvoiceDetail>>() {};
-    protected ParameterizedTypeReference<PageResult<YingFayun>> typeReferenceFayunPage  = new ParameterizedTypeReference<PageResult<YingFayun>>() {};
-    protected ParameterizedTypeReference<PageResult<YingFukuan>> typeReferenceFukuanPage  = new ParameterizedTypeReference<PageResult<YingFukuan>>() {};
-    protected ParameterizedTypeReference<PageResult<YingHuikuan>> typeReferenceHuikuanPage  = new ParameterizedTypeReference<PageResult<YingHuikuan>>() {};
-    protected ParameterizedTypeReference<PageResult<YingHuankuan>> typeReferenceHuankuanPage  = new ParameterizedTypeReference<PageResult<YingHuankuan>>() {};
-    protected ParameterizedTypeReference<PageResult<YingSettleUpstream>> typeReferenceSettleUpstreamPage  = new ParameterizedTypeReference<PageResult<YingSettleUpstream>>() {};
-    protected ParameterizedTypeReference<PageResult<YingSettleDownstream>> typeReferenceSettleDownstreamPage  = new ParameterizedTypeReference<PageResult<YingSettleDownstream>>() {};
-    protected ParameterizedTypeReference<PageResult<YingSettleTraffic>> typeReferenceSettleTrafficPage  = new ParameterizedTypeReference<PageResult<YingSettleTraffic>>() {};
-    protected ParameterizedTypeReference<PageResult<YingFee>> typeReferenceFeePage = new ParameterizedTypeReference<PageResult<YingFee>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingOrder>>> typeReferenceOrderPage  = new ParameterizedTypeReference<Result<Page<YingOrder>>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingOrderConfig>>> typeReferenceOrderConfigPage  = new ParameterizedTypeReference<Result<Page<YingOrderConfig>>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingOrderParty>>> typeReferenceOrderPartyPage  = new ParameterizedTypeReference<Result<Page<YingOrderParty>>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingInvoice>>> typeReferenceInvoicePage  = new ParameterizedTypeReference<Result<Page<YingInvoice>>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingInvoiceDetail>>> typeReferenceInvoiceDetailPage  = new ParameterizedTypeReference<Result<Page<YingInvoiceDetail>>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingFayun>>> typeReferenceFayunPage  = new ParameterizedTypeReference<Result<Page<YingFayun>>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingFukuan>>> typeReferenceFukuanPage  = new ParameterizedTypeReference<Result<Page<YingFukuan>>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingHuikuan>>> typeReferenceHuikuanPage  = new ParameterizedTypeReference<Result<Page<YingHuikuan>>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingHuankuan>>> typeReferenceHuankuanPage  = new ParameterizedTypeReference<Result<Page<YingHuankuan>>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingSettleUpstream>>> typeReferenceSettleUpstreamPage  = new ParameterizedTypeReference<Result<Page<YingSettleUpstream>>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingSettleDownstream>>> typeReferenceSettleDownstreamPage  = new ParameterizedTypeReference<Result<Page<YingSettleDownstream>>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingSettleTraffic>>> typeReferenceSettleTrafficPage  = new ParameterizedTypeReference<Result<Page<YingSettleTraffic>>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingFee>>> typeReferenceFeePage = new ParameterizedTypeReference<Result<Page<YingFee>>>() {};
 
 }

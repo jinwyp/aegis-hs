@@ -1,9 +1,9 @@
 package com.yimei.hs.user.controller;
 
-import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.ext.annotation.Logined;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.user.dto.PageUserDTO;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.user.service.UserService;
@@ -30,6 +30,7 @@ public class AdminController {
 
     /**
      * 创建用户
+     *
      * @param user
      * @return
      */
@@ -54,8 +55,8 @@ public class AdminController {
      * @return
      */
     @GetMapping("/users")
-    public ResponseEntity<PageResult<User>> list(PageUserDTO pageUserDTO) {
-        return PageResult.ok(userService.getPage(pageUserDTO));
+    public ResponseEntity<Result<Page<User>>> list(PageUserDTO pageUserDTO) {
+        return Result.ok(userService.getPage(pageUserDTO));
     }
 
 

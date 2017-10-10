@@ -1,6 +1,5 @@
 package com.yimei.hs.user.controller;
 
-import com.yimei.hs.boot.api.ListResult;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.user.entity.User;
@@ -88,7 +87,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PutMapping(value = "/api/change_password", consumes ="application/json", produces = "application/json")
+    @PutMapping(value = "/api/change_password", consumes = "application/json", produces = "application/json")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> change(
             @CurrentUser User user,
@@ -103,7 +102,7 @@ public class UserController {
             return Result.error(4003, "用户已经禁用", HttpStatus.UNAUTHORIZED);
         } else {
             userUpdate.setId(user.getId());
-            int rtn  =  userService.changePassword(userUpdate);
+            int rtn = userService.changePassword(userUpdate);
             if (rtn != 1) {
                 return Result.error(4001, "更新密码失败");
             }
@@ -126,11 +125,12 @@ public class UserController {
 
     /**
      * 获取用户同部门的的用户列表
+     *
      * @return
      */
     @GetMapping(value = "/api/user/list_dept_user")
     public ResponseEntity<Result<List<User>>> userList(
-           @CurrentUser User user
+            @CurrentUser User user
     ) {
         List<User> userList = userService.getUsersOfSameDept(user);
         return Result.ok(userList);

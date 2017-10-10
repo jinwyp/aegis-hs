@@ -1,13 +1,12 @@
 package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.boot.api.CreateGroup;
+import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.ying.entity.YingInvoice;
-import com.yimei.hs.boot.api.PageResult;
-import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.ying.dto.PageYingInvoiceDTO;
+import com.yimei.hs.ying.entity.YingInvoice;
 import com.yimei.hs.ying.service.YingInvoiceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +42,7 @@ public class YingInvoiceController {
     ) {
         pageYingInvoiceDTO.setOrderId(morderId);
         Page<YingInvoice> page = yingInvoiceService.getPage(pageYingInvoiceDTO);
-        logger.info("my invoice page = {}", page) ;
+        logger.info("my invoice page = {}", page);
         return Result.ok(page);
     }
 
@@ -74,7 +73,7 @@ public class YingInvoiceController {
     @PostMapping("/{morderId}/invoices")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<YingInvoice>> create(
-       @RequestBody @Validated(CreateGroup.class) YingInvoice yingInvoice
+            @RequestBody @Validated(CreateGroup.class) YingInvoice yingInvoice
     ) {
         int rtn = yingInvoiceService.create(yingInvoice);
         if (rtn != 1) {
@@ -90,7 +89,7 @@ public class YingInvoiceController {
      * @return
      */
     @PutMapping("/{morderId}/invoices/{id}")
-    @Transactional(readOnly =  false)
+    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
@@ -107,10 +106,11 @@ public class YingInvoiceController {
 
     /**
      * 逻辑删除
+     *
      * @return
      */
     @DeleteMapping("/{morderId}/invoices/{id}")
-    @Transactional(readOnly =  false)
+    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> delete(
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id

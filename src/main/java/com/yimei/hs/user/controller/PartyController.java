@@ -1,10 +1,10 @@
 package com.yimei.hs.user.controller;
 
 
-import com.yimei.hs.user.entity.Party;
-import com.yimei.hs.boot.api.PageResult;
-import com.yimei.hs.user.dto.PagePartyDTO;
 import com.yimei.hs.boot.api.Result;
+import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.user.dto.PagePartyDTO;
+import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.service.PartyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +29,8 @@ public class PartyController {
      * @return
      */
     @GetMapping("/parties")
-    public ResponseEntity<PageResult<Party>> list(PagePartyDTO pagePartyDTO) {
-        return PageResult.ok(partyService.getPage(pagePartyDTO));
+    public ResponseEntity<Result<Page<Party>>> list(PagePartyDTO pagePartyDTO) {
+        return Result.ok(partyService.getPage(pagePartyDTO));
     }
 
     /**

@@ -1,9 +1,9 @@
 package com.yimei.hs.user.controller;
 
-import com.yimei.hs.user.entity.Dept;
-import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.user.dto.PageDeptDTO;
+import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.service.DeptService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,16 +27,18 @@ public class DeptController {
 
     /**
      * 部门分页
+     *
      * @param pageDeptDTO
      * @return
      */
     @GetMapping("/departments")
-    public ResponseEntity<PageResult<Dept>> list(PageDeptDTO pageDeptDTO) {
-        return PageResult.ok(deptService.getPage(pageDeptDTO));
+    public ResponseEntity<Result<Page<Dept>>> list(PageDeptDTO pageDeptDTO) {
+        return Result.ok(deptService.getPage(pageDeptDTO));
     }
 
     /**
      * 获取部门详情
+     *
      * @param id
      * @return
      */
@@ -53,6 +55,7 @@ public class DeptController {
 
     /**
      * 创建部门
+     *
      * @return
      */
     @PostMapping("/departments")
@@ -68,6 +71,7 @@ public class DeptController {
 
     /**
      * 更新dept
+     *
      * @return
      */
     @PutMapping("/departments/{id}")

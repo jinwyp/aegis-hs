@@ -1,9 +1,9 @@
 package com.yimei.hs.user.controller;
 
-import com.yimei.hs.user.entity.Team;
-import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
+import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.user.dto.PageTeamDTO;
+import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.service.DeptService;
 import com.yimei.hs.user.service.TeamService;
 import org.slf4j.Logger;
@@ -32,14 +32,13 @@ public class TeamController {
 
 
     /**
-     *
      * @param pageTeamDTO
      * @return
      */
     @GetMapping("/teams")
-    public ResponseEntity<PageResult<Team>> list(PageTeamDTO pageTeamDTO) {
+    public ResponseEntity<Result<Page<Team>>> list(PageTeamDTO pageTeamDTO) {
         logger.info("get teams: {}", pageTeamDTO);
-        return PageResult.ok(teamService.getPage(pageTeamDTO));
+        return Result.ok(teamService.getPage(pageTeamDTO));
     }
 
 

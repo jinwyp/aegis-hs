@@ -1,13 +1,12 @@
 package com.yimei.hs.ying.controller;
 
 import com.yimei.hs.boot.api.CreateGroup;
+import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.ying.entity.YingSettleUpstream;
-import com.yimei.hs.boot.api.PageResult;
-import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.ying.dto.PageYingSettleUpstreamDTO;
+import com.yimei.hs.ying.entity.YingSettleUpstream;
 import com.yimei.hs.ying.service.YingSettleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,6 +85,7 @@ public class YingSettleUpstreamController {
 
     /**
      * 更新上游结算
+     *
      * @return
      */
     @Transactional(readOnly = false)
@@ -107,6 +107,7 @@ public class YingSettleUpstreamController {
 
     /**
      * 删除上游结算
+     *
      * @return
      */
     @Transactional(readOnly = false)

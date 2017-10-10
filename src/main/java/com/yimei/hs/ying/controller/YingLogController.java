@@ -1,6 +1,5 @@
 package com.yimei.hs.ying.controller;
 
-import com.yimei.hs.boot.api.PageResult;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.YingEntityType;
@@ -23,6 +22,7 @@ public class YingLogController {
 
     /**
      * 查询日志分页
+     *
      * @param morderId
      * @param yingEntityType
      * @param pageYingLogDTO
@@ -40,6 +40,7 @@ public class YingLogController {
 
     /**
      * 创建日志
+     *
      * @param log
      * @return
      */
@@ -53,6 +54,7 @@ public class YingLogController {
 
     /**
      * 查询日志
+     *
      * @param morderId
      * @param yingEntityType
      * @param id
