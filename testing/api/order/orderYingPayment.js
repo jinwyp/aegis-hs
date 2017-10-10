@@ -363,17 +363,16 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
                 {
                     "hsId" : 1,
                     "skCompanyId" : 1,
-                    "huankuankDate" : "2017-09-01 00:00:00",
-                    "huankuanAmount" : "10000",
+                    "huankuankDate" : "2017-10-07 00:00:00",
+                    "huankuanPrincipal" : "100",
                     "huankuanInterest" : "100",
-                    "huankuanFee" : "10",
+                    "huankuanFee" : "100",
                     "orderId" : 1,
                     "huankuanMapList" : [
                         {
-                            "orderId" : 1,
                             "fukuanId" : 1,
-                            "principal" : 10000,
-                            "interest" : 10000.2,
+                            "principal" : "100",
+                            "interest" : "100"
                         }
                     ]
                 }
@@ -398,17 +397,16 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
                 {
                     "hsId" : 1,
                     "skCompanyId" : 1,
-                    "huankuankDate" : "2017-09-01 00:00:00",
-                    "huankuanAmount" : "10000",
+                    "huankuankDate" : "2017-10-07 00:00:00",
+                    "huankuanPrincipal" : "100",
                     "huankuanInterest" : "100",
-                    "huankuanFee" : "10",
+                    "huankuanFee" : "100",
                     "orderId" : 1,
                     "huankuanMapList" : [
                         {
-                            "orderId" : 1,
                             "fukuanId" : 1,
-                            "principal" : 10000,
-                            "interest" : 10000.2
+                            "principal" : "100",
+                            "interest" : "100"
                         }
                     ]
                 }
@@ -421,6 +419,70 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
                 expect(res.body.data).to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.huankuankDate).to.include('2017')
+                done()
+            })
+    })
+
+    it('还款单 - 新建还款单3 还款map明细的本金总计不符合, POST: /api/ying/1/huankuans', function (done) {
+        server.post('/api/ying/1/huankuans')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : 1,
+                    "skCompanyId" : 1,
+                    "huankuankDate" : "2017-09-01 00:00:00",
+                    "huankuanAmount" : "100",
+                    "huankuanInterest" : "100",
+                    "huankuanFee" : "10",
+                    "orderId" : 1,
+                    "huankuanMapList" : [
+                        {
+                            "fukuanId" : 1,
+                            "principal" : "100000",
+                            "interest" : "10000",
+                        }
+                    ]
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(false)
+                expect(res.body.data).to.equal(undefined)
+                done()
+            })
+    })
+
+    it('还款单 - 新建还款单4 还款map明细的本金总计不符合, POST: /api/ying/1/huankuans', function (done) {
+        server.post('/api/ying/1/huankuans')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : 1,
+                    "skCompanyId" : 1,
+                    "huankuankDate" : "2017-09-01 00:00:00",
+                    "huankuanAmount" : "10000",
+                    "huankuanInterest" : "100",
+                    "huankuanFee" : "10",
+                    "orderId" : 1,
+                    "huankuanMapList" : [
+                        {
+                            "fukuanId" : 1,
+                            "principal" : 10000,
+                            "interest" : 100,
+                        }
+                    ]
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(false)
+                expect(res.body.data).to.equal(undefined)
                 done()
             })
     })

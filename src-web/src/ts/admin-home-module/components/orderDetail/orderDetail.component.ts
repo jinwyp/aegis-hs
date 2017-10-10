@@ -30,6 +30,7 @@ export class OrderDetailComponent implements OnInit {
     currentOrderUnitId : number
 
     orderUnitForm: FormGroup
+    transferForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
@@ -40,6 +41,7 @@ export class OrderDetailComponent implements OnInit {
     departmentList : any[] = []
     teamList : any[] = []
     partyList : any[] = []
+    userList : any[] = []
 
 
     pagination: any = {
@@ -70,7 +72,6 @@ export class OrderDetailComponent implements OnInit {
             return this.hsOrderService.getOrderByID(this.currentOrderId)
         }).subscribe(
             data => {
-                console.log(data)
                 if (data) {
                     this.currentOrder = data.data
                 }
@@ -86,7 +87,9 @@ export class OrderDetailComponent implements OnInit {
         this.getPartyList()
         this.getDepartmentList()
         this.getTeamList()
+        this.getUserList()
         this.createOrderUnitForm()
+        this.createTransferForm()
     }
 
     trackByFn(index: any, item: any) {
@@ -144,7 +147,18 @@ export class OrderDetailComponent implements OnInit {
     }
 
 
+    getUserList () {
+        this.hsUserService.getUserListDepartment().subscribe(
+            data => {
+                this.userList = data.data
+
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
+
     orderUnitFormError : any = {}
+    transferFormError : any = {}
     orderUnitFormValidationMessages: any = {
         'hsMonth'  : {
             'required'      : '请填写名称!'
@@ -167,11 +181,17 @@ export class OrderDetailComponent implements OnInit {
         },
         'weightedPrice'  : {
             'required'      : '请填写价格!'
+        },
+        'userId'  : {
+            'required'      : '请选择财务人员!'
         }
     }
 
     orderUnitFormInputChange(formInputData : any) {
         this.orderUnitFormError = formErrorHandler(formInputData, this.orderUnitForm, this.orderUnitFormValidationMessages)
+    }
+    transferFormInputChange(formInputData : any) {
+        this.transferFormError = formErrorHandler(formInputData, this.transferForm, this.orderUnitFormValidationMessages)
     }
 
     createOrderUnitForm(): void {
@@ -274,5 +294,39 @@ export class OrderDetailComponent implements OnInit {
         this.currentTabIndex = currentIndex
     }
 
+
+
+    createTransferForm(): void {
+
+        this.transferForm = this.fb.group({
+            'userId'    : ['', [Validators.required ] ]
+        } )
+
+        this.orderUnitForm.valueChanges.subscribe(data => {
+            this.ignoreDirty = false
+            this.transferFormInputChange(data)
+        })
+    }
+
+    transferFormSubmit() {
+
+        if (this.transferForm.invalid) {
+            this.transferFormInputChange(this.transferForm.value)
+            this.ignoreDirty = true
+
+            console.log('当前信息: ', this.transferForm, this.transferFormError)
+            return
+        }
+
+
+        this.hsOrderService.transferOrder(this.currentOrderId, this.transferForm.value.userId).subscribe(
+            data => {
+                console.log('保存成功: ', data)
+                this.httpService.successHandler(data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+    }
 }
 

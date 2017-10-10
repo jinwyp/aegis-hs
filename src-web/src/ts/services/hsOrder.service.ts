@@ -53,6 +53,11 @@ export class HSOrderService {
         return this.http.put(apiPath.hsGetOrderList + '/' + userId, user)
     }
 
+    transferOrder(orderId: number, userId: number): Observable<any> {
+
+        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/to/' + userId, {} )
+    }
+
 
     getOrderUnitListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()

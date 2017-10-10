@@ -22,6 +22,9 @@ export class HSUserService {
     }
 
 
+    getUserListDepartment(): Observable<any> {
+        return this.http.get(apiPath.getUserListInSameDepartment)
+    }
 
     getUserList(query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()

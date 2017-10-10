@@ -156,7 +156,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
         'huankuankDate'  : {
             'required'      : '请填写还款日期!'
         },
-        'huankuanAmount'  : {
+        'huankuanPrincipal'  : {
             'required'      : '请填写还款总额!'
         },
         'huankuanInterest'  : {
@@ -192,7 +192,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             'hsId'    : [-1, [Validators.required ] ],
             'skCompanyId'    : [-1, [Validators.required ] ],
             'huankuankDate'    : [null, [Validators.required ] ],
-            'huankuanAmount'    : ['', [Validators.required ] ],
+            'huankuanPrincipal'    : ['', [Validators.required ] ],
             'huankuanInterest'    : ['', [Validators.required ] ],
             'huankuanFee'    : ['', [Validators.required ] ]
         } )
@@ -234,7 +234,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
         const postData = this.repaymentHKForm.value
         postData.orderId = this.currentOrder.id
         postData.huankuanMapList = this.paymentPostList.map( payment => {
-            return {orderId: payment.orderId, fukuanId : payment.id, principal : payment.principal, interest : payment.interest}
+            return { fukuanId : payment.id, principal : Number(payment.principal), interest : Number(payment.interest)}
         })
 
         if (this.isAddNew) {
@@ -251,7 +251,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             )
         } else {
             postData.id = this.currentHuanKuanId
-            delete postData.huankuanAmount
+            delete postData.huankuanPrincipal
 
             this.hsOrderService.modifyRepaymentHK(this.currentOrder.id, this.currentHuanKuanId, postData).subscribe(
                 data => {
@@ -281,7 +281,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
                 'hsId'    : -1,
                 'skCompanyId'    : -1,
                 'huankuankDate'    : null,
-                'huankuanAmount'    : '',
+                'huankuanPrincipal'    : '',
                 'huankuanInterest'    : '',
                 'huankuanFee'    : ''
             })
@@ -291,6 +291,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             this.isAddNew = false
             this.currentHuanKuanId = repaymentHKOrder.id
 
+            this.paymentPostList = []
             this.repaymentHKForm.patchValue(repaymentHKOrder)
         }
 
@@ -311,7 +312,9 @@ export class RepaymentHuanKuanComponent implements OnInit {
             return
         }
 
-        this.paymentPostList.push(<any>Object.assign(this.paymentListObject[this.paymentForm.value.id], {fukuanId : this.paymentForm.value.id, principal : this.paymentForm.value.principal, interest : this.paymentForm.value.interest}) )
+        this.paymentPostList.push(<any>Object.assign( {}, this.paymentListObject[this.paymentForm.value.id],
+            {fukuanId : this.paymentForm.value.id, principal : this.paymentForm.value.principal, interest : this.paymentForm.value.interest}) )
+
         this.ignoreDirtyPayment = false
     }
 
