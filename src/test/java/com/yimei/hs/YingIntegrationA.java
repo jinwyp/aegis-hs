@@ -41,7 +41,6 @@ import java.util.Map;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = HsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Ignore
 public class YingIntegrationA extends HsTestBase {
 
     public static final Logger logger = LoggerFactory.getLogger(YingIntegrationA.class);
@@ -261,7 +260,7 @@ public class YingIntegrationA extends HsTestBase {
         variables.put("ownerId", userResult.getData().getId());
         variables.put("pageSize", 5);
         variables.put("pageNo", 1);
-        String orderPageUrl = "/api/yings?" + WebUtils.getUrlTemplate(PageOrderDTO.class);
+        String orderPageUrl = "/api/business/yings?" + WebUtils.getUrlTemplate(PageOrderDTO.class);
         // logger.info("page order variables = {}, url = {}", variables, orderPageUrl);
         Result<Page<Order>> yingOrderPageResult = client.exchange(orderPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderPage, variables).getBody();
         if (yingOrderPageResult.getSuccess()) {
@@ -272,7 +271,7 @@ public class YingIntegrationA extends HsTestBase {
         }
 
         // 9. 单个订单查询
-        String kurl = "/api/yings/" + yingOrderResult.getData().getId();
+        String kurl = "/api/business/yings/" + yingOrderResult.getData().getId();
         Result<Order> yingOrderResult1 = client.exchange(kurl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrder).getBody();
         if (yingOrderResult1.getSuccess()) {
             logger.info("查询订单成功\nGET {}\nrequest = {}\nresponse = {}", kurl, "", printJson(yingOrderResult1.getData()));
