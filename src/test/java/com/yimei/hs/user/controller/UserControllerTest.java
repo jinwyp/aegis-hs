@@ -101,13 +101,13 @@ public class UserControllerTest extends YingTestBase {
         fayun();
         fukuan();
         huikuan();
-//        huankuan();
-//        upstream();
-//        downstream();
-//        traffic();
-//        fee();
-
-//        invoice();
+        huankuan();
+        upstream();
+        downstream();
+        traffic();
+        fee();
+//
+        invoice();
 
 
     }
