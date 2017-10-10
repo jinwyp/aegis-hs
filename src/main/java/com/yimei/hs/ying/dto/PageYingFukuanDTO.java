@@ -21,8 +21,8 @@ public class PageYingFukuanDTO extends BaseFilter<PageYingFukuanDTO> {
     private Long receiveCompanyId;
 
     // 还款是否完成
-    private Boolean huankuanUnfinished;
+    private Boolean huankuanUnfinished = false;
 
     // 回款是否完成
-    private Boolean huikuanUnfinished;
+    private Boolean huikuanUnfinished = false;
 }

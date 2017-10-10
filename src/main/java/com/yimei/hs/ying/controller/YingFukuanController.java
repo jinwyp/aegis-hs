@@ -53,8 +53,12 @@ public class YingFukuanController {
             PageYingFukuanDTO pageYingFukuanDTO) {
 
         //
-        if (pageYingFukuanDTO.getHuankuanUnfinished() && pageYingFukuanDTO.getHuikuanUnfinished()) {
-            return  PageResult.error(4001, "参数非法");
+        if (pageYingFukuanDTO.getHuankuanUnfinished() != null
+                && pageYingFukuanDTO.getHuankuanUnfinished()
+                && pageYingFukuanDTO.getHuikuanUnfinished() != null
+                && pageYingFukuanDTO.getHuikuanUnfinished()
+                ) {
+            return PageResult.error(4001, "参数非法");
         }
 
         pageYingFukuanDTO.setOrderId(morderId);
@@ -88,7 +92,7 @@ public class YingFukuanController {
      * @return
      */
     @PostMapping("/{morderId}/fukuans")
-    @Transactional(readOnly =  false)
+    @Transactional(readOnly = false)
     public ResponseEntity<Result<YingFukuan>> create(
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingFukuan yingFukuan
@@ -107,7 +111,7 @@ public class YingFukuanController {
      *
      * @return
      */
-    @Transactional(readOnly =  false)
+    @Transactional(readOnly = false)
     @PutMapping("/{morderId}/fukuans/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
@@ -128,7 +132,7 @@ public class YingFukuanController {
      *
      * @return
      */
-    @Transactional(readOnly =  false)
+    @Transactional(readOnly = false)
     @DeleteMapping("/{morderId}/fukuans/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
