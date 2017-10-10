@@ -208,11 +208,11 @@ export class OrderListComponent implements OnInit {
         }
     }
 
-    orderFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.orderFormError = formErrorHandler(formInputData, this.orderForm, this.orderFormValidationMessages, ignoreDirty)
+    orderFormInputChange(formInputData : any) {
+        this.orderFormError = formErrorHandler(formInputData, this.orderForm, this.orderFormValidationMessages)
     }
-    orderOtherPartyFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.orderOtherPartyFormError = formErrorHandler(formInputData, this.orderOtherPartyForm, this.orderFormValidationMessages, ignoreDirty)
+    orderOtherPartyFormInputChange(formInputData : any) {
+        this.orderOtherPartyFormError = formErrorHandler(formInputData, this.orderOtherPartyForm, this.orderFormValidationMessages)
     }
 
 
@@ -241,7 +241,7 @@ export class OrderListComponent implements OnInit {
     orderFormSubmit() {
 
         if (this.orderForm.invalid) {
-            this.orderFormInputChange(this.orderForm.value, true)
+            this.orderFormInputChange(this.orderForm.value)
             this.ignoreDirty = true
 
             console.log('当前信息: ', this.orderForm, this.orderFormError)
@@ -333,7 +333,7 @@ export class OrderListComponent implements OnInit {
 
     createNewOtherParty () {
         if (this.orderOtherPartyForm.invalid) {
-            this.orderOtherPartyFormInputChange(this.orderOtherPartyForm.value, true)
+            this.orderOtherPartyFormInputChange(this.orderOtherPartyForm.value)
             this.ignoreDirty = true
 
             return

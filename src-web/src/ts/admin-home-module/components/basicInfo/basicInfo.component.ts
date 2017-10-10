@@ -88,8 +88,8 @@ export class BasicInfoComponent implements OnInit {
         }
     }
 
-    userInfoFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.userInfoFormError = formErrorHandler(formInputData, this.userInfoForm, this.userInfoFormValidationMessages, ignoreDirty)
+    userInfoFormInputChange(formInputData : any) {
+        this.userInfoFormError = formErrorHandler(formInputData, this.userInfoForm, this.userInfoFormValidationMessages)
     }
 
     createUserInfoForm(user: any = {}): void {
@@ -109,7 +109,7 @@ export class BasicInfoComponent implements OnInit {
     userInfoFormSubmit() {
 
         if (this.userInfoForm.invalid) {
-            this.userInfoFormInputChange(this.userInfoForm.value, true)
+            this.userInfoFormInputChange(this.userInfoForm.value)
             this.ignoreDirty = true
 
             console.log('当前表单状态: ', this.userInfoForm.invalid, this.userInfoFormError, this.userInfoForm)

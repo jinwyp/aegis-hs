@@ -2,9 +2,9 @@
 
             <form [formGroup]="repaymentHKForm" (ngSubmit)="repaymentHKFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-                <bs-select formControlName="hsId" [fc]="repaymentHKForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="repaymentHKFormError.hsId"></bs-select>
-                <bs-select formControlName="skCompanyId" [fc]="repaymentHKForm.get('skCompanyId')" [label]="'资金方:'"  [options]="partyList" [error]="repaymentHKFormError.skCompanyId"></bs-select>
-                <bs-datepicker formControlName="huankuankDate" [fc]="repaymentHKForm.get('huankuankDate')" [label]="'还款日期:'" [error]="repaymentHKFormError.huankuankDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
+                <bs-select formControlName="hsId" [fc]="repaymentHKForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty" [options]="unitList" [error]="repaymentHKFormError.hsId"></bs-select>
+                <bs-select formControlName="skCompanyId" [fc]="repaymentHKForm.get('skCompanyId')" [label]="'资金方:'" [dirty]="ignoreDirty" [options]="partyList" [error]="repaymentHKFormError.skCompanyId"></bs-select>
+                <bs-datepicker formControlName="huankuankDate" [fc]="repaymentHKForm.get('huankuankDate')" [label]="'还款日期:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuankDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
 
                 <bs-text-input formControlName="huankuanAmount" [fc]="repaymentHKForm.get('huankuanAmount')" [type]="'number'" [label]="'还款总额:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanAmount"></bs-text-input>
                 <bs-text-input formControlName="huankuanInterest" [fc]="repaymentHKForm.get('huankuanInterest')" [type]="'number'" [label]="'还款利息:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanInterest" ></bs-text-input>
@@ -18,11 +18,13 @@
                         <form [formGroup]="paymentForm"  (keydown.enter)="$event.preventDefault()">
 
                             <div class="form-row ">
-                                <div class="col-8" >
+                                <div class="col-10" >
 
                                     <ul class="list-group" >
                                         <li class="list-group-item mb-2" *ngFor=" let payment of paymentPostList">
-                                            ID:{{payment.id}} 日期:{{payment.payDate}} 收款单位:{{payment.receiveCompanyId | findKey:partyList:'name'}} 金额:{{payment.payAmount}} 付款方式:{{payment.payMode}}
+                                            ID:{{payment.id}} 付款日期:{{payment.payDate}} 收款单位:{{payment.receiveCompanyId | findKey:partyList:'name'}}
+                                            金额:{{payment.payAmount}} 付款方式:{{payment.payMode}}
+                                            对应本金:{{payment.principal}} 对应总计:{{payment.amount}}
                                             <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delPayment(payment)"> x </button>
                                         </li>
                                     </ul>
@@ -36,10 +38,10 @@
                                 </div>
 
                                 <div class="col-2">
-                                    <bs-text-input formControlName="principal" [fc]="paymentForm.get('principal')" [type]="'text'" [prompt]="'本金:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirty2" [error]="paymentFormError.principal"></bs-text-input>
+                                    <bs-text-input formControlName="principal" [fc]="paymentForm.get('principal')" [type]="'text'" [prompt]="'本金:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyPayment" [error]="paymentFormError.principal"></bs-text-input>
                                 </div>
                                 <div class="col-2">
-                                    <bs-text-input formControlName="amount" [fc]="paymentForm.get('amount')" [type]="'text'" [prompt]="'总计:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirty2" [error]="paymentFormError.amount"></bs-text-input>
+                                    <bs-text-input formControlName="amount" [fc]="paymentForm.get('amount')" [type]="'text'" [prompt]="'总计:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyPayment" [error]="paymentFormError.amount"></bs-text-input>
                                 </div>
 
                                 <div class="col-1">
@@ -56,7 +58,7 @@
                 <div class="form-group row">
                     <div class="col-10 ml-auto">
 
-                        <button type="submit" class="btn btn-info" >保存 {{paymentFormError.principal}} {{ignoreDirty2}} </button>
+                        <button type="submit" class="btn btn-info" >保存 </button>
                         <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
                     </div>
                 </div>

@@ -109,8 +109,8 @@ export class PartyManagementComponent implements OnInit {
         }
     }
 
-    partyFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.partyFormError = formErrorHandler(formInputData, this.partyForm, this.partyFormValidationMessages, ignoreDirty)
+    partyFormInputChange(formInputData : any) {
+        this.partyFormError = formErrorHandler(formInputData, this.partyForm, this.partyFormValidationMessages)
     }
 
     createPartyForm(user: any = {}): void {
@@ -131,7 +131,7 @@ export class PartyManagementComponent implements OnInit {
     partyFormSubmit() {
 
         if (this.partyForm.invalid) {
-            this.partyFormInputChange(this.partyForm.value, true)
+            this.partyFormInputChange(this.partyForm.value)
             this.ignoreDirty = true
 
             console.log('当前信息: ', this.partyForm, this.partyFormError)

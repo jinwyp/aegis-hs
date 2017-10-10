@@ -30,6 +30,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
     @Input() editable: boolean = false
 
     @Input() error: string = ''
+    @Input() dirty: boolean = false
 
     @Input('labelclass') labelClass: string = 'col-2'
     @Input('inputclass') inputClass: string = 'col-6'

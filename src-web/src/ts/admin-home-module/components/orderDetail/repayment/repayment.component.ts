@@ -136,8 +136,8 @@ export class RepaymentComponent implements OnInit {
         }
     }
 
-    repaymentFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.repaymentFormError = formErrorHandler(formInputData, this.repaymentForm, this.repaymentFormValidationMessages, ignoreDirty)
+    repaymentFormInputChange(formInputData : any) {
+        this.repaymentFormError = formErrorHandler(formInputData, this.repaymentForm, this.repaymentFormValidationMessages)
     }
 
     createRepaymentForm(): void {
@@ -178,7 +178,7 @@ export class RepaymentComponent implements OnInit {
     repaymentFormSubmit() {
 
         if (this.repaymentForm.invalid) {
-            this.repaymentFormInputChange(this.repaymentForm.value, true)
+            this.repaymentFormInputChange(this.repaymentForm.value)
             this.ignoreDirty = true
 
             console.log('当前信息: ', this.repaymentForm, this.repaymentFormError)

@@ -128,8 +128,8 @@ export class UserManagementComponent implements OnInit {
         }
     }
 
-    userFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.userFormError = formErrorHandler(formInputData, this.userForm, this.userFormValidationMessages, ignoreDirty)
+    userFormInputChange(formInputData : any) {
+        this.userFormError = formErrorHandler(formInputData, this.userForm, this.userFormValidationMessages)
     }
 
     createUserForm(user: any = {}): void {
@@ -152,7 +152,7 @@ export class UserManagementComponent implements OnInit {
     userFormSubmit() {
 
         if (this.userForm.invalid) {
-            this.userFormInputChange(this.userForm.value, true)
+            this.userFormInputChange(this.userForm.value)
             this.ignoreDirty = true
 
             console.log('当前信息: ', this.userForm, this.userFormError)

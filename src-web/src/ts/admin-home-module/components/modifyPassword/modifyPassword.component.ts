@@ -68,8 +68,8 @@ export class ModifyPasswordComponent implements OnInit {
         }
     }
 
-    passwordFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.passwordFormError = formErrorHandler(formInputData, this.passwordForm, this.passwordFormValidationMessages, ignoreDirty)
+    passwordFormInputChange(formInputData : any) {
+        this.passwordFormError = formErrorHandler(formInputData, this.passwordForm, this.passwordFormValidationMessages)
     }
 
     createUserInfoForm(user: any = {}): void {
@@ -91,7 +91,7 @@ export class ModifyPasswordComponent implements OnInit {
     passwordFormSubmit() {
 
         if (this.passwordForm.invalid) {
-            this.passwordFormInputChange(this.passwordForm.value, true)
+            this.passwordFormInputChange(this.passwordForm.value)
             this.ignoreDirty = true
 
             console.log('当前表单状态: ', this.passwordForm.invalid, this.passwordFormError, this.passwordForm)

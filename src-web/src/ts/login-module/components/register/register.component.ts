@@ -85,14 +85,14 @@ export class RegisterComponent implements OnInit {
         }
     }
 
-    registerFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.registerFormError = formErrorHandler(formInputData, this.registerForm, this.registerFormValidationMessages, ignoreDirty)
+    registerFormInputChange(formInputData : any) {
+        this.registerFormError = formErrorHandler(formInputData, this.registerForm, this.registerFormValidationMessages)
     }
-    registerFormInputChangeWithMobilePhone(formInputData : any, ignoreDirty : boolean = false) {
-        this.registerFormError = formErrorHandler(formInputData, this.registerFormWithMobilePhone, this.registerFormValidationMessages, ignoreDirty)
+    registerFormInputChangeWithMobilePhone(formInputData : any) {
+        this.registerFormError = formErrorHandler(formInputData, this.registerFormWithMobilePhone, this.registerFormValidationMessages)
     }
-    registerFormInputChangeWithMobilePhoneStep2(formInputData : any, ignoreDirty : boolean = false) {
-        this.registerFormError = formErrorHandler(formInputData, this.registerFormWithMobilePhoneStep2, this.registerFormValidationMessages, ignoreDirty)
+    registerFormInputChangeWithMobilePhoneStep2(formInputData : any) {
+        this.registerFormError = formErrorHandler(formInputData, this.registerFormWithMobilePhoneStep2, this.registerFormValidationMessages)
     }
 
     createRegisterForm(): void {
@@ -136,7 +136,7 @@ export class RegisterComponent implements OnInit {
     registerFormSubmit() {
 
         if (this.registerForm.invalid) {
-            this.registerFormInputChange(this.registerForm.value, true)
+            this.registerFormInputChange(this.registerForm.value)
             this.ignoreDirty = true
             return
         }
@@ -156,7 +156,7 @@ export class RegisterComponent implements OnInit {
 
 
         if (this.registerFormWithMobilePhone.invalid) {
-            this.registerFormInputChangeWithMobilePhone(this.registerFormWithMobilePhone.value, true)
+            this.registerFormInputChangeWithMobilePhone(this.registerFormWithMobilePhone.value)
             this.ignoreDirty = true
             return
         }
@@ -194,7 +194,7 @@ export class RegisterComponent implements OnInit {
 
         console.log('registerFormOnSubmit', this.registerForm.value)
         if (this.registerFormWithMobilePhoneStep2.invalid) {
-            this.registerFormInputChangeWithMobilePhoneStep2(this.registerFormWithMobilePhoneStep2.value, true)
+            this.registerFormInputChangeWithMobilePhoneStep2(this.registerFormWithMobilePhoneStep2.value)
             this.ignoreDirty = true
             return
         }

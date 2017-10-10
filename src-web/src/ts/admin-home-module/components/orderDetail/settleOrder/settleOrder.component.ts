@@ -51,7 +51,7 @@ export class SettleOrderComponent implements OnInit {
     settleTypeList : any[] = [
         { id : 'upstream', name : '上游结算'},
         { id : 'downstream', name : '下游结算'},
-        { id : 'traffic', name : '运输方结算'},
+        { id : 'traffic', name : '运输方结算'}
     ]
 
 
@@ -172,8 +172,8 @@ export class SettleOrderComponent implements OnInit {
     }
 
 
-    settleFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.settleFormError = formErrorHandler(formInputData, this.settleForm, this.settleFormValidationMessages, ignoreDirty)
+    settleFormInputChange(formInputData : any) {
+        this.settleFormError = formErrorHandler(formInputData, this.settleForm, this.settleFormValidationMessages)
     }
 
     createSettleForm(): void {
@@ -222,7 +222,7 @@ export class SettleOrderComponent implements OnInit {
 
 
         if (this.settleForm.invalid) {
-            this.settleFormInputChange(this.settleForm.value, true)
+            this.settleFormInputChange(this.settleForm.value)
             this.ignoreDirty = true
 
             console.log('当前信息: ', this.settleForm, this.settleFormError)

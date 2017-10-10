@@ -116,8 +116,8 @@ export class ShippingOrderComponent implements OnInit {
         }
     }
 
-    shippingFormInputChange(formInputData : any, ignoreDirty : boolean = false) {
-        this.shippingFormError = formErrorHandler(formInputData, this.shippingForm, this.shippingFormValidationMessages, ignoreDirty)
+    shippingFormInputChange(formInputData : any) {
+        this.shippingFormError = formErrorHandler(formInputData, this.shippingForm, this.shippingFormValidationMessages)
     }
 
     createShippingForm(): void {
@@ -136,7 +136,7 @@ export class ShippingOrderComponent implements OnInit {
             'downstreamTrafficMode'    : ['', [Validators.required ] ],
             'downstreamCars'    : ['', [ ] ],
             'downstreamJHH'    : ['', [ ] ],
-            'downstreamShip'    : ['', [ ] ],
+            'downstreamShip'    : ['', [ ] ]
         } )
 
 
@@ -153,7 +153,7 @@ export class ShippingOrderComponent implements OnInit {
     shippingFormSubmit() {
 
         if (this.shippingForm.invalid) {
-            this.shippingFormInputChange(this.shippingForm.value, true)
+            this.shippingFormInputChange(this.shippingForm.value)
             this.ignoreDirty = true
 
             console.log('当前信息: ', this.shippingForm, this.shippingFormError)
