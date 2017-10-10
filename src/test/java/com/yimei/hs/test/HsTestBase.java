@@ -74,6 +74,7 @@ abstract public class HsTestBase {
     protected ParameterizedTypeReference<Result<Page<Party>>> typeReferencePartyPage  = new ParameterizedTypeReference<Result<Page<Party>>>() {};
 
 
+    protected ParameterizedTypeReference<Result<List<User>>> typeReferenceUserList  = new ParameterizedTypeReference<Result<List<User>>>() {};
 
     protected ParameterizedTypeReference<Result<Order>> typeReferenceOrder  = new ParameterizedTypeReference<Result<Order>>() {};
     protected ParameterizedTypeReference<Result<OrderConfig>> typeReferenceOrderConfig  = new ParameterizedTypeReference<Result<OrderConfig>>() {};

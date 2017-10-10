@@ -236,11 +236,11 @@ public class UserControllerTest extends YingTestBase {
 
         //
         // 6.5 再次查询同一部门
-        Result<Page<User>> sameDeptResult = client.exchange("/api/user/list_dept_user", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceUserPage).getBody();
+        Result<List<User>> sameDeptResult = client.exchange("/api/user/list_dept_user", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceUserList).getBody();
         if (logoutResult.getSuccess()) {
-            logger.info("登出成功\nGET {}\nrequest = {}\nresponse = {}", "/api/user/list_dept_user\"", "", sameDeptResult.getData());
+            logger.info(" 查询同部门员工成功\nGET {}\nrequest = {}\nresponse = {}", "/api/user/list_dept_user\"", "", sameDeptResult.getData());
         } else {
-            logger.error("登出失败: {}", logoutResult.getError());
+            logger.error("查询同部门员工成功失败: {}", sameDeptResult.getError());
         }
 
 
