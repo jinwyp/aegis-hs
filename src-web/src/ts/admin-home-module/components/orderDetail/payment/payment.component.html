@@ -2,15 +2,15 @@
 
             <form [formGroup]="paymentForm" (ngSubmit)="paymentFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-                <bs-select formControlName="hsId" [fc]="paymentForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="paymentFormError.hsId"></bs-select>
-                <bs-datepicker formControlName="payDate" [fc]="paymentForm.get('payDate')" [label]="'付款日期:'" [error]="paymentFormError.payDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
+                <bs-select formControlName="hsId" [fc]="paymentForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty" [options]="unitList" [error]="paymentFormError.hsId"></bs-select>
+                <bs-datepicker formControlName="payDate" [fc]="paymentForm.get('payDate')" [label]="'付款日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="paymentFormError.payDate"></bs-datepicker>
 
-                <bs-select formControlName ="receiveCompanyId" [fc]="paymentForm.get('receiveCompanyId')" [label]="'收款单位:'" [options]="partyList" [error]="paymentFormError.receiveCompanyId"></bs-select>
-                <bs-select formControlName="payUsage" [fc]="paymentForm.get('payUsage')" [label]="'付款用途:'"  [options]="purposeList" [error]="paymentFormError.payUsage"></bs-select>
+                <bs-select formControlName ="receiveCompanyId" [fc]="paymentForm.get('receiveCompanyId')" [label]="'收款单位:'" [dirty]="ignoreDirty" [options]="partyList" [error]="paymentFormError.receiveCompanyId"></bs-select>
+                <bs-select formControlName="payUsage" [fc]="paymentForm.get('payUsage')" [label]="'付款用途:'" [dirty]="ignoreDirty"  [options]="purposeList" [error]="paymentFormError.payUsage"></bs-select>
                 <bs-text-input formControlName="payAmount" [fc]="paymentForm.get('payAmount')" [type]="'number'" [label]="'付款金额:'" [dirty]="ignoreDirty" [error]="paymentFormError.payAmount"></bs-text-input>
-                <bs-select formControlName="payMode" [fc]="paymentForm.get('payMode')" [label]="'付款方式:'"  [options]="payModeList" [error]="paymentFormError.payMode"></bs-select>
+                <bs-select formControlName="payMode" [fc]="paymentForm.get('payMode')" [label]="'付款方式:'" [dirty]="ignoreDirty"  [options]="payModeList" [error]="paymentFormError.payMode"></bs-select>
 
-                <bs-select formControlName ="capitalId" [fc]="paymentForm.get('capitalId')" [label]="'资金方:'" [options]="partyList" [error]="paymentFormError.capitalId"></bs-select>
+                <bs-select formControlName ="capitalId" [fc]="paymentForm.get('capitalId')" [label]="'资金方:'" [dirty]="ignoreDirty"  [options]="partyList" [error]="paymentFormError.capitalId"></bs-select>
                 <bs-text-input formControlName="useInterest" [fc]="paymentForm.get('useInterest')" [type]="'number'" [label]="'外部资金使用利率:'" [dirty]="ignoreDirty" [error]="paymentFormError.useInterest"></bs-text-input>
                 <bs-text-input formControlName="useDays" [fc]="paymentForm.get('useDays')" [type]="'number'" [label]="'外部资金使用天数:'" [dirty]="ignoreDirty" [error]="paymentFormError.useDays"></bs-text-input>
 
