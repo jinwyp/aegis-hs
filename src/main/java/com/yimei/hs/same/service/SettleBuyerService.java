@@ -1,9 +1,9 @@
 package com.yimei.hs.same.service;
 
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.ying.dto.PageYingSettleDownstreamDTO;
-import com.yimei.hs.ying.entity.YingSettleDownstream;
-import com.yimei.hs.ying.mapper.YingSettleDownstreamMapper;
+import com.yimei.hs.same.dto.PageSettleBuyerDTO;
+import com.yimei.hs.same.entity.SettleBuyer;
+import com.yimei.hs.same.mapper.SettleBuyerMapper;
 import com.yimei.hs.ying.service.YingLogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,33 +24,25 @@ public class SettleBuyerService {
 
 
     @Autowired
-    YingSettleDownstreamMapper yingSettleDownstreamMapper;
-
-
-
-
-
-    @Autowired
-    private YingLogService yingLogService;
+    SettleBuyerMapper settleBuyerMapper;
 
     /**
-     * @param pageYingSettleDownstreamDTO
+     * @param pageSettleBuyerDTO
      * @return
      */
-    public Page<YingSettleDownstream> getPageDownstream(PageYingSettleDownstreamDTO pageYingSettleDownstreamDTO) {
-        return yingSettleDownstreamMapper.getPage(pageYingSettleDownstreamDTO);
+    public Page<SettleBuyer> getPageSettleBuyer(PageSettleBuyerDTO pageSettleBuyerDTO) {
+        return settleBuyerMapper.getPage(pageSettleBuyerDTO);
     }
 
 
     /**
      * 下游结算
      *
-     * @param yingSettleDownstream
      * @return
      */
     @Transactional(readOnly = false)
-    public int createDownstream(YingSettleDownstream yingSettleDownstream) {
-        int rtn = yingSettleDownstreamMapper.insert(yingSettleDownstream);
+    public int createSettleBuyer(SettleBuyer settleBuyer) {
+        int rtn = settleBuyerMapper.insert(settleBuyer);
         if (rtn != 1) {
             return 0;
         }
@@ -63,18 +55,18 @@ public class SettleBuyerService {
      * @param id
      * @return
      */
-    public YingSettleDownstream findDownstream(long id) {
-        return yingSettleDownstreamMapper.selectByPrimaryKey(id);
+    public SettleBuyer findOne(long id) {
+        return settleBuyerMapper.selectByPrimaryKey(id);
     }
 
 
     /**
-     * @param yingSettleDownstream
+     * @param settleBuyer
      * @return
      */
     @Transactional(readOnly = false)
-    public int updateDownstream(YingSettleDownstream yingSettleDownstream) {
-        return yingSettleDownstreamMapper.updateByPrimaryKeySelective(yingSettleDownstream);
+    public int update(SettleBuyer settleBuyer) {
+        return settleBuyerMapper.updateByPrimaryKeySelective(settleBuyer);
     }
 
     /**
@@ -90,8 +82,8 @@ public class SettleBuyerService {
      * @return
      */
     @Transactional(readOnly = false)
-    public int deleteDownstream(long id) {
-        return yingSettleDownstreamMapper.delete(id);
+    public int delete(long id) {
+        return settleBuyerMapper.delete(id);
     }
 
 }

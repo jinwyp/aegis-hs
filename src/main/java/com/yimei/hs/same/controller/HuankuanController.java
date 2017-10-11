@@ -5,6 +5,7 @@ import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageHuankuanDTO;
 import com.yimei.hs.same.entity.Fukuan;
 import com.yimei.hs.same.entity.Huankuan;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * Created by hary on 2017/9/22.
  */
-@RequestMapping("/api/ying")
+@RequestMapping("/api/business/{businessType}")
 @RestController
 @Logined
 public class HuankuanController {
@@ -45,6 +46,7 @@ public class HuankuanController {
      */
     @GetMapping("/{morderId}/huankuans")
     public ResponseEntity<Result<Page<Huankuan>>> list(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             PageHuankuanDTO pageHuankuanDTO) {
         pageHuankuanDTO.setOrderId(morderId);
@@ -59,6 +61,7 @@ public class HuankuanController {
      */
     @GetMapping("/{morderId}/huankuans/{id}")
     public ResponseEntity<Result<Huankuan>> read(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
@@ -78,6 +81,7 @@ public class HuankuanController {
      */
     @PostMapping("/{morderId}/huankuans")
     public ResponseEntity<Result<Huankuan>> create(
+            @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(CreateGroup.class) Huankuan huankuan
     ) {
         // 1. 找出当前订单借款记录 - 还款尚未对应完成的记录
@@ -113,6 +117,7 @@ public class HuankuanController {
      */
     @PutMapping("/{morderId}/huankuans/{id}")
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) Huankuan huankuan
@@ -134,6 +139,7 @@ public class HuankuanController {
      */
     @DeleteMapping("/{morderId}/huankuans/{id}")
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {

@@ -46,7 +46,7 @@ public class SettleSellerService {
      * @param pageSettleSellerDTO
      * @return
      */
-    public Page<SettleSeller> getPageUpstream(PageSettleSellerDTO pageSettleSellerDTO) {
+    public Page<SettleSeller> getPage(PageSettleSellerDTO pageSettleSellerDTO) {
         return settleSellerMapper.getPage(pageSettleSellerDTO);
     }
 
@@ -55,7 +55,7 @@ public class SettleSellerService {
 
 
     @Transactional(readOnly = false)
-    public int createUpstream(SettleSeller yingSettleUpstream) {
+    public int create(SettleSeller yingSettleUpstream) {
         return settleSellerMapper.insert(yingSettleUpstream);
     }
 
@@ -64,7 +64,7 @@ public class SettleSellerService {
      * @param id
      * @return
      */
-    public SettleSeller findUpstream(long id) {
+    public SettleSeller findOne(long id) {
         return settleSellerMapper.selectByPrimaryKey(id);
     }
 
@@ -73,7 +73,7 @@ public class SettleSellerService {
      * @return
      */
     @Transactional(readOnly = false)
-    public int updateUpstream(SettleSeller yingSettleUpstream) {
+    public int update(SettleSeller yingSettleUpstream) {
         return settleSellerMapper.updateByPrimaryKeySelective(yingSettleUpstream);
     }
 
@@ -90,7 +90,7 @@ public class SettleSellerService {
      * @return
      */
     @Transactional(readOnly = false)
-    public int deleteUpstream(long id) {
+    public int delete(long id) {
         return settleSellerMapper.delete(id);
     }
 }

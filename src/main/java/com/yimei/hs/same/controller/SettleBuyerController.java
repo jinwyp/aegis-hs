@@ -5,9 +5,10 @@ import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.ying.dto.PageYingSettleDownstreamDTO;
-import com.yimei.hs.ying.entity.YingSettleDownstream;
-import com.yimei.hs.ying.service.YingSettleDownstreamService;
+import com.yimei.hs.enums.BusinessType;
+import com.yimei.hs.same.dto.PageSettleBuyerDTO;
+import com.yimei.hs.same.entity.SettleBuyer;
+import com.yimei.hs.same.service.SettleBuyerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by hary on 2017/9/21.
  */
 @RestController
-@RequestMapping("/api/ying")
+@RequestMapping("/api/business/{businessType}")
 @Logined
 public class SettleBuyerController {
 
@@ -29,7 +30,7 @@ public class SettleBuyerController {
 
 
     @Autowired
-    private YingSettleDownstreamService yingSettleDownstreamService;
+    private SettleBuyerService settleBuyeService;
 
     /**
      * 获取所有下游结算
@@ -37,12 +38,13 @@ public class SettleBuyerController {
      * @return
      */
     @GetMapping("/{morderId}/settledownstream")
-    public ResponseEntity<Result<Page<YingSettleDownstream>>> list(
+    public ResponseEntity<Result<Page<SettleBuyer>>> list(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
-            PageYingSettleDownstreamDTO pageYingSettleDownstreamDTO
+            PageSettleBuyerDTO pageSettleBuyerDTO
     ) {
-        pageYingSettleDownstreamDTO.setOrderId(morderId);
-        return Result.ok(yingSettleDownstreamService.getPageDownstream(pageYingSettleDownstreamDTO));
+        pageSettleBuyerDTO.setOrderId(morderId);
+        return Result.ok(settleBuyeService.getPageSettleBuyer(pageSettleBuyerDTO));
     }
 
     /**
@@ -52,12 +54,13 @@ public class SettleBuyerController {
      * @return
      */
     @GetMapping("/{morderId}/settledownstream/{id}")
-    public ResponseEntity<Result<YingSettleDownstream>> read(
+    public ResponseEntity<Result<SettleBuyer>> read(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
 
-        YingSettleDownstream settleDownstream = yingSettleDownstreamService.findDownstream(id);
+        SettleBuyer settleDownstream = settleBuyeService.findOne(id);
         if (settleDownstream == null) {
             return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
         } else {
@@ -72,10 +75,11 @@ public class SettleBuyerController {
      * @return
      */
     @PostMapping("/{morderId}/settledownstream")
-    public ResponseEntity<Result<YingSettleDownstream>> create(
-            @RequestBody @Validated(CreateGroup.class) YingSettleDownstream yingSettleDownstream
+    public ResponseEntity<Result<SettleBuyer>> create(
+            @PathVariable("businessType") BusinessType businessType,
+            @RequestBody @Validated(CreateGroup.class) SettleBuyer yingSettleDownstream
     ) {
-        yingSettleDownstreamService.createDownstream(yingSettleDownstream);
+        settleBuyeService.createSettleBuyer(yingSettleDownstream);
         return Result.ok(yingSettleDownstream);
     }
 
@@ -86,12 +90,13 @@ public class SettleBuyerController {
      */
     @PutMapping("/{morderId}/settledownstream/{id}")
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
-            @RequestBody @Validated(UpdateGroup.class) YingSettleDownstream yingSettleDownstream
+            @RequestBody @Validated(UpdateGroup.class) SettleBuyer yingSettleDownstream
     ) {
         assert (yingSettleDownstream.getOrderId() == morderId);
-        int rtn = yingSettleDownstreamService.updateDownstream(yingSettleDownstream);
+        int rtn = settleBuyeService.update(yingSettleDownstream);
         if (rtn != 1) {
             logger.error("更新失败: {}", yingSettleDownstream);
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
@@ -107,10 +112,11 @@ public class SettleBuyerController {
      */
     @DeleteMapping("/{morderId}/settledownstream/{id}")
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
-        int rtn = yingSettleDownstreamService.deleteDownstream(id);
+        int rtn = settleBuyeService.delete(id);
         if (rtn != 1) {
             return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
         }

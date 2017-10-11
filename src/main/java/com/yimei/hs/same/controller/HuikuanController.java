@@ -5,6 +5,7 @@ import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.PayMode;
 import com.yimei.hs.same.dto.PageHuikuanDTO;
 import com.yimei.hs.same.entity.Huikuan;
@@ -23,7 +24,7 @@ import java.math.BigDecimal;
 /**
  * Created by hary on 2017/9/15.
  */
-@RequestMapping("/api/ying")
+@RequestMapping("/api/business/{businessType}")
 @RestController
 @Logined
 public class HuikuanController {
@@ -40,6 +41,7 @@ public class HuikuanController {
      */
     @GetMapping("/{morderId}/huikuans")
     public ResponseEntity<Result<Page<Huikuan>>> list(
+           @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             PageHuikuanDTO pageHuikuanDTO) {
         pageHuikuanDTO.setOrderId(morderId);
@@ -54,6 +56,7 @@ public class HuikuanController {
      */
     @GetMapping("/{morderId}/huikuans/{id}")
     public ResponseEntity<Result<Huikuan>> read(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
@@ -73,6 +76,7 @@ public class HuikuanController {
     @PostMapping("/{morderId}/huikuans")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Huikuan>> create(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) Huikuan huikuan
     ) {
@@ -121,6 +125,7 @@ public class HuikuanController {
     @PutMapping("/{morderId}/huikuans/{id}")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) Huikuan huikuan
@@ -144,6 +149,7 @@ public class HuikuanController {
     @DeleteMapping("/{morderId}/huikuans/{id}")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {

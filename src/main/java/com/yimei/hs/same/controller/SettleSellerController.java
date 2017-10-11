@@ -5,6 +5,7 @@ import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageSettleSellerDTO;
 import com.yimei.hs.same.entity.SettleSeller;
 import com.yimei.hs.same.service.SettleSellerService;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by hary on 2017/9/21.
  */
 @RestController
-@RequestMapping("/api/ying")
+@RequestMapping("/api/business/{businessType}")
 @Logined
 public class SettleSellerController {
 
@@ -36,11 +37,12 @@ public class SettleSellerController {
      */
     @GetMapping("/{morderId}/settleupstream")
     public ResponseEntity<Result<Page<SettleSeller>>> list(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             PageSettleSellerDTO pageSettleSellerDTO) {
 
         pageSettleSellerDTO.setOrderId(morderId);
-        return Result.ok(settleSellerService.getPageUpstream(pageSettleSellerDTO));
+        return Result.ok(settleSellerService.getPage(pageSettleSellerDTO));
     }
 
     /**
@@ -51,11 +53,12 @@ public class SettleSellerController {
      */
     @GetMapping("/{morderId}/settleupstream/{id}")
     public ResponseEntity<Result<SettleSeller>> read(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
 
-        SettleSeller settleUpstream = settleSellerService.findUpstream(id);
+        SettleSeller settleUpstream = settleSellerService.findOne(id);
         if (settleUpstream == null) {
             return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
         } else {
@@ -71,15 +74,16 @@ public class SettleSellerController {
 
     @PostMapping("/{morderId}/settleupstream")
     public ResponseEntity<Result<SettleSeller>> create(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
-            @RequestBody @Validated(CreateGroup.class) SettleSeller yingSettleUpstream) {
-        yingSettleUpstream.setOrderId(morderId);
-        int rtn = settleSellerService.createUpstream(yingSettleUpstream);
+            @RequestBody @Validated(CreateGroup.class) SettleSeller settleSeller) {
+        settleSeller.setOrderId(morderId);
+        int rtn = settleSellerService.create(settleSeller);
         if (rtn != 1) {
-            logger.error("创建失败: {}", yingSettleUpstream);
+            logger.error("创建失败: {}", settleSeller);
             return Result.error(4001, "创建失败");
         }
-        return Result.ok(yingSettleUpstream);
+        return Result.ok(settleSeller);
     }
 
     /**
@@ -89,15 +93,16 @@ public class SettleSellerController {
      */
     @PutMapping("/{morderId}/settleupstream/{id}")
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
-            @RequestBody @Validated(UpdateGroup.class) SettleSeller yingSettleUpstream
+            @RequestBody @Validated(UpdateGroup.class) SettleSeller settleSeller
     ) {
-//        assert (orderId == yingSettleUpstream.getOrderId());
-        yingSettleUpstream.setId(id);
-        int rtn = settleSellerService.updateUpstream(yingSettleUpstream);
+//        assert (orderId == settleSeller.getOrderId());
+        settleSeller.setId(id);
+        int rtn = settleSellerService.update(settleSeller);
         if (rtn != 1) {
-            logger.error("更新失败: {}", yingSettleUpstream);
+            logger.error("更新失败: {}", settleSeller);
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
         }
         return Result.ok(1);
@@ -110,10 +115,11 @@ public class SettleSellerController {
      */
     @DeleteMapping("/{morderId}/settleupstream/{id}")
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
-        int rtn = settleSellerService.deleteUpstream(id);
+        int rtn = settleSellerService.delete(id);
         if (rtn != 1) {
             logger.error("删除失败: {}", id);
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
