@@ -133,7 +133,7 @@ public class YingOrderController {
     ) {
         int cnt = yingOrderService.updateTransfer(morderId, user.getId(), toId);
         if (cnt != 1) {
-            return Result.error(4001, "转移失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "转移失败");
         }
         return Result.ok(1);
     }
