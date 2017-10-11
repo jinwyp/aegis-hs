@@ -6,13 +6,12 @@ import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.dto.PageYingSettleTrafficDTO;
 import com.yimei.hs.ying.entity.YingSettleTraffic;
-import com.yimei.hs.ying.service.YingSettleService;
+import com.yimei.hs.ying.service.YingSettleTrafficService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +30,7 @@ public class YingSettleTrafficController {
     private static final Logger logger = LoggerFactory.getLogger(YingSettleTrafficController.class);
 
     @Autowired
-    private YingSettleService yingSettleService;
+    private YingSettleTrafficService yingSettleService;
 
     /**
      * 获取所有huikuan

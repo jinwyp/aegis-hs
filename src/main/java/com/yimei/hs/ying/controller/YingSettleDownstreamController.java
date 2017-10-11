@@ -7,13 +7,13 @@ import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.dto.PageYingSettleDownstreamDTO;
 import com.yimei.hs.ying.entity.YingSettleDownstream;
-import com.yimei.hs.ying.service.YingSettleService;
+import com.yimei.hs.ying.service.YingSettleDownstreamService;
+import com.yimei.hs.ying.service.YingSettleTrafficService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +30,7 @@ public class YingSettleDownstreamController {
 
 
     @Autowired
-    private YingSettleService yingSettleService;
+    private YingSettleDownstreamService yingSettleDownstreamService;
 
     /**
      * 获取所有下游结算
@@ -43,7 +43,7 @@ public class YingSettleDownstreamController {
             PageYingSettleDownstreamDTO pageYingSettleDownstreamDTO
     ) {
         pageYingSettleDownstreamDTO.setOrderId(morderId);
-        return Result.ok(yingSettleService.getPageDownstream(pageYingSettleDownstreamDTO));
+        return Result.ok(yingSettleDownstreamService.getPageDownstream(pageYingSettleDownstreamDTO));
     }
 
     /**
@@ -58,7 +58,7 @@ public class YingSettleDownstreamController {
             @PathVariable("id") long id
     ) {
 
-        YingSettleDownstream settleDownstream = yingSettleService.findDownstream(id);
+        YingSettleDownstream settleDownstream = yingSettleDownstreamService.findDownstream(id);
         if (settleDownstream == null) {
             return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
         } else {
@@ -76,7 +76,7 @@ public class YingSettleDownstreamController {
     public ResponseEntity<Result<YingSettleDownstream>> create(
             @RequestBody @Validated(CreateGroup.class) YingSettleDownstream yingSettleDownstream
     ) {
-        yingSettleService.createDownstream(yingSettleDownstream);
+        yingSettleDownstreamService.createDownstream(yingSettleDownstream);
         return Result.ok(yingSettleDownstream);
     }
 
@@ -92,7 +92,7 @@ public class YingSettleDownstreamController {
             @RequestBody @Validated(UpdateGroup.class) YingSettleDownstream yingSettleDownstream
     ) {
         assert (yingSettleDownstream.getOrderId() == morderId);
-        int rtn = yingSettleService.updateDownstream(yingSettleDownstream);
+        int rtn = yingSettleDownstreamService.updateDownstream(yingSettleDownstream);
         if (rtn != 1) {
             logger.error("更新失败: {}", yingSettleDownstream);
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
@@ -111,7 +111,7 @@ public class YingSettleDownstreamController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
-        int rtn = yingSettleService.deleteDownstream(id);
+        int rtn = yingSettleDownstreamService.deleteDownstream(id);
         if (rtn != 1) {
             return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
         }
