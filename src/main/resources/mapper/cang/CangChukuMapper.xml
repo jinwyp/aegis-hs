@@ -1,46 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yimei.hs.cang.mapper.CangChukuMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.cang.entity.CangChuku">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="orderId" jdbcType="BIGINT" property="orderId" />
-    <result column="hsId" jdbcType="BIGINT" property="hsId" />
-    <result column="chukuDate" jdbcType="TIMESTAMP" property="chukuDate" />
-    <result column="locality" jdbcType="VARCHAR" property="locality" />
-    <result column="chukuAmount" jdbcType="DECIMAL" property="chukuAmount" />
-    <result column="chukuPrice" jdbcType="DECIMAL" property="chukuPrice" />
-    <result column="tsc" jdbcType="TIMESTAMP" property="tsc" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.cang.entity.CangChuku">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="hsId" jdbcType="BIGINT" property="hsId"/>
+        <result column="chukuDate" jdbcType="TIMESTAMP" property="chukuDate"/>
+        <result column="locality" jdbcType="VARCHAR" property="locality"/>
+        <result column="chukuAmount" jdbcType="DECIMAL" property="chukuAmount"/>
+        <result column="chukuPrice" jdbcType="DECIMAL" property="chukuPrice"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, orderId, hsId, chukuDate, locality, chukuAmount, chukuPrice, tsc
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from hs_cang_chuku
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <select id="getPage" resultType="com.yimei.hs.cang.entity.CangChuku">
-    select
-    <include refid="Base_Column_List" />
-    from hs_cang_chuku
-      <where>
-        <if test="true">and deleted = 0</if>
-        <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
-        <if test="hsId!=null">and hsId = #{hsId, jdbcType=BIGINT}</if>
-        <if test="chukuDate!=null">and chukuDate = #{chukuDate, jdbcType=TIMESTAMP}</if>
-        <if test="chukuPrice!=null">and  chukuPrice = #{chukuPrice, jdbcType=DECIMAL}</if>
-        <if test="chukuAmount!=null">and  chukuAmount= #{chukuAmount, jdbcType=DECIMAL}</if>
-        <if test="locality!=null">and  locality= #{locality, jdbcType=VARCHAR}</if>
-    </where>
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_cang_chuku
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="getPage" resultType="com.yimei.hs.cang.entity.CangChuku">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_cang_chuku
+        <where>
+            <if test="true">and deleted = 0</if>
+            <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
+
+            <if test="hsId!=null">and hsId = #{hsId, jdbcType=BIGINT}</if>
+            <if test="chukuDate!=null">and chukuDate = #{chukuDate, jdbcType=TIMESTAMP}</if>
+            <if test="chukuPrice!=null">and chukuPrice = #{chukuPrice, jdbcType=DECIMAL}</if>
+            <if test="chukuAmount!=null">and chukuAmount= #{chukuAmount, jdbcType=DECIMAL}</if>
+            <!--          <if test="locality!=null">and  locality= #{locality, jdbcType=VARCHAR}</if>-->
+
+
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from hs_cang_chuku
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
 
-  <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangChuku" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangChuku" keyProperty="id" useGeneratedKeys="true">
 
     insert into hs_cang_chuku (id, orderId, hsId, 
       chukuDate, locality, chukuAmount, 
@@ -50,67 +53,68 @@
       #{chukuPrice,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
 
-  <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangChuku" keyProperty="id" useGeneratedKeys="true">
-    insert into hs_cang_chuku
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null"> id, </if>
-      <if test="orderId != null"> orderId, </if>
-      <if test="hsId != null"> hsId, </if>
-      <if test="chukuDate != null"> chukuDate, </if>
-      <if test="locality != null">
-        locality,
-      </if>
-      <if test="chukuAmount != null">
-        chukuAmount,
-      </if>
-      <if test="chukuPrice != null">
-        chukuPrice,
-      </if>
-      <if test="tsc != null">
-        tsc,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="orderId != null">
-        #{orderId,jdbcType=BIGINT},
-      </if>
-      <if test="hsId != null">
-        #{hsId,jdbcType=BIGINT},
-      </if>
-      <if test="chukuDate != null">
-        #{chukuDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="locality != null">
-        #{locality,jdbcType=VARCHAR},
-      </if>
-      <if test="chukuAmount != null">
-        #{chukuAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="chukuPrice != null">
-        #{chukuPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="tsc != null">
-        #{tsc,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.cang.entity.CangChuku">
-    update hs_cang_chuku
-    <set>
-      <if test="orderId != null"> orderId = #{orderId,jdbcType=BIGINT}, </if>
-      <if test="hsId != null"> hsId = #{hsId,jdbcType=BIGINT}, </if>
-      <if test="chukuDate != null"> chukuDate = #{chukuDate,jdbcType=TIMESTAMP}, </if>
-      <if test="locality != null"> locality = #{locality,jdbcType=VARCHAR}, </if>
-      <if test="chukuAmount != null"> chukuAmount = #{chukuAmount,jdbcType=DECIMAL}, </if>
-      <if test="chukuPrice != null"> chukuPrice = #{chukuPrice,jdbcType=DECIMAL}, </if>
-      <if test="tsc != null"> tsc = #{tsc,jdbcType=TIMESTAMP}, </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimei.hs.cang.entity.CangChuku">
+    <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangChuku" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into hs_cang_chuku
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="hsId != null">hsId,</if>
+            <if test="chukuDate != null">chukuDate,</if>
+            <if test="locality != null">
+                locality,
+            </if>
+            <if test="chukuAmount != null">
+                chukuAmount,
+            </if>
+            <if test="chukuPrice != null">
+                chukuPrice,
+            </if>
+            <if test="tsc != null">
+                tsc,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="hsId != null">
+                #{hsId,jdbcType=BIGINT},
+            </if>
+            <if test="chukuDate != null">
+                #{chukuDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="locality != null">
+                #{locality,jdbcType=VARCHAR},
+            </if>
+            <if test="chukuAmount != null">
+                #{chukuAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="chukuPrice != null">
+                #{chukuPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="tsc != null">
+                #{tsc,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.cang.entity.CangChuku">
+        update hs_cang_chuku
+        <set>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
+            <if test="chukuDate != null">chukuDate = #{chukuDate,jdbcType=TIMESTAMP},</if>
+            <if test="locality != null">locality = #{locality,jdbcType=VARCHAR},</if>
+            <if test="chukuAmount != null">chukuAmount = #{chukuAmount,jdbcType=DECIMAL},</if>
+            <if test="chukuPrice != null">chukuPrice = #{chukuPrice,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.cang.entity.CangChuku">
     update hs_cang_chuku
     set orderId = #{orderId,jdbcType=BIGINT},
       hsId = #{hsId,jdbcType=BIGINT},
@@ -122,8 +126,8 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <!-- 逻辑删除 -->
-  <update id="delete" parameterType="java.lang.Long">
+    <!-- 逻辑删除 -->
+    <update id="delete" parameterType="java.lang.Long">
     UPDATE hs_cang_chuku
     SET deleted = 1, tsu = current_timestamp
     WHERE id = #{id, jdbcType=BIGINT}

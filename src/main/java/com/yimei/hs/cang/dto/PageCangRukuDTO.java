@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @Data
 public class PageCangRukuDTO extends BaseFilter<PageCangRukuDTO> {
 
-    private long orderId;
-    private long hsId;
+    private Long orderId;
+    private Long hsId;
     private LocalDateTime rukuDate;
     private InStorageStatus rukuStatus;
     private BigDecimal rukuPrice;
