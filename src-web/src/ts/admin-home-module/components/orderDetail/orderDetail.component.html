@@ -59,7 +59,7 @@
 
                         <div class="form-row">
                             <div class="col-6">
-                                <bs-select formControlName="userId" [fc]="transferForm.get('userId')" [label]="'订单权限移交给:'" [labelclass]="'col-4'" [inputclass]="'col-6'" [options]="userList" [error]="transferFormError.userId"></bs-select>
+                                <bs-select formControlName="userId" [fc]="transferForm.get('userId')" [label]="'订单权限移交给:'" [labelclass]="'col-4'" [inputclass]="'col-6'" [dirty]="ignoreDirty" [options]="userList" [error]="transferFormError.userId"></bs-select>
                             </div>
 
                             <div class="col-2">

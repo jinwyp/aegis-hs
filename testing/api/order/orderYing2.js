@@ -43,8 +43,6 @@ describe('应收订单', function () {
             })
     });
 
-
-
     it('应收订单 - 新建应收订单11 POST: /api/yings', function (done) {
         server.post('/api/yings')
             .set('Authorization', Authorization)
@@ -69,11 +67,14 @@ describe('应收订单', function () {
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.line).to.include('那曲')
                 orderId = res.body.data.id
+                console.log('----------------res.body', res.body)
                 done()
             })
     })
 
-    it('应收订单 - 转移订单给另一个财务人员 POST: /api/yings/' + orderId + '/to/4', function (done) {
+    it('应收订单 - 转移订单给另一个财务人员 POST: /api/yings/8/to/4', function (done) {
+
+        console.log('转移订单给另一个财务人员 POST: /api/yings/' + orderId + '/to/4')
         server.post('/api/yings/' + orderId + '/to/4')
             .set('Authorization', Authorization)
             .set(config.headers)
