@@ -128,37 +128,37 @@ describe('应收订单', function () {
                 done()
             })
     })
-
-    it('应收订单 - 新建应收订单4 非法输入不存在部门 deptId:9999 POST: /api/yings', function (done) {
-        server.post('/api/yings')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "deptId" : 9999,
-                    "teamId" : 1,
-                    "line" : "嘉瑞 - 那曲 - 山瑞",
-                    "cargoType" : "COAL",
-                    "upstreamSettleMode" : "ONE_PAPER_SETTLE",
-                    "downstreamSettleMode" : "ONE_PAPER_SETTLE",
-                    "mainAccounting" : 2,
-                    "upstreamId" : 3,
-                    "downstreamId" : 4,
-                    "orderPartyList" : [
-                        { "custType" : "UPSTREAM", "customerId" : 1},
-                        { "custType" : "DOWNSTREAM", "customerId" : 2}
-                    ]
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(400)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success).to.equal(false)
-                expect(res.body.data).to.equal(undefined)
-                done()
-            })
-    })
+    //
+    // it('应收订单 - 新建应收订单4 非法输入不存在部门 deptId:9999 POST: /api/yings', function (done) {
+    //     server.post('/api/yings')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send(
+    //             {
+    //                 "deptId" : 9999,
+    //                 "teamId" : 1,
+    //                 "line" : "嘉瑞 - 那曲 - 山瑞",
+    //                 "cargoType" : "COAL",
+    //                 "upstreamSettleMode" : "ONE_PAPER_SETTLE",
+    //                 "downstreamSettleMode" : "ONE_PAPER_SETTLE",
+    //                 "mainAccounting" : 2,
+    //                 "upstreamId" : 3,
+    //                 "downstreamId" : 4,
+    //                 "orderPartyList" : [
+    //                     { "custType" : "UPSTREAM", "customerId" : 1},
+    //                     { "custType" : "DOWNSTREAM", "customerId" : 2}
+    //                 ]
+    //             }
+    //         )
+    //         .expect('Content-Type', /json/)
+    //         .expect(400)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success).to.equal(false)
+    //             expect(res.body.data).to.equal(undefined)
+    //             done()
+    //         })
+    // })
 
     it('应收订单 - 新建应收订单5 非法输入不存在部门和团队 deptId:9999, teamId:99999 POST: /api/yings', function (done) {
         server.post('/api/yings')
