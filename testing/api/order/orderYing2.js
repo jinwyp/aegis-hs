@@ -85,8 +85,6 @@ describe('应收订单', function () {
                 if (err) return done(err)
                 expect(res.body.success).to.equal(true)
                 expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
                 done()
             })
     })
