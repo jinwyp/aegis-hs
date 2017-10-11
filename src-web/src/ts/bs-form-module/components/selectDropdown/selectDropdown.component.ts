@@ -206,11 +206,13 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
     set value(val: any) {
         // console.log('Setter: ', val)
-        this.interValueCurrentSelected = val
 
-        if (val.id !== -1) {
+        if (this.interValueCurrentSelected.id === -1 && val.id !== -1  || this.interValueCurrentSelected.id !== -1) {
             this.onChange(val.id)
         }
+
+        this.interValueCurrentSelected = val
+
 
         this.onTouched()
     }

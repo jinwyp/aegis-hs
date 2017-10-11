@@ -490,9 +490,9 @@ public class YingIntegrationA extends HsTestBase {
 
         Result <CangChuku> chukuFindResult = client.exchange(chukugetFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceCangChuku).getBody();
         if (chukuFindResult.getSuccess()) {
-            logger.info("仓押入库查询成功\nGET {}\nrequest = {}\nresponse = {}", chukugetFindUrl, "", printJson(chukuFindResult.getData()));
+            logger.info("仓押出库查询成功\nGET {}\nrequest = {}\nresponse = {}", chukugetFindUrl, "", printJson(chukuFindResult.getData()));
         } else {
-            logger.info("仓押入库查询失败: {}", chukuFindResult.getError());
+            logger.info("仓押出库查询失败: {}", chukuFindResult.getError());
             System.exit(-1);
         }
 
@@ -504,9 +504,9 @@ public class YingIntegrationA extends HsTestBase {
         chuku.setOrderId(yingOrderResult.getData().getId());
         Result<Integer> yingChukuUpdateResult = client.exchange(rukuUpdateUrl, HttpMethod.PUT, new HttpEntity<CangChuku>(chuku), typeReferenceInteger).getBody();
         if (yingChukuUpdateResult.getSuccess()) {
-            logger.info("更新仓押入成功\nPOST {}\nrequest = {}\nresponse = {}", rukuUpdateUrl, printJson(chuku), printJson(yingChukuUpdateResult.getData()));
+            logger.info("更新仓押出库成功\nPOST {}\nrequest = {}\nresponse = {}", rukuUpdateUrl, printJson(chuku), printJson(yingChukuUpdateResult.getData()));
         } else {
-            logger.error("更新仓押入失败: {}", yingChukuUpdateResult.getError());
+            logger.error("更新仓押出库失败: {}", yingChukuUpdateResult.getError());
             System.exit(-2);
         }
     }
