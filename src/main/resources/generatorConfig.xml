@@ -26,7 +26,7 @@
         </javaTypeResolver>  
   
         <!-- generate Model -->  
-        <javaModelGenerator targetPackage="com.yimei.cang.hs.entity"  targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.yimei.hs.same.entity"  targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>  
@@ -37,10 +37,12 @@
         </sqlMapGenerator>  
   
         <!--生成dao接口的配置 -->  
-        <javaClientGenerator type="XMLMAPPER"  targetPackage="com.yimei.hs.cang.mapper" targetProject="src/main/java"> <property name="enableSubPackages" value="true" />
+        <javaClientGenerator type="XMLMAPPER"  targetPackage="com.yimei.hs.same.mapper" targetProject="src/main/java"> <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="hs_cang_chuku" domainObjectName="CangChuku" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
+        <table tableName="hs_same_jiekuan" domainObjectName="Jiekuan" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
+
+        <!--<table tableName="hs_cang_chuku" domainObjectName="CangChuku" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>-->
         <!--<table tableName="hs_cang_fee" domainObjectName="CangFee" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>-->
         <!--<table tableName="hs_cang_fukuan" domainObjectName="CangFukuan" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>-->
         <!--<table tableName="hs_cang_huankuan" domainObjectName="CangHuankuan" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>-->
