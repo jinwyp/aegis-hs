@@ -64,7 +64,9 @@ public class AdminController {
      * @return
      */
     @GetMapping("/users")
-    public ResponseEntity<Result<Page<User>>> list(PageUserDTO pageUserDTO) {
+    public ResponseEntity<Result<Page<User>>> list(
+            PageUserDTO pageUserDTO
+    ) {
         return Result.ok(userService.getPage(pageUserDTO));
     }
 
@@ -76,7 +78,9 @@ public class AdminController {
      * @return
      */
     @GetMapping("/users/{id}")
-    public ResponseEntity<Result<User>> read(@PathVariable long id) {
+    public ResponseEntity<Result<User>> read(
+            @PathVariable long id
+    ) {
         User nuser = userService.findOne(id);
         if (nuser == null) {
             return Result.error(4001, "记录不存在");
