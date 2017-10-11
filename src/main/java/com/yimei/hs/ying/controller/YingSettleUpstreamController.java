@@ -69,7 +69,7 @@ public class YingSettleUpstreamController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
+
     @PostMapping("/{morderId}/settleupstream")
     public ResponseEntity<Result<YingSettleUpstream>> create(
             @PathVariable("morderId") Long morderId,
@@ -88,7 +88,6 @@ public class YingSettleUpstreamController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
     @PutMapping("/{morderId}/settleupstream/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
@@ -110,7 +109,6 @@ public class YingSettleUpstreamController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
     @DeleteMapping("/{morderId}/settleupstream/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,

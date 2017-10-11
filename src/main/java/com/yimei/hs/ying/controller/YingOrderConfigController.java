@@ -50,7 +50,6 @@ public class YingOrderConfigController {
      * @return
      */
     @PostMapping("/{morderId}/units")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<YingOrderConfig>> create(
             @PathVariable("morderId") Long morderId,
             @RequestBody YingOrderConfig yingOrderConfig) {
@@ -83,7 +82,6 @@ public class YingOrderConfigController {
     }
 
     @PutMapping("/{morderId}/units/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id,

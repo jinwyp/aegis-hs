@@ -59,7 +59,6 @@ public class DeptController {
      * @return
      */
     @PostMapping("/departments")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Dept>> create(@RequestBody Dept dept) {
         int rtn = deptService.create(dept);
         if (rtn != 1) {
@@ -75,7 +74,6 @@ public class DeptController {
      * @return
      */
     @PutMapping("/departments/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable(value = "id") Long id,
             @RequestBody Dept dept) {

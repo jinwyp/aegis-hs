@@ -70,7 +70,6 @@ public class YingFeeController {
      * @return
      */
     @PostMapping("/{morderId}/fees")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<YingFee>> create(
             @RequestBody @Validated(CreateGroup.class) YingFee yingFee
     ) {
@@ -88,7 +87,6 @@ public class YingFeeController {
      * @return
      */
     @PutMapping("/{morderId}/fees/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id,
@@ -109,7 +107,6 @@ public class YingFeeController {
      * @return
      */
     @DeleteMapping("/{morderId}/fees/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> delete(
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id

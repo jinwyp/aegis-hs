@@ -26,7 +26,6 @@ public class YingOrder implements Serializable {
     @NotNull(groups = {UpdateGroup.class}, message = "id不能为空")
     private Long id;
 
-    @NotNull(groups = {CreateGroup.class}, message = "部门编号不能为空")
     private Long deptId;
 
     @NotNull(groups = {CreateGroup.class },message = "团队不能为空")

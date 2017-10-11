@@ -6,11 +6,13 @@ import com.yimei.hs.ying.entity.YingOrderConfig;
 import com.yimei.hs.ying.mapper.YingOrderConfigMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by hary on 2017/9/25.
  */
 @Service
+@Transactional(readOnly = true)
 public class YingOrderConfigService {
 
     @Autowired
@@ -20,6 +22,7 @@ public class YingOrderConfigService {
         return yingOrderConfigMapper.getPage(pageYingOrerConfigDTO);
     }
 
+    @Transactional(readOnly = false)
     public int create(YingOrderConfig yingOrderConfig) {
         return yingOrderConfigMapper.insert(yingOrderConfig);
     }
@@ -28,6 +31,7 @@ public class YingOrderConfigService {
         return yingOrderConfigMapper.selectByPrimaryKey(id);
     }
 
+    @Transactional(readOnly = false)
     public int update(YingOrderConfig yingOrderConfig) {
         return yingOrderConfigMapper.updateByPrimaryKeySelective(yingOrderConfig);
     }

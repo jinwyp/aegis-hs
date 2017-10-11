@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * Created by hary on 2017/9/15.
  */
 @Service
+@Transactional(readOnly = true)
 public class YingOrderService {
 
     private static final Logger logger = LoggerFactory.getLogger(YingOrderService.class);
@@ -68,47 +70,52 @@ public class YingOrderService {
      * @param order
      * @return
      */
+    @Transactional(readOnly = false)
     public int create(YingOrder order) {
 
-        // 插入业务线
-        int rtn = yingOrderMapper.insert(order);
+        try {
+            // 插入业务线
+            int rtn = yingOrderMapper.insert(order);
 
-        if (rtn == 0) {
+            if (rtn == 0) {
+                return 0;
+            }
+
+            List<YingOrderConfig> configList = order.getOrderConfigList();
+
+            List<YingOrderParty> partyList = order.getOrderPartyList();
+
+            int failed = 0;
+
+            // 插入参与方
+            if (partyList != null) {
+
+                for (YingOrderParty yingOrderParty : partyList) {
+                    yingOrderParty.setOrderId(order.getId());
+                    if (yingOrderPartyMapper.insert(yingOrderParty) != 1) {
+                        failed++;
+                    }
+                }
+            }
+
+            // 插入核算月配置
+            if (configList != null) {
+                for (YingOrderConfig yingOrderConfig : configList) {
+                    yingOrderConfig.setOrderId(order.getId());
+                    if (yingOrderConfigMapper.insert(yingOrderConfig) != 1) {
+                        failed++;
+                    }
+                }
+            }
+
+            if (failed > 0) {
+                return 0;
+            }
+        } catch (Exception e) {
             return 0;
         }
 
-        List<YingOrderConfig> configList = order.getOrderConfigList();
-
-        List<YingOrderParty> partyList = order.getOrderPartyList();
-
-        int failed = 0;
-
-        // 插入参与方
-        if (partyList != null) {
-
-            for (YingOrderParty yingOrderParty : partyList) {
-                yingOrderParty.setOrderId(order.getId());
-                if (yingOrderPartyMapper.insert(yingOrderParty) != 1) {
-                    failed++;
-                }
-            }
-        }
-
-        // 插入核算月配置
-        if (configList != null) {
-            for (YingOrderConfig yingOrderConfig : configList) {
-                yingOrderConfig.setOrderId(order.getId());
-                if( yingOrderConfigMapper.insert(yingOrderConfig) !=  1) {
-                    failed++;
-                }
-            }
-        }
-
-        if (failed > 0) {
-            return 0;
-        }
-
-        return rtn;
+        return 1;
     }
 
     /**
@@ -117,6 +124,7 @@ public class YingOrderService {
      * @param record
      * @return
      */
+    @Transactional(readOnly = false)
     public int update(YingOrder record) {
         return yingOrderMapper.updateByPrimaryKeySelective(record);
     }
@@ -127,6 +135,7 @@ public class YingOrderService {
      * @param to
      * @return
      */
+    @Transactional(readOnly = false)
     public int updateTransfer(Long orderId, Long from, Long to) {
         int rtn = yingOrderMapper.transfer(orderId, from, to);
         return rtn;
@@ -152,6 +161,7 @@ public class YingOrderService {
      * @param id
      * @return
      */
+    @Transactional(readOnly = false)
     public int delete(Long id) {
         return yingOrderMapper.delete(id);
     }

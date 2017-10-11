@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -19,6 +20,7 @@ import java.util.function.Consumer;
  * Created by hary on 2017/9/15.
  */
 @Service
+@Transactional(readOnly = true)
 public class YingInvoiceService {
 
     private static final Logger logger = LoggerFactory.getLogger(YingSettleService.class);
@@ -46,6 +48,7 @@ public class YingInvoiceService {
         return yingInvoiceMapper.selectByPrimaryKey(id);
     }
 
+    @Transactional(readOnly = false)
     public int create(YingInvoice yingInvoice) {
 
         int rtn = 0;
@@ -66,6 +69,7 @@ public class YingInvoiceService {
         return rtn;
     }
 
+    @Transactional(readOnly = false)
     public int update(YingInvoice yingInvoice) {
         return yingInvoiceMapper.updateByPrimaryKeySelective(yingInvoice);
     }
@@ -76,6 +80,7 @@ public class YingInvoiceService {
      * @param id
      * @return
      */
+    @Transactional(readOnly = false)
     public int delete(long id) {
         yingInvoiceDetailMapper.deleteByInvoiceId(id);
          return yingInvoiceMapper.delete(id);

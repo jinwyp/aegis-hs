@@ -22,6 +22,7 @@ import java.util.*;
  * Created by hary on 2017/9/15.
  */
 @Service
+@Transactional(readOnly = true)
 public class YingHuikuanService {
 
     private static final Logger logger = LoggerFactory.getLogger(YingHuikuanService.class);
@@ -63,10 +64,12 @@ public class YingHuikuanService {
         return yingHuikuanMapper.selectByPrimaryKey(id);
     }
 
+    @Transactional(readOnly = false)
     public int update(YingHuikuan yingHuikuan) {
         return yingHuikuanMapper.updateByPrimaryKeySelective(yingHuikuan);
     }
 
+    @Transactional(readOnly = false)
     public int create(YingHuikuan yingHuikuan) {
 
         // 1. 插入回款记录
@@ -84,6 +87,7 @@ public class YingHuikuanService {
      * @param id
      * @return
      */
+    @Transactional(readOnly = false)
     public int delete(long orderId, long id) {
         // 由于回款时自动对应到付款的, 删除回款记录, 需要重建整个业务线的 回款-付款-map记录
         yingHuikuanMapMapper.deleteByOrderId(orderId);
@@ -91,6 +95,7 @@ public class YingHuikuanService {
         return yingHuikuanMapper.delete(id);
     }
 
+    @Transactional(readOnly = false)
     public void createMapping(Long orderId) {
         // 2. 找出付款尚未完成回款对应的付款记录
         List<YingFukuan> unfinishedFukuan = yingFukuanService.huikuanUnfinished(orderId);

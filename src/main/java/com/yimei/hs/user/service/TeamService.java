@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by hary on 2017/9/15.
@@ -30,14 +31,17 @@ public class TeamService {
        return team;
     }
 
+    @Transactional(readOnly = false)
     public int create(Team team){
         return teamMapper.insert(team);
     }
 
+    @Transactional(readOnly = false)
     public int delete(long id){
         return teamMapper.deleteByPrimaryKey(id);
     }
 
+    @Transactional(readOnly = false)
     public int update(Team team){
 
         return teamMapper.updateByPrimaryKeySelective(team);

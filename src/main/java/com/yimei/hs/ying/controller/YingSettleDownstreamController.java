@@ -72,7 +72,6 @@ public class YingSettleDownstreamController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
     @PostMapping("/{morderId}/settledownstream")
     public ResponseEntity<Result<YingSettleDownstream>> create(
             @RequestBody @Validated(CreateGroup.class) YingSettleDownstream yingSettleDownstream
@@ -86,7 +85,6 @@ public class YingSettleDownstreamController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
     @PutMapping("/{morderId}/settledownstream/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
@@ -108,7 +106,6 @@ public class YingSettleDownstreamController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
     @DeleteMapping("/{morderId}/settledownstream/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,

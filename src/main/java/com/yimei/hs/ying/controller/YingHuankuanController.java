@@ -113,7 +113,6 @@ public class YingHuankuanController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
     @PutMapping("/{morderId}/huankuans/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
@@ -135,7 +134,6 @@ public class YingHuankuanController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
     @DeleteMapping("/{morderId}/huankuans/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,

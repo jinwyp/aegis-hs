@@ -8,11 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by hary on 2017/9/15.
  */
 @Service
+@Transactional(readOnly = true)
 public class YingFeeService {
 
     private static final Logger logger = LoggerFactory.getLogger(YingFeeService.class);
@@ -47,6 +49,7 @@ public class YingFeeService {
      * @param yingFee
      * @return
      */
+    @Transactional(readOnly = false)
     public int create(YingFee yingFee) {
         return yingFeeMapper.insert(yingFee);
     }
@@ -56,6 +59,7 @@ public class YingFeeService {
      * @param yingFee
      * @return
      */
+    @Transactional(readOnly = false)
     public int update(YingFee yingFee) {
         return yingFeeMapper.updateByPrimaryKeySelective(yingFee);
     }
@@ -65,6 +69,7 @@ public class YingFeeService {
      * @param id
      * @return
      */
+    @Transactional(readOnly = false)
     public int delete(long id) {
         return yingFeeMapper.delete(id);
     }

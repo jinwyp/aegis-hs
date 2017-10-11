@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
  * Created by hary on 2017/9/15.
  */
 @Service
+@Transactional(readOnly = true)
 public class YingSettleService {
 
     private static final Logger logger = LoggerFactory.getLogger(YingSettleService.class);
@@ -37,7 +39,8 @@ public class YingSettleService {
     YingSettleTrafficMapper yingSettleTrafficMapper;
 
     /**
-     *  find settles by orderid
+     * find settles by orderid
+     *
      * @param orderId
      * @return
      */
@@ -49,7 +52,6 @@ public class YingSettleService {
     private YingLogService yingLogService;
 
     /**
-     *
      * @param pageYingSettleTrafficDTO
      * @return
      */
@@ -58,7 +60,6 @@ public class YingSettleService {
     }
 
     /**
-     *
      * @param pageYingSettleUpstreamDTO
      * @return
      */
@@ -67,7 +68,6 @@ public class YingSettleService {
     }
 
     /**
-     *
      * @param pageYingSettleDownstreamDTO
      * @return
      */
@@ -79,19 +79,23 @@ public class YingSettleService {
         return yingSettleTrafficMapper.selectByPrimaryKey(id);
     }
 
+    @Transactional(readOnly = false)
     public int createTraffic(YingSettleTraffic yingSettleTraffic) {
         return yingSettleTrafficMapper.insert(yingSettleTraffic);
     }
 
+    @Transactional(readOnly = false)
     public int createUpstream(YingSettleUpstream yingSettleUpstream) {
         return yingSettleUpstreamMapper.insert(yingSettleUpstream);
     }
 
     /**
      * 下游结算
+     *
      * @param yingSettleDownstream
      * @return
      */
+    @Transactional(readOnly = false)
     public int createDownstream(YingSettleDownstream yingSettleDownstream) {
         int rtn = yingSettleDownstreamMapper.insert(yingSettleDownstream);
         if (rtn != 1) {
@@ -103,7 +107,6 @@ public class YingSettleService {
 
 
     /**
-     *
      * @param id
      * @return
      */
@@ -112,7 +115,6 @@ public class YingSettleService {
     }
 
     /**
-     *
      * @param id
      * @return
      */
@@ -121,28 +123,28 @@ public class YingSettleService {
     }
 
     /**
-     *
      * @param yingSettleUpstream
      * @return
      */
+    @Transactional(readOnly = false)
     public int updateUpstream(YingSettleUpstream yingSettleUpstream) {
         return yingSettleUpstreamMapper.updateByPrimaryKeySelective(yingSettleUpstream);
     }
 
     /**
-     *
      * @param yingSettleTraffic
      * @return
      */
+    @Transactional(readOnly = false)
     public int udpateTraffic(YingSettleTraffic yingSettleTraffic) {
         return yingSettleTrafficMapper.updateByPrimaryKeySelective(yingSettleTraffic);
     }
 
     /**
-     *
      * @param yingSettleDownstream
      * @return
      */
+    @Transactional(readOnly = false)
     public int updateDownstream(YingSettleDownstream yingSettleDownstream) {
         return yingSettleDownstreamMapper.updateByPrimaryKeySelective(yingSettleDownstream);
     }
@@ -154,28 +156,34 @@ public class YingSettleService {
      */
 
     /**
-     *  逻辑删除
+     * 逻辑删除
+     *
      * @param id
      * @return
      */
+    @Transactional(readOnly = false)
     public int deleteDownstream(long id) {
         return yingSettleDownstreamMapper.delete(id);
     }
 
     /**
      * 逻辑删除
+     *
      * @param id
      * @return
      */
+    @Transactional(readOnly = false)
     public int deleteTraffic(long id) {
         return yingSettleTrafficMapper.delete(id);
     }
 
     /**
      * 逻辑删除
+     *
      * @param id
      * @return
      */
+    @Transactional(readOnly = false)
     public int deleteUpstream(long id) {
         return yingSettleUpstreamMapper.delete(id);
     }

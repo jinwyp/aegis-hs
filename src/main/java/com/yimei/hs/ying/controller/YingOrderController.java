@@ -73,7 +73,6 @@ public class YingOrderController {
      * @return
      */
     @PostMapping
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<YingOrder>> create(
             @CurrentUser User user,
             @RequestBody @Validated(CreateGroup.class) YingOrder order) {
@@ -82,13 +81,7 @@ public class YingOrderController {
         order.setDeptId(user.getDeptId());
         order.setStatus(OrderStatus.UNCOMPLETED);
 
-        int rtn;
-        try {
-            rtn = yingOrderService.create(order);
-        } catch (Exception e) {
-            System.out.println("------------------------------------------");
-            return Result.error(4001, "创建失败", HttpStatus.BAD_REQUEST);
-        }
+        int rtn = yingOrderService.create(order);
         if (rtn == 1) {
             return Result.ok(order);
         } else {
@@ -103,7 +96,6 @@ public class YingOrderController {
      * @return
      */
     @PutMapping("/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) YingOrder yingOrder
@@ -125,7 +117,6 @@ public class YingOrderController {
      * @return
      */
     @PostMapping("/{morderId}/to/{toId}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> transfer(
             @CurrentUser User user,
             @PathVariable("morderId") Long morderId,
@@ -145,7 +136,6 @@ public class YingOrderController {
      * @return
      */
     @DeleteMapping("/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> delete(
             @PathVariable("id") Long id
     ) {

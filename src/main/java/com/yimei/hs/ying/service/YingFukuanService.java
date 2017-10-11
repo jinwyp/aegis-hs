@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
  * Created by hary on 2017/9/15.
  */
 @Service
+@Transactional(readOnly = true)
 public class YingFukuanService {
 
     private static final Logger logger = LoggerFactory.getLogger(YingFukuanService.class);
@@ -195,6 +197,7 @@ public class YingFukuanService {
      * @param yingFukuan
      * @return
      */
+    @Transactional(readOnly = false)
     public int create(YingFukuan yingFukuan) {
 
         // 1. 插入付款记录
@@ -211,6 +214,7 @@ public class YingFukuanService {
         return yingFukuanMapper.selectByPrimaryKey(id);
     }
 
+    @Transactional(readOnly = false)
     public int update(YingFukuan yingFukuan) {
         return yingFukuanMapper.updateByPrimaryKeySelective(yingFukuan);
     }
@@ -222,6 +226,7 @@ public class YingFukuanService {
      * @param id
      * @return
      */
+    @Transactional(readOnly = false)
     public int delete(Long orderId, long id) {
         yingHuikuanService.createMapping(orderId);
 

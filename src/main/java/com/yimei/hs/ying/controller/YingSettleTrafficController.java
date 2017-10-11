@@ -73,7 +73,6 @@ public class YingSettleTrafficController {
      * @return
      */
     @PostMapping("/{morderId}/settletraffic")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<YingSettleTraffic>> create(@PathVariable("morderId") Long morderId, @RequestBody YingSettleTraffic yingSettleTraffic) {
         yingSettleTraffic.setOrderId(morderId);
 
@@ -90,7 +89,6 @@ public class YingSettleTrafficController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
     @PutMapping("/{morderId}/settletraffic/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
@@ -110,7 +108,6 @@ public class YingSettleTrafficController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
     @DeleteMapping("/{morderId}/settletraffic/{id}")
     public ResponseEntity<Result<Integer>> delete(
             @PathVariable("morderId") Long morderId,

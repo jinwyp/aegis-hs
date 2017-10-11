@@ -7,6 +7,7 @@ import com.yimei.hs.user.dto.PagePartyDTO;
 import com.yimei.hs.user.mapper.PartyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by hary on 2017/9/15.
@@ -25,10 +26,12 @@ public class PartyService {
         return partyMapper.selectByPrimaryKey(id);
     }
 
+    @Transactional(readOnly = false)
     public int create(Party party) {
         return partyMapper.insert(party);
     }
 
+    @Transactional(readOnly = false)
     public int update(Party party) {
         return partyMapper.updateByPrimaryKeySelective(party);
     }

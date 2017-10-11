@@ -6,11 +6,13 @@ import com.yimei.hs.ying.entity.YingOrderParty;
 import com.yimei.hs.ying.mapper.YingOrderPartyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by hary on 2017/9/25.
  */
 @Service
+@Transactional(readOnly = true)
 public class YingPartyService {
 
     @Autowired
@@ -25,10 +27,12 @@ public class YingPartyService {
         return yingOrderPartyMapper.getPage(pageYingOrderPartyDTO);
     }
 
+    @Transactional(readOnly = false)
     public int update(YingOrderParty yingOrderParty) {
         return yingOrderPartyMapper.updateByPrimaryKeySelective(yingOrderParty);
     }
 
+    @Transactional(readOnly = false)
     public int delete(Long id) {
         return yingOrderPartyMapper.delete(id);
     }

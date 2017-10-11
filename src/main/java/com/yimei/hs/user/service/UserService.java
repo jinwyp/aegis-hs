@@ -62,8 +62,13 @@ public class UserService {
         } else {
             user.setCreateBy(admin.getPhone().toString());
         }
-        return userMapper.insert(user);
+        try {
+            userMapper.insert(user);
+        } catch (Exception e) {
+            return 0;
+        }
 
+        return 1;
     }
 
     /**
@@ -102,10 +107,22 @@ public class UserService {
      * @param user
      * @return
      */
+    @Transactional(readOnly = false)
     public int update(User user) {
-        return userMapper.updateByPrimaryKeySelective(user);
+        try {
+            userMapper.updateByPrimaryKeySelective(user);
+        } catch (Exception e) {
+            return 0;
+        }
+        return 1;
     }
 
+    /**
+     * 修改密码
+     * @param userUpdate
+     * @return
+     */
+    @Transactional(readOnly = false)
     public int changePassword(User userUpdate) {
 
         byte[] passwordSalt = Digests.generateSalt(SALT_SIZE);
@@ -114,9 +131,12 @@ public class UserService {
         userUpdate.setPassword(Encodes.encodeHex(hashPassword));
         userUpdate.setPasswordSalt(Encodes.encodeHex(passwordSalt));
 
-        int rtn = userMapper.updateByPrimaryKeySelective(userUpdate);
-
-        return rtn;
+        try {
+            userMapper.updateByPrimaryKeySelective(userUpdate);
+        } catch (Exception e) {
+            return 0;
+        }
+        return 1;
 
     }
 

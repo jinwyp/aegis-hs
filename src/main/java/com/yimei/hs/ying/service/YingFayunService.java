@@ -6,11 +6,13 @@ import com.yimei.hs.ying.dto.PageYingFayunDTO;
 import com.yimei.hs.ying.mapper.YingFayunMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by hary on 2017/9/15.
  */
 @Service
+@Transactional(readOnly = true)
 public class YingFayunService {
 
     @Autowired
@@ -42,6 +44,7 @@ public class YingFayunService {
      * @param yingFayun
      * @return
      */
+    @Transactional(readOnly = false)
     public int create(YingFayun yingFayun) {
         return yingFayunMapper.insert(yingFayun);
     }
@@ -51,6 +54,7 @@ public class YingFayunService {
      * @param yingFayun
      * @return
      */
+    @Transactional(readOnly = false)
     public int update(YingFayun yingFayun) {
         return yingFayunMapper.updateByPrimaryKeySelective(yingFayun);
     }
@@ -62,6 +66,7 @@ public class YingFayunService {
      * @param id
      * @return
      */
+    @Transactional(readOnly = false)
     public int delete(Long orderId, long id) {
         return yingFayunMapper.delete(id);
     }

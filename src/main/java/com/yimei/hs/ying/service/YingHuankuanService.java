@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.List;
  * Created by hary on 2017/9/15.
  */
 @Service
+@Transactional(readOnly = true)
 public class YingHuankuanService {
 
     private static final Logger logger = LoggerFactory.getLogger(YingHuankuanService.class);
@@ -52,6 +54,7 @@ public class YingHuankuanService {
      * @param yingHuankuan
      * @return
      */
+    @Transactional(readOnly = false)
     public int create(YingHuankuan yingHuankuan) {
 
         // 1. 插入还款记录
@@ -74,6 +77,7 @@ public class YingHuankuanService {
      * @param orderId
      * @return
      */
+    @Transactional(readOnly = false)
     public int createMap(long orderId) {
         // 1. 删除所有的orderId的 hs_ying_huankuan_map记录
         // 2. 重建所有的orderId的 hs_ying_huankuan_map记录
@@ -85,6 +89,7 @@ public class YingHuankuanService {
      * @param yingHuankuan
      * @return
      */
+    @Transactional(readOnly = false)
     public int update(YingHuankuan yingHuankuan) {
         return yingHuankuanMapper.updateByPrimaryKeySelective(yingHuankuan);
     }
@@ -94,6 +99,7 @@ public class YingHuankuanService {
      * @param id
      * @return
      */
+    @Transactional(readOnly = false)
     public int delete( long id) {
         // 还款是手动对应的， 删除还款记录，
         // 需要同时删除其map

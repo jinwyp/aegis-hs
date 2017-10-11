@@ -82,7 +82,6 @@ public class YingFukuanController {
      * @return
      */
     @PostMapping("/{morderId}/fukuans")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<YingFukuan>> create(
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingFukuan yingFukuan
@@ -101,7 +100,6 @@ public class YingFukuanController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
     @PutMapping("/{morderId}/fukuans/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
@@ -122,7 +120,6 @@ public class YingFukuanController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
     @DeleteMapping("/{morderId}/fukuans/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,

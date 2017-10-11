@@ -36,25 +36,18 @@ public class AdminController {
      * @return
      */
     @PostMapping("/users")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<User>> create(
             @CurrentUser User admin,
             @RequestBody @Validated User user
     ) {
 
-        try {
-            int rtn = userService.create(user, admin);
-            if (rtn != 1) {
-                logger.error("创建用户失败: {}", user);
-                return Result.error(4001, "创建用户失败");
-            } else {
-                return Result.ok(user);
-            }
-        } catch (Exception e) {
-            System.out.println("asdasfdasfasdfafds---------------------asdasdfasdasdfasdfasdasad");
-            return Result.error(4001, "创建失败-参数非法");
+        int rtn = userService.create(user, admin);
+        if (rtn != 1) {
+            logger.error("创建用户失败: {}", user);
+            return Result.error(4001, "创建用户失败");
+        } else {
+            return Result.ok(user);
         }
-
     }
 
 
@@ -95,7 +88,6 @@ public class AdminController {
      * @return
      */
     @PutMapping("/users/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("id") Long id,
             @RequestBody User user
