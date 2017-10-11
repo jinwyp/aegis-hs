@@ -1,13 +1,13 @@
 
         <form [formGroup]="invoiceForm" (ngSubmit)="invoiceFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-            <bs-select formControlName="hsId" [fc]="invoiceForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="invoiceFormError.hsId"></bs-select>
-            <bs-select formControlName="invoiceDirection" [fc]="invoiceForm.get('invoiceDirection')" [label]="'进项或销项:'"  [options]="invoiceDirectionList" [error]="invoiceFormError.invoiceDirection"></bs-select>
-            <bs-select formControlName="invoiceType" [fc]="invoiceForm.get('invoiceType')" [label]="'发票类型:'"  [options]="invoiceTypeList" [error]="invoiceFormError.invoiceType"></bs-select>
-            <bs-datepicker formControlName="openDate" [fc]="invoiceForm.get('openDate')" [label]="'开票日期:'" [error]="invoiceFormError.openDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
+            <bs-select formControlName="hsId" [fc]="invoiceForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="invoiceFormError.hsId"></bs-select>
+            <bs-select formControlName="invoiceDirection" [fc]="invoiceForm.get('invoiceDirection')" [label]="'进项或销项:'" [dirty]="ignoreDirty"  [options]="invoiceDirectionList" [error]="invoiceFormError.invoiceDirection"></bs-select>
+            <bs-select formControlName="invoiceType" [fc]="invoiceForm.get('invoiceType')" [label]="'发票类型:'" [dirty]="ignoreDirty"  [options]="invoiceTypeList" [error]="invoiceFormError.invoiceType"></bs-select>
+            <bs-datepicker formControlName="openDate" [fc]="invoiceForm.get('openDate')" [label]="'开票日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty"  [error]="invoiceFormError.openDate" ></bs-datepicker>
 
-            <bs-select formControlName ="openCompanyId" [fc]="invoiceForm.get('openCompanyId')" [label]="'开票单位:'" [options]="partyList" [error]="invoiceFormError.openCompanyId"></bs-select>
-            <bs-select formControlName ="receiverId" [fc]="invoiceForm.get('receiverId')" [label]="'收票单位:'" [options]="partyList" [error]="invoiceFormError.receiverId"></bs-select>
+            <bs-select formControlName ="openCompanyId" [fc]="invoiceForm.get('openCompanyId')" [label]="'开票单位:'" [dirty]="ignoreDirty" [options]="partyList" [error]="invoiceFormError.openCompanyId"></bs-select>
+            <bs-select formControlName ="receiverId" [fc]="invoiceForm.get('receiverId')" [label]="'收票单位:'" [dirty]="ignoreDirty" [options]="partyList" [error]="invoiceFormError.receiverId"></bs-select>
 
 
             <div class="form-group row" >
