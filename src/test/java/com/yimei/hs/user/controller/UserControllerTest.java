@@ -88,20 +88,20 @@ public class UserControllerTest extends YingTestBase {
     public void userTest() throws JsonProcessingException {
 
         user();
-//        order();
-//        config();
-//        fukuanTest();
-//
-//        fayun();
-//        fukuan();
-//        huikuan();
-//        huankuan();
-//        upstream();
-//        downstream();
-//        traffic();
-//        fee();
-//
-//        invoice();
+        order();
+        config();
+        fukuanTest();
+
+        fayun();
+        fukuan();
+        huikuan();
+        huankuan();
+        upstream();
+        downstream();
+        traffic();
+        fee();
+
+        invoice();
 
 
     }
