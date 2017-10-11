@@ -61,7 +61,7 @@ public class OrderConfigController {
         int rtn = orderConfigService.create(orderConfig);
         if (rtn != 1) {
             logger.error("创建失败: {}", orderConfig);
-            return Result.error(5001, "创建失败", HttpStatus.NOT_FOUND);
+            return Result.error(5001, "创建失败");
         } else {
             return Result.ok(orderConfig);
         }
@@ -82,7 +82,7 @@ public class OrderConfigController {
         OrderConfig orderConfig = orderConfigService.findOne(id);
 
         if (orderConfig == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "记录不存在");
         } else {
             return Result.ok(orderConfig);
         }
@@ -105,7 +105,7 @@ public class OrderConfigController {
         if (status == 1) {
             return Result.ok(1);
         } else {
-            return Result.error(5003, "更新失败", HttpStatus.NOT_FOUND);
+            return Result.error(5003, "更新失败");
         }
 
     }

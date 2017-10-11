@@ -23,8 +23,8 @@ create table hs_cang_ruku (
   primary key (id)
 )engine=InnoDB default charset=utf8;
 
--- alter table hs_cang_ruku add foreign key(orderId) references hs_cang_order(id);
--- alter table hs_cang_ruku add foreign key(hsId)    references hs_cang_order_config(id);
+alter table hs_cang_ruku add foreign key(orderId) references hs_same_order(id);
+alter table hs_cang_ruku add foreign key(hsId)    references hs_same_order_config(id);
 
 create table hs_cang_chuku (
   id bigint(20)                  not null auto_increment,
@@ -35,14 +35,14 @@ create table hs_cang_chuku (
   locality varchar(128)          not null comment '出库场地',
   chukuAmount decimal(10, 2)     not null comment '出库吨数',
   chukuPrice decimal(10, 2)      not null comment '出库单价',
-  deleted tinyint(1)          not null default 0 comment '逻辑删除',
-  tsc timestamp                   not null default current_timestamp,
-  tsu timestamp                   not null default current_timestamp,
+  deleted tinyint(1)             not null default 0 comment '逻辑删除',
+  tsc timestamp                  not null default current_timestamp,
+  tsu timestamp                  not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
 
--- alter table hs_cang_chuku add foreign key(orderId) references hs_cang_order(id);
--- alter table hs_cang_chuku add foreign key(hsId)    references hs_cang_order_config(id);
+alter table hs_cang_chuku add foreign key(orderId) references hs_same_order(id);
+alter table hs_cang_chuku add foreign key(hsId)    references hs_same_order_config(id);
 
 -- 苍押订单 - 上游结算
 create table hs_cang_settle_upstream (
@@ -55,16 +55,14 @@ create table hs_cang_settle_upstream (
    money decimal(10, 2)      not null comment '结算金额',
    settleGap decimal(10, 2)  not null comment '结算扣吨',
 
-   deleted tinyint(1)          not null default 0 comment '逻辑删除',
+   deleted tinyint(1)        not null default 0 comment '逻辑删除',
    tsc timestamp             not null default current_timestamp,
-   tsu timestamp                   not null default current_timestamp,
+   tsu timestamp             not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
 
-
 -- alter table hs_cang_settle_upstream add foreign key(orderId) references hs_cang_order(id);
 -- alter table hs_cang_settle_upstream add foreign key(hsId)    references hs_cang_order_config(id);
-
 
 
 
@@ -75,12 +73,11 @@ create table hs_cang_settle_upstream_map (
    rukuId bigint(20)         not null comment '对应入库id',
    deduction decimal(10,2)   not null comment '抵扣入库吨数',
 
-   deleted tinyint(1)          not null default 0 comment '逻辑删除',
+   deleted tinyint(1)        not null default 0 comment '逻辑删除',
    tsc timestamp             not null default current_timestamp,
-   tsu timestamp                   not null default current_timestamp,
+   tsu timestamp             not null default current_timestamp,
    primary key (id)
 )engine=InnoDB default charset=utf8;
-
 alter table hs_cang_settle_upstream_map add foreign key(settleId) references hs_cang_settle_upstream(id);
 alter table hs_cang_settle_upstream_map add foreign key(rukuId) references hs_cang_ruku(id);
 
