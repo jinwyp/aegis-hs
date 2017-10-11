@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.same.entity.Fee;
-import com.yimei.hs.same.entity.Order;
-import com.yimei.hs.same.entity.OrderConfig;
-import com.yimei.hs.same.entity.OrderParty;
+import com.yimei.hs.same.entity.*;
 import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.entity.Team;
@@ -89,6 +86,11 @@ abstract public class HsTestBase {
 
     protected ParameterizedTypeReference<Result<Fee>> typeReferenceFee  = new ParameterizedTypeReference<Result<Fee>>() {};
     protected ParameterizedTypeReference<Result<Page<Fee>>> typeReferenceFeePage  = new ParameterizedTypeReference<Result<Page<Fee>>>() {};
+
+
+    protected ParameterizedTypeReference<Result<SettleTraffic>> typeReferenceSettleTraffic  = new ParameterizedTypeReference<Result<SettleTraffic>>() {};
+    protected ParameterizedTypeReference<Result<Page<SettleTraffic>>> typeReferenceSettleTrafficPage  = new ParameterizedTypeReference<Result<Page<SettleTraffic>>>() {};
+
 
 
 

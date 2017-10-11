@@ -127,6 +127,30 @@ create table hs_same_invoice_detail (
 
 alter table hs_same_invoice_detail add foreign key(invoiceId) references hs_same_invoice(id);
 
+
+-- 应收订单 - 运输方结算
+create table hs_same_settle_traffic (
+  id bigint(20)              not null auto_increment,
+  orderId bigint(20)         not null comment '订单id, 业务线id',
+  hsId bigint(20)            not null comment '核算月id',
+
+  settleDate date             not null comment '结算日期',
+  amount decimal(10, 2)       not null comment '结算数量(吨)',
+  money decimal(10, 2)        not null comment '结算金额',
+  trafficCompanyId bigint(20) not null comment '与哪个运输方结算',
+
+  deleted tinyint(1)               not null default 0 comment '是否删除',
+  tsc timestamp               not null default current_timestamp,
+  tsu timestamp not null default current_timestamp,
+
+  primary key (id)
+)engine=InnoDB default charset=utf8;
+
+alter table hs_same_settle_traffic add foreign key(orderId) references hs_same_order(id);
+alter table hs_same_settle_traffic add foreign key(hsId)    references hs_same_order_config(id);
+alter table hs_same_settle_traffic add foreign key(trafficCompanyId) references hs_party(id);
+
+
 -- 订单转移
 create table hs_same_transfer (
   id bigint(20)         not null auto_increment,

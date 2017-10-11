@@ -8,6 +8,7 @@ import com.yimei.hs.enums.*;
 import com.yimei.hs.same.dto.PageFeeDTO;
 import com.yimei.hs.same.dto.PageOrderConfigDTO;
 import com.yimei.hs.same.dto.PageOrderDTO;
+import com.yimei.hs.same.dto.PageSettleTrafficDTO;
 import com.yimei.hs.same.entity.*;
 import com.yimei.hs.test.HsTestBase;
 import com.yimei.hs.user.entity.Dept;
@@ -17,7 +18,10 @@ import com.yimei.hs.user.entity.User;
 import com.yimei.hs.util.WebUtils;
 import com.yimei.hs.ying.dto.PageYingFeeDTO;
 import com.yimei.hs.ying.dto.PageYingOrderConfigDTO;
+import com.yimei.hs.ying.dto.PageYingSettleTrafficDTO;
+import com.yimei.hs.ying.dto.PageYingTransferDTO;
 import com.yimei.hs.ying.entity.YingOrderConfig;
+import com.yimei.hs.ying.entity.YingSettleTraffic;
 import org.assertj.core.util.Lists;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -32,6 +36,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -73,8 +78,8 @@ public class YingIntegrationA extends HsTestBase {
 
     Result<Invoice> invoiceCreateResult = null;
     Result<Fee> feeFindResult = null;
+    Result<SettleTraffic> trafficCreateResult = null;
 
-//    Result<SettleTraffic> trafficCreateResult = null;
 //    Result<SettleDownstream> downstreamCreateResult = null;
 //    Result<SettleUpstream> upstreamCreateResult = null;
 //    Result<Fukuan> fukuanResult = null;
@@ -89,6 +94,7 @@ public class YingIntegrationA extends HsTestBase {
         order();
         config();
         fee();
+        traffic();
     }
 
     public void order() throws JsonProcessingException {
@@ -281,6 +287,71 @@ public class YingIntegrationA extends HsTestBase {
             logger.info("更新费用成功\nPUT {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(fee), printJson(yingFayunUpdateResult.getData()));
         } else {
             logger.error("更新费用失败: {}", yingFayunUpdateResult.getError());
+            System.exit(-2);
+        }
+    }
+
+
+    private void traffic() throws JsonProcessingException {
+
+        // 1. 添加运输方结算
+        String trafficCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settletraffic";
+        SettleTraffic traffic = new SettleTraffic() {{
+            setHsId(yingOrderConfigResult.getData().getId());
+            setOrderId(yingOrderResult.getData().getId());
+            setMoney(new BigDecimal("1000"));
+            setAmount(new BigDecimal("100"));
+            setSettleDate(LocalDateTime.now());
+            setTrafficCompanyId(yingOrderResult.getData().getMainAccounting());
+
+        }};
+        trafficCreateResult = client.exchange(trafficCreateUrl, HttpMethod.POST, new HttpEntity<>(traffic), typeReferenceSettleTraffic).getBody();
+        if (trafficCreateResult.getSuccess()) {
+            logger.info("创建运输方结算成功\n POST {}\nrequest = {}\nresponse = {}", trafficCreateUrl, printJson(traffic), printJson(trafficCreateResult.getData()));
+        } else {
+            logger.info("创建运输方结算失败: {}", trafficCreateResult.getError());
+            System.exit(-1);
+        }
+
+        // 2. 分页
+        String trafficPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settletraffic?" + WebUtils.getUrlTemplate(PageSettleTrafficDTO.class);
+
+        Map<String, Object> trafficVariables = WebUtils.getUrlVariables(PageSettleTrafficDTO.class);
+        trafficVariables.put("orderId", yingOrderResult.getData().getId());
+        trafficVariables.put("pageSize", 5);
+        trafficVariables.put("pageNo", 1);
+
+
+        PageSettleTrafficDTO trafficDTO = new PageSettleTrafficDTO();
+        trafficDTO.setOrderId(yingOrderResult.getData().getId());
+        Result<Page<SettleTraffic>> trafficPageResult = client.exchange(trafficPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleTrafficPage, trafficVariables).getBody();
+        if (trafficPageResult.getSuccess()) {
+            logger.info("运输方结算分页成功\nGET {}\nrequest = {}\nresponse = {}", trafficPageUrl, "", printJson(trafficPageResult.getData()));
+        } else {
+            logger.info("运输方结算分页失败: {}", trafficPageResult.getError());
+            System.exit(-1);
+        }
+
+        // 3. id查询
+        String trafficFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settletraffic/" + trafficCreateResult.getData().getId();
+        Result<SettleTraffic> trafficFindResult = client.exchange(trafficFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleTraffic).getBody();
+        if (trafficFindResult.getSuccess()) {
+            logger.info("查询运输方结算成功\nGET {}\nrequest = {}\nresponse = {}", trafficFindUrl, "", printJson(trafficFindResult.getData()));
+        } else {
+            logger.info("查询运输方结算失败: {}", trafficFindResult.getError());
+            System.exit(-1);
+        }
+
+        // 4. 更新
+        String fayunUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settletraffic/" + trafficCreateResult.getData().getId();
+        traffic.setAmount(new BigDecimal("9999"));
+        traffic.setOrderId(yingOrderResult.getData().getId());
+        traffic.setId(trafficCreateResult.getData().getId());
+        Result<Integer> yingFayunUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<SettleTraffic>(traffic), typeReferenceInteger).getBody();
+        if (yingFayunUpdateResult.getSuccess()) {
+            logger.info("更新输方结算成功\nPOST {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(traffic), printJson(yingFayunUpdateResult.getData()));
+        } else {
+            logger.error("更新输方结算失败: {}", yingFayunUpdateResult.getError());
             System.exit(-2);
         }
     }
