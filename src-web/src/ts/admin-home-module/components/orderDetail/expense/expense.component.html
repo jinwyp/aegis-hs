@@ -1,9 +1,9 @@
 
         <form [formGroup]="expenseForm" (ngSubmit)="expenseFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-            <bs-select formControlName="hsId" [fc]="expenseForm.get('hsId')" [label]="'核算月:'"  [options]="unitList" [error]="expenseFormError.hsId"></bs-select>
+            <bs-select formControlName="hsId" [fc]="expenseForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="expenseFormError.hsId"></bs-select>
 
-            <bs-select formControlName ="name" [fc]="expenseForm.get('name')" [label]="'费用科目:'" [options]="expensePurposeList" [error]="expenseFormError.name"></bs-select>
+            <bs-select formControlName ="name" [fc]="expenseForm.get('name')" [label]="'费用科目:'" [dirty]="ignoreDirty" [options]="expensePurposeList" [error]="expenseFormError.name"></bs-select>
             <bs-text-input formControlName="amount" [fc]="expenseForm.get('amount')" [type]="'number'" [label]="'金额:'" [dirty]="ignoreDirty" [error]="expenseFormError.amount"></bs-text-input>
 
 

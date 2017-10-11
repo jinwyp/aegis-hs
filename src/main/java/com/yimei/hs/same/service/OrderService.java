@@ -1,7 +1,9 @@
 package com.yimei.hs.same.service;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.EntityType;
 import com.yimei.hs.same.dto.PageOrderDTO;
+import com.yimei.hs.same.entity.Log;
 import com.yimei.hs.same.entity.Order;
 import com.yimei.hs.same.entity.OrderConfig;
 import com.yimei.hs.same.entity.OrderParty;
@@ -31,6 +33,9 @@ public class OrderService {
 
     @Autowired
     private OrderConfigMapper orderConfigMapper;
+
+    @Autowired
+    LogService logService;
 
     /**
      * 获取一页订单
@@ -127,9 +132,11 @@ public class OrderService {
      */
     public int updateTransfer(Long orderId, Long from, Long to) {
         int rtn = orderMapper.transfer(orderId, from, to);
-        if (rtn == 1) {
-            // yingLogService.create(new YingLog(null, orderId, null, orderId, EntityType.order, "转移订单", null));
-        }
+
+//        if (rtn == 1) {
+//            logService.create(new Log(null, orderId, orderId, EntityType.order, "转移订单", null));
+//        }
+
         return rtn;
     }
 

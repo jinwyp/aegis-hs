@@ -27,16 +27,12 @@ export class OrderDetailComponent implements OnInit {
 
     currentOrder : any
     currentOrderId : number
-    currentOrderUnitId : number
 
-    orderUnitForm: FormGroup
+
     transferForm: FormGroup
     ignoreDirty: boolean = false
 
-    isShowForm: boolean = false
-    isAddNew: boolean = true
 
-    unitList : any[] = []
 
     departmentList : any[] = []
     teamList : any[] = []
@@ -76,8 +72,6 @@ export class OrderDetailComponent implements OnInit {
                     this.currentOrder = data.data
                 }
 
-                this.getOrderUnitList()
-
                 // console.log('Order信息: ', data)
             },
             error => {this.httpService.errorHandler(error) }
@@ -88,7 +82,6 @@ export class OrderDetailComponent implements OnInit {
         this.getDepartmentList()
         this.getTeamList()
         this.getUserList()
-        this.createOrderUnitForm()
         this.createTransferForm()
     }
 
@@ -104,15 +97,7 @@ export class OrderDetailComponent implements OnInit {
             error => {this.httpService.errorHandler(error) }
         )
     }
-    getOrderUnitList () {
-        this.hsOrderService.getOrderUnitListByID(this.currentOrderId).subscribe(
-            data => {
-                this.unitList = data.data.results
 
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-    }
 
     getDepartmentList () {
         this.hsUserService.getDepartmentList().subscribe(
@@ -169,136 +154,18 @@ export class OrderDetailComponent implements OnInit {
         )
     }
 
-    orderUnitFormError : any = {}
     transferFormError : any = {}
-    orderUnitFormValidationMessages: any = {
-        'hsMonth'  : {
-            'required'      : '请填写名称!'
-        },
-        'maxPrepayRate'  : {
-            'required'      : '请填写比例!'
-        },
-        'unInvoicedRate'  : {
-            'required'      : '请填写比例!'
-        },
-        'contractBaseInterest'  : {
-            'required'      : '请填写利率!'
-        },
-        'expectHKDays'  : {
-            'required'      : '请填写天数!',
-            'int'      : '请填写整数!'
-        },
-        'tradeAddPrice'  : {
-            'required'      : '请填写加价!'
-        },
-        'weightedPrice'  : {
-            'required'      : '请填写价格!'
-        },
+    transferFormValidationMessages: any = {
         'userId'  : {
             'required'      : '请选择财务人员!'
         }
     }
 
-    orderUnitFormInputChange(formInputData : any) {
-        this.orderUnitFormError = formErrorHandler(formInputData, this.orderUnitForm, this.orderUnitFormValidationMessages)
-    }
+
     transferFormInputChange(formInputData : any) {
-        this.transferFormError = formErrorHandler(formInputData, this.transferForm, this.orderUnitFormValidationMessages)
+        this.transferFormError = formErrorHandler(formInputData, this.transferForm, this.transferFormValidationMessages)
     }
 
-    createOrderUnitForm(): void {
-
-        this.orderUnitForm = this.fb.group({
-            'hsMonth'    : ['', [Validators.required ] ],
-            'maxPrepayRate'    : ['', [Validators.required ] ],
-            'unInvoicedRate'    : ['', [Validators.required ] ],
-            'contractBaseInterest'    : ['', [Validators.required ] ],
-
-            'expectHKDays'    : ['', [Validators.required, isInt() ] ],
-            'tradeAddPrice'    : ['', [Validators.required ] ],
-            'weightedPrice'    : ['', [Validators.required ] ]
-        } )
-
-
-
-        this.orderUnitForm.valueChanges.subscribe(data => {
-            this.ignoreDirty = false
-            this.orderUnitFormInputChange(data)
-        })
-    }
-
-
-    orderUnitFormSubmit() {
-
-        if (this.orderUnitForm.invalid) {
-            this.orderUnitFormInputChange(this.orderUnitForm.value)
-            this.ignoreDirty = true
-
-            console.log('当前信息: ', this.orderUnitForm, this.orderUnitFormError)
-            return
-        }
-
-        const postData = this.orderUnitForm.value
-        postData.expectHKDays = Number(this.orderUnitForm.value.expectHKDays)
-
-        if (this.isAddNew) {
-            this.hsOrderService.createNewOrderUnit(this.currentOrderId, postData).subscribe(
-                data => {
-                    console.log('保存成功: ', data)
-                    this.httpService.successHandler(data)
-
-                    this.getOrderUnitList()
-                    this.showForm()
-
-                },
-                error => {this.httpService.errorHandler(error) }
-            )
-        } else {
-            postData.id = this.currentOrderUnitId
-            this.hsOrderService.modifyOrderUnit(this.currentOrderId, this.currentOrderUnitId, postData).subscribe(
-                data => {
-                    console.log('修改成功: ', data)
-                    this.httpService.successHandler(data)
-
-                    this.getOrderUnitList()
-                    this.showForm()
-
-                },
-                error => {this.httpService.errorHandler(error) }
-            )
-        }
-
-    }
-
-
-    showForm(isAddNew : boolean = true, unit?: any ) {
-
-        if (isAddNew) {
-            this.isAddNew = true
-            this.currentOrderUnitId = 0
-
-            this.orderUnitForm.patchValue({
-                'hsMonth'    : '',
-                'maxPrepayRate'    : '',
-                'unInvoicedRate'    : '',
-                'contractBaseInterest'    : '',
-
-                'expectHKDays'    : '',
-                'tradeAddPrice'    : '',
-                'weightedPrice'    : ''
-
-            })
-
-        } else {
-            this.isAddNew = false
-            this.currentOrderUnitId = unit.id
-
-            this.orderUnitForm.patchValue(unit)
-        }
-
-
-        this.isShowForm = !this.isShowForm
-    }
 
 
 
@@ -316,7 +183,7 @@ export class OrderDetailComponent implements OnInit {
             'userId'    : ['', [Validators.required ] ]
         } )
 
-        this.orderUnitForm.valueChanges.subscribe(data => {
+        this.transferForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
             this.transferFormInputChange(data)
         })

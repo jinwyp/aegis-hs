@@ -24,5 +24,5 @@ public interface YingOrderMapper {
 
     boolean hasOrder(@Param("ownerId") long ownerId, @Param("orderId") long orderId);
 
-    int transfer(@Param("orderId") Long orderId, @Param("from") Long from, @Param("to") Long to);
+    int transfer(@Param("id") Long id, @Param("from") Long from, @Param("to") Long to);
 }

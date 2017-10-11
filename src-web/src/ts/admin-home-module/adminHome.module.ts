@@ -21,6 +21,7 @@ import { PartyManagementComponent } from './components/partyManagement/partyMana
 
 import { OrderListComponent } from './components/orderList/orderList.component'
 import { OrderDetailComponent } from './components/orderDetail/orderDetail.component'
+import { UnitComponent } from './components/orderDetail/unit/unit.component'
 import { ShippingOrderComponent } from './components/orderDetail/shippingOrder/shippingOrder.component'
 
 import { PaymentComponent } from './components/orderDetail/payment/payment.component'
@@ -83,6 +84,7 @@ const userHomeRoutes: Routes = [
 
         OrderListComponent,
         OrderDetailComponent,
+        UnitComponent,
         ShippingOrderComponent,
 
         PaymentComponent,

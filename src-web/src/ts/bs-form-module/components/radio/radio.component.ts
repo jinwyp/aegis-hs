@@ -18,6 +18,7 @@ export class RadioComponent implements OnInit, ControlValueAccessor {
     @Input() label: string
 
     @Input() error: string = ''
+    @Input() dirty: boolean = false
 
     @Input('labelclass') labelClass: string = 'col-2'
     @Input('inputclass') inputClass: string = 'col-6'

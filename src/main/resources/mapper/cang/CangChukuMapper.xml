@@ -39,7 +39,9 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
+
   <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangChuku" keyProperty="id" useGeneratedKeys="true">
+
     insert into hs_cang_chuku (id, orderId, hsId, 
       chukuDate, locality, chukuAmount, 
       chukuPrice, tsc)
@@ -47,21 +49,14 @@
       #{chukuDate,jdbcType=TIMESTAMP}, #{locality,jdbcType=VARCHAR}, #{chukuAmount,jdbcType=DECIMAL}, 
       #{chukuPrice,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
+
   <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangChuku" keyProperty="id" useGeneratedKeys="true">
     insert into hs_cang_chuku
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="orderId != null">
-        orderId,
-      </if>
-      <if test="hsId != null">
-        hsId,
-      </if>
-      <if test="chukuDate != null">
-        chukuDate,
-      </if>
+      <if test="id != null"> id, </if>
+      <if test="orderId != null"> orderId, </if>
+      <if test="hsId != null"> hsId, </if>
+      <if test="chukuDate != null"> chukuDate, </if>
       <if test="locality != null">
         locality,
       </if>
@@ -105,27 +100,13 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.cang.entity.CangChuku">
     update hs_cang_chuku
     <set>
-      <if test="orderId != null">
-        orderId = #{orderId,jdbcType=BIGINT},
-      </if>
-      <if test="hsId != null">
-        hsId = #{hsId,jdbcType=BIGINT},
-      </if>
-      <if test="chukuDate != null">
-        chukuDate = #{chukuDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="locality != null">
-        locality = #{locality,jdbcType=VARCHAR},
-      </if>
-      <if test="chukuAmount != null">
-        chukuAmount = #{chukuAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="chukuPrice != null">
-        chukuPrice = #{chukuPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="tsc != null">
-        tsc = #{tsc,jdbcType=TIMESTAMP},
-      </if>
+      <if test="orderId != null"> orderId = #{orderId,jdbcType=BIGINT}, </if>
+      <if test="hsId != null"> hsId = #{hsId,jdbcType=BIGINT}, </if>
+      <if test="chukuDate != null"> chukuDate = #{chukuDate,jdbcType=TIMESTAMP}, </if>
+      <if test="locality != null"> locality = #{locality,jdbcType=VARCHAR}, </if>
+      <if test="chukuAmount != null"> chukuAmount = #{chukuAmount,jdbcType=DECIMAL}, </if>
+      <if test="chukuPrice != null"> chukuPrice = #{chukuPrice,jdbcType=DECIMAL}, </if>
+      <if test="tsc != null"> tsc = #{tsc,jdbcType=TIMESTAMP}, </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>

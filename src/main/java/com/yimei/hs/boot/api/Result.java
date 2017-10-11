@@ -28,7 +28,7 @@ public class Result<T> {
     private Error error;
 
     public static final <M> ResponseEntity<Result<M>> error(int code, String message) {
-        return new ResponseEntity<>(new Result<M>(false, null, new Error(code, message)), HttpStatus.OK);
+        return new ResponseEntity<>(new Result<M>(false, null, new Error(code, message)), HttpStatus.BAD_REQUEST);
     }
 
     public static final <M> ResponseEntity<Result<M>> error(int code, String message, HttpStatus httpStatus) {
@@ -65,10 +65,6 @@ public class Result<T> {
     public static final <M> ResponseEntity<Result<M>> ok(M m, HttpStatus httpStatus) {
         ResponseEntity<Result<M>> entity = new ResponseEntity<>(new Result<>(true, m, null), httpStatus);
         return entity;
-    }
-
-    public static final <M> ResponseEntity<Result<M>> ok(M m,  MultiValueMap<String, String> headers) {
-        return new ResponseEntity<>(new Result<>(true, m, null), headers, HttpStatus.OK);
     }
 
     public Result(int code, String msg) {

@@ -386,7 +386,6 @@ alter table hs_ying_transfer add foreign key(orderId) references hs_ying_order(i
 create table hs_ying_log (
   id bigint(20)           not null auto_increment,
   orderId bigint(20)      not null comment '订单编号',
-  hsId bigint(20)         not null comment '核算月id',
   entityId bigint(20)     not null comment '实体id',
   entityType varchar(32)  not null comment '实体类型',
   memo varchar(128)       not null comment '修改日志',
@@ -398,7 +397,6 @@ create table hs_ying_log (
 )engine=InnoDB default charset=utf8;
 
 alter table hs_ying_log add foreign key(orderId) references hs_ying_order(id);
-alter table hs_ying_log add foreign key(hsId) references hs_ying_order_config(id);
 
 
 --  发运总吨数， 发运到场吨数， 发运未到场吨数

@@ -21,9 +21,6 @@ public class YingLog implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "业务线不能为空")
     private Long orderId;
 
-    @NotNull(groups = {CreateGroup.class}, message = "核算月不能为空")
-    private Long hsId;
-
     @NotNull(groups = {CreateGroup.class}, message = "实体id不能为空")
     private Long entityId;
 
