@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yimei.hs.ying.mapper.YingSettleUpstreamMapper">
+<mapper namespace="com.yimei.hs.same.mapper.SettleSellerMapper">
 
-    <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingSettleUpstream">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.same.entity.SettleSeller">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
@@ -24,22 +24,22 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from hs_ying_settle_upstream
+        from hs_same_settle_upstream
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="selectByOrderId" resultType="com.yimei.hs.ying.entity.YingSettleUpstream">
+    <select id="selectByOrderId" resultType="com.yimei.hs.same.entity.SettleSeller">
         select
         <include refid="Base_Column_List"/>
-        from hs_ying_settle_upstream
+        from hs_same_settle_upstream
         where id = #{id,jdbcType=BIGINT}
     </select>
 
     <!-- 获取一页数据 -->
-    <select id="getPage" resultType="com.yimei.hs.ying.entity.YingSettleUpstream">
+    <select id="getPage" resultType="com.yimei.hs.same.entity.SettleSeller">
         select
         <include refid="Base_Column_List"/>
-        FROM hs_ying_settle_upstream
+        FROM hs_same_settle_upstream
         <where>
             <if test="orderId != null">AND orderId=#{orderId,jdbcType=BIGINT}</if>
             <if test="hsId != null">AND hsId= #{hsId,jdbcType=BIGINT}</if>
@@ -48,20 +48,20 @@
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        DELETE FROM hs_ying_settle_upstream
+        DELETE FROM hs_same_settle_upstream
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
     <!-- 逻辑删除 -->
     <update id="delete" parameterType="java.lang.Long">
-        UPDATE hs_ying_settle_upstream
+        UPDATE hs_same_settle_upstream
         SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT};
     </update>
 
-    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingSettleUpstream" keyProperty="id"
+    <insert id="insert" parameterType="com.yimei.hs.same.entity.SettleSeller" keyProperty="id"
             useGeneratedKeys="true">
-        INSERT INTO hs_ying_settle_upstream (
+        INSERT INTO hs_same_settle_upstream (
             id,
             orderId,
             hsId,
@@ -88,9 +88,9 @@
         )
     </insert>
 
-    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingSettleUpstream" keyProperty="id"
+    <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.SettleSeller" keyProperty="id"
             useGeneratedKeys="true">
-        insert into hs_ying_settle_upstream
+        insert into hs_same_settle_upstream
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="orderId != null">orderId,</if>
@@ -119,8 +119,8 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingSettleUpstream">
-        update hs_ying_settle_upstream
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.same.entity.SettleSeller">
+        update hs_same_settle_upstream
         <set>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
@@ -137,8 +137,8 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingSettleUpstream">
-        UPDATE hs_ying_settle_upstream
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.SettleSeller">
+        UPDATE hs_same_settle_upstream
         SET orderId          = #{orderId,jdbcType=BIGINT},
             hsId             = #{hsId,jdbcType=BIGINT},
             settleDate       = #{settleDate,jdbcType=DATE},
