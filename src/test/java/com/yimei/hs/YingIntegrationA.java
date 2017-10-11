@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.cang.entity.CangRuku;
 import com.yimei.hs.enums.*;
 import com.yimei.hs.same.dto.PageFeeDTO;
 import com.yimei.hs.same.dto.PageOrderConfigDTO;
@@ -94,7 +95,8 @@ public class YingIntegrationA extends HsTestBase {
         order();
         config();
         fee();
-        traffic();
+//        traffic();
+        ruku();
     }
 
     public void order() throws JsonProcessingException {
@@ -353,6 +355,32 @@ public class YingIntegrationA extends HsTestBase {
         } else {
             logger.error("更新输方结算失败: {}", yingFayunUpdateResult.getError());
             System.exit(-2);
+        }
+    }
+
+    public void ruku() throws JsonProcessingException {
+
+        // 1. 添加入库
+        String rukuCreateUrl = "/api/cang/" + yingOrderResult.getData().getId() + "/rukus";
+        CangRuku ruku = new CangRuku() {{
+            setHsId(yingOrderConfigResult.getData().getId());
+            setOrderId(yingOrderResult.getData().getId());
+            setLocality("泰德码头");
+            setRukuAmount(new BigDecimal(32715));
+            setRukuPrice(new BigDecimal(22581201.60));
+            setTrafficMode(TrafficMode.SHIP);
+            setShip("华盛15");
+            setRukuStatus(InStorageStatus.IN_STORAGE);
+            setRukuDate(LocalDateTime.of(2017,3,1,0,0));
+
+
+        }};
+        Result<CangRuku> rukuCreateResult = client.exchange(rukuCreateUrl, HttpMethod.POST, new HttpEntity<>(ruku), typeReferenceSettleCangRuku).getBody();
+        if (rukuCreateResult.getSuccess()) {
+            logger.info("创建运输方结算成功\n POST {}\nrequest = {}\nresponse = {}", rukuCreateUrl, printJson(ruku), printJson(rukuCreateResult.getData()));
+        } else {
+            logger.info("创建运输方结算失败: {}", rukuCreateResult.getError());
+            System.exit(-1);
         }
     }
 }

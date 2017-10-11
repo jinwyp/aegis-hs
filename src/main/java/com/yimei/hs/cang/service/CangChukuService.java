@@ -19,4 +19,20 @@ public class CangChukuService {
     public Page<CangChuku> getPage(PageCangChukuDTO pageCangChukuDTO) {
         return cangChukuMapper.getPage(pageCangChukuDTO);
     }
+
+    public CangChuku findOne(long id) {
+        return cangChukuMapper.selectByPrimaryKey(id);
+    }
+
+    public int create(CangChuku cangRuku) {
+        return cangChukuMapper.insert(cangRuku);
+    }
+
+    public int update(CangChuku cangRuku) {
+        return cangChukuMapper.insert(cangRuku);
+    }
+
+    public int delete(Long id) {
+       return cangChukuMapper.delete(id);
+    }
 }
