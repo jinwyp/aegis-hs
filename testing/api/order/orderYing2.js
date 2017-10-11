@@ -89,6 +89,21 @@ describe('应收订单', function () {
             })
     })
 
+    it('应收订单 - 不是自己的订单转移给另一个财务人员 非法输入 POST: /api/yings/1/to/4', function (done) {
 
+        console.log('转移订单给另一个财务人员 POST: /api/yings/' + orderId + '/to/4')
+        server.post('/api/yings/' + orderId + '/to/4')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(false)
+                expect(res.body.data).to.equal(undefined)
+                done()
+            })
+    })
 
 })
