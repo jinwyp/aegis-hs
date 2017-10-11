@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -35,17 +36,25 @@ public class AdminController {
      * @return
      */
     @PostMapping("/users")
+    @Transactional(readOnly = false)
     public ResponseEntity<Result<User>> create(
             @CurrentUser User admin,
             @RequestBody @Validated User user
     ) {
-        int rtn = userService.create(user, admin);
-        if (rtn != 1) {
-            logger.error("创建用户失败: {}", user);
-            return Result.error(4001, "创建用户失败");
-        } else {
-            return Result.ok(user);
+
+        try {
+            int rtn = userService.create(user, admin);
+            if (rtn != 1) {
+                logger.error("创建用户失败: {}", user);
+                return Result.error(4001, "创建用户失败");
+            } else {
+                return Result.ok(user);
+            }
+        } catch (Exception e) {
+            System.out.println("asdasfdasfasdfafds---------------------asdasdfasdasdfasdfasdasad");
+            return Result.error(4001, "创建失败-参数非法");
         }
+
     }
 
 

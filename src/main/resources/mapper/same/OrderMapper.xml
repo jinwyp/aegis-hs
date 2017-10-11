@@ -257,7 +257,7 @@
             ownerId = #{to,jdbcType=BIGINT},
             tsu     = current_timestamp
         WHERE
-            orderId = #{orderId, jdbcType=BIGINT}
+            id = #{id, jdbcType=BIGINT}
             AND ownerId = #{from,jdbcType=BIGINT}
     </update>
 
