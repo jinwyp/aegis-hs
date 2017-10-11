@@ -52,7 +52,6 @@ public class OrderConfigController {
      * @return
      */
     @PostMapping("/{morderId}/units")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<OrderConfig>> create(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
@@ -90,7 +89,6 @@ public class OrderConfigController {
     }
 
     @PutMapping("/{morderId}/units/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,

@@ -6,11 +6,13 @@ import com.yimei.hs.same.entity.OrderConfig;
 import com.yimei.hs.same.mapper.OrderConfigMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by hary on 2017/9/25.
  */
 @Service
+@Transactional(readOnly = true)
 public class OrderConfigService {
 
     @Autowired
@@ -20,6 +22,7 @@ public class OrderConfigService {
         return orderConfigMapper.getPage(pageOrderConfigDTO);
     }
 
+    @Transactional(readOnly = false)
     public int create(OrderConfig orderConfig) {
         return orderConfigMapper.insert(orderConfig);
     }
@@ -28,6 +31,7 @@ public class OrderConfigService {
         return orderConfigMapper.selectByPrimaryKey(id);
     }
 
+    @Transactional(readOnly = false)
     public int update(OrderConfig orderConfig) {
         return orderConfigMapper.updateByPrimaryKeySelective(orderConfig);
     }

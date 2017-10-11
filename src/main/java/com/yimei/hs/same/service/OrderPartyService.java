@@ -6,11 +6,13 @@ import com.yimei.hs.same.entity.OrderParty;
 import com.yimei.hs.same.mapper.OrderPartyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by hary on 2017/9/25.
  */
 @Service
+@Transactional(readOnly = true)
 public class OrderPartyService {
 
     @Autowired
