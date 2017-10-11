@@ -28,10 +28,10 @@
         <if test="true">and deleted = 0</if>
         <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
         <if test="hsId!=null">and hsId = #{hsId, jdbcType=BIGINT}</if>
-        <if test="rukuDate!=null">and chukuDate = #{rukuDate, jdbcType=TIMESTAMP}</if>
-        <if test="hsId!=null">and  chukuPrice = #{rukuPrice, jdbcType=DECIMAL}</if>
-        <if test="hsId!=null">and  chukuAmount= #{rukuAmount, jdbcType=DECIMAL}</if>
-        <if test="hsId!=null">and  locality= #{locality, jdbcType=VARCHAR}</if>
+        <if test="chukuDate!=null">and chukuDate = #{chukuDate, jdbcType=TIMESTAMP}</if>
+        <if test="chukuPrice!=null">and  chukuPrice = #{chukuPrice, jdbcType=DECIMAL}</if>
+        <if test="chukuAmount!=null">and  chukuAmount= #{chukuAmount, jdbcType=DECIMAL}</if>
+        <if test="locality!=null">and  locality= #{locality, jdbcType=VARCHAR}</if>
     </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

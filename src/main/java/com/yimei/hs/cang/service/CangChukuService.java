@@ -29,7 +29,7 @@ public class CangChukuService {
     }
 
     public int update(CangChuku cangRuku) {
-        return cangChukuMapper.insert(cangRuku);
+        return cangChukuMapper.updateByPrimaryKey(cangRuku);
     }
 
     public int delete(Long id) {
