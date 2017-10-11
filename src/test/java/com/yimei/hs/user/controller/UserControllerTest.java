@@ -6,6 +6,7 @@ import com.yimei.hs.HsApplication;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.*;
+import com.yimei.hs.same.dto.PageSettleTrafficDTO;
 import com.yimei.hs.test.YingTestBase;
 import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Party;
@@ -797,9 +798,9 @@ public class UserControllerTest extends YingTestBase {
         }
 
         // 2. 分页
-        String trafficPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settletraffic?" + WebUtils.getUrlTemplate(PageYingTransferDTO.class);
+        String trafficPageUrl = "/api/ying/" + yingOrderResult.getData().getId() + "/settletraffic?" + WebUtils.getUrlTemplate(PageSettleTrafficDTO.class);
 
-        Map<String, Object> trafficVariables = WebUtils.getUrlVariables(PageYingTransferDTO.class);
+        Map<String, Object> trafficVariables = WebUtils.getUrlVariables(PageSettleTrafficDTO.class);
         trafficVariables.put("orderId", yingOrderResult.getData().getId());
         trafficVariables.put("pageSize", 5);
         trafficVariables.put("pageNo", 1);

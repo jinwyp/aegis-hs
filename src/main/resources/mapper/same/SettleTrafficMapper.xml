@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yimei.hs.same.mapper.SettleTrafficMapper">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.same.entity.SettleTraffic">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="hsId" jdbcType="BIGINT" property="hsId"/>
+        <result column="settleDate" jdbcType="DATE" property="settleDate"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+        <result column="trafficCompanyId" jdbcType="BIGINT" property="trafficCompanyId"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, orderId, hsId, settleDate, amount, money, trafficCompanyId, tsc
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_settle_traffic
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
+    </select>
+
+    <select id="getPage" resultType="com.yimei.hs.same.entity.SettleTraffic">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_settle_traffic
+        <where>
+            <if test="true">deleted = 0</if>
+            <if test="orderId != null">AND orderId=#{orderId,jdbcType=BIGINT}</if>
+            <if test="hsId != null">AND hsId=#{hsId,jdbcType=BIGINT}</if>
+            <if test="settleDate != null">AND settleDate= #{settleDate,jdbcType=DATE}</if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM hs_same_settle_traffic
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_same_settle_traffic
+        SET deleted = 1, tsu = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <insert id="insert" parameterType="com.yimei.hs.same.entity.SettleTraffic" keyProperty="id"
+            useGeneratedKeys="true">
+        INSERT INTO hs_same_settle_traffic (
+            id,
+            orderId,
+            hsId,
+            settleDate,
+            amount,
+            money,
+            trafficCompanyId,
+            tsc
+        )
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{hsId,jdbcType=BIGINT},
+            #{settleDate,jdbcType=DATE},
+            #{amount,jdbcType=DECIMAL},
+            #{money,jdbcType=DECIMAL},
+            #{trafficCompanyId,jdbcType=BIGINT},
+            #{tsc,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.SettleTraffic" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into hs_same_settle_traffic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="hsId != null">hsId,</if>
+            <if test="settleDate != null">settleDate,</if>
+            <if test="amount != null">amount,</if>
+            <if test="money != null">money,</if>
+            <if test="trafficCompanyId != null">trafficCompanyId,</if>
+            <if test="tsc != null">tsc,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
+            <if test="settleDate != null">#{settleDate,jdbcType=DATE},</if>
+            <if test="amount != null">#{amount,jdbcType=DECIMAL},</if>
+            <if test="money != null">#{money,jdbcType=DECIMAL},</if>
+            <if test="trafficCompanyId != null">#{trafficCompanyId,jdbcType=BIGINT},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.same.entity.SettleTraffic">
+        update hs_same_settle_traffic
+        <set>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
+            <if test="settleDate != null">settleDate = #{settleDate,jdbcType=DATE},</if>
+            <if test="amount != null">amount = #{amount,jdbcType=DECIMAL},</if>
+            <if test="money != null">money = #{money,jdbcType=DECIMAL},</if>
+            <if test="trafficCompanyId != null">trafficCompanyId = #{trafficCompanyId,jdbcType=BIGINT},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.SettleTraffic">
+        UPDATE hs_same_settle_traffic
+        SET orderId          = #{orderId,jdbcType=BIGINT},
+            hsId             = #{hsId,jdbcType=BIGINT},
+            settleDate       = #{settleDate,jdbcType=DATE},
+            amount           = #{amount,jdbcType=DECIMAL},
+            money            = #{money,jdbcType=DECIMAL},
+            trafficCompanyId = #{trafficCompanyId,jdbcType=BIGINT},
+            tsc              = #{tsc,jdbcType=TIMESTAMP},
+            tsu              = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>
