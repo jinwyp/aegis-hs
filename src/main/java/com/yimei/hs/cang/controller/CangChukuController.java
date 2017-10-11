@@ -33,7 +33,6 @@ public class CangChukuController {
 
     @GetMapping("/{morderId}/chukus")
     public ResponseEntity<Result<Page<CangChuku>>> list(
-            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             PageCangChukuDTO pageCangChukuDTO
     ) {

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.cang.dto.PageCangChukuDTO;
+import com.yimei.hs.cang.dto.PageCangRukuDTO;
+import com.yimei.hs.cang.entity.CangChuku;
 import com.yimei.hs.cang.entity.CangRuku;
 import com.yimei.hs.enums.*;
 import com.yimei.hs.same.dto.PageFeeDTO;
@@ -95,8 +98,9 @@ public class YingIntegrationA extends HsTestBase {
         order();
         config();
         fee();
-//        traffic();
+        traffic();
         ruku();
+        chuku();
     }
 
     public void order() throws JsonProcessingException {
@@ -104,7 +108,6 @@ public class YingIntegrationA extends HsTestBase {
         Order yingOrder = new Order();
         yingOrder.setBusinessType(BusinessType.ying);
         yingOrder.setTeamId(1L); // 赵善文团队
-        yingOrder.setDeptId(3L);
         yingOrder.setCargoType(CargoType.COAL);
         yingOrder.setUpstreamId(partyIds.get(0));   // 上游
         yingOrder.setDownstreamId(partyIds.get(1));  // 下游
@@ -375,12 +378,134 @@ public class YingIntegrationA extends HsTestBase {
 
 
         }};
-        Result<CangRuku> rukuCreateResult = client.exchange(rukuCreateUrl, HttpMethod.POST, new HttpEntity<>(ruku), typeReferenceSettleCangRuku).getBody();
+        Result<CangRuku> rukuCreateResult = client.exchange(rukuCreateUrl, HttpMethod.POST, new HttpEntity<>(ruku), typeReferenceCangRuku).getBody();
         if (rukuCreateResult.getSuccess()) {
-            logger.info("创建运输方结算成功\n POST {}\nrequest = {}\nresponse = {}", rukuCreateUrl, printJson(ruku), printJson(rukuCreateResult.getData()));
+            logger.info("创建仓押入库成功\n POST {}\nrequest = {}\nresponse = {}", rukuCreateUrl, printJson(ruku), printJson(rukuCreateResult.getData()));
         } else {
-            logger.info("创建运输方结算失败: {}", rukuCreateResult.getError());
+            logger.info("创建仓押入库算失败: {}", rukuCreateResult.getError());
             System.exit(-1);
+        }
+
+//
+//        // 2. 分页
+//        String rukuPageUrl = "/api/cang/" + yingOrderResult.getData().getId() + "/rukus?" + WebUtils.getUrlTemplate(PageCangRukuDTO.class);
+//
+//        Map<String, Object> rukuVariables = WebUtils.getUrlVariables(PageCangRukuDTO.class);
+//        rukuVariables.put("orderId", yingOrderResult.getData().getId());
+//        rukuVariables.put("orderId", yingOrderConfigResult.getData().getId());
+//        rukuVariables.put("pageSize", 5);
+//        rukuVariables.put("pageNo", 1);
+//
+//
+//        Result<Page<CangRuku>> rukuPageResult = client.exchange(rukuPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceCangRukuPage, rukuVariables).getBody();
+//        if (rukuPageResult.getSuccess()) {
+//            logger.info("仓押入库分页成功\nGET {}\nrequest = {}\nresponse = {}", rukuPageUrl, "", printJson(rukuPageResult.getData()));
+//        } else {
+//            logger.info("仓押入库分页失败: {}", rukuPageResult.getError());
+//            System.exit(-1);
+//        }
+
+        //3 findone
+        String rukugetFindUrl = "/api/cang/" + yingOrderResult.getData().getId() + "/rukus/" + rukuCreateResult.getData().getId();
+
+        Result <CangRuku> rukuFindResult = client.exchange(rukugetFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceCangRuku).getBody();
+        if (rukuFindResult.getSuccess()) {
+            logger.info("仓押入库查询成功\nGET {}\nrequest = {}\nresponse = {}", rukugetFindUrl, "", printJson(rukuFindResult.getData()));
+        } else {
+            logger.info("仓押入库查询失败: {}", rukuFindResult.getError());
+            System.exit(-1);
+        }
+
+
+
+        // 4. 更新
+        String rukuUpdateUrl = "/api/cang/" + yingOrderResult.getData().getId() + "/rukus/" + rukuCreateResult.getData().getId();
+        ruku.setRukuAmount(new BigDecimal("9999"));
+        ruku.setOrderId(yingOrderResult.getData().getId());
+        Result<Integer> yingFayunUpdateResult = client.exchange(rukuUpdateUrl, HttpMethod.PUT, new HttpEntity<CangRuku>(ruku), typeReferenceInteger).getBody();
+        if (yingFayunUpdateResult.getSuccess()) {
+            logger.info("更新仓押入成功\nPOST {}\nrequest = {}\nresponse = {}", rukuUpdateUrl, printJson(ruku), printJson(yingFayunUpdateResult.getData()));
+        } else {
+            logger.error("更新仓押入失败: {}", yingFayunUpdateResult.getError());
+            System.exit(-2);
+        }
+
+    }
+
+    public void chuku() throws JsonProcessingException {
+
+        // 1. 添加入库
+        String chukuCreateUrl = "/api/cang/" + yingOrderResult.getData().getId() + "/chukus";
+        CangChuku chuku = new CangChuku() {{
+            setHsId(yingOrderConfigResult.getData().getId());
+            setOrderId(yingOrderResult.getData().getId());
+            setLocality("泰德码头");
+            setChukuAmount(new BigDecimal("2175.00"));
+            setChukuPrice(new BigDecimal("22581201.60"));
+            setChukuDate(LocalDateTime.of(2017,3,1,0,0));
+
+
+        }};
+        Result<CangChuku> chukuCreateResult = client.exchange(chukuCreateUrl, HttpMethod.POST, new HttpEntity<CangChuku>(chuku), typeReferenceCangChuku).getBody();
+        if (chukuCreateResult.getSuccess()) {
+            logger.info("创建仓押出库成功\n POST {}\nrequest = {}\nresponse = {}", chukuCreateUrl, printJson(chuku), printJson(chukuCreateResult.getData()));
+        } else {
+            logger.info("创建仓押出库算失败: {}", chukuCreateResult.getError());
+            System.exit(-1);
+        }
+        // 第二笔 出库
+//        chuku.setId(2l);
+//        chuku.setChukuPrice(new BigDecimal("2000000"));
+//        chuku.setChukuAmount(new BigDecimal("3000"));
+//        chuku.setChukuDate(LocalDateTime.of(2017,3,17,0,0));
+//        client.exchange(chukuCreateUrl, HttpMethod.POST, new HttpEntity<CangChuku>(chuku), typeReferenceCangChuku).getBody();
+//
+//        chuku.setId(3l);
+//        chuku.setChukuPrice(new BigDecimal("600000"));
+//        chuku.setChukuAmount(new BigDecimal("900"));
+//        chuku.setChukuDate(LocalDateTime.of(2017,3,22,0,0));
+//        client.exchange(chukuCreateUrl, HttpMethod.POST, new HttpEntity<CangChuku>(chuku), typeReferenceCangChuku).getBody();
+
+//        String chukuPageUrl = "/api/cang/" + yingOrderResult.getData().getId() + "/chukus?" + WebUtils.getUrlTemplate(PageCangChukuDTO.class);
+//        Map<String, Object> chukuVariables = WebUtils.getUrlVariables(PageCangChukuDTO.class);
+//        chukuVariables.put("orderId", yingOrderResult.getData().getId());
+//        chukuVariables.put("pageSize", 5);
+//        chukuVariables.put("pageNo", 1);
+//
+//        Result<Page<CangChuku>> cangChukuPageResult = client.exchange(chukuPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceCangChukuPage, chukuVariables).getBody();
+//
+//        if (cangChukuPageResult.getSuccess()) {
+//            logger.info("创建仓押出库分页成功\n POST {}\nrequest = {}\nresponse = {}", chukuPageUrl,"", printJson(cangChukuPageResult.getData()));
+//        } else {
+//            logger.info("创建仓押出库分页失败: {}", chukuCreateResult.getError());
+//            System.exit(-1);
+//        }
+
+
+
+        //3 findone
+        String chukugetFindUrl = "/api/cang/" + yingOrderResult.getData().getId() + "/chukus/" + chukuCreateResult.getData().getId();
+
+        Result <CangChuku> chukuFindResult = client.exchange(chukugetFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceCangChuku).getBody();
+        if (chukuFindResult.getSuccess()) {
+            logger.info("仓押入库查询成功\nGET {}\nrequest = {}\nresponse = {}", chukugetFindUrl, "", printJson(chukuFindResult.getData()));
+        } else {
+            logger.info("仓押入库查询失败: {}", chukuFindResult.getError());
+            System.exit(-1);
+        }
+
+
+
+        // 4. 更新
+        String rukuUpdateUrl = "/api/cang/" + yingOrderResult.getData().getId() + "/chukus/" + chukuCreateResult.getData().getId();
+        chuku.setChukuAmount(new BigDecimal("9999"));
+        chuku.setOrderId(yingOrderResult.getData().getId());
+        Result<Integer> yingChukuUpdateResult = client.exchange(rukuUpdateUrl, HttpMethod.PUT, new HttpEntity<CangChuku>(chuku), typeReferenceInteger).getBody();
+        if (yingChukuUpdateResult.getSuccess()) {
+            logger.info("更新仓押入成功\nPOST {}\nrequest = {}\nresponse = {}", rukuUpdateUrl, printJson(chuku), printJson(yingChukuUpdateResult.getData()));
+        } else {
+            logger.error("更新仓押入失败: {}", yingChukuUpdateResult.getError());
+            System.exit(-2);
         }
     }
 }

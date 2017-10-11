@@ -35,11 +35,11 @@
             <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
             <if test="hsId!=null">and hsId = #{hsId, jdbcType=BIGINT}</if>
             <if test="rukuDate!=null">and rukuDate = #{rukuDate, jdbcType=TIMESTAMP}</if>
-            <if test="hsId!=null">and  rukuPrice = #{rukuPrice, jdbcType=DECIMAL}</if>
-            <if test="hsId!=null">and  rukuStatus = #{rukuStatus, jdbcType=VARCHAR}</if>
-            <if test="hsId!=null">and  rukuAmount= #{rukuAmount, jdbcType=DECIMAL}</if>
-            <if test="hsId!=null">and  locality= #{locality, jdbcType=VARCHAR}</if>
-            <if test="hsId!=null">and  trafficMode= #{trafficMode, jdbcType=VARCHAR}</if>
+            <if test="rukuPrice!=null">and  rukuPrice = #{rukuPrice, jdbcType=DECIMAL}</if>
+            <if test="rukuStatus!=null">and  rukuStatus = #{rukuStatus, jdbcType=VARCHAR}</if>
+            <if test="rukuAmount!=null">and  rukuAmount= #{rukuAmount, jdbcType=DECIMAL}</if>
+            <if test="locality!=null">and  locality= #{locality, jdbcType=VARCHAR}</if>
+            <if test="trafficMode!=null">and  trafficMode= #{trafficMode, jdbcType=VARCHAR}</if>
 
         </where>
 
