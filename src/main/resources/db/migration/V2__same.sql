@@ -254,6 +254,43 @@ create table hs_same_huikuan_map (
 alter table hs_same_huikuan_map add foreign key(huikuanId) references hs_same_huikuan(id);
 alter table hs_same_huikuan_map add foreign key(fukuanId)  references hs_same_fukuan(id);
 
+-- 买方结算
+create table hs_same_settle_buyer (
+  id bigint(20)             not null auto_increment,
+  orderId bigint(20)        not null comment '订单id, 业务线id',
+  hsId bigint(20)           not null comment '核算月id',
+  settleDate datetime       not null comment '结算日期',
+  amount decimal(10, 2)     not null comment '结算数量(吨)',
+  money decimal(10, 2)      not null comment '结算金额',
+  settleGap decimal(10, 2)  not null comment '结算扣吨',
+  deleted tinyint(1)               not null default 0 comment '是否删除',
+  tsc timestamp             not null default current_timestamp,
+  tsu timestamp not null default current_timestamp,
+  primary key (id)
+)engine=InnoDB default charset=utf8;
+alter table hs_same_settle_buyer add foreign key(orderId) references hs_same_order(id);
+alter table hs_same_settle_buyer add foreign key(hsId)    references hs_same_order_config(id);
+
+-- 卖方结算
+create table hs_same_settle_seller (
+  id bigint(20)             not null auto_increment,
+  orderId bigint(20)        not null comment '订单id, 业务线id',
+  hsId bigint(20)           not null comment '核算月id',
+  settleDate date           not null comment '结算日期',
+  amount decimal(10, 2)     not null comment '结算数量(吨)',
+  money decimal(10, 2)      not null comment '结算金额',
+  discountType varchar(32)  not null comment '折扣类型: 利率折扣, 金额折扣, 无折扣',
+  discountInterest decimal(10, 4)    comment '利率折扣',
+  discountDays int                   comment '利率折扣天数',
+  discountAmount decimal(10, 2)      comment '金额折扣',
+  deleted tinyint(1)               not null default 0 comment '是否删除',
+  tsc timestamp             not null default current_timestamp,
+  tsu timestamp not null default current_timestamp,
+  primary key (id)
+)engine=InnoDB default charset=utf8;
+alter table hs_same_settle_seller add foreign key(orderId) references hs_same_order(id);
+alter table hs_same_settle_seller add foreign key(hsId)    references hs_same_order_config(id);
+
 -- 修改记录
 create table hs_same_log (
   id bigint(20)           not null auto_increment,
