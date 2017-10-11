@@ -156,7 +156,6 @@ create table hs_same_fukuan (
 )engine=InnoDB default charset=utf8;
 alter table hs_same_fukuan add foreign key(orderId)   references hs_same_order(id);
 alter table hs_same_fukuan add foreign key(hsId)      references hs_same_order_config(id);
-alter table hs_same_fukuan add foreign key(capitalId) references hs_party(id);
 alter table hs_same_fukuan add foreign key(receiveCompanyId) references hs_party(id);
 
 -- 借款
@@ -207,6 +206,38 @@ create table hs_same_huankuan_map (
 )engine=InnoDB default charset=utf8;
 alter table hs_same_huankuan_map add foreign key(huankuanId)  references hs_same_huankuan(id);
 alter table hs_same_huankuan_map add foreign key(jiekuanId)   references hs_same_fukuan(id);
+
+
+
+-- 应收订单 - 回款
+create table hs_same_huikuan (
+  id bigint(20)                    not null auto_increment,
+  orderId bigint(20)               not null comment '订单id, 业务线id',
+  hsId bigint(20)                  not null comment '核算月id',
+  huikuanCompanyId bigint(20)           not null comment '回款公司-谁回的款',
+  huikuanDate datetime                  not null comment '回款日期',
+  huikuanAmount decimal(10,2)           not null comment '回款总额',
+  huikuanUsage varchar(32)              not null comment '回款用途: 货款, 保证金',
+  huikuanMode varchar(32)               not null comment '回款方式: 电汇, 银行承兑, 商业承兑, 现金',
+  huikuanBankPaper tinyint(1)                        comment '是否收到票据, 如果回款方式是银行承兑, 此字段有效',
+  huikuanBankPaperDate datetime                      comment '收到票据原件日期, 如果收到票据',
+  huikuanBankDiscount tinyint(1)                     comment '是否贴息, 如果回款方式是银行承兑, 此字段有效',
+  huikuanBankDiscountRate decimal(10, 2)             comment '如果回款方式是银行承兑, 贴息率',
+  huikuanBankPaperExpire datetime                    comment '票据到期日',
+  huikuanBusinessPaper tinyint(1)                    comment '是否收到票据, 如果回款方式是商业承兑, 此字段有效',
+  huikuanBusinessPaperDate datetime                  comment '收到票据原件日期, 如果收到票据',
+  huikuanBusinessDiscount tinyint(1)                 comment '是否贴息, 如果回款方式是商业承兑, 此字段有效',
+  huikuanBusinessDiscountRate decimal(10, 2)         comment '如果回款方式是商业承兑, 贴息率',
+  huikuanBusinessPaperExpire datetime                comment '票据到期日 如果回款方式是商业承兑 ,此字段有效',
+  deleted tinyint(1)               not null default 0 comment '是否删除',
+  tsc timestamp                    not null default current_timestamp,
+  tsu timestamp not null default current_timestamp,
+  primary key (id)
+)engine=InnoDB default charset=utf8;
+alter table hs_same_huikuan add foreign key(orderId)          references hs_same_order(id);
+alter table hs_same_huikuan add foreign key(hsId)             references hs_same_order_config(id);
+alter table hs_same_huikuan add foreign key(huikuanCompanyId) references hs_party(id);
+
 
 -- 应收订单 - 回款-付款-mapping
 create table hs_same_huikuan_map (
