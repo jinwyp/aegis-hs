@@ -30,7 +30,7 @@ public class SettleBuyerService {
      * @param pageSettleBuyerDTO
      * @return
      */
-    public Page<SettleBuyer> getPageSettleBuyer(PageSettleBuyerDTO pageSettleBuyerDTO) {
+    public Page<SettleBuyer> getPage(PageSettleBuyerDTO pageSettleBuyerDTO) {
         return settleBuyerMapper.getPage(pageSettleBuyerDTO);
     }
 
@@ -41,7 +41,7 @@ public class SettleBuyerService {
      * @return
      */
     @Transactional(readOnly = false)
-    public int createSettleBuyer(SettleBuyer settleBuyer) {
+    public int create(SettleBuyer settleBuyer) {
         int rtn = settleBuyerMapper.insert(settleBuyer);
         if (rtn != 1) {
             return 0;

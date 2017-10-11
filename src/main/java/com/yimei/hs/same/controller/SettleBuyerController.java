@@ -44,7 +44,7 @@ public class SettleBuyerController {
             PageSettleBuyerDTO pageSettleBuyerDTO
     ) {
         pageSettleBuyerDTO.setOrderId(morderId);
-        return Result.ok(settleBuyeService.getPageSettleBuyer(pageSettleBuyerDTO));
+        return Result.ok(settleBuyeService.getPage(pageSettleBuyerDTO));
     }
 
     /**
@@ -77,10 +77,10 @@ public class SettleBuyerController {
     @PostMapping("/{morderId}/settledownstream")
     public ResponseEntity<Result<SettleBuyer>> create(
             @PathVariable("businessType") BusinessType businessType,
-            @RequestBody @Validated(CreateGroup.class) SettleBuyer yingSettleDownstream
+            @RequestBody @Validated(CreateGroup.class) SettleBuyer settleBuyer
     ) {
-        settleBuyeService.createSettleBuyer(yingSettleDownstream);
-        return Result.ok(yingSettleDownstream);
+        settleBuyeService.create(settleBuyer);
+        return Result.ok(settleBuyer);
     }
 
     /**
@@ -93,12 +93,12 @@ public class SettleBuyerController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
-            @RequestBody @Validated(UpdateGroup.class) SettleBuyer yingSettleDownstream
+            @RequestBody @Validated(UpdateGroup.class) SettleBuyer settleBuyer
     ) {
-        assert (yingSettleDownstream.getOrderId() == morderId);
-        int rtn = settleBuyeService.update(yingSettleDownstream);
+        assert (settleBuyer.getOrderId() == morderId);
+        int rtn = settleBuyeService.update(settleBuyer);
         if (rtn != 1) {
-            logger.error("更新失败: {}", yingSettleDownstream);
+            logger.error("更新失败: {}", settleBuyer);
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
         }
 
