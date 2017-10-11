@@ -66,3 +66,76 @@ create table hs_same_order_config (
 
   primary key (id)
 )engine=InnoDB default charset=utf8;
+
+
+
+-- 应收订单 - 费用
+create table hs_same_fee (
+  id bigint(20)              not null auto_increment,
+  orderId bigint(20)         not null comment '订单id, 业务线id',
+  hsId bigint(20)            not null comment '核算月id',
+
+  name varchar(64)           not null comment '费用科目',
+  amount decimal(10, 2)      not null comment '金额',
+  deleted tinyint(1)          not null default 0 comment '逻辑删除',
+  tsc timestamp              not null default current_timestamp,
+  tsu timestamp not null default current_timestamp,
+  primary key (id)
+)engine=InnoDB default charset=utf8;
+
+alter table hs_same_fee add foreign key(orderId) references hs_same_order(id);
+alter table hs_same_fee add foreign key(hsId)    references hs_same_order_config(id);
+
+
+-- 应收订单 - 发票
+create table hs_same_invoice (
+  id bigint(20)                 not null auto_increment,
+  orderId bigint(20)            not null comment '订单id, 业务线id',
+  hsId bigint(20)               not null comment '核算月id',
+
+  invoiceDirection varchar(32)  not null comment '进项 or 销项',
+  invoiceType varchar(32)       not null comment '货款发票 or 运输发票',
+  openDate  datetime            not null comment '开票日期',
+  openCompanyId  bigint(20)     not null comment '开票单位',
+  receiverId  bigint(20)        not null comment '收票单位',
+  deleted tinyint(1)          not null default 0 comment '逻辑删除',
+  tsc timestamp                 not null default current_timestamp,
+  tsu timestamp not null default current_timestamp,
+
+  primary key (id)
+)engine=InnoDB default charset=utf8;
+
+alter table hs_same_invoice add foreign key(orderId)       references hs_same_order(id);
+alter table hs_same_invoice add foreign key(hsId)          references hs_same_order_config(id);
+alter table hs_same_invoice add foreign key(openCompanyId) references hs_party(id);
+
+
+-- 应收订单 - 发票明细
+create table hs_same_invoice_detail (
+  id bigint(20)              not null auto_increment,
+  invoiceId bigint(20)       not null comment '发票记录id',
+  invoiceNumber varchar(128) not null comment '发票号',
+  cargoAmount decimal(10,2)  not null comment '发票对应的货物数量(吨)',
+  taxRate decimal(10,2)      not null comment '税率',
+  priceAndTax decimal(10,2)  not null comment '价税合计',
+  deleted tinyint(1)          not null default 0 comment '逻辑删除',
+  tsc timestamp              not null default current_timestamp,
+  tsu timestamp not null default current_timestamp,
+
+  primary key (id)
+)engine=InnoDB default charset=utf8;;
+
+alter table hs_same_invoice_detail add foreign key(invoiceId) references hs_same_invoice(id);
+
+-- 订单转移
+create table hs_same_transfer (
+  id bigint(20)         not null auto_increment,
+  orderId bigint(20)    not null,
+  fromUserId bigint(20) not null,
+  toUserId bigint(20)   not null,
+  deleted tinyint(1)          not null default 0 comment '逻辑删除',
+  tsc timestamp         not null default current_timestamp,
+  tsu timestamp,
+  primary key (id)
+)engine=InnoDB default charset=utf8;
+alter table hs_same_transfer add foreign key(orderId) references hs_same_order(id);

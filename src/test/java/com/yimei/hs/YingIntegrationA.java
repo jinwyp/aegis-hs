@@ -4,20 +4,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.enums.BusinessType;
-import com.yimei.hs.enums.CargoType;
-import com.yimei.hs.enums.CustomerType;
-import com.yimei.hs.enums.SettleMode;
+import com.yimei.hs.enums.*;
+import com.yimei.hs.same.dto.PageFeeDTO;
+import com.yimei.hs.same.dto.PageOrderConfigDTO;
 import com.yimei.hs.same.dto.PageOrderDTO;
-import com.yimei.hs.same.entity.Order;
-import com.yimei.hs.same.entity.OrderConfig;
-import com.yimei.hs.same.entity.OrderParty;
+import com.yimei.hs.same.entity.*;
 import com.yimei.hs.test.HsTestBase;
 import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.util.WebUtils;
+import com.yimei.hs.ying.dto.PageYingFeeDTO;
+import com.yimei.hs.ying.dto.PageYingOrderConfigDTO;
+import com.yimei.hs.ying.entity.YingOrderConfig;
 import org.assertj.core.util.Lists;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -30,7 +30,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -41,7 +40,6 @@ import java.util.Map;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = HsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Ignore
 public class YingIntegrationA extends HsTestBase {
 
     public static final Logger logger = LoggerFactory.getLogger(YingIntegrationA.class);
@@ -71,6 +69,19 @@ public class YingIntegrationA extends HsTestBase {
     Result<User> userResult = null;
     Result<Order> yingOrderResult = null;
     Result<OrderConfig> yingOrderConfigResult = null;
+
+
+
+    Result<Invoice> invoiceCreateResult = null;
+    Result<Fee> feeFindResult = null;
+
+//    Result<SettleTraffic> trafficCreateResult = null;
+//    Result<SettleDownstream> downstreamCreateResult = null;
+//    Result<SettleUpstream> upstreamCreateResult = null;
+//    Result<Fukuan> fukuanResult = null;
+//    Result<Huankuan> huankuanCreateResult = null;
+//    Result<Huikuan> huikuanCreateResult = null;
+//    Result<Fayun> fayunCreateResult = null;
 
     protected void user() throws JsonProcessingException {
         // 默认有个admin用户了 13022117050
@@ -208,6 +219,8 @@ public class YingIntegrationA extends HsTestBase {
         System.out.println("开始应收集成测试");
         user();
         order();
+        config();
+        fee();
     }
 
     public void order() throws JsonProcessingException {
@@ -282,5 +295,125 @@ public class YingIntegrationA extends HsTestBase {
         }
 
 
+    }
+
+    private void config() throws JsonProcessingException {
+
+        // 1. 增加核算月配置
+        String configCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/units";
+
+        OrderConfig config = new OrderConfig() {{
+            setHsMonth("201712");
+            setContractBaseInterest(new BigDecimal("0.20"));
+            setMaxPrepayRate(new BigDecimal("0.90"));
+            setUnInvoicedRate(new BigDecimal("0.7"));
+            setExpectHKDays(45);
+            setTradeAddPrice(new BigDecimal("0"));
+            setWeightedPrice(new BigDecimal("612"));
+        }};
+        Result<OrderConfig> yingOrderConfigResult = client.exchange(configCreateUrl, HttpMethod.POST, new HttpEntity<OrderConfig>(config), typeReferenceOrderConfig).getBody();
+        if (yingOrderConfigResult.getSuccess()) {
+            logger.info("添加核算月配置成功\nPOST {}\nrequest:{}\nresponse:{}", configCreateUrl, printJson(config), printJson(yingOrderConfigResult.getData()));
+        } else {
+            logger.error("添加核算月配置失败: {}", yingOrderConfigResult.getError());
+            System.exit(-2);
+        }
+
+        // 2. 修改核算月配置
+        OrderConfig yingOrderConfig = new OrderConfig() {{
+            setOrderId(yingOrderResult.getData().getId());
+            setId(yingOrderConfigResult.getData().getId());
+            setHsMonth("201706");
+            setContractBaseInterest(new BigDecimal("0.20"));
+            setMaxPrepayRate(new BigDecimal("0.90"));
+            setUnInvoicedRate(new BigDecimal("0.7"));
+            setExpectHKDays(45);
+            setTradeAddPrice(new BigDecimal("0"));
+            setWeightedPrice(new BigDecimal("700"));
+        }};
+        String configUpdateUrl = "/api/business/ying/" + yingOrderConfigResult.getData().getOrderId() + "/units/" + yingOrderConfigResult.getData().getId();
+        Result<Integer> yingOrderConfigUpdateResult = client.exchange(configUpdateUrl, HttpMethod.PUT, new HttpEntity<OrderConfig>(yingOrderConfig), typeReferenceInteger).getBody();
+        if (yingOrderConfigUpdateResult.getSuccess()) {
+            logger.info("更新核算月配置成功\nPUT {}\nrequest = {}\nresponse = {}", configUpdateUrl, printJson(yingOrderConfig), printJson(yingOrderConfigUpdateResult.getData()));
+        } else {
+            logger.error("更新核算月配置失败: {}", yingOrderConfigUpdateResult.getError());
+            System.exit(-2);
+        }
+
+        // 3. 核算月分页查询  query by orderId
+
+        Map<String, Object> variablesHs = WebUtils.getUrlVariables(PageOrderConfigDTO.class);
+        variablesHs.put("orderId", "" + yingOrderResult.getData().getId());
+        variablesHs.put("pageSize", 5);
+        variablesHs.put("pageNo", 1);
+        String configPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/units?" + WebUtils.getUrlTemplate(PageOrderConfigDTO.class);
+        Result<Page<OrderConfig>> yingOrderConfigPageResult = client.exchange(configPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceOrderConfigPage, variablesHs).getBody();
+        if (yingOrderConfigPageResult.getSuccess()) {
+            logger.info("获取核算月配置分页成功\nGET /api/ying \nrequest: {}\nresponse:\n{}", printJson(variablesHs), printJson(yingOrderConfigPageResult.getData()));
+        } else {
+            logger.error("获取核算月配置分页失败: {}", yingOrderConfigPageResult.getError());
+            System.exit(-1);
+        }
+
+        this.yingOrderConfigResult = new Result<OrderConfig>(true, yingOrderConfigPageResult.getData().getResults().get(0), null);
+
+    }
+
+    private void fee() throws JsonProcessingException {
+        // 1. 添加费用
+        String feeCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fees";
+        Fee fee = new Fee() {{
+            setHsId(yingOrderConfigResult.getData().getId());
+            setOrderId(yingOrderResult.getData().getId());
+            setAmount(new BigDecimal("100"));
+            setName(FeeClass.SERVICE_FEE);
+        }};
+        Result<Fee> feeCreateResult = client.exchange(feeCreateUrl, HttpMethod.POST, new HttpEntity<>(fee), typeReferenceFee).getBody();
+        if (feeCreateResult.getSuccess()) {
+            logger.info("创建费用成功\nPOST {}\nrequest = {}\nresponse = {}", feeCreateUrl, printJson(fee), printJson(feeCreateResult.getData()));
+        } else {
+            logger.info("创建费用失败: {}", feeCreateResult.getError());
+            System.exit(-1);
+        }
+
+
+        // 2. 分页
+        String feePageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fees?" + WebUtils.getUrlTemplate(PageFeeDTO.class);
+
+        Map<String, Object> feeVariables = WebUtils.getUrlVariables(PageYingFeeDTO.class);
+        feeVariables.put("orderId", yingOrderResult.getData().getId());
+        feeVariables.put("pageSize", 5);
+        feeVariables.put("pageNo", 1);
+
+        Result<Page<Fee>> feePageResult = client.exchange(feePageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFeePage, feeVariables).getBody();
+        if (feePageResult.getSuccess()) {
+            logger.info("费用分页查询成功\nGET {}\nrequest = {}\nresponse = {}", feePageUrl, "", printJson(feePageResult.getData()));
+        } else {
+            logger.info("费用分页查询失败: {}", feePageResult.getError());
+            System.exit(-1);
+        }
+
+        // 3. 查询
+        String feeFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fees/" + feeCreateResult.getData().getId();
+        feeFindResult = client.exchange(feeFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFee).getBody();
+        if (feeFindResult.getSuccess()) {
+            logger.info("费用查询成功\nGET {}\nrequest = {}\nresponse = {}", feeFindUrl, "", printJson(feeFindResult.getData()));
+        } else {
+            logger.info("费用查询失败: {}", feeFindResult.getError());
+            System.exit(-1);
+        }
+
+        // 4. 更新
+        String fayunUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fees/" + feeFindResult.getData().getId();
+        fee.setAmount(new BigDecimal("9999"));
+        fee.setOrderId(yingOrderResult.getData().getId());
+        fee.setId(feeCreateResult.getData().getId());
+        Result<Integer> yingFayunUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<Fee>(fee), typeReferenceInteger).getBody();
+        if (yingFayunUpdateResult.getSuccess()) {
+            logger.info("更新费用成功\nPUT {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(fee), printJson(yingFayunUpdateResult.getData()));
+        } else {
+            logger.error("更新费用失败: {}", yingFayunUpdateResult.getError());
+            System.exit(-2);
+        }
     }
 }

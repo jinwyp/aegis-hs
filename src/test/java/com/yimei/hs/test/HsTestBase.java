@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.same.entity.Fee;
 import com.yimei.hs.same.entity.Order;
 import com.yimei.hs.same.entity.OrderConfig;
 import com.yimei.hs.same.entity.OrderParty;
@@ -77,12 +78,18 @@ abstract public class HsTestBase {
     protected ParameterizedTypeReference<Result<List<User>>> typeReferenceUserList  = new ParameterizedTypeReference<Result<List<User>>>() {};
 
     protected ParameterizedTypeReference<Result<Order>> typeReferenceOrder  = new ParameterizedTypeReference<Result<Order>>() {};
-    protected ParameterizedTypeReference<Result<OrderConfig>> typeReferenceOrderConfig  = new ParameterizedTypeReference<Result<OrderConfig>>() {};
-    protected ParameterizedTypeReference<Result<OrderParty>> typeReferenceOrderParty  = new ParameterizedTypeReference<Result<OrderParty>>() {};
-
     protected ParameterizedTypeReference<Result<Page<Order>>> typeReferenceOrderPage  = new ParameterizedTypeReference<Result<Page<Order>>>() {};
-    protected ParameterizedTypeReference<Result<Page<OrderConfig>>> typeReferenceOrderConfigPage  = new ParameterizedTypeReference<Result<Page<OrderConfig>>>() {};
+
+    protected ParameterizedTypeReference<Result<OrderParty>> typeReferenceOrderParty  = new ParameterizedTypeReference<Result<OrderParty>>() {};
     protected ParameterizedTypeReference<Result<Page<OrderParty>>> typeReferenceOrderPartyPage  = new ParameterizedTypeReference<Result<Page<OrderParty>>>() {};
+
+    protected ParameterizedTypeReference<Result<OrderConfig>> typeReferenceOrderConfig  = new ParameterizedTypeReference<Result<OrderConfig>>() {};
+    protected ParameterizedTypeReference<Result<Page<OrderConfig>>> typeReferenceOrderConfigPage  = new ParameterizedTypeReference<Result<Page<OrderConfig>>>() {};
+
+    protected ParameterizedTypeReference<Result<Fee>> typeReferenceFee  = new ParameterizedTypeReference<Result<Fee>>() {};
+    protected ParameterizedTypeReference<Result<Page<Fee>>> typeReferenceFeePage  = new ParameterizedTypeReference<Result<Page<Fee>>>() {};
+
+
 
 
     public void createUser(String phone, String password) {
