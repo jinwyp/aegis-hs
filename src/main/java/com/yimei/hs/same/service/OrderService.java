@@ -128,7 +128,7 @@ public class OrderService {
     public int updateTransfer(Long orderId, Long from, Long to) {
         int rtn = orderMapper.transfer(orderId, from, to);
         if (rtn == 1) {
-            // yingLogService.create(new YingLog(null, orderId, null, orderId, YingEntityType.order, "转移订单", null));
+            // yingLogService.create(new YingLog(null, orderId, null, orderId, EntityType.order, "转移订单", null));
         }
         return rtn;
     }

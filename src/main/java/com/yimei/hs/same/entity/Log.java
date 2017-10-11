@@ -1,9 +1,11 @@
-package com.yimei.hs.ying.entity;
+package com.yimei.hs.same.entity;
 
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.enums.EntityType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class YingLog implements Serializable {
+public class Log implements Serializable {
 
     @NotNull(groups = {UpdateGroup.class}, message = "id不能为空")
     private Long id;

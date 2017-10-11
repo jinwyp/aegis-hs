@@ -1,11 +1,11 @@
-package com.yimei.hs.ying.controller;
+package com.yimei.hs.same.controller;
 
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.EntityType;
-import com.yimei.hs.ying.dto.PageYingLogDTO;
-import com.yimei.hs.ying.entity.YingLog;
-import com.yimei.hs.ying.service.YingLogService;
+import com.yimei.hs.same.dto.PageLogDTO;
+import com.yimei.hs.same.entity.Log;
+import com.yimei.hs.same.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,27 +14,27 @@ import org.springframework.web.bind.annotation.*;
  * Created by hary on 2017/9/27.
  */
 @RestController
-@RequestMapping("/api/ying")
-public class YingLogController {
+@RequestMapping("/api/business/{businessType}")
+public class LogController {
 
     @Autowired
-    YingLogService yingLogService;
+    LogService logService;
 
     /**
      * 查询日志分页
      *
      * @param morderId
-     * @param yingEntityType
-     * @param pageYingLogDTO
+     * @param entityType
+     * @param pageLogDTO
      * @return
      */
     @GetMapping("/{morderId}/log/{entityType}")
-    public ResponseEntity<Result<Page<YingLog>>> getPage(
+    public ResponseEntity<Result<Page<Log>>> getPage(
             @PathVariable("morderId") Long morderId,
-            @PathVariable("entityType") EntityType yingEntityType,
-            PageYingLogDTO pageYingLogDTO
+            @PathVariable("entityType") EntityType entityType,
+            PageLogDTO pageLogDTO
     ) {
-        Page<YingLog> page = yingLogService.getPage(pageYingLogDTO);
+        Page<Log> page = logService.getPage(pageLogDTO);
         return Result.ok(page);
     }
 
@@ -45,10 +45,10 @@ public class YingLogController {
      * @return
      */
     @PostMapping("/{morderId}/log/{entityType}")
-    public ResponseEntity<Result<YingLog>> create(
-            @RequestBody YingLog log
+    public ResponseEntity<Result<Log>> create(
+            @RequestBody Log log
     ) {
-        int rtn = yingLogService.create(log);
+        int rtn = logService.create(log);
         return Result.ok(log);
     }
 
@@ -56,17 +56,17 @@ public class YingLogController {
      * 查询日志
      *
      * @param morderId
-     * @param yingEntityType
+     * @param entityType
      * @param id
      * @return
      */
     @GetMapping("/orderId/log/{entityType}/{id}")
-    public ResponseEntity<Result<YingLog>> findOne(
+    public ResponseEntity<Result<Log>> findOne(
             @PathVariable("morderId") Long morderId,
-            @PathVariable("entityType") EntityType yingEntityType,
+            @PathVariable("entityType") EntityType entityType,
             @PathVariable("id") Long id
     ) {
-        YingLog log = yingLogService.findOne(id);
+        Log log = logService.findOne(id);
         return Result.ok(log);
     }
 }
