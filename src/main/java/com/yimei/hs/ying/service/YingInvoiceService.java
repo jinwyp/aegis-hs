@@ -4,7 +4,6 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.entity.YingInvoice;
 import com.yimei.hs.ying.dto.PageYingInvoiceDTO;
 import com.yimei.hs.ying.entity.YingInvoiceDetail;
-import com.yimei.hs.ying.entity.YingOrder;
 import com.yimei.hs.ying.mapper.YingInvoiceDetailMapper;
 import com.yimei.hs.ying.mapper.YingInvoiceMapper;
 import org.slf4j.Logger;
@@ -23,7 +22,7 @@ import java.util.function.Consumer;
 @Transactional(readOnly = true)
 public class YingInvoiceService {
 
-    private static final Logger logger = LoggerFactory.getLogger(YingSettleService.class);
+    private static final Logger logger = LoggerFactory.getLogger(YingSettleTrafficService.class);
 
 
     @Autowired

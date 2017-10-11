@@ -1,6 +1,7 @@
 package com.yimei.hs.cang.dto;
 
 import com.yimei.hs.boot.persistence.BaseFilter;
+import com.yimei.hs.enums.InStorageStatus;
 import com.yimei.hs.enums.TrafficMode;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ public class PageCangRukuDTO extends BaseFilter<PageCangRukuDTO> {
     private long orderId;
     private long hsId;
     private LocalDateTime rukuDate;
-    private int rukuStatus;
+    private InStorageStatus rukuStatus;
     private BigDecimal rukuPrice;
     private String locality;
     private TrafficMode trafficMode;

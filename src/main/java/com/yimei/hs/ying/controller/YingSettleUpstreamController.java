@@ -7,13 +7,13 @@ import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.ying.dto.PageYingSettleUpstreamDTO;
 import com.yimei.hs.ying.entity.YingSettleUpstream;
-import com.yimei.hs.ying.service.YingSettleService;
+import com.yimei.hs.ying.service.YingSettleTrafficService;
+import com.yimei.hs.ying.service.YingSettleUpsteamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +28,7 @@ public class YingSettleUpstreamController {
     private static final Logger logger = LoggerFactory.getLogger(YingSettleUpstreamController.class);
 
     @Autowired
-    private YingSettleService yingSettleService;
+    private YingSettleUpsteamService yingSettleUpsteamService;
 
     /**
      * 获取上游结算 - 分页
@@ -41,7 +41,7 @@ public class YingSettleUpstreamController {
             PageYingSettleUpstreamDTO pageYingSettleUpstreamDTO) {
 
         pageYingSettleUpstreamDTO.setOrderId(morderId);
-        return Result.ok(yingSettleService.getPageUpstream(pageYingSettleUpstreamDTO));
+        return Result.ok(yingSettleUpsteamService.getPageUpstream(pageYingSettleUpstreamDTO));
     }
 
     /**
@@ -56,7 +56,7 @@ public class YingSettleUpstreamController {
             @PathVariable("id") long id
     ) {
 
-        YingSettleUpstream settleUpstream = yingSettleService.findUpstream(id);
+        YingSettleUpstream settleUpstream = yingSettleUpsteamService.findUpstream(id);
         if (settleUpstream == null) {
             return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
         } else {
@@ -75,7 +75,7 @@ public class YingSettleUpstreamController {
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) YingSettleUpstream yingSettleUpstream) {
         yingSettleUpstream.setOrderId(morderId);
-        int rtn = yingSettleService.createUpstream(yingSettleUpstream);
+        int rtn = yingSettleUpsteamService.createUpstream(yingSettleUpstream);
         if (rtn != 1) {
             logger.error("创建失败: {}", yingSettleUpstream);
             return Result.error(4001, "创建失败");
@@ -96,7 +96,7 @@ public class YingSettleUpstreamController {
     ) {
 //        assert (orderId == yingSettleUpstream.getOrderId());
         yingSettleUpstream.setId(id);
-        int rtn = yingSettleService.updateUpstream(yingSettleUpstream);
+        int rtn = yingSettleUpsteamService.updateUpstream(yingSettleUpstream);
         if (rtn != 1) {
             logger.error("更新失败: {}", yingSettleUpstream);
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
@@ -114,7 +114,7 @@ public class YingSettleUpstreamController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
-        int rtn = yingSettleService.deleteUpstream(id);
+        int rtn = yingSettleUpsteamService.deleteUpstream(id);
         if (rtn != 1) {
             logger.error("删除失败: {}", id);
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
