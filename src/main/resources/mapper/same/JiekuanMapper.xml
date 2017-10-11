@@ -28,13 +28,29 @@
 
     <!-- 获取付款所关联的借款明细 todo -->
     <select id="getListByFukuanId" resultType="com.yimei.hs.same.entity.Jiekuan">
-        select * from hs_same_jiekuan
+        SELECT *
+        FROM hs_same_jiekuan
+    </select>
+
+    <!-- 借款分页todo  -->
+    <select id="getPage" resultType="com.yimei.hs.same.entity.Jiekuan">
+        SELECT *
+        FROM hs_same_jiekuan
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_jiekuan
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
+
+    <!-- 逻辑删除 -->
+    <delete id="delete">
+        UPDATE hs_same_jiekuan
+        SET deleted = 1,
+            tsu     = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
     <insert id="insert" parameterType="com.yimei.hs.same.entity.Jiekuan">
         INSERT INTO hs_same_jiekuan (id, fukuanId, orderId,
                                      hsId, amount, capitalId,
