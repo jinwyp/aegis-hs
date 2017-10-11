@@ -29,7 +29,7 @@ public class Order implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "业务线类型不能为空")
     private BusinessType businessType;
 
-    @NotNull(groups = {CreateGroup.class}, message = "部门编号不能为空")
+    @Null(groups = {CreateGroup.class}, message = "部门编号不需要")
     private Long deptId;
 
     @NotNull(groups = {CreateGroup.class },message = "团队不能为空")
