@@ -18,7 +18,6 @@
         <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
     </resultMap>
 
-
     <!-- todo -->
     <resultMap id="YingFukuanResultMap" type="com.yimei.hs.ying.entity.YingFukuan" autoMapping="true">
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>

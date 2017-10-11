@@ -95,8 +95,8 @@ public class YingIntegrationA extends HsTestBase {
         order();
         config();
         fee();
-//        traffic();
-        ruku();
+        traffic();
+//        ruku();
     }
 
     public void order() throws JsonProcessingException {
@@ -104,7 +104,7 @@ public class YingIntegrationA extends HsTestBase {
         Order yingOrder = new Order();
         yingOrder.setBusinessType(BusinessType.ying);
         yingOrder.setTeamId(1L); // 赵善文团队
-        yingOrder.setDeptId(3L);
+        // yingOrder.setDeptId(3L);
         yingOrder.setCargoType(CargoType.COAL);
         yingOrder.setUpstreamId(partyIds.get(0));   // 上游
         yingOrder.setDownstreamId(partyIds.get(1));  // 下游

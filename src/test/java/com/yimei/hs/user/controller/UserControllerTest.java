@@ -258,7 +258,7 @@ public class UserControllerTest extends YingTestBase {
         // 7. 创建应收订单
         YingOrder yingOrder = new YingOrder();
         yingOrder.setTeamId(1L); // 赵善文团队
-        yingOrder.setDeptId(3L);
+        // yingOrder.setDeptId(3L);
         yingOrder.setCargoType(CargoType.COAL);
         yingOrder.setUpstreamId(partyIds.get(0));   // 上游
         yingOrder.setDownstreamId(partyIds.get(1));  // 下游
