@@ -63,7 +63,7 @@ public class InvoiceController {
     ) {
         Invoice invoice = invoiceService.findOne(id);
         if (invoice == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "记录不存在");
         } else {
             return Result.ok(invoice);
         }
@@ -103,7 +103,7 @@ public class InvoiceController {
         yingInvoice.setOrderId(morderId);
         int rtn = invoiceService.update(yingInvoice);
         if (rtn != 1) {
-            return Result.error(4001, "更新错误", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "更新错误");
         }
         return Result.ok(1);
     }
@@ -121,7 +121,7 @@ public class InvoiceController {
     ) {
         int rtn = invoiceService.delete(id);
         if (rtn != 1) {
-            return Result.error(4001, "删除错误", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "删除错误");
         }
         return Result.ok(1);
     }

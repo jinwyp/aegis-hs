@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yimei.hs.same.mapper.FukuanMapper">
+
+    <resultMap id="BaseResultMap" type="com.yimei.hs.same.entity.Fukuan">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="hsId" jdbcType="BIGINT" property="hsId"/>
+        <result column="payDate" jdbcType="TIMESTAMP" property="payDate"/>
+        <result column="receiveCompanyId" jdbcType="BIGINT" property="receiveCompanyId"/>
+        <result column="payUsage" jdbcType="VARCHAR" property="payUsage"/>
+        <result column="payAmount" jdbcType="DECIMAL" property="payAmount"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+        <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
+    </resultMap>
+
+    <!-- todo -->
+    <resultMap id="FukuanResultMap" type="com.yimei.hs.same.entity.Fukuan" autoMapping="true">
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="hsId" jdbcType="BIGINT" property="hsId"/>
+        <result column="payDate" jdbcType="TIMESTAMP" property="payDate"/>
+        <result column="receiveCompanyId" jdbcType="BIGINT" property="receiveCompanyId"/>
+        <result column="payUsage" jdbcType="VARCHAR" property="payUsage"/>
+        <result column="payAmount" jdbcType="DECIMAL" property="payAmount"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+        <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
+
+        <!-- 关联的回款记录 -->
+        <collection property="huikuanList" javaType="ArrayList" ofType="com.yimei.hs.same.entity.Huikuan" autoMapping="true">
+            <id property="id" column="huikuan_Id"/>
+            <id property="orderId" column="huikuan_orderId"/>
+            <id property="hsId" column="huikuan_hsId"/>
+            <id property="tsc" column="huikuan_tsc"/>
+            <id property="tsu" column="huikuan_tsu"/>
+        </collection>
+
+        <!-- 关联记录-->
+        <collection property="huikuanMap" javaType="ArrayList" ofType="com.yimei.hs.same.entity.HuikuanMap"
+                    autoMapping="true">
+            <id property="huikuanId" column="huikuanId"/>
+            <id property="amount" column="amount"/>
+        </collection>
+
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, orderId, hsId, payDate, receiveCompanyId, payUsage, payAmount, tsc, tsu
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="FukuanResultMap">
+        SELECT
+            fukuan.id,
+            fukuan.orderId,
+            fukuan.hsId,
+            fukuan.payDate,
+            fukuan.receiveCompanyId,
+            fukuan.payUsage,
+            fukuan.payAmount,
+            fukuan.tsc,
+            fukuan.tsu,
+            huikuanmap.amount  AS huikuanmap_amount,
+            huikuan.id         AS huikuan_id,
+            huikuan.orderId    AS huikuan_orderId,
+            huikuan.hsId       AS huikuan_hsId,
+            huikuan.huikuanCompanyId,
+            huikuan.huikuanDate,
+            huikuan.huikuanAmount,
+            huikuan.huikuanUsage,
+            huikuan.huikuanMode,
+            huikuan.huikuanBankPaper,
+            huikuan.huikuanBankPaperDate,
+            huikuan.huikuanBankDiscount,
+            huikuan.huikuanBankDiscountRate,
+            huikuan.huikuanBankPaperExpire,
+            huikuan.huikuanBusinessPaper,
+            huikuan.huikuanBusinessPaperDate,
+            huikuan.huikuanBusinessDiscount,
+            huikuan.huikuanBusinessDiscountRate,
+            huikuan.huikuanBusinessPaperExpire,
+            huikuan.tsc        AS huikuan_tsc,
+            huikuan.tsu        AS huikuan_tsu,
+
+
+        FROM hs_same_fukuan fukuan
+            LEFT JOIN hs_same_huikuan_map huikuanmap ON fukuan.id = huikuanmap.fukuanId
+            LEFT JOIN hs_same_huikuan huikuan ON huikuanmap.huikuanId = huikuan.id
+        WHERE fukuan.id = #{id,jdbcType=BIGINT} AND fukuan.deleted = 0
+    </select>
+
+    <!-- 获取付款分页 -->
+    <select id="getPage" resultType="com.yimei.hs.same.entity.Fukuan">
+        select
+        t1.id,
+        t1.orderId,
+        t1.hsId,
+        t1.payDate,
+        t1.receiveCompanyId,
+        t1.payUsage,
+        t1.payAmount,
+        t1.payMode,
+        t1.capitalId,
+        t1.useInterest,
+        t1.useDays,
+        t1.tsc,
+        t1.tsu
+        from hs_same_fukuan t1 LEFT JOIN hs_same_huankuan_map map on t1.id = map.fukuanId
+        <where>
+            <if test="true">t1.deleted = 0</if>
+            <if test="orderId!=null">and t1.orderId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="hsId!=null">and t1.hsId = #{hsId, jdbcType=BIGINT}</if>
+            <if test="payDate!=null">and t1.payDate = #{payDate, jdbcType=TIMESTAMP}</if>
+            <if test="receiveCompanyId!=null">and t1.receiveCompanyId = #{receiveCompanyId, jdbcType=BIGINT}</if>
+        </where>
+        order by t1.payDate asc
+    </select>
+
+    <!-- 获取某个业务线的所有付款 -->
+    <select id="getList" resultType="com.yimei.hs.same.entity.Fukuan">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_fukuan
+        where orderId = #{orderId,jdbcType=BIGINT} and deleted = 0
+        order by payDate asc
+    </select>
+
+    <!-- 物理删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM hs_same_fukuan
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 逻辑删除 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_same_fukuan
+        SET deleted = 1, tsu = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <insert id="insert" parameterType="com.yimei.hs.same.entity.Fukuan" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO hs_same_fukuan (
+            id,
+            orderId,
+            hsId,
+            payDate,
+            receiveCompanyId,
+            payUsage,
+            payAmount,
+            tsc,
+            tsu
+        )
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{hsId,jdbcType=BIGINT},
+            #{payDate,jdbcType=TIMESTAMP},
+            #{receiveCompanyId,jdbcType=BIGINT},
+            #{payUsage,jdbcType=VARCHAR},
+            #{payAmount,jdbcType=DECIMAL},
+            #{tsc,jdbcType=TIMESTAMP},
+            current_timestamp
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.Fukuan" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into hs_same_fukuan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="hsId != null">hsId,</if>
+            <if test="payDate != null">payDate,</if>
+            <if test="receiveCompanyId != null">receiveCompanyId,</if>
+            <if test="payUsage != null">payUsage,</if>
+            <if test="payAmount != null">payAmount,</if>
+            <if test="tsc != null">tsc,</if>
+            <if test="tsu != null">tsu,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
+            <if test="payDate != null">#{payDate,jdbcType=TIMESTAMP},</if>
+            <if test="receiveCompanyId != null">#{receiveCompanyId,jdbcType=BIGINT},</if>
+            <if test="payUsage != null">#{payUsage,jdbcType=VARCHAR},</if>
+            <if test="payAmount != null">#{payAmount,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+            current_timestamp
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.same.entity.Fukuan">
+        update hs_same_fukuan
+        <set>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
+            <if test="payDate != null">payDate = #{payDate,jdbcType=TIMESTAMP},</if>
+            <if test="receiveCompanyId != null">receiveCompanyId = #{receiveCompanyId,jdbcType=BIGINT},</if>
+            <if test="payUsage != null">payUsage = #{payUsage,jdbcType=VARCHAR},</if>
+            <if test="payAmount != null">payAmount = #{payAmount,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.Fukuan">
+        UPDATE hs_same_fukuan
+        SET orderId          = #{orderId,jdbcType=BIGINT},
+            hsId             = #{hsId,jdbcType=BIGINT},
+            payDate          = #{payDate,jdbcType=TIMESTAMP},
+            receiveCompanyId = #{receiveCompanyId,jdbcType=BIGINT},
+            payUsage         = #{payUsage,jdbcType=VARCHAR},
+            payAmount        = #{payAmount,jdbcType=DECIMAL},
+            tsc              = #{tsc,jdbcType=TIMESTAMP},
+            tsu              = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

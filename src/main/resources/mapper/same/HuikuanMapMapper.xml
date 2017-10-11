@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yimei.hs.same.mapper.HuikuanMapMapper">
+
+    <resultMap id="BaseResultMap" type="com.yimei.hs.same.entity.HuikuanMap">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="huikuanId" jdbcType="BIGINT" property="huikuanId"/>
+        <result column="fukuanId" jdbcType="BIGINT" property="fukuanId"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, orderId, huikuanId, fukuanId, amount, tsc
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_huikuan_map
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="loadAll" resultType="com.yimei.hs.same.entity.HuikuanMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_huikuan_map
+        where orderId = #{orderId,jdbcType=BIGINT} Group By tsc desc
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM hs_same_huikuan_map
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 逻辑删除所有的map记录 -->
+    <update id="deleteByOrderId" parameterType="java.lang.Long">
+        UPDATE hs_same_huikuan_map
+        SET deleted = 1, tsu = current_timestamp
+        WHERE orderId = #{orderId,jdbcType=BIGINT}
+    </update>
+
+    <insert id="insert" parameterType="com.yimei.hs.same.entity.HuikuanMap" keyProperty="id"
+            useGeneratedKeys="true">
+        INSERT INTO hs_same_huikuan_map (
+            id,
+            orderId,
+            huikuanId,
+            fukuanId,
+            amount,
+            tsc)
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{huikuanId,jdbcType=BIGINT},
+            #{fukuanId,jdbcType=BIGINT},
+            #{amount,jdbcType=DECIMAL},
+            #{tsc,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.HuikuanMap" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into hs_same_huikuan_map
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="huikuanId != null">huikuanId,</if>
+            <if test="fukuanId != null">fukuanId,</if>
+            <if test="amount != null">amount,</if>
+            <if test="tsc != null">tsc,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="huikuanId != null">#{huikuanId,jdbcType=BIGINT},</if>
+            <if test="fukuanId != null">#{fukuanId,jdbcType=BIGINT},</if>
+            <if test="amount != null">#{amount,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.same.entity.HuikuanMap">
+        update hs_same_huikuan_map
+        <set>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="huikuanId != null">huikuanId = #{huikuanId,jdbcType=BIGINT},</if>
+            <if test="fukuanId != null">fukuanId = #{fukuanId,jdbcType=BIGINT},</if>
+            <if test="amount != null">amount = #{amount,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.HuikuanMap">
+        UPDATE hs_same_huikuan_map
+        SET huikuanId = #{huikuanId,jdbcType=BIGINT},
+            fukuanId  = #{fukuanId,jdbcType=BIGINT},
+            amount    = #{amount,jdbcType=DECIMAL},
+            tsc       = #{tsc,jdbcType=TIMESTAMP},
+            tsu       = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="getListByFukuanId" resultType="com.yimei.hs.same.entity.HuikuanMap">
+        SELECT
+            huikuanId,
+            amount
+        FROM
+            hs_same_huikuan_map
+        WHERE
+            fukuanId = #{fukuanId, jdbcType=BIGINT}
+    </select>
+
+</mapper>

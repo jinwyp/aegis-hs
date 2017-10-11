@@ -41,7 +41,7 @@ create table hs_ying_order_party (
    customerId bigint(20) not null comment '业务线(订单)关联的其他账务公司',
    deleted tinyint(1)          not null default 0 comment '逻辑删除',
    tsc timestamp         not null default current_timestamp,
-  tsu timestamp not null default current_timestamp,
+   tsu timestamp not null default current_timestamp,
 
    primary key (id)
 )engine=InnoDB default charset=utf8;
@@ -63,7 +63,7 @@ create table hs_ying_order_config (
    weightedPrice  decimal(10, 2)              not null comment '加权单价',
    deleted tinyint(1)          not null default 0 comment '逻辑删除',
    tsc timestamp                       not null default current_timestamp,
-  tsu timestamp not null default current_timestamp,
+   tsu timestamp not null default current_timestamp,
 
    primary key (id)
 )engine=InnoDB default charset=utf8;
@@ -112,7 +112,7 @@ create table hs_ying_fukuan (
   capitalId bigint(20)           not null comment '资金方id',
   useInterest decimal(10, 4)              comment '当资金方为非自由资金时: 外部资金使用利率',
   useDays int                             comment '当资金方为非自由资金时: 外部资金使用利率',
-  deleted tinyint(1)               not null default 0 comment '是否删除',
+  deleted tinyint(1)             not null default 0 comment '是否删除',
   tsc timestamp                  not null default current_timestamp,
   tsu timestamp not null default current_timestamp,
   primary key (id)
