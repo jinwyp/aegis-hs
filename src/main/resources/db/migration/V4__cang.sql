@@ -7,7 +7,7 @@ create table hs_cang_ruku (
   hsId bigint(20)                 not null comment '核算月id',
 
   rukuDate datetime               not null comment '入库日期',
-  rukuStatus int              not null comment '入库状态, 在途,已入库',
+  rukuStatus varchar(32)              not null comment '入库状态, 在途,已入库',
   rukuAmount decimal(10,2)        not null comment '入库吨数',
   rukuPrice decimal(10,2)         not null comment '入库单价: 元/吨',
   locality varchar(128)           not null comment '场库',

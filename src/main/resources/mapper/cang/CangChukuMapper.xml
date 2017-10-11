@@ -20,11 +20,28 @@
     from hs_cang_chuku
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="getPage" resultType="com.yimei.hs.cang.entity.CangChuku">
+    select
+    <include refid="Base_Column_List" />
+    from hs_cang_chuku
+      <where>
+        <if test="true">and deleted = 0</if>
+        <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
+        <if test="hsId!=null">and hsId = #{hsId, jdbcType=BIGINT}</if>
+        <if test="rukuDate!=null">and chukuDate = #{rukuDate, jdbcType=TIMESTAMP}</if>
+        <if test="hsId!=null">and  chukuPrice = #{rukuPrice, jdbcType=DECIMAL}</if>
+        <if test="hsId!=null">and  chukuAmount= #{rukuAmount, jdbcType=DECIMAL}</if>
+        <if test="hsId!=null">and  locality= #{locality, jdbcType=VARCHAR}</if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from hs_cang_chuku
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangChuku">
+
+
+  <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangChuku" keyProperty="id" useGeneratedKeys="true">
+
     insert into hs_cang_chuku (id, orderId, hsId, 
       chukuDate, locality, chukuAmount, 
       chukuPrice, tsc)
@@ -32,7 +49,8 @@
       #{chukuDate,jdbcType=TIMESTAMP}, #{locality,jdbcType=VARCHAR}, #{chukuAmount,jdbcType=DECIMAL}, 
       #{chukuPrice,jdbcType=DECIMAL}, #{tsc,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangChuku">
+
+  <insert id="insertSelective" parameterType="com.yimei.hs.cang.entity.CangChuku" keyProperty="id" useGeneratedKeys="true">
     insert into hs_cang_chuku
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null"> id, </if>
@@ -102,5 +120,12 @@
       chukuPrice = #{chukuPrice,jdbcType=DECIMAL},
       tsc = #{tsc,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!-- 逻辑删除 -->
+  <update id="delete" parameterType="java.lang.Long">
+    UPDATE hs_cang_chuku
+    SET deleted = 1, tsu = current_timestamp
+    WHERE id = #{id, jdbcType=BIGINT}
   </update>
 </mapper>

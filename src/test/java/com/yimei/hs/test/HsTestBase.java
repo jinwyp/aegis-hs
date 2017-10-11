@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.cang.entity.CangRuku;
 import com.yimei.hs.same.entity.*;
 import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Party;
@@ -91,6 +92,9 @@ abstract public class HsTestBase {
     protected ParameterizedTypeReference<Result<SettleTraffic>> typeReferenceSettleTraffic  = new ParameterizedTypeReference<Result<SettleTraffic>>() {};
     protected ParameterizedTypeReference<Result<Page<SettleTraffic>>> typeReferenceSettleTrafficPage  = new ParameterizedTypeReference<Result<Page<SettleTraffic>>>() {};
 
+
+    protected ParameterizedTypeReference<Result<CangRuku>> typeReferenceSettleCangRuku  = new ParameterizedTypeReference<Result<CangRuku>>() {};
+    protected ParameterizedTypeReference<Result<Page<CangRuku>>> typeReferenceSettleCangRukuPage  = new ParameterizedTypeReference<Result<Page<CangRuku>>>() {};
 
 
 

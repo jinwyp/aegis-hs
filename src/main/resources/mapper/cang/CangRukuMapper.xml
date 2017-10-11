@@ -6,7 +6,7 @@
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
         <result column="rukuDate" jdbcType="TIMESTAMP" property="rukuDate"/>
-        <result column="rukuStatus" jdbcType="INTEGER" property="rukuStatus"/>
+        <result column="rukuStatus" jdbcType="VARCHAR" property="rukuStatus"/>
         <result column="rukuAmount" jdbcType="DECIMAL" property="rukuAmount"/>
         <result column="rukuPrice" jdbcType="DECIMAL" property="rukuPrice"/>
         <result column="locality" jdbcType="VARCHAR" property="locality"/>
@@ -26,18 +26,44 @@
         from hs_cang_ruku
         where id = #{id,jdbcType=BIGINT}
     </select>
+    <select id="getPage" resultType="com.yimei.hs.cang.entity.CangRuku">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_cang_ruku
+        <where>
+            <if test="true">and deleted = 0</if>
+            <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
+            <if test="hsId!=null">and hsId = #{hsId, jdbcType=BIGINT}</if>
+            <if test="rukuDate!=null">and rukuDate = #{rukuDate, jdbcType=TIMESTAMP}</if>
+            <if test="hsId!=null">and  rukuPrice = #{rukuPrice, jdbcType=DECIMAL}</if>
+            <if test="hsId!=null">and  rukuStatus = #{rukuStatus, jdbcType=VARCHAR}</if>
+            <if test="hsId!=null">and  rukuAmount= #{rukuAmount, jdbcType=DECIMAL}</if>
+            <if test="hsId!=null">and  locality= #{locality, jdbcType=VARCHAR}</if>
+            <if test="hsId!=null">and  trafficMode= #{trafficMode, jdbcType=VARCHAR}</if>
+
+        </where>
+
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_cang_ruku
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangRuku">
+
+    <!-- 逻辑删除 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_cang_ruku
+        SET deleted = 1, tsu = current_timestamp
+        WHERE id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangRuku" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO hs_cang_ruku (id, orderId, hsId,
                                   rukuDate, rukuStatus, rukuAmount,
                                   rukuPrice, locality, trafficMode,
                                   cars, jhh, ship, tsc
         )
         VALUES (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hsId,jdbcType=BIGINT},
-                                       #{rukuDate,jdbcType=TIMESTAMP}, #{rukuStatus,jdbcType=INTEGER},
+                                       #{rukuDate,jdbcType=TIMESTAMP}, #{rukuStatus,jdbcType=VARCHAR},
                                        #{rukuAmount,jdbcType=DECIMAL},
                                        #{rukuPrice,jdbcType=DECIMAL}, #{locality,jdbcType=VARCHAR},
                                        #{trafficMode,jdbcType=VARCHAR},
@@ -67,7 +93,7 @@
             <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
             <if test="rukuDate != null">#{rukuDate,jdbcType=TIMESTAMP},</if>
-            <if test="rukuStatus != null">#{rukuStatus,jdbcType=INTEGER},</if>
+            <if test="rukuStatus != null">#{rukuStatus,jdbcType=VARCHAR},</if>
             <if test="rukuAmount != null">#{rukuAmount,jdbcType=DECIMAL},</if>
             <if test="rukuPrice != null">#{rukuPrice,jdbcType=DECIMAL},</if>
             <if test="locality != null">#{locality,jdbcType=VARCHAR},</if>
@@ -84,7 +110,7 @@
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
             <if test="rukuDate != null">rukuDate = #{rukuDate,jdbcType=TIMESTAMP},</if>
-            <if test="rukuStatus != null">rukuStatus = #{rukuStatus,jdbcType=INTEGER},</if>
+            <if test="rukuStatus != null">rukuStatus = #{rukuStatus,jdbcType=VARCHAR},</if>
             <if test="rukuAmount != null">rukuAmount = #{rukuAmount,jdbcType=DECIMAL},</if>
             <if test="rukuPrice != null">rukuPrice = #{rukuPrice,jdbcType=DECIMAL},</if>
             <if test="locality != null">locality = #{locality,jdbcType=VARCHAR},</if>
@@ -101,7 +127,7 @@
         SET orderId     = #{orderId,jdbcType=BIGINT},
             hsId        = #{hsId,jdbcType=BIGINT},
             rukuDate    = #{rukuDate,jdbcType=TIMESTAMP},
-            rukuStatus  = #{rukuStatus,jdbcType=INTEGER},
+            rukuStatus  = #{rukuStatus,jdbcType=VARCHAR},
             rukuAmount  = #{rukuAmount,jdbcType=DECIMAL},
             rukuPrice   = #{rukuPrice,jdbcType=DECIMAL},
             locality    = #{locality,jdbcType=VARCHAR},

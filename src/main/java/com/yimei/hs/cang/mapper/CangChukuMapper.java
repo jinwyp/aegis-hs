@@ -18,4 +18,6 @@ public interface CangChukuMapper {
     int updateByPrimaryKey(CangChuku record);
 
     Page<CangChuku> getPage(PageCangChukuDTO pageCangChukuDTO);
+
+    int delete(Long id);
 }
