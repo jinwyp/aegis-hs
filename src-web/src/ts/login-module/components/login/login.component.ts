@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
 
                 setTimeout(function() {
                     window.location.href = '/web/index'
-                }, 1000)
+                }, 500)
 
                 // this.httpService.successHandler(data)
             },

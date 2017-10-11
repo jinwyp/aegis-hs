@@ -33,6 +33,7 @@
                 <tr>
                     <th>ID</th>
                     <th>手机号</th>
+                    <th>部门</th>
                     <th>创建时间</th>
                     <th>创建人</th>
                     <th>是否为管理员</th>
@@ -44,6 +45,7 @@
                 <tr *ngFor="let user of userList; trackBy: trackByFn">
                     <td> {{user.id}}</td>
                     <td> {{user.phone}}</td>
+                    <td> {{user.deptId | findKey : departmentList : 'name'}}</td>
                     <td> {{user.createDate}}</td>
                     <td> {{user.createBy}}</td>
                     <td> {{user.isAdmin === true ? '是' : '否'}} </td>

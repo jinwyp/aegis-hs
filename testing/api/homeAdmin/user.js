@@ -55,7 +55,7 @@ describe('管理用户', function () {
 
 
 
-    it('新建用户 POST: /api/users', function (done) {
+    it('新建用户1 POST: /api/users', function (done) {
         server.post('/api/users')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -78,6 +78,49 @@ describe('管理用户', function () {
             })
     })
 
+    it('新建用户2 POST: /api/users', function (done) {
+        server.post('/api/users')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                phone : '13564568301',
+                password : '123456',
+                deptId : 2,
+                isActive  :  2,
+                isAdmin  : 1
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.createBy).to.include('13022117050')
+                done()
+            })
+    })
+
+    it('新建用户3 重复新建手机号相同用户 POST: /api/users', function (done) {
+        server.post('/api/users')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                phone : '13564568304',
+                password : '123456',
+                deptId : 2,
+                isActive  :  2,
+                isAdmin  : 1
+            })
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(false)
+                expect(res.body.data).to.equal(undefined)
+                done()
+            })
+    })
 
     it('获取用户列表 GET: /api/users?pageNo=1&pageSize=2', function (done) {
         server.get('/api/users?pageNo=1&pageSize=2')

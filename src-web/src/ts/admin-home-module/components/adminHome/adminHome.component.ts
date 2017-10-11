@@ -163,7 +163,7 @@ export class AdminHomeComponent implements OnInit {
         )
     }
 
-    logout (){
+    logout () {
         this.userService.userLogout().subscribe(
             data => {
                 console.log('退出登陆成功: ', data)
@@ -171,7 +171,7 @@ export class AdminHomeComponent implements OnInit {
 
                 setTimeout(function() {
                     window.location.href = '/web/login'
-                }, 1000)
+                }, 500)
 
             },
             error => {this.httpService.errorHandler(error) }

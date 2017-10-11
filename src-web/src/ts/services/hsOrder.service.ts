@@ -55,7 +55,7 @@ export class HSOrderService {
 
     transferOrder(orderId: number, userId: number): Observable<any> {
 
-        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/to/' + userId, {} )
+        return this.http.post(apiPath.hsGetOrderList + '/' + orderId + '/to/' + userId, {} )
     }
 
 
