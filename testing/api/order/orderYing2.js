@@ -67,7 +67,34 @@ describe('应收订单', function () {
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.line).to.include('那曲')
                 orderId = res.body.data.id
-                console.log('----------------res.body', res.body)
+                done()
+            })
+    })
+
+    it('应收订单 - 新建应收订单12 POST: /api/yings', function (done) {
+        server.post('/api/yings')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                "deptId":2,
+                "teamId":1,
+                "line":"那曲 - 晋和 - 嘉瑞",
+                "cargoType":"COAL",
+                "upstreamSettleMode":"ONE_PAPER_SETTLE",
+                "downstreamSettleMode":"ONE_PAPER_SETTLE",
+                "mainAccounting":1,
+                "upstreamId":2,
+                "downstreamId":3
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success).to.equal(true)
+                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.line).to.include('那曲')
+                orderId = res.body.data.id
                 done()
             })
     })
@@ -84,15 +111,14 @@ describe('应收订单', function () {
             .end(function(err, res) {
                 if (err) return done(err)
                 expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
+                expect(res.body.data).to.equal(1)
                 done()
             })
     })
 
     it('应收订单 - 不是自己的订单转移给另一个财务人员 非法输入 POST: /api/yings/1/to/4', function (done) {
 
-        console.log('转移订单给另一个财务人员 POST: /api/yings/' + orderId + '/to/4')
-        server.post('/api/yings/' + orderId + '/to/4')
+        server.post('/api/yings/1/to/4')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
