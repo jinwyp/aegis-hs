@@ -124,7 +124,7 @@ public class YingOrderController {
      * @param toId
      * @return
      */
-    @PostMapping("/{id}/to/{toId}")
+    @PostMapping("/{morderId}/to/{toId}")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> transfer(
             @CurrentUser User user,
