@@ -316,7 +316,7 @@ export class OrderDetailComponent implements OnInit {
             'userId'    : ['', [Validators.required ] ]
         } )
 
-        this.orderUnitForm.valueChanges.subscribe(data => {
+        this.transferForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
             this.transferFormInputChange(data)
         })
