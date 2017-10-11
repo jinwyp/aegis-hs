@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ import java.util.List;
  * Created by hary on 2017/9/15.
  */
 @Service
+@Transactional(readOnly = true)
+
 public class OrderService {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
@@ -71,6 +74,7 @@ public class OrderService {
      * @param order
      * @return
      */
+    @Transactional(readOnly = false)
     public int create(Order order) {
 
         // 插入业务线
@@ -120,6 +124,7 @@ public class OrderService {
      * @param record
      * @return
      */
+    @Transactional(readOnly = false)
     public int update(Order record) {
         return orderMapper.updateByPrimaryKeySelective(record);
     }
@@ -130,14 +135,13 @@ public class OrderService {
      * @param to
      * @return
      */
+    @Transactional(readOnly = false)
     public int updateTransfer(Long orderId, Long from, Long to) {
-        int rtn = orderMapper.transfer(orderId, from, to);
-
-//        if (rtn == 1) {
-//            logService.create(new Log(null, orderId, orderId, EntityType.order, "转移订单", null));
-//        }
-
-        return rtn;
+        try {
+            return orderMapper.transfer(orderId, from, to);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     /**
@@ -157,6 +161,7 @@ public class OrderService {
      * @param id
      * @return
      */
+    @Transactional(readOnly = false)
     public int delete(Long id) {
         return orderMapper.delete(id);
     }

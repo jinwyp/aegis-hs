@@ -109,14 +109,15 @@ class HttpService {
 */
 
                 let messageError = ''
-                if (error && error.error && error.error.error && error.error.error.name) {
-                    messageError = error.error.error.message
 
-                }else if (error && error.error && error.error.error) {
-                    messageError = error.error.message
-
-                }else {
-                    messageError = error.message
+                if (error && error.error && (error.error.success === false || error.error.success === true)) {
+                    messageError = error.error.error.code + ': ' + error.error.error.message
+                } else {
+                    if (error && error.error && error.error.message) {
+                        messageError = error.error.message
+                    }else {
+                        messageError = error.message
+                    }
                 }
 
                 this.notificationService.error( '请求出现错误!',  messageError,

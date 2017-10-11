@@ -66,8 +66,6 @@ public class UserControllerTest extends YingTestBase {
 
     private static final Logger logger = LoggerFactory.getLogger(UserControllerTest.class);
 
-    List<Long> partyIds = null;
-    Result<User> userResult = null;
     Result<YingOrder> yingOrderResult = null;
     Result<YingOrderConfig> yingOrderConfigResult = null;
 
@@ -87,7 +85,7 @@ public class UserControllerTest extends YingTestBase {
     @Test
     public void userTest() throws JsonProcessingException {
 
-        user();
+        defaultUser();
         order();
         config();
         fukuanTest();
@@ -106,146 +104,6 @@ public class UserControllerTest extends YingTestBase {
 
     }
 
-    private void user() throws JsonProcessingException {
-        // 默认有个admin用户了 13022117050
-        // 1. 13022117050用户登录
-        User admin = new User();
-        admin.setPhone("13022117050");
-        admin.setPassword("123456");
-
-        Result<String> result = client.exchange("/api/login", HttpMethod.POST, new HttpEntity<User>(admin), typeReferenceString).getBody();
-
-        if (result.getSuccess()) {
-            logger.info("登录成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/login", printJson(admin), printJson(result.getData()));
-        } else {
-            logger.error("admin 登录失败");
-            System.exit(-1);
-        }
-        setClientInterceptor(result.getData());
-
-        // 2. 创建hs_party
-        List<Party> parties = Lists.newArrayList(
-                new Party() {{
-                    setName("郴州博太超细石墨股份有限公司");
-                    setShortName("博泰");
-                    setPartyType(3);
-                }},
-                new Party() {{
-                    setName("湖南华润电力鲤鱼江有限公司");
-                    setShortName("鲤鱼江");
-                    setPartyType(3);
-                }}
-        );
-        partyIds = createParties(parties);
-
-        // 3. 创建部门
-        Dept dept = new Dept();
-        dept.setName("周超团队");
-        Result<Dept> deptResult = client.exchange("/api/departments", HttpMethod.POST, new HttpEntity<Dept>(dept), typeReferenceDept).getBody();
-        if (deptResult.getSuccess()) {
-            logger.info("创建部门成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/departments", printJson(dept), printJson(deptResult.getData()));
-        } else {
-            logger.error("创建部门失败: {}", deptResult.getError());
-            System.exit(-3);
-        }
-
-        // 4. 创建team
-        Team team = new Team();
-        team.setDeptId(deptResult.getData().getId());
-        team.setName("我的team");
-        Result<Team> teamResult = client.exchange("/api/teams", HttpMethod.POST, new HttpEntity<Team>(team), typeReferenceTeam).getBody();
-        if (teamResult.getSuccess()) {
-            logger.info("创建团队成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/teams", printJson(team), printJson(teamResult.getData()));
-        } else {
-            logger.error("创建团队失败: {}", teamResult.getError());
-        }
-
-        // 5. 创建用户
-        User newUser = new User();
-        newUser.setPassword("123456");
-        newUser.setPhone("13022117051");
-        newUser.setDeptId(deptResult.getData().getId());
-        userResult = client.exchange("/api/users", HttpMethod.POST, new HttpEntity<User>(newUser), typeReferenceUser).getBody();
-        if (userResult.getSuccess()) {
-            logger.info("创建用户成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/users", printJson(newUser), printJson(userResult.getData()));
-        } else {
-            logger.error("创建用户失败: {}", userResult.getError());
-            System.exit(-2);
-        }
-
-        // 5.1 更新用户
-        User updateUser = new User();
-        updateUser.setId(userResult.getData().getId());
-        updateUser.setIsActive(true);
-        updateUser.setDeptId(userResult.getData().getDeptId());
-        String updateUserURL = "/api/users/" + userResult.getData().getId();
-        Result<Integer> updateUserRtn = client.exchange(updateUserURL, HttpMethod.PUT, new HttpEntity<User>(updateUser), typeReferenceInteger).getBody();
-        if (updateUserRtn.getSuccess()) {
-            logger.info("更新用户成功\nPUT {}\nrequest = {}\nresponse = {}", updateUserURL, printJson(updateUser), printJson(updateUserRtn.getData()));
-        } else {
-            logger.error("更新用户失败: {}", updateUserRtn.getError());
-            System.exit(-2);
-        }
-
-        // 6. 用户登录
-        Result<String> loginResult = client.exchange("/api/login", HttpMethod.POST, new HttpEntity<User>(newUser), typeReferenceString).getBody();
-        if (loginResult.getSuccess()) {
-            logger.info("登录成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/login", printJson(newUser), printJson(loginResult.getData()));
-        } else {
-            logger.error("登录失败: {}", loginResult.getError());
-        }
-        setClientInterceptor(loginResult.getData());
-
-        // 6.1 更改密码
-        User changeUser = new User();
-        changeUser.setOldPassword("123456");
-        changeUser.setPassword("1234567");
-        Result<Integer> changeResult = client.exchange("/api/change_password", HttpMethod.PUT, new HttpEntity<User>(changeUser), typeReferenceInteger).getBody();
-        if (changeResult.getSuccess()) {
-            logger.info("修改密码成功\nPUT {}\nrequest = {}\nresponse = {}", "/api/change_password", printJson(changeUser), changeResult.getData());
-        } else {
-            logger.info("修改密码失败: {}", changeResult.getError());
-        }
-
-        // 6.2 再登录一次, 用新密码登录
-        newUser.setPassword("1234567");
-        loginResult = client.exchange("/api/login", HttpMethod.POST, new HttpEntity<User>(newUser), typeReferenceString).getBody();
-        if (loginResult.getSuccess()) {
-            logger.info("登录成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/login", printJson(newUser), printJson(loginResult.getData()));
-        } else {
-            logger.error("登录失败: {}", loginResult.getError());
-        }
-        setClientInterceptor(loginResult.getData());
-
-        // 6.3 登出
-        Result<Integer> logoutResult = client.exchange("/api/logout", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceInteger).getBody();
-        if (logoutResult.getSuccess()) {
-            logger.info("登出成功\nGET {}\nrequest = {}\nresponse = {}", "/api/login", "", logoutResult.getData());
-        } else {
-            logger.error("登出失败: {}", logoutResult.getError());
-        }
-
-        // 6.4 再次重新登录
-        newUser.setPassword("1234567");
-        loginResult = client.exchange("/api/login", HttpMethod.POST, new HttpEntity<User>(newUser), typeReferenceString).getBody();
-        if (loginResult.getSuccess()) {
-            logger.info("登录成功\nPOST {}\nrequest = {}\nresponse = {}", "/api/login", printJson(newUser), printJson(loginResult.getData()));
-        } else {
-            logger.error("登录失败: {}", loginResult.getError());
-        }
-        setClientInterceptor(loginResult.getData());
-
-        //
-        // 6.5 再次查询同一部门
-        Result<List<User>> sameDeptResult = client.exchange("/api/user/list_dept_user", HttpMethod.GET, HttpEntity.EMPTY, typeReferenceUserList).getBody();
-        if (logoutResult.getSuccess()) {
-            logger.info(" 查询同部门员工成功\nGET {}\nrequest = {}\nresponse = {}", "/api/user/list_dept_user\"", "", sameDeptResult.getData());
-        } else {
-            logger.error("查询同部门员工成功失败: {}", sameDeptResult.getError());
-        }
-
-
-    }
 
 
 //    private void deleteUserAbout()throws JsonProcessingException{
@@ -258,7 +116,7 @@ public class UserControllerTest extends YingTestBase {
         // 7. 创建应收订单
         YingOrder yingOrder = new YingOrder();
         yingOrder.setTeamId(1L); // 赵善文团队
-        yingOrder.setDeptId(3L);
+        // yingOrder.setDeptId(3L);
         yingOrder.setCargoType(CargoType.COAL);
         yingOrder.setUpstreamId(partyIds.get(0));   // 上游
         yingOrder.setDownstreamId(partyIds.get(1));  // 下游

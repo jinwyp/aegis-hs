@@ -8,11 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by hary on 2017/9/15.
  */
 @Service
+@Transactional(readOnly = true)
 public class SettleTrafficService {
 
     private static final Logger logger = LoggerFactory.getLogger(SettleTrafficService.class);
@@ -33,6 +35,7 @@ public class SettleTrafficService {
         return settleTrafficMapper.selectByPrimaryKey(id);
     }
 
+    @Transactional(readOnly = false)
     public int create(SettleTraffic yingSettleTraffic) {
         return settleTrafficMapper.insert(yingSettleTraffic);
     }
@@ -41,6 +44,7 @@ public class SettleTrafficService {
      * @param yingSettleTraffic
      * @return
      */
+    @Transactional(readOnly = false)
     public int udpateTraffic(SettleTraffic yingSettleTraffic) {
         return settleTrafficMapper.updateByPrimaryKeySelective(yingSettleTraffic);
     }
@@ -51,6 +55,7 @@ public class SettleTrafficService {
      * @param id
      * @return
      */
+    @Transactional(readOnly = false)
     public int delete(long id) {
         return settleTrafficMapper.delete(id);
     }

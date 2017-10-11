@@ -76,7 +76,6 @@ public class SettleTrafficController {
      * @return
      */
     @PostMapping("/{morderId}/settletraffic")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<SettleTraffic>> create(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
@@ -96,7 +95,6 @@ public class SettleTrafficController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
     @PutMapping("/{morderId}/settletraffic/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("businessType") BusinessType businessType,
@@ -117,7 +115,6 @@ public class SettleTrafficController {
      *
      * @return
      */
-    @Transactional(readOnly = false)
     @DeleteMapping("/{morderId}/settletraffic/{id}")
     public ResponseEntity<Result<Integer>> delete(
             @PathVariable("businessType") BusinessType businessType,

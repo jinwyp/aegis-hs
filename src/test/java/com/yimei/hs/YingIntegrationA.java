@@ -99,8 +99,10 @@ public class YingIntegrationA extends HsTestBase {
         config();
         fee();
         traffic();
+
         ruku();
         chuku();
+
     }
 
     public void order() throws JsonProcessingException {

@@ -75,7 +75,6 @@ public class InvoiceController {
      * @return
      */
     @PostMapping("/{morderId}/invoices")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Invoice>> create(
             @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(CreateGroup.class) Invoice yingInvoice
@@ -94,7 +93,6 @@ public class InvoiceController {
      * @return
      */
     @PutMapping("/{morderId}/invoices/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
@@ -116,7 +114,6 @@ public class InvoiceController {
      * @return
      */
     @DeleteMapping("/{morderId}/invoices/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> delete(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,

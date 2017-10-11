@@ -73,7 +73,6 @@ public class FeeController {
      * @return
      */
     @PostMapping("/{morderId}/fees")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Fee>> create(
             @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(CreateGroup.class) Fee fee
@@ -92,7 +91,6 @@ public class FeeController {
      * @return
      */
     @PutMapping("/{morderId}/fees/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
@@ -114,7 +112,6 @@ public class FeeController {
      * @return
      */
     @DeleteMapping("/{morderId}/fees/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> delete(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,

@@ -78,7 +78,6 @@ public class OrderController {
      * @return
      */
     @PostMapping
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Order>> create(
             @CurrentUser User user,
             @PathVariable("businessType") BusinessType businessType,
@@ -109,7 +108,6 @@ public class OrderController {
      * @return
      */
     @PutMapping("/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("id") long id,
@@ -132,7 +130,6 @@ public class OrderController {
      * @return
      */
     @PostMapping("/{morderId}/to/{toId}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> transfer(
             @CurrentUser User user,
             @PathVariable("businessType") BusinessType businessType,
@@ -153,7 +150,6 @@ public class OrderController {
      * @return
      */
     @DeleteMapping("/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> delete(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("id") Long id
