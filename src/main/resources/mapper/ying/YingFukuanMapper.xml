@@ -76,9 +76,8 @@
         useInterest, useDays, tsc, tsu
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="YingFukuanResultMap">
         SELECT
-
             fukuan.id,
             fukuan.orderId,
             fukuan.hsId,
@@ -92,10 +91,7 @@
             fukuan.useDays,
             fukuan.tsc,
             fukuan.tsu,
-
-
             huikuanmap.amount  AS huikuanmap_amount,
-
             huikuan.id         AS huikuan_id,
             huikuan.orderId    AS huikuan_orderId,
             huikuan.hsId       AS huikuan_hsId,
@@ -116,11 +112,8 @@
             huikuan.huikuanBusinessPaperExpire,
             huikuan.tsc        AS huikuan_tsc,
             huikuan.tsu        AS huikuan_tsu,
-
-
             huankuanmap.principal,
             huankuanmap.interest AS huankuanmap_interest,
-
             huankuan.id        AS huankuan_id,
             huankuan.orderId   AS huankuan_orderId,
             huankuan.hsId      AS huankuan_hsId,
@@ -131,15 +124,11 @@
             huankuan.huankuanFee,
             huankuan.tsc       AS huankuan_tsc,
             huankuan.tsu       AS huankuan_tsu
-
-
         FROM hs_ying_fukuan fukuan
             LEFT JOIN hs_ying_huikuan_map huikuanmap ON fukuan.id = huikuanmap.fukuanId
             LEFT JOIN hs_ying_huikuan huikuan ON huikuanmap.huikuanId = huikuan.id
-
             LEFT JOIN hs_ying_huankuan_map huankuanmap ON fukuan.id = huankuanmap.fukuanId
             LEFT JOIN hs_ying_huankuan huankuan ON huankuanmap.huankuanId = huankuan.id
-
         WHERE fukuan.id = #{id,jdbcType=BIGINT} AND fukuan.deleted = 0
     </select>
 
