@@ -167,7 +167,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
         },
 
 
-        'id'  : {
+        'fukuanId'  : {
             'required'      : '请选择付款!'
         },
         'principal'  : {
@@ -189,8 +189,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
     createHKForm(): void {
 
         this.repaymentHKForm = this.fb.group({
-            'hsId'    : [-1, [Validators.required ] ],
-            'skCompanyId'    : [-1, [Validators.required ] ],
+            'hsId'    : ['', [Validators.required ] ],
+            'skCompanyId'    : ['', [Validators.required ] ],
             'huankuankDate'    : [null, [Validators.required ] ],
             'huankuanPrincipal'    : ['', [Validators.required ] ],
             'huankuanInterest'    : ['', [Validators.required ] ],
@@ -208,12 +208,13 @@ export class RepaymentHuanKuanComponent implements OnInit {
     createPaymentForm(): void {
 
         this.paymentForm = this.fb.group({
-            'id'    : ['', [Validators.required ] ],
+            'fukuanId'    : ['', [Validators.required ] ],
             'principal'    : ['', [Validators.required ] ],
             'interest'    : ['', [Validators.required ] ]
         } )
 
         this.paymentForm.valueChanges.subscribe(data => {
+            // console.log('this.ignoreDirtyPayment', this.ignoreDirtyPayment, data)
             this.ignoreDirtyPayment = false
             this.paymentFormInputChange(data)
         })
@@ -278,8 +279,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
             this.currentHuanKuanId = 0
 
             this.repaymentHKForm.patchValue({
-                'hsId'    : -1,
-                'skCompanyId'    : -1,
+                'hsId'    : '',
+                'skCompanyId'    : '',
                 'huankuankDate'    : null,
                 'huankuanPrincipal'    : '',
                 'huankuanInterest'    : '',
@@ -304,10 +305,9 @@ export class RepaymentHuanKuanComponent implements OnInit {
         if (this.paymentForm.invalid) {
 
             this.paymentFormInputChange(this.paymentForm.value)
+            this.ignoreDirtyPayment = true
 
-            setTimeout( () => {
-                this.ignoreDirtyPayment = true
-            })
+            // console.log('this.ignoreDirtyPayment2', this.ignoreDirtyPayment, this.paymentForm.value)
 
             return
         }

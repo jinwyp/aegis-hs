@@ -19,15 +19,15 @@
 
             <div class="form-row ">
                 <div class="col">
-                    <bs-select formControlName ="upstreamSettleMode" [fc]="orderForm.get('upstreamSettleMode')" [label]="'上游结算方式:'" [labelclass]="'col-4'" [options]="payModeList" [error]="orderFormError.upstreamSettleMode"></bs-select>
+                    <bs-select formControlName ="upstreamSettleMode" [fc]="orderForm.get('upstreamSettleMode')" [label]="'上游结算方式:'" [labelclass]="'col-4'" [dirty]="ignoreDirty" [options]="payModeList" [error]="orderFormError.upstreamSettleMode"></bs-select>
                 </div>
                 <div class="col">
-                    <bs-select formControlName ="downstreamSettleMode" [fc]="orderForm.get('downstreamSettleMode')" [label]="'下游结算方式:'" [labelclass]="'col-4'" [options]="payModeList" [error]="orderFormError.downstreamSettleMode"></bs-select>
+                    <bs-select formControlName ="downstreamSettleMode" [fc]="orderForm.get('downstreamSettleMode')" [label]="'下游结算方式:'" [labelclass]="'col-4'" [dirty]="ignoreDirty" [options]="payModeList" [error]="orderFormError.downstreamSettleMode"></bs-select>
                 </div>
             </div>
 
             <bs-text-input formControlName="line" [fc]="orderForm.get('line')" [type]="'text'" [label]="'业务线名称:'" [readOnly]="true" [dirty]="ignoreDirty" [error]="orderFormError.line"></bs-text-input>
-            <bs-select formControlName ="cargoType" [fc]="orderForm.get('cargoType')" [label]="'货物种类:'" [options]="cargoTypeList" [error]="orderFormError.cargoType"></bs-select>
+            <bs-select formControlName ="cargoType" [fc]="orderForm.get('cargoType')" [label]="'货物种类:'" [dirty]="ignoreDirty" [options]="cargoTypeList" [error]="orderFormError.cargoType"></bs-select>
 
             <bs-select formControlName ="mainAccounting" [fc]="orderForm.get('mainAccounting')" [label]="'主账务公司:'" [dirty]="ignoreDirty" [options]="partyList" [error]="orderFormError.mainAccounting" (change)="lineName()"></bs-select>
             <bs-select formControlName ="upstreamId" [fc]="orderForm.get('upstreamId')" [label]="'上游供应商:'" [dirty]="ignoreDirty" [options]="partyList" [error]="orderFormError.upstreamId" (change)="lineName()"></bs-select>

@@ -52,16 +52,27 @@
             </ul>
 
 
-            <form class="mt-3" [formGroup]="transferForm" (ngSubmit)="transferFormSubmit()" (keydown.enter)="$event.preventDefault()" >
+            <div class="card mt-3">
+                <div class="card-body">
 
-                <bs-select formControlName="userId" [fc]="transferForm.get('userId')" [label]="'转移给:'"  [options]="userList" [error]="transferFormError.userId"></bs-select>
+                    <form  [formGroup]="transferForm" (ngSubmit)="transferFormSubmit()" (keydown.enter)="$event.preventDefault()" >
 
-                <div class="form-group row">
-                    <div class="col-10 ml-auto">
-                        <button type="submit" class="btn btn-info" >保存</button>
-                    </div>
+                        <div class="form-row">
+                            <div class="col-6">
+                                <bs-select formControlName="userId" [fc]="transferForm.get('userId')" [label]="'订单权限移交给:'" [labelclass]="'col-4'" [inputclass]="'col-6'" [options]="userList" [error]="transferFormError.userId"></bs-select>
+                            </div>
+
+                            <div class="col-2">
+                                <button type="submit" class="btn btn-info" >保存</button>
+                            </div>
+                        </div>
+                    </form>
+
                 </div>
-            </form>
+            </div>
+
+
+
 
         </div>
 

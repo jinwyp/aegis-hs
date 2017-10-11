@@ -142,15 +142,17 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
     onClickHideSelect(event: any) {
 
         if (!this.optionsListEl.nativeElement.contains(event.target)) {
+
+            if (this.isShowSelectOptionList === true) {
+                if (this.currentSelectIndexByKeyboard === -1 ) {
+                    this.clickOption({ id : -1 , name : ''})
+
+                } else {
+                    this.clickOption(this.filterOptionList[this.currentSelectIndexByKeyboard])
+                }
+            }
             this.isShowSelectOptionList = false
 
-
-            if (this.currentSelectIndexByKeyboard === -1 ) {
-                this.clickOption({ id : -1 , name : ''})
-
-            } else {
-                this.clickOption(this.filterOptionList[this.currentSelectIndexByKeyboard])
-            }
         }
     }
 

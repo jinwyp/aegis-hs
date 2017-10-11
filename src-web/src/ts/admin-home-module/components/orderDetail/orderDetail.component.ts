@@ -150,7 +150,19 @@ export class OrderDetailComponent implements OnInit {
     getUserList () {
         this.hsUserService.getUserListDepartment().subscribe(
             data => {
-                this.userList = data.data
+
+                const tempResult : any[] = []
+
+                if (data.data && Array.isArray(data.data)) {
+                    data.data.forEach( user => {
+                        tempResult.push ({
+                            id : user.id,
+                            name : user.phone
+                        })
+                    })
+                }
+
+                this.userList = tempResult
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -293,6 +305,8 @@ export class OrderDetailComponent implements OnInit {
     changeTab (currentIndex : number) {
         this.currentTabIndex = currentIndex
     }
+
+
 
 
 

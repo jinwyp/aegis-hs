@@ -34,7 +34,7 @@
 
                             <div class="form-row ">
                                 <div class="col-7">
-                                    <bs-select formControlName ="id" [fc]="paymentForm.get('id')" [labelclass]="'d-none'" [inputclass]="'col-12'" [prompt]="'请选择付款:'" [options]="paymentDropDownList" [error]="paymentFormError.id"></bs-select>
+                                    <bs-select formControlName ="fukuanId" [fc]="paymentForm.get('fukuanId')" [labelclass]="'d-none'" [inputclass]="'col-12'" [prompt]="'请选择付款:'" [dirty]="ignoreDirtyPayment" [options]="paymentDropDownList" [error]="paymentFormError.fukuanId"></bs-select>
                                 </div>
 
                                 <div class="col-2">
