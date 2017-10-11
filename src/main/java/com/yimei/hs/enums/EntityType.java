@@ -3,7 +3,7 @@ package com.yimei.hs.enums;
 /**
  * Created by hary on 2017/9/26.
  */
-public enum YingEntityType {
+public enum EntityType {
 
     order("应收业务线"),
     config("应收业务线-配置"),
@@ -19,7 +19,7 @@ public enum YingEntityType {
     invoice("应收业务线-发票");
 
     private String value;
-    YingEntityType(String value) {
+    EntityType(String value) {
         this.value = value;
     }
 }

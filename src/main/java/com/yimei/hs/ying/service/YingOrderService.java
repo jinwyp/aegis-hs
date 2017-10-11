@@ -1,7 +1,7 @@
 package com.yimei.hs.ying.service;
 
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.enums.YingEntityType;
+import com.yimei.hs.enums.EntityType;
 import com.yimei.hs.ying.entity.YingLog;
 import com.yimei.hs.ying.entity.YingOrder;
 import com.yimei.hs.ying.entity.YingOrderConfig;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * Created by hary on 2017/9/15.
@@ -131,7 +130,7 @@ public class YingOrderService {
     public int updateTransfer(Long orderId, Long from, Long to) {
         int rtn = yingOrderMapper.transfer(orderId, from, to);
         if (rtn == 1) {
-            yingLogService.create(new YingLog(null, orderId, null, orderId, YingEntityType.order, "转移订单", null));
+            yingLogService.create(new YingLog(null, orderId, null, orderId, EntityType.order, "转移订单", null));
         }
         return rtn;
     }
