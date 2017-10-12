@@ -54,15 +54,15 @@ public class HuankuanService {
 
         // 1. 插入还款记录
         int rtn = huankuanMapper.insert(yingHuankuan);
-        if (rtn != 1) {
-            return 0;
-        }
-
-        for (HuankuanMap map : yingHuankuan.getHuankuanMapList()) {
-            map.setHuankuanId(yingHuankuan.getId());
-            map.setOrderId(yingHuankuan.getOrderId());
-            huankuanMapMapper.insert(map);
-        }
+//        if (rtn != 1) {
+//            return 0;
+//        }
+//
+//        for (HuankuanMap map : yingHuankuan.getHuankuanMapList()) {
+//            map.setHuankuanId(yingHuankuan.getId());
+//            map.setOrderId(yingHuankuan.getOrderId());
+//            huankuanMapMapper.insert(map);
+//        }
         return rtn;
     }
 

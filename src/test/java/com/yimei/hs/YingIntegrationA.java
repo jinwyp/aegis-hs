@@ -36,6 +36,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -104,8 +105,8 @@ public class YingIntegrationA extends HsTestBase {
 //        fukuan();
 //        fayun();
 //        huikuan();
-        jiekuan();
-//        huankuan();
+//        jiekuan();
+        huankuan();
     }
 
     public void order() throws JsonProcessingException {
@@ -534,7 +535,7 @@ public class YingIntegrationA extends HsTestBase {
 
     private void jiekuan() throws JsonProcessingException {
 
-        // 1. 添加回款
+        // 1. 添加借款
         String jiekuanCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans";
         Jiekuan jiekuan = new Jiekuan() {{
             setOrderId(yingOrderResult.getData().getId());
@@ -588,7 +589,60 @@ public class YingIntegrationA extends HsTestBase {
     }
 
     private void huankuan() throws JsonProcessingException {
+        // 1. 添加还款
+        String huankuanCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/huankuans";
+        Huankuan huankuan = new Huankuan() {{
 
+            // todo 陆彪
+            List<HuankuanMap> hukuanMapList = new ArrayList<>();
+            HuankuanMap map = new HuankuanMap();
+            // map.setOrderId(1L);
+            map.setPrincipal(new BigDecimal("510000"));
+            map.setInterest(new BigDecimal("1700.02"));
+            map.setFee(new BigDecimal("560"));
+
+            hukuanMapList.add(map);
+
+            setOrderId(yingOrderResult.getData().getId());
+            setHsId(yingOrderConfigResult.getData().getId());
+            setHuankuankDate(stringToTime("2017-7-26"));
+            setHuankuanMapList(hukuanMapList);
+
+        }};
+        huankuanCreateResult = client.exchange(huankuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huankuan), typeReferenceHuankuan).getBody();
+        if (huankuanCreateResult.getSuccess()) {
+            logger.info("创建还款成功\nPOST {}\nrequest = {}\nresponse = {}", huankuanCreateUrl, printJson(huankuan), printJson(huankuanCreateResult.getData()));
+        } else {
+            logger.info("创建还款失败: {}", huankuanCreateResult.getError());
+            System.exit(-1);
+        }
+
+        // 2. 分页
+        String huankuanPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/huankuans?" + WebUtils.getUrlTemplate(PageHuankuanDTO.class);
+        Map<String, Object> variableshuankuan = WebUtils.getUrlVariables(PageHuankuanDTO.class);
+        variableshuankuan.put("orderId", yingOrderResult.getData().getId());
+        variableshuankuan.put("pageSize", 5);
+        variableshuankuan.put("pageNo", 1);
+
+        Result<Page<Huankuan>> huankuanPageResult = client.exchange(huankuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceHuankuanPage, variableshuankuan).getBody();
+        if (huankuanPageResult.getSuccess()) {
+            logger.info("还款  分页成功\n GET {}\nrequest = {}\nresponse = {}", huankuanPageUrl, "", printJson(huankuanPageResult.getData()));
+        } else {
+            logger.info("还款  分页失败: {}", huankuanPageResult.getError());
+            System.exit(-1);
+        }
+
+        // 3. id查询
+        String huankuanFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/huankuans/" + huankuanCreateResult.getData().getId();
+        Result<Huankuan> huankuanFindResult = client.exchange(huankuanFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceHuankuan).getBody();
+        if (huankuanFindResult.getSuccess()) {
+            logger.info("查询  还款成功\n  GET {}\nrequest = {}\nresponse = {}", huankuanFindUrl, "", printJson(huankuanFindResult.getData()));
+        } else {
+            logger.info("查询  还款失败: {}", huankuanFindResult.getError());
+            System.exit(-1);
+        }
+
+        // 4. 更新 todo  timestamp
     }
 
     private void fayun() throws JsonProcessingException {
