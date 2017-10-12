@@ -17,10 +17,8 @@ import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.util.WebUtils;
-import com.yimei.hs.ying.dto.PageYingFeeDTO;
-import com.yimei.hs.ying.dto.PageYingOrderConfigDTO;
-import com.yimei.hs.ying.dto.PageYingSettleTrafficDTO;
-import com.yimei.hs.ying.dto.PageYingTransferDTO;
+import com.yimei.hs.ying.dto.*;
+import com.yimei.hs.ying.entity.YingFayun;
 import com.yimei.hs.ying.entity.YingOrderConfig;
 import com.yimei.hs.ying.entity.YingSettleTraffic;
 import org.assertj.core.util.Lists;
@@ -89,7 +87,7 @@ public class YingIntegrationA extends HsTestBase {
 
         Result<Jiekuan> jiekuanCreateResult = null;
 
-//    Result<Fayun> fayunCreateResult = null;
+    Result<YingFayun> fayunCreateResult = null;
 
     @Test
     public void yingIntegration() throws JsonProcessingException {
@@ -101,10 +99,10 @@ public class YingIntegrationA extends HsTestBase {
 //        traffic();
 //
 //        ruku();
-        chuku();
+//        chuku();
 
 //        fukuan();
-//        fayun();
+        fayun();
 //        huikuan();
     }
 
@@ -590,7 +588,56 @@ public class YingIntegrationA extends HsTestBase {
         
     }
     private void  fayun() throws JsonProcessingException{
-        
+
+        // 1. 添加发运
+        String fayunCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fayuns";
+
+        YingFayun fayun = new YingFayun() {{
+            setOrderId(yingOrderResult.getData().getId());
+            setDownstreamCars(166);
+            setDownstreamTrafficMode(TrafficMode.MOTOR);
+            setUpstreamTrafficMode(TrafficMode.RAIL);
+            setUpstreamJHH("1000001");
+            setDownstreamCars(1234);
+            setFyAmount(new BigDecimal("1510.60"));
+            setArriveStatus(CargoArriveStatus.UNARRIVE);
+            setHsId(yingOrderConfigResult.getData().getId());
+            setFyDate(stringToTime("2017-6-20"));
+        }};
+
+        fayunCreateResult = client.exchange(fayunCreateUrl, HttpMethod.POST, new HttpEntity<>(fayun), typeReferenceYingFayun).getBody();
+        if (fayunCreateResult.getSuccess()) {
+            logger.info("创建发运成功\nPOST {}\nrequest = {}\nresponse = {}", fayunCreateUrl, printJson(fayun), printJson(fayunCreateResult.getData()));
+        } else {
+            logger.info("创建发运失败: {}", fayunCreateResult.getError());
+            System.exit(-1);
+        }
+
+        // 2. 分页查询
+
+        Map<String, Object> variablesFayun = WebUtils.getUrlVariables(PageYingFayunDTO.class);
+        variablesFayun.put("pageSize", 5);
+        variablesFayun.put("orderId", yingOrderResult.getData().getId());
+        variablesFayun.put("pageNo", 1);
+
+        String fayunPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fayuns?" + WebUtils.getUrlTemplate(PageYingFayunDTO.class);
+        Result<Page<YingFayun>> fayunPageResult = client.exchange(fayunPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceYingFayunPage, variablesFayun).getBody();
+        if (fayunPageResult.getSuccess()) {
+            logger.info("发运分页成功\nGET {}\nrequest = {}\nresponse = {}", fayunPageUrl, variablesFayun, printJson(fayunPageResult.getData()));
+        } else {
+            logger.info("发运分页失败: {}", fayunPageResult.getError());
+            System.exit(-1);
+        }
+
+        // 3. id查询
+        String fayunFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fayuns/" + fayunCreateResult.getData().getId();
+        Result<YingFayun> fayunFindResult = client.exchange(fayunFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceYingFayun).getBody();
+        if (fayunFindResult.getSuccess()) {
+            logger.info("查询发运成功\nGET {}\nrequest = {}\nresponse = {}", fayunFindUrl, "", printJson(fayunFindResult.getData()));
+        } else {
+            logger.info("查询发运失败: {}", fayunFindResult.getError());
+            System.exit(-1);
+        }
     }
     public void ruku() throws JsonProcessingException {
 

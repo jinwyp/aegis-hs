@@ -125,6 +125,11 @@ abstract public class HsTestBase {
     protected ParameterizedTypeReference<Result<Huankuan>> typeReferenceHuankuan  = new ParameterizedTypeReference<Result<Huankuan>>() {};
     protected ParameterizedTypeReference<Result<Page<Huankuan>>> typeReferenceHuankuanPage  = new ParameterizedTypeReference<Result<Page<Huankuan>>>() {};
 
+
+    protected ParameterizedTypeReference<Result<YingFayun>> typeReferenceYingFayun  = new ParameterizedTypeReference<Result<YingFayun>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingFayun>>> typeReferenceYingFayunPage  = new ParameterizedTypeReference<Result<Page<YingFayun>>>() {};
+
+
     public void createUser(String phone, String password) {
 
         final int HASH_INTERATIONS = 1024;

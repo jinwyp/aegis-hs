@@ -94,8 +94,8 @@ create table hs_ying_fayun (
   primary key (id)
 )engine=InnoDB default charset=utf8;
 
-alter table hs_ying_fayun add foreign key(orderId) references hs_ying_order(id);
-alter table hs_ying_fayun add foreign key(hsId)    references hs_ying_order_config(id);
+alter table hs_ying_fayun add foreign key(orderId) references hs_same_order(id);
+alter table hs_ying_fayun add foreign key(hsId)    references hs_same_order_config(id);
 
 
 -- 应收订单 - 付款:(主账务公司付给上游)
