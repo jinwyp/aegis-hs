@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 @Data
 public class PageCangChukuDTO extends BaseFilter<PageCangChukuDTO> {
 
-    private long orderId;
-    private long hsId;
+    private Long orderId;
+    private Long hsId;
     private LocalDateTime chukuDate;
     private BigDecimal chukuPrice;
-    private String locality;
+//    private String locality;
     private BigDecimal chukuAmount;
 
 }

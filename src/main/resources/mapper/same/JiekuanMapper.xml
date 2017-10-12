@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yimei.hs.same.mapper.JiekuanMapper">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.same.entity.Jiekuan">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="fukuanId" jdbcType="BIGINT" property="fukuanId"/>
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="hsId" jdbcType="BIGINT" property="hsId"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="capitalId" jdbcType="BIGINT" property="capitalId"/>
+        <result column="useInterest" jdbcType="DECIMAL" property="useInterest"/>
+        <result column="useDays" jdbcType="INTEGER" property="useDays"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+        <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, fukuanId, orderId, hsId, amount, capitalId, useInterest, useDays, deleted, tsc,
+        tsu
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_jiekuan
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+
+    <!-- 获取付款所关联的借款明细 todo -->
+    <select id="getListByFukuanId" resultType="com.yimei.hs.same.entity.Jiekuan">
+        SELECT *
+        FROM hs_same_jiekuan
+    </select>
+
+    <!-- 借款分页todo  -->
+    <select id="getPage" resultType="com.yimei.hs.same.entity.Jiekuan">
+        SELECT *
+        FROM hs_same_jiekuan
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM hs_same_jiekuan
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 逻辑删除 -->
+    <delete id="delete">
+        UPDATE hs_same_jiekuan
+        SET deleted = 1,
+            tsu     = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.yimei.hs.same.entity.Jiekuan">
+        INSERT INTO hs_same_jiekuan (id, fukuanId, orderId,
+                                     hsId, amount, capitalId,
+                                     useInterest, useDays, deleted,
+                                     tsc, tsu)
+        VALUES (#{id,jdbcType=BIGINT}, #{fukuanId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT},
+                                       #{hsId,jdbcType=BIGINT}, #{amount,jdbcType=DECIMAL},
+                                       #{capitalId,jdbcType=BIGINT},
+                                       #{useInterest,jdbcType=DECIMAL}, #{useDays,jdbcType=INTEGER},
+                                       #{deleted,jdbcType=BIT},
+                                       #{tsc,jdbcType=TIMESTAMP}, #{tsu,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.Jiekuan">
+        insert into hs_same_jiekuan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="fukuanId != null">
+                fukuanId,
+            </if>
+            <if test="orderId != null">
+                orderId,
+            </if>
+            <if test="hsId != null">
+                hsId,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="capitalId != null">
+                capitalId,
+            </if>
+            <if test="useInterest != null">
+                useInterest,
+            </if>
+            <if test="useDays != null">
+                useDays,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="tsc != null">
+                tsc,
+            </if>
+            <if test="tsu != null">
+                tsu,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="fukuanId != null">
+                #{fukuanId,jdbcType=BIGINT},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="hsId != null">
+                #{hsId,jdbcType=BIGINT},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="capitalId != null">
+                #{capitalId,jdbcType=BIGINT},
+            </if>
+            <if test="useInterest != null">
+                #{useInterest,jdbcType=DECIMAL},
+            </if>
+            <if test="useDays != null">
+                #{useDays,jdbcType=INTEGER},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+            <if test="tsc != null">
+                #{tsc,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tsu != null">
+                #{tsu,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.same.entity.Jiekuan">
+        update hs_same_jiekuan
+        <set>
+            <if test="fukuanId != null">
+                fukuanId = #{fukuanId,jdbcType=BIGINT},
+            </if>
+            <if test="orderId != null">
+                orderId = #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="hsId != null">
+                hsId = #{hsId,jdbcType=BIGINT},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="capitalId != null">
+                capitalId = #{capitalId,jdbcType=BIGINT},
+            </if>
+            <if test="useInterest != null">
+                useInterest = #{useInterest,jdbcType=DECIMAL},
+            </if>
+            <if test="useDays != null">
+                useDays = #{useDays,jdbcType=INTEGER},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+            <if test="tsc != null">
+                tsc = #{tsc,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tsu != null">
+                tsu = #{tsu,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.Jiekuan">
+        UPDATE hs_same_jiekuan
+        SET fukuanId    = #{fukuanId,jdbcType=BIGINT},
+            orderId     = #{orderId,jdbcType=BIGINT},
+            hsId        = #{hsId,jdbcType=BIGINT},
+            amount      = #{amount,jdbcType=DECIMAL},
+            capitalId   = #{capitalId,jdbcType=BIGINT},
+            useInterest = #{useInterest,jdbcType=DECIMAL},
+            useDays     = #{useDays,jdbcType=INTEGER},
+            deleted     = #{deleted,jdbcType=BIT},
+            tsc         = #{tsc,jdbcType=TIMESTAMP},
+            tsu         = #{tsu,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

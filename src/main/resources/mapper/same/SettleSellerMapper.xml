@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yimei.hs.same.mapper.SettleSellerMapper">
+
+    <resultMap id="BaseResultMap" type="com.yimei.hs.same.entity.SettleSeller">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="hsId" jdbcType="BIGINT" property="hsId"/>
+        <result column="settleDate" jdbcType="DATE" property="settleDate"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+        <result column="discountType" jdbcType="VARCHAR" property="discountType"/>
+        <result column="discountInterest" jdbcType="DECIMAL" property="discountInterest"/>
+        <result column="discountDays" jdbcType="INTEGER" property="discountDays"/>
+        <result column="discountAmount" jdbcType="DECIMAL" property="discountAmount"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, orderId, hsId, settleDate, amount, money, discountType, discountInterest, discountDays,
+        discountAmount, tsc
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_settle_upstream
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByOrderId" resultType="com.yimei.hs.same.entity.SettleSeller">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_settle_upstream
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 获取一页数据 -->
+    <select id="getPage" resultType="com.yimei.hs.same.entity.SettleSeller">
+        select
+        <include refid="Base_Column_List"/>
+        FROM hs_same_settle_upstream
+        <where>
+            <if test="orderId != null">AND orderId=#{orderId,jdbcType=BIGINT}</if>
+            <if test="hsId != null">AND hsId= #{hsId,jdbcType=BIGINT}</if>
+            <if test="settleDate != null">AND settleDate=#{settleDate,jdbcType=DATE}</if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM hs_same_settle_upstream
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 逻辑删除 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_same_settle_upstream
+        SET deleted = 1, tsu = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT};
+    </update>
+
+    <insert id="insert" parameterType="com.yimei.hs.same.entity.SettleSeller" keyProperty="id"
+            useGeneratedKeys="true">
+        INSERT INTO hs_same_settle_upstream (
+            id,
+            orderId,
+            hsId,
+            settleDate,
+            amount,
+            money,
+            discountType,
+            discountInterest,
+            discountDays,
+            discountAmount,
+            tsc)
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{hsId,jdbcType=BIGINT},
+            #{settleDate,jdbcType=DATE},
+            #{amount,jdbcType=DECIMAL},
+            #{money,jdbcType=DECIMAL},
+            #{discountType,jdbcType=VARCHAR},
+            #{discountInterest,jdbcType=DECIMAL},
+            #{discountDays,jdbcType=INTEGER},
+            #{discountAmount,jdbcType=DECIMAL},
+            #{tsc,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.SettleSeller" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into hs_same_settle_upstream
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="hsId != null">hsId,</if>
+            <if test="settleDate != null">settleDate,</if>
+            <if test="amount != null">amount,</if>
+            <if test="money != null">money,</if>
+            <if test="discountType != null">discountType,</if>
+            <if test="discountInterest != null">discountInterest,</if>
+            <if test="discountDays != null">discountDays,</if>
+            <if test="discountAmount != null">discountAmount,</if>
+            <if test="tsc != null">tsc,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
+            <if test="settleDate != null">#{settleDate,jdbcType=DATE},</if>
+            <if test="amount != null">#{amount,jdbcType=DECIMAL},</if>
+            <if test="money != null">#{money,jdbcType=DECIMAL},</if>
+            <if test="discountType != null">#{discountType,jdbcType=VARCHAR},</if>
+            <if test="discountInterest != null">#{discountInterest,jdbcType=DECIMAL},</if>
+            <if test="discountDays != null">#{discountDays,jdbcType=INTEGER},</if>
+            <if test="discountAmount != null">#{discountAmount,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.same.entity.SettleSeller">
+        update hs_same_settle_upstream
+        <set>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
+            <if test="settleDate != null">settleDate = #{settleDate,jdbcType=DATE},</if>
+            <if test="amount != null">amount = #{amount,jdbcType=DECIMAL},</if>
+            <if test="money != null">money = #{money,jdbcType=DECIMAL},</if>
+            <if test="discountType != null">discountType = #{discountType,jdbcType=VARCHAR},</if>
+            <if test="discountInterest != null">discountInterest = #{discountInterest,jdbcType=DECIMAL},</if>
+            <if test="discountDays != null">discountDays = #{discountDays,jdbcType=INTEGER},</if>
+            <if test="discountAmount != null">discountAmount = #{discountAmount,jdbcType=DECIMAL},</if>
+            <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="true">tsu = current_timestamp,</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.SettleSeller">
+        UPDATE hs_same_settle_upstream
+        SET orderId          = #{orderId,jdbcType=BIGINT},
+            hsId             = #{hsId,jdbcType=BIGINT},
+            settleDate       = #{settleDate,jdbcType=DATE},
+            amount           = #{amount,jdbcType=DECIMAL},
+            money            = #{money,jdbcType=DECIMAL},
+            discountType     = #{discountType,jdbcType=VARCHAR},
+            discountInterest = #{discountInterest,jdbcType=DECIMAL},
+            discountDays     = #{discountDays,jdbcType=INTEGER},
+            discountAmount   = #{discountAmount,jdbcType=DECIMAL},
+            tsc              = #{tsc,jdbcType=TIMESTAMP},
+            tsu              = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>
