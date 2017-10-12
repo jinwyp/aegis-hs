@@ -105,7 +105,7 @@ public class YingIntegrationA extends HsTestBase {
 //        fukuan();
 //        fayun();
 //        huikuan();
-//        jiekuan();
+        jiekuan();
         huankuan();
     }
 
@@ -590,19 +590,20 @@ public class YingIntegrationA extends HsTestBase {
 
     private void huankuan() throws JsonProcessingException {
         // 1. 添加还款
-        String huankuanCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/huankuans";
+        String huankuanCreateUrl = "/api/business/cang/" + yingOrderResult.getData().getId() + "/huankuans";
         Huankuan huankuan = new Huankuan() {{
 
-            // todo 陆彪
+
             List<HuankuanMap> hukuanMapList = new ArrayList<>();
             HuankuanMap map = new HuankuanMap();
             // map.setOrderId(1L);
             map.setPrincipal(new BigDecimal("510000"));
             map.setInterest(new BigDecimal("1700.02"));
-            map.setFee(new BigDecimal("560"));
+            map.setFee(new BigDecimal("570.0"));
+            map.setJiekuanId(jiekuanCreateResult.getData()
+            .getId());
 
             hukuanMapList.add(map);
-
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
             setHuankuankDate(stringToTime("2017-7-26"));

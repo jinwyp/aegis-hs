@@ -187,7 +187,7 @@ create table hs_same_huankuan_map (
   primary key (id)
 )engine=InnoDB default charset=utf8;
 alter table hs_same_huankuan_map add foreign key(huankuanId)  references hs_same_huankuan(id);
-alter table hs_same_huankuan_map add foreign key(jiekuanId)   references hs_same_fukuan(id);
+alter table hs_same_huankuan_map add foreign key(jiekuanId)   references hs_same_jiekuan(id);
 
 -- 回款
 create table hs_same_huikuan (

@@ -45,24 +45,24 @@ public class HuankuanService {
     }
 
     /**
-     * 创建还款时， 需要将还款与付款对应关系设置好
-     * @param yingHuankuan
+     * 创建还款时， 需要将还款与借款款对应关系设置好
+     * @param huankuan
      * @return
      */
     @Transactional(readOnly = false)
-    public int create(Huankuan yingHuankuan) {
+    public int create(Huankuan huankuan) {
 
         // 1. 插入还款记录
-        int rtn = huankuanMapper.insert(yingHuankuan);
-//        if (rtn != 1) {
-//            return 0;
-//        }
-//
-//        for (HuankuanMap map : yingHuankuan.getHuankuanMapList()) {
-//            map.setHuankuanId(yingHuankuan.getId());
-//            map.setOrderId(yingHuankuan.getOrderId());
-//            huankuanMapMapper.insert(map);
-//        }
+        int rtn = huankuanMapper.insert(huankuan);
+        if (rtn != 1) {
+            return 0;
+        }
+
+        for (HuankuanMap map : huankuan.getHuankuanMapList()) {
+            map.setHuankuanId(huankuan.getId());
+            map.setOrderId(huankuan.getOrderId());
+            huankuanMapMapper.insert(map);
+        }
         return rtn;
     }
 
