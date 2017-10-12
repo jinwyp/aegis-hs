@@ -10,9 +10,6 @@ import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, S
 })
 export class BSPaginationComponent implements OnInit, OnChanges {
 
-    /**
-     *  Number of pages.
-     */
     _totalPageCount: number = 1
 
     _pageArrayLeft :  number[] = []
@@ -188,6 +185,7 @@ export class BSPaginationComponent implements OnInit, OnChanges {
     changePage (event: any, pageNo: number, buttonName? : string) {
 
         event.stopPropagation()
+        event.preventDefault()
 
         if ( (buttonName === 'prev' && pageNo === 1)  || (buttonName === 'next' && pageNo === this._totalPageCount) || pageNo === this.page) {
             return  //disabled, active不会触发

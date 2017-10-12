@@ -1,0 +1,29 @@
+<div class="form-group row" >
+    <label class="{{labelClass}} col-form-label">{{label}}</label>
+    <div class="{{inputClass}} positionR" #optionsListEl>
+
+        <i class="fa fa-angle-down select_input_arrow" aria-hidden="true" [class.arrow_up]="isShowSelectOptionList"></i>
+        <!--<input type="text" class="form-control select_input" placeholder="{{prompt}}" [readonly]="!editable" [class.is-invalid]="error" [value]="interValueCurrentSelected.name" (click)="showOptions()" (keyup)="filterOptions($event)" >-->
+
+        <ul class="form-control multiSelect" (click)="showOptions()">
+            <li *ngFor="let item of interValueCurrentSelected">
+                <p class="badge badge-primary mb-0"><i class="fa fa-remove" (click)="deleteSelected(item) "></i>{{item.name}}</p>
+            </li>
+            <li class="inputLi">
+                <input type="text" #inputEl  [readonly]="!editable" [class.is-invalid]="error && (currentFormControl.dirty || dirty)"   (keyup)="filterOptions($event)" >
+            </li>
+        </ul>
+
+        <ul class="list-group options_box pr-0"  [class.d-none]="!isShowSelectOptionList">
+            <li *ngFor="let option of filterOptionList; let i = index" class="list-group-item" [class.selected]="contains(option)" [class.active]="i === currentSelectIndexByKeyboard" (click)="clickOption(option)">{{option.name}}</li>
+        </ul>
+
+        <div class="invalid-feedback" *ngIf="error && (currentFormControl.dirty || dirty)">
+            <span *ngIf="error"> {{error}} </span>
+            <span *ngIf="!error">
+                <span *ngIf="currentFormControl.hasError('required')"> 该项是必填项！</span>
+            </span>
+        </div>
+    </div>
+
+</div>

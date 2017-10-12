@@ -1,6 +1,3 @@
-.select_input {
-    padding-right: 20px;
-}
 .select_input_arrow {
     position: absolute;
     top : 5px;
@@ -8,11 +5,9 @@
     font-size: 2em;
     transition: transform 0.2s linear;
 }
-
 .arrow_up {
     transform: rotate(180deg);
 }
-
 .options_box {
     position: absolute;
     width: 96%;
@@ -25,12 +20,40 @@
     border-radius: 0;
     padding: 6px 1.25rem;
     height: 35px;
+
 }
 .options_box li:hover{
     background-color: #f1f1f1;
     cursor: pointer;
 }
+
+.options_box .selected{
+    background-color: #29ccf1;
+    color: white;
+}
 .options_box .active{
     background-color: #03b7f1!important;
     border-color: transparent;
+}
+
+.multiSelect{
+    margin-bottom: 0px;
+}
+
+.multiSelect li{
+    list-style: none;
+    display: inline-block;
+    margin-right: 2px;
+    margin-bottom: 2px;
+
+}
+
+.multiSelect li.inputLi input{
+    border:none;
+    outline: none;
+    width: 80px;
+}
+.fa-remove{
+    margin-right: 3px;
+    cursor: pointer;
 }
