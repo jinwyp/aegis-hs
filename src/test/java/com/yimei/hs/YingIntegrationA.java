@@ -103,8 +103,9 @@ public class YingIntegrationA extends HsTestBase {
 
 //        fukuan();
 //        fayun();
-        huikuan();
-        huankuan();
+//        huikuan();
+        jiekuan();
+//        huankuan();
     }
 
     public void order() throws JsonProcessingException {
@@ -542,7 +543,7 @@ public class YingIntegrationA extends HsTestBase {
             setJiekuanDate(stringToTime("20170706"));
             setCapitalId(1L);
             setAmount(new BigDecimal("510000.00"));
-            setUseDays();
+//            setUseDays();
 
         }};
         jiekuanCreateResult = client.exchange(jiekuanCreateUrl, HttpMethod.POST, new HttpEntity<>(jiekuan), typeReferenceJiekuan).getBody();
