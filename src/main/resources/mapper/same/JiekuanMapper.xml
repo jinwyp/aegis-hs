@@ -44,6 +44,23 @@
 
         </where>
     </select>
+    <select id="getListByJiekuanId" resultType="com.yimei.hs.same.entity.Jiekuan">
+        SELECT
+             jiekuan.id,
+             jiekuan.fukuanId,
+             jiekuan.orderId,
+             jiekuan.hsId,
+             jiekuan.amount,
+             jiekuan.capitalId,
+             jiekuan.useInterest,
+             jiekuan.useDays,
+             jiekuan.deleted,
+             jiekuan.tsc,
+             jiekuan.tsu
+        FROM hs_same_huankuan_map huankuannmap
+             LEFT JOIN hs_same_jiekuan jiekuan ON  jiekuan.id=huankuannmap.jiekuanId
+        where huankuannmap.huankuanId = #{huankuanId,jdbcType=BIGINT}
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_jiekuan

@@ -7,6 +7,7 @@ import com.yimei.hs.same.entity.HuankuanMap;
 import com.yimei.hs.same.mapper.FukuanMapper;
 import com.yimei.hs.same.mapper.HuankuanMapMapper;
 import com.yimei.hs.same.mapper.HuankuanMapper;
+import com.yimei.hs.same.mapper.JiekuanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,19 @@ public class HuankuanService {
     private FukuanMapper yingFukuanMapper;
 
     @Autowired
+    private JiekuanMapper jiekuanMapper;
+
+    @Autowired
     private LogService yingLogService;
 
     public Page<Huankuan> getPage(PageHuankuanDTO pageHuankuanDTO) {
-        return huankuanMapper.getPage(pageHuankuanDTO);
+        Page<Huankuan> pagehuankuans = huankuanMapper.getPage(pageHuankuanDTO);
+
+        for (Huankuan huankuan :pagehuankuans.getResults()){
+            huankuan.setJiekuanList(jiekuanMapper.getListByJiekuanId(huankuan.getId()));
+        }
+
+        return pagehuankuans;
     }
 
     public Huankuan findOne(long id) {

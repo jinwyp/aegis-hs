@@ -40,7 +40,7 @@
         t1.tsc
         from hs_same_huankuan t1
         LEFT JOIN hs_same_huankuan_map map on t1.id = map.huankuanId
-        LEFT JOIN hs_same_jiekuan t2 on map.fukuanId = t2.id
+        LEFT JOIN hs_same_jiekuan t2 on map.jiekuanId = t2.id
         <where>
             <if test="true">AND t1.deleted = 0</if>
             <if test="orderId!=null">AND t1.orderId=#{orderId}</if>

@@ -7,8 +7,11 @@ import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageSettleBuyerDTO;
+import com.yimei.hs.same.dto.PageSettleSellerDTO;
 import com.yimei.hs.same.entity.SettleBuyer;
+import com.yimei.hs.same.entity.SettleSeller;
 import com.yimei.hs.same.service.SettleBuyerService;
+import com.yimei.hs.same.service.SettleSellerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +35,36 @@ public class SettleBuyerController {
     @Autowired
     private SettleBuyerService settleBuyeService;
 
+    private boolean isValidReq(String pos, BusinessType businessType) {
+        return (
+                businessType.equals(BusinessType.ying) && pos.equals("downstream")
+                        ||
+                        (businessType.equals(BusinessType.cang) && pos.equals("upstream"))
+        );
+    }
+
     /**
      * 获取所有下游结算
      *
+     * @param pos pos-->downstream应收下游结算  upstream 仓押下游结算
      * @return
      */
-    @GetMapping("/{morderId}/settledownstream")
-    public ResponseEntity<Result<Page<SettleBuyer>>> list(
+    @GetMapping("/{morderId}/settle{pos}")
+    public ResponseEntity<Result<Page<SettleBuyer>>> listYingDownstream(
+            @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             PageSettleBuyerDTO pageSettleBuyerDTO
     ) {
         pageSettleBuyerDTO.setOrderId(morderId);
-        return Result.ok(settleBuyeService.getPage(pageSettleBuyerDTO));
+
+        if (isValidReq(pos, businessType)) {
+            return Result.ok(settleBuyeService.getPage(pageSettleBuyerDTO));
+        }
+
+        return Result.error(4001, "invalid request");
     }
+
 
     /**
      * 获取下游结算
@@ -53,20 +72,24 @@ public class SettleBuyerController {
      * @param id
      * @return
      */
-    @GetMapping("/{morderId}/settledownstream/{id}")
+    @GetMapping("/{morderId}/settle{pos}/{id}")
     public ResponseEntity<Result<SettleBuyer>> read(
+            @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
 
-        SettleBuyer settleDownstream = settleBuyeService.findOne(id);
-        if (settleDownstream == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
-        } else {
-            return Result.ok(settleDownstream);
-        }
+        if (isValidReq(pos, businessType)) {
 
+            SettleBuyer settleDownstream = settleBuyeService.findOne(id);
+            if (settleDownstream == null) {
+                return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            } else {
+                return Result.ok(settleDownstream);
+            }
+        }
+        return Result.error(4001, "invalid request");
     }
 
     /**
@@ -74,13 +97,18 @@ public class SettleBuyerController {
      *
      * @return
      */
-    @PostMapping("/{morderId}/settledownstream")
+    @PostMapping("/{morderId}/settle{pos}")
     public ResponseEntity<Result<SettleBuyer>> create(
+            @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(CreateGroup.class) SettleBuyer settleBuyer
     ) {
-        settleBuyeService.create(settleBuyer);
-        return Result.ok(settleBuyer);
+        if (isValidReq(pos, businessType)) {
+
+            settleBuyeService.create(settleBuyer);
+            return Result.ok(settleBuyer);
+        }
+        return Result.error(4001, "invalid request");
     }
 
     /**
@@ -88,21 +116,25 @@ public class SettleBuyerController {
      *
      * @return
      */
-    @PutMapping("/{morderId}/settledownstream/{id}")
+    @PutMapping("/{morderId}/settle{pos}/{id}")
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) SettleBuyer settleBuyer
     ) {
-        assert (settleBuyer.getOrderId() == morderId);
-        int rtn = settleBuyeService.update(settleBuyer);
-        if (rtn != 1) {
-            logger.error("更新失败: {}", settleBuyer);
-            return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
-        }
+        if (isValidReq(pos, businessType)) {
+            assert (settleBuyer.getOrderId() == morderId);
+            int rtn = settleBuyeService.update(settleBuyer);
+            if (rtn != 1) {
+                logger.error("更新失败: {}", settleBuyer);
+                return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+            }
 
-        return Result.ok(1);
+            return Result.ok(1);
+        }
+        return Result.error(4001, "invalid request");
     }
 
     /**
@@ -110,18 +142,22 @@ public class SettleBuyerController {
      *
      * @return
      */
-    @DeleteMapping("/{morderId}/settledownstream/{id}")
+    @DeleteMapping("/{morderId}/settle{pos}/{id}")
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
-        int rtn = settleBuyeService.delete(id);
-        if (rtn != 1) {
-            return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
-        }
+        if (isValidReq(pos, businessType)) {
+            int rtn = settleBuyeService.delete(id);
+            if (rtn != 1) {
+                return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
+            }
 
-        return Result.ok(1);
+            return Result.ok(1);
+        }
+        return Result.error(4001, "invalid request");
     }
 
 }

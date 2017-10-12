@@ -30,20 +30,33 @@ public class SettleSellerController {
     @Autowired
     private SettleSellerService settleSellerService;
 
+    private boolean isValidReq(String pos, BusinessType businessType) {
+        return (businessType.equals(BusinessType.ying) && pos.equals("upstream"))
+                || (businessType.equals(BusinessType.cang) && pos.equals("downstream")
+        );
+    }
+
     /**
      * 获取上游结算 - 分页
      *
      * @return
      */
-    @GetMapping("/{morderId}/settleupstream")
-    public ResponseEntity<Result<Page<SettleSeller>>> list(
+    @GetMapping("/{morderId}/settle{pos}")
+    public ResponseEntity<Result<Page<SettleSeller>>> listYingUpstream(
+            @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             PageSettleSellerDTO pageSettleSellerDTO) {
 
         pageSettleSellerDTO.setOrderId(morderId);
-        return Result.ok(settleSellerService.getPage(pageSettleSellerDTO));
+
+
+        if (isValidReq(pos, businessType)) {
+            return Result.ok(settleSellerService.getPage(pageSettleSellerDTO));
+        }
+        return Result.error(4001, "invalid request");
     }
+
 
     /**
      * 获取上游结算
@@ -51,19 +64,23 @@ public class SettleSellerController {
      * @param id
      * @return
      */
-    @GetMapping("/{morderId}/settleupstream/{id}")
+    @GetMapping("/{morderId}/settle{pos}/{id}")
     public ResponseEntity<Result<SettleSeller>> read(
             @PathVariable("businessType") BusinessType businessType,
+            @PathVariable("pos") String pos,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
 
-        SettleSeller settleUpstream = settleSellerService.findOne(id);
-        if (settleUpstream == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
-        } else {
-            return Result.ok(settleUpstream);
+        if (isValidReq(pos, businessType)) {
+            SettleSeller settleUpstream = settleSellerService.findOne(id);
+            if (settleUpstream == null) {
+                return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            } else {
+                return Result.ok(settleUpstream);
+            }
         }
+        return Result.error(4001, "invalid request");
     }
 
     /**
@@ -72,18 +89,22 @@ public class SettleSellerController {
      * @return
      */
 
-    @PostMapping("/{morderId}/settleupstream")
+    @PostMapping("/{morderId}/settle{pos}")
     public ResponseEntity<Result<SettleSeller>> create(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
+            @PathVariable("pos") String pos,
             @RequestBody @Validated(CreateGroup.class) SettleSeller settleSeller) {
         settleSeller.setOrderId(morderId);
-        int rtn = settleSellerService.create(settleSeller);
-        if (rtn != 1) {
-            logger.error("创建失败: {}", settleSeller);
-            return Result.error(4001, "创建失败");
+        if (isValidReq(pos, businessType)) {
+            int rtn = settleSellerService.create(settleSeller);
+            if (rtn != 1) {
+                logger.error("创建失败: {}", settleSeller);
+                return Result.error(4001, "创建失败");
+            }
+            return Result.ok(settleSeller);
         }
-        return Result.ok(settleSeller);
+        return Result.error(4001, "invalid request");
     }
 
     /**
@@ -91,21 +112,25 @@ public class SettleSellerController {
      *
      * @return
      */
-    @PutMapping("/{morderId}/settleupstream/{id}")
+    @PutMapping("/{morderId}/settle{pos}/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
+            @PathVariable("pos") String pos,
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) SettleSeller settleSeller
     ) {
 //        assert (orderId == settleSeller.getOrderId());
-        settleSeller.setId(id);
-        int rtn = settleSellerService.update(settleSeller);
-        if (rtn != 1) {
-            logger.error("更新失败: {}", settleSeller);
-            return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+        if (isValidReq(pos, businessType)) {
+            settleSeller.setId(id);
+            int rtn = settleSellerService.update(settleSeller);
+            if (rtn != 1) {
+                logger.error("更新失败: {}", settleSeller);
+                return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+            }
+            return Result.ok(1);
         }
-        return Result.ok(1);
+        return Result.error(4001, "invalid request");
     }
 
     /**
@@ -113,18 +138,22 @@ public class SettleSellerController {
      *
      * @return
      */
-    @DeleteMapping("/{morderId}/settleupstream/{id}")
+    @DeleteMapping("/{morderId}/settle{pos}/{id}")
     public ResponseEntity<Result<Integer>> update(
+            @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
-        int rtn = settleSellerService.delete(id);
-        if (rtn != 1) {
-            logger.error("删除失败: {}", id);
-            return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+        if (isValidReq(pos, businessType)) {
+            int rtn = settleSellerService.delete(id);
+            if (rtn != 1) {
+                logger.error("删除失败: {}", id);
+                return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+            }
+            return Result.ok(1);
         }
-        return Result.ok(1);
+        return Result.error(4001, "invalid request");
     }
 
 }
