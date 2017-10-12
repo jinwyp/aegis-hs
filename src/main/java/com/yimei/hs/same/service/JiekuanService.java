@@ -32,26 +32,18 @@ public class JiekuanService {
 
 
     /**
-     * 获取一页付款记录
+     * 获取一页借款记录
      *
      * @param pageJiekuanDTO
      * @return
      */
     public Page<Jiekuan> getPage(PageJiekuanDTO pageJiekuanDTO) {
-
-        // 1. 去除付款列表
         Page<Jiekuan> page = jiekuanMapper.getPage(pageJiekuanDTO);
-
-       
         return page;
     }
 
-
-
-
     /**
-     * 创建付款 - 触发 回款-付款-对应关系的建立
-     *
+     * 创建借款
      * @param fukuan
      * @return
      */
@@ -61,25 +53,32 @@ public class JiekuanService {
         return rtn;
     }
 
+    /**
+     * 查找借款
+     * @param id
+     * @return
+     */
     public Jiekuan findOne(long id) {
         return jiekuanMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     * 更新借款
+     * @param fukuan
+     * @return
+     */
     @Transactional(readOnly = false)
     public int update(Jiekuan fukuan) {
         return jiekuanMapper.updateByPrimaryKeySelective(fukuan);
     }
 
     /**
-     * 删除指定订单的付款记录， 这时候， 需要重建所有 回款-付款-map,  还款-付款-map
-     *
-     * @param orderId
+     * 删除借款记录
      * @param id
      * @return
      */
     @Transactional(readOnly = false)
-    public int delete(Long orderId, long id) {
-        // todo
+    public int delete(long id) {
         return jiekuanMapper.delete(id);
     }
 

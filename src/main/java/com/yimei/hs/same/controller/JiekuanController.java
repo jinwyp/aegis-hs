@@ -119,7 +119,7 @@ public class JiekuanController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
-        int rtn = jiekuanService.delete(morderId, id);
+        int rtn = jiekuanService.delete(id);
         if (rtn != 1) {
             return Result.error(4001, "更新失败");
         }

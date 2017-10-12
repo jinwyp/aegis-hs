@@ -88,12 +88,11 @@ public class HuankuanController {
         // 1. 找出当前订单借款记录 - 还款尚未对应完成的记录
         List<Jiekuan> jiekuans = jiekuanService.huankuanUnfinished(huankuan.getOrderId());
 
-        // 2. 校验 所有还款map明细的利息汇总校验
+        // 2. 校验所有还款map明细的利息汇总校验
         BigDecimal inTotal = huankuan.getHuankuanMapList()
                 .stream()
                 .map(HuankuanMap::getInterest)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
         if (inTotal.compareTo(huankuan.getHuankuanInterest()) != 0) {
             return Result.error(4001, "invalid request: 所有还款map明细的amount汇总校验");
         }
@@ -107,12 +106,14 @@ public class HuankuanController {
             return Result.error(4001, "invalid request: 所有还款map明细的本金汇总");
         }
 
+        // 4. 创建还款
         int rtn = huankuanService.create(huankuan);
         if (rtn != 1) {
             logger.error("创建失败: {}", huankuan);
             return Result.error(4001, "创建失败");
         }
         return Result.ok(huankuan);
+
     }
 
     /**

@@ -100,19 +100,38 @@ public class FukuanService {
      * @return
      */
     public List<Fukuan> huikuanUnfinished(long orderId) {
+
+        List<Fukuan> all = this.getAll(orderId);
+        for (Fukuan fukuan : all) {
+            List<HuikuanMap> huikuanMap = huikuanMapMapper.getListByFukuanId(fukuan.getId());
+            fukuan.setHuikuanMap(huikuanMap);
+        }
+        return this.getHuikuanUnifished(all);
+    }
+
+    private List<Fukuan> getAll(long orderId) {
         PageFukuanDTO dto = new PageFukuanDTO();
         dto.setPageSize(1000000000);
         dto.setPageNo(1);
         dto.setOrderId(orderId);
-
         Page<Fukuan> page = fukuanMapper.getPage(dto);
-        for (Fukuan fukuan : page.getResults()) {
-            List<HuikuanMap> huikuanMap = huikuanMapMapper.getListByFukuanId(fukuan.getId());
-            fukuan.setHuikuanMap(huikuanMap);
-        }
-        return this.getHuikuanUnifished(page.getResults());
+        return page.getResults();
     }
 
+
+    /**
+     *
+     * @param orderId
+     * @return
+     */
+    public List<Fukuan> jiekuanUnfinished(long orderId) {
+        List<Fukuan> all = this.getAll(orderId);
+        for (Fukuan fukuan : all) {
+            List<Jiekuan> jiekuanList = jiekuanMapper.getListByFukuanId(fukuan.getId());
+            fukuan.setJiekuanList(jiekuanList);
+        }
+        return this.getJiekuanUnfinshed(all);
+    }
 
     /**
      * 过滤付款列表: 返回付款没有被回款完的付款列表
@@ -123,7 +142,6 @@ public class FukuanService {
     private List<Fukuan> getHuikuanUnifished(List<Fukuan> fukuans) {
         List<Fukuan> filter = new ArrayList<>();
         for (Fukuan fukuan : fukuans) {
-
             // 计算此付款被回部分的总额
             List<HuikuanMap> huikuanMap = fukuan.getHuikuanMap();
             BigDecimal total = huikuanMap.stream().map(m -> m.getAmount()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
@@ -134,6 +152,16 @@ public class FukuanService {
             }
         }
         return filter;
+    }
+
+
+    /**
+     *
+     * @param fukuans
+     * @return
+     */
+    private List<Fukuan> getJiekuanUnfinshed(List<Fukuan> fukuans) {
+        return null;
     }
 
     /**

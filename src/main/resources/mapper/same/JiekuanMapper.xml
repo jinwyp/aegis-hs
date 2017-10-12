@@ -28,14 +28,20 @@
 
     <!-- 获取付款所关联的借款明细 todo -->
     <select id="getListByFukuanId" resultType="com.yimei.hs.same.entity.Jiekuan">
-        SELECT *
+        SELECT
+            id, fukuanId, orderId, hsId, amount, capitalId, useInterest, useDays, deleted, tsc, tsu
         FROM hs_same_jiekuan
+        where fukuanId = #{fukuanId,jdbcType=BIGINT}
     </select>
 
     <!-- 借款分页todo  -->
     <select id="getPage" resultType="com.yimei.hs.same.entity.Jiekuan">
-        SELECT *
+        SELECT
+            id, fukuanId, orderId, hsId, amount, capitalId, useInterest, useDays, deleted, tsc, tsu
         FROM hs_same_jiekuan
+        <where>
+
+        </where>
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

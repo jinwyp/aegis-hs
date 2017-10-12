@@ -19,22 +19,22 @@ public class LogService {
     private static final Logger logger = LoggerFactory.getLogger(LogService.class);
 
     @Autowired
-    private LogMapper yingLogMapper;
+    private LogMapper logMapper;
 
     public void log(Long orderId, Long hsId, String entityType, Long entityId, String memo) {
     }
 
     public Page<Log> getPage(PageLogDTO pageLogDTO) {
-        return yingLogMapper.getPage(pageLogDTO);
+        return logMapper.getPage(pageLogDTO);
     }
 
     @Transactional(readOnly = false)
-    public int create(Log yingLog) {
-        return yingLogMapper.insert(yingLog);
+    public int create(Log log) {
+        return logMapper.insert(log);
     }
 
     @Transactional(readOnly = false)
     public Log findOne(Long id) {
-        return yingLogMapper.selectByPrimaryKey(id);
+        return logMapper.selectByPrimaryKey(id);
     }
 }

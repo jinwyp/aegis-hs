@@ -19,7 +19,7 @@ public interface JiekuanMapper {
 
     int updateByPrimaryKey(Jiekuan record);
 
-    List<Jiekuan> getListByFukuanId(Long id);
+    List<Jiekuan> getListByFukuanId(Long fukuanId);
 
     Page<Jiekuan> getPage(PageJiekuanDTO pageJiekuanDTO);
 

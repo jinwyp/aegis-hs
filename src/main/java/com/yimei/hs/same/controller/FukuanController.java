@@ -31,10 +31,8 @@ public class FukuanController {
     @Autowired
     private FukuanService fukuanService;
 
-
     /**
-     * 获取所有huankuan
-     *
+     * 获取付款-分页
      * @return
      */
     @GetMapping("/{morderId}/fukuans")
@@ -43,10 +41,8 @@ public class FukuanController {
             @PathVariable("morderId") Long morderId,
             PageFukuanDTO pageFukuanDTO) {
 
-        //
-        if ( pageFukuanDTO.getHuikuanUnfinished() != null
-              && pageFukuanDTO.getHuikuanUnfinished()
-                ) {
+        // 不能同时指定借款与付款unfinished
+        if ( pageFukuanDTO.getHuikuanUnfinished() != null && pageFukuanDTO.getJiekuanUnfinished() ) {
             return Result.error(4001, "参数非法");
         }
 
@@ -57,8 +53,7 @@ public class FukuanController {
     }
 
     /**
-     * 获取huankuan
-     *
+     * 获取付款
      * @param id
      * @return
      */
@@ -77,8 +72,7 @@ public class FukuanController {
     }
 
     /**
-     * 创建huankuan
-     *
+     * 创建付款
      * @return
      */
     @PostMapping("/{morderId}/fukuans")
@@ -97,8 +91,7 @@ public class FukuanController {
     }
 
     /**
-     * 更新huankuan
-     *
+     * 删除付款
      * @return
      */
     @PutMapping("/{morderId}/fukuans/{id}")
@@ -118,8 +111,7 @@ public class FukuanController {
     }
 
     /**
-     * 更新付款
-     *
+     * 删除付款
      * @return
      */
     @DeleteMapping("/{morderId}/fukuans/{id}")
