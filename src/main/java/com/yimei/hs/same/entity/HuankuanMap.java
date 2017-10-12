@@ -21,7 +21,7 @@ public class HuankuanMap implements Serializable {
 
     private Long jiekuanId;
 
-    @NotNull(groups = {CreateGroup.class}, message = "付款记录不能为空")
+
     private Long huankuanId;
 
     @NotNull(groups = {CreateGroup.class}, message = "还款本金不能为空")

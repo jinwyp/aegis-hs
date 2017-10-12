@@ -5,11 +5,7 @@
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
-        <result column="skCompanyId" jdbcType="BIGINT" property="skCompanyId"/>
         <result column="huankuankDate" jdbcType="TIMESTAMP" property="huankuankDate"/>
-        <result column="huankuanPrincipal" jdbcType="DECIMAL" property="huankuanPrincipal"/>
-        <result column="huankuanInterest" jdbcType="DECIMAL" property="huankuanInterest"/>
-        <result column="huankuanFee" jdbcType="DECIMAL" property="huankuanFee"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
 
@@ -24,7 +20,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, skCompanyId, huankuankDate, huankuanPrincipal, huankuanInterest, huankuanFee, tsc, tsu
+        id, orderId, hsId,  huankuankDate, deleted,tsc, tsu
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -40,11 +36,7 @@
         t1.id,
         t1.orderId,
         t1.hsId,
-        t1.skCompanyId,
         t1.huankuankDate,
-        t1.huankuanPrincipal,
-        t1.huankuanInterest,
-        t1.huankuanFee,
         t1.tsc
         from hs_same_huankuan t1
         LEFT JOIN hs_same_huankuan_map map on t1.id = map.huankuanId
@@ -53,9 +45,7 @@
             <if test="true">AND t1.deleted = 0</if>
             <if test="orderId!=null">AND t1.orderId=#{orderId}</if>
             <if test="hsId!=null">AND t1.hsId=#{hsId}</if>
-            <if test="skCompanyId!=null">AND t1.skCompanyId=#{skCompanyId}</if>
             <if test="huankuanDate!=null">AND t1.huankuanDate=#{huankuanDate}</if>
-            <if test="huankuanPrincipal!=null">AND t1.huankuanPrincipal=#{huankuanPrincipal}</if>
         </where>
     </select>
 
@@ -65,11 +55,7 @@
             huankuan.id,
             huankuan.orderId,
             huankuan.hsId,
-            huankuan.skCompanyId,
             huankuan.huankuankDate,
-            huankuan.huankuanPrincipal,
-            huankuan.huankuanInterest,
-            huankuan.huankuanFee,
             huankuan.tsc,
             huankuan.tsu
         FROM hs_same_huankuan_map huankuanmap
@@ -96,11 +82,7 @@
             id,
             orderId,
             hsId,
-            skCompanyId,
             huankuankDate,
-            huankuanPrincipal,
-            huankuanInterest,
-            huankuanFee,
             tsc,
             tsu
         )
@@ -108,11 +90,7 @@
             #{id,jdbcType=BIGINT},
             #{orderId,jdbcType=BIGINT},
             #{hsId,jdbcType=BIGINT},
-            #{skCompanyId,jdbcType=BIGINT},
             #{huankuankDate,jdbcType=TIMESTAMP},
-            #{huankuanPrincipal,jdbcType=DECIMAL},
-            #{huankuanInterest,jdbcType=DECIMAL},
-            #{huankuanFee,jdbcType=DECIMAL},
             #{tsc,jdbcType=TIMESTAMP},
             current_timestamp
         )
@@ -125,22 +103,14 @@
             <if test="id != null">id,</if>
             <if test="orderId != null">orderId,</if>
             <if test="hsId != null">hsId,</if>
-            <if test="skCompanyId != null">skCompanyId,</if>
             <if test="huankuankDate != null">huankuankDate,</if>
-            <if test="huankuanPrincipal != null">huankuanPrincipal,</if>
-            <if test="huankuanInterest != null">huankuanInterest,</if>
-            <if test="huankuanFee != null">huankuanFee,</if>
             <if test="tsc != null">tsc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id,jdbcType=BIGINT},</if>
             <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
-            <if test="skCompanyId != null">#{skCompanyId,jdbcType=BIGINT},</if>
             <if test="huankuankDate != null">#{huankuankDate,jdbcType=TIMESTAMP},</if>
-            <if test="huankuanPrincipal != null">#{huankuanPrincipal,jdbcType=DECIMAL},</if>
-            <if test="huankuanInterest != null">#{huankuanInterest,jdbcType=DECIMAL},</if>
-            <if test="huankuanFee != null">#{huankuanFee,jdbcType=DECIMAL},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
@@ -150,11 +120,7 @@
         <set>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
-            <if test="skCompanyId != null">skCompanyId = #{skCompanyId,jdbcType=BIGINT},</if>
             <if test="huankuankDate != null">huankuankDate = #{huankuankDate,jdbcType=TIMESTAMP},</if>
-            <if test="huankuanPrincipal != null">huankuanPrincipal = #{huankuanPrincipal,jdbcType=DECIMAL},</if>
-            <if test="huankuanInterest != null">huankuanInterest = #{huankuanInterest,jdbcType=DECIMAL},</if>
-            <if test="huankuanFee != null">huankuanFee = #{huankuanFee,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
             <if test="true">tsu = current_timestamp</if>
         </set>
@@ -165,9 +131,7 @@
         UPDATE hs_same_huankuan
         SET orderId        = #{orderId,jdbcType=BIGINT},
             hsId           = #{hsId,jdbcType=BIGINT},
-            skCompanyId    = #{skCompanyId,jdbcType=BIGINT},
             huankuankDate  = #{huankuankDate,jdbcType=TIMESTAMP},
-            huankuanPrincipal = #{huankuanPrincipal,jdbcType=DECIMAL},
             tsc            = #{tsc,jdbcType=TIMESTAMP},
             tsu            = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}

@@ -34,21 +34,8 @@ public class Huankuan implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "核算月不能为空")
     private Long hsId;
 
-    @NotNull(groups = {CreateGroup.class}, message = "收款公司不能为空")
-    private Long skCompanyId;
-
     @NotNull(groups = {CreateGroup.class}, message = "还款日期不能为空")
     private LocalDateTime huankuankDate;
-
-    @Null(groups = {UpdateGroup.class}, message = "还款记录不能更新金额")
-    @NotNull(groups = {CreateGroup.class} ,message = "还款总额不能为空")
-    private BigDecimal huankuanPrincipal;
-
-    @NotNull(groups = {CreateGroup.class}, message = "还款利息不能为空")
-    private BigDecimal huankuanInterest;
-
-    @NotNull(groups = {CreateGroup.class}, message = "还款服务费不能为空")
-    private BigDecimal huankuanFee;
 
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
