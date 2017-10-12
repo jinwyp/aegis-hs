@@ -1,4 +1,4 @@
--- 应收订单表
+-- 订单表
 create table hs_same_order (
   id bigint(20)                    not null auto_increment,
   businessType varchar(32)         not null comment '业务线类型',
@@ -38,7 +38,6 @@ create table hs_same_order_party (
   tsu timestamp not null default current_timestamp,
   primary key (id)
 )engine=InnoDB default charset=utf8;
-
 alter table hs_same_order_party add foreign key(orderId)    references hs_same_order(id);
 alter table hs_same_order_party add foreign key(customerId) references hs_party(id);
 alter table hs_same_order_party add foreign key(orderId) references hs_same_order(id);
@@ -60,7 +59,7 @@ create table hs_same_order_config (
   primary key (id)
 )engine=InnoDB default charset=utf8;
 
--- 应收订单 - 费用
+-- 费用
 create table hs_same_fee (
   id bigint(20)              not null auto_increment,
   orderId bigint(20)         not null comment '订单id, 业务线id',
@@ -75,7 +74,7 @@ create table hs_same_fee (
 alter table hs_same_fee add foreign key(orderId) references hs_same_order(id);
 alter table hs_same_fee add foreign key(hsId)    references hs_same_order_config(id);
 
--- 应收订单 - 发票
+-- 发票
 create table hs_same_invoice (
   id bigint(20)                 not null auto_increment,
   orderId bigint(20)            not null comment '订单id, 业务线id',
@@ -94,7 +93,7 @@ alter table hs_same_invoice add foreign key(orderId)       references hs_same_or
 alter table hs_same_invoice add foreign key(hsId)          references hs_same_order_config(id);
 alter table hs_same_invoice add foreign key(openCompanyId) references hs_party(id);
 
--- 应收订单 - 发票明细
+-- 发票明细
 create table hs_same_invoice_detail (
   id bigint(20)              not null auto_increment,
   invoiceId bigint(20)       not null comment '发票记录id',
@@ -108,24 +107,6 @@ create table hs_same_invoice_detail (
   primary key (id)
 )engine=InnoDB default charset=utf8;;
 alter table hs_same_invoice_detail add foreign key(invoiceId) references hs_same_invoice(id);
-
--- 应收订单 - 运输方结算
-create table hs_same_settle_traffic (
-  id bigint(20)              not null auto_increment,
-  orderId bigint(20)         not null comment '订单id, 业务线id',
-  hsId bigint(20)            not null comment '核算月id',
-  settleDate date             not null comment '结算日期',
-  amount decimal(10, 2)       not null comment '结算数量(吨)',
-  money decimal(10, 2)        not null comment '结算金额',
-  trafficCompanyId bigint(20) not null comment '与哪个运输方结算',
-  deleted tinyint(1)               not null default 0 comment '是否删除',
-  tsc timestamp               not null default current_timestamp,
-  tsu timestamp not null default current_timestamp,
-  primary key (id)
-)engine=InnoDB default charset=utf8;
-alter table hs_same_settle_traffic add foreign key(orderId) references hs_same_order(id);
-alter table hs_same_settle_traffic add foreign key(hsId)    references hs_same_order_config(id);
-alter table hs_same_settle_traffic add foreign key(trafficCompanyId) references hs_party(id);
 
 -- 订单转移
 create table hs_same_transfer (
@@ -174,7 +155,7 @@ create table hs_same_jiekuan(
   primary key (id)
 )engine=InnoDB default charset=utf8;
 
--- 应收订单 - 还款
+-- 还款
 create table hs_same_huankuan (
   id bigint(20)           not null auto_increment,
   orderId bigint(20)      not null comment '订单id, 业务线id',
@@ -188,7 +169,7 @@ create table hs_same_huankuan (
 alter table hs_same_huankuan add foreign key(orderId) references hs_same_order(id);
 alter table hs_same_huankuan add foreign key(hsId)    references hs_same_order_config(id);
 
--- 应收订单 - 还款-借款-mapping
+-- 还款-借款-mapping
 create table hs_same_huankuan_map (
   id bigint(20)             not null auto_increment,
   orderId bigint(20)        not null comment '还款所属的业务线',
@@ -207,9 +188,7 @@ create table hs_same_huankuan_map (
 alter table hs_same_huankuan_map add foreign key(huankuanId)  references hs_same_huankuan(id);
 alter table hs_same_huankuan_map add foreign key(jiekuanId)   references hs_same_fukuan(id);
 
-
-
--- 应收订单 - 回款
+-- 回款
 create table hs_same_huikuan (
   id bigint(20)                    not null auto_increment,
   orderId bigint(20)               not null comment '订单id, 业务线id',
@@ -238,8 +217,7 @@ alter table hs_same_huikuan add foreign key(orderId)          references hs_same
 alter table hs_same_huikuan add foreign key(hsId)             references hs_same_order_config(id);
 alter table hs_same_huikuan add foreign key(huikuanCompanyId) references hs_party(id);
 
-
--- 应收订单 - 回款-付款-mapping
+--  回款-付款-mapping
 create table hs_same_huikuan_map (
   id bigint(20)         not null auto_increment,
   orderId bigint(20)    not null,
@@ -290,6 +268,24 @@ create table hs_same_settle_seller (
 )engine=InnoDB default charset=utf8;
 alter table hs_same_settle_seller add foreign key(orderId) references hs_same_order(id);
 alter table hs_same_settle_seller add foreign key(hsId)    references hs_same_order_config(id);
+
+-- 应收订单 - 运输方结算
+create table hs_same_settle_traffic (
+  id bigint(20)              not null auto_increment,
+  orderId bigint(20)         not null comment '订单id, 业务线id',
+  hsId bigint(20)            not null comment '核算月id',
+  settleDate date             not null comment '结算日期',
+  amount decimal(10, 2)       not null comment '结算数量(吨)',
+  money decimal(10, 2)        not null comment '结算金额',
+  trafficCompanyId bigint(20) not null comment '与哪个运输方结算',
+  deleted tinyint(1)               not null default 0 comment '是否删除',
+  tsc timestamp               not null default current_timestamp,
+  tsu timestamp not null default current_timestamp,
+  primary key (id)
+)engine=InnoDB default charset=utf8;
+alter table hs_same_settle_traffic add foreign key(orderId) references hs_same_order(id);
+alter table hs_same_settle_traffic add foreign key(hsId)    references hs_same_order_config(id);
+alter table hs_same_settle_traffic add foreign key(trafficCompanyId) references hs_party(id);
 
 -- 修改记录
 create table hs_same_log (
