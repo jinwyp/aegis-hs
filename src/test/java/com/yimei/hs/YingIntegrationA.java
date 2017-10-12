@@ -478,7 +478,7 @@ public class YingIntegrationA extends HsTestBase {
         }
     }
 
-    private void huikuan()throws JsonProcessingException{
+    private void huikuan() throws JsonProcessingException {
 
         // 1. 添加回款
         String huikuanCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/huikuans";
@@ -532,7 +532,7 @@ public class YingIntegrationA extends HsTestBase {
 
     }
 
-    private void jiekuan()throws JsonProcessingException{
+    private void jiekuan() throws JsonProcessingException {
 
         // 1. 添加回款
         String jiekuanCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans";
@@ -543,7 +543,8 @@ public class YingIntegrationA extends HsTestBase {
             setJiekuanDate(stringToTime("20170706"));
             setCapitalId(1L);
             setAmount(new BigDecimal("510000.00"));
-//            setUseDays();
+            setUseDays(35);
+            setUseInterest(new BigDecimal("7.50"));
 
         }};
         jiekuanCreateResult = client.exchange(jiekuanCreateUrl, HttpMethod.POST, new HttpEntity<>(jiekuan), typeReferenceJiekuan).getBody();
@@ -585,10 +586,12 @@ public class YingIntegrationA extends HsTestBase {
         }
 
     }
-    private void huankuan() throws  JsonProcessingException{
+
+    private void huankuan() throws JsonProcessingException {
 
     }
-    private void  fayun() throws JsonProcessingException{
+
+    private void fayun() throws JsonProcessingException {
 
         // 1. 添加发运
         String fayunCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fayuns";
@@ -640,6 +643,7 @@ public class YingIntegrationA extends HsTestBase {
             System.exit(-1);
         }
     }
+
     public void ruku() throws JsonProcessingException {
 
         // 1. 添加入库
@@ -709,6 +713,7 @@ public class YingIntegrationA extends HsTestBase {
         }
 
     }
+
     public void chuku() throws JsonProcessingException {
 
         // 1. 添加入库
@@ -752,7 +757,7 @@ public class YingIntegrationA extends HsTestBase {
         Result<Page<CangChuku>> cangChukuPageResult = client.exchange(chukuPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceCangChukuPage, chukuVariables).getBody();
 
         if (cangChukuPageResult.getSuccess()) {
-            logger.info("创建仓押出库分页成功\n GET {}\nrequest = {}\nresponse = {}", chukuPageUrl,"", printJson(cangChukuPageResult.getData()));
+            logger.info("创建仓押出库分页成功\n GET {}\nrequest = {}\nresponse = {}", chukuPageUrl, "", printJson(cangChukuPageResult.getData()));
         } else {
             logger.info("创建仓押出库分页失败: {}", chukuCreateResult.getError());
             System.exit(-1);
@@ -784,7 +789,7 @@ public class YingIntegrationA extends HsTestBase {
         }
     }
 
-    private void fukuan() throws JsonProcessingException{
+    private void fukuan() throws JsonProcessingException {
         // 1. 添加付款
         String fukuanCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fukuans";
         Fukuan yingFukuan = new Fukuan() {{
