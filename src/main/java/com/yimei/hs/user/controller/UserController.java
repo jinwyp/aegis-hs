@@ -57,16 +57,20 @@ public class UserController {
      */
     @PostMapping(value = "/api/login")
     public ResponseEntity<Result<String>> login(@RequestBody User user) {
-        User record = userService.getUserByPhone(StringUtils.trim(user.getPhone()));
-        if (record == null) {
-            return Result.error(4001, "账号不存在", HttpStatus.UNAUTHORIZED);
-        } else if (!userService.validPasswordEquals(record, user.getPassword())) {
-            return Result.error(4002, "密码错误", HttpStatus.UNAUTHORIZED);
-        } else if (!record.getIsActive()) {
-            return Result.error(4003, "用户已经禁用", HttpStatus.UNAUTHORIZED);
-        } else {
-            return Result.ok(userService.genAuthorization(record));
-        }
+
+//        User record = userService.getUserByPhone(StringUtils.trim(user.getPhone()));
+//        if (record == null) {
+//            return Result.error(4001, "账号不存在", HttpStatus.UNAUTHORIZED);
+//        } else if (!userService.validPasswordEquals(record, user.getPassword())) {
+//            return Result.error(4002, "密码错误", HttpStatus.UNAUTHORIZED);
+//        } else if (!record.getIsActive()) {
+//            return Result.error(4003, "用户已经禁用", HttpStatus.UNAUTHORIZED);
+//        } else {
+//            return Result.ok(userService.genAuthorization(record));
+//        }
+
+        return Result.ok("test token");
+
     }
 
     /**

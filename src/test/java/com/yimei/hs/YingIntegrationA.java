@@ -297,6 +297,11 @@ public class YingIntegrationA extends HsTestBase {
         }
     }
 
+    private void buyer() throws JsonProcessingException {
+    }
+
+    private void seller() throws JsonProcessingException {
+    }
 
     private void traffic() throws JsonProcessingException {
 
