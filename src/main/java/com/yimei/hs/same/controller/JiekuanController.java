@@ -57,7 +57,7 @@ public class JiekuanController {
     public ResponseEntity<Result<Jiekuan>> read(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
-            @PathVariable("id") long id
+            @PathVariable("id") Long id
     ) {
         Jiekuan fukuan = jiekuanService.findOne(id);
         if (fukuan == null) {

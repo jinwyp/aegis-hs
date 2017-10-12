@@ -38,7 +38,7 @@
     <!-- 借款分页todo  -->
     <select id="getPage" resultType="com.yimei.hs.same.entity.Jiekuan">
         SELECT
-            id, fukuanId, orderId, hsId, amount, capitalId, useInterest, useDays, deleted, tsc, tsu
+        id, fukuanId, orderId, hsId, amount, capitalId, useInterest, useDays, deleted, tsc, tsu
         FROM hs_same_jiekuan
         <where>
 
@@ -58,20 +58,34 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insert" parameterType="com.yimei.hs.same.entity.Jiekuan">
-        INSERT INTO hs_same_jiekuan (id, fukuanId, orderId,
-                                     hsId, amount, capitalId,
-                                     useInterest, useDays, deleted,jiekuanDate,
-                                     tsc, tsu)
-        VALUES (#{id,jdbcType=BIGINT}, #{fukuanId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT},
-                                       #{hsId,jdbcType=BIGINT}, #{amount,jdbcType=DECIMAL},
-                                       #{capitalId,jdbcType=BIGINT},
-                                       #{useInterest,jdbcType=DECIMAL}, #{useDays,jdbcType=INTEGER},
-                                       #{deleted,jdbcType=BIT},
-                                       #{jiekuanDate,jdbcType=TIMESTAMP},
-                                       #{tsc,jdbcType=TIMESTAMP}, #{tsu,jdbcType=TIMESTAMP})
+    <insert id="insert" parameterType="com.yimei.hs.same.entity.Jiekuan" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO hs_same_jiekuan (
+        id,
+        fukuanId,
+        orderId,
+        hsId ,
+        amount,
+        capitalId,
+        useInterest,
+        useDays,
+        jiekuanDate,
+        tsc,
+        tsu
+        )VALUES (
+        #{id,jdbcType=BIGINT},
+        #{fukuanId,jdbcType=BIGINT},
+        #{orderId,jdbcType=BIGINT},
+        #{hsId,jdbcType=BIGINT},
+        #{amount,jdbcType=DECIMAL},
+        #{capitalId,jdbcType=BIGINT},
+        #{useInterest,jdbcType=DECIMAL},
+        #{useDays,jdbcType=INTEGER},
+
+        #{jiekuanDate,jdbcType=TIMESTAMP},
+        #{tsc,jdbcType=TIMESTAMP},
+        #{tsu,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.Jiekuan">
+    <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.Jiekuan" useGeneratedKeys="true" keyProperty="id">
         insert into hs_same_jiekuan
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -98,14 +112,11 @@
             <if test="useDays != null">
                 useDays,
             </if>
-            <if test="deleted != null">
-                deleted,
-            </if>
+
             <if test="jiekuanDate != null">
                 jiekuanDate,
             </if>
             <if test="tsc != null">
-                tsc,
             </if>
             <if test="tsu != null">
                 tsu,
@@ -135,9 +146,6 @@
             </if>
             <if test="useDays != null">
                 #{useDays,jdbcType=INTEGER},
-            </if>
-            <if test="deleted != null">
-                #{deleted,jdbcType=BIT},
             </if>
             <if test="jiekuanDate != null">
                 #{jiekuanDate,jdbcType=TIMESTAMP},
