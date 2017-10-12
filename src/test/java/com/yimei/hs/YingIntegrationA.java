@@ -102,8 +102,8 @@ public class YingIntegrationA extends HsTestBase {
 //        chuku();
 
 //        fukuan();
-        fayun();
-//        huikuan();
+//        fayun();
+        huikuan();
     }
 
     public void order() throws JsonProcessingException {

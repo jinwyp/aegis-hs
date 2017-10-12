@@ -78,10 +78,6 @@
             t2.receiveCompanyId,
             t2.payUsage,
             t2.payAmount,
-            t2.payMode,
-            t2.capitalId,
-            t2.useInterest,
-            t2.useDays,
             t2.tsc     AS t2tsc,
 
             map.amount
@@ -143,10 +139,6 @@
         fukuan.receiveCompanyId,
         fukuan.payUsage,
         fukuan.payAmount,
-        fukuan.payMode,
-        fukuan.capitalId,
-        fukuan.useInterest,
-        fukuan.useDays,
         fukuan.tsc,
         fukuan.tsu
         FROM hs_same_huikuan_map map
