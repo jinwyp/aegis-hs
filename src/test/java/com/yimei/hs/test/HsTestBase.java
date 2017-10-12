@@ -102,6 +102,15 @@ abstract public class HsTestBase {
     protected ParameterizedTypeReference<Result<Page<CangChuku>>> typeReferenceCangChukuPage  = new ParameterizedTypeReference<Result<Page<CangChuku>>>() {};
 
 
+    protected ParameterizedTypeReference<Result<SettleBuyer>> typeReferenceSettleBuyer  = new ParameterizedTypeReference<Result<SettleBuyer>>() {};
+    protected ParameterizedTypeReference<Result<Page<SettleBuyer>>> typeReferenceSettleBuyerPage  = new ParameterizedTypeReference<Result<Page<SettleBuyer>>>() {};
+
+
+
+    protected ParameterizedTypeReference<Result<SettleSeller>> typeReferenceSettleSeller  = new ParameterizedTypeReference<Result<SettleSeller>>() {};
+    protected ParameterizedTypeReference<Result<Page<SettleSeller>>> typeReferenceSettleSellerPage  = new ParameterizedTypeReference<Result<Page<SettleSeller>>>() {};
+
+
 
     public void createUser(String phone, String password) {
 

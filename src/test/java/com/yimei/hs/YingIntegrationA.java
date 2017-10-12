@@ -9,10 +9,7 @@ import com.yimei.hs.cang.dto.PageCangRukuDTO;
 import com.yimei.hs.cang.entity.CangChuku;
 import com.yimei.hs.cang.entity.CangRuku;
 import com.yimei.hs.enums.*;
-import com.yimei.hs.same.dto.PageFeeDTO;
-import com.yimei.hs.same.dto.PageOrderConfigDTO;
-import com.yimei.hs.same.dto.PageOrderDTO;
-import com.yimei.hs.same.dto.PageSettleTrafficDTO;
+import com.yimei.hs.same.dto.*;
 import com.yimei.hs.same.entity.*;
 import com.yimei.hs.test.HsTestBase;
 import com.yimei.hs.user.entity.Dept;
@@ -83,11 +80,15 @@ public class YingIntegrationA extends HsTestBase {
     Result<Fee> feeFindResult = null;
     Result<SettleTraffic> trafficCreateResult = null;
 
-//    Result<SettleDownstream> downstreamCreateResult = null;
-//    Result<SettleUpstream> upstreamCreateResult = null;
-//    Result<Fukuan> fukuanResult = null;
-//    Result<Huankuan> huankuanCreateResult = null;
-//    Result<Huikuan> huikuanCreateResult = null;
+    Result<SettleBuyer> settleBuyerCreateResult = null;
+    Result<SettleSeller> settleSellerCreateResult = null;
+
+    Result<Fukuan> fukuanResult = null;
+    Result<Huankuan> huankuanCreateResult = null;
+    Result<Huikuan> huikuanCreateResult = null;
+
+        Result<Jiekuan> jiekuanCreateResult = null;
+
 //    Result<Fayun> fayunCreateResult = null;
 
     @Test
@@ -298,9 +299,116 @@ public class YingIntegrationA extends HsTestBase {
     }
 
     private void buyer() throws JsonProcessingException {
+        // 1. 添加下游结算
+        String downstreamCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settledownstream";
+        SettleBuyer downstream = new SettleBuyer(
+        ) {{
+            setAmount(new BigDecimal("1510.61"));
+            setMoney(new BigDecimal("55968.26"));
+            setHsId(yingOrderConfigResult.getData().getId());
+            setOrderId(yingOrderResult.getData().getId());
+            setSettleDate(stringToTime("2017-07-07"));
+
+            setSettleGap(new BigDecimal("0"));
+        }};
+        settleBuyerCreateResult = client.exchange(downstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(downstream), typeReferenceSettleBuyer).getBody();
+        if (settleBuyerCreateResult.getSuccess()) {
+            logger.info("创建下游结算成功\nPOST {}\nrequest = {}\nresponse = {}", downstreamCreateUrl, printJson(downstream), printJson(settleBuyerCreateResult.getData()));
+        } else {
+            logger.info("创建下游结算失败: {}", settleBuyerCreateResult.getError());
+            System.exit(-1);
+        }
+
+        // 2. 分页
+        String downstreamPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settledownstream?" + WebUtils.getUrlTemplate(PageSettleBuyerDTO.class);
+        Map<String, Object> downstreamVariables = WebUtils.getUrlVariables(PageSettleBuyerDTO.class);
+        downstreamVariables.put("orderId", yingOrderResult.getData().getId());
+        downstreamVariables.put("pageSize", 5);
+        downstreamVariables.put("pageNo", 1);
+
+
+        Result<Page<SettleBuyer>> downstreamPageResult = client.exchange(downstreamPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleBuyerPage, downstreamVariables).getBody();
+        if (downstreamPageResult.getSuccess()) {
+            logger.info("下游结算分页成功\nGET {}\nrequest = {}\nresponse = {}", downstreamPageUrl, "", printJson(downstreamPageResult.getData()));
+        } else {
+            logger.info("下游结算分页失败: {}", downstreamPageResult.getError());
+            System.exit(-1);
+        }
+
+        // 3. id查询
+
+        String downstreamFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settledownstream/" + settleBuyerCreateResult.getData().getId();
+        Result<SettleBuyer> downstreamFindResult = client.exchange(downstreamFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleBuyer).getBody();
+        if (downstreamFindResult.getSuccess()) {
+            logger.info("下游结算查询成功\n Get {}\nrequest = {}\nresponse = {}", downstreamFindUrl, "", printJson(downstreamFindResult.getData()));
+        } else {
+            logger.info("下游结算查询失败: {}", downstreamFindResult.getError());
+            System.exit(-1);
+        }
+
+        // 4. 更新 todo
     }
 
     private void seller() throws JsonProcessingException {
+        // 1. 添加上游结算
+
+        String upstreamCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settleupstream";
+        SettleSeller upstream = new SettleSeller() {
+            {
+                setOrderId(yingOrderResult.getData().getId());
+                setHsId(yingOrderConfigResult.getData().getId());
+                setSettleDate(stringToTime("2017-8-4"));
+                setMoney(new BigDecimal("565994.59"));
+                setDiscountType(DiscountMode.NO_DISCOUNT);
+                setAmount(new BigDecimal("1510.61"));
+            }
+        };
+
+        settleSellerCreateResult = client.exchange(upstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(upstream), typeReferenceSettleSeller).getBody();
+        if (settleSellerCreateResult.getSuccess()) {
+            logger.info("创建上游结算成功\nPOST {}\nrequest = {}\nresponse = {}", upstreamCreateUrl, printJson(upstream), printJson(settleSellerCreateResult.getData()));
+        } else {
+            logger.info("创建上游结算失败: {}", settleSellerCreateResult.getError());
+            System.exit(-1);
+        }
+
+        // 2. 分页
+        String upstreamPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settleupstream?" + WebUtils.getUrlTemplate(PageSettleSellerDTO.class);
+
+        Map<String, Object> upstreamVariables = WebUtils.getUrlVariables(PageSettleSellerDTO.class);
+        upstreamVariables.put("orderId", yingOrderResult.getData().getId());
+        upstreamVariables.put("pageSize", 5);
+        upstreamVariables.put("pageNo", 1);
+
+        Result<Page<SettleSeller>> upstreamPageResult = client.exchange(upstreamPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleSellerPage, upstreamVariables).getBody();
+        if (upstreamPageResult.getSuccess()) {
+            logger.info("创建分页成功\nGET {}\nrequest = {}\nresponse = {}", upstreamPageUrl, "", printJson(upstreamPageResult.getData()));
+        } else {
+            logger.info("创建分页失败: {}", upstreamPageResult.getError());
+            System.exit(-1);
+        }
+
+        // 3. id 查询
+        String upstreamFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settleupstream/" + settleSellerCreateResult.getData().getId();
+        Result<SettleSeller> upstreamFindResult = client.exchange(upstreamFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleSeller).getBody();
+        if (upstreamFindResult.getSuccess()) {
+            logger.info("上游结算成功\nGET {}\nrequest = {}\nresponse = {}", upstreamFindUrl, "", printJson(upstreamFindResult.getData()));
+        } else {
+            logger.info("上游结算失败: {}", upstreamFindResult.getError());
+            System.exit(-1);
+        }
+
+        // 4. 更新
+        String fayunUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settleupstream/" + settleSellerCreateResult.getData().getId();
+        upstream.setAmount(new BigDecimal("9999"));
+        upstream.setId(settleSellerCreateResult.getData().getId());
+        Result<Integer> upstreamUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<SettleSeller>(upstream), typeReferenceInteger).getBody();
+        if (upstreamUpdateResult.getSuccess()) {
+            logger.info("更新上游结算成功\nPOST {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(upstream), printJson(upstreamUpdateResult.getData()));
+        } else {
+            logger.error("更新上游结算失败: {}", upstreamUpdateResult.getError());
+            System.exit(-2);
+        }
     }
 
     private void traffic() throws JsonProcessingException {
@@ -509,6 +617,19 @@ public class YingIntegrationA extends HsTestBase {
         } else {
             logger.error("更新仓押出库失败: {}", yingChukuUpdateResult.getError());
             System.exit(-2);
+        }
+    }
+
+    /**
+     * @param strData 格式Y
+     * @return
+     */
+    public LocalDateTime stringToTime(String strData) {
+        try {
+            String[] data = strData.split("-");
+            return LocalDateTime.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]), 0, 0, 0);
+        } catch (Exception e) {
+            return LocalDateTime.now();
         }
     }
 }
