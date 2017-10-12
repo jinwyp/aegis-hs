@@ -31,10 +31,8 @@ public class FukuanController {
     @Autowired
     private FukuanService fukuanService;
 
-
     /**
-     * 获取所有huankuan
-     *
+     * 获取付款-分页
      * @return
      */
     @GetMapping("/{morderId}/fukuans")
@@ -43,10 +41,8 @@ public class FukuanController {
             @PathVariable("morderId") Long morderId,
             PageFukuanDTO pageFukuanDTO) {
 
-        //
-        if ( pageFukuanDTO.getHuikuanUnfinished() != null
-              && pageFukuanDTO.getHuikuanUnfinished()
-                ) {
+        // 不能同时指定借款与付款unfinished
+        if ( pageFukuanDTO.getHuikuanUnfinished() != null && pageFukuanDTO.getJiekuanUnfinished() ) {
             return Result.error(4001, "参数非法");
         }
 
@@ -57,8 +53,7 @@ public class FukuanController {
     }
 
     /**
-     * 获取huankuan
-     *
+     * 获取付款
      * @param id
      * @return
      */
@@ -77,28 +72,26 @@ public class FukuanController {
     }
 
     /**
-     * 创建huankuan
-     *
+     * 创建付款
      * @return
      */
     @PostMapping("/{morderId}/fukuans")
     public ResponseEntity<Result<Fukuan>> create(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
-            @RequestBody @Validated(CreateGroup.class) Fukuan yingFukuan
+            @RequestBody @Validated(CreateGroup.class) Fukuan fukuan
     ) {
-        yingFukuan.setOrderId(morderId);
-        int rtn = fukuanService.create(yingFukuan);
+        fukuan.setOrderId(morderId);
+        int rtn = fukuanService.create(fukuan);
         if (rtn != 1) {
-            logger.error("创建失败: {}", yingFukuan);
+            logger.error("创建失败: {}", fukuan);
             return Result.error(4001, "创建失败");
         }
-        return Result.ok(yingFukuan);
+        return Result.ok(fukuan);
     }
 
     /**
-     * 更新huankuan
-     *
+     * 删除付款
      * @return
      */
     @PutMapping("/{morderId}/fukuans/{id}")
@@ -106,11 +99,11 @@ public class FukuanController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
-            @RequestBody @Validated(UpdateGroup.class) Fukuan yingFukuan
+            @RequestBody @Validated(UpdateGroup.class) Fukuan fukuan
     ) {
-        assert (yingFukuan.getOrderId() == morderId);
-        yingFukuan.setId(id);
-        int rtn = fukuanService.update(yingFukuan);
+        assert (fukuan.getOrderId() == morderId);
+        fukuan.setId(id);
+        int rtn = fukuanService.update(fukuan);
         if (rtn != 1) {
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
         }
@@ -118,8 +111,7 @@ public class FukuanController {
     }
 
     /**
-     * 更新付款
-     *
+     * 删除付款
      * @return
      */
     @DeleteMapping("/{morderId}/fukuans/{id}")

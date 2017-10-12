@@ -85,7 +85,7 @@ public class YingIntegrationA extends HsTestBase {
     Result<Huankuan> huankuanCreateResult = null;
     Result<Huikuan> huikuanCreateResult = null;
 
-        Result<Jiekuan> jiekuanCreateResult = null;
+    Result<Jiekuan> jiekuanCreateResult = null;
 
     Result<YingFayun> fayunCreateResult = null;
 
