@@ -42,15 +42,11 @@ public class OrderService {
 
     /**
      * 获取一页订单
-     *
      * @param pageOrderDTO
      * @return
      */
     public Page<Order> getPage(PageOrderDTO pageOrderDTO) {
-
-
         Page<Order> orderPage = orderMapper.getPage(pageOrderDTO);
-
         for (Order order : orderPage.getResults()) {
             order.setOrderPartyList(orderPartyMapper.getList(order.getId()));
             order.setOrderConfigList(orderConfigMapper.getList(order.getId()));
@@ -60,7 +56,6 @@ public class OrderService {
 
     /**
      * 获取指定订单
-     *
      * @param id
      * @return
      */
@@ -70,7 +65,6 @@ public class OrderService {
 
     /**
      * 创建订单
-     *
      * @param order
      * @return
      */
@@ -83,11 +77,8 @@ public class OrderService {
         if (rtn == 0) {
             return 0;
         }
-
         List<OrderConfig> configList = order.getOrderConfigList();
-
         List<OrderParty> partyList = order.getOrderPartyList();
-
         int failed = 0;
 
         // 插入参与方
@@ -120,7 +111,6 @@ public class OrderService {
 
     /**
      * 更新订单
-     *
      * @param record
      * @return
      */
@@ -146,7 +136,6 @@ public class OrderService {
 
     /**
      * ownerId是否拥有orderId
-     *
      * @param ownerId
      * @param orderId
      * @return
@@ -157,7 +146,6 @@ public class OrderService {
 
     /**
      * 逻辑删除
-     *
      * @param id
      * @return
      */

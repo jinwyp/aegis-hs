@@ -59,10 +59,7 @@ public class FukuanService {
         // 1. 去除付款列表
         Page<Fukuan> page = fukuanMapper.getPage(pageFukuanDTO);
 
-        // 2. 对每一笔付款，
-        // 关联: 回款列表
-        //       回款map明细
-        //       借款列表
+        // 2. 对每一笔付款， 关联回款列表, 回款map明细
         for (Fukuan fukuan : page.getResults()) {
             // 关联回款列表
             List<Huikuan> huikuanList = huikuanMapper.getListByFukuanID(fukuan.getId());
@@ -77,25 +74,21 @@ public class FukuanService {
             fukuan.setJiekuanList(jiekuanList);
         }
 
-        if (
-                pageFukuanDTO.getHuikuanUnfinished() != null
-                        && pageFukuanDTO.getHuikuanUnfinished()
-                ) {
+        // 如果只需要回款尚未完成的付款， 则过滤
+        if ( pageFukuanDTO.getHuikuanUnfinished() != null && pageFukuanDTO.getHuikuanUnfinished() ) {
             page.setResults(this.getHuikuanUnifished(page.getResults()));
         }
 
-//        if (pageFukuanDTO.getJiekuanUnfinished() != null
-//                && pageFukuanDTO.getJiekuanUnfinished()
-//                ) {
-//            page.setResults(this.getHuankuanUnfinished(page.getResults()));
-//        }
+        // 如果只需要借款尚未填充完毕的， 则过滤
+        if (pageFukuanDTO.getJiekuanUnfinished() != null && pageFukuanDTO.getJiekuanUnfinished() ) {
+            page.setResults(this.getJiekuanUnfinshed(page.getResults()));
+        }
 
         return page;
     }
 
     /**
      * 找出当前订单的付款列表: (条件为: 回款尚未回完的付款)
-     *
      * @param orderId
      * @return
      */
@@ -109,6 +102,11 @@ public class FukuanService {
         return this.getHuikuanUnifished(all);
     }
 
+    /**
+     * 获取订单的所有付款
+     * @param orderId
+     * @return
+     */
     private List<Fukuan> getAll(long orderId) {
         PageFukuanDTO dto = new PageFukuanDTO();
         dto.setPageSize(1000000000);
@@ -118,9 +116,8 @@ public class FukuanService {
         return page.getResults();
     }
 
-
     /**
-     *
+     * 获取借款尚未添加完整的付款记录
      * @param orderId
      * @return
      */
@@ -154,14 +151,25 @@ public class FukuanService {
         return filter;
     }
 
-
     /**
      *
      * @param fukuans
      * @return
      */
     private List<Fukuan> getJiekuanUnfinshed(List<Fukuan> fukuans) {
-        return null;
+        List<Fukuan> filter = new ArrayList<>();
+        for (Fukuan fukuan : fukuans) {
+            List<Jiekuan> jiekuanList = jiekuanMapper.getListByFukuanId(fukuan.getId());
+            BigDecimal total = jiekuanList.stream()
+                    .map(m -> m.getAmount())
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            fukuan.setJiekuanTotal(total);
+
+            if (!total.equals(fukuan.getPayAmount())) {
+                filter.add(fukuan);
+            }
+        }
+        return filter;
     }
 
     /**
