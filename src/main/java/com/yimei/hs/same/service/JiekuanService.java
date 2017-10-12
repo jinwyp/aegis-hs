@@ -4,9 +4,7 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.same.dto.PageJiekuanDTO;
 import com.yimei.hs.same.entity.*;
 import com.yimei.hs.same.entity.Jiekuan;
-import com.yimei.hs.same.mapper.JiekuanMapper;
-import com.yimei.hs.same.mapper.HuikuanMapMapper;
-import com.yimei.hs.same.mapper.HuikuanMapper;
+import com.yimei.hs.same.mapper.*;
 import com.yimei.hs.same.mapper.JiekuanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +28,12 @@ public class JiekuanService {
     @Autowired
     JiekuanMapper jiekuanMapper;
 
+    @Autowired
+    HuankuanMapMapper huankuanMapMapper;
+
 
     /**
      * 获取一页借款记录
-     *
      * @param pageJiekuanDTO
      * @return
      */
@@ -84,11 +84,19 @@ public class JiekuanService {
 
 
     /**
-     *
+     * 找出某笔订单的所有借款， 过滤掉已经被还完的借款
      * @param orderId
      * @return
      */
     public List<Jiekuan> huankuanUnfinished(Long orderId) {
+        PageJiekuanDTO dto = new PageJiekuanDTO();
+        dto.setHsId(orderId);
+        dto.setPageSize(1000000);
+        dto.setPageNo(1);
+        List<Jiekuan> all = jiekuanMapper.getPage(dto).getResults();
+
+        // 找出每笔借款的还款明细
+        // huankuanMapMapper.getListByFukuanId()
         return null;
     }
 }
