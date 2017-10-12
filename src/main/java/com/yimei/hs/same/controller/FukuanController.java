@@ -85,15 +85,15 @@ public class FukuanController {
     public ResponseEntity<Result<Fukuan>> create(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
-            @RequestBody @Validated(CreateGroup.class) Fukuan yingFukuan
+            @RequestBody @Validated(CreateGroup.class) Fukuan fukuan
     ) {
-        yingFukuan.setOrderId(morderId);
-        int rtn = fukuanService.create(yingFukuan);
+        fukuan.setOrderId(morderId);
+        int rtn = fukuanService.create(fukuan);
         if (rtn != 1) {
-            logger.error("创建失败: {}", yingFukuan);
+            logger.error("创建失败: {}", fukuan);
             return Result.error(4001, "创建失败");
         }
-        return Result.ok(yingFukuan);
+        return Result.ok(fukuan);
     }
 
     /**
@@ -106,11 +106,11 @@ public class FukuanController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
-            @RequestBody @Validated(UpdateGroup.class) Fukuan yingFukuan
+            @RequestBody @Validated(UpdateGroup.class) Fukuan fukuan
     ) {
-        assert (yingFukuan.getOrderId() == morderId);
-        yingFukuan.setId(id);
-        int rtn = fukuanService.update(yingFukuan);
+        assert (fukuan.getOrderId() == morderId);
+        fukuan.setId(id);
+        int rtn = fukuanService.update(fukuan);
         if (rtn != 1) {
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
         }
