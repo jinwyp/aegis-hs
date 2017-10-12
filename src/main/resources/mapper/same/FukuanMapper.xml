@@ -98,13 +98,9 @@
         t1.receiveCompanyId,
         t1.payUsage,
         t1.payAmount,
-        t1.payMode,
-        t1.capitalId,
-        t1.useInterest,
-        t1.useDays,
         t1.tsc,
         t1.tsu
-        from hs_same_fukuan t1 LEFT JOIN hs_same_huankuan_map map on t1.id = map.fukuanId
+        from hs_same_fukuan t1 LEFT JOIN hs_same_huankuan_map map on t1.id = map.jiekuanId
         <where>
             <if test="true">t1.deleted = 0</if>
             <if test="orderId!=null">and t1.orderId = #{orderId, jdbcType=BIGINT}</if>
