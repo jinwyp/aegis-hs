@@ -49,7 +49,7 @@ public class SettleBuyerController {
      * @param pos pos-->downstream应收下游结算  upstream 仓押下游结算
      * @return
      */
-    @GetMapping("/{morderId}/settle{pos}")
+    @GetMapping("/{morderId}/settle/{pos}")
     public ResponseEntity<Result<Page<SettleBuyer>>> listYingDownstream(
             @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
@@ -72,7 +72,7 @@ public class SettleBuyerController {
      * @param id
      * @return
      */
-    @GetMapping("/{morderId}/settle{pos}/{id}")
+    @GetMapping("/{morderId}/settle/{pos}/{id}")
     public ResponseEntity<Result<SettleBuyer>> read(
             @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
@@ -97,7 +97,7 @@ public class SettleBuyerController {
      *
      * @return
      */
-    @PostMapping("/{morderId}/settle{pos}")
+    @PostMapping("/{morderId}/settle/{pos}")
     public ResponseEntity<Result<SettleBuyer>> create(
             @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
@@ -116,7 +116,7 @@ public class SettleBuyerController {
      *
      * @return
      */
-    @PutMapping("/{morderId}/settle{pos}/{id}")
+    @PutMapping("/{morderId}/settle/{pos}/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
@@ -142,8 +142,8 @@ public class SettleBuyerController {
      *
      * @return
      */
-    @DeleteMapping("/{morderId}/settle{pos}/{id}")
-    public ResponseEntity<Result<Integer>> update(
+    @DeleteMapping("/{morderId}/settle/{pos}/{id}")
+    public ResponseEntity<Result<Integer>> deletes(
             @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,

@@ -59,7 +59,9 @@
             fukuan.payAmount,
             fukuan.tsc,
             fukuan.tsu,
+
             huikuanmap.amount  AS huikuanmap_amount,
+
             huikuan.id         AS huikuan_id,
             huikuan.orderId    AS huikuan_orderId,
             huikuan.hsId       AS huikuan_hsId,
@@ -79,11 +81,10 @@
             huikuan.huikuanBusinessDiscountRate,
             huikuan.huikuanBusinessPaperExpire,
             huikuan.tsc        AS huikuan_tsc,
-            huikuan.tsu        AS huikuan_tsu,
+            huikuan.tsu        AS huikuan_tsu
 
-
-        FROM hs_same_fukuan fukuan
-            LEFT JOIN hs_same_huikuan_map huikuanmap ON fukuan.id = huikuanmap.fukuanId
+        FROM hs_same_huikuan_map huikuanmap
+            LEFT JOIN hs_same_fukuan fukuan ON fukuan.id = huikuanmap.fukuanId
             LEFT JOIN hs_same_huikuan huikuan ON huikuanmap.huikuanId = huikuan.id
         WHERE fukuan.id = #{id,jdbcType=BIGINT} AND fukuan.deleted = 0
     </select>

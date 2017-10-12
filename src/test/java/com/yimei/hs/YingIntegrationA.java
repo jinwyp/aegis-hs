@@ -96,17 +96,18 @@ public class YingIntegrationA extends HsTestBase {
         defaultUser();
         order();
         config();
-//        fee();
-//        traffic();
-//
-//        ruku();
-//        chuku();
+        fee();
+        traffic();
 
-//        fukuan();
-//        fayun();
-//        huikuan();
+        ruku();
+        chuku();
+        huikuan();
+        fukuan();
+        fayun();
+
         jiekuan();
         huankuan();
+//        seller();
     }
 
     public void order() throws JsonProcessingException {
@@ -117,7 +118,7 @@ public class YingIntegrationA extends HsTestBase {
         yingOrder.setCargoType(CargoType.COAL);
         yingOrder.setUpstreamId(partyIds.get(0));   // 上游
         yingOrder.setDownstreamId(partyIds.get(1));  // 下游
-        yingOrder.setMainAccounting(1L);
+        yingOrder.setMainAccounting(2L);
         yingOrder.setLine("郴州博太-晋和-华润鲤鱼江");
         yingOrder.setUpstreamSettleMode(SettleMode.ONE_PAPER_SETTLE);
         yingOrder.setDownstreamSettleMode(SettleMode.ONE_PAPER_SETTLE);
@@ -854,6 +855,7 @@ public class YingIntegrationA extends HsTestBase {
             setReceiveCompanyId(yingOrderResult.getData().getUpstreamId());
             setPayUsage(PaymentPurpose.DEPOSITECASH);
             setPayAmount(new BigDecimal("510000"));
+            setCapitalId(1L);
         }};
         Fukuan yingFukuantwo = new Fukuan() {{
             setOrderId(yingOrderResult.getData().getId());
@@ -862,6 +864,7 @@ public class YingIntegrationA extends HsTestBase {
             setReceiveCompanyId(yingOrderResult.getData().getUpstreamId());
             setPayUsage(PaymentPurpose.FIAL_PAYMENT);
             setPayAmount(new BigDecimal("54294.93"));
+            setCapitalId(1L);
         }};
         fukuanResult = client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuan), typeReferenceFukuan).getBody();
         if (fukuanResult.getSuccess()) {

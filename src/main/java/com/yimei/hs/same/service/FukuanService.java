@@ -2,14 +2,8 @@ package com.yimei.hs.same.service;
 
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.same.dto.PageFukuanDTO;
-import com.yimei.hs.same.entity.Fukuan;
-import com.yimei.hs.same.entity.Huikuan;
-import com.yimei.hs.same.entity.HuikuanMap;
-import com.yimei.hs.same.entity.Jiekuan;
-import com.yimei.hs.same.mapper.FukuanMapper;
-import com.yimei.hs.same.mapper.HuikuanMapMapper;
-import com.yimei.hs.same.mapper.HuikuanMapper;
-import com.yimei.hs.same.mapper.JiekuanMapper;
+import com.yimei.hs.same.entity.*;
+import com.yimei.hs.same.mapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +35,9 @@ public class FukuanService {
     @Autowired
     JiekuanMapper jiekuanMapper;
 
+
+    @Autowired
+    OrderMapper orderMapper;
 
     @Autowired
     private HuikuanService huikuanService;
@@ -80,9 +77,9 @@ public class FukuanService {
         }
 
         // 如果只需要借款尚未填充完毕的， 则过滤
-        if (pageFukuanDTO.getJiekuanUnfinished() != null && pageFukuanDTO.getJiekuanUnfinished() ) {
-            page.setResults(this.getJiekuanUnfinshed(page.getResults()));
-        }
+//        if (pageFukuanDTO.getJiekuanUnfinished() != null && pageFukuanDTO.getJiekuanUnfinished() ) {
+//            page.setResults(this.getJiekuanUnfinshed(page.getResults()));
+//        }
 
         return page;
     }
@@ -186,8 +183,15 @@ public class FukuanService {
 
         // 2. 触发回款对应
         fukuan.setHuikuanTotal(BigDecimal.ZERO);
-        huikuanService.createMapping(fukuan.getOrderId());
 
+        //3 当资金方不为自有资金时 触发借款
+        huikuanService.createMapping(fukuan.getOrderId());
+        Order order=orderMapper.selectByPrimaryKey(fukuan.getOrderId());
+
+        if (fukuan.getCapitalId() == order.getMainAccounting()) {
+            fukuan.getJiekuan().setFukuanId(fukuan.getId());
+            jiekuanMapper.insert(fukuan.getJiekuan());
+        }
         return rtn;
     }
 

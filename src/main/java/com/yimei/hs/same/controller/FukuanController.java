@@ -8,7 +8,10 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageFukuanDTO;
 import com.yimei.hs.same.entity.Fukuan;
+import com.yimei.hs.same.entity.Order;
 import com.yimei.hs.same.service.FukuanService;
+import com.yimei.hs.same.service.JiekuanService;
+import com.yimei.hs.same.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,8 @@ public class FukuanController {
     @Autowired
     private FukuanService fukuanService;
 
+    @Autowired
+    private OrderService orderService;
     /**
      * 获取付款-分页
      * @return
@@ -81,13 +86,32 @@ public class FukuanController {
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) Fukuan fukuan
     ) {
-        fukuan.setOrderId(morderId);
-        int rtn = fukuanService.create(fukuan);
-        if (rtn != 1) {
-            logger.error("创建失败: {}", fukuan);
-            return Result.error(4001, "创建失败");
+        Order order =orderService.findOne(fukuan.getOrderId());
+        if (order==null) {
+              return Result.error(4001, "创建失败");
         }
-        return Result.ok(fukuan);
+        if (order.getMainAccounting() == fukuan.getCapitalId()) {
+            if (fukuan.getJiekuan() != null) {
+                fukuan.setOrderId(morderId);
+                int rtn = fukuanService.create(fukuan);
+                if (rtn != 1) {
+                    logger.error("创建失败: {}", fukuan);
+                    return Result.error(4001, "创建失败");
+                }
+                return Result.ok(fukuan);
+            } else {
+                return Result.error(4001, "参数不匹配");
+            }
+        } else {
+            fukuan.setOrderId(morderId);
+            int rtn = fukuanService.create(fukuan);
+            if (rtn != 1) {
+                logger.error("创建失败: {}", fukuan);
+                return Result.error(4001, "创建失败");
+            }
+            return Result.ok(fukuan);
+        }
+
     }
 
     /**
