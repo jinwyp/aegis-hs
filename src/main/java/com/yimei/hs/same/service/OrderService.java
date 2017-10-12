@@ -1,6 +1,7 @@
 package com.yimei.hs.same.service;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.EntityType;
 import com.yimei.hs.same.dto.PageOrderDTO;
 import com.yimei.hs.same.entity.Log;
@@ -140,8 +141,8 @@ public class OrderService {
      * @param orderId
      * @return
      */
-    public boolean hasOrder(long ownerId, long orderId) {
-        return orderMapper.hasOrder(ownerId, orderId);
+    public boolean hasOrder(long ownerId, BusinessType businessType, long orderId) {
+        return orderMapper.hasOrder(ownerId, businessType, orderId);
     }
 
     /**

@@ -3,6 +3,8 @@ package com.yimei.hs.boot.ext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.ext.annotation.Logined;
+import com.yimei.hs.enums.BusinessType;
+import com.yimei.hs.same.service.OrderService;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.ying.service.YingOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,7 @@ import java.util.regex.Pattern;
 @Service
 public class ACLInterceptor extends HandlerInterceptorAdapter {
 
-    public static final Pattern p = Pattern.compile("^/api/(ying|cang)/(\\d+).*$");
+    public static final Pattern p = Pattern.compile("^/api/business/(\\w+)/(\\d+).*$");
 
     @Autowired
     JwtSupport jwtSupport;
@@ -31,7 +33,7 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
     ObjectMapper om;
 
     @Autowired
-    private YingOrderService yingOrderService;
+    private OrderService orderService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -60,29 +62,22 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
                 Matcher m = p.matcher(request.getRequestURI());
                 if (m.matches()) {
                     String business = m.group(1);
+
+                    BusinessType type = BusinessType.valueOf(business);
+
                     long orderId = Long.parseLong(m.group(2));
-
-                    if ( business.equals("ying")) {
-                        if (!yingOrderService.hasOrder(user.getId(), orderId)) {
-                            response.setStatus(401);
-                            response.setContentType("application/json;charset=UTF-8");
-                            om.writeValue(response.getOutputStream(), new Result(4001, "你不是这条业务线的主人"));
-                            return false;
-                        }
-
-                    } else if (business.equals("cang")) {
-                        if (!yingOrderService.hasOrder(user.getId(), orderId)) {
-                            response.setStatus(401);
-                            response.setContentType("application/json;charset=UTF-8");
-                            om.writeValue(response.getOutputStream(), new Result(4001, "你不是这条业务线的主人"));
-                            return false;
-                        }
-                    } else {
-                        response.setStatus(404);
+                    if (!orderService.hasOrder(user.getId(), type, orderId)) {
+                        response.setStatus(401);
                         response.setContentType("application/json;charset=UTF-8");
-                        om.writeValue(response.getOutputStream(), new Result(4001, "页面不存在"));
+                        om.writeValue(response.getOutputStream(), new Result(4001, "你不是这条业务线的主人"));
                         return false;
                     }
+
+                } else {
+                    response.setStatus(404);
+                    response.setContentType("application/json;charset=UTF-8");
+                    om.writeValue(response.getOutputStream(), new Result(4001, "页面不存在"));
+                    return false;
                 }
             }
         }
