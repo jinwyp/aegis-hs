@@ -10,12 +10,13 @@
         <result column="capitalId" jdbcType="BIGINT" property="capitalId"/>
         <result column="useInterest" jdbcType="DECIMAL" property="useInterest"/>
         <result column="useDays" jdbcType="INTEGER" property="useDays"/>
+        <result column="jiekuanDate" jdbcType="TIMESTAMP" property="jiekuanDate"/>
         <result column="deleted" jdbcType="BIT" property="deleted"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
         <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, fukuanId, orderId, hsId, amount, capitalId, useInterest, useDays, deleted, tsc,
+        id, fukuanId, orderId, hsId, amount, capitalId, useInterest, useDays, jiekuanDate,deleted, tsc,
         tsu
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -60,13 +61,14 @@
     <insert id="insert" parameterType="com.yimei.hs.same.entity.Jiekuan">
         INSERT INTO hs_same_jiekuan (id, fukuanId, orderId,
                                      hsId, amount, capitalId,
-                                     useInterest, useDays, deleted,
+                                     useInterest, useDays, deleted,jiekuanDate,
                                      tsc, tsu)
         VALUES (#{id,jdbcType=BIGINT}, #{fukuanId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT},
                                        #{hsId,jdbcType=BIGINT}, #{amount,jdbcType=DECIMAL},
                                        #{capitalId,jdbcType=BIGINT},
                                        #{useInterest,jdbcType=DECIMAL}, #{useDays,jdbcType=INTEGER},
                                        #{deleted,jdbcType=BIT},
+                                       #{jiekuanDate,jdbcType=TIMESTAMP},
                                        #{tsc,jdbcType=TIMESTAMP}, #{tsu,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.Jiekuan">
@@ -98,6 +100,9 @@
             </if>
             <if test="deleted != null">
                 deleted,
+            </if>
+            <if test="jiekuanDate != null">
+                jiekuanDate,
             </if>
             <if test="tsc != null">
                 tsc,
@@ -134,6 +139,9 @@
             <if test="deleted != null">
                 #{deleted,jdbcType=BIT},
             </if>
+            <if test="jiekuanDate != null">
+                #{jiekuanDate,jdbcType=TIMESTAMP},
+            </if>
             <if test="tsc != null">
                 #{tsc,jdbcType=TIMESTAMP},
             </if>
@@ -169,6 +177,9 @@
             <if test="deleted != null">
                 deleted = #{deleted,jdbcType=BIT},
             </if>
+            <if test="jiekuanDate != null">
+                tsc = #{jiekuanDate,jdbcType=TIMESTAMP},
+            </if>
             <if test="tsc != null">
                 tsc = #{tsc,jdbcType=TIMESTAMP},
             </if>
@@ -188,6 +199,7 @@
             useInterest = #{useInterest,jdbcType=DECIMAL},
             useDays     = #{useDays,jdbcType=INTEGER},
             deleted     = #{deleted,jdbcType=BIT},
+            jiekuanDate         = #{jiekuanDate,jdbcType=TIMESTAMP},
             tsc         = #{tsc,jdbcType=TIMESTAMP},
             tsu         = #{tsu,jdbcType=TIMESTAMP}
         WHERE id = #{id,jdbcType=BIGINT}

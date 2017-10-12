@@ -146,6 +146,7 @@ create table hs_same_jiekuan(
   orderId bigint(20)             not null comment '订单id, 业务线id',
   hsId bigint(20)                not null comment '核算月id',
   amount decimal(10,2)           not null comment '借款金额',
+  jiekuanDate datetime               not null comment '借款日期yyyy-mm-dd',
   capitalId bigint(20)           not null comment '资金方id: 如果为主账务公司id, 则为自有资金',
   useInterest decimal(10, 4)              comment '外部资金使用利率',
   useDays int                             comment '外部资金使用天数',

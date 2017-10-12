@@ -103,7 +103,9 @@ public class YingIntegrationA extends HsTestBase {
 
 //        fukuan();
 //        fayun();
-        huikuan();
+//        huikuan();
+        jiekuan();
+//        huankuan();
     }
 
     public void order() throws JsonProcessingException {
@@ -529,63 +531,62 @@ public class YingIntegrationA extends HsTestBase {
         }
 
     }
-    private void fukuan() throws JsonProcessingException{
-        // 1. 添加付款
-        String fukuanCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fukuans";
-        Fukuan yingFukuan = new Fukuan() {{
+
+    private void jiekuan()throws JsonProcessingException{
+
+        // 1. 添加回款
+        String jiekuanCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans";
+        Jiekuan jiekuan = new Jiekuan() {{
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
-            setPayDate(stringToTime("2017-7-6"));
-            setReceiveCompanyId(yingOrderResult.getData().getUpstreamId());
-            setPayUsage(PaymentPurpose.DEPOSITECASH);
-            setPayAmount(new BigDecimal("510000"));
+            setFukuanId(0L);
+            setJiekuanDate(stringToTime("20170706"));
+            setCapitalId(1L);
+            setAmount(new BigDecimal("510000.00"));
+//            setUseDays();
+
         }};
-        Fukuan yingFukuantwo = new Fukuan() {{
-            setOrderId(yingOrderResult.getData().getId());
-            setHsId(yingOrderConfigResult.getData().getId());
-            setPayDate(stringToTime("2017-8-10"));
-            setReceiveCompanyId(yingOrderResult.getData().getUpstreamId());
-            setPayUsage(PaymentPurpose.FIAL_PAYMENT);
-            setPayAmount(new BigDecimal("54294.93"));
-        }};
-        fukuanResult = client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuan), typeReferenceFukuan).getBody();
-        if (fukuanResult.getSuccess()) {
-            logger.info("创建付款成功\nPOST {}\nrequest = {}\nresponse = {}", fukuanCreateUrl, printJson(yingFukuan), printJson(fukuanResult.getData()));
+        jiekuanCreateResult = client.exchange(jiekuanCreateUrl, HttpMethod.POST, new HttpEntity<>(jiekuan), typeReferenceJiekuan).getBody();
+        if (jiekuanCreateResult.getSuccess()) {
+            logger.info("创建借款成功\nPOST {}\nrequest = {}\nresponse = {}", jiekuanCreateUrl, printJson(jiekuan), printJson(jiekuanCreateResult.getData()));
         } else {
-            logger.info("创建付款失败: {}", fukuanResult.getError());
+            logger.info("创建借款失败: {}", jiekuanCreateResult.getError());
             System.exit(-1);
         }
-        client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuantwo), typeReferenceFukuan).getBody();
-        yingFukuantwo.setPayAmount(new BigDecimal("5680"));
-
-        client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuantwo), typeReferenceFukuan).getBody();
-        // 2. 分页
-        String fukuanPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fukuans?" + WebUtils.getUrlTemplate(PageFukuanDTO.class);
-
-        Map<String, Object> fukuanVariablesPage = WebUtils.getUrlVariables(PageFukuanDTO.class);
-        fukuanVariablesPage.put("orderId", yingOrderResult.getData().getId());
-        fukuanVariablesPage.put("pageSize", 5);
-        fukuanVariablesPage.put("pageNo", 1);
 
 
-        Result<Page<Fukuan>> fukuanPageResult = client.exchange(fukuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFukuanPage, fukuanVariablesPage).getBody();
-        if (fukuanPageResult.getSuccess()) {
-            logger.info("付款分页成功\nGET {}\nrequest = {}\nresponse = {}", fukuanPageUrl, "", printJson(fukuanPageResult.getData()));
+        // 借款 - 分页
+
+        String jiekuanPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans?" + WebUtils.getUrlTemplate(PageJiekuanDTO.class);
+
+        Map<String, Object> variablesHuikuan = WebUtils.getUrlVariables(PageJiekuanDTO.class);
+        variablesHuikuan.put("orderId", yingOrderResult.getData().getId());
+        variablesHuikuan.put("pageSize", 5);
+        variablesHuikuan.put("pageNo", 1);
+
+
+        Result<Page<Jiekuan>> jiekuanPageResult = client.exchange(jiekuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceJiekuanPage, variablesHuikuan).getBody();
+
+        if (jiekuanPageResult.getSuccess()) {
+            logger.info("创建分页成功\n GET {}\nrequest = {}\nresponse = {}", jiekuanPageUrl, "", printJson(jiekuanPageResult.getData()));
         } else {
-            logger.info("付款分页失败: {}", fukuanPageResult.getError());
+            logger.info("创建分页失败: {}", jiekuanPageResult.getError());
             System.exit(-1);
         }
 
         // 3. id查询
-        String fukuanFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fukuans/" + fukuanResult.getData().getId();
-        Result<Fukuan> fukuanFindResult = client.exchange(fukuanFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFukuan).getBody();
-        if (fukuanFindResult.getSuccess()) {
-            logger.info("查询付款成功\nGET {}\nrequest = {}\nresponse = {}", fukuanFindUrl, "", printJson(fukuanFindResult.getData()));
+        String jiekuanFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans/" + jiekuanCreateResult.getData().getId();
+        Result<Jiekuan> jiekuanFindResult = client.exchange(jiekuanFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceJiekuan).getBody();
+        if (jiekuanFindResult.getSuccess()) {
+            logger.info("查询借款成功\nGET {}\nrequest = {}\nresponse = {}", jiekuanFindUrl, "", printJson(jiekuanFindResult.getData()));
         } else {
-            logger.info("查询付款失败: {}", fukuanFindResult.getError());
+            logger.info("查询借款失败: {}", jiekuanFindResult.getError());
             System.exit(-1);
         }
-        
+
+    }
+    private void huankuan() throws  JsonProcessingException{
+
     }
     private void  fayun() throws JsonProcessingException{
 
@@ -708,7 +709,6 @@ public class YingIntegrationA extends HsTestBase {
         }
 
     }
-
     public void chuku() throws JsonProcessingException {
 
         // 1. 添加入库
@@ -782,6 +782,65 @@ public class YingIntegrationA extends HsTestBase {
             logger.error("更新仓押出库失败: {}", yingChukuUpdateResult.getError());
             System.exit(-2);
         }
+    }
+
+    private void fukuan() throws JsonProcessingException{
+        // 1. 添加付款
+        String fukuanCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fukuans";
+        Fukuan yingFukuan = new Fukuan() {{
+            setOrderId(yingOrderResult.getData().getId());
+            setHsId(yingOrderConfigResult.getData().getId());
+            setPayDate(stringToTime("2017-7-6"));
+            setReceiveCompanyId(yingOrderResult.getData().getUpstreamId());
+            setPayUsage(PaymentPurpose.DEPOSITECASH);
+            setPayAmount(new BigDecimal("510000"));
+        }};
+        Fukuan yingFukuantwo = new Fukuan() {{
+            setOrderId(yingOrderResult.getData().getId());
+            setHsId(yingOrderConfigResult.getData().getId());
+            setPayDate(stringToTime("2017-8-10"));
+            setReceiveCompanyId(yingOrderResult.getData().getUpstreamId());
+            setPayUsage(PaymentPurpose.FIAL_PAYMENT);
+            setPayAmount(new BigDecimal("54294.93"));
+        }};
+        fukuanResult = client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuan), typeReferenceFukuan).getBody();
+        if (fukuanResult.getSuccess()) {
+            logger.info("创建付款成功\nPOST {}\nrequest = {}\nresponse = {}", fukuanCreateUrl, printJson(yingFukuan), printJson(fukuanResult.getData()));
+        } else {
+            logger.info("创建付款失败: {}", fukuanResult.getError());
+            System.exit(-1);
+        }
+        client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuantwo), typeReferenceFukuan).getBody();
+        yingFukuantwo.setPayAmount(new BigDecimal("5680"));
+
+        client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuantwo), typeReferenceFukuan).getBody();
+        // 2. 分页
+        String fukuanPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fukuans?" + WebUtils.getUrlTemplate(PageFukuanDTO.class);
+
+        Map<String, Object> fukuanVariablesPage = WebUtils.getUrlVariables(PageFukuanDTO.class);
+        fukuanVariablesPage.put("orderId", yingOrderResult.getData().getId());
+        fukuanVariablesPage.put("pageSize", 5);
+        fukuanVariablesPage.put("pageNo", 1);
+
+
+        Result<Page<Fukuan>> fukuanPageResult = client.exchange(fukuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFukuanPage, fukuanVariablesPage).getBody();
+        if (fukuanPageResult.getSuccess()) {
+            logger.info("付款分页成功\nGET {}\nrequest = {}\nresponse = {}", fukuanPageUrl, "", printJson(fukuanPageResult.getData()));
+        } else {
+            logger.info("付款分页失败: {}", fukuanPageResult.getError());
+            System.exit(-1);
+        }
+
+        // 3. id查询
+        String fukuanFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/fukuans/" + fukuanResult.getData().getId();
+        Result<Fukuan> fukuanFindResult = client.exchange(fukuanFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceFukuan).getBody();
+        if (fukuanFindResult.getSuccess()) {
+            logger.info("查询付款成功\nGET {}\nrequest = {}\nresponse = {}", fukuanFindUrl, "", printJson(fukuanFindResult.getData()));
+        } else {
+            logger.info("查询付款失败: {}", fukuanFindResult.getError());
+            System.exit(-1);
+        }
+
     }
 
     /**
