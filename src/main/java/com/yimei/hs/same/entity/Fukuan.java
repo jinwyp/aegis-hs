@@ -57,4 +57,5 @@ public class Fukuan implements Serializable {
 
     // 关联的借款明细
     private List<Jiekuan> jiekuanList;
+    private BigDecimal jiekuanTotal;
 }
