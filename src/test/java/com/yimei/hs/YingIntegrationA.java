@@ -783,7 +783,19 @@ public class YingIntegrationA extends HsTestBase {
             System.exit(-1);
         }
 
-        // 4. 更新 todo  timestamp
+        // 4. 更新
+        String huankuanUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/huankuans/" + huankuanCreateResult.getData().getId();
+        huankuanCreateResult.getData().getHuankuanMapList().get(0).setFee(new BigDecimal("8888"));
+        huankuanCreateResult.getData().getHuankuanMapList().get(0).setId(2L);
+        huankuan.setHuankuanMapList(huankuanCreateResult.getData().getHuankuanMapList());
+        huankuan.setId(huankuanCreateResult.getData().getId());
+        Result<Integer> huankuanUpdateResult = client.exchange(huankuanUpdateUrl, HttpMethod.PUT, new HttpEntity<Huankuan>(huankuan), typeReferenceInteger).getBody();
+        if (huankuanUpdateResult.getSuccess()) {
+            logger.info("更新  还款成功\n  GET {}\nrequest = {}\nresponse = {}", huankuanUpdateUrl, printJson(huankuan), printJson(huankuanUpdateResult.getData()));
+        } else {
+            logger.info("更新  还款失败: {}", huankuanUpdateResult.getError());
+            System.exit(-1);
+        }
     }
 
     private void fayun() throws JsonProcessingException {

@@ -11,6 +11,7 @@ import com.yimei.hs.same.entity.Fukuan;
 import com.yimei.hs.same.entity.Huankuan;
 import com.yimei.hs.same.entity.HuankuanMap;
 import com.yimei.hs.same.entity.Jiekuan;
+import com.yimei.hs.same.mapper.HuankuanMapMapper;
 import com.yimei.hs.same.service.JiekuanService;
 import com.yimei.hs.same.service.HuankuanService;
 import org.slf4j.Logger;
@@ -39,6 +40,9 @@ public class HuankuanController {
 
     @Autowired
     private JiekuanService jiekuanService;
+
+    @Autowired
+    private HuankuanMapMapper huankuanMapMapper;
 
     /**
      * 获取所有huikuan
@@ -99,7 +103,7 @@ public class HuankuanController {
     }
 
     /**
-     * 更新huikuan
+     * 更新huankuan
      *
      * @return
      */
@@ -113,6 +117,10 @@ public class HuankuanController {
         //
         huankuan.setId(id);
         assert (morderId == huankuan.getOrderId());
+
+
+        // 2删除还款记录详情
+        huankuanMapMapper.deleteByPrimaryKey(huankuan.getId());
         int cnt = huankuanService.update(huankuan);
         if (cnt != 1) {
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
@@ -126,12 +134,16 @@ public class HuankuanController {
      * @return
      */
     @DeleteMapping("/{morderId}/huankuans/{id}")
-    public ResponseEntity<Result<Integer>> update(
+    public ResponseEntity<Result<Integer>> delete(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
         int cnt = huankuanService.delete(id);
+        List<HuankuanMap> huankuanMaps = huankuanMapMapper.getListByHuankuanId(id);
+        for (HuankuanMap huankuanMap : huankuanMaps) {
+            huankuanMapMapper.deleteByPrimaryKey(huankuanMap.getId());
+        }
         if (cnt != 1) {
             return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
         }
