@@ -30,34 +30,58 @@
             hs.discountInterest,
             hs.discountDays,
             hs.discountAmount,
-            tsc,
-            tsu,
+            hs.tsc,
+            hs.tsu,
             sum(buyer.amount),
             sum(buyer.money),
             sum(buyer.settleGap)
         FROM hs_same_settle_seller seller
-            JOIN hs_same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
+            LEFT JOIN hs_same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
         WHERE seller.id = #{id,jdbcType=BIGINT} and deleted = 0
         GROUP BY seller.orderId
     </select>
 
-    <!-- -->
+    <!-- 找出订单的所有seller记录 -->
     <select id="selectByOrderId" resultType="com.yimei.hs.same.entity.SettleSeller">
         select
-        <include refid="Base_Column_List"/>
+        hs.id,
+        hs.orderId,
+        hs.hsId,
+        hs.settleDate,
+        hs.discountType,
+        hs.discountInterest,
+        hs.discountDays,
+        hs.discountAmount,
+        hs.tsc,
+        hs.tsu,
+        sum(buyer.amount),
+        sum(buyer.money),
+        sum(buyer.settleGap)
         from hs_same_settle_seller
-        LEFT JOIN hs_same_settle_buyer buyer on seller.hsId = buyer.hsId and seller.orderI的= buyer.orderId
-        where id = #{id,jdbcType=BIGINT}
+             seller
+            LEFT JOIN hs_same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
+        WHERE seller.orderId = #{orderId,jdbcType=BIGINT} and deleted = 0
+        GROUP BY seller.orderId
     </select>
 
     <!-- 获取一页数据 -->
     <select id="getPage" resultType="com.yimei.hs.same.entity.SettleSeller">
         select
-        <include refid="Base_Column_List"/>
+        hs.id,
+        hs.orderId,
+        hs.hsId,
+        hs.settleDate,
+        hs.discountType,
+        hs.discountInterest,
+        hs.discountDays,
+        hs.discountAmount,
+        hs.tsc,
+        hs.tsu,
         sum(buyer.amount),
         sum(buyer.money),
         sum(buyer.settleGap)
-        FROM hs_same_settle_seller
+        FROM hs_same_settle_seller seller
+        LEFT JOIN hs_same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
         <where>
             <if test="orderId != null">AND orderId=#{orderId,jdbcType=BIGINT}</if>
             <if test="hsId != null">AND hsId= #{hsId,jdbcType=BIGINT}</if>
