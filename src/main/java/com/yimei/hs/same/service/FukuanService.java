@@ -63,16 +63,37 @@ public class FukuanService {
             fukuan.setHuikuanMap(huikuanMap);
         }
 
-        // 3. 如果只需要回款尚未完成的付款， 则过滤
-        if ( pageFukuanDTO.getHuikuanUnfinished() != null && pageFukuanDTO.getHuikuanUnfinished() ) {
-            page.setResults(this.getHuikuanUnifished(page.getResults()));
-        }
-
         return page;
     }
 
     /**
+     * 获取当前订单尚未完成回款的付款
+     * @param orderId
+     * @return
+     */
+    public List<Fukuan> getListUnfinished(long orderId) {
+        List<Fukuan> fukuans = getAll(orderId);
+
+        // 2. 对每一笔付款， 关联回款列表, 回款map明细
+        for (Fukuan fukuan : fukuans) {
+            // 关联回款列表
+            List<Huikuan> huikuanList = huikuanMapper.getListByFukuanID(fukuan.getId());
+            fukuan.setHuikuanList(huikuanList);
+
+            // 关联回款map明细
+            List<HuikuanMap> huikuanMap = huikuanMapMapper.getListByFukuanId(fukuan.getId());
+            fukuan.setHuikuanMap(huikuanMap);
+        }
+
+        // 3. 如果只需要回款尚未完成的付款， 则过滤
+        return this.getHuikuanUnifished(fukuans);
+
+    }
+
+
+    /**
      * 找出当前订单的付款列表: (条件为: 回款尚未回完的付款)
+     *
      * @param orderId
      * @return
      */
@@ -91,6 +112,7 @@ public class FukuanService {
 
     /**
      * 获取订单的所有付款
+     *
      * @param orderId
      * @return
      */
@@ -139,10 +161,11 @@ public class FukuanService {
         // 2. 触发回款对应
         fukuan.setHuikuanTotal(BigDecimal.ZERO);
 
-        //3 当资金方不为自有资金时 触发借款记录
+        // 3. 触发回款明细的创建
         huikuanService.createMapping(fukuan.getOrderId());
-        Order order=orderMapper.selectByPrimaryKey(fukuan.getOrderId());
 
+        // 4. 当资金方不为自有资金时 触发借款记录
+        Order order = orderMapper.selectByPrimaryKey(fukuan.getOrderId());
         if (fukuan.getCapitalId() == order.getMainAccounting()) {
             fukuan.getJiekuan().setFukuanId(fukuan.getId());
             jiekuanMapper.insert(fukuan.getJiekuan());

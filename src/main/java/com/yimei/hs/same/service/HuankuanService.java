@@ -45,11 +45,17 @@ public class HuankuanService {
             // 设置还款所对应的借款
             huankuan.setJiekuanList(jiekuanMapper.getJiekuanListByHuankuanId(huankuan.getId()));
 
+            // 设置还款所对应的还款明细
             huankuan.setHuankuanMapList(huankuanMapMapper.getListByHuankuanId(huankuan.getId()));
         }
         return pagehuankuans;
     }
 
+    /**
+     * 
+     * @param id
+     * @return
+     */
     public Huankuan findOne(long id) {
         return huankuanMapper.selectByPrimaryKey(id);
     }
@@ -78,12 +84,27 @@ public class HuankuanService {
 
     /**
      *  更新
-     * @param yingHuankuan
+     * @param hk
      * @return
      */
     @Transactional(readOnly = false)
-    public int update(Huankuan yingHuankuan) {
-        return huankuanMapper.updateByPrimaryKeySelective(yingHuankuan);
+    public int update(Huankuan hk) {
+        
+        // 1. 找出还款
+        Huankuan huankuan = huankuanMapper.selectByPrimaryKey(hk.getId());
+
+        // 2. 删除还款对应的还款明细
+        huankuanMapMapper.deleteByHuankuanId(hk.getId());
+
+        // 3. 插入还款明细
+        for (HuankuanMap map : hk.getHuankuanMapList()) {
+            map.setHuankuanId(huankuan.getId());
+            map.setOrderId(huankuan.getOrderId());
+            huankuanMapMapper.insert(map);
+        }
+
+        // 4. 更新还款记录(可能是日期)
+        return huankuanMapper.updateByPrimaryKeySelective(hk);
     }
 
     /**
@@ -97,19 +118,10 @@ public class HuankuanService {
         // 1. 找出还款记录
         Huankuan huankuan = huankuanMapper.selectByPrimaryKey(id);
 
-        // 2. 删除还款对应借款
-        List<Jiekuan> jiekuanList = huankuan.getJiekuanList();
-        if (jiekuanList != null) {
-            for (Jiekuan jiekuan : jiekuanList) {
-                jiekuanMapper.delete(jiekuan.getId());
-            }
-        }
-
-        // 3. 删除借款对应的还款明细
+        // 3. 删除还款对应的还款明细
         huankuanMapMapper.deleteByHuankuanId(id);
 
         // 删除还款
-        int rtn =  huankuanMapper.delete(id);
-        return rtn;
+        return huankuanMapper.delete(id);
     }
 }

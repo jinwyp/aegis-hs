@@ -51,4 +51,5 @@ public class Jiekuan implements Serializable {
 
     private List<Huankuan> huankuanList;       // 借款对应的还款列表
 
+    private BigDecimal huankuanTotal;
 }

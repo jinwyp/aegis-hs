@@ -65,7 +65,17 @@ public class HuikuanService {
 
     @Transactional(readOnly = false)
     public int update(Huikuan huikuan) {
-        return huikuanMapper.updateByPrimaryKeySelective(huikuan);
+
+        // 1. 删除回款明细
+        huikuanMapMapper.deleteByOrderId(huikuan.getOrderId());
+
+        // 2. 更新回款
+        int rtn = huikuanMapper.updateByPrimaryKeySelective(huikuan);
+
+        // 3. 重建回款明细
+        this.createMapping(huikuan.getOrderId());
+
+        return rtn;
     }
 
     /**

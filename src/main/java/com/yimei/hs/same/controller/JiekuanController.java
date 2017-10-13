@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by hary on 2017/9/15.
  */
@@ -45,6 +47,18 @@ public class JiekuanController {
         pageJiekuanDTO.setOrderId(morderId);
         Page<Jiekuan> page = jiekuanService.getPage(pageJiekuanDTO);
         return Result.ok(page);
+    }
+
+    /**
+     * 获取所有借款
+     *
+     * @return
+     */
+    @GetMapping("/{morderId}/jiekuansUnfinished")
+    public ResponseEntity<Result<List<Jiekuan>>> getListUnfinished(
+            @PathVariable("businessType") BusinessType businessType,
+            @PathVariable("morderId") Long morderId) {
+        return Result.ok(jiekuanService.getListUnfinished(morderId));
     }
 
     /**

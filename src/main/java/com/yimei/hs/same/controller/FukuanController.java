@@ -20,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by hary on 2017/9/15.
  */
@@ -36,8 +38,10 @@ public class FukuanController {
 
     @Autowired
     private OrderService orderService;
+
     /**
      * 获取付款-分页
+     *
      * @return
      */
     @GetMapping("/{morderId}/fukuans")
@@ -53,7 +57,21 @@ public class FukuanController {
     }
 
     /**
+     * @param businessType
+     * @param morderId
+     * @return
+     */
+    @GetMapping("/{morderId}/fukuansUnfinished")
+    public ResponseEntity<Result<List<Fukuan>>> list(
+            @PathVariable("businessType") BusinessType businessType,
+            @PathVariable("morderId") Long morderId) {
+        return Result.ok(fukuanService.getListUnfinished(morderId));
+    }
+
+
+    /**
      * 获取付款
+     *
      * @param id
      * @return
      */
@@ -73,6 +91,7 @@ public class FukuanController {
 
     /**
      * 创建付款
+     *
      * @return
      */
     @PostMapping("/{morderId}/fukuans")
@@ -81,9 +100,9 @@ public class FukuanController {
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) Fukuan fukuan
     ) {
-        Order order =orderService.findOne(fukuan.getOrderId());
-        if (order==null) {
-              return Result.error(4001, "创建失败");
+        Order order = orderService.findOne(fukuan.getOrderId());
+        if (order == null) {
+            return Result.error(4001, "创建失败");
         }
         if (order.getMainAccounting() == fukuan.getCapitalId()) {
             if (fukuan.getJiekuan() != null) {
@@ -111,6 +130,7 @@ public class FukuanController {
 
     /**
      * 删除付款
+     *
      * @return
      */
     @PutMapping("/{morderId}/fukuans/{id}")
@@ -131,6 +151,7 @@ public class FukuanController {
 
     /**
      * 删除付款
+     *
      * @return
      */
     @DeleteMapping("/{morderId}/fukuans/{id}")

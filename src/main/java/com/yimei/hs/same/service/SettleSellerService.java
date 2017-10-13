@@ -70,12 +70,6 @@ public class SettleSellerService {
         return settleSellerMapper.updateByPrimaryKeySelective(settleSeller);
     }
 
-
-
-
-
-
-
     /**
      * 逻辑删除
      *
