@@ -882,7 +882,7 @@ public class YingIntegrationA extends HsTestBase {
         }};
         List<HuankuanMap> hukuanMapList = new ArrayList<>();
 
-        for (Jiekuan jiekuan :jiekuanListResult.getData()) {
+        Jiekuan jiekuan = jiekuanListResult.getData().get(0);
 
             HuankuanMap map = new HuankuanMap();
             map.setPrincipal(jiekuan.getAmount().subtract(new BigDecimal("50")));
@@ -890,7 +890,7 @@ public class YingIntegrationA extends HsTestBase {
             map.setFee(new BigDecimal("570.0"));
             map.setJiekuanId(jiekuan.getId());
             hukuanMapList.add(map);
-        }
+
         huankuan.setHuankuanMapList(hukuanMapList);
         huankuanCreateResult = client.exchange(huankuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huankuan), typeReferenceHuankuan).getBody();
         if (huankuanCreateResult.getSuccess()) {
@@ -899,7 +899,19 @@ public class YingIntegrationA extends HsTestBase {
             logger.info("创建还款失败: {}", huankuanCreateResult.getError());
             System.exit(-1);
         }
+        List<HuankuanMap> hukuanMapList2 = new ArrayList<>();
 
+        Jiekuan jiekuan2 = jiekuanListResult.getData().get(1);
+
+        HuankuanMap map2 = new HuankuanMap();
+        map.setPrincipal(jiekuan2.getAmount().subtract(new BigDecimal("50")));
+        map.setInterest(new BigDecimal("1700.02"));
+        map.setFee(new BigDecimal("570.0"));
+        map.setJiekuanId(jiekuan2.getId());
+        hukuanMapList2.add(map);
+        huankuan.setHuankuanMapList(hukuanMapList2);
+        huankuan.setHuankuankDate(stringToTime("20170809"));
+        huankuanCreateResult = client.exchange(huankuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huankuan), typeReferenceHuankuan).getBody();
 
     }
 
@@ -1208,15 +1220,15 @@ public class YingIntegrationA extends HsTestBase {
 
         Jiekuan jiekuan=jiekuanFindResult.getData();
         jiekuan.setAmount(new BigDecimal("6666666"));
-        // 4.更新
-        String jiekuanUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans/" + jiekuanCreateResult.getData().getId();
-        Result<Integer> jiekuanUpdateResult = client.exchange(jiekuanUpdateUrl, HttpMethod.PUT, new HttpEntity<>(jiekuan), typeReferenceInteger).getBody();
-        if (jiekuanUpdateResult.getSuccess()) {
-            logger.info("更新借款成功\nGET {}\nrequest = {}\nresponse = {}", jiekuanUpdateUrl, "", printJson(jiekuanUpdateResult.getData()));
-        } else {
-            logger.info("更新借款失败: {}", jiekuanUpdateResult.getError());
-            System.exit(-1);
-        }
+//        // 4.更新
+//        String jiekuanUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans/" + jiekuanCreateResult.getData().getId();
+//        Result<Integer> jiekuanUpdateResult = client.exchange(jiekuanUpdateUrl, HttpMethod.PUT, new HttpEntity<>(jiekuan), typeReferenceInteger).getBody();
+//        if (jiekuanUpdateResult.getSuccess()) {
+//            logger.info("更新借款成功\nGET {}\nrequest = {}\nresponse = {}", jiekuanUpdateUrl, "", printJson(jiekuanUpdateResult.getData()));
+//        } else {
+//            logger.info("更新借款失败: {}", jiekuanUpdateResult.getError());
+//            System.exit(-1);
+//        }
 
     }
 }

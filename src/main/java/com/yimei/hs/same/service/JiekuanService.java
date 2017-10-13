@@ -143,12 +143,12 @@ public class JiekuanService {
         Jiekuan jiekuan = jiekuanMapper.selectByPrimaryKey(id);
 
         // 2. 找出借款对应的还款
-        List<Huankuan> huankuans = jiekuan.getHuankuanList();
+        List<HuankuanMap> huankuanMaps = huankuanMapMapper.getListByJiekuanId(id);
 
         // 3. 删除所有还款， 以及还款对应的还款明细
-        for (Huankuan huankuan : huankuans) {
-            huankuanMapper.delete(huankuan.getId());
-            huankuanMapMapper.deleteByHuankuanId(huankuan.getId());
+        for (HuankuanMap huankuanMap : huankuanMaps) {
+            huankuanMapper.delete(huankuanMap.getHuankuanId());
+            huankuanMapMapper.deleteByHuankuanId(huankuanMap.getId());
         }
 
         // 4. 删除借款记录

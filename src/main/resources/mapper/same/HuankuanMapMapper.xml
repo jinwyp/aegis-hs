@@ -46,6 +46,7 @@
     <!-- 查找还款明细by借款Id-->
     <select id="getListByJiekuanId" resultType="com.yimei.hs.same.entity.HuankuanMap">
         SELECT
+        id,
         huankuanId,
         principal,
         interest,
