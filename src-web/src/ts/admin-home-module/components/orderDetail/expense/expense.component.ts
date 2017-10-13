@@ -175,7 +175,7 @@ export class ExpenseComponent implements OnInit {
     }
 
 
-    showForm(isAddNew : boolean = true, repayment?: any ) {
+    showForm(isAddNew : boolean = true, expense?: any ) {
 
         this.ignoreDirty = false
 
@@ -191,16 +191,28 @@ export class ExpenseComponent implements OnInit {
 
         } else {
             this.isAddNew = false
-            this.currentExpenseId = repayment.id
+            this.currentExpenseId = expense.id
 
-            this.expenseForm.patchValue(repayment)
+            this.expenseForm.patchValue(expense)
         }
-
 
         this.isShowForm = !this.isShowForm
     }
 
 
+    deleteItem (expense : any) {
+
+        this.hsOrderService.delExpense(this.currentOrder.id, expense.id).subscribe(
+            data => {
+                console.log('保存成功: ', data)
+                this.httpService.successHandler(data)
+
+                this.getExpenseList()
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+    }
 
 }
 

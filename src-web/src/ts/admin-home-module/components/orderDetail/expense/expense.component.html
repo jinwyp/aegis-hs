@@ -36,7 +36,10 @@
                     <td> {{expense.name | findKey : expensePurposeList : 'name' }}</td>
                     <td> {{expense.amount  }}</td>
 
-                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, expense)"> 修改 </button></td>
+                    <td>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, expense)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(expense)"> 删除 </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>

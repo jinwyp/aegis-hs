@@ -209,13 +209,15 @@ export class HSOrderService {
         return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/fees', {params: params} )
     }
     createNewExpense(orderId: number, expense: any): Observable<any> {
-
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/fees', expense )
     }
     modifyExpense(orderId: number, expenseId: number, expense: any ): Observable<any> {
-
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/fees/' + expenseId.toString() , expense)
     }
+    delExpense(orderId: number, expenseId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderConfig + '/' + orderId + '/fees/' + expenseId.toString())
+    }
+
 
 
     getInvoiceListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
@@ -226,14 +228,14 @@ export class HSOrderService {
         return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/invoices', {params: params} )
     }
     createNewInvoice(orderId: number, invoice: any): Observable<any> {
-
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/invoices', invoice )
     }
     modifyInvoice(orderId: number, invoiceId: number, invoice: any ): Observable<any> {
-
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/invoices/' + invoiceId.toString() , invoice)
     }
-
+    delInvoice(orderId: number, invoiceId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderConfig + '/' + orderId + '/invoices/' + invoiceId.toString())
+    }
 
 }
 

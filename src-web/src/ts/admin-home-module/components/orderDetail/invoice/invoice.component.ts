@@ -277,6 +277,19 @@ export class InvoiceComponent implements OnInit {
     }
 
 
+    deleteItem (invoice : any) {
+
+        this.hsOrderService.delInvoice(this.currentOrder.id, invoice.id).subscribe(
+            data => {
+                console.log('保存成功: ', data)
+                this.httpService.successHandler(data)
+
+                this.getInvoiceList()
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+    }
 
 
     createInvoiceDetail () {
