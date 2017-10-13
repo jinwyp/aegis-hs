@@ -31,6 +31,8 @@ public class JiekuanService {
     @Autowired
     HuankuanMapMapper huankuanMapMapper;
 
+    @Autowired
+    HuankuanMapper huankuanMapper;
 
     /**
      * 获取一页借款记录
@@ -96,8 +98,25 @@ public class JiekuanService {
 
         List<Jiekuan> all = jiekuanMapper.getPage(dto).getResults();
 
-        // 找出每笔借款的还款明细
-        // huankuanMapMapper.getListByHuankuanId()
-        return null;
+        List<Jiekuan> filter = new ArrayList<>();
+
+        for (Jiekuan jiekuan : all) {
+            // 此笔借款关联的还款明细
+            List<HuankuanMap> huankuanMaps = huankuanMapMapper.getListByJiekuanId(jiekuan.getId());
+            BigDecimal total = huankuanMaps.stream()
+                    .map(HuankuanMap::getPrincipal)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            if (total.equals(jiekuan.getAmount())) {
+                continue;
+            }
+
+            // 借款的还款明细
+            jiekuan.setHuankuanMapList(huankuanMaps);
+
+            // 此笔借款关联的还款
+            jiekuan.setHuankuanList(huankuanMapper.getListByJiekuanId(jiekuan.getId()));
+            filter.add(jiekuan);
+        }
+        return filter;
     }
 }

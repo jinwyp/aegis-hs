@@ -23,5 +23,7 @@ public interface HuankuanMapMapper {
 
     int deleteByHuankuanId(long huankuanId);
 
-    List<HuankuanMap> getListByHuankuanId(Long fukuanId);
+    List<HuankuanMap> getListByHuankuanId(Long huankuanId);
+
+    List<HuankuanMap> getListByJiekuanId(Long jiekuanId);
 }

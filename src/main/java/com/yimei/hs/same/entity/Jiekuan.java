@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class Jiekuan implements Serializable {
@@ -45,4 +46,9 @@ public class Jiekuan implements Serializable {
     private Date tsu;
 
     private static final long serialVersionUID = 1L;
+
+    private List<HuankuanMap> huankuanMapList; // 借款对应的还款明细
+
+    private List<Huankuan> huankuanList;       // 借款对应的还款列表
+
 }

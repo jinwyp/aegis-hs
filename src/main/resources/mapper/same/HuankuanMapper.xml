@@ -54,8 +54,8 @@
         </where>
     </select>
 
-    <!---->
-    <select id="getListByFukuanId" resultType="com.yimei.hs.same.entity.Huankuan">
+    <!-- 找出某笔借款所对应的所有还款记录 -->
+    <select id="getListByJiekuanId" resultType="com.yimei.hs.same.entity.Huankuan">
         SELECT
             huankuan.id,
             huankuan.orderId,
@@ -65,7 +65,7 @@
             huankuan.tsu
         FROM hs_same_huankuan_map huankuanmap
             LEFT JOIN hs_same_huankuan huankuan ON huankuanmap.huankuanId = huankuan.id
-        WHERE huankuanmap.fukuanId = #{fukuanId, jdbcType=BIGINT} AND huankuan.deleted = 0
+        WHERE huankuanmap.jiekuanId = #{jiekuanId, jdbcType=BIGINT} AND huankuan.deleted = 0
     </select>
 
     <!-- -->

@@ -30,7 +30,7 @@
         WHERE orderId = #{orderId,jdbcType=BIGINT}
     </select>
 
-    <!-- -->
+    <!-- 查找还款明细by还款Id-->
     <select id="getListByHuankuanId" resultType="com.yimei.hs.same.entity.HuankuanMap">
         SELECT
             huankuanId,
@@ -40,7 +40,20 @@
         FROM
             hs_same_huankuan_map
         WHERE
-            jiekuanId = #{jiekuanId,jdbcType=BIGINT}
+            huankuanId = #{huankuanId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 查找还款明细by借款Id-->
+    <select id="getListByJiekuanId" resultType="com.yimei.hs.same.entity.HuankuanMap">
+        SELECT
+        huankuanId,
+        principal,
+        interest,
+        fee
+        FROM
+        hs_same_huankuan_map
+        WHERE
+        jiekuanId = #{jiekuanId,jdbcType=BIGINT}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
