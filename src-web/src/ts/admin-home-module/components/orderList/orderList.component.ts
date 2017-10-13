@@ -316,7 +316,19 @@ export class OrderListComponent implements OnInit {
         this.isShowForm = !this.isShowForm
     }
 
+    deleteItem (order : any) {
 
+        this.hsOrderService.delOrder(order.id).subscribe(
+            data => {
+                console.log('保存成功: ', data)
+                this.httpService.successHandler(data)
+
+                this.getOrderList()
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+    }
 
 
     createOrderOtherPartyForm(): void {

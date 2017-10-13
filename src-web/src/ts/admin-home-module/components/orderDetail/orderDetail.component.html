@@ -14,7 +14,7 @@
             <li class="nav-item">
                 <a class="nav-link" [class.active]="currentTabIndex === 2" (click)="changeTab(2)">核算月管理</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="orderType==='ying'">
                 <a class="nav-link" [class.active]="currentTabIndex === 3" (click)="changeTab(3)">发运管理</a>
             </li>
             <li class="nav-item">
@@ -72,13 +72,12 @@
             </div>
 
 
-
         </div>
 
 
 
         <app-unit  *ngIf="currentTabIndex === 2" [currentOrder]="currentOrder"></app-unit>
-        <app-shipping  *ngIf="currentTabIndex === 3" [currentOrder]="currentOrder"></app-shipping>
+        <app-shipping  *ngIf="currentTabIndex === 3 && orderType==='ying'" [currentOrder]="currentOrder"></app-shipping>
         <app-payment  *ngIf="currentTabIndex === 4" [currentOrder]="currentOrder"></app-payment>
         <app-repayment  *ngIf="currentTabIndex === 5" [currentOrder]="currentOrder"></app-repayment>
         <app-huankuan  *ngIf="currentTabIndex === 6" [currentOrder]="currentOrder"></app-huankuan>

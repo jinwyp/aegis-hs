@@ -214,5 +214,21 @@ export class UnitComponent implements OnInit {
     }
 
 
+
+    deleteItem (unit : any) {
+
+        this.hsOrderService.delOrderUnit(this.currentOrder.id, unit.id).subscribe(
+            data => {
+                console.log('保存成功: ', data)
+                this.httpService.successHandler(data)
+
+                this.getOrderUnitList()
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+    }
+
+
 }
 

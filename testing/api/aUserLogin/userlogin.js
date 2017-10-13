@@ -39,7 +39,7 @@ describe('用户注册登陆', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 done()
             })
     })
@@ -72,8 +72,8 @@ describe('用户注册登陆', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 done()
             })
     })

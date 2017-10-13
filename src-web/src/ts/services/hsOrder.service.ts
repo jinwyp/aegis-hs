@@ -40,21 +40,20 @@ export class HSOrderService {
         return this.http.get(apiPath.hsGetOrderList, {params: params})
     }
     getOrderByID(orderId: any): Observable<any> {
-
         return this.http.get(apiPath.hsGetOrderList + '/' + orderId )
     }
 
-    createNewOrder(user: any): Observable<any> {
-
-        return this.http.post(apiPath.hsGetOrderList, user)
+    createNewOrder(order: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList, order)
     }
-    modifyOrder(userId: number, user: any): Observable<any> {
-
-        return this.http.put(apiPath.hsGetOrderList + '/' + userId, user)
+    modifyOrder(orderId: number, user: any): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + orderId, user)
+    }
+    delOrder(orderId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + orderId)
     }
 
     transferOrder(orderId: number, userId: number): Observable<any> {
-
         return this.http.post(apiPath.hsGetOrderList + '/' + orderId + '/to/' + userId, {} )
     }
 
@@ -67,14 +66,14 @@ export class HSOrderService {
         return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/units', {params: params} )
     }
     createNewOrderUnit(orderId: number, unit: any): Observable<any> {
-
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/units', unit )
     }
     modifyOrderUnit(orderId: number, unitId: number, unit: any ): Observable<any> {
-
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/units/' + unitId.toString() , unit)
     }
-
+    delOrderUnit(orderId: number, unitId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderConfig + '/' + orderId + '/units/' + unitId.toString())
+    }
 
     getShippingListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
@@ -84,13 +83,15 @@ export class HSOrderService {
         return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/fayuns', {params: params} )
     }
     createNewShipping(orderId: number, shipping: any): Observable<any> {
-
         return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/fayuns', shipping )
     }
     modifyShipping(orderId: number, shippingId: number, shipping: any ): Observable<any> {
-
         return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/fayuns/' + shippingId.toString() , shipping)
     }
+    delShipping(orderId: number, shippingId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderConfig + '/' + orderId + '/fayuns/' + shippingId.toString())
+    }
+
 
     getPaymentListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()

@@ -233,5 +233,20 @@ export class ShippingOrderComponent implements OnInit {
 
 
 
+    deleteItem (shipping : any) {
+
+        this.hsOrderService.delShipping(this.currentOrder.id, shipping.id).subscribe(
+            data => {
+                console.log('保存成功: ', data)
+                this.httpService.successHandler(data)
+
+                this.getShippingList()
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+    }
+
+
 }
 

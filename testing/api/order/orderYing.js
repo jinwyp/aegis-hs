@@ -7,8 +7,6 @@
  * Created by jin on 9/18/17.
  */
 
-const env = process.env.NODE_ENV || 'test'
-
 
 //Require the dev-dependencies
 const expect = require('chai').expect
@@ -29,10 +27,7 @@ describe('应收订单', function () {
 
         server.post('/api/login')
             .set(config.headers)
-            .send({
-                phone: "13022117050",
-                password: "123456"
-            })
+            .send(config.user.admin)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -40,7 +35,8 @@ describe('应收订单', function () {
                 Authorization = res.body.data
                 done()
             })
-    });
+    })
+
 
 
 
@@ -63,9 +59,9 @@ describe('应收订单', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.line).to.include('那曲')
                 done()
             })
@@ -88,15 +84,15 @@ describe('应收订单', function () {
                 "orderPartyList":[
                     {"custType":"TRAFFICKCER","customerId":7},
                     {"custType":"ACCOUNTING_COMPANY","customerId":16}
-                    ]
+                ]
             })
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.line).to.include('那曲')
                 done()
             })
@@ -107,7 +103,6 @@ describe('应收订单', function () {
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
-                "deptId":2,
                 "teamId":1,
                 "line":"那曲 - 晋和 - 嘉瑞",
                 "cargoType":"COAL",
@@ -115,53 +110,25 @@ describe('应收订单', function () {
                 "downstreamSettleMode":"ONE_PAPER_SETTLE",
                 "mainAccounting":1,
                 "upstreamId":2,
-                "downstreamId":3
+                "downstreamId":3,
+                "orderPartyList" : [
+                    { "custType" : "UPSTREAM", "customerId" : 1},
+                    { "custType" : "DOWNSTREAM", "customerId" : 2}
+                ]
             })
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.line).to.include('那曲')
                 done()
             })
     })
 
-    it('应收订单 - 新建应收订单4 POST: /api/yings', function (done) {
-        server.post('/api/yings')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "teamId" : 1,
-                    "line" : "嘉瑞 - 那曲 - 山瑞",
-                    "cargoType" : "COAL",
-                    "upstreamSettleMode" : "ONE_PAPER_SETTLE",
-                    "downstreamSettleMode" : "ONE_PAPER_SETTLE",
-                    "mainAccounting" : 2,
-                    "upstreamId" : 3,
-                    "downstreamId" : 4,
-                    "orderPartyList" : [
-                        { "custType" : "UPSTREAM", "customerId" : 1},
-                        { "custType" : "DOWNSTREAM", "customerId" : 2}
-                    ]
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
-                done()
-            })
-    })
-
-    it('应收订单 - 新建应收订单5 非法输入不存在部门和团队 deptId:9999, teamId:99999 POST: /api/yings', function (done) {
+    it('应收订单 - 新建应收订单 非法输入 不存在部门和团队 deptId:9999, teamId:99999 POST: /api/yings', function (done) {
         server.post('/api/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -186,14 +153,13 @@ describe('应收订单', function () {
             .expect(400)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(false)
-                expect(res.body.data).to.equal(undefined)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
                 done()
             })
     })
 
-
-    it('应收订单 - 新建应收订单6 非法输入不存在的公司ID mainAccounting:9999, upstreamId:99999, downstreamId:99999 POST: /api/yings', function (done) {
+    it('应收订单 - 新建应收订单 非法输入 不存在的公司ID mainAccounting:9999, upstreamId:99999, downstreamId:99999 POST: /api/yings', function (done) {
         server.post('/api/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -218,13 +184,13 @@ describe('应收订单', function () {
             .expect(400)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(false)
-                expect(res.body.data).to.equal(undefined)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
                 done()
             })
     })
 
-    it('应收订单 - 新建应收订单7 非法输入不存在的参与方公司ID "custType" : "UPSTREAM", "customerId" : 9999 POST: /api/yings', function (done) {
+    it('应收订单 - 新建应收订单 非法输入 不存在的参与方公司ID "custType" : "UPSTREAM", "customerId" : 9999 POST: /api/yings', function (done) {
         server.post('/api/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -241,7 +207,9 @@ describe('应收订单', function () {
                     "downstreamId" : 4,
                     "orderPartyList" : [
                         { "custType" : "UPSTREAM", "customerId" : 9999},
-                        { "custType" : "DOWNSTREAM", "customerId" : 2}
+                        { "custType" : "DOWNSTREAM", "customerId" : 9999},
+                        { "custType" : "TRAFFICKCER", "customerId":9999},
+                        { "custType" : "ACCOUNTING_COMPANY", "customerId":9999}
                     ]
                 }
             )
@@ -249,8 +217,8 @@ describe('应收订单', function () {
             .expect(400)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(false)
-                expect(res.body.data).to.equal(undefined)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
                 done()
             })
     })
@@ -263,12 +231,11 @@ describe('应收订单', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.pageNo).to.equal(1)
-                expect(res.body.data.pageSize).to.equal(2)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.pageNo, 'pageNo值应该是1 但实际不是1').to.equal(1)
+                expect(res.body.data.pageSize, 'pageSize值应该是2 但实际不是2').to.equal(2)
                 expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
-
                 done()
             })
     })
@@ -281,15 +248,15 @@ describe('应收订单', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.line).to.include('那曲')
                 done()
             })
     })
 
-    it('应收订单 - 修改某个ID的应收订单名称 PUT: /api/yings/1', function (done) {
+    it('应收订单 - 修改某个ID的应收订单 PUT: /api/yings/1', function (done) {
         server.put('/api/yings/1')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -303,14 +270,35 @@ describe('应收订单', function () {
                 "downstreamSettleMode":"ONE_PAPER_SETTLE",
                 "mainAccounting":1,
                 "upstreamId":2,
-                "downstreamId":3
+                "downstreamId":3,
+                "orderPartyList" : [
+                    { "custType" : "UPSTREAM", "customerId" : 9999},
+                    { "custType" : "DOWNSTREAM", "customerId" : 9999},
+                    { "custType" : "TRAFFICKCER", "customerId":9999},
+                    { "custType" : "ACCOUNTING_COMPANY", "customerId":9999}
+                ]
             })
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.equal(1)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+                done()
+            })
+    })
+
+    it('应收订单 - 删除某个ID的应收订单 DELETE: /api/yings/1', function (done) {
+        server.put('/api/yings/1')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
                 done()
             })
     })
@@ -335,9 +323,9 @@ describe('应收订单', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.hsMonth).to.include('201709')
                 done()
             })
@@ -360,9 +348,9 @@ describe('应收订单', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.hsMonth).to.include('201710')
                 done()
             })
@@ -376,10 +364,10 @@ describe('应收订单', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.pageNo).to.equal(1)
-                expect(res.body.data.pageSize).to.equal(2)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.pageNo, 'pageNo值应该是1 但实际不是1').to.equal(1)
+                expect(res.body.data.pageSize, 'pageSize值应该是2 但实际不是2').to.equal(2)
                 expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
                 done()
             })
@@ -393,9 +381,9 @@ describe('应收订单', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.hsMonth).to.include('201709')
                 done()
             })
@@ -419,8 +407,8 @@ describe('应收订单', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.equal(1)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的data值应该是1 但实际不是1').to.equal(1)
                 done()
             })
     })
@@ -428,161 +416,117 @@ describe('应收订单', function () {
 
 
 
+})
 
-    it('发运单 - 新建发运单1 POST: /api/ying/1/fayuns', function (done) {
-        server.post('/api/ying/1/fayuns')
+
+
+
+describe('应收订单', function () {
+
+    let Authorization = ''
+    let orderId = ''
+
+    before(function (done) {
+
+        server.post('/api/login')
+            .set(config.headers)
+            .send(config.user.user1)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                Authorization = res.body.data
+                done()
+            })
+    });
+
+    it('移交订单权限 - 新建应收订单11 POST: /api/yings', function (done) {
+        server.post('/api/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
-                "hsId"               : 1,
-                "fyDate"                : "2017-09-02 00:00:00",
-                "fyAmount"              : "2000",
-                "arriveStatus"          : "ARRIVE",
-                "upstreamTrafficMode"   : "MOTOR",
-                "upstreamCars"          : 200,
-                "upstreamJHH"           : "",
-                "upstreamShip"          : "",
-                "downstreamTrafficMode" : "SHIP",
-                "downstreamCars"        : "",
-                "downstreamJHH"         : "",
-                "downstreamShip"        : "x1000",
-                "orderId"               : 1
+                "deptId":2,
+                "teamId":1,
+                "line":"那曲 - 晋和 - 嘉瑞",
+                "cargoType":"COAL",
+                "upstreamSettleMode":"ONE_PAPER_SETTLE",
+                "downstreamSettleMode":"ONE_PAPER_SETTLE",
+                "mainAccounting":1,
+                "upstreamId":2,
+                "downstreamId":3
             })
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.fyDate).to.include('2017')
+                expect(res.body.data.line).to.include('那曲')
+                orderId = res.body.data.id
                 done()
             })
     })
 
-    it('发运单 - 新建发运单2 POST: /api/ying/1/fayuns', function (done) {
-        server.post('/api/ying/1/fayuns')
+    it('移交订单权限 - 新建应收订单12 POST: /api/yings', function (done) {
+        server.post('/api/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
-                "hsId"               : 1,
-                "fyDate"                : "2017-10-01 00:00:00",
-                "fyAmount"              : "40000",
-                "arriveStatus"          : "ARRIVE",
-                "upstreamTrafficMode"   : "MOTOR",
-                "upstreamCars"          : 200,
-                "upstreamJHH"           : "",
-                "upstreamShip"          : "",
-                "downstreamTrafficMode" : "SHIP",
-                "downstreamCars"        : "",
-                "downstreamJHH"         : "",
-                "downstreamShip"        : "x1003",
-                "orderId"               : 1
+                "deptId":2,
+                "teamId":1,
+                "line":"那曲 - 晋和 - 嘉瑞",
+                "cargoType":"COAL",
+                "upstreamSettleMode":"ONE_PAPER_SETTLE",
+                "downstreamSettleMode":"ONE_PAPER_SETTLE",
+                "mainAccounting":1,
+                "upstreamId":2,
+                "downstreamId":3
             })
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.fyDate).to.include('2017')
+                expect(res.body.data.line).to.include('那曲')
+                orderId = res.body.data.id
                 done()
             })
     })
 
-    it('发运单 - 新建发运单3 非法输入不存在的核算单元ID hsId:99999, POST: /api/ying/1/fayuns', function (done) {
-        server.post('/api/ying/1/fayuns')
+    it('移交订单权限 - 转移订单给另一个财务人员 POST: /api/yings/8/to/4', function (done) {
+
+        console.log('转移订单给另一个财务人员 POST: /api/yings/' + orderId + '/to/4')
+        server.post('/api/yings/' + orderId + '/to/4')
             .set('Authorization', Authorization)
             .set(config.headers)
-            .send({
-                "hsId"               : 99999,
-                "fyDate"                : "2017-10-01 00:00:00",
-                "fyAmount"              : "40000",
-                "arriveStatus"          : "ARRIVE",
-                "upstreamTrafficMode"   : "MOTOR",
-                "upstreamCars"          : 200,
-                "upstreamJHH"           : "",
-                "upstreamShip"          : "",
-                "downstreamTrafficMode" : "SHIP",
-                "downstreamCars"        : "",
-                "downstreamJHH"         : "",
-                "downstreamShip"        : "x1003",
-                "orderId"               : 1
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+                done()
             })
+    })
+
+    it('移交订单权限 - 不是自己的订单转移给另一个财务人员 非法输入 POST: /api/yings/1/to/4', function (done) {
+
+        server.post('/api/yings/1/to/4')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
             .expect('Content-Type', /json/)
             .expect(400)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(false)
-                expect(res.body.data).to.equal(undefined)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
                 done()
             })
     })
-
-    it('发运单 - 获取应收订单发运单列表 GET: /api/ying/1/fayuns?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/ying/1/fayuns?pageNo=1&pageSize=2')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.pageNo).to.equal(1)
-                expect(res.body.data.pageSize).to.equal(2)
-                expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
-                done()
-            })
-    })
-
-    it('发运单 - 获取某个ID的发运单信息 GET: /api/ying/1/fayuns/1', function (done) {
-        server.get('/api/ying/1/fayuns/1')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.fyDate).to.include('2017')
-                done()
-            })
-    })
-
-    it('发运单 - 修改某个ID的发运单 PUT: /api/ying/1/fayuns/1', function (done) {
-        server.put('/api/ying/1/fayuns/1')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "id" : 1,
-                    "hsId"               : 1,
-                    "fyDate"                : "2017-09-02 00:00:00",
-                    "arriveStatus"          : "ARRIVE",
-                    "upstreamTrafficMode"   : "MOTOR",
-                    "upstreamCars"          : 300,
-                    "upstreamJHH"           : "",
-                    "upstreamShip"          : "",
-                    "downstreamTrafficMode" : "SHIP",
-                    "downstreamCars"        : "",
-                    "downstreamJHH"         : "",
-                    "downstreamShip"        : "x3000",
-                    "orderId"               : 1
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.equal(1)
-                done()
-            })
-    })
-
 
 })

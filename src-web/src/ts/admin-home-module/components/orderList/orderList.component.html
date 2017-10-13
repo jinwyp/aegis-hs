@@ -1,7 +1,7 @@
 
 
         <h3>
-            核算单管理
+            应收单管理
             <button type="button" class="btn btn-outline-info btn-sm float-right" *ngIf="!isShowForm" (click)="showForm(true)">添加</button>
         </h3>
 
@@ -148,6 +148,7 @@
                     <td>
                         <a class="btn btn-link btn-sm" [routerLink]="['/orders', order.id]" role="button">查看</a>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, order)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(order)"> 删除 </button>
                     </td>
                 </tr>
                 </tbody>

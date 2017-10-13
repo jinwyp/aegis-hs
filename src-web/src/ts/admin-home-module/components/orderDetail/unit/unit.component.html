@@ -47,7 +47,10 @@
                     <td> {{unit.expectHKDays }}</td>
                     <td> {{unit.tradeAddPrice }}</td>
                     <td> {{unit.weightedPrice }}</td>
-                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, unit)"> 修改 </button></td>
+                    <td>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, unit)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(unit)"> 删除 </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>

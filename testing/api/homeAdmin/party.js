@@ -46,8 +46,8 @@ describe('参与商公司', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.pageNo).to.equal(1)
                 expect(res.body.data.pageSize).to.equal(2)
                 expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
@@ -70,8 +70,8 @@ describe('参与商公司', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.name).to.include('新的参与商公司')
                 done()
@@ -87,8 +87,8 @@ describe('参与商公司', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.not.equal(null)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.name).to.include('江苏晋和电力燃料有限公司')
                 done()
@@ -109,8 +109,8 @@ describe('参与商公司', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success).to.equal(true)
-                expect(res.body.data).to.equal(1)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
                 done()
             })
     })
