@@ -312,7 +312,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             return
         }
 
-        this.paymentPostList.push(<any>Object.assign( {}, this.paymentListObject[this.paymentForm.value.id],
+        this.paymentPostList.push((<any>Object).assign( {}, this.paymentListObject[this.paymentForm.value.id],
             {fukuanId : this.paymentForm.value.id, principal : this.paymentForm.value.principal, interest : this.paymentForm.value.interest}) )
 
         this.ignoreDirtyPayment = false

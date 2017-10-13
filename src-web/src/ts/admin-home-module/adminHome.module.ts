@@ -65,6 +65,7 @@ const userHomeRoutes: Routes = [
 
 @NgModule({
     declarations : [
+        PipeSubstringId,
         PipeOrderStatus,
         PipePaymentSettleMode,
         PipeCargoType,

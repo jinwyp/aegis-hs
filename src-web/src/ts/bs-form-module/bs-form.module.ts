@@ -13,6 +13,7 @@ import { UiSwitchComponent } from './components/ui-switch/ui-switch.component'
 import { SwitchComponent } from './components/switch/switch.component'
 import { TextInputComponent } from './components/text-input/text-input.component'
 import { SelectDropdownComponent } from './components/selectDropdown/selectDropdown.component'
+import { MultiSelectComponent } from './components/multiSelect/multiSelect.component'
 import { RadioComponent } from './components/radio/radio.component'
 import { DatePickerComponent } from './components/datepicker/datepicker.component'
 import { AddressDropdownComponent } from './components/addressDropdown/addressDropdown.component'
@@ -38,6 +39,7 @@ import {HttpService} from './services/http.service'
         SwitchComponent,
         TextInputComponent,
         SelectDropdownComponent,
+        MultiSelectComponent,
         RadioComponent,
         DatePickerComponent,
         AddressDropdownComponent,
@@ -72,6 +74,7 @@ import {HttpService} from './services/http.service'
         UiSwitchComponent,
         SwitchComponent,
         SelectDropdownComponent,
+        MultiSelectComponent,
         RadioComponent,
         DatePickerComponent,
         RadioComponent,

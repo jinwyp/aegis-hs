@@ -14,7 +14,7 @@ import {apiPath} from '../../../services/apiPath'
 
 @Component({
     selector    : 'app-register',
-    templateUrl : './create.component.html'
+    templateUrl : './register.component.html'
 })
 export class RegisterComponent implements OnInit {
 

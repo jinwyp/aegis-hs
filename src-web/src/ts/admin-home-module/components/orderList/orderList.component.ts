@@ -102,7 +102,7 @@ export class OrderListComponent implements OnInit {
             pageNo: this.pagination.pageNo
         }
 
-        query = Object.assign(query, this.orderSearchForm.value)
+        query = (<any>Object).assign(query, this.orderSearchForm.value)
 
         console.log(query)
         this.hsOrderService.getOrderList(query).subscribe(
