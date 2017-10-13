@@ -22,7 +22,4 @@ public class PageFukuanDTO extends BaseFilter<PageFukuanDTO> {
 
     // 回款是否完成
     private Boolean huikuanUnfinished = false;
-
-    // 付款的借款是否完成明细
-    private Boolean jiekuanUnfinished = false;
 }

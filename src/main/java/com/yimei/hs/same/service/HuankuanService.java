@@ -68,6 +68,7 @@ public class HuankuanService {
             return 0;
         }
 
+        // 2. 插入还款明细
         for (HuankuanMap map : huankuan.getHuankuanMapList()) {
             map.setHuankuanId(huankuan.getId());
             map.setOrderId(huankuan.getOrderId());

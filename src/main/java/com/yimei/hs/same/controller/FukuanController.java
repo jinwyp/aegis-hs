@@ -46,11 +46,6 @@ public class FukuanController {
             @PathVariable("morderId") Long morderId,
             PageFukuanDTO pageFukuanDTO) {
 
-        // 不能同时指定借款与付款unfinished
-        if ( pageFukuanDTO.getHuikuanUnfinished() != null && pageFukuanDTO.getJiekuanUnfinished() ) {
-            return Result.error(4001, "参数非法");
-        }
-
         pageFukuanDTO.setOrderId(morderId);
         Page<Fukuan> page = fukuanService.getPage(pageFukuanDTO);
 

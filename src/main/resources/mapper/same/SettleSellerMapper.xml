@@ -6,6 +6,11 @@
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+
+        <!--<result column="settleGap" jdbcType="DECIMAL" property="settleGap"/>-->
+
         <result column="settleDate" jdbcType="DATE" property="settleDate"/>
         <result column="discountType" jdbcType="VARCHAR" property="discountType"/>
         <result column="discountInterest" jdbcType="DECIMAL" property="discountInterest"/>
@@ -33,8 +38,7 @@
             hs.tsc,
             hs.tsu,
             sum(buyer.amount),
-            sum(buyer.money),
-            sum(buyer.settleGap)
+            sum(buyer.money)
         FROM hs_same_settle_seller seller
             LEFT JOIN hs_same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
         WHERE seller.id = #{id,jdbcType=BIGINT} and deleted = 0
@@ -55,8 +59,7 @@
         hs.tsc,
         hs.tsu,
         sum(buyer.amount),
-        sum(buyer.money),
-        sum(buyer.settleGap)
+        sum(buyer.money)
         from hs_same_settle_seller
              seller
             LEFT JOIN hs_same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
@@ -78,14 +81,14 @@
         hs.tsc,
         hs.tsu,
         sum(buyer.amount),
-        sum(buyer.money),
-        sum(buyer.settleGap)
+        sum(buyer.money)
         FROM hs_same_settle_seller seller
         LEFT JOIN hs_same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
         <where>
             <if test="orderId != null">AND orderId=#{orderId,jdbcType=BIGINT}</if>
             <if test="hsId != null">AND hsId= #{hsId,jdbcType=BIGINT}</if>
             <if test="settleDate != null">AND settleDate=#{settleDate,jdbcType=DATE}</if>
+            <if test="true">AND deleted = 0</if>
         </where>
         group by seller.orderId
     </select>

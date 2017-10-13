@@ -35,7 +35,6 @@ public class FukuanService {
     @Autowired
     JiekuanMapper jiekuanMapper;
 
-
     @Autowired
     OrderMapper orderMapper;
 
@@ -65,10 +64,6 @@ public class FukuanService {
             // 关联回款map明细
             List<HuikuanMap> huikuanMap = huikuanMapMapper.getListByFukuanId(fukuan.getId());
             fukuan.setHuikuanMap(huikuanMap);
-
-            // 关联借款列表
-            List<Jiekuan> jiekuanList = jiekuanMapper.getListByFukuanId(fukuan.getId());
-            fukuan.setJiekuanList(jiekuanList);
         }
 
         // 如果只需要回款尚未完成的付款， 则过滤
@@ -113,19 +108,7 @@ public class FukuanService {
         return page.getResults();
     }
 
-    /**
-     * 获取借款尚未添加完整的付款记录
-     * @param orderId
-     * @return
-     */
-    public List<Fukuan> jiekuanUnfinished(long orderId) {
-        List<Fukuan> all = this.getAll(orderId);
-        for (Fukuan fukuan : all) {
-            List<Jiekuan> jiekuanList = jiekuanMapper.getListByFukuanId(fukuan.getId());
-            fukuan.setJiekuanList(jiekuanList);
-        }
-        return this.getJiekuanUnfinshed(all);
-    }
+
 
     /**
      * 过滤付款列表: 返回付款没有被回款完的付款列表
@@ -148,26 +131,7 @@ public class FukuanService {
         return filter;
     }
 
-    /**
-     *
-     * @param fukuans
-     * @return
-     */
-    private List<Fukuan> getJiekuanUnfinshed(List<Fukuan> fukuans) {
-        List<Fukuan> filter = new ArrayList<>();
-        for (Fukuan fukuan : fukuans) {
-            List<Jiekuan> jiekuanList = jiekuanMapper.getListByFukuanId(fukuan.getId());
-            BigDecimal total = jiekuanList.stream()
-                    .map(m -> m.getAmount())
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
-            fukuan.setJiekuanTotal(total);
 
-            if (!total.equals(fukuan.getPayAmount())) {
-                filter.add(fukuan);
-            }
-        }
-        return filter;
-    }
 
     /**
      * 创建付款 - 触发 回款-付款-对应关系的建立
@@ -184,7 +148,7 @@ public class FukuanService {
         // 2. 触发回款对应
         fukuan.setHuikuanTotal(BigDecimal.ZERO);
 
-        //3 当资金方不为自有资金时 触发借款
+        //3 当资金方不为自有资金时 触发借款记录
         huikuanService.createMapping(fukuan.getOrderId());
         Order order=orderMapper.selectByPrimaryKey(fukuan.getOrderId());
 

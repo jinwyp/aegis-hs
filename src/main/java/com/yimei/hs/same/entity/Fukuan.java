@@ -59,8 +59,5 @@ public class Fukuan implements Serializable {
     private List<HuikuanMap> huikuanMap;
     private BigDecimal huikuanTotal;
 
-    // 关联的借款明细
-    private List<Jiekuan> jiekuanList;
     private Jiekuan jiekuan; //当资金方为非自由资金时 此字段不能为空
-    private BigDecimal jiekuanTotal;
 }
