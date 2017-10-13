@@ -177,9 +177,16 @@ public class FukuanService {
      */
     @Transactional(readOnly = false)
     public int delete(Long orderId, long id) {
+
+        // 1. 删除订单的所有 回款-付款 映射
+        huikuanMapMapper.deleteByOrderId(orderId);
+
+        // 2. 删除付款
+        int rtn = fukuanMapper.delete(id);
+
+        // 3. 重建回款付款映射
         huikuanService.createMapping(orderId);
 
-        // todo
-        return fukuanMapper.delete(id);
+        return rtn;
     }
 }

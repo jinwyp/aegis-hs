@@ -81,7 +81,23 @@ public class JiekuanService {
      */
     @Transactional(readOnly = false)
     public int delete(long id) {
-        return jiekuanMapper.delete(id);
+
+        // 1. 找出借款
+        Jiekuan jiekuan = jiekuanMapper.selectByPrimaryKey(id);
+
+        // 2. 找出借款对应的还款
+        List<Huankuan> huankuans = jiekuan.getHuankuanList();
+
+        // 3. 删除所有还款， 以及还款对应的还款明细
+        for (Huankuan huankuan : huankuans) {
+            huankuanMapper.delete(huankuan.getId());
+            huankuanMapMapper.deleteByHuankuanId(huankuan.getId());
+        }
+
+        // 4. 删除借款记录
+        int rtn = jiekuanMapper.delete(id);
+
+        return rtn;
     }
 
 
