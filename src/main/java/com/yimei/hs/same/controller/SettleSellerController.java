@@ -41,7 +41,7 @@ public class SettleSellerController {
      *
      * @return
      */
-    @GetMapping("/{morderId}/settle{pos}")
+    @GetMapping("/{morderId}/settleseller{pos}")
     public ResponseEntity<Result<Page<SettleSeller>>> listYingUpstream(
             @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
@@ -64,7 +64,7 @@ public class SettleSellerController {
      * @param id
      * @return
      */
-    @GetMapping("/{morderId}/settle{pos}/{id}")
+    @GetMapping("/{morderId}/settleseller{pos}/{id}")
     public ResponseEntity<Result<SettleSeller>> read(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("pos") String pos,
@@ -89,7 +89,7 @@ public class SettleSellerController {
      * @return
      */
 
-    @PostMapping("/{morderId}/settle{pos}")
+    @PostMapping("/{morderId}/settleseller{pos}")
     public ResponseEntity<Result<SettleSeller>> create(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
@@ -112,7 +112,7 @@ public class SettleSellerController {
      *
      * @return
      */
-    @PutMapping("/{morderId}/settle{pos}/{id}")
+    @PutMapping("/{morderId}/settleseller{pos}/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
@@ -138,7 +138,7 @@ public class SettleSellerController {
      *
      * @return
      */
-    @DeleteMapping("/{morderId}/settle{pos}/{id}")
+    @DeleteMapping("/{morderId}/settleseller{pos}/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
