@@ -103,8 +103,11 @@ public class YingIntegrationA extends HsTestBase {
 //        huikuan();
 //        fukuan();
 //        fayun();
-        jiekuan();
-        huankuan();
+//        jiekuan();
+//        huankuan();
+        huankuanAuto();
+        jiekuan_huankuan();
+
 //        buyer();
 //        buyerCang();
 //        seller();
@@ -720,9 +723,21 @@ public class YingIntegrationA extends HsTestBase {
         String jiekuanFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans/" + jiekuanCreateResult.getData().getId();
         Result<Jiekuan> jiekuanFindResult = client.exchange(jiekuanFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceJiekuan).getBody();
         if (jiekuanFindResult.getSuccess()) {
-            logger.info("查询借款成功\nGET {}\nrequest = {}\nresponse = {}", jiekuanFindUrl, "", printJson(jiekuanFindResult.getData()));
+            logger.info("查询借款成功\nPUT {}\nrequest = {}\nresponse = {}", jiekuanFindUrl, "", printJson(jiekuanFindResult.getData()));
         } else {
             logger.info("查询借款失败: {}", jiekuanFindResult.getError());
+            System.exit(-1);
+        }
+
+        jiekuan=jiekuanFindResult.getData();
+        jiekuan.setAmount(new BigDecimal("6666666"));
+        // 4.更新
+        String jiekuanUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans/" + jiekuanCreateResult.getData().getId();
+        Result<Integer> jiekuanUpdateResult = client.exchange(jiekuanUpdateUrl, HttpMethod.PUT, new HttpEntity<>(jiekuan), typeReferenceInteger).getBody();
+        if (jiekuanUpdateResult.getSuccess()) {
+            logger.info("更新借款成功\nGET {}\nrequest = {}\nresponse = {}", jiekuanUpdateUrl, "", printJson(jiekuanUpdateResult.getData()));
+        } else {
+            logger.info("更新借款失败: {}", jiekuanUpdateResult.getError());
             System.exit(-1);
         }
 
@@ -796,6 +811,96 @@ public class YingIntegrationA extends HsTestBase {
             logger.info("更新  还款失败: {}", huankuanUpdateResult.getError());
             System.exit(-1);
         }
+    }
+
+    private void huankuanAuto()throws JsonProcessingException {
+        //创建多笔借款
+
+        String jiekuanCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans";
+        Jiekuan jiekuanOne = new Jiekuan() {{
+            setOrderId(yingOrderResult.getData().getId());
+            setHsId(yingOrderConfigResult.getData().getId());
+            setFukuanId(0L);
+            setJiekuanDate(stringToTime("20170701"));
+            setCapitalId(1L);
+            setAmount(new BigDecimal("100.00"));
+            setUseDays(35);
+            setUseInterest(new BigDecimal("7.50"));
+
+        }};
+        Jiekuan jiekuanTwo = new Jiekuan() {{
+            setOrderId(yingOrderResult.getData().getId());
+            setHsId(yingOrderConfigResult.getData().getId());
+            setFukuanId(0L);
+            setJiekuanDate(stringToTime("20170702"));
+            setCapitalId(1L);
+            setAmount(new BigDecimal("200.00"));
+            setUseDays(35);
+            setUseInterest(new BigDecimal("7.50"));
+
+        }};
+        Jiekuan jiekuanThree = new Jiekuan() {{
+            setOrderId(yingOrderResult.getData().getId());
+            setHsId(yingOrderConfigResult.getData().getId());
+            setFukuanId(0L);
+            setJiekuanDate(stringToTime("20170703"));
+            setCapitalId(1L);
+            setAmount(new BigDecimal("300.00"));
+            setUseDays(35);
+            setUseInterest(new BigDecimal("7.50"));
+
+        }};
+        jiekuanCreateResult = client.exchange(jiekuanCreateUrl, HttpMethod.POST, new HttpEntity<>(jiekuanOne), typeReferenceJiekuan).getBody();
+
+        client.exchange(jiekuanCreateUrl, HttpMethod.POST, new HttpEntity<>(jiekuanTwo), typeReferenceJiekuan).getBody();
+        client.exchange(jiekuanCreateUrl, HttpMethod.POST, new HttpEntity<>(jiekuanThree), typeReferenceJiekuan).getBody();
+
+        //查询还款尚未匹配完成借款
+        String jiekuanListUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuansUnfinished" ;
+        Result<List<Jiekuan>> jiekuanListResult = client.exchange(jiekuanListUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceJiekuanList).getBody();
+
+        if (jiekuanListResult.getSuccess()) {
+            logger.info("创建分页成功\n GET {}\nrequest = {}\nresponse = {}", jiekuanListResult, "", printJson(jiekuanListResult.getData()));
+        } else {
+            logger.info("创建分页失败: {}", jiekuanListResult.getError());
+            System.exit(-1);
+        }
+
+
+        //还款
+
+        String huankuanCreateUrl = "/api/business/cang/" + yingOrderResult.getData().getId() + "/huankuans";
+        Huankuan huankuan = new Huankuan() {{
+
+
+
+            setOrderId(yingOrderResult.getData().getId());
+            setHsId(yingOrderConfigResult.getData().getId());
+            setHuankuankDate(stringToTime("2017-7-26"));
+
+
+        }};
+        List<HuankuanMap> hukuanMapList = new ArrayList<>();
+
+        for (Jiekuan jiekuan :jiekuanListResult.getData()) {
+
+            HuankuanMap map = new HuankuanMap();
+            map.setPrincipal(jiekuan.getAmount().subtract(new BigDecimal("50")));
+            map.setInterest(new BigDecimal("1700.02"));
+            map.setFee(new BigDecimal("570.0"));
+            map.setJiekuanId(jiekuan.getId());
+            hukuanMapList.add(map);
+        }
+        huankuan.setHuankuanMapList(hukuanMapList);
+        huankuanCreateResult = client.exchange(huankuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huankuan), typeReferenceHuankuan).getBody();
+        if (huankuanCreateResult.getSuccess()) {
+            logger.info("创建还款成功\nPOST {}\nrequest = {}\nresponse = {}", huankuanCreateUrl, printJson(huankuan), printJson(huankuanCreateResult.getData()));
+        } else {
+            logger.info("创建还款失败: {}", huankuanCreateResult.getError());
+            System.exit(-1);
+        }
+
+
     }
 
     private void fayun() throws JsonProcessingException {
@@ -1068,5 +1173,50 @@ public class YingIntegrationA extends HsTestBase {
         } catch (Exception e) {
             return LocalDateTime.now();
         }
+    }
+
+    public void jiekuan_huankuan() throws JsonProcessingException{
+
+        // 借款 - 分页
+
+        String jiekuanPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans?" + WebUtils.getUrlTemplate(PageJiekuanDTO.class);
+
+        Map<String, Object> variablesHuikuan = WebUtils.getUrlVariables(PageJiekuanDTO.class);
+        variablesHuikuan.put("orderId", yingOrderResult.getData().getId());
+        variablesHuikuan.put("pageSize", 5);
+        variablesHuikuan.put("pageNo", 1);
+
+
+        Result<Page<Jiekuan>> jiekuanPageResult = client.exchange(jiekuanPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceJiekuanPage, variablesHuikuan).getBody();
+
+        if (jiekuanPageResult.getSuccess()) {
+            logger.info("创建分页成功\n GET {}\nrequest = {}\nresponse = {}", jiekuanPageUrl, "", printJson(jiekuanPageResult.getData()));
+        } else {
+            logger.info("创建分页失败: {}", jiekuanPageResult.getError());
+            System.exit(-1);
+        }
+
+        // 3. id查询
+        String jiekuanFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans/" + jiekuanCreateResult.getData().getId();
+        Result<Jiekuan> jiekuanFindResult = client.exchange(jiekuanFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceJiekuan).getBody();
+        if (jiekuanFindResult.getSuccess()) {
+            logger.info("查询借款成功\nGET {}\nrequest = {}\nresponse = {}", jiekuanFindUrl, "", printJson(jiekuanFindResult.getData()));
+        } else {
+            logger.info("查询借款失败: {}", jiekuanFindResult.getError());
+            System.exit(-1);
+        }
+
+        Jiekuan jiekuan=jiekuanFindResult.getData();
+        jiekuan.setAmount(new BigDecimal("6666666"));
+        // 4.更新
+        String jiekuanUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans/" + jiekuanCreateResult.getData().getId();
+        Result<Integer> jiekuanUpdateResult = client.exchange(jiekuanUpdateUrl, HttpMethod.PUT, new HttpEntity<>(jiekuan), typeReferenceInteger).getBody();
+        if (jiekuanUpdateResult.getSuccess()) {
+            logger.info("更新借款成功\nGET {}\nrequest = {}\nresponse = {}", jiekuanUpdateUrl, "", printJson(jiekuanUpdateResult.getData()));
+        } else {
+            logger.info("更新借款失败: {}", jiekuanUpdateResult.getError());
+            System.exit(-1);
+        }
+
     }
 }

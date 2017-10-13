@@ -89,7 +89,7 @@ public class HuankuanController {
             @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(CreateGroup.class) Huankuan huankuan
     ) {
-        // 1. 找出当前订单借款记录 - 还款尚未对应完成的记录
+        // 1. 找出当前订单借款记录 - 还款尚未对应完成的记录 TODO check
         List<Jiekuan> jiekuans = jiekuanService.huankuanUnfinished(huankuan.getOrderId());
 
         // 2. 创建还款

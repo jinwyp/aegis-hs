@@ -121,6 +121,9 @@ abstract public class HsTestBase {
 
     protected ParameterizedTypeReference<Result<Jiekuan>> typeReferenceJiekuan  = new ParameterizedTypeReference<Result<Jiekuan>>() {};
     protected ParameterizedTypeReference<Result<Page<Jiekuan>>> typeReferenceJiekuanPage  = new ParameterizedTypeReference<Result<Page<Jiekuan>>>() {};
+    protected ParameterizedTypeReference<Result<List<Jiekuan>>> typeReferenceJiekuanList  = new ParameterizedTypeReference<Result<List<Jiekuan>>>() {};
+
+
 
     protected ParameterizedTypeReference<Result<Huankuan>> typeReferenceHuankuan  = new ParameterizedTypeReference<Result<Huankuan>>() {};
     protected ParameterizedTypeReference<Result<Page<Huankuan>>> typeReferenceHuankuanPage  = new ParameterizedTypeReference<Result<Page<Huankuan>>>() {};

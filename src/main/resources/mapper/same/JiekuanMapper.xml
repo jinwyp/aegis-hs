@@ -21,11 +21,52 @@
         tsu
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <resultMap id="JiekuanResultMap" type="com.yimei.hs.same.entity.Jiekuan" autoMapping="true">
+        <result property="id" column="jiekuanId"/>
+        <result property="orderId" column="jiekuanOrderId"/>
+        <result property="hsId" column="jiekuanHsId"/>
+        <collection property="huankuanMapList" javaType="ArrayList" ofType="com.yimei.hs.same.entity.HuankuanMap"
+                    autoMapping="true">
+            <id property="id" column="huankuanmapId"/>
+            <id property="jiekuanId" column="mapJiekuanId"/>
+            <id property="huankuanId" column="mapHuankuanId"/>
+        </collection>
+        <collection property="huankuanList" autoMapping="true" javaType="ArrayList"
+                    ofType="com.yimei.hs.same.entity.Huankuan">
+            <id property="id" column="huankuanId"/>
+
+        </collection>
+    </resultMap>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="JiekuanResultMap">
         select
-        <include refid="Base_Column_List"/>
-        from hs_same_jiekuan
-        where id = #{id,jdbcType=BIGINT}
+        jiekuan.id AS jiekuanId,
+        jiekuan.fukuanId ,
+        jiekuan.orderId AS jiekuanOrderId,
+        jiekuan.hsId  AS jiekuanHsId,
+        jiekuan.amount,
+        jiekuan.jiekuanDate,
+        jiekuan.capitalId ,
+        jiekuan.useInterest,
+        jiekuan.useDays ,
+
+
+        huankuanmap.id AS mapId,
+        huankuanmap.jiekuanId  AS mapJiekuanId,
+        huankuanmap.huankuanId  AS mapHuankuanId,
+        huankuanmap.principal ,
+        huankuanmap.interest ,
+        huankuanmap.fee,
+
+        huankuan.id AS huankuanId,
+        huankuan.huankuankDate,
+        huankuan.tsc,
+        huankuan.tsu
+
+        from hs_same_jiekuan jiekuan
+        LEFT JOIN hs_same_huankuan_map huankuanmap ON  jiekuan.id=huankuanmap.jiekuanId
+        LEFT JOIN hs_same_huankuan  huankuan     ON  huankuanmap.huankuanId=huankuan.id
+        where jiekuan.id = #{id,jdbcType=BIGINT} and jiekuan.deleted=0
     </select>
 
     <!-- 借款分页 -->
@@ -34,13 +75,13 @@
         id, fukuanId, orderId, hsId, amount, capitalId, useInterest, useDays, deleted, tsc, tsu
         FROM hs_same_jiekuan
         <where>
-            <if test="fukuanId!=null"> fukuanId = #{fukuanId,jdbcType=BIGINT}</if>
-            <if test="orderId!=null"> orderId = #{orderId,jdbcType=BIGINT}</if>
-            <if test="hsId!=null"> hsId = #{hsId,jdbcType=BIGINT}</if>
-            <if test="amount!=null"> amount = #{amount,jdbcType=DECIMAL}</if>
-            <if test="capitalId!=null"> capitalId = #{capitalId,jdbcType=BIGINT}</if>
-            <if test="useInterest!=null"> useInterest = #{useInterest,jdbcType=DECIMAL}</if>
-            <if test="useDays!=null"> useDays = #{useDays,jdbcType=BIGINT}</if>
+            <if test="fukuanId!=null">fukuanId = #{fukuanId,jdbcType=BIGINT}</if>
+            <if test="orderId!=null">orderId = #{orderId,jdbcType=BIGINT}</if>
+            <if test="hsId!=null">hsId = #{hsId,jdbcType=BIGINT}</if>
+            <if test="amount!=null">amount = #{amount,jdbcType=DECIMAL}</if>
+            <if test="capitalId!=null">capitalId = #{capitalId,jdbcType=BIGINT}</if>
+            <if test="useInterest!=null">useInterest = #{useInterest,jdbcType=DECIMAL}</if>
+            <if test="useDays!=null">useDays = #{useDays,jdbcType=BIGINT}</if>
         </where>
     </select>
 
@@ -103,7 +144,8 @@
         #{tsc,jdbcType=TIMESTAMP},
         #{tsu,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.Jiekuan" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.Jiekuan" useGeneratedKeys="true"
+            keyProperty="id">
         insert into hs_same_jiekuan
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -224,7 +266,6 @@
             capitalId   = #{capitalId,jdbcType=BIGINT},
             useInterest = #{useInterest,jdbcType=DECIMAL},
             useDays     = #{useDays,jdbcType=INTEGER},
-            deleted     = #{deleted,jdbcType=BIT},
             jiekuanDate         = #{jiekuanDate,jdbcType=TIMESTAMP},
             tsc         = #{tsc,jdbcType=TIMESTAMP},
             tsu         = #{tsu,jdbcType=TIMESTAMP}

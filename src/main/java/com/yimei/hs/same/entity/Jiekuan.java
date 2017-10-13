@@ -47,8 +47,10 @@ public class Jiekuan implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private List<HuankuanMap> huankuanMapList; // 借款对应的还款明细
+    @NotNull(groups = {UpdateGroup.class}, message = "借款对应的还款明细不能为空")
+    private List<HuankuanMap> huankuanMapList; //
 
+    @NotNull(groups = {UpdateGroup.class}, message = "借款对应的还款不能为空")
     private List<Huankuan> huankuanList;       // 借款对应的还款列表
 
     private BigDecimal huankuanTotal;
