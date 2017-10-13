@@ -17,57 +17,58 @@
         <result column="discountDays" jdbcType="INTEGER" property="discountDays"/>
         <result column="discountAmount" jdbcType="DECIMAL" property="discountAmount"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+        <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId,hsId, settleDate, discountType, discountInterest, discountDays,
-        discountAmount, tsc,tsu
+        id, orderId, hsId, settleDate, discountType, discountInterest, discountDays,
+        discountAmount, tsc, tsu
     </sql>
 
     <!-- 查找seller记录 -->
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT
-           seller.id,
-           seller.orderId,
-           seller.hsId,
-           seller.settleDate,
-           seller.discountType,
-           seller.discountInterest,
-           seller.discountDays,
-           seller.discountAmount,
-           seller.tsc,
-           seller.tsu,
+            seller.id,
+            seller.orderId,
+            seller.hsId,
+            seller.settleDate,
+            seller.discountType,
+            seller.discountInterest,
+            seller.discountDays,
+            seller.discountAmount,
+            seller.tsc,
+            seller.tsu,
             sum(buyer.amount),
             sum(buyer.money)
         FROM hs_same_settle_seller seller
             LEFT JOIN hs_same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
-        WHERE seller.id = #{id,jdbcType=BIGINT} and seller.deleted = 0
+        WHERE seller.id = #{id,jdbcType=BIGINT} AND seller.deleted = 0
         GROUP BY seller.orderId
     </select>
 
     <!-- 找出订单的所有seller记录 -->
     <select id="selectByOrderId" resultType="com.yimei.hs.same.entity.SettleSeller">
-        select
-       seller.id,
-       seller.orderId,
-       seller.hsId,
-       seller.settleDate,
-       seller.discountType,
-       seller.discountInterest,
-       seller.discountDays,
-       seller.discountAmount,
-       seller.tsc,
-       seller.tsu,
-        sum(buyer.amount),
-        sum(buyer.money)
-        from hs_same_settle_seller
+        SELECT
+            seller.id,
+            seller.orderId,
+            seller.hsId,
+            seller.settleDate,
+            seller.discountType,
+            seller.discountInterest,
+            seller.discountDays,
+            seller.discountAmount,
+            seller.tsc,
+            seller.tsu,
+            sum(buyer.amount),
+            sum(buyer.money)
+        FROM hs_same_settle_seller
              seller
             LEFT JOIN hs.same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
-        WHERE seller.orderId = #{orderId,jdbcType=BIGINT} and seller.deleted = 0
+        WHERE seller.orderId = #{orderId,jdbcType=BIGINT} AND seller.deleted = 0
         GROUP BY seller.orderId
     </select>
 
-    <!-- 获取一页数据 -->
+    <!-- 获取一页数据, 一笔订单只有一笔seller结算 -->
     <select id="getPage" resultType="com.yimei.hs.same.entity.SettleSeller">
         select
         seller.id,
@@ -95,7 +96,7 @@
 
     <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        DELETE FROM  hs_same_settle_seller
+        DELETE FROM hs_same_settle_seller
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 

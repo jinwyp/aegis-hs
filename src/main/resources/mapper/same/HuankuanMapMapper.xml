@@ -13,7 +13,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, huankuanId, jiekuanId, principal,  interest,fee, tsc
+        id, orderId, huankuanId, jiekuanId, principal, interest, fee, tsc
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -30,17 +30,17 @@
         WHERE orderId = #{orderId,jdbcType=BIGINT}
     </select>
 
-    <select id="getListByFukuanId" resultType="com.yimei.hs.same.entity.HuankuanMap">
-       select
-           huankuanId,
-           principal,
-           interest,
-           fee
-        from
+    <!-- -->
+    <select id="getListByHuankuanId" resultType="com.yimei.hs.same.entity.HuankuanMap">
+        SELECT
+            huankuanId,
+            principal,
+            interest,
+            fee
+        FROM
             hs_same_huankuan_map
-        where
+        WHERE
             jiekuanId = #{jiekuanId,jdbcType=BIGINT}
-
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -80,7 +80,7 @@
             #{huankuanId,jdbcType=BIGINT},
             #{jiekuanId,jdbcType=BIGINT},
             #{principal,jdbcType=DECIMAL},
-             #{fee,jdbcType=DECIMAL},
+            #{fee,jdbcType=DECIMAL},
             #{interest,jdbcType=DECIMAL},
             #{tsc,jdbcType=TIMESTAMP}
         )
@@ -127,10 +127,10 @@
         UPDATE hs_same_huankuan_map
         SET huankuanId = #{huankuanId,jdbcType=BIGINT},
             orderId    = #{orderId,jdbcType=BIGINT},
-            jiekuanId   = #{jiekuanId,jdbcType=BIGINT},
+            jiekuanId  = #{jiekuanId,jdbcType=BIGINT},
             principal  = #{principal,jdbcType=DECIMAL},
-            interest     = #{interest,jdbcType=DECIMAL},
-            fee     = #{fee,jdbcType=DECIMAL},
+            interest   = #{interest,jdbcType=DECIMAL},
+            fee        = #{fee,jdbcType=DECIMAL},
             tsc        = #{tsc,jdbcType=TIMESTAMP},
             tsu        = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}

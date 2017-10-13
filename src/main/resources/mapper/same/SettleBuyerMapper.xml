@@ -10,6 +10,7 @@
         <result column="money" jdbcType="DECIMAL" property="money"/>
         <result column="settleGap" jdbcType="DECIMAL" property="settleGap"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+        <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -58,7 +59,8 @@
             amount,
             money,
             settleGap,
-            tsc
+            tsc,
+            tsu
         )
         VALUES (
             #{id,jdbcType=BIGINT},
@@ -68,7 +70,8 @@
             #{amount,jdbcType=DECIMAL},
             #{money,jdbcType=DECIMAL},
             #{settleGap,jdbcType=DECIMAL},
-            #{tsc,jdbcType=TIMESTAMP}
+            #{tsc,jdbcType=TIMESTAMP},
+            #{tsu,jdbcType=TIMESTAMP}
         )
     </insert>
 
@@ -107,6 +110,7 @@
             <if test="money != null">money = #{money,jdbcType=DECIMAL},</if>
             <if test="settleGap != null">settleGap = #{settleGap,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="tsu != null">tsu = #{tsu,jdbcType=TIMESTAMP},</if>
             <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}

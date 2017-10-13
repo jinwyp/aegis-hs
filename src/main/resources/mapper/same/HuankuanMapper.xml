@@ -20,17 +20,24 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId,  huankuankDate, deleted,tsc, tsu
+        id, orderId, hsId, huankuankDate, deleted, tsc, tsu
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from hs_same_huankuan
-        where id = #{id,jdbcType=BIGINT}
+    <!-- 获取还款记录, 以及还款记录对应的还款明细集合， 以及对应的借款集合-->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="HuankuanResultMap">
+        SELECT
+            t1.id,
+            t1.orderId,
+            t1.hsId,
+            t1.huankuankDate,
+            t1.tsc
+        FROM hs_same_huankuan t1
+            LEFT JOIN hs_same_huankuan_map map ON t1.id = map.huankuanId
+            LEFT JOIN hs_same_jiekuan t2 ON map.jiekuanId = t2.id
+        WHERE id = #{id,jdbcType=BIGINT} AND deleted = 0
     </select>
 
-    <!--获取一页数据-->
+    <!--获取一页数据, 需要手动关联还款记录对应的还款明细集合， 以及对应的借款集合-->
     <select id="getPage" resultType="com.yimei.hs.same.entity.Huankuan">
         select
         t1.id,
@@ -39,8 +46,6 @@
         t1.huankuankDate,
         t1.tsc
         from hs_same_huankuan t1
-        LEFT JOIN hs_same_huankuan_map map on t1.id = map.huankuanId
-        LEFT JOIN hs_same_jiekuan t2 on map.jiekuanId = t2.id
         <where>
             <if test="true">AND t1.deleted = 0</if>
             <if test="orderId!=null">AND t1.orderId=#{orderId}</if>
@@ -60,9 +65,8 @@
             huankuan.tsu
         FROM hs_same_huankuan_map huankuanmap
             LEFT JOIN hs_same_huankuan huankuan ON huankuanmap.huankuanId = huankuan.id
-        WHERE huankuanmap.fukuanId = #{fukuanId, jdbcType=BIGINT}
+        WHERE huankuanmap.fukuanId = #{fukuanId, jdbcType=BIGINT} AND huankuan.deleted = 0
     </select>
-
 
     <!-- -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -129,11 +133,11 @@
 
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.Huankuan">
         UPDATE hs_same_huankuan
-        SET orderId        = #{orderId,jdbcType=BIGINT},
-            hsId           = #{hsId,jdbcType=BIGINT},
-            huankuankDate  = #{huankuankDate,jdbcType=TIMESTAMP},
-            tsc            = #{tsc,jdbcType=TIMESTAMP},
-            tsu            = current_timestamp
+        SET orderId       = #{orderId,jdbcType=BIGINT},
+            hsId          = #{hsId,jdbcType=BIGINT},
+            huankuankDate = #{huankuankDate,jdbcType=TIMESTAMP},
+            tsc           = #{tsc,jdbcType=TIMESTAMP},
+            tsu           = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 

@@ -111,7 +111,6 @@
         huikuanBusinessDiscountRate,
         huikuanBusinessPaperExpire,
         tsc
-
         FROM hs_same_huikuan
         <where>
             <if test="true">deleted = 0</if>
@@ -122,11 +121,12 @@
             <if test="huikuanDate!=null">AND huikuanDate=#{huikuanDate}</if>
         </where>
     </select>
+
     <select id="loadAll" resultType="com.yimei.hs.same.entity.Huikuan">
         SELECT
         <include refid="Base_Column_List"/>
         FROM hs_same_huikuan
-        WHERE orderId=#{orderId}
+        WHERE orderId = #{orderId,jdbcType=BIGINT} and deleted = 0
     </select>
 
     <!-- 依据回款id, 找出回款对应的付款列表-->

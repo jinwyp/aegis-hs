@@ -20,11 +20,9 @@ public interface JiekuanMapper {
 
     int updateByPrimaryKey(Jiekuan record);
 
-    List<Jiekuan> getListByFukuanId(Long fukuanId);
-
     Page<Jiekuan> getPage(PageJiekuanDTO pageJiekuanDTO);
 
     int delete(long id);
 
-    List<Jiekuan> getListByJiekuanId(@Param("huankuanId") Long huankuanId);
+    List<Jiekuan> getJiekuanListByHuankuanId(@Param("huankuanId") Long huankuanId);
 }

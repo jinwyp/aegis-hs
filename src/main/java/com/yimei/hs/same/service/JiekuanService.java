@@ -97,7 +97,7 @@ public class JiekuanService {
         List<Jiekuan> all = jiekuanMapper.getPage(dto).getResults();
 
         // 找出每笔借款的还款明细
-        // huankuanMapMapper.getListByFukuanId()
+        // huankuanMapMapper.getListByHuankuanId()
         return null;
     }
 }

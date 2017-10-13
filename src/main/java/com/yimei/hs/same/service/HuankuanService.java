@@ -44,9 +44,11 @@ public class HuankuanService {
         Page<Huankuan> pagehuankuans = huankuanMapper.getPage(pageHuankuanDTO);
 
         for (Huankuan huankuan :pagehuankuans.getResults()){
-            huankuan.setJiekuanList(jiekuanMapper.getListByJiekuanId(huankuan.getId()));
-        }
+            // 设置还款所对应的借款
+            huankuan.setJiekuanList(jiekuanMapper.getJiekuanListByHuankuanId(huankuan.getId()));
 
+            huankuan.setHuankuanMapList(huankuanMapMapper.getListByHuankuanId(huankuan.getId()));
+        }
         return pagehuankuans;
     }
 
@@ -61,7 +63,6 @@ public class HuankuanService {
      */
     @Transactional(readOnly = false)
     public int create(Huankuan huankuan) {
-
         // 1. 插入还款记录
         int rtn = huankuanMapper.insert(huankuan);
         if (rtn != 1) {

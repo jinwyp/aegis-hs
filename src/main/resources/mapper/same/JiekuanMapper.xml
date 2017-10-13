@@ -15,10 +15,12 @@
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
         <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
     </resultMap>
+
     <sql id="Base_Column_List">
         id, fukuanId, orderId, hsId, amount, capitalId, useInterest, useDays, jiekuanDate,deleted, tsc,
         tsu
     </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -26,25 +28,24 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-
-    <!-- 获取付款所关联的借款明细 todo -->
-    <select id="getListByFukuanId" resultType="com.yimei.hs.same.entity.Jiekuan">
-        SELECT
-            id, fukuanId, orderId, hsId, amount, capitalId, useInterest, useDays, deleted, tsc, tsu
-        FROM hs_same_jiekuan
-        where fukuanId = #{fukuanId,jdbcType=BIGINT}
-    </select>
-
-    <!-- 借款分页todo  -->
+    <!-- 借款分页 -->
     <select id="getPage" resultType="com.yimei.hs.same.entity.Jiekuan">
         SELECT
         id, fukuanId, orderId, hsId, amount, capitalId, useInterest, useDays, deleted, tsc, tsu
         FROM hs_same_jiekuan
         <where>
-
+            <if test="fukuanId!=null"> fukuanId = #{fukuanId,jdbcType=BIGINT}</if>
+            <if test="orderId!=null"> orderId = #{orderId,jdbcType=BIGINT}</if>
+            <if test="hsId!=null"> hsId = #{hsId,jdbcType=BIGINT}</if>
+            <if test="amount!=null"> amount = #{amount,jdbcType=DECIMAL}</if>
+            <if test="capitalId!=null"> capitalId = #{capitalId,jdbcType=BIGINT}</if>
+            <if test="useInterest!=null"> useInterest = #{useInterest,jdbcType=DECIMAL}</if>
+            <if test="useDays!=null"> useDays = #{useDays,jdbcType=BIGINT}</if>
         </where>
     </select>
-    <select id="getListByJiekuanId" resultType="com.yimei.hs.same.entity.Jiekuan">
+
+    <!-- 获取还款对应的借款 -->
+    <select id="getJiekuanListByHuankuanId" resultType="com.yimei.hs.same.entity.Jiekuan">
         SELECT
              jiekuan.id,
              jiekuan.fukuanId,
