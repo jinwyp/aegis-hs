@@ -66,15 +66,10 @@ public class FukuanService {
             fukuan.setHuikuanMap(huikuanMap);
         }
 
-        // 如果只需要回款尚未完成的付款， 则过滤
+        // 3. 如果只需要回款尚未完成的付款， 则过滤
         if ( pageFukuanDTO.getHuikuanUnfinished() != null && pageFukuanDTO.getHuikuanUnfinished() ) {
             page.setResults(this.getHuikuanUnifished(page.getResults()));
         }
-
-        // 如果只需要借款尚未填充完毕的， 则过滤
-//        if (pageFukuanDTO.getJiekuanUnfinished() != null && pageFukuanDTO.getJiekuanUnfinished() ) {
-//            page.setResults(this.getJiekuanUnfinshed(page.getResults()));
-//        }
 
         return page;
     }
@@ -86,8 +81,11 @@ public class FukuanService {
      */
     public List<Fukuan> huikuanUnfinished(long orderId) {
 
+        // 1. 获取订单的所有付款
         List<Fukuan> all = this.getAll(orderId);
+
         for (Fukuan fukuan : all) {
+            // 设置付款所关联的回款明细
             List<HuikuanMap> huikuanMap = huikuanMapMapper.getListByFukuanId(fukuan.getId());
             fukuan.setHuikuanMap(huikuanMap);
         }
@@ -121,7 +119,7 @@ public class FukuanService {
         for (Fukuan fukuan : fukuans) {
             // 计算此付款被回部分的总额
             List<HuikuanMap> huikuanMap = fukuan.getHuikuanMap();
-            BigDecimal total = huikuanMap.stream().map(m -> m.getAmount()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
+            BigDecimal total = huikuanMap.stream().map(m -> m.getAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
 
             fukuan.setHuikuanTotal(total);
             if (!total.equals(fukuan.getPayAmount())) {
