@@ -116,7 +116,7 @@ public class SettleBuyerController {
      *
      * @return
      */
-    @PutMapping("/{morderId}/settlebuyer/{pos}/{id}")
+    @PutMapping("/{morderId}/settlebuyer{pos}/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,
@@ -142,7 +142,7 @@ public class SettleBuyerController {
      *
      * @return
      */
-    @DeleteMapping("/{morderId}/settlebuyer/{pos}/{id}")
+    @DeleteMapping("/{morderId}/settlebuyer{pos}/{id}")
     public ResponseEntity<Result<Integer>> deletes(
             @PathVariable("pos") String pos,
             @PathVariable("businessType") BusinessType businessType,

@@ -107,8 +107,9 @@ public class YingIntegrationA extends HsTestBase {
 //
 //        jiekuan();
 //        huankuan();
-//        seller();
         buyer();
+//        seller();
+//        sellerCang();
     }
 
     public void order() throws JsonProcessingException {
@@ -306,7 +307,7 @@ public class YingIntegrationA extends HsTestBase {
 
     private void buyer() throws JsonProcessingException {
         // 1. 添加下游结算
-        String downstreamCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlebuyerdownstream";
+        String buyerCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlebuyerdownstream";
         SettleBuyer downstream = new SettleBuyer(
         ) {{
             setAmount(new BigDecimal("1510.61"));
@@ -317,42 +318,55 @@ public class YingIntegrationA extends HsTestBase {
 
             setSettleGap(new BigDecimal("0"));
         }};
-        settleBuyerCreateResult = client.exchange(downstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(downstream), typeReferenceSettleBuyer).getBody();
+        settleBuyerCreateResult = client.exchange(buyerCreateUrl, HttpMethod.POST, new HttpEntity<>(downstream), typeReferenceSettleBuyer).getBody();
         if (settleBuyerCreateResult.getSuccess()) {
-            logger.info("创建下游结算成功\nPOST {}\nrequest = {}\nresponse = {}", downstreamCreateUrl, printJson(downstream), printJson(settleBuyerCreateResult.getData()));
+            logger.info("创建下游结算成功\nPOST {}\nrequest = {}\nresponse = {}", buyerCreateUrl, printJson(downstream), printJson(settleBuyerCreateResult.getData()));
         } else {
             logger.info("创建下游结算失败: {}", settleBuyerCreateResult.getError());
             System.exit(-1);
         }
 
         // 2. 分页
-        String downstreamPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlebuyerdownstream?" + WebUtils.getUrlTemplate(PageSettleBuyerDTO.class);
-        Map<String, Object> downstreamVariables = WebUtils.getUrlVariables(PageSettleBuyerDTO.class);
-        downstreamVariables.put("orderId", yingOrderResult.getData().getId());
-        downstreamVariables.put("pageSize", 5);
-        downstreamVariables.put("pageNo", 1);
+        String buyerPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlebuyerdownstream?" + WebUtils.getUrlTemplate(PageSettleBuyerDTO.class);
+        Map<String, Object> buyerVariables = WebUtils.getUrlVariables(PageSettleBuyerDTO.class);
+        buyerVariables.put("orderId", yingOrderResult.getData().getId());
+        buyerVariables.put("pageSize", 5);
+        buyerVariables.put("pageNo", 1);
 
 
-        Result<Page<SettleBuyer>> downstreamPageResult = client.exchange(downstreamPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleBuyerPage, downstreamVariables).getBody();
-        if (downstreamPageResult.getSuccess()) {
-            logger.info("下游结算分页成功\nGET {}\nrequest = {}\nresponse = {}", downstreamPageUrl, "", printJson(downstreamPageResult.getData()));
+        Result<Page<SettleBuyer>> buyerPageResult = client.exchange(buyerPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleBuyerPage, buyerVariables).getBody();
+        if (buyerPageResult.getSuccess()) {
+            logger.info("下游结算分页成功\nGET {}\nrequest = {}\nresponse = {}", buyerPageUrl, "", printJson(buyerPageResult.getData()));
         } else {
-            logger.info("下游结算分页失败: {}", downstreamPageResult.getError());
+            logger.info("下游结算分页失败: {}", buyerPageResult.getError());
             System.exit(-1);
         }
 
         // 3. id查询
 
-        String downstreamFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlebuyerdownstream/" + settleBuyerCreateResult.getData().getId();
-        Result<SettleBuyer> downstreamFindResult = client.exchange(downstreamFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleBuyer).getBody();
-        if (downstreamFindResult.getSuccess()) {
-            logger.info("下游结算查询成功\n Get {}\nrequest = {}\nresponse = {}", downstreamFindUrl, "", printJson(downstreamFindResult.getData()));
+        String buyerFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlebuyerdownstream/" + settleBuyerCreateResult.getData().getId();
+        Result<SettleBuyer> buyerFindResult = client.exchange(buyerFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleBuyer).getBody();
+        if (buyerFindResult.getSuccess()) {
+            logger.info("下游结算查询成功\n Get {}\nrequest = {}\nresponse = {}", buyerFindUrl, "", printJson(buyerFindResult.getData()));
         } else {
-            logger.info("下游结算查询失败: {}", downstreamFindResult.getError());
+            logger.info("下游结算查询失败: {}", buyerFindResult.getError());
             System.exit(-1);
         }
 
-        // 4. 更新 todo
+
+
+
+        // 4. 更新
+        String buyerUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlebuyerdownstream/" + settleBuyerCreateResult.getData().getId();
+        downstream.setAmount(new BigDecimal("9999"));
+        downstream.setId(settleBuyerCreateResult.getData().getId());
+        Result<Integer> upstreamUpdateResult = client.exchange(buyerUpdateUrl, HttpMethod.PUT, new HttpEntity<SettleBuyer>(downstream), typeReferenceInteger).getBody();
+        if (upstreamUpdateResult.getSuccess()) {
+            logger.info("更新应收上游结算成功\nPOST {}\nrequest = {}\nresponse = {}", buyerUpdateUrl, printJson(downstream), printJson(upstreamUpdateResult.getData()));
+        } else {
+            logger.error("更新应收上游结算失败: {}", upstreamUpdateResult.getError());
+            System.exit(-2);
+        }
     }
 
     private void seller() throws JsonProcessingException {
@@ -372,9 +386,9 @@ public class YingIntegrationA extends HsTestBase {
 
         settleSellerCreateResult = client.exchange(upstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(upstream), typeReferenceSettleSeller).getBody();
         if (settleSellerCreateResult.getSuccess()) {
-            logger.info("创建上游结算成功\nPOST {}\nrequest = {}\nresponse = {}", upstreamCreateUrl, printJson(upstream), printJson(settleSellerCreateResult.getData()));
+            logger.info("创建应收上游结算成功\nPOST {}\nrequest = {}\nresponse = {}", upstreamCreateUrl, printJson(upstream), printJson(settleSellerCreateResult.getData()));
         } else {
-            logger.info("创建上游结算失败: {}", settleSellerCreateResult.getError());
+            logger.info("创建应收上游结算失败: {}", settleSellerCreateResult.getError());
             System.exit(-1);
         }
 
@@ -388,9 +402,9 @@ public class YingIntegrationA extends HsTestBase {
 
         Result<Page<SettleSeller>> upstreamPageResult = client.exchange(upstreamPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleSellerPage, upstreamVariables).getBody();
         if (upstreamPageResult.getSuccess()) {
-            logger.info("创建分页成功\nGET {}\nrequest = {}\nresponse = {}", upstreamPageUrl, "", printJson(upstreamPageResult.getData()));
+            logger.info("应收上游结算分页成功\nGET {}\nrequest = {}\nresponse = {}", upstreamPageUrl, "", printJson(upstreamPageResult.getData()));
         } else {
-            logger.info("创建分页失败: {}", upstreamPageResult.getError());
+            logger.info("应收上游结算分页失败: {}", upstreamPageResult.getError());
             System.exit(-1);
         }
 
@@ -398,9 +412,9 @@ public class YingIntegrationA extends HsTestBase {
         String upstreamFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlesellerupstream/" + settleSellerCreateResult.getData().getId();
         Result<SettleSeller> upstreamFindResult = client.exchange(upstreamFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleSeller).getBody();
         if (upstreamFindResult.getSuccess()) {
-            logger.info("上游结算成功\nGET {}\nrequest = {}\nresponse = {}", upstreamFindUrl, "", printJson(upstreamFindResult.getData()));
+            logger.info("应收上游结算成功\nGET {}\nrequest = {}\nresponse = {}", upstreamFindUrl, "", printJson(upstreamFindResult.getData()));
         } else {
-            logger.info("上游结算失败: {}", upstreamFindResult.getError());
+            logger.info("应收上游结算失败: {}", upstreamFindResult.getError());
             System.exit(-1);
         }
 
@@ -410,13 +424,75 @@ public class YingIntegrationA extends HsTestBase {
         upstream.setId(settleSellerCreateResult.getData().getId());
         Result<Integer> upstreamUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<SettleSeller>(upstream), typeReferenceInteger).getBody();
         if (upstreamUpdateResult.getSuccess()) {
-            logger.info("更新上游结算成功\nPOST {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(upstream), printJson(upstreamUpdateResult.getData()));
+            logger.info("更新应收上游结算成功\nPOST {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(upstream), printJson(upstreamUpdateResult.getData()));
         } else {
-            logger.error("更新上游结算失败: {}", upstreamUpdateResult.getError());
+            logger.error("更新应收上游结算失败: {}", upstreamUpdateResult.getError());
             System.exit(-2);
         }
     }
 
+    private void sellerCang() throws JsonProcessingException {
+        // 1. 添加上游结算
+
+        String upstreamCreateUrl = "/api/business/cang/" + yingOrderResult.getData().getId() + "/settlesellerdownstream";
+        SettleSeller upstream = new SettleSeller() {
+            {
+                setOrderId(yingOrderResult.getData().getId());
+                setHsId(yingOrderConfigResult.getData().getId());
+                setSettleDate(stringToTime("2017-8-4"));
+                setMoney(new BigDecimal("565994.59"));
+                setDiscountType(DiscountMode.NO_DISCOUNT);
+                setAmount(new BigDecimal("1510.61"));
+            }
+        };
+
+        settleSellerCreateResult = client.exchange(upstreamCreateUrl, HttpMethod.POST, new HttpEntity<>(upstream), typeReferenceSettleSeller).getBody();
+        if (settleSellerCreateResult.getSuccess()) {
+            logger.info("创建仓押下游结算成功\nPOST {}\nrequest = {}\nresponse = {}", upstreamCreateUrl, printJson(upstream), printJson(settleSellerCreateResult.getData()));
+        } else {
+            logger.info("创建仓押下游结算失败: {}", settleSellerCreateResult.getError());
+            System.exit(-1);
+        }
+
+        // 2. 分页
+        String upstreamPageUrl = "/api/business/cang/" + yingOrderResult.getData().getId() + "/settlesellerdownstream?" + WebUtils.getUrlTemplate(PageSettleSellerDTO.class);
+
+        Map<String, Object> upstreamVariables = WebUtils.getUrlVariables(PageSettleSellerDTO.class);
+        upstreamVariables.put("orderId", yingOrderResult.getData().getId());
+        upstreamVariables.put("pageSize", 5);
+        upstreamVariables.put("pageNo", 1);
+
+        Result<Page<SettleSeller>> upstreamPageResult = client.exchange(upstreamPageUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleSellerPage, upstreamVariables).getBody();
+        if (upstreamPageResult.getSuccess()) {
+            logger.info("仓押下游结算创建分页成功\nGET {}\nrequest = {}\nresponse = {}", upstreamPageUrl, "", printJson(upstreamPageResult.getData()));
+        } else {
+            logger.info("仓押下游结算创建分页失败: {}", upstreamPageResult.getError());
+            System.exit(-1);
+        }
+
+        // 3. id 查询
+        String upstreamFindUrl = "/api/business/cang/" + yingOrderResult.getData().getId() + "/settlesellerdownstream/" + settleSellerCreateResult.getData().getId();
+        Result<SettleSeller> upstreamFindResult = client.exchange(upstreamFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleSeller).getBody();
+        if (upstreamFindResult.getSuccess()) {
+            logger.info("仓押下游结算成功\nGET {}\nrequest = {}\nresponse = {}", upstreamFindUrl, "", printJson(upstreamFindResult.getData()));
+        } else {
+            logger.info("仓押下游结算失败: {}", upstreamFindResult.getError());
+            System.exit(-1);
+        }
+
+        // 4. 更新
+        String fayunUpdateUrl = "/api/business/cang" +
+                "/" + yingOrderResult.getData().getId() + "/settlesellerdownstream/" + settleSellerCreateResult.getData().getId();
+        upstream.setAmount(new BigDecimal("9999"));
+        upstream.setId(settleSellerCreateResult.getData().getId());
+        Result<Integer> upstreamUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<SettleSeller>(upstream), typeReferenceInteger).getBody();
+        if (upstreamUpdateResult.getSuccess()) {
+            logger.info("更新仓押下游结算成功\nPOST {}\nrequest = {}\nresponse = {}", fayunUpdateUrl, printJson(upstream), printJson(upstreamUpdateResult.getData()));
+        } else {
+            logger.error("更新仓押下游结算失败: {}", upstreamUpdateResult.getError());
+            System.exit(-2);
+        }
+    }
     private void traffic() throws JsonProcessingException {
 
         // 1. 添加运输方结算
