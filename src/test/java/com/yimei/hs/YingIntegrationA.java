@@ -419,7 +419,7 @@ public class YingIntegrationA extends HsTestBase {
     private void traffic() throws JsonProcessingException {
 
         // 1. 添加运输方结算
-        String trafficCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settletraffic";
+        String trafficCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settle/traffic";
         SettleTraffic traffic = new SettleTraffic() {{
             setHsId(yingOrderConfigResult.getData().getId());
             setOrderId(yingOrderResult.getData().getId());
@@ -438,7 +438,7 @@ public class YingIntegrationA extends HsTestBase {
         }
 
         // 2. 分页
-        String trafficPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settletraffic?" + WebUtils.getUrlTemplate(PageSettleTrafficDTO.class);
+        String trafficPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settle/traffic?" + WebUtils.getUrlTemplate(PageSettleTrafficDTO.class);
 
         Map<String, Object> trafficVariables = WebUtils.getUrlVariables(PageSettleTrafficDTO.class);
         trafficVariables.put("orderId", yingOrderResult.getData().getId());
@@ -457,7 +457,7 @@ public class YingIntegrationA extends HsTestBase {
         }
 
         // 3. id查询
-        String trafficFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settletraffic/" + trafficCreateResult.getData().getId();
+        String trafficFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settle/traffic/" + trafficCreateResult.getData().getId();
         Result<SettleTraffic> trafficFindResult = client.exchange(trafficFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleTraffic).getBody();
         if (trafficFindResult.getSuccess()) {
             logger.info("查询运输方结算成功\nGET {}\nrequest = {}\nresponse = {}", trafficFindUrl, "", printJson(trafficFindResult.getData()));
@@ -467,7 +467,7 @@ public class YingIntegrationA extends HsTestBase {
         }
 
         // 4. 更新
-        String fayunUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settletraffic/" + trafficCreateResult.getData().getId();
+        String fayunUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settle/traffic/" + trafficCreateResult.getData().getId();
         traffic.setAmount(new BigDecimal("9999"));
         traffic.setOrderId(yingOrderResult.getData().getId());
         traffic.setId(trafficCreateResult.getData().getId());

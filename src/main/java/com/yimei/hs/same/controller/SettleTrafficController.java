@@ -39,7 +39,7 @@ public class SettleTrafficController {
      *
      * @return
      */
-    @GetMapping("/{morderId}/settletraffic")
+    @GetMapping("/{morderId}/settle/traffic")
     public ResponseEntity<Result<Page<SettleTraffic>>> list(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") long morderId,
@@ -56,7 +56,7 @@ public class SettleTrafficController {
      * @param id
      * @return
      */
-    @GetMapping("/{morderId}/settletraffic/{id}")
+    @GetMapping("/{morderId}/settle/traffic/{id}")
     public ResponseEntity<Result<SettleTraffic>> read(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
@@ -75,7 +75,7 @@ public class SettleTrafficController {
      *
      * @return
      */
-    @PostMapping("/{morderId}/settletraffic")
+    @PostMapping("/{morderId}/settle/traffic")
     public ResponseEntity<Result<SettleTraffic>> create(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
@@ -95,7 +95,7 @@ public class SettleTrafficController {
      *
      * @return
      */
-    @PutMapping("/{morderId}/settletraffic/{id}")
+    @PutMapping("/{morderId}/settle/traffic/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
@@ -115,7 +115,7 @@ public class SettleTrafficController {
      *
      * @return
      */
-    @DeleteMapping("/{morderId}/settletraffic/{id}")
+    @DeleteMapping("/{morderId}/settle/traffic/{id}")
     public ResponseEntity<Result<Integer>> delete(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
