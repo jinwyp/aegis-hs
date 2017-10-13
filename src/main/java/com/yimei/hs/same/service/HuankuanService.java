@@ -4,6 +4,7 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.same.dto.PageHuankuanDTO;
 import com.yimei.hs.same.entity.Huankuan;
 import com.yimei.hs.same.entity.HuankuanMap;
+import com.yimei.hs.same.entity.Jiekuan;
 import com.yimei.hs.same.mapper.FukuanMapper;
 import com.yimei.hs.same.mapper.HuankuanMapMapper;
 import com.yimei.hs.same.mapper.HuankuanMapper;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by hary on 2017/9/15.
  */
@@ -22,8 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class HuankuanService {
 
     private static final Logger logger = LoggerFactory.getLogger(HuankuanService.class);
-
-    @Autowired FukuanService yingFukuanService;
 
     @Autowired
     private HuankuanMapper huankuanMapper;
@@ -36,9 +37,6 @@ public class HuankuanService {
 
     @Autowired
     private JiekuanMapper jiekuanMapper;
-
-    @Autowired
-    private LogService yingLogService;
 
     public Page<Huankuan> getPage(PageHuankuanDTO pageHuankuanDTO) {
         Page<Huankuan> pagehuankuans = huankuanMapper.getPage(pageHuankuanDTO);
@@ -79,19 +77,6 @@ public class HuankuanService {
     }
 
     /**
-     * todo 陆彪
-     *  重建 还款-付款-映射
-     * @param orderId
-     * @return
-     */
-    @Transactional(readOnly = false)
-    public int createMap(long orderId) {
-        // 1. 删除所有的orderId的 hs_ying_huankuan_map记录
-        // 2. 重建所有的orderId的 hs_ying_huankuan_map记录
-        return 1;
-    }
-
-    /**
      *  更新
      * @param yingHuankuan
      * @return
@@ -108,9 +93,23 @@ public class HuankuanService {
      */
     @Transactional(readOnly = false)
     public int delete( long id) {
-        // 还款是手动对应的， 删除还款记录，
-        // 需要同时删除其map
+
+        // 1. 找出还款记录
+        Huankuan huankuan = huankuanMapper.selectByPrimaryKey(id);
+
+        // 2. 删除还款对应借款
+        List<Jiekuan> jiekuanList = huankuan.getJiekuanList();
+        if (jiekuanList != null) {
+            for (Jiekuan jiekuan : jiekuanList) {
+                jiekuanMapper.delete(jiekuan.getId());
+            }
+        }
+
+        // 3. 删除借款对应的还款明细
         huankuanMapMapper.deleteByHuankuanId(id);
-        return huankuanMapper.delete(id);
+
+        // 删除还款
+        int rtn =  huankuanMapper.delete(id);
+        return rtn;
     }
 }

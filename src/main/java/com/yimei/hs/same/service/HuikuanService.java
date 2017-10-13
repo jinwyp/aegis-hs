@@ -85,18 +85,24 @@ public class HuikuanService {
     }
 
     /**
-     * todo 陆彪 check
-     * 逻辑删除
+     * 逻辑删除 由于回款时自动对应到付款的, 删除回款记录, 需要重建整个业务线的 回款-付款-map记录
      *
      * @param id
      * @return
      */
     @Transactional(readOnly = false)
     public int delete(long orderId, long id) {
-        // 由于回款时自动对应到付款的, 删除回款记录, 需要重建整个业务线的 回款-付款-map记录
+
+        // 1. 删除所有的回款对应明细
         huikuanMapMapper.deleteByOrderId(orderId);
+
+        // 2. 删除回款
+        int rtn = huikuanMapper.delete(id);
+
+        // 3. 重新
         this.createMapping(orderId);
-        return huikuanMapper.delete(id);
+
+        return rtn;
     }
 
     /**

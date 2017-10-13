@@ -41,9 +41,6 @@ public class FukuanService {
     @Autowired
     private HuikuanService huikuanService;
 
-    @Autowired
-    private LogService yingLogService;
-
     /**
      * 获取一页付款记录
      *
