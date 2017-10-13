@@ -16,20 +16,29 @@
 
     <sql id="Base_Column_List">
         id, orderId, hsId, settleDate, discountType, discountInterest, discountDays,
-        discountAmount, tsc
+        discountAmount, tsc,tsu
     </sql>
 
     <!-- 查找seller记录 -->
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        sum(buyer.amount),
-        sum(buyer.money),
-        sum(buyer.settleGap)
-        from hs_same_settle_seller seller
-        JOIN hs_same_settle_buyer buyer on seller.hsId = buyer.hsId and seller.orderId = buyer.orderId
-        where id = #{id,jdbcType=BIGINT}
-        group by seller.orderId
+        SELECT
+            hs.id,
+            hs.orderId,
+            hs.hsId,
+            hs.settleDate,
+            hs.discountType,
+            hs.discountInterest,
+            hs.discountDays,
+            hs.discountAmount,
+            tsc,
+            tsu,
+            sum(buyer.amount),
+            sum(buyer.money),
+            sum(buyer.settleGap)
+        FROM hs_same_settle_seller seller
+            JOIN hs_same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
+        WHERE seller.id = #{id,jdbcType=BIGINT} and deleted = 0
+        GROUP BY seller.orderId
     </select>
 
     <!-- -->
@@ -54,9 +63,10 @@
             <if test="hsId != null">AND hsId= #{hsId,jdbcType=BIGINT}</if>
             <if test="settleDate != null">AND settleDate=#{settleDate,jdbcType=DATE}</if>
         </where>
-        group by
+        group by seller.orderId
     </select>
 
+    <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_settle_seller
         WHERE id = #{id,jdbcType=BIGINT}
