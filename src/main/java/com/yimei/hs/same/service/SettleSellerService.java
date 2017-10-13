@@ -22,10 +22,8 @@ public class SettleSellerService {
 
     private static final Logger logger = LoggerFactory.getLogger(SettleSellerService.class);
 
-
     @Autowired
     SettleSellerMapper settleSellerMapper;
-
 
     /**
      * find settles by orderid
@@ -37,11 +35,6 @@ public class SettleSellerService {
         return settleSellerMapper.selectByOrderId(orderId);
     }
 
-    @Autowired
-    private YingLogService yingLogService;
-
-
-
     /**
      * @param pageSettleSellerDTO
      * @return
@@ -50,15 +43,15 @@ public class SettleSellerService {
         return settleSellerMapper.getPage(pageSettleSellerDTO);
     }
 
-
-
-
-
+    /**
+     * 
+     * @param settleSeller
+     * @return
+     */
     @Transactional(readOnly = false)
-    public int create(SettleSeller yingSettleUpstream) {
-        return settleSellerMapper.insert(yingSettleUpstream);
+    public int create(SettleSeller settleSeller) {
+        return settleSellerMapper.insert(settleSeller);
     }
-
 
     /**
      * @param id
@@ -69,12 +62,12 @@ public class SettleSellerService {
     }
 
     /**
-     * @param yingSettleUpstream
+     * @param settleSeller
      * @return
      */
     @Transactional(readOnly = false)
-    public int update(SettleSeller yingSettleUpstream) {
-        return settleSellerMapper.updateByPrimaryKeySelective(yingSettleUpstream);
+    public int update(SettleSeller settleSeller) {
+        return settleSellerMapper.updateByPrimaryKeySelective(settleSeller);
     }
 
 

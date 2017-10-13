@@ -176,11 +176,11 @@
         FROM
             hs_same_huikuan_map huikuanmap
             LEFT JOIN hs_same_huikuan huikuan ON huikuanmap.huikuanId = huikuan.id
-        WHERE huikuanmap.fukuanId = #{fukuanId,jdbcType=BIGINT}
+        WHERE huikuanmap.fukuanId = #{fukuanId,jdbcType=BIGINT} and deleted = 0
     </select>
 
+    <!-- 找出订单的所有未对应完的回款记录，同时汇总每条回款记录的已经对应金额 -->
     <select id="getUnfinshedByOrderId" resultType="com.yimei.hs.same.entity.Huikuan">
-
         SELECT
             huikuan.id,
             huikuan.orderId,
@@ -205,10 +205,10 @@
             ifnull(sum(map.amount), 0) AS fukuanTotal
         FROM hs_same_huikuan huikuan
         LEFT JOIN hs_same_huikuan_map map ON map.huikuanId = huikuan.id
-        WHERE huikuan.orderId = #{orderId, jdbcType=BIGINT}
+        WHERE huikuan.orderId = #{orderId, jdbcType=BIGINT} and deleted = 0
         GROUP BY huikuan.id
         HAVING fukuanTotal <![CDATA[ <  ]]>  huikuan.huikuanAmount
-        ORDER BY huikuan.huikuanDate
+        ORDER BY huikuan.huikuanDate asc
     </select>
 
     <!-- 物理删除-->
