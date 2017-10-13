@@ -24,14 +24,14 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from hs_same_settle_upstream
+        from hs_same_settle_seller
         where id = #{id,jdbcType=BIGINT}
     </select>
 
     <select id="selectByOrderId" resultType="com.yimei.hs.same.entity.SettleSeller">
         select
         <include refid="Base_Column_List"/>
-        from hs_same_settle_upstream
+        from hs_same_settle_seller
         where id = #{id,jdbcType=BIGINT}
     </select>
 
@@ -39,7 +39,7 @@
     <select id="getPage" resultType="com.yimei.hs.same.entity.SettleSeller">
         select
         <include refid="Base_Column_List"/>
-        FROM hs_same_settle_upstream
+        FROM hs_same_settle_seller
         <where>
             <if test="orderId != null">AND orderId=#{orderId,jdbcType=BIGINT}</if>
             <if test="hsId != null">AND hsId= #{hsId,jdbcType=BIGINT}</if>
@@ -48,20 +48,20 @@
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        DELETE FROM hs_same_settle_upstream
+        DELETE FROM hs_same_settle_seller
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
     <!-- 逻辑删除 -->
     <update id="delete" parameterType="java.lang.Long">
-        UPDATE hs_same_settle_upstream
+        UPDATE hs_same_settle_seller
         SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT};
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.same.entity.SettleSeller" keyProperty="id"
             useGeneratedKeys="true">
-        INSERT INTO hs_same_settle_upstream (
+        INSERT INTO hs_same_settle_seller (
             id,
             orderId,
             hsId,
@@ -90,7 +90,7 @@
 
     <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.SettleSeller" keyProperty="id"
             useGeneratedKeys="true">
-        insert into hs_same_settle_upstream
+        insert into hs_same_settle_seller
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="orderId != null">orderId,</if>
@@ -120,7 +120,7 @@
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.same.entity.SettleSeller">
-        update hs_same_settle_upstream
+        update hs_same_settle_seller
         <set>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
@@ -138,7 +138,7 @@
     </update>
 
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.SettleSeller">
-        UPDATE hs_same_settle_upstream
+        UPDATE hs_same_settle_seller
         SET orderId          = #{orderId,jdbcType=BIGINT},
             hsId             = #{hsId,jdbcType=BIGINT},
             settleDate       = #{settleDate,jdbcType=DATE},
