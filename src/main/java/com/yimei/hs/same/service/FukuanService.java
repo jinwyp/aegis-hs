@@ -106,8 +106,6 @@ public class FukuanService {
         return page.getResults();
     }
 
-
-
     /**
      * 过滤付款列表: 返回付款没有被回款完的付款列表
      *
@@ -128,8 +126,6 @@ public class FukuanService {
         }
         return filter;
     }
-
-
 
     /**
      * 创建付款 - 触发 回款-付款-对应关系的建立
