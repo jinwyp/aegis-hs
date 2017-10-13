@@ -96,18 +96,19 @@ public class YingIntegrationA extends HsTestBase {
         defaultUser();
         order();
         config();
-        fee();
-        traffic();
-
-        ruku();
-        chuku();
-        huikuan();
-        fukuan();
-        fayun();
-
-        jiekuan();
-        huankuan();
+//        fee();
+//        traffic();
+//
+//        ruku();
+//        chuku();
+//        huikuan();
+//        fukuan();
+//        fayun();
+//
+//        jiekuan();
+//        huankuan();
 //        seller();
+        buyer();
     }
 
     public void order() throws JsonProcessingException {
@@ -305,7 +306,7 @@ public class YingIntegrationA extends HsTestBase {
 
     private void buyer() throws JsonProcessingException {
         // 1. 添加下游结算
-        String downstreamCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settledownstream";
+        String downstreamCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlebuyerdownstream";
         SettleBuyer downstream = new SettleBuyer(
         ) {{
             setAmount(new BigDecimal("1510.61"));
@@ -325,7 +326,7 @@ public class YingIntegrationA extends HsTestBase {
         }
 
         // 2. 分页
-        String downstreamPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settledownstream?" + WebUtils.getUrlTemplate(PageSettleBuyerDTO.class);
+        String downstreamPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlebuyerdownstream?" + WebUtils.getUrlTemplate(PageSettleBuyerDTO.class);
         Map<String, Object> downstreamVariables = WebUtils.getUrlVariables(PageSettleBuyerDTO.class);
         downstreamVariables.put("orderId", yingOrderResult.getData().getId());
         downstreamVariables.put("pageSize", 5);
@@ -342,7 +343,7 @@ public class YingIntegrationA extends HsTestBase {
 
         // 3. id查询
 
-        String downstreamFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settledownstream/" + settleBuyerCreateResult.getData().getId();
+        String downstreamFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlebuyerdownstream/" + settleBuyerCreateResult.getData().getId();
         Result<SettleBuyer> downstreamFindResult = client.exchange(downstreamFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleBuyer).getBody();
         if (downstreamFindResult.getSuccess()) {
             logger.info("下游结算查询成功\n Get {}\nrequest = {}\nresponse = {}", downstreamFindUrl, "", printJson(downstreamFindResult.getData()));
@@ -357,7 +358,7 @@ public class YingIntegrationA extends HsTestBase {
     private void seller() throws JsonProcessingException {
         // 1. 添加上游结算
 
-        String upstreamCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settleupstream";
+        String upstreamCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlesellerupstream";
         SettleSeller upstream = new SettleSeller() {
             {
                 setOrderId(yingOrderResult.getData().getId());
@@ -378,7 +379,7 @@ public class YingIntegrationA extends HsTestBase {
         }
 
         // 2. 分页
-        String upstreamPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settleupstream?" + WebUtils.getUrlTemplate(PageSettleSellerDTO.class);
+        String upstreamPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlesellerupstream?" + WebUtils.getUrlTemplate(PageSettleSellerDTO.class);
 
         Map<String, Object> upstreamVariables = WebUtils.getUrlVariables(PageSettleSellerDTO.class);
         upstreamVariables.put("orderId", yingOrderResult.getData().getId());
@@ -394,7 +395,7 @@ public class YingIntegrationA extends HsTestBase {
         }
 
         // 3. id 查询
-        String upstreamFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settleupstream/" + settleSellerCreateResult.getData().getId();
+        String upstreamFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlesellerupstream/" + settleSellerCreateResult.getData().getId();
         Result<SettleSeller> upstreamFindResult = client.exchange(upstreamFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleSeller).getBody();
         if (upstreamFindResult.getSuccess()) {
             logger.info("上游结算成功\nGET {}\nrequest = {}\nresponse = {}", upstreamFindUrl, "", printJson(upstreamFindResult.getData()));
@@ -404,7 +405,7 @@ public class YingIntegrationA extends HsTestBase {
         }
 
         // 4. 更新
-        String fayunUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settleupstream/" + settleSellerCreateResult.getData().getId();
+        String fayunUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlesellerupstream/" + settleSellerCreateResult.getData().getId();
         upstream.setAmount(new BigDecimal("9999"));
         upstream.setId(settleSellerCreateResult.getData().getId());
         Result<Integer> upstreamUpdateResult = client.exchange(fayunUpdateUrl, HttpMethod.PUT, new HttpEntity<SettleSeller>(upstream), typeReferenceInteger).getBody();
@@ -419,7 +420,7 @@ public class YingIntegrationA extends HsTestBase {
     private void traffic() throws JsonProcessingException {
 
         // 1. 添加运输方结算
-        String trafficCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settle/traffic";
+        String trafficCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settletraffic";
         SettleTraffic traffic = new SettleTraffic() {{
             setHsId(yingOrderConfigResult.getData().getId());
             setOrderId(yingOrderResult.getData().getId());
@@ -438,7 +439,7 @@ public class YingIntegrationA extends HsTestBase {
         }
 
         // 2. 分页
-        String trafficPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settle/traffic?" + WebUtils.getUrlTemplate(PageSettleTrafficDTO.class);
+        String trafficPageUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settletraffic?" + WebUtils.getUrlTemplate(PageSettleTrafficDTO.class);
 
         Map<String, Object> trafficVariables = WebUtils.getUrlVariables(PageSettleTrafficDTO.class);
         trafficVariables.put("orderId", yingOrderResult.getData().getId());
@@ -457,7 +458,7 @@ public class YingIntegrationA extends HsTestBase {
         }
 
         // 3. id查询
-        String trafficFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settle/traffic/" + trafficCreateResult.getData().getId();
+        String trafficFindUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settletraffic/" + trafficCreateResult.getData().getId();
         Result<SettleTraffic> trafficFindResult = client.exchange(trafficFindUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceSettleTraffic).getBody();
         if (trafficFindResult.getSuccess()) {
             logger.info("查询运输方结算成功\nGET {}\nrequest = {}\nresponse = {}", trafficFindUrl, "", printJson(trafficFindResult.getData()));
@@ -467,7 +468,7 @@ public class YingIntegrationA extends HsTestBase {
         }
 
         // 4. 更新
-        String fayunUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settle/traffic/" + trafficCreateResult.getData().getId();
+        String fayunUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settletraffic/" + trafficCreateResult.getData().getId();
         traffic.setAmount(new BigDecimal("9999"));
         traffic.setOrderId(yingOrderResult.getData().getId());
         traffic.setId(trafficCreateResult.getData().getId());
