@@ -17,6 +17,8 @@
             <id property="id" column="t2Id"/>
             <id property="tsc" column="t2tsc"/>
         </collection>
+        <collection property="huankuanMapList" javaType="ArrayList" ofType="com.yimei.hs.same.entity.HuankuanMap"
+                    autoMapping="true"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -26,15 +28,29 @@
     <!-- 获取还款记录, 以及还款记录对应的还款明细集合， 以及对应的借款集合-->
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="HuankuanResultMap">
         SELECT
-            t1.id,
+            t1.id  AS  t1Id,
             t1.orderId,
             t1.hsId,
             t1.huankuankDate,
-            t1.tsc
+            t1.tsc,
+
+            map.principal ,
+            map.interest ,
+            map.fee,
+
+            t2.id AS t2Id,
+            t2.fukuanId ,
+            t2.hsId ,
+            t2.amount,
+            t2.jiekuanDate,
+            t2.capitalId ,
+            t2.useInterest,
+            t2.useDays
+
         FROM hs_same_huankuan t1
             LEFT JOIN hs_same_huankuan_map map ON t1.id = map.huankuanId
             LEFT JOIN hs_same_jiekuan t2 ON map.jiekuanId = t2.id
-        WHERE id = #{id,jdbcType=BIGINT} AND deleted = 0
+        WHERE t1.id = #{id,jdbcType=BIGINT} AND t1.deleted = 0
     </select>
 
     <!--获取一页数据, 需要手动关联还款记录对应的还款明细集合， 以及对应的借款集合-->

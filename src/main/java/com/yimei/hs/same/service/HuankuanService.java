@@ -44,7 +44,6 @@ public class HuankuanService {
         for (Huankuan huankuan :pagehuankuans.getResults()){
             // 设置还款所对应的借款
             huankuan.setJiekuanList(jiekuanMapper.getJiekuanListByHuankuanId(huankuan.getId()));
-
             // 设置还款所对应的还款明细
             huankuan.setHuankuanMapList(huankuanMapMapper.getListByHuankuanId(huankuan.getId()));
         }

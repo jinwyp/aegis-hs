@@ -103,11 +103,11 @@ public class YingIntegrationA extends HsTestBase {
 //        huikuan();
 //        fukuan();
 //        fayun();
-//        jiekuan();
-//        huankuan();
+        jiekuan();
+        huankuan();
 //        buyer();
 //        buyerCang();
-        seller();
+//        seller();
 //        sellerCang();
     }
 
