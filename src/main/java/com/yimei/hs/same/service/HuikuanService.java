@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by hary on 2017/9/15.
@@ -71,12 +68,17 @@ public class HuikuanService {
         return huikuanMapper.updateByPrimaryKeySelective(huikuan);
     }
 
+    /**
+     * 创建回款
+     * @param huikuan
+     * @return
+     */
     @Transactional(readOnly = false)
     public int create(Huikuan huikuan) {
-
         // 1. 插入回款记录
         int rtn = huikuanMapper.insert(huikuan);
 
+        // 2. 触发建立 回款-还款映射
         this.createMapping(huikuan.getOrderId());
 
         return rtn;
@@ -97,33 +99,26 @@ public class HuikuanService {
         return huikuanMapper.delete(id);
     }
 
-    @Transactional(readOnly = false)
+    /**
+     * 为某个订单重建 回款-付款 对应关系
+     * @param orderId
+     */
     public void createMapping(Long orderId) {
-        // 2. 找出付款尚未完成回款对应的付款记录
+
+        // 1. 找出付款尚未完成回款对应的付款记录
         List<Fukuan> unfinishedFukuan = fukuanService.huikuanUnfinished(orderId);
 
-//        if (currentFukuan != null) {
-//            unfinishedFukuan.add(currentFukuan);
-//        }
-
+        // 2. 如果所有付款都已经回款完
         if (unfinishedFukuan.size() == 0) {
             return;
         }
 
-        Iterator<Fukuan> it = unfinishedFukuan.iterator();
-
-
+        // 3. 待创建的对应记录
         List<HuikuanMap> toAdd = new ArrayList<>();
 
-        // 1.  找出订单的回款记录 -  尚有未对应完的余额
+        // 1.  找出订单的回款记录 - 尚有未对应完的余额,  也就是回款还有余额
         List<Huikuan> unfinished = huikuanMapper.getUnfinshedByOrderId(orderId);
-
-//        if (current != null) {
-//            unfinished.add(current);
-//        }
-
-        Collections.sort(unfinished, (a, b) -> a.getHuikuanDate().compareTo(b.getHuikuanDate()));
-
+        Iterator<Fukuan> it = unfinishedFukuan.iterator();
         for (Huikuan huikuan : unfinished) {
 
             // 尚未对应完的余额

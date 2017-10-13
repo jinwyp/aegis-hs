@@ -20,9 +20,6 @@ public class SettleBuyerService {
 
     private static final Logger logger = LoggerFactory.getLogger(SettleBuyerService.class);
 
-
-
-
     @Autowired
     SettleBuyerMapper settleBuyerMapper;
 
@@ -34,9 +31,8 @@ public class SettleBuyerService {
         return settleBuyerMapper.getPage(pageSettleBuyerDTO);
     }
 
-
     /**
-     * 下游结算
+     * 应收-下游结算 || 苍押-上游结算
      *
      * @return
      */
@@ -46,10 +42,8 @@ public class SettleBuyerService {
         if (rtn != 1) {
             return 0;
         }
-
         return rtn;
     }
-
 
     /**
      * @param id
@@ -70,12 +64,6 @@ public class SettleBuyerService {
     }
 
     /**
-     * 重建所有对应关系
-     * @param orderId
-     * @return
-     */
-
-    /**
      * 逻辑删除
      *
      * @param id
@@ -85,5 +73,4 @@ public class SettleBuyerService {
     public int delete(long id) {
         return settleBuyerMapper.delete(id);
     }
-
 }
