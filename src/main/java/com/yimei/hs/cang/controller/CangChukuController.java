@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by hary on 2017/9/15.
  */
 @RestController
-@RequestMapping("/api/cang")
+@RequestMapping("/api/business/{businessType}")
 public class CangChukuController {
 
     private static final Logger logger = LoggerFactory.getLogger(CangChukuController.class);
@@ -34,6 +34,7 @@ public class CangChukuController {
     @GetMapping("/{morderId}/chukus")
     public ResponseEntity<Result<Page<CangChuku>>> list(
             @PathVariable("morderId") Long morderId,
+            @PathVariable("businessType") BusinessType businessType,
             PageCangChukuDTO pageCangChukuDTO
     ) {
         // pageChukuDTO.setOrderId(morderId);
@@ -49,6 +50,7 @@ public class CangChukuController {
     @GetMapping("/{morderId}/chukus/{id}")
     public ResponseEntity<Result<CangChuku>> read(
             @PathVariable("morderId") Long morderId,
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("id") long id
     ) {
         CangChuku cangRuku = cangChukuService.findOne(id);
@@ -67,6 +69,7 @@ public class CangChukuController {
     @PostMapping("/{morderId}/chukus")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<CangChuku>> create(
+            @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(CreateGroup.class) CangChuku cangRuku
     ) {
         int rtn = cangChukuService.create(cangRuku);
@@ -86,6 +89,7 @@ public class CangChukuController {
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("id") Long id,
             @RequestBody @Validated(UpdateGroup.class) CangChuku cangRuku
     ) {
@@ -107,6 +111,7 @@ public class CangChukuController {
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> delete(
             @PathVariable("morderId") Long morderId,
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("id") Long id
     ) {
         int rtn = cangChukuService.delete(id);

@@ -1,6 +1,7 @@
 package com.yimei.hs.same.mapper;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageOrderDTO;
 import com.yimei.hs.same.entity.Order;
 import org.apache.ibatis.annotations.Param;
@@ -22,7 +23,7 @@ public interface OrderMapper {
 
     Page<Order> getPage(PageOrderDTO pageOrderDTO);
 
-    boolean hasOrder(@Param("ownerId") long ownerId, @Param("orderId") long orderId);
+    boolean hasOrder(@Param("ownerId") long ownerId, @Param("businessType") BusinessType businessType, @Param("orderId") long orderId);
 
     int transfer(Long id, @Param("from") Long from, @Param("to") Long to);
 }

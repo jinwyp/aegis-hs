@@ -5,11 +5,7 @@
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
-        <result column="skCompanyId" jdbcType="BIGINT" property="skCompanyId"/>
         <result column="huankuankDate" jdbcType="TIMESTAMP" property="huankuankDate"/>
-        <result column="huankuanPrincipal" jdbcType="DECIMAL" property="huankuanPrincipal"/>
-        <result column="huankuanInterest" jdbcType="DECIMAL" property="huankuanInterest"/>
-        <result column="huankuanFee" jdbcType="DECIMAL" property="huankuanFee"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
 
@@ -21,62 +17,72 @@
             <id property="id" column="t2Id"/>
             <id property="tsc" column="t2tsc"/>
         </collection>
+        <collection property="huankuanMapList" javaType="ArrayList" ofType="com.yimei.hs.same.entity.HuankuanMap"
+                    autoMapping="true"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, skCompanyId, huankuankDate, huankuanPrincipal, huankuanInterest, huankuanFee, tsc, tsu
+        id, orderId, hsId, huankuankDate, deleted, tsc, tsu
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from hs_same_huankuan
-        where id = #{id,jdbcType=BIGINT}
+    <!-- 获取还款记录, 以及还款记录对应的还款明细集合， 以及对应的借款集合-->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="HuankuanResultMap">
+        SELECT
+            t1.id  AS  t1Id,
+            t1.orderId,
+            t1.hsId,
+            t1.huankuankDate,
+            t1.tsc,
+
+            map.principal ,
+            map.interest ,
+            map.fee,
+
+            t2.id AS t2Id,
+            t2.fukuanId ,
+            t2.hsId ,
+            t2.amount,
+            t2.jiekuanDate,
+            t2.capitalId ,
+            t2.useInterest,
+            t2.useDays
+
+        FROM hs_same_huankuan t1
+            LEFT JOIN hs_same_huankuan_map map ON t1.id = map.huankuanId
+            LEFT JOIN hs_same_jiekuan t2 ON map.jiekuanId = t2.id
+        WHERE t1.id = #{id,jdbcType=BIGINT} AND t1.deleted = 0
     </select>
 
-    <!--获取一页数据-->
+    <!--获取一页数据, 需要手动关联还款记录对应的还款明细集合， 以及对应的借款集合-->
     <select id="getPage" resultType="com.yimei.hs.same.entity.Huankuan">
         select
         t1.id,
         t1.orderId,
         t1.hsId,
-        t1.skCompanyId,
         t1.huankuankDate,
-        t1.huankuanPrincipal,
-        t1.huankuanInterest,
-        t1.huankuanFee,
         t1.tsc
         from hs_same_huankuan t1
-        LEFT JOIN hs_same_huankuan_map map on t1.id = map.huankuanId
-        LEFT JOIN hs_same_jiekuan t2 on map.fukuanId = t2.id
         <where>
             <if test="true">AND t1.deleted = 0</if>
             <if test="orderId!=null">AND t1.orderId=#{orderId}</if>
             <if test="hsId!=null">AND t1.hsId=#{hsId}</if>
-            <if test="skCompanyId!=null">AND t1.skCompanyId=#{skCompanyId}</if>
             <if test="huankuanDate!=null">AND t1.huankuanDate=#{huankuanDate}</if>
-            <if test="huankuanPrincipal!=null">AND t1.huankuanPrincipal=#{huankuanPrincipal}</if>
         </where>
     </select>
 
-    <!---->
-    <select id="getListByFukuanId" resultType="com.yimei.hs.same.entity.Huankuan">
+    <!-- 找出某笔借款所对应的所有还款记录 -->
+    <select id="getListByJiekuanId" resultType="com.yimei.hs.same.entity.Huankuan">
         SELECT
             huankuan.id,
             huankuan.orderId,
             huankuan.hsId,
-            huankuan.skCompanyId,
             huankuan.huankuankDate,
-            huankuan.huankuanPrincipal,
-            huankuan.huankuanInterest,
-            huankuan.huankuanFee,
             huankuan.tsc,
             huankuan.tsu
         FROM hs_same_huankuan_map huankuanmap
             LEFT JOIN hs_same_huankuan huankuan ON huankuanmap.huankuanId = huankuan.id
-        WHERE huankuanmap.fukuanId = #{fukuanId, jdbcType=BIGINT}
+        WHERE huankuanmap.jiekuanId = #{jiekuanId, jdbcType=BIGINT} AND huankuan.deleted = 0
     </select>
-
 
     <!-- -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -96,11 +102,7 @@
             id,
             orderId,
             hsId,
-            skCompanyId,
             huankuankDate,
-            huankuanPrincipal,
-            huankuanInterest,
-            huankuanFee,
             tsc,
             tsu
         )
@@ -108,11 +110,7 @@
             #{id,jdbcType=BIGINT},
             #{orderId,jdbcType=BIGINT},
             #{hsId,jdbcType=BIGINT},
-            #{skCompanyId,jdbcType=BIGINT},
             #{huankuankDate,jdbcType=TIMESTAMP},
-            #{huankuanPrincipal,jdbcType=DECIMAL},
-            #{huankuanInterest,jdbcType=DECIMAL},
-            #{huankuanFee,jdbcType=DECIMAL},
             #{tsc,jdbcType=TIMESTAMP},
             current_timestamp
         )
@@ -125,22 +123,14 @@
             <if test="id != null">id,</if>
             <if test="orderId != null">orderId,</if>
             <if test="hsId != null">hsId,</if>
-            <if test="skCompanyId != null">skCompanyId,</if>
             <if test="huankuankDate != null">huankuankDate,</if>
-            <if test="huankuanPrincipal != null">huankuanPrincipal,</if>
-            <if test="huankuanInterest != null">huankuanInterest,</if>
-            <if test="huankuanFee != null">huankuanFee,</if>
             <if test="tsc != null">tsc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id,jdbcType=BIGINT},</if>
             <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
-            <if test="skCompanyId != null">#{skCompanyId,jdbcType=BIGINT},</if>
             <if test="huankuankDate != null">#{huankuankDate,jdbcType=TIMESTAMP},</if>
-            <if test="huankuanPrincipal != null">#{huankuanPrincipal,jdbcType=DECIMAL},</if>
-            <if test="huankuanInterest != null">#{huankuanInterest,jdbcType=DECIMAL},</if>
-            <if test="huankuanFee != null">#{huankuanFee,jdbcType=DECIMAL},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
@@ -150,11 +140,7 @@
         <set>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
-            <if test="skCompanyId != null">skCompanyId = #{skCompanyId,jdbcType=BIGINT},</if>
             <if test="huankuankDate != null">huankuankDate = #{huankuankDate,jdbcType=TIMESTAMP},</if>
-            <if test="huankuanPrincipal != null">huankuanPrincipal = #{huankuanPrincipal,jdbcType=DECIMAL},</if>
-            <if test="huankuanInterest != null">huankuanInterest = #{huankuanInterest,jdbcType=DECIMAL},</if>
-            <if test="huankuanFee != null">huankuanFee = #{huankuanFee,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
             <if test="true">tsu = current_timestamp</if>
         </set>
@@ -163,13 +149,11 @@
 
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.Huankuan">
         UPDATE hs_same_huankuan
-        SET orderId        = #{orderId,jdbcType=BIGINT},
-            hsId           = #{hsId,jdbcType=BIGINT},
-            skCompanyId    = #{skCompanyId,jdbcType=BIGINT},
-            huankuankDate  = #{huankuankDate,jdbcType=TIMESTAMP},
-            huankuanPrincipal = #{huankuanPrincipal,jdbcType=DECIMAL},
-            tsc            = #{tsc,jdbcType=TIMESTAMP},
-            tsu            = current_timestamp
+        SET orderId       = #{orderId,jdbcType=BIGINT},
+            hsId          = #{hsId,jdbcType=BIGINT},
+            huankuankDate = #{huankuankDate,jdbcType=TIMESTAMP},
+            tsc           = #{tsc,jdbcType=TIMESTAMP},
+            tsu           = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 

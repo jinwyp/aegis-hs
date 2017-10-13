@@ -8,7 +8,10 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageFukuanDTO;
 import com.yimei.hs.same.entity.Fukuan;
+import com.yimei.hs.same.entity.Order;
 import com.yimei.hs.same.service.FukuanService;
+import com.yimei.hs.same.service.JiekuanService;
+import com.yimei.hs.same.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by hary on 2017/9/15.
@@ -31,9 +36,11 @@ public class FukuanController {
     @Autowired
     private FukuanService fukuanService;
 
+    @Autowired
+    private OrderService orderService;
 
     /**
-     * 获取所有huankuan
+     * 获取付款-分页
      *
      * @return
      */
@@ -43,13 +50,6 @@ public class FukuanController {
             @PathVariable("morderId") Long morderId,
             PageFukuanDTO pageFukuanDTO) {
 
-        //
-        if ( pageFukuanDTO.getHuikuanUnfinished() != null
-              && pageFukuanDTO.getHuikuanUnfinished()
-                ) {
-            return Result.error(4001, "参数非法");
-        }
-
         pageFukuanDTO.setOrderId(morderId);
         Page<Fukuan> page = fukuanService.getPage(pageFukuanDTO);
 
@@ -57,7 +57,20 @@ public class FukuanController {
     }
 
     /**
-     * 获取huankuan
+     * @param businessType
+     * @param morderId
+     * @return
+     */
+    @GetMapping("/{morderId}/fukuansUnfinished")
+    public ResponseEntity<Result<List<Fukuan>>> list(
+            @PathVariable("businessType") BusinessType businessType,
+            @PathVariable("morderId") Long morderId) {
+        return Result.ok(fukuanService.getListUnfinished(morderId));
+    }
+
+
+    /**
+     * 获取付款
      *
      * @param id
      * @return
@@ -77,7 +90,7 @@ public class FukuanController {
     }
 
     /**
-     * 创建huankuan
+     * 创建付款
      *
      * @return
      */
@@ -85,19 +98,38 @@ public class FukuanController {
     public ResponseEntity<Result<Fukuan>> create(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
-            @RequestBody @Validated(CreateGroup.class) Fukuan yingFukuan
+            @RequestBody @Validated(CreateGroup.class) Fukuan fukuan
     ) {
-        yingFukuan.setOrderId(morderId);
-        int rtn = fukuanService.create(yingFukuan);
-        if (rtn != 1) {
-            logger.error("创建失败: {}", yingFukuan);
+        Order order = orderService.findOne(fukuan.getOrderId());
+        if (order == null) {
             return Result.error(4001, "创建失败");
         }
-        return Result.ok(yingFukuan);
+        if (order.getMainAccounting() == fukuan.getCapitalId()) {
+            if (fukuan.getJiekuan() != null) {
+                fukuan.setOrderId(morderId);
+                int rtn = fukuanService.create(fukuan);
+                if (rtn != 1) {
+                    logger.error("创建失败: {}", fukuan);
+                    return Result.error(4001, "创建失败");
+                }
+                return Result.ok(fukuan);
+            } else {
+                return Result.error(4001, "参数不匹配");
+            }
+        } else {
+            fukuan.setOrderId(morderId);
+            int rtn = fukuanService.create(fukuan);
+            if (rtn != 1) {
+                logger.error("创建失败: {}", fukuan);
+                return Result.error(4001, "创建失败");
+            }
+            return Result.ok(fukuan);
+        }
+
     }
 
     /**
-     * 更新huankuan
+     * 删除付款
      *
      * @return
      */
@@ -106,11 +138,11 @@ public class FukuanController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
-            @RequestBody @Validated(UpdateGroup.class) Fukuan yingFukuan
+            @RequestBody @Validated(UpdateGroup.class) Fukuan fukuan
     ) {
-        assert (yingFukuan.getOrderId() == morderId);
-        yingFukuan.setId(id);
-        int rtn = fukuanService.update(yingFukuan);
+        assert (fukuan.getOrderId() == morderId);
+        fukuan.setId(id);
+        int rtn = fukuanService.update(fukuan);
         if (rtn != 1) {
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
         }
@@ -118,7 +150,7 @@ public class FukuanController {
     }
 
     /**
-     * 更新付款
+     * 删除付款
      *
      * @return
      */

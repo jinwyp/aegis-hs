@@ -30,7 +30,6 @@ public class SettleBuyer implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "结算日期不能为空")
     private LocalDateTime settleDate;
 
-    @Null(groups = {UpdateGroup.class}, message = "下游结算不能更新金额")
     private BigDecimal amount;
 
     @NotNull(groups = {CreateGroup.class}, message = "结算金额不能为空")
@@ -40,6 +39,8 @@ public class SettleBuyer implements Serializable {
 
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
+
+    private LocalDateTime tsu;
 
     private static final long serialVersionUID = 1L;
 

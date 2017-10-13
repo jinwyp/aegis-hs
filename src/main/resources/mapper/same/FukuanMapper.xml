@@ -59,7 +59,9 @@
             fukuan.payAmount,
             fukuan.tsc,
             fukuan.tsu,
+
             huikuanmap.amount  AS huikuanmap_amount,
+
             huikuan.id         AS huikuan_id,
             huikuan.orderId    AS huikuan_orderId,
             huikuan.hsId       AS huikuan_hsId,
@@ -79,11 +81,10 @@
             huikuan.huikuanBusinessDiscountRate,
             huikuan.huikuanBusinessPaperExpire,
             huikuan.tsc        AS huikuan_tsc,
-            huikuan.tsu        AS huikuan_tsu,
+            huikuan.tsu        AS huikuan_tsu
 
-
-        FROM hs_same_fukuan fukuan
-            LEFT JOIN hs_same_huikuan_map huikuanmap ON fukuan.id = huikuanmap.fukuanId
+        FROM hs_same_huikuan_map huikuanmap
+            LEFT JOIN hs_same_fukuan fukuan ON fukuan.id = huikuanmap.fukuanId
             LEFT JOIN hs_same_huikuan huikuan ON huikuanmap.huikuanId = huikuan.id
         WHERE fukuan.id = #{id,jdbcType=BIGINT} AND fukuan.deleted = 0
     </select>
@@ -98,13 +99,9 @@
         t1.receiveCompanyId,
         t1.payUsage,
         t1.payAmount,
-        t1.payMode,
-        t1.capitalId,
-        t1.useInterest,
-        t1.useDays,
         t1.tsc,
         t1.tsu
-        from hs_same_fukuan t1 LEFT JOIN hs_same_huankuan_map map on t1.id = map.fukuanId
+        from hs_same_fukuan t1
         <where>
             <if test="true">t1.deleted = 0</if>
             <if test="orderId!=null">and t1.orderId = #{orderId, jdbcType=BIGINT}</if>

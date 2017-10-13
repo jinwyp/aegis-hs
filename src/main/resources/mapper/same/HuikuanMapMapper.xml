@@ -19,14 +19,15 @@
         select
         <include refid="Base_Column_List"/>
         from hs_same_huikuan_map
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
     </select>
 
     <select id="loadAll" resultType="com.yimei.hs.same.entity.HuikuanMap">
         select
         <include refid="Base_Column_List"/>
         from hs_same_huikuan_map
-        where orderId = #{orderId,jdbcType=BIGINT} Group By tsc desc
+        where orderId = #{orderId,jdbcType=BIGINT} and deleted = 0
+        Group By tsc desc
     </select>
 
 

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by hary on 2017/9/15.
  */
-@RequestMapping("/api/ying")
+@RequestMapping("/api/business/{businessType}")
 @RestController
 @Logined
 public class YingFayunController {
@@ -42,6 +42,7 @@ public class YingFayunController {
     @GetMapping("/{morderId}/fayuns")
     public ResponseEntity<Result<Page<YingFayun>>> list(
             @PathVariable("morderId") Long morderId,
+            @PathVariable("businessType") BusinessType businessType,
             PageYingFayunDTO pageYingFayunDTO) {
         pageYingFayunDTO.setOrderId(morderId);
         Page<YingFayun> page = yingFayunService.getPage(pageYingFayunDTO);
@@ -57,6 +58,7 @@ public class YingFayunController {
     @GetMapping("/{morderId}/fayuns/{id}")
     public ResponseEntity<Result<YingFayun>> read(
             @PathVariable("morderId") Long morderId,
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("id") long id) {
 
         YingFayun fayun = yingFayunService.findOne(id);
@@ -75,6 +77,7 @@ public class YingFayunController {
     @PostMapping("/{morderId}/fayuns")
     public ResponseEntity<Result<YingFayun>> create(
             @PathVariable("morderId") Long morderId,
+            @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(CreateGroup.class) YingFayun yingFayun
     ) {
 
@@ -139,6 +142,7 @@ public class YingFayunController {
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id,
+            @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(UpdateGroup.class) YingFayun yingFayun) {
         yingFayun.setId(id);
         int cnt = yingFayunService.update(yingFayun);
@@ -158,6 +162,7 @@ public class YingFayunController {
     @DeleteMapping("/{morderId}/fayuns/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("morderId") Long morderId,
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("id") Long id
     ) {
         int cnt = yingFayunService.delete(morderId, id);
@@ -178,6 +183,7 @@ public class YingFayunController {
      */
     @GetMapping("/{morderId}/fayuns-stat")
     public ResponseEntity<Result<FayunStat>> stat(
+            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId
     ) {
         return Result.ok(null);

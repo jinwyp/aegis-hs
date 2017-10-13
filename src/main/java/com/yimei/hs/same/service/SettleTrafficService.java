@@ -19,7 +19,6 @@ public class SettleTrafficService {
 
     private static final Logger logger = LoggerFactory.getLogger(SettleTrafficService.class);
 
-
     @Autowired
     SettleTrafficMapper settleTrafficMapper;
 
@@ -31,10 +30,20 @@ public class SettleTrafficService {
         return settleTrafficMapper.getPage(pageSettleTrafficDTO);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public SettleTraffic findTraffic(long id) {
         return settleTrafficMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     *
+     * @param yingSettleTraffic
+     * @return
+     */
     @Transactional(readOnly = false)
     public int create(SettleTraffic yingSettleTraffic) {
         return settleTrafficMapper.insert(yingSettleTraffic);

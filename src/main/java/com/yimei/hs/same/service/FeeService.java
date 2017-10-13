@@ -19,7 +19,6 @@ public class FeeService {
 
     private static final Logger logger = LoggerFactory.getLogger(FeeService.class);
 
-
     @Autowired
     private FeeMapper yingFeeMapper;
 

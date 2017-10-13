@@ -102,6 +102,33 @@ abstract public class HsTestBase {
     protected ParameterizedTypeReference<Result<Page<CangChuku>>> typeReferenceCangChukuPage  = new ParameterizedTypeReference<Result<Page<CangChuku>>>() {};
 
 
+    protected ParameterizedTypeReference<Result<SettleBuyer>> typeReferenceSettleBuyer  = new ParameterizedTypeReference<Result<SettleBuyer>>() {};
+    protected ParameterizedTypeReference<Result<Page<SettleBuyer>>> typeReferenceSettleBuyerPage  = new ParameterizedTypeReference<Result<Page<SettleBuyer>>>() {};
+
+
+
+    protected ParameterizedTypeReference<Result<SettleSeller>> typeReferenceSettleSeller  = new ParameterizedTypeReference<Result<SettleSeller>>() {};
+    protected ParameterizedTypeReference<Result<Page<SettleSeller>>> typeReferenceSettleSellerPage  = new ParameterizedTypeReference<Result<Page<SettleSeller>>>() {};
+
+
+    protected ParameterizedTypeReference<Result<Fukuan>> typeReferenceFukuan  = new ParameterizedTypeReference<Result<Fukuan>>() {};
+    protected ParameterizedTypeReference<Result<Page<Fukuan>>> typeReferenceFukuanPage  = new ParameterizedTypeReference<Result<Page<Fukuan>>>() {};
+
+
+    protected ParameterizedTypeReference<Result<Huikuan>> typeReferenceHuikuan  = new ParameterizedTypeReference<Result<Huikuan>>() {};
+    protected ParameterizedTypeReference<Result<Page<Huikuan>>> typeReferenceHuikuanPage  = new ParameterizedTypeReference<Result<Page<Huikuan>>>() {};
+
+
+    protected ParameterizedTypeReference<Result<Jiekuan>> typeReferenceJiekuan  = new ParameterizedTypeReference<Result<Jiekuan>>() {};
+    protected ParameterizedTypeReference<Result<Page<Jiekuan>>> typeReferenceJiekuanPage  = new ParameterizedTypeReference<Result<Page<Jiekuan>>>() {};
+
+    protected ParameterizedTypeReference<Result<Huankuan>> typeReferenceHuankuan  = new ParameterizedTypeReference<Result<Huankuan>>() {};
+    protected ParameterizedTypeReference<Result<Page<Huankuan>>> typeReferenceHuankuanPage  = new ParameterizedTypeReference<Result<Page<Huankuan>>>() {};
+
+
+    protected ParameterizedTypeReference<Result<YingFayun>> typeReferenceYingFayun  = new ParameterizedTypeReference<Result<YingFayun>>() {};
+    protected ParameterizedTypeReference<Result<Page<YingFayun>>> typeReferenceYingFayunPage  = new ParameterizedTypeReference<Result<Page<YingFayun>>>() {};
+
 
     public void createUser(String phone, String password) {
 

@@ -9,7 +9,9 @@ import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageHuankuanDTO;
 import com.yimei.hs.same.entity.Fukuan;
 import com.yimei.hs.same.entity.Huankuan;
+import com.yimei.hs.same.entity.HuankuanMap;
 import com.yimei.hs.same.entity.Jiekuan;
+import com.yimei.hs.same.mapper.HuankuanMapMapper;
 import com.yimei.hs.same.service.JiekuanService;
 import com.yimei.hs.same.service.HuankuanService;
 import org.slf4j.Logger;
@@ -38,6 +40,9 @@ public class HuankuanController {
 
     @Autowired
     private JiekuanService jiekuanService;
+
+    @Autowired
+    private HuankuanMapMapper huankuanMapMapper;
 
     /**
      * 获取所有huikuan
@@ -87,31 +92,18 @@ public class HuankuanController {
         // 1. 找出当前订单借款记录 - 还款尚未对应完成的记录
         List<Jiekuan> jiekuans = jiekuanService.huankuanUnfinished(huankuan.getOrderId());
 
-        // 2. 校验 所有还款map明细的利息汇总校验
-        BigDecimal inTotal = huankuan.getHuankuanMapList().stream().map(m -> m.getInterest()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
-
-        if (inTotal.compareTo(huankuan.getHuankuanInterest()) != 0
-                ) {
-            return Result.error(4001, "invalid request: 所有还款map明细的amount汇总校验");
-        }
-
-        // 3. 校验 所有还款map明细的本金汇总
-        BigDecimal pTotal = huankuan.getHuankuanMapList().stream().map(m -> m.getPrincipal()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
-        if (pTotal.compareTo(huankuan.getHuankuanPrincipal()) != 0
-                ) {
-            return Result.error(4001, "invalid request: 所有还款map明细的本金汇总");
-        }
-
+        // 2. 创建还款
         int rtn = huankuanService.create(huankuan);
         if (rtn != 1) {
             logger.error("创建失败: {}", huankuan);
             return Result.error(4001, "创建失败");
         }
         return Result.ok(huankuan);
+
     }
 
     /**
-     * 更新huikuan
+     * 更新huankuan
      *
      * @return
      */
@@ -125,6 +117,10 @@ public class HuankuanController {
         //
         huankuan.setId(id);
         assert (morderId == huankuan.getOrderId());
+
+
+        // 2删除还款记录详情
+        huankuanMapMapper.deleteByPrimaryKey(huankuan.getId());
         int cnt = huankuanService.update(huankuan);
         if (cnt != 1) {
             return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
@@ -138,12 +134,16 @@ public class HuankuanController {
      * @return
      */
     @DeleteMapping("/{morderId}/huankuans/{id}")
-    public ResponseEntity<Result<Integer>> update(
+    public ResponseEntity<Result<Integer>> delete(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
         int cnt = huankuanService.delete(id);
+        List<HuankuanMap> huankuanMaps = huankuanMapMapper.getListByHuankuanId(id);
+        for (HuankuanMap huankuanMap : huankuanMaps) {
+            huankuanMapMapper.deleteByPrimaryKey(huankuanMap.getId());
+        }
         if (cnt != 1) {
             return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
         }

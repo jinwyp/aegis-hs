@@ -78,10 +78,6 @@
             t2.receiveCompanyId,
             t2.payUsage,
             t2.payAmount,
-            t2.payMode,
-            t2.capitalId,
-            t2.useInterest,
-            t2.useDays,
             t2.tsc     AS t2tsc,
 
             map.amount
@@ -115,7 +111,6 @@
         huikuanBusinessDiscountRate,
         huikuanBusinessPaperExpire,
         tsc
-
         FROM hs_same_huikuan
         <where>
             <if test="true">deleted = 0</if>
@@ -126,11 +121,12 @@
             <if test="huikuanDate!=null">AND huikuanDate=#{huikuanDate}</if>
         </where>
     </select>
+
     <select id="loadAll" resultType="com.yimei.hs.same.entity.Huikuan">
         SELECT
         <include refid="Base_Column_List"/>
         FROM hs_same_huikuan
-        WHERE orderId=#{orderId}
+        WHERE orderId = #{orderId,jdbcType=BIGINT} and deleted = 0
     </select>
 
     <!-- 依据回款id, 找出回款对应的付款列表-->
@@ -143,10 +139,6 @@
         fukuan.receiveCompanyId,
         fukuan.payUsage,
         fukuan.payAmount,
-        fukuan.payMode,
-        fukuan.capitalId,
-        fukuan.useInterest,
-        fukuan.useDays,
         fukuan.tsc,
         fukuan.tsu
         FROM hs_same_huikuan_map map
@@ -184,11 +176,11 @@
         FROM
             hs_same_huikuan_map huikuanmap
             LEFT JOIN hs_same_huikuan huikuan ON huikuanmap.huikuanId = huikuan.id
-        WHERE huikuanmap.fukuanId = #{fukuanId,jdbcType=BIGINT}
+        WHERE huikuanmap.fukuanId = #{fukuanId,jdbcType=BIGINT} and huikuanmap.deleted = 0
     </select>
 
+    <!-- 找出订单的所有未对应完的回款记录，同时汇总每条回款记录的已经对应金额 -->
     <select id="getUnfinshedByOrderId" resultType="com.yimei.hs.same.entity.Huikuan">
-
         SELECT
             huikuan.id,
             huikuan.orderId,
@@ -213,10 +205,10 @@
             ifnull(sum(map.amount), 0) AS fukuanTotal
         FROM hs_same_huikuan huikuan
         LEFT JOIN hs_same_huikuan_map map ON map.huikuanId = huikuan.id
-        WHERE huikuan.orderId = #{orderId, jdbcType=BIGINT}
+        WHERE huikuan.orderId = #{orderId, jdbcType=BIGINT} and huikuan.deleted = 0
         GROUP BY huikuan.id
         HAVING fukuanTotal <![CDATA[ <  ]]>  huikuan.huikuanAmount
-        ORDER BY huikuan.huikuanDate
+        ORDER BY huikuan.huikuanDate asc
     </select>
 
     <!-- 物理删除-->

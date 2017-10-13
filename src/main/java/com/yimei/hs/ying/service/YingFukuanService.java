@@ -85,6 +85,7 @@ public class YingFukuanService {
                 pageYingFukuanDTO.getHuikuanUnfinished() != null
                         && pageYingFukuanDTO.getHuikuanUnfinished()
                 ) {
+
             page.setResults(this.getHuikuanUnifished(page.getResults()));
         }
 

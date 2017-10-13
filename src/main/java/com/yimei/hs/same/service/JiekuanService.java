@@ -4,9 +4,7 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.same.dto.PageJiekuanDTO;
 import com.yimei.hs.same.entity.*;
 import com.yimei.hs.same.entity.Jiekuan;
-import com.yimei.hs.same.mapper.JiekuanMapper;
-import com.yimei.hs.same.mapper.HuikuanMapMapper;
-import com.yimei.hs.same.mapper.HuikuanMapper;
+import com.yimei.hs.same.mapper.*;
 import com.yimei.hs.same.mapper.JiekuanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,28 +28,67 @@ public class JiekuanService {
     @Autowired
     JiekuanMapper jiekuanMapper;
 
+    @Autowired
+    HuankuanMapMapper huankuanMapMapper;
+
+    @Autowired
+    HuankuanMapper huankuanMapper;
 
     /**
-     * 获取一页付款记录
-     *
+     * 获取一页借款记录
      * @param pageJiekuanDTO
      * @return
      */
     public Page<Jiekuan> getPage(PageJiekuanDTO pageJiekuanDTO) {
-
-        // 1. 去除付款列表
         Page<Jiekuan> page = jiekuanMapper.getPage(pageJiekuanDTO);
 
-       
+        for (Jiekuan jiekuan : page.getResults()) {
+            // 1. 关联借款对应的还款
+            jiekuan.setHuankuanList(huankuanMapper.getListByJiekuanId(jiekuan.getId()));
+            // 2. 关联借款对应的还款明细
+            jiekuan.setHuankuanMapList(huankuanMapMapper.getListByJiekuanId(jiekuan.getId()));
+        }
+
         return page;
     }
 
+    /**
+     * 找出当前订单的尚未被还款对应完的借款
+      * @param orderId
+     * @return
+     */
+    public List<Jiekuan> getListUnfinished(long orderId) {
+        PageJiekuanDTO dto = new PageJiekuanDTO();
+        dto.setPageNo(1);
+        dto.setPageSize(100000000);
+        dto.setOrderId(orderId);
+        List<Jiekuan> all = jiekuanMapper.getPage(dto).getResults();
 
+        List<Jiekuan> filter = new ArrayList<>();
 
+        for (Jiekuan jiekuan : all) {
+            List<HuankuanMap> huankuanMaps = huankuanMapMapper.getListByJiekuanId(jiekuan.getId());
+
+            BigDecimal total = huankuanMaps.stream()
+                    .map(HuankuanMap::getPrincipal)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            if ( jiekuan.getAmount().equals(total)) {
+                continue;
+            }
+
+            jiekuan.setHuankuanMapList(huankuanMaps);
+            jiekuan.setHuankuanTotal(total);
+            jiekuan.setHuankuanList(huankuanMapper.getListByJiekuanId(jiekuan.getId()));
+
+            filter.add(jiekuan);
+        }
+
+        return filter;
+    }
 
     /**
-     * 创建付款 - 触发 回款-付款-对应关系的建立
-     *
+     * 创建借款
      * @param fukuan
      * @return
      */
@@ -61,35 +98,98 @@ public class JiekuanService {
         return rtn;
     }
 
+    /**
+     * 查找借款
+     * @param id
+     * @return
+     */
     public Jiekuan findOne(long id) {
         return jiekuanMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     * 更新借款
+     * @return
+     */
     @Transactional(readOnly = false)
-    public int update(Jiekuan fukuan) {
-        return jiekuanMapper.updateByPrimaryKeySelective(fukuan);
+    public int update(Jiekuan j) {
+        // 1. 找出借款
+        Jiekuan jiekuan = jiekuanMapper.selectByPrimaryKey(j.getId());
+
+        // 2. 找出借款对应的还款
+        List<Huankuan> huankuans = jiekuan.getHuankuanList();
+
+        // 3. 删除所有还款， 以及还款对应的还款明细
+        for (Huankuan huankuan : huankuans) {
+            huankuanMapper.delete(huankuan.getId());
+            huankuanMapMapper.deleteByHuankuanId(huankuan.getId());
+        }
+
+        // 4. 删除借款记录
+        int rtn = jiekuanMapper.updateByPrimaryKey(j);
+
+        return rtn;
     }
 
     /**
-     * 删除指定订单的付款记录， 这时候， 需要重建所有 回款-付款-map,  还款-付款-map
-     *
-     * @param orderId
+     * 删除借款记录
      * @param id
      * @return
      */
     @Transactional(readOnly = false)
-    public int delete(Long orderId, long id) {
-        // todo
-        return jiekuanMapper.delete(id);
+    public int delete(long id) {
+
+        // 1. 找出借款
+        Jiekuan jiekuan = jiekuanMapper.selectByPrimaryKey(id);
+
+        // 2. 找出借款对应的还款
+        List<Huankuan> huankuans = jiekuan.getHuankuanList();
+
+        // 3. 删除所有还款， 以及还款对应的还款明细
+        for (Huankuan huankuan : huankuans) {
+            huankuanMapper.delete(huankuan.getId());
+            huankuanMapMapper.deleteByHuankuanId(huankuan.getId());
+        }
+
+        // 4. 删除借款记录
+        int rtn = jiekuanMapper.delete(id);
+
+        return rtn;
     }
 
 
     /**
-     *
+     * 找出某笔订单的所有借款， 过滤掉已经被还完的借款
      * @param orderId
      * @return
      */
     public List<Jiekuan> huankuanUnfinished(Long orderId) {
-        return null;
+        PageJiekuanDTO dto = new PageJiekuanDTO();
+        dto.setHsId(orderId);
+        dto.setPageSize(1000000);
+        dto.setPageNo(1);
+
+        List<Jiekuan> all = jiekuanMapper.getPage(dto).getResults();
+
+        List<Jiekuan> filter = new ArrayList<>();
+
+        for (Jiekuan jiekuan : all) {
+            // 此笔借款关联的还款明细
+            List<HuankuanMap> huankuanMaps = huankuanMapMapper.getListByJiekuanId(jiekuan.getId());
+            BigDecimal total = huankuanMaps.stream()
+                    .map(HuankuanMap::getPrincipal)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            if (total.equals(jiekuan.getAmount())) {
+                continue;
+            }
+
+            // 借款的还款明细
+            jiekuan.setHuankuanMapList(huankuanMaps);
+
+            // 此笔借款关联的还款
+            jiekuan.setHuankuanList(huankuanMapper.getListByJiekuanId(jiekuan.getId()));
+            filter.add(jiekuan);
+        }
+        return filter;
     }
 }

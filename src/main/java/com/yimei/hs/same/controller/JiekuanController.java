@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by hary on 2017/9/15.
  */
@@ -33,7 +35,7 @@ public class JiekuanController {
 
 
     /**
-     * 获取所有huankuan
+     * 获取所有借款
      *
      * @return
      */
@@ -48,7 +50,19 @@ public class JiekuanController {
     }
 
     /**
-     * 获取huankuan
+     * 获取所有借款
+     *
+     * @return
+     */
+    @GetMapping("/{morderId}/jiekuansUnfinished")
+    public ResponseEntity<Result<List<Jiekuan>>> getListUnfinished(
+            @PathVariable("businessType") BusinessType businessType,
+            @PathVariable("morderId") Long morderId) {
+        return Result.ok(jiekuanService.getListUnfinished(morderId));
+    }
+
+    /**
+     * 获取借款
      *
      * @param id
      * @return
@@ -57,18 +71,18 @@ public class JiekuanController {
     public ResponseEntity<Result<Jiekuan>> read(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
-            @PathVariable("id") long id
+            @PathVariable("id") Long id
     ) {
         Jiekuan fukuan = jiekuanService.findOne(id);
         if (fukuan == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "记录不存在");
         } else {
             return Result.ok(fukuan);
         }
     }
 
     /**
-     * 创建huankuan
+     * 创建借款
      *
      * @return
      */
@@ -76,19 +90,19 @@ public class JiekuanController {
     public ResponseEntity<Result<Jiekuan>> create(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
-            @RequestBody @Validated(CreateGroup.class) Jiekuan yingJiekuan
+            @RequestBody @Validated(CreateGroup.class) Jiekuan jiekuan
     ) {
-        yingJiekuan.setOrderId(morderId);
-        int rtn = jiekuanService.create(yingJiekuan);
+        jiekuan.setOrderId(morderId);
+        int rtn = jiekuanService.create(jiekuan);
         if (rtn != 1) {
-            logger.error("创建失败: {}", yingJiekuan);
+            logger.error("创建失败: {}", jiekuan);
             return Result.error(4001, "创建失败");
         }
-        return Result.ok(yingJiekuan);
+        return Result.ok(jiekuan);
     }
 
     /**
-     * 更新huankuan
+     * 更新借款
      *
      * @return
      */
@@ -97,19 +111,19 @@ public class JiekuanController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id,
-            @RequestBody @Validated(UpdateGroup.class) Jiekuan yingJiekuan
+            @RequestBody @Validated(UpdateGroup.class) Jiekuan jiekuan
     ) {
-        assert (yingJiekuan.getOrderId() == morderId);
-        yingJiekuan.setId(id);
-        int rtn = jiekuanService.update(yingJiekuan);
+        assert (jiekuan.getOrderId() == morderId);
+        jiekuan.setId(id);
+        int rtn = jiekuanService.update(jiekuan);
         if (rtn != 1) {
-            return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "更新失败");
         }
         return Result.ok(1);
     }
 
     /**
-     * 更新付款
+     * 删除借款
      *
      * @return
      */
@@ -119,9 +133,9 @@ public class JiekuanController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
-        int rtn = jiekuanService.delete(morderId, id);
+        int rtn = jiekuanService.delete(id);
         if (rtn != 1) {
-            return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "更新失败");
         }
         return Result.ok(1);
     }

@@ -46,6 +46,10 @@ public class Fukuan implements Serializable {
 
     private LocalDateTime tsu;
 
+
+    @NotNull(groups = {CreateGroup.class}, message = "资金方id不能为空")
+    private Long capitalId;
+
     private static final long serialVersionUID = 1L;
 
     // 关联的回款记录
@@ -55,6 +59,5 @@ public class Fukuan implements Serializable {
     private List<HuikuanMap> huikuanMap;
     private BigDecimal huikuanTotal;
 
-    // 关联的借款明细
-    private List<Jiekuan> jiekuanList;
+    private Jiekuan jiekuan; //当资金方为非自由资金时 此字段不能为空
 }

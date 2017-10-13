@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by hary on 2017/9/15.
@@ -68,62 +65,76 @@ public class HuikuanService {
 
     @Transactional(readOnly = false)
     public int update(Huikuan huikuan) {
-        return huikuanMapper.updateByPrimaryKeySelective(huikuan);
-    }
 
-    @Transactional(readOnly = false)
-    public int create(Huikuan huikuan) {
+        // 1. 删除回款明细
+        huikuanMapMapper.deleteByOrderId(huikuan.getOrderId());
 
-        // 1. 插入回款记录
-        int rtn = huikuanMapper.insert(huikuan);
+        // 2. 更新回款
+        int rtn = huikuanMapper.updateByPrimaryKeySelective(huikuan);
 
+        // 3. 重建回款明细
         this.createMapping(huikuan.getOrderId());
 
         return rtn;
     }
 
     /**
-     * todo 陆彪 check
-     * 逻辑删除
+     * 创建回款
+     * @param huikuan
+     * @return
+     */
+    @Transactional(readOnly = false)
+    public int create(Huikuan huikuan) {
+        // 1. 插入回款记录
+        int rtn = huikuanMapper.insert(huikuan);
+
+        // 2. 触发建立 回款-还款映射
+        this.createMapping(huikuan.getOrderId());
+
+        return rtn;
+    }
+
+    /**
+     * 逻辑删除 由于回款时自动对应到付款的, 删除回款记录, 需要重建整个业务线的 回款-付款-map记录
      *
      * @param id
      * @return
      */
     @Transactional(readOnly = false)
     public int delete(long orderId, long id) {
-        // 由于回款时自动对应到付款的, 删除回款记录, 需要重建整个业务线的 回款-付款-map记录
+
+        // 1. 删除所有的回款对应明细
         huikuanMapMapper.deleteByOrderId(orderId);
+
+        // 2. 删除回款
+        int rtn = huikuanMapper.delete(id);
+
+        // 3. 重新
         this.createMapping(orderId);
-        return huikuanMapper.delete(id);
+
+        return rtn;
     }
 
-    @Transactional(readOnly = false)
+    /**
+     * 为某个订单重建 回款-付款 对应关系
+     * @param orderId
+     */
     public void createMapping(Long orderId) {
-        // 2. 找出付款尚未完成回款对应的付款记录
+
+        // 1. 找出付款尚未完成回款对应的付款记录
         List<Fukuan> unfinishedFukuan = fukuanService.huikuanUnfinished(orderId);
 
-//        if (currentFukuan != null) {
-//            unfinishedFukuan.add(currentFukuan);
-//        }
-
+        // 2. 如果所有付款都已经回款完
         if (unfinishedFukuan.size() == 0) {
             return;
         }
 
-        Iterator<Fukuan> it = unfinishedFukuan.iterator();
-
-
+        // 3. 待创建的对应记录
         List<HuikuanMap> toAdd = new ArrayList<>();
 
-        // 1.  找出订单的回款记录 -  尚有未对应完的余额
+        // 1.  找出订单的回款记录 - 尚有未对应完的余额,  也就是回款还有余额
         List<Huikuan> unfinished = huikuanMapper.getUnfinshedByOrderId(orderId);
-
-//        if (current != null) {
-//            unfinished.add(current);
-//        }
-
-        Collections.sort(unfinished, (a, b) -> a.getHuikuanDate().compareTo(b.getHuikuanDate()));
-
+        Iterator<Fukuan> it = unfinishedFukuan.iterator();
         for (Huikuan huikuan : unfinished) {
 
             // 尚未对应完的余额

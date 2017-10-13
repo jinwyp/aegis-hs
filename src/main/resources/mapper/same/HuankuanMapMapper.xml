@@ -8,11 +8,12 @@
         <result column="jiekuanId" jdbcType="BIGINT" property="jiekuanId"/>
         <result column="principal" jdbcType="DECIMAL" property="principal"/>
         <result column="interest" jdbcType="DECIMAL" property="interest"/>
+        <result column="fee" jdbcType="DECIMAL" property="fee"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, huankuanId, jiekuanId, principal, interest, tsc
+        id, orderId, huankuanId, jiekuanId, principal, interest, fee, tsc
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -29,16 +30,30 @@
         WHERE orderId = #{orderId,jdbcType=BIGINT}
     </select>
 
-    <select id="getListByFukuanId" resultType="com.yimei.hs.same.entity.HuankuanMap">
-       select
-           huankuanId,
-           principal,
-           interest
-        from
+    <!-- 查找还款明细by还款Id-->
+    <select id="getListByHuankuanId" resultType="com.yimei.hs.same.entity.HuankuanMap">
+        SELECT
+            huankuanId,
+            principal,
+            interest,
+            fee
+        FROM
             hs_same_huankuan_map
-        where
-            jiekuanId = #{jiekuanId,jdbcType=BIGINT}
+        WHERE
+            huankuanId = #{huankuanId,jdbcType=BIGINT}
+    </select>
 
+    <!-- 查找还款明细by借款Id-->
+    <select id="getListByJiekuanId" resultType="com.yimei.hs.same.entity.HuankuanMap">
+        SELECT
+        huankuanId,
+        principal,
+        interest,
+        fee
+        FROM
+        hs_same_huankuan_map
+        WHERE
+        jiekuanId = #{jiekuanId,jdbcType=BIGINT}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -68,6 +83,7 @@
             huankuanId,
             jiekuanId,
             principal,
+            fee,
             interest,
             tsc
         )
@@ -77,6 +93,7 @@
             #{huankuanId,jdbcType=BIGINT},
             #{jiekuanId,jdbcType=BIGINT},
             #{principal,jdbcType=DECIMAL},
+            #{fee,jdbcType=DECIMAL},
             #{interest,jdbcType=DECIMAL},
             #{tsc,jdbcType=TIMESTAMP}
         )
@@ -90,6 +107,7 @@
             <if test="huankuanId != null">huankuanId,</if>
             <if test="jiekuanId != null">jiekuanId,</if>
             <if test="principal != null">principal,</if>
+            <if test="fee != null">fee,</if>
             <if test="interest != null">interest,</if>
             <if test="tsc != null">tsc,</if>
         </trim>
@@ -99,6 +117,7 @@
             <if test="huankuanId != null">#{huankuanId,jdbcType=BIGINT},</if>
             <if test="jiekuanId != null">#{jiekuanId,jdbcType=BIGINT},</if>
             <if test="principal != null">#{principal,jdbcType=DECIMAL},</if>
+            <if test="fee != null">#{fee,jdbcType=DECIMAL},</if>
             <if test="interest != null">#{interest,jdbcType=DECIMAL},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
@@ -110,6 +129,7 @@
             <if test="huankuanId != null">huankuanId = #{huankuanId,jdbcType=BIGINT},</if>
             <if test="jiekuanId != null">jiekuanId = #{jiekuanId,jdbcType=BIGINT},</if>
             <if test="principal != null">principal = #{principal,jdbcType=DECIMAL},</if>
+            <if test="fee != null">interest = #{fee,jdbcType=DECIMAL},</if>
             <if test="interest != null">interest = #{interest,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
             <if test="true">tsu = current_timestamp</if>
@@ -120,9 +140,10 @@
         UPDATE hs_same_huankuan_map
         SET huankuanId = #{huankuanId,jdbcType=BIGINT},
             orderId    = #{orderId,jdbcType=BIGINT},
-            jiekuanId   = #{jiekuanId,jdbcType=BIGINT},
+            jiekuanId  = #{jiekuanId,jdbcType=BIGINT},
             principal  = #{principal,jdbcType=DECIMAL},
-            interest     = #{interest,jdbcType=DECIMAL},
+            interest   = #{interest,jdbcType=DECIMAL},
+            fee        = #{fee,jdbcType=DECIMAL},
             tsc        = #{tsc,jdbcType=TIMESTAMP},
             tsu        = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}

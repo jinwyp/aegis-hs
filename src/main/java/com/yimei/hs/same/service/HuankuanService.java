@@ -4,14 +4,18 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.same.dto.PageHuankuanDTO;
 import com.yimei.hs.same.entity.Huankuan;
 import com.yimei.hs.same.entity.HuankuanMap;
+import com.yimei.hs.same.entity.Jiekuan;
 import com.yimei.hs.same.mapper.FukuanMapper;
 import com.yimei.hs.same.mapper.HuankuanMapMapper;
 import com.yimei.hs.same.mapper.HuankuanMapper;
+import com.yimei.hs.same.mapper.JiekuanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by hary on 2017/9/15.
@@ -21,8 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class HuankuanService {
 
     private static final Logger logger = LoggerFactory.getLogger(HuankuanService.class);
-
-    @Autowired FukuanService yingFukuanService;
 
     @Autowired
     private HuankuanMapper huankuanMapper;
@@ -34,59 +36,74 @@ public class HuankuanService {
     private FukuanMapper yingFukuanMapper;
 
     @Autowired
-    private LogService yingLogService;
+    private JiekuanMapper jiekuanMapper;
 
     public Page<Huankuan> getPage(PageHuankuanDTO pageHuankuanDTO) {
-        return huankuanMapper.getPage(pageHuankuanDTO);
+        Page<Huankuan> pagehuankuans = huankuanMapper.getPage(pageHuankuanDTO);
+
+        for (Huankuan huankuan :pagehuankuans.getResults()){
+            // 设置还款所对应的借款
+            huankuan.setJiekuanList(jiekuanMapper.getJiekuanListByHuankuanId(huankuan.getId()));
+            // 设置还款所对应的还款明细
+            huankuan.setHuankuanMapList(huankuanMapMapper.getListByHuankuanId(huankuan.getId()));
+        }
+        return pagehuankuans;
     }
 
+    /**
+     * 
+     * @param id
+     * @return
+     */
     public Huankuan findOne(long id) {
         return huankuanMapper.selectByPrimaryKey(id);
     }
 
     /**
-     * 创建还款时， 需要将还款与付款对应关系设置好
-     * @param yingHuankuan
+     * 创建还款时， 需要将还款与借款款对应关系设置好
+     * @param huankuan
      * @return
      */
     @Transactional(readOnly = false)
-    public int create(Huankuan yingHuankuan) {
-
+    public int create(Huankuan huankuan) {
         // 1. 插入还款记录
-        int rtn = huankuanMapper.insert(yingHuankuan);
+        int rtn = huankuanMapper.insert(huankuan);
         if (rtn != 1) {
             return 0;
         }
 
-        for (HuankuanMap map : yingHuankuan.getHuankuanMapList()) {
-            map.setHuankuanId(yingHuankuan.getId());
-            map.setOrderId(yingHuankuan.getOrderId());
+        // 2. 插入还款明细
+        for (HuankuanMap map : huankuan.getHuankuanMapList()) {
+            map.setHuankuanId(huankuan.getId());
+            map.setOrderId(huankuan.getOrderId());
             huankuanMapMapper.insert(map);
         }
         return rtn;
     }
 
     /**
-     * todo 陆彪
-     *  重建 还款-付款-映射
-     * @param orderId
-     * @return
-     */
-    @Transactional(readOnly = false)
-    public int createMap(long orderId) {
-        // 1. 删除所有的orderId的 hs_ying_huankuan_map记录
-        // 2. 重建所有的orderId的 hs_ying_huankuan_map记录
-        return 1;
-    }
-
-    /**
      *  更新
-     * @param yingHuankuan
+     * @param hk
      * @return
      */
     @Transactional(readOnly = false)
-    public int update(Huankuan yingHuankuan) {
-        return huankuanMapper.updateByPrimaryKeySelective(yingHuankuan);
+    public int update(Huankuan hk) {
+        
+        // 1. 找出还款
+        Huankuan huankuan = huankuanMapper.selectByPrimaryKey(hk.getId());
+
+        // 2. 删除还款对应的还款明细
+        huankuanMapMapper.deleteByHuankuanId(hk.getId());
+
+        // 3. 插入还款明细
+        for (HuankuanMap map : hk.getHuankuanMapList()) {
+            map.setHuankuanId(huankuan.getId());
+            map.setOrderId(huankuan.getOrderId());
+            huankuanMapMapper.insert(map);
+        }
+
+        // 4. 更新还款记录(可能是日期)
+        return huankuanMapper.updateByPrimaryKeySelective(hk);
     }
 
     /**
@@ -96,9 +113,14 @@ public class HuankuanService {
      */
     @Transactional(readOnly = false)
     public int delete( long id) {
-        // 还款是手动对应的， 删除还款记录，
-        // 需要同时删除其map
+
+        // 1. 找出还款记录
+        Huankuan huankuan = huankuanMapper.selectByPrimaryKey(id);
+
+        // 3. 删除还款对应的还款明细
         huankuanMapMapper.deleteByHuankuanId(id);
+
+        // 删除还款
         return huankuanMapper.delete(id);
     }
 }

@@ -24,6 +24,6 @@ public interface HuankuanMapper {
 
     Page<Huankuan> getPage(PageHuankuanDTO pageHuankuanDTO);
 
-    List<Huankuan> getListByFukuanId(@Param("fukuanId") Long fukuanId);
+    List<Huankuan> getListByJiekuanId(@Param("jiekuanId") Long jiekuanId);
 
 }

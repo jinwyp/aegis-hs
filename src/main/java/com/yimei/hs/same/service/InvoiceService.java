@@ -31,7 +31,11 @@ public class InvoiceService {
     @Autowired
     private InvoiceDetailMapper invoiceDetailMapper;
 
-
+    /**
+     *
+     * @param pageInvoiceDTO
+     * @return
+     */
     public Page<Invoice> getPage(PageInvoiceDTO pageInvoiceDTO) {
         Page<Invoice> yingInvoicePage = invoiceMapper.getPage(pageInvoiceDTO);
         for (Invoice invoice : yingInvoicePage.getResults()) {
@@ -41,10 +45,20 @@ public class InvoiceService {
         return yingInvoicePage;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Invoice findOne(long id) {
         return invoiceMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     *
+     * @param yingInvoice
+     * @return
+     */
     @Transactional(readOnly = false)
     public int create(Invoice yingInvoice) {
 
@@ -66,6 +80,11 @@ public class InvoiceService {
         return rtn;
     }
 
+    /**
+     *
+     * @param yingInvoice
+     * @return
+     */
     @Transactional(readOnly = false)
     public int update(Invoice yingInvoice) {
         return invoiceMapper.updateByPrimaryKeySelective(yingInvoice);

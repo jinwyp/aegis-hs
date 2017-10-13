@@ -6,68 +6,114 @@
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
-        <result column="settleDate" jdbcType="DATE" property="settleDate"/>
         <result column="amount" jdbcType="DECIMAL" property="amount"/>
         <result column="money" jdbcType="DECIMAL" property="money"/>
+
+        <!--<result column="settleGap" jdbcType="DECIMAL" property="settleGap"/>-->
+
+        <result column="settleDate" jdbcType="DATE" property="settleDate"/>
         <result column="discountType" jdbcType="VARCHAR" property="discountType"/>
         <result column="discountInterest" jdbcType="DECIMAL" property="discountInterest"/>
         <result column="discountDays" jdbcType="INTEGER" property="discountDays"/>
         <result column="discountAmount" jdbcType="DECIMAL" property="discountAmount"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+        <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, settleDate, amount, money, discountType, discountInterest, discountDays,
-        discountAmount, tsc
+        id, orderId, hsId, settleDate, discountType, discountInterest, discountDays,
+        discountAmount, tsc, tsu
     </sql>
 
+    <!-- 查找seller记录 -->
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from hs_same_settle_upstream
-        where id = #{id,jdbcType=BIGINT}
+        SELECT
+            seller.id,
+            seller.orderId,
+            seller.hsId,
+            seller.settleDate,
+            seller.discountType,
+            seller.discountInterest,
+            seller.discountDays,
+            seller.discountAmount,
+            seller.tsc,
+            seller.tsu,
+            sum(buyer.amount),
+            sum(buyer.money)
+        FROM hs_same_settle_seller seller
+            LEFT JOIN hs_same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
+        WHERE seller.id = #{id,jdbcType=BIGINT} AND seller.deleted = 0
+        GROUP BY seller.orderId
     </select>
 
+    <!-- 找出订单的所有seller记录 -->
     <select id="selectByOrderId" resultType="com.yimei.hs.same.entity.SettleSeller">
-        select
-        <include refid="Base_Column_List"/>
-        from hs_same_settle_upstream
-        where id = #{id,jdbcType=BIGINT}
+        SELECT
+            seller.id,
+            seller.orderId,
+            seller.hsId,
+            seller.settleDate,
+            seller.discountType,
+            seller.discountInterest,
+            seller.discountDays,
+            seller.discountAmount,
+            seller.tsc,
+            seller.tsu,
+            sum(buyer.amount),
+            sum(buyer.money)
+        FROM hs_same_settle_seller
+             seller
+            LEFT JOIN hs.same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
+        WHERE seller.orderId = #{orderId,jdbcType=BIGINT} AND seller.deleted = 0
+        GROUP BY seller.orderId
     </select>
 
-    <!-- 获取一页数据 -->
+    <!-- 获取一页数据, 一笔订单只有一笔seller结算 -->
     <select id="getPage" resultType="com.yimei.hs.same.entity.SettleSeller">
         select
-        <include refid="Base_Column_List"/>
-        FROM hs_same_settle_upstream
+        seller.id,
+        seller.orderId,
+        seller.hsId,
+        seller.settleDate,
+        seller.discountType,
+        seller.discountInterest,
+        seller.discountDays,
+        seller.discountAmount,
+        seller.tsc,
+        seller.tsu,
+        sum(buyer.amount),
+        sum(buyer.money)
+        FROM hs_same_settle_seller seller
+        LEFT JOIN hs_same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
         <where>
-            <if test="orderId != null">AND orderId=#{orderId,jdbcType=BIGINT}</if>
-            <if test="hsId != null">AND hsId= #{hsId,jdbcType=BIGINT}</if>
-            <if test="settleDate != null">AND settleDate=#{settleDate,jdbcType=DATE}</if>
+            <if test="orderId != null">AND seller.orderId=#{orderId,jdbcType=BIGINT}</if>
+            <if test="hsId != null">AND seller.hsId= #{hsId,jdbcType=BIGINT}</if>
+            <if test="settleDate != null">AND seller.settleDate=#{settleDate,jdbcType=DATE}</if>
+            <if test="true">AND seller.deleted = 0</if>
         </where>
+        group by seller.orderId
     </select>
 
+    <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        DELETE FROM hs_same_settle_upstream
+        DELETE FROM hs_same_settle_seller
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
 
     <!-- 逻辑删除 -->
     <update id="delete" parameterType="java.lang.Long">
-        UPDATE hs_same_settle_upstream
+        UPDATE hs_same_settle_seller
         SET deleted = 1, tsu = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT};
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.same.entity.SettleSeller" keyProperty="id"
             useGeneratedKeys="true">
-        INSERT INTO hs_same_settle_upstream (
+        INSERT hs_same_settle_seller (
             id,
             orderId,
             hsId,
             settleDate,
-            amount,
-            money,
             discountType,
             discountInterest,
             discountDays,
@@ -78,8 +124,6 @@
             #{orderId,jdbcType=BIGINT},
             #{hsId,jdbcType=BIGINT},
             #{settleDate,jdbcType=DATE},
-            #{amount,jdbcType=DECIMAL},
-            #{money,jdbcType=DECIMAL},
             #{discountType,jdbcType=VARCHAR},
             #{discountInterest,jdbcType=DECIMAL},
             #{discountDays,jdbcType=INTEGER},
@@ -90,14 +134,12 @@
 
     <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.SettleSeller" keyProperty="id"
             useGeneratedKeys="true">
-        insert into hs_same_settle_upstream
+        insert hs_same_settle_seller
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="orderId != null">orderId,</if>
             <if test="hsId != null">hsId,</if>
             <if test="settleDate != null">settleDate,</if>
-            <if test="amount != null">amount,</if>
-            <if test="money != null">money,</if>
             <if test="discountType != null">discountType,</if>
             <if test="discountInterest != null">discountInterest,</if>
             <if test="discountDays != null">discountDays,</if>
@@ -109,8 +151,6 @@
             <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
             <if test="settleDate != null">#{settleDate,jdbcType=DATE},</if>
-            <if test="amount != null">#{amount,jdbcType=DECIMAL},</if>
-            <if test="money != null">#{money,jdbcType=DECIMAL},</if>
             <if test="discountType != null">#{discountType,jdbcType=VARCHAR},</if>
             <if test="discountInterest != null">#{discountInterest,jdbcType=DECIMAL},</if>
             <if test="discountDays != null">#{discountDays,jdbcType=INTEGER},</if>
@@ -120,13 +160,11 @@
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.same.entity.SettleSeller">
-        update hs_same_settle_upstream
+        update hs_same_settle_seller
         <set>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
             <if test="settleDate != null">settleDate = #{settleDate,jdbcType=DATE},</if>
-            <if test="amount != null">amount = #{amount,jdbcType=DECIMAL},</if>
-            <if test="money != null">money = #{money,jdbcType=DECIMAL},</if>
             <if test="discountType != null">discountType = #{discountType,jdbcType=VARCHAR},</if>
             <if test="discountInterest != null">discountInterest = #{discountInterest,jdbcType=DECIMAL},</if>
             <if test="discountDays != null">discountDays = #{discountDays,jdbcType=INTEGER},</if>
@@ -138,12 +176,10 @@
     </update>
 
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.same.entity.SettleSeller">
-        UPDATE hs_same_settle_upstream
+        UPDATE hs_same_settle_seller
         SET orderId          = #{orderId,jdbcType=BIGINT},
             hsId             = #{hsId,jdbcType=BIGINT},
             settleDate       = #{settleDate,jdbcType=DATE},
-            amount           = #{amount,jdbcType=DECIMAL},
-            money            = #{money,jdbcType=DECIMAL},
             discountType     = #{discountType,jdbcType=VARCHAR},
             discountInterest = #{discountInterest,jdbcType=DECIMAL},
             discountDays     = #{discountDays,jdbcType=INTEGER},
