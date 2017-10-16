@@ -32,7 +32,7 @@ public class SettleBuyerService {
     }
 
     /**
-     * 应收-下游结算 || 苍押-上游结算
+     * 应收-下游结算 || 仓押-上游结算
      *
      * @return
      */
