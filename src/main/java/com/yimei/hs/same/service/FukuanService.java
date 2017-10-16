@@ -153,7 +153,7 @@ public class FukuanService {
      * @return
      */
     @Transactional(readOnly = false)
-    public int create(Fukuan fukuan) {
+    public int create(Fukuan fukuan,boolean isSame) {
 
         // 1. 插入付款记录
         int rtn = fukuanMapper.insert(fukuan);
@@ -166,7 +166,7 @@ public class FukuanService {
 
         // 4. 当资金方不为自有资金时 触发借款记录
         Order order = orderMapper.selectByPrimaryKey(fukuan.getOrderId());
-        if (fukuan.getCapitalId() == order.getMainAccounting()) {
+        if (isSame) {
             fukuan.getJiekuan().setFukuanId(fukuan.getId());
             jiekuanMapper.insert(fukuan.getJiekuan());
         }
