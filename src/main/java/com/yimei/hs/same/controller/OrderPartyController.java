@@ -5,6 +5,9 @@ import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
+import com.yimei.hs.same.dto.PageOrderPartyDTO;
+import com.yimei.hs.same.entity.OrderParty;
+import com.yimei.hs.same.service.OrderPartyService;
 import com.yimei.hs.ying.dto.PageYingOrderPartyDTO;
 import com.yimei.hs.ying.entity.YingOrderParty;
 import com.yimei.hs.ying.service.YingPartyService;
@@ -24,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 public class OrderPartyController {
 
     @Autowired
-    YingPartyService yingPartyService;
+    OrderPartyService orderPartyService;
 
 
     /**
@@ -33,13 +36,13 @@ public class OrderPartyController {
      * @return
      */
     @GetMapping("/{morderId}/parties")
-    public ResponseEntity<Result<Page<YingOrderParty>>> list(
+    public ResponseEntity<Result<Page<OrderParty>>> list(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
-            PageYingOrderPartyDTO pageYingOrderPartyDTO
+            PageOrderPartyDTO pageOrderPartyDTO
     ) {
-        pageYingOrderPartyDTO.setOrderId(morderId);
-        return Result.ok(yingPartyService.getPage(pageYingOrderPartyDTO));
+        pageOrderPartyDTO.setOrderId(morderId);
+        return Result.ok(orderPartyService.getPage(pageOrderPartyDTO));
     }
 
 
@@ -51,12 +54,12 @@ public class OrderPartyController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") Long id,
-            @RequestBody @Validated(UpdateGroup.class) YingOrderParty yingOrderParty
+            @RequestBody @Validated(UpdateGroup.class) OrderParty orderParty
     ) {
 
-        yingOrderParty.setOrderId(morderId);
-        yingOrderParty.setId(id);
-        int status = yingPartyService.update(yingOrderParty);
+        orderParty.setOrderId(morderId);
+        orderParty.setId(id);
+        int status = orderPartyService.update(orderParty);
         if (status == 1) {
             return Result.ok(1);
         } else {
@@ -75,7 +78,7 @@ public class OrderPartyController {
             @PathVariable("id") Long id
     ) {
 
-        int status = yingPartyService.delete(id);
+        int status = orderPartyService.delete(id);
         if (status == 1) {
             return Result.ok(1);
         } else {
