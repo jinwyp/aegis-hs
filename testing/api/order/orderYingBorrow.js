@@ -175,4 +175,19 @@ describe('应收订单 借款单:', function () {
     })
 
 
+    it('借款单 - 获取应收订单尚未匹配还款的借款单列表 GET: /api/business/ying/1/jiekuansUnfinished', function (done) {
+        server.get('/api/business/ying/1/jiekuansUnfinished')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.length, 'data 的返回记录数量错误').to.equal(2)
+                done()
+            })
+    })
+
 })

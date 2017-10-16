@@ -122,15 +122,15 @@ export class RepaymentHuanKuanComponent implements OnInit {
     }
 
     getBorrowList () {
-        this.hsOrderService.getBorrowListByID(this.currentOrder.id).subscribe(
+        this.hsOrderService.getBorrowListUnfinishedByID(this.currentOrder.id).subscribe(
             data => {
 
-                if (Array.isArray(data.data.results)) {
-                    data.data.results.forEach( (borrow) => {
+                if (Array.isArray(data.data)) {
+                    data.data.forEach( (borrow) => {
                         if (borrow) {
                             this.borrowDropDownList.push ({
                                 id : borrow.id,
-                                name : 'ID:' + borrow.id + ' 日期:' + borrow.jiekuanDate + ' 资金方:' + this.partyListObject[borrow.capitalId].name + ' 金额:' + borrow.amount
+                                name : 'ID:' + borrow.id + ' 借款日期:' + borrow.jiekuanDate + ' 资金方:' + this.partyListObject[borrow.capitalId].name + ' 金额:' + borrow.amount
                             })
                         }
 
@@ -238,7 +238,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
         const postData = this.repaymentHKForm.value
         postData.orderId = this.currentOrder.id
         postData.huankuanMapList = this.borrowPostList.map( borrow => {
-            return { jiekuanId : borrow.id, principal : Number(borrow.principal), interest : Number(borrow.interest), fee : Number(borrow.fee) }
+            return { jiekuanId : borrow.jiekuanId, principal : Number(borrow.principal), interest : Number(borrow.interest), fee : Number(borrow.fee) }
         })
 
         if (this.isAddNew) {
@@ -312,8 +312,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
             return
         }
 
-        this.borrowPostList.push((<any>Object).assign( {}, this.borrowListObject[this.borrowForm.value.id],
-            {jiekuanId : this.borrowForm.value.id, principal : this.borrowForm.value.principal, interest : this.borrowForm.value.interest, fee : this.borrowForm.value.fee}) )
+        this.borrowPostList.push((<any>Object).assign( {}, this.borrowListObject[this.borrowForm.value.jiekuanId],
+            {jiekuanId : this.borrowForm.value.jiekuanId, principal : this.borrowForm.value.principal, interest : this.borrowForm.value.interest, fee : this.borrowForm.value.fee}) )
 
         this.ignoreDirtyBorrow = false
     }

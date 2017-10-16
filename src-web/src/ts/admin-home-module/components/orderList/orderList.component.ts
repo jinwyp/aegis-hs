@@ -22,7 +22,7 @@ import {getEnum} from '../../../services/localStorage'
 })
 export class OrderListComponent implements OnInit {
 
-    businessType : string = 'ying'
+    businessType : string = ''
 
     sessionUser : any
     currentOrderId : any
@@ -113,7 +113,7 @@ export class OrderListComponent implements OnInit {
         query = (<any>Object).assign(query, this.orderSearchForm.value)
 
         console.log('query: ', query)
-        this.hsOrderService.getOrderList(query).subscribe(
+        this.hsOrderService.getOrderList(this.businessType, query).subscribe(
             data => {
                 this.orderList = data.data.results
 
@@ -263,7 +263,7 @@ export class OrderListComponent implements OnInit {
         delete postData.deptId
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewOrder(postData).subscribe(
+            this.hsOrderService.createNewOrder(this.businessType, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -276,7 +276,7 @@ export class OrderListComponent implements OnInit {
             )
         } else {
             postData.id = this.currentOrderId
-            this.hsOrderService.modifyOrder(this.currentOrderId, postData).subscribe(
+            this.hsOrderService.modifyOrder(this.businessType, this.currentOrderId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
@@ -328,7 +328,7 @@ export class OrderListComponent implements OnInit {
 
     deleteItem (order : any) {
 
-        this.hsOrderService.delOrder(order.id).subscribe(
+        this.hsOrderService.delOrder(this.businessType, order.id).subscribe(
             data => {
                 console.log('保存成功: ', data)
                 this.httpService.successHandler(data)

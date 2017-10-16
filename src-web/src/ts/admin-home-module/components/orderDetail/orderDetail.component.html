@@ -44,6 +44,13 @@
             <li class="nav-item">
                 <a class="nav-link" [class.active]="currentTabIndex === 21" (click)="changeTab(21)">发票管理</a>
             </li>
+            <li class="nav-item" *ngIf="businessType==='cang'">
+                <a class="nav-link" [class.active]="currentTabIndex === 24" (click)="changeTab(24)">入库管理</a>
+            </li>
+            <li class="nav-item" *ngIf="businessType==='cang'">
+                <a class="nav-link" [class.active]="currentTabIndex === 25" (click)="changeTab(25)">出库管理</a>
+            </li>
+
         </ul>
 
 
@@ -97,3 +104,6 @@
         <app-settle  *ngIf="currentTabIndex === 13" [currentOrder]="currentOrder" [settleType]="'settletraffic'"></app-settle>
         <app-expense  *ngIf="currentTabIndex === 20" [currentOrder]="currentOrder"></app-expense>
         <app-invoice  *ngIf="currentTabIndex === 21" [currentOrder]="currentOrder"></app-invoice>
+
+        <app-warehouse  *ngIf="currentTabIndex === 24 && businessType==='cang'" [currentOrder]="currentOrder" [warehouseType]="'ruku'"></app-warehouse>
+        <app-warehouse  *ngIf="currentTabIndex === 25 && businessType==='cang'" [currentOrder]="currentOrder" [warehouseType]="'chuku'"></app-warehouse>
