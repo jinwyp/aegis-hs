@@ -18,6 +18,7 @@ public class Jiekuan implements Serializable {
     private Long id;
 
     private Long fukuanId;
+
     @NotNull(groups = {CreateGroup.class}, message = "订单id不能为空")
     private Long orderId;
 
