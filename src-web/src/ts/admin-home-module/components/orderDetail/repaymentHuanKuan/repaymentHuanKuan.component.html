@@ -6,26 +6,26 @@
                 <bs-select formControlName="skCompanyId" [fc]="repaymentHKForm.get('skCompanyId')" [label]="'资金方:'" [dirty]="ignoreDirty" [options]="partyList" [error]="repaymentHKFormError.skCompanyId"></bs-select>
                 <bs-datepicker formControlName="huankuankDate" [fc]="repaymentHKForm.get('huankuankDate')" [label]="'还款日期:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuankDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
 
-                <bs-text-input formControlName="huankuanPrincipal" [fc]="repaymentHKForm.get('huankuanPrincipal')" [type]="'number'" [label]="'还款本金:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanPrincipal"></bs-text-input>
-                <bs-text-input formControlName="huankuanInterest" [fc]="repaymentHKForm.get('huankuanInterest')" [type]="'number'" [label]="'还款利息:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanInterest" ></bs-text-input>
-                <bs-text-input formControlName="huankuanFee" [fc]="repaymentHKForm.get('huankuanFee')" [type]="'text'" [label]="'还款服务费:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanFee" ></bs-text-input>
+                <!--<bs-text-input formControlName="huankuanPrincipal" [fc]="repaymentHKForm.get('huankuanPrincipal')" [type]="'number'" [label]="'还款本金:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanPrincipal"></bs-text-input>-->
+                <!--<bs-text-input formControlName="huankuanInterest" [fc]="repaymentHKForm.get('huankuanInterest')" [type]="'number'" [label]="'还款利息:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanInterest" ></bs-text-input>-->
+                <!--<bs-text-input formControlName="huankuanFee" [fc]="repaymentHKForm.get('huankuanFee')" [type]="'text'" [label]="'还款服务费:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanFee" ></bs-text-input>-->
 
                 <div class="form-group row">
-                    <label class="col-2 col-form-label" >对应付款:</label>
+                    <label class="col-2 col-form-label" >对应借款:</label>
 
                     <div class="col-8">
 
-                        <form [formGroup]="paymentForm"  (keydown.enter)="$event.preventDefault()">
+                        <form [formGroup]="borrowForm"  (keydown.enter)="$event.preventDefault()">
 
                             <div class="form-row ">
                                 <div class="col-10" >
 
                                     <ul class="list-group" >
-                                        <li class="list-group-item mb-2" *ngFor=" let payment of paymentPostList">
-                                            ID:{{payment.id}} 付款日期:{{payment.payDate}} 收款单位:{{payment.receiveCompanyId | findKey:partyList:'name'}}
-                                            金额:{{payment.payAmount}} 付款方式:{{payment.payMode}}
-                                            对应本金:{{payment.principal}} 对应利息:{{payment.interest}}
-                                            <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delPayment(payment)"> x </button>
+                                        <li class="list-group-item mb-2" *ngFor=" let borrow of borrowPostList">
+                                            ID:{{borrow.id}} 借款日期:{{borrow.payDate}} 资金方:{{borrow.capitalId | findKey:partyList:'name'}}
+                                            金额:{{borrow.amount}}
+                                            对应本金:{{borrow.principal}} 对应利息:{{borrow.interest}} 服务费:{{borrow.fee}}
+                                            <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delBorrow(borrow)"> x </button>
                                         </li>
                                     </ul>
                                 </div>
@@ -33,19 +33,22 @@
 
 
                             <div class="form-row ">
-                                <div class="col-7">
-                                    <bs-select formControlName ="fukuanId" [fc]="paymentForm.get('fukuanId')" [labelclass]="'d-none'" [inputclass]="'col-12'" [prompt]="'请选择付款:'" [dirty]="ignoreDirtyPayment" [options]="paymentDropDownList" [error]="paymentFormError.fukuanId"></bs-select>
+                                <div class="col-5">
+                                    <bs-select formControlName ="jiekuanId" [fc]="borrowForm.get('jiekuanId')" [labelclass]="'d-none'" [inputclass]="'col-12'" [prompt]="'请选择付款:'" [dirty]="ignoreDirtyBorrow" [options]="borrowDropDownList" [error]="borrowFormError.jiekuanId"></bs-select>
                                 </div>
 
                                 <div class="col-2">
-                                    <bs-text-input formControlName="principal" [fc]="paymentForm.get('principal')" [type]="'text'" [prompt]="'本金:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyPayment" [error]="paymentFormError.principal"></bs-text-input>
+                                    <bs-text-input formControlName="principal" [fc]="borrowForm.get('principal')" [type]="'text'" [prompt]="'本金:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyBorrow" [error]="borrowFormError.principal"></bs-text-input>
                                 </div>
                                 <div class="col-2">
-                                    <bs-text-input formControlName="interest" [fc]="paymentForm.get('interest')" [type]="'text'" [prompt]="'利息:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyPayment" [error]="paymentFormError.interest"></bs-text-input>
+                                    <bs-text-input formControlName="interest" [fc]="borrowForm.get('interest')" [type]="'text'" [prompt]="'利息:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyBorrow" [error]="borrowFormError.interest"></bs-text-input>
+                                </div>
+                                <div class="col-2">
+                                    <bs-text-input formControlName="fee" [fc]="borrowForm.get('fee')" [type]="'text'" [prompt]="'服务费:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyBorrow" [error]="borrowFormError.fee"></bs-text-input>
                                 </div>
 
                                 <div class="col-1">
-                                    <button type="button" class="btn btn-info" (click)="createNewPayment()">添加</button>
+                                    <button type="button" class="btn btn-info" (click)="createNewBorrow()">添加</button>
                                 </div>
                             </div>
 
