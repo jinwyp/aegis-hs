@@ -134,6 +134,7 @@ public class HuikuanService {
 
         // 1.  找出订单的回款记录 - 尚有未对应完的余额,  也就是回款还有余额
         List<Huikuan> unfinished = huikuanMapper.getUnfinshedByOrderId(orderId);
+
         Iterator<Fukuan> it = unfinishedFukuan.iterator();
         for (Huikuan huikuan : unfinished) {
 
