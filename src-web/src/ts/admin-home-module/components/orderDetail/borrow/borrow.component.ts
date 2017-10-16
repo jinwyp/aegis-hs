@@ -15,22 +15,22 @@ import {getEnum} from '../../../../services/localStorage'
 
 
 @Component({
-  selector: 'app-payment',
-  templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.css']
+  selector: 'app-borrow',
+  templateUrl: './borrow.component.html',
+  styleUrls: ['./borrow.component.css']
 })
-export class PaymentComponent implements OnInit {
+export class BorrowComponent implements OnInit {
 
     @Input() currentOrder : any
-    currentPaymentId : number = 0
+    currentBorrowId : number = 0
 
-    paymentForm: FormGroup
+    borrowForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
 
-    paymentList : any[] = []
+    borrowList : any[] = []
     partyList : any[] = []
 
     unitList : any[] = []
@@ -62,8 +62,8 @@ export class PaymentComponent implements OnInit {
     ngOnInit(): void {
 
         this.getPartyList()
-        this.getPaymentList()
-        this.createPaymentForm()
+        this.getBorrowList()
+        this.createBorrowForm()
 
         if (this.currentOrder) {
             if (Array.isArray(this.currentOrder.orderConfigList)) {
@@ -85,10 +85,10 @@ export class PaymentComponent implements OnInit {
     }
 
 
-    getPaymentList () {
-        this.hsOrderService.getPaymentListByID(this.currentOrder.id).subscribe(
+    getBorrowList () {
+        this.hsOrderService.getBorrowListByID(this.currentOrder.id).subscribe(
             data => {
-                this.paymentList = data.data.results
+                this.borrowList = data.data.results
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -108,48 +108,41 @@ export class PaymentComponent implements OnInit {
 
 
 
-    paymentFormError : any = {}
-    paymentFormValidationMessages: any = {
+    borrowFormError : any = {}
+    borrowFormValidationMessages: any = {
         'hsId'  : {
             'required'      : '请选择核算月!'
         },
-        'payDate'  : {
-            'required'      : '请填写付款日期!'
+        'jiekuanDate'  : {
+            'required'      : '请填写借款日期!'
         },
-        'receiveCompanyId'  : {
-            'required'      : '请填写收款单位!'
+        'amount'  : {
+            'required'      : '请填写借款金额!'
         },
-        'payUsage'  : {
-            'required'      : '请填写付款用途!'
-        },
-        'payAmount'  : {
-            'required'      : '请填写付款金额!'
-        },
-        'payMode'  : {
-            'required'      : '请填写付款方式!'
+        'capitalId'  : {
+            'required'      : '请填写资金方!'
         }
     }
 
-    paymentFormInputChange(formInputData : any) {
-        this.paymentFormError = formErrorHandler(formInputData, this.paymentForm, this.paymentFormValidationMessages)
+    borrowFormInputChange(formInputData : any) {
+        this.borrowFormError = formErrorHandler(formInputData, this.borrowForm, this.borrowFormValidationMessages)
     }
 
-    createPaymentForm(): void {
+    createBorrowForm(): void {
 
-        this.paymentForm = this.fb.group({
+        this.borrowForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
-            'payDate'    : [null, [Validators.required ] ],
-            'receiveCompanyId'    : ['', [Validators.required ] ],
+            'jiekuanDate'    : [null, [Validators.required ] ],
+            'amount'    : ['', [Validators.required ] ],
 
-            'payUsage'    : ['', [Validators.required ] ],
-            'payAmount'    : ['', [Validators.required ] ],
-            'payMode'    : ['', [Validators.required ] ]
+            'capitalId'    : ['', [Validators.required ] ],
+            'useInterest'    : ['', [] ],
+            'useDays'    : ['', [ ] ]
         } )
 
-
-        this.paymentForm.valueChanges.subscribe(data => {
+        this.borrowForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
-            this.paymentFormInputChange(data)
+            this.borrowFormInputChange(data)
         })
     }
 
@@ -157,85 +150,91 @@ export class PaymentComponent implements OnInit {
 
 
 
-    paymentFormSubmit() {
+    borrowFormSubmit() {
 
-        if (this.paymentForm.invalid) {
-            this.paymentFormInputChange(this.paymentForm.value)
+        if (this.borrowForm.invalid) {
+            this.borrowFormInputChange(this.borrowForm.value)
             this.ignoreDirty = true
 
-            console.log('当前信息: ', this.paymentForm, this.paymentFormError)
+            console.log('当前信息: ', this.borrowForm, this.borrowFormError)
             return
         }
 
-        const postData = this.paymentForm.value
+        const postData = this.borrowForm.value
         postData.orderId = this.currentOrder.id
 
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewPayment(this.currentOrder.id, postData).subscribe(
+            this.hsOrderService.createNewBorrow(this.currentOrder.id, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getPaymentList()
+                    this.getBorrowList()
                     this.showForm()
 
                 },
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
-            postData.id = this.currentPaymentId
+            postData.id = this.currentBorrowId
             delete postData.payDate
             delete postData.payAmount
 
-            this.hsOrderService.modifyPayment(this.currentOrder.id, this.currentPaymentId, postData).subscribe(
+            this.hsOrderService.modifyBorrow(this.currentOrder.id, this.currentBorrowId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getPaymentList()
+                    this.getBorrowList()
                     this.showForm()
 
                 },
                 error => {this.httpService.errorHandler(error) }
             )
         }
-
     }
 
 
-    showForm(isAddNew : boolean = true, shippingOrder?: any ) {
+    showForm(isAddNew : boolean = true, borrowOrder?: any ) {
 
         if (isAddNew) {
             this.isAddNew = true
-            this.currentPaymentId = 0
+            this.currentBorrowId = 0
 
-            this.paymentForm.patchValue({
+            this.borrowForm.patchValue({
                 'hsId'    : '',
-                'payDate'    : null,
-                'receiveCompanyId'    : '',
-
-                'payUsage'    : '',
-                'payAmount'    : '',
-                'payMode'    : '',
+                'jiekuanDate'    : null,
+                'amount'    : '',
 
                 'capitalId'    : '',
                 'useInterest'    : '',
                 'useDays'    : ''
             })
 
-
         } else {
             this.isAddNew = false
-            this.currentPaymentId = shippingOrder.id
+            this.currentBorrowId = borrowOrder.id
 
-            this.paymentForm.patchValue(shippingOrder)
+            this.borrowForm.patchValue(borrowOrder)
         }
-
 
         this.isShowForm = !this.isShowForm
     }
 
+
+    deleteItem (borrow : any) {
+
+        this.hsOrderService.delBorrow(this.currentOrder.id, borrow.id).subscribe(
+            data => {
+                console.log('保存成功: ', data)
+                this.httpService.successHandler(data)
+
+                this.getBorrowList()
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
 
 
 }

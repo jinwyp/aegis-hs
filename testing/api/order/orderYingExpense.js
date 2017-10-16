@@ -26,7 +26,7 @@ const server = supertest(config.path.urlApi)
 
 
 
-describe('应收订单 - 费用 : ', function () {
+describe('应收订单 费用单:', function () {
 
     let Authorization = ''
 
@@ -152,8 +152,8 @@ describe('应收订单 - 费用 : ', function () {
             })
     })
 
-    it('费用单 - 删除某个ID的费用单 DELETE: /api/business/ying/1/fees/1', function (done) {
-        server.delete('/api/business/ying/1/fees/1')
+    it('费用单 - 删除某个ID的费用单 DELETE: /api/business/ying/1/fees/2', function (done) {
+        server.delete('/api/business/ying/1/fees/2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})

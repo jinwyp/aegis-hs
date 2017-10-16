@@ -26,7 +26,7 @@ const server = supertest(config.path.urlApi)
 
 
 
-describe('应收订单 - 发运单: ', function () {
+describe('应收订单 发运单:', function () {
 
     let Authorization = ''
 
@@ -204,8 +204,8 @@ describe('应收订单 - 发运单: ', function () {
             })
     })
 
-    it('发运单 - 删除某个ID的发运单 DELETE: /api/business/ying/1/fayuns/1', function (done) {
-        server.delete('/api/business/ying/1/fayuns/1')
+    it('发运单 - 删除某个ID的发运单 DELETE: /api/business/ying/1/fayuns/2', function (done) {
+        server.delete('/api/business/ying/1/fayuns/2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})

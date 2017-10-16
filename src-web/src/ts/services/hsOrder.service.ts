@@ -75,6 +75,7 @@ export class HSOrderService {
         return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/units/' + unitId.toString())
     }
 
+
     getShippingListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
@@ -93,6 +94,24 @@ export class HSOrderService {
     }
 
 
+    getBorrowListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+        const params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
+
+        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/jiekuans', {params: params} )
+    }
+    createNewBorrow(orderId: number, borrow: any): Observable<any> {
+        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/jiekuans', borrow )
+    }
+    modifyBorrow(orderId: number, borrowId: number, borrow: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/jiekuans/' + borrowId.toString() , borrow)
+    }
+    delBorrow(orderId: number, borrowId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/jiekuans/' + borrowId.toString())
+    }
+
+
     getPaymentListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
@@ -101,15 +120,16 @@ export class HSOrderService {
         return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fukuans', {params: params} )
     }
     createNewPayment(orderId: number, payment: any): Observable<any> {
-
         return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fukuans', payment )
     }
     modifyPayment(orderId: number, paymentId: number, payment: any ): Observable<any> {
-
         return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fukuans/' + paymentId.toString() , payment)
     }
+    delPayment(orderId: number, paymentId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fukuans/' + paymentId.toString())
+    }
 
-
+    // 回款
     getRepaymentListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
@@ -118,15 +138,16 @@ export class HSOrderService {
         return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huikuans', {params: params} )
     }
     createNewRepayment(orderId: number, repayment: any): Observable<any> {
-
         return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huikuans', repayment )
     }
     modifyRepayment(orderId: number, repaymentId: number, repayment: any ): Observable<any> {
-
         return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huikuans/' + repaymentId.toString() , repayment)
     }
+    delRepayment(orderId: number, repaymentId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huikuans/' + repaymentId.toString())
+    }
 
-
+    // 还款
     getRepaymentHKListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
@@ -135,14 +156,14 @@ export class HSOrderService {
         return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huankuans', {params: params} )
     }
     createNewRepaymentHK(orderId: number, repayment: any): Observable<any> {
-
         return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huankuans', repayment )
     }
     modifyRepaymentHK(orderId: number, repaymentId: number, repayment: any ): Observable<any> {
-
         return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huankuans/' + repaymentId.toString() , repayment)
     }
-
+    delRepaymentHK(orderId: number, repaymentId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fukuans/' + repaymentId.toString())
+    }
 
 
 

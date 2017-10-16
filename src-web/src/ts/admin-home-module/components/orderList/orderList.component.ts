@@ -337,7 +337,6 @@ export class OrderListComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
-
     }
 
 
