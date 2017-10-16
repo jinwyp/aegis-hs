@@ -16,7 +16,7 @@ const server = supertest(config.path.urlApi)
 
 
 
-describe('事业部门', function () {
+describe('事业部门 - ', function () {
 
     let Authorization = ''
 
@@ -24,10 +24,7 @@ describe('事业部门', function () {
 
         server.post('/api/login')
             .set(config.headers)
-            .send({
-                phone: "13022117050",
-                password: "123456"
-            })
+            .send(config.user.admin)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -36,6 +33,8 @@ describe('事业部门', function () {
                 done()
             })
     });
+
+
 
 
 
@@ -56,8 +55,7 @@ describe('事业部门', function () {
             })
     })
 
-
-    it('新建部门 POST: /api/departments', function (done) {
+    it('新建部门1 POST: /api/departments', function (done) {
         server.post('/api/departments')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -76,6 +74,24 @@ describe('事业部门', function () {
             })
     })
 
+    it('新建部门2 POST: /api/departments', function (done) {
+        server.post('/api/departments')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                name: "新的部门" + Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.name).to.include('新的部门')
+                done()
+            })
+    })
 
     it('获取某个ID的部门信息 GET: /api/departments/1', function (done) {
         server.get('/api/departments/1')
@@ -92,7 +108,6 @@ describe('事业部门', function () {
                 done()
             })
     })
-
 
     it('修改某个ID的部门名称 PUT: /api/departments/3', function (done) {
         server.put('/api/departments/3')
@@ -111,4 +126,18 @@ describe('事业部门', function () {
             })
     })
 
+    it('删除某个ID的部门 DELETE: /api/departments/4', function (done) {
+        server.delete('/api/departments/4')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+                done()
+            })
+    })
 })

@@ -40,12 +40,12 @@ describe('应收订单', function () {
 
 
 
-    it('应收订单 - 新建应收订单1 POST: /api/yings', function (done) {
-        server.post('/api/yings')
+    it('应收订单 - 新建应收订单1 POST: /api/business/yings', function (done) {
+        server.post('/api/business/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
-                "deptId":2,
+                "businessType":"ying",
                 "teamId":1,
                 "line":"那曲 - 晋和 - 嘉瑞",
                 "cargoType":"COAL",
@@ -67,12 +67,12 @@ describe('应收订单', function () {
             })
     })
 
-    it('应收订单 - 新建应收订单2 POST: /api/yings', function (done) {
-        server.post('/api/yings')
+    it('应收订单 - 新建应收订单2 POST: /api/business/yings', function (done) {
+        server.post('/api/business/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
-                "deptId":2,
+                "businessType":"ying",
                 "teamId":1,
                 "line":"那曲 - 晋和 - 嘉瑞",
                 "cargoType":"COAL",
@@ -98,11 +98,12 @@ describe('应收订单', function () {
             })
     })
 
-    it('应收订单 - 新建应收订单3 POST: /api/yings', function (done) {
-        server.post('/api/yings')
+    it('应收订单 - 新建应收订单3 POST: /api/business/yings', function (done) {
+        server.post('/api/business/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
+                "businessType":"ying",
                 "teamId":1,
                 "line":"那曲 - 晋和 - 嘉瑞",
                 "cargoType":"COAL",
@@ -128,13 +129,13 @@ describe('应收订单', function () {
             })
     })
 
-    it('应收订单 - 新建应收订单 非法输入 不存在部门和团队 deptId:9999, teamId:99999 POST: /api/yings', function (done) {
-        server.post('/api/yings')
+    it('应收订单 - 新建应收订单 非法输入 不存在部门和团队 teamId:99999 POST: /api/business/yings', function (done) {
+        server.post('/api/business/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
                 {
-                    "deptId" : 9999,
+                    "businessType":"ying",
                     "teamId" : 99999,
                     "line" : "嘉瑞 - 那曲 - 山瑞",
                     "cargoType" : "COAL",
@@ -159,13 +160,13 @@ describe('应收订单', function () {
             })
     })
 
-    it('应收订单 - 新建应收订单 非法输入 不存在的公司ID mainAccounting:9999, upstreamId:99999, downstreamId:99999 POST: /api/yings', function (done) {
-        server.post('/api/yings')
+    it('应收订单 - 新建应收订单 非法输入 不存在的公司ID mainAccounting:9999, upstreamId:99999, downstreamId:99999 POST: /api/business/yings', function (done) {
+        server.post('/api/business/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
                 {
-                    "deptId" : 2,
+                    "businessType":"ying",
                     "teamId" : 1,
                     "line" : "嘉瑞 - 那曲 - 山瑞",
                     "cargoType" : "COAL",
@@ -190,13 +191,13 @@ describe('应收订单', function () {
             })
     })
 
-    it('应收订单 - 新建应收订单 非法输入 不存在的参与方公司ID "custType" : "UPSTREAM", "customerId" : 9999 POST: /api/yings', function (done) {
-        server.post('/api/yings')
+    it('应收订单 - 新建应收订单 非法输入 不存在的参与方公司ID "custType" : "UPSTREAM", "customerId" : 9999 POST: /api/business/yings', function (done) {
+        server.post('/api/business/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
                 {
-                    "deptId" : 2,
+                    "businessType":"ying",
                     "teamId" : 1,
                     "line" : "嘉瑞 - 那曲 - 山瑞",
                     "cargoType" : "COAL",
@@ -223,8 +224,8 @@ describe('应收订单', function () {
             })
     })
 
-    it('应收订单 - 获取应收订单列表 GET: /api/yings?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/yings?pageNo=1&pageSize=2')
+    it('应收订单 - 获取应收订单列表 GET: /api/business/yings?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/yings?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -240,8 +241,8 @@ describe('应收订单', function () {
             })
     })
 
-    it('应收订单 - 获取某个ID的应收订单信息 GET: /api/yings/1', function (done) {
-        server.get('/api/yings/1')
+    it('应收订单 - 获取某个ID的应收订单信息 GET: /api/business/yings/1', function (done) {
+        server.get('/api/business/yings/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -256,8 +257,8 @@ describe('应收订单', function () {
             })
     })
 
-    it('应收订单 - 修改某个ID的应收订单 PUT: /api/yings/1', function (done) {
-        server.put('/api/yings/1')
+    it('应收订单 - 修改某个ID的应收订单 PUT: /api/business/yings/1', function (done) {
+        server.put('/api/business/yings/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -288,8 +289,8 @@ describe('应收订单', function () {
             })
     })
 
-    it('应收订单 - 删除某个ID的应收订单 DELETE: /api/yings/1', function (done) {
-        server.put('/api/yings/1')
+    it('应收订单 - 删除某个ID的应收订单 DELETE: /api/business/yings/1', function (done) {
+        server.delete('/api/business/yings/21')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
@@ -306,8 +307,9 @@ describe('应收订单', function () {
 
 
 
-    it('核算单元 - 新建核算单元1 POST: /api/ying/1/units', function (done) {
-        server.post('/api/ying/1/units')
+
+    it('核算单元 - 新建核算单元1 POST: /api/business/ying/1/units', function (done) {
+        server.post('/api/business/ying/1/units')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -331,8 +333,8 @@ describe('应收订单', function () {
             })
     })
 
-    it('核算单元 - 新建核算单元2 POST: /api/ying/1/units', function (done) {
-        server.post('/api/ying/1/units')
+    it('核算单元 - 新建核算单元2 POST: /api/business/ying/1/units', function (done) {
+        server.post('/api/business/ying/1/units')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -356,8 +358,8 @@ describe('应收订单', function () {
             })
     })
 
-    it('核算单元 - 获取应收订单核算单元列表 GET: /api/ying/1/units?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/ying/1/units?pageNo=1&pageSize=2')
+    it('核算单元 - 获取应收订单核算单元列表 GET: /api/business/ying/1/units?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/ying/1/units?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -373,8 +375,8 @@ describe('应收订单', function () {
             })
     })
 
-    it('核算单元 - 获取某个ID的核算单元信息 GET: /api/ying/1/units/1', function (done) {
-        server.get('/api/ying/1/units/1')
+    it('核算单元 - 获取某个ID的核算单元信息 GET: /api/business/ying/1/units/1', function (done) {
+        server.get('/api/business/ying/1/units/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -389,8 +391,8 @@ describe('应收订单', function () {
             })
     })
 
-    it('核算单元 - 修改某个ID的应收订单核算单元 PUT: /api/ying/1/units/1', function (done) {
-        server.put('/api/ying/1/units/1')
+    it('核算单元 - 修改某个ID的应收订单核算单元 PUT: /api/business/ying/1/units/1', function (done) {
+        server.put('/api/business/ying/1/units/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -440,12 +442,12 @@ describe('应收订单', function () {
             })
     });
 
-    it('移交订单权限 - 新建应收订单11 POST: /api/yings', function (done) {
-        server.post('/api/yings')
+    it('移交订单权限 - 新建应收订单11 POST: /api/business/yings', function (done) {
+        server.post('/api/business/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
-                "deptId":2,
+                "businessType":"ying",
                 "teamId":1,
                 "line":"那曲 - 晋和 - 嘉瑞",
                 "cargoType":"COAL",
@@ -468,12 +470,12 @@ describe('应收订单', function () {
             })
     })
 
-    it('移交订单权限 - 新建应收订单12 POST: /api/yings', function (done) {
-        server.post('/api/yings')
+    it('移交订单权限 - 新建应收订单12 POST: /api/business/yings', function (done) {
+        server.post('/api/business/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
-                "deptId":2,
+                "businessType":"ying",
                 "teamId":1,
                 "line":"那曲 - 晋和 - 嘉瑞",
                 "cargoType":"COAL",
@@ -496,10 +498,10 @@ describe('应收订单', function () {
             })
     })
 
-    it('移交订单权限 - 转移订单给另一个财务人员 POST: /api/yings/8/to/4', function (done) {
+    it('移交订单权限 - 转移订单给另一个财务人员 POST: /api/business/yings/4/to/4', function (done) {
 
-        console.log('转移订单给另一个财务人员 POST: /api/yings/' + orderId + '/to/4')
-        server.post('/api/yings/' + orderId + '/to/4')
+        console.log('转移订单给另一个财务人员 POST: /api/business/yings/' + orderId + '/to/4')
+        server.post('/api/business/yings/' + orderId + '/to/4')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
@@ -513,9 +515,9 @@ describe('应收订单', function () {
             })
     })
 
-    it('移交订单权限 - 不是自己的订单转移给另一个财务人员 非法输入 POST: /api/yings/1/to/4', function (done) {
+    it('移交订单权限 - 不是自己的订单转移给另一个财务人员 非法输入 POST: /api/business/yings/1/to/4', function (done) {
 
-        server.post('/api/yings/1/to/4')
+        server.post('/api/business/yings/1/to/4')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})

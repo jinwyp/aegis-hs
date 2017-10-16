@@ -136,7 +136,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let order of orderList; trackBy: trackByFn">
-                    <td> <a class="btn btn-link btn-sm" [routerLink]="['/orders', order.id]" role="button"> {{order.id}}</a></td>
+                    <td> <a class="btn btn-link btn-sm" [routerLink]="['/yingorders', order.id]" role="button"> {{order.id}}</a></td>
                     <td> {{order.line}}</td>
                     <td> {{order.deptId | findKey : departmentList : 'name'}}</td>
                     <td> {{order.teamId | findKey : teamList : 'name'}}</td>
@@ -146,7 +146,7 @@
                     <td> {{order.status | orderStatus}}</td>
                     <td> {{order.tsc }}</td>
                     <td>
-                        <a class="btn btn-link btn-sm" [routerLink]="['/orders', order.id]" role="button">查看</a>
+                        <a class="btn btn-link btn-sm" [routerLink]="['/yingorders', order.id]" role="button">查看</a>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, order)"> 修改 </button>
                         <button class="btn btn-link btn-sm" (click)="deleteItem(order)"> 删除 </button>
                     </td>

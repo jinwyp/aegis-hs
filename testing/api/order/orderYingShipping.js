@@ -49,8 +49,8 @@ describe('应收订单 - 发运单: ', function () {
 
 
 
-    it('发运单 - 新建发运单1 POST: /api/ying/1/fayuns', function (done) {
-        server.post('/api/ying/1/fayuns')
+    it('发运单 - 新建发运单1 POST: /api/business/ying/1/fayuns', function (done) {
+        server.post('/api/business/ying/1/fayuns')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -80,8 +80,8 @@ describe('应收订单 - 发运单: ', function () {
             })
     })
 
-    it('发运单 - 新建发运单2 POST: /api/ying/1/fayuns', function (done) {
-        server.post('/api/ying/1/fayuns')
+    it('发运单 - 新建发运单2 POST: /api/business/ying/1/fayuns', function (done) {
+        server.post('/api/business/ying/1/fayuns')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -111,8 +111,8 @@ describe('应收订单 - 发运单: ', function () {
             })
     })
 
-    it('发运单 - 新建发运单 非法输入不存在的核算单元ID hsId:99999, POST: /api/ying/1/fayuns', function (done) {
-        server.post('/api/ying/1/fayuns')
+    it('发运单 - 新建发运单 非法输入不存在的核算单元ID hsId:99999, POST: /api/business/ying/1/fayuns', function (done) {
+        server.post('/api/business/ying/1/fayuns')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -140,8 +140,8 @@ describe('应收订单 - 发运单: ', function () {
             })
     })
 
-    it('发运单 - 获取应收订单发运单列表 GET: /api/ying/1/fayuns?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/ying/1/fayuns?pageNo=1&pageSize=2')
+    it('发运单 - 获取应收订单发运单列表 GET: /api/business/ying/1/fayuns?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/ying/1/fayuns?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -157,8 +157,8 @@ describe('应收订单 - 发运单: ', function () {
             })
     })
 
-    it('发运单 - 获取某个ID的发运单信息 GET: /api/ying/1/fayuns/1', function (done) {
-        server.get('/api/ying/1/fayuns/1')
+    it('发运单 - 获取某个ID的发运单信息 GET: /api/business/ying/1/fayuns/1', function (done) {
+        server.get('/api/business/ying/1/fayuns/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -173,8 +173,8 @@ describe('应收订单 - 发运单: ', function () {
             })
     })
 
-    it('发运单 - 修改某个ID的发运单 PUT: /api/ying/1/fayuns/1', function (done) {
-        server.put('/api/ying/1/fayuns/1')
+    it('发运单 - 修改某个ID的发运单 PUT: /api/business/ying/1/fayuns/1', function (done) {
+        server.put('/api/business/ying/1/fayuns/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -204,8 +204,8 @@ describe('应收订单 - 发运单: ', function () {
             })
     })
 
-    it('发运单 - 删除某个ID的发运单 DELETE: /api/yings/1/fayuns/1', function (done) {
-        server.put('/api/yings/1/fayuns/1')
+    it('发运单 - 删除某个ID的发运单 DELETE: /api/business/yings/1/fayuns/1', function (done) {
+        server.put('/api/business/yings/1/fayuns/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})

@@ -24,10 +24,7 @@ describe('参与商公司', function () {
 
         server.post('/api/login')
             .set(config.headers)
-            .send({
-                phone: "13022117050",
-                password: "123456"
-            })
+            .send(config.user.admin)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {

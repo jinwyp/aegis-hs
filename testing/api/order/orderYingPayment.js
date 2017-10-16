@@ -50,8 +50,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
 
 
 
-    it('付款单 - 新建付款单1 POST: /api/ying/1/fukuans', function (done) {
-        server.post('/api/ying/1/fukuans')
+    it('付款单 - 新建付款单1 POST: /api/business/ying/1/fukuans', function (done) {
+        server.post('/api/business/ying/1/fukuans')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -80,8 +80,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('付款单 - 新建付款单2 POST: /api/ying/1/fukuans', function (done) {
-        server.post('/api/ying/1/fukuans')
+    it('付款单 - 新建付款单2 POST: /api/business/ying/1/fukuans', function (done) {
+        server.post('/api/business/ying/1/fukuans')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -110,8 +110,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('付款单 - 获取应收订单付款单列表 GET: /api/ying/1/fukuans?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/ying/1/fukuans?pageNo=1&pageSize=2')
+    it('付款单 - 获取应收订单付款单列表 GET: /api/business/ying/1/fukuans?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/ying/1/fukuans?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -127,8 +127,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('付款单 - 获取某个ID的付款单信息 GET: /api/ying/1/fukuans/1', function (done) {
-        server.get('/api/ying/1/fukuans/1')
+    it('付款单 - 获取某个ID的付款单信息 GET: /api/business/ying/1/fukuans/1', function (done) {
+        server.get('/api/business/ying/1/fukuans/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -143,8 +143,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('付款单 - 修改某个ID的付款单 PUT: /api/ying/1/fukuans/1', function (done) {
-        server.put('/api/ying/1/fukuans/1')
+    it('付款单 - 修改某个ID的付款单 PUT: /api/business/ying/1/fukuans/1', function (done) {
+        server.put('/api/business/ying/1/fukuans/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -173,8 +173,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
 
 
 
-    it('回款单 - 新建回款单1 POST: /api/ying/1/huikuans', function (done) {
-        server.post('/api/ying/1/huikuans')
+    it('回款单 - 新建回款单1 POST: /api/business/ying/1/huikuans', function (done) {
+        server.post('/api/business/ying/1/huikuans')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -210,8 +210,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('回款单 - 新建回款单2 POST: /api/ying/1/huikuans', function (done) {
-        server.post('/api/ying/1/huikuans')
+    it('回款单 - 新建回款单2 POST: /api/business/ying/1/huikuans', function (done) {
+        server.post('/api/business/ying/1/huikuans')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -247,8 +247,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('回款单 - 新建回款单3 POST: /api/ying/1/huikuans', function (done) {
-        server.post('/api/ying/1/huikuans')
+    it('回款单 - 新建回款单3 POST: /api/business/ying/1/huikuans', function (done) {
+        server.post('/api/business/ying/1/huikuans')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -284,8 +284,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('回款单 - 获取应收订单回款单列表 GET: /api/ying/1/huikuans?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/ying/1/huikuans?pageNo=1&pageSize=2')
+    it('回款单 - 获取应收订单回款单列表 GET: /api/business/ying/1/huikuans?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/ying/1/huikuans?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -301,8 +301,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('回款单 - 获取某个ID的回款单信息 GET: /api/ying/1/huikuans/1', function (done) {
-        server.get('/api/ying/1/huikuans/1')
+    it('回款单 - 获取某个ID的回款单信息 GET: /api/business/ying/1/huikuans/1', function (done) {
+        server.get('/api/business/ying/1/huikuans/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -317,8 +317,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('回款单 - 修改某个ID的回款单 PUT: /api/ying/1/huikuans/1', function (done) {
-        server.put('/api/ying/1/huikuans/1')
+    it('回款单 - 修改某个ID的回款单 PUT: /api/business/ying/1/huikuans/1', function (done) {
+        server.put('/api/business/ying/1/huikuans/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -355,8 +355,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
 
 
 
-    it('还款单 - 新建还款单1 POST: /api/ying/1/huankuans', function (done) {
-        server.post('/api/ying/1/huankuans')
+    it('还款单 - 新建还款单1 POST: /api/business/ying/1/huankuans', function (done) {
+        server.post('/api/business/ying/1/huankuans')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -389,8 +389,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('还款单 - 新建还款单2 POST: /api/ying/1/huankuans', function (done) {
-        server.post('/api/ying/1/huankuans')
+    it('还款单 - 新建还款单2 POST: /api/business/ying/1/huankuans', function (done) {
+        server.post('/api/business/ying/1/huankuans')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -423,8 +423,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('还款单 - 新建还款单3 还款map明细的本金总计不符合, POST: /api/ying/1/huankuans', function (done) {
-        server.post('/api/ying/1/huankuans')
+    it('还款单 - 新建还款单3 还款map明细的本金总计不符合, POST: /api/business/ying/1/huankuans', function (done) {
+        server.post('/api/business/ying/1/huankuans')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -455,8 +455,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('还款单 - 新建还款单4 还款map明细的本金总计不符合, POST: /api/ying/1/huankuans', function (done) {
-        server.post('/api/ying/1/huankuans')
+    it('还款单 - 新建还款单4 还款map明细的本金总计不符合, POST: /api/business/ying/1/huankuans', function (done) {
+        server.post('/api/business/ying/1/huankuans')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -487,8 +487,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('还款单 - 获取应收订单还款单列表 GET: /api/ying/1/huankuans?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/ying/1/huankuans?pageNo=1&pageSize=2')
+    it('还款单 - 获取应收订单还款单列表 GET: /api/business/ying/1/huankuans?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/ying/1/huankuans?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -504,8 +504,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('还款单 - 获取某个ID的还款单信息 GET: /api/ying/1/huankuans/1', function (done) {
-        server.get('/api/ying/1/huankuans/1')
+    it('还款单 - 获取某个ID的还款单信息 GET: /api/business/ying/1/huankuans/1', function (done) {
+        server.get('/api/business/ying/1/huankuans/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -520,8 +520,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
             })
     })
 
-    it('还款单 - 修改某个ID的还款单 PUT: /api/ying/1/huankuans/1', function (done) {
-        server.put('/api/ying/1/huankuans/1')
+    it('还款单 - 修改某个ID的还款单 PUT: /api/business/ying/1/huankuans/1', function (done) {
+        server.put('/api/business/ying/1/huankuans/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(

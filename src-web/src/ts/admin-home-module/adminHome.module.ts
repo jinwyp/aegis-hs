@@ -57,9 +57,14 @@ const userHomeRoutes: Routes = [
     {path : 'teams', component : TeamManagementComponent},
     {path : 'companies', component : PartyManagementComponent},
 
-    {path : 'orders', component : OrderListComponent},
-    {path : 'orders/:orderId', component : OrderDetailComponent},
-    {path : '**', redirectTo : '/info/basic', pathMatch : 'full'},
+    {path : 'yingorders', component : OrderListComponent, data: { businessType: 'ying' }},
+    {path : 'yingorders/:orderId', component : OrderDetailComponent, data: { businessType: 'ying' }},
+
+    {path : 'cangorders', component : OrderListComponent, data: { businessType: 'cang' }},
+    {path : 'cangorders/:orderId', component : OrderDetailComponent, data: { businessType: 'cang' }},
+
+
+    {path : '**', redirectTo : '/info/basic', pathMatch : 'full'}
 ]
 
 

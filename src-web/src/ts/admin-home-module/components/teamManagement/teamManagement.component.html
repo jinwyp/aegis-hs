@@ -40,7 +40,9 @@
                     <td> {{team.name}}</td>
                     <td> {{team.deptId}}</td>
                     <td> {{team.deptId | findKey : departmentList : 'name' }}</td>
-                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, team)"> 修改 </button></td>
+                    <td>
+                        <button class="btn btn-info btn-sm" (click)="showForm(false, team)"> 修改 </button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteItem(team)"> 删除 </button></td>
                 </tr>
                 </tbody>
             </table>

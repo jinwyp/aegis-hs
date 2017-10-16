@@ -176,5 +176,19 @@ export class DepartmentManagementComponent implements OnInit {
     }
 
 
+    deleteItem (department : any) {
+
+        this.hsUserService.delDepartment(department.id).subscribe(
+            data => {
+                console.log('保存成功: ', data)
+                this.httpService.successHandler(data)
+
+                this.getDepartmentList()
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+    }
+
 
 }

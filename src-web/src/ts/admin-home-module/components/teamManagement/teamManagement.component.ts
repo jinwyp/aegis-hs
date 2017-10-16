@@ -193,5 +193,18 @@ export class TeamManagementComponent implements OnInit {
     }
 
 
+    deleteItem (team : any) {
+
+        this.hsUserService.delTeam(team.id).subscribe(
+            data => {
+                console.log('保存成功: ', data)
+                this.httpService.successHandler(data)
+
+                this.getTeamList()
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+    }
 
 }
