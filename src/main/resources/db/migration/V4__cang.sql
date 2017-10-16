@@ -1,6 +1,6 @@
 use hsdb;
 
--- 苍押订单 - 入库
+-- 仓押订单 - 入库
 create table hs_cang_ruku (
   id bigint(20)                   not null auto_increment,
   orderId bigint(20)              not null comment '订单id, 业务线id',
@@ -22,7 +22,7 @@ create table hs_cang_ruku (
 alter table hs_cang_ruku add foreign key(orderId) references hs_same_order(id);
 alter table hs_cang_ruku add foreign key(hsId)    references hs_same_order_config(id);
 
--- 苍押订单 - 出库
+-- 仓押订单 - 出库
 create table hs_cang_chuku (
   id bigint(20)                  not null auto_increment,
   orderId bigint(20)             not null comment '订单id, 业务线id',
