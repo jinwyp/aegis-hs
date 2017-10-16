@@ -117,13 +117,13 @@ export class BasicInfoComponent implements OnInit {
             return
         }
 
-        this.userService.saveUserInfo(this.userInfoForm.value).subscribe(
-            data => {
-                console.log('保存用户信息成功: ', data)
-                this.httpService.successHandler(data)
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
+        // this.userService.saveUserInfo(this.userInfoForm.value).subscribe(
+        //     data => {
+        //         console.log('保存用户信息成功: ', data)
+        //         this.httpService.successHandler(data)
+        //     },
+        //     error => {this.httpService.errorHandler(error) }
+        // )
 
     }
 

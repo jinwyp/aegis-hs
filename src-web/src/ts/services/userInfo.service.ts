@@ -46,11 +46,6 @@ export class UserInfoService {
 
 
 
-    saveUserInfo(user : any): Observable<any> {
-
-        return this.http.post(apiPath.saveUserInfo, user)
-    }
-
     modifyPassword(user : any): Observable<any> {
 
         return this.http.put(apiPath.modifyUserPassword, user)
@@ -60,27 +55,6 @@ export class UserInfoService {
 
         return this.http.get(apiPath.logout)
     }
-
-
-
-    getUserAddressList(query: any): Observable<any> {
-        const params = new HttpParams()
-            .set('pageSize', query.pageSize)
-            .set('pageNo', query.pageNo)
-
-        return this.http.get(apiPath.getUserAddressList, {params: params})
-    }
-
-    createUserAddress(address : any): Observable<any> {
-
-        return this.http.post(apiPath.saveUserAddressList, address)
-    }
-
-    updateUserAddress(addressId : string, address : any): Observable<any> {
-
-        return this.http.put(apiPath.saveUserAddressList + '/' + addressId, address)
-    }
-
 
 
 
