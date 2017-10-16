@@ -189,8 +189,8 @@ describe('应收订单 - 发票 : ', function () {
             })
     })
 
-    it('发票 - 删除某个ID的发票 DELETE: /api/business/yings/1/invoices/1', function (done) {
-        server.put('/api/business/yings/1/invoices/1')
+    it('发票 - 删除某个ID的发票 DELETE: /api/business/ying/1/invoices/1', function (done) {
+        server.delete('/api/business/ying/1/invoices/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})

@@ -1,25 +1,24 @@
 
         <form [formGroup]="settleForm" (ngSubmit)="settleFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-            <bs-radio formControlName ="tempSettleType" [sourceList]="settleTypeList" [label]="'结算类型:'" [error]="settleFormError.tempSettleType" [hidden]="!isAddNew"></bs-radio>
             <bs-select formControlName="hsId" [fc]="settleForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="settleFormError.hsId"></bs-select>
             <bs-datepicker formControlName="settleDate" [fc]="settleForm.get('settleDate')" [label]="'结算日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="settleFormError.settleDate" ></bs-datepicker>
             <bs-text-input formControlName="amount" [fc]="settleForm.get('amount')" [type]="'number'" [label]="'结算数量(吨):'" [dirty]="ignoreDirty" [error]="settleFormError.amount"></bs-text-input>
             <bs-text-input formControlName="money" [fc]="settleForm.get('money')" [type]="'number'" [label]="'结算金额:'" [dirty]="ignoreDirty" [error]="settleFormError.money"></bs-text-input>
 
 
-            <div [hidden]="settleForm.get('tempSettleType').value !== 'upstream'">
+            <div [hidden]="settleType !== 'settlesellerupstream'">
                 <bs-select formControlName ="discountType" [fc]="settleForm.get('discountType')" [label]="'折扣类型:'" [dirty]="ignoreDirty" [options]="settleDiscountModeList" [error]="settleFormError.discountType"></bs-select>
                 <bs-text-input formControlName="discountInterest" [fc]="settleForm.get('discountInterest')" [type]="'number'" [label]="'利率折扣:'" [dirty]="ignoreDirty" [error]="settleFormError.discountInterest"></bs-text-input>
                 <bs-text-input formControlName="discountDays" [fc]="settleForm.get('discountDays')" [type]="'number'" [label]="'利率折扣天数:'" [dirty]="ignoreDirty" [error]="settleFormError.discountDays"></bs-text-input>
                 <bs-text-input formControlName="discountAmount" [fc]="settleForm.get('discountAmount')" [type]="'number'" [label]="'折扣金额:'" [dirty]="ignoreDirty" [error]="settleFormError.discountAmount"></bs-text-input>
             </div>
 
-            <div [hidden]="settleForm.get('tempSettleType').value !== 'downstream'">
+            <div [hidden]="settleType !== 'settlebuyerdownstream'">
                 <bs-text-input formControlName="settleGap" [fc]="settleForm.get('settleGap')" [type]="'number'" [label]="'结算扣吨:'" [dirty]="ignoreDirty" [error]="settleFormError.settleGap"></bs-text-input>
             </div>
 
-            <div [hidden]="settleForm.get('tempSettleType').value !== 'traffic'">
+            <div [hidden]="settleType !== 'settletraffic'">
                 <bs-select formControlName ="trafficCompanyId" [fc]="settleForm.get('trafficCompanyId')" [label]="'与哪个运输方结算:'" [dirty]="ignoreDirty" [options]="partyList" [error]="settleFormError.trafficCompanyId"></bs-select>
             </div>
 
@@ -33,7 +32,8 @@
 
 
         <div *ngIf="!isShowForm">
-            <table class="table table-bordered table-hover table-responsive" >
+
+            <table class="table table-bordered table-hover table-responsive" *ngIf="settleType==='settlesellerupstream'">
                 <thead>
                 <tr>
                     <th>上游结算ID</th>
@@ -65,12 +65,16 @@
                     <td> {{settle.discountDays }}</td>
                     <td> {{settle.discountAmount }}</td>
 
-                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, settle, 'upstream')"> 修改 </button></td>
+                    <td>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, settle)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(settle)"> 删除 </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
 
-            <table class="table table-bordered table-hover table-responsive" >
+
+            <table class="table table-bordered table-hover table-responsive" *ngIf="settleType==='settlebuyerdownstream'">
                 <thead>
                 <tr>
                     <th>下游结算ID</th>
@@ -78,8 +82,7 @@
                     <th>结算日期</th>
                     <th>结算数量(吨)</th>
                     <th>结算金额</th>
-
-                    <th>与哪个运输方结算</th>
+                    <th>结算扣吨</th>
 
                     <th></th>
                 </tr>
@@ -92,15 +95,18 @@
                     <td> {{settle.settleDate }}</td>
                     <td> {{settle.amount }}</td>
                     <td> {{settle.money }}</td>
-
                     <td> {{settle.settleGap }}</td>
 
-                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, settle, 'downstream')"> 修改 </button></td>
+                    <td>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, settle)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(settle)"> 删除 </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
 
-            <table class="table table-bordered table-hover table-responsive" >
+
+            <table class="table table-bordered table-hover table-responsive" *ngIf="settleType==='settletraffic'">
                 <thead>
                 <tr>
                     <th>运输方结算ID</th>
@@ -109,7 +115,7 @@
                     <th>结算数量(吨)</th>
                     <th>结算金额</th>
 
-                    <th>结算扣吨</th>
+                    <th>与哪个运输方结算</th>
 
                     <th></th>
                 </tr>
@@ -125,7 +131,10 @@
 
                     <td> {{settle.trafficCompanyId | findKey : partyList : 'name'}}</td>
 
-                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, settle, 'traffic')"> 修改 </button></td>
+                    <td>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, settle)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(settle)"> 删除 </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>

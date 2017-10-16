@@ -32,7 +32,9 @@ describe('参与商公司', function () {
                 Authorization = res.body.data
                 done()
             })
-    });
+    })
+
+
 
 
     it('获取参与商公司列表 GET: /api/parties?pageNo=1&pageSize=2', function (done) {
@@ -91,7 +93,6 @@ describe('参与商公司', function () {
                 done()
             })
     })
-
 
     it('修改某个ID的参与商信息 PUT: /api/parties/19', function (done) {
         server.put('/api/parties/19')
