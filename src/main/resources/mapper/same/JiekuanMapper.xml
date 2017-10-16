@@ -72,17 +72,17 @@
     <!-- 借款分页 -->
     <select id="getPage" resultType="com.yimei.hs.same.entity.Jiekuan">
         SELECT
-        id, fukuanId, orderId, hsId, amount, capitalId, useInterest, useDays, deleted, tsc, tsu
+        <include refid="Base_Column_List"/>
         FROM hs_same_jiekuan
         <where>
             <if test="true">AND deleted = 0</if>
-            <if test="fukuanId!=null"> AND fukuanId = #{fukuanId,jdbcType=BIGINT}</if>
-            <if test="orderId!=null">  AND  orderId = #{orderId,jdbcType=BIGINT}</if>
-            <if test="hsId!=null">  AND hsId = #{hsId,jdbcType=BIGINT}</if>
-            <if test="amount!=null">  AND amount = #{amount,jdbcType=DECIMAL}</if>
-            <if test="capitalId!=null">  AND capitalId = #{capitalId,jdbcType=BIGINT}</if>
-            <if test="useInterest!=null">  AND useInterest = #{useInterest,jdbcType=DECIMAL}</if>
-            <if test="useDays!=null">  AND useDays = #{useDays,jdbcType=BIGINT}</if>
+            <if test="fukuanId!=null">AND fukuanId = #{fukuanId,jdbcType=BIGINT}</if>
+            <if test="orderId!=null">AND orderId = #{orderId,jdbcType=BIGINT}</if>
+            <if test="hsId!=null">AND hsId = #{hsId,jdbcType=BIGINT}</if>
+            <if test="amount!=null">AND amount = #{amount,jdbcType=DECIMAL}</if>
+            <if test="capitalId!=null">AND capitalId = #{capitalId,jdbcType=BIGINT}</if>
+            <if test="useInterest!=null">AND useInterest = #{useInterest,jdbcType=DECIMAL}</if>
+            <if test="useDays!=null">AND useDays = #{useDays,jdbcType=BIGINT}</if>
         </where>
     </select>
 
