@@ -23,6 +23,8 @@ import {getEnum} from '../../../../services/localStorage'
 export class RepaymentHuanKuanComponent implements OnInit {
 
     @Input() currentOrder : any
+    @Input() businessType : string
+
     currentHuanKuanId : number = 1
 
     repaymentHKForm: FormGroup

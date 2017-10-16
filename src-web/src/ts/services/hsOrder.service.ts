@@ -58,21 +58,21 @@ export class HSOrderService {
     }
 
 
-    getOrderUnitListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getOrderUnitListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/units', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/units', {params: params} )
     }
-    createNewOrderUnit(orderId: number, unit: any): Observable<any> {
-        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/units', unit )
+    createNewOrderUnit(businessType : string, orderId: number, unit: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/units', unit )
     }
-    modifyOrderUnit(orderId: number, unitId: number, unit: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/units/' + unitId.toString() , unit)
+    modifyOrderUnit(businessType : string, orderId: number, unitId: number, unit: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/units/' + unitId.toString() , unit)
     }
-    delOrderUnit(orderId: number, unitId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/units/' + unitId.toString())
+    delOrderUnit(businessType : string, orderId: number, unitId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/units/' + unitId.toString())
     }
 
 
@@ -266,39 +266,39 @@ export class HSOrderService {
 
 
 
-    getWarehouseInListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getWarehouseInListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/rukus', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/rukus', {params: params} )
     }
-    createNewWareInhouse(orderId: number, warehouse: any): Observable<any> {
-        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/rukus', warehouse )
+    createNewWareInhouse(businessType : string, orderId: number, warehouse: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/rukus', warehouse )
     }
-    modifyWarehouseIn(orderId: number, warehouseId: number, warehouse: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/rukus/' + warehouseId.toString() , warehouse)
+    modifyWarehouseIn(businessType : string, orderId: number, warehouseId: number, warehouse: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/rukus/' + warehouseId.toString() , warehouse)
     }
-    delWarehouseIn(orderId: number, warehouseId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/rukus/' + warehouseId.toString())
+    delWarehouseIn(businessType : string, orderId: number, warehouseId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/rukus/' + warehouseId.toString())
     }
 
 
-    getWarehouseOutListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getWarehouseOutListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/chukus', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/chukus', {params: params} )
     }
-    createNewWarehouseOut(orderId: number, warehouse: any): Observable<any> {
-        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/chukus', warehouse )
+    createNewWarehouseOut(businessType : string, orderId: number, warehouse: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/chukus', warehouse )
     }
-    modifyWarehouseOut(orderId: number, warehouseId: number, warehouse: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/chukus/' + warehouseId.toString() , warehouse)
+    modifyWarehouseOut(businessType : string, orderId: number, warehouseId: number, warehouse: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/chukus/' + warehouseId.toString() , warehouse)
     }
-    delWarehouseOut(orderId: number, warehouseId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/chukus/' + warehouseId.toString())
+    delWarehouseOut(businessType : string, orderId: number, warehouseId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/chukus/' + warehouseId.toString())
     }
 
 

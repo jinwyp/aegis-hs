@@ -161,6 +161,13 @@ export class AdminHomeComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+
+        this.orderService.getEnumList('InStorageStatus').subscribe(
+            data => {
+                saveEnum('InStorageStatus', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
     }
 
     logout () {

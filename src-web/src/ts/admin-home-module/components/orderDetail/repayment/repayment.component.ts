@@ -22,6 +22,7 @@ import {getEnum} from '../../../../services/localStorage'
 export class RepaymentComponent implements OnInit {
 
     @Input() currentOrder : any
+    @Input() businessType : string
 
     currentRepaymentId : number = 1
 

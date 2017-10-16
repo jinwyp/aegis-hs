@@ -21,6 +21,7 @@ import {getEnum} from '../../../../services/localStorage'
 export class ShippingOrderComponent implements OnInit {
 
     @Input() currentOrder : any
+    @Input() businessType : string
     currentShippingOrderId : number = 1
 
     shippingForm: FormGroup
@@ -109,10 +110,10 @@ export class ShippingOrderComponent implements OnInit {
             'required'      : '请填写到场状态!'
         },
         'upstreamTrafficMode'  : {
-            'required'      : '请填写天数!'
+            'required'      : '请填写运输方式!'
         },
         'downstreamTrafficMode'  : {
-            'required'      : '请填写加价!'
+            'required'      : '请填写运输方式!'
         }
     }
 
