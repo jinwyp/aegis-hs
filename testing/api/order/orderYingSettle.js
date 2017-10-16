@@ -464,4 +464,19 @@ describe('应收订单 - 结算 : ', function () {
                 done()
             })
     })
+
+    it('运输方结算单 - 第二次删除同一个ID的运输方结算单应该返回400 DELETE: /api/business/ying/1/settletraffic/2', function (done) {
+        server.delete('/api/business/ying/1/settletraffic/2')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
+                done()
+            })
+    })
 })
