@@ -97,12 +97,19 @@ public class SettleSellerController {
             @RequestBody @Validated(CreateGroup.class) SettleSeller settleSeller) {
         settleSeller.setOrderId(morderId);
         if (isValidReq(pos, businessType)) {
-            int rtn = settleSellerService.create(settleSeller);
-            if (rtn != 1) {
-                logger.error("创建失败: {}", settleSeller);
+
+            int  exit=settleSellerService.selectHsAndOrderId(morderId, settleSeller.getHsId());
+            if (exit != 1) {
                 return Result.error(4001, "创建失败");
+            } else {
+                int rtn = settleSellerService.create(settleSeller);
+                if (rtn != 1) {
+                    logger.error("创建失败: {}", settleSeller);
+                    return Result.error(4001, "创建失败");
+                }
+                return Result.ok(settleSeller);
             }
-            return Result.ok(settleSeller);
+
         }
         return Result.error(4001, "invalid request");
     }

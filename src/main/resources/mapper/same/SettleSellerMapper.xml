@@ -93,6 +93,12 @@
         </where>
         group by seller.orderId
     </select>
+    <select id="findByOrderIdAndHsID" resultType="java.lang.Integer">
+         SELECT
+            <include refid="Base_Column_List"/>
+        FROM hs_same_settle_seller
+        WHERE hsId=#{hsId ,jdbcType=BIGINT} and orderId=#{orderId ,jdbcType=BIGINT}
+    </select>
 
     <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

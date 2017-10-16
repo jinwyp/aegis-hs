@@ -3,6 +3,7 @@ package com.yimei.hs.same.mapper;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.same.dto.PageSettleSellerDTO;
 import com.yimei.hs.same.entity.SettleSeller;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface SettleSellerMapper {
     Page<SettleSeller> getPage(PageSettleSellerDTO pageSettleSellerDTO);
 
     int delete(long id);
+
+    int findByOrderIdAndHsID(@Param("orderId") Long orderId, @Param("hsId") Long hsId);
 }
