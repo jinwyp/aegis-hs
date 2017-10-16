@@ -50,8 +50,8 @@ describe('应收订单 - 结算 : ', function () {
 
 
 
-    it('上游结算单 - 新建上游结算单1 POST: /api/business/ying/1/settleupstream', function (done) {
-        server.post('/api/business/ying/1/settleupstream')
+    it('上游结算单 - 新建上游结算单1 POST: /api/business/ying/1/settlesellerupstream', function (done) {
+        server.post('/api/business/ying/1/settlesellerupstream')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -80,8 +80,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('上游结算单 - 新建上游结算单2 POST: /api/business/ying/1/settleupstream', function (done) {
-        server.post('/api/business/ying/1/settleupstream')
+    it('上游结算单 - 新建上游结算单2 POST: /api/business/ying/1/settlesellerupstream', function (done) {
+        server.post('/api/business/ying/1/settlesellerupstream')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -110,8 +110,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('上游结算单 - 获取应收订单上游结算单列表 GET: /api/business/ying/1/settleupstream?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/business/ying/1/settleupstream?pageNo=1&pageSize=2')
+    it('上游结算单 - 获取应收订单上游结算单列表 GET: /api/business/ying/1/settlesellerupstream?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/ying/1/settlesellerupstream?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -127,8 +127,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('上游结算单 - 获取某个ID的上游结算单信息 GET: /api/business/ying/1/settleupstream/1', function (done) {
-        server.get('/api/business/ying/1/settleupstream/1')
+    it('上游结算单 - 获取某个ID的上游结算单信息 GET: /api/business/ying/1/settlesellerupstream/1', function (done) {
+        server.get('/api/business/ying/1/settlesellerupstream/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -143,8 +143,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('上游结算单 - 修改某个ID的上游结算单 PUT: /api/business/ying/1/settleupstream/1', function (done) {
-        server.put('/api/business/ying/1/settleupstream/1')
+    it('上游结算单 - 修改某个ID的上游结算单 PUT: /api/business/ying/1/settlesellerupstream/1', function (done) {
+        server.put('/api/business/ying/1/settlesellerupstream/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -172,11 +172,27 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
+    it('上游结算单 - 删除某个ID的上游结算单 DELETE: /api/business/ying/1/settlesellerupstream/1', function (done) {
+        server.delete('/api/business/ying/1/settlesellerupstream/1')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+                done()
+            })
+    })
 
 
 
-    it('下游结算单 - 新建下游结算单1 POST: /api/business/ying/1/settledownstream', function (done) {
-        server.post('/api/business/ying/1/settledownstream')
+
+
+    it('下游结算单 - 新建下游结算单1 POST: /api/business/ying/1/settlebuyerdownstream', function (done) {
+        server.post('/api/business/ying/1/settlebuyerdownstream')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -207,8 +223,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('下游结算单 - 新建下游结算单2 POST: /api/business/ying/1/settledownstream', function (done) {
-        server.post('/api/business/ying/1/settledownstream')
+    it('下游结算单 - 新建下游结算单2 POST: /api/business/ying/1/settlebuyerdownstream', function (done) {
+        server.post('/api/business/ying/1/settlebuyerdownstream')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -239,8 +255,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('下游结算单 - 获取应收订单下游结算单列表 GET: /api/business/ying/1/settledownstream?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/business/ying/1/settledownstream?pageNo=1&pageSize=2')
+    it('下游结算单 - 获取应收订单下游结算单列表 GET: /api/business/ying/1/settlebuyerdownstream?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/ying/1/settlebuyerdownstream?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -256,8 +272,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('下游结算单 - 获取某个ID的下游结算单信息 GET: /api/business/ying/1/settledownstream/1', function (done) {
-        server.get('/api/business/ying/1/settledownstream/1')
+    it('下游结算单 - 获取某个ID的下游结算单信息 GET: /api/business/ying/1/settlebuyerdownstream/1', function (done) {
+        server.get('/api/business/ying/1/settlebuyerdownstream/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -272,8 +288,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('下游结算单 - 修改某个ID的下游结算单 PUT: /api/business/ying/1/settledownstream/1', function (done) {
-        server.put('/api/business/ying/1/settledownstream/1')
+    it('下游结算单 - 修改某个ID的下游结算单 PUT: /api/business/ying/1/settlebuyerdownstream/1', function (done) {
+        server.put('/api/business/ying/1/settlebuyerdownstream/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -292,6 +308,21 @@ describe('应收订单 - 结算 : ', function () {
                     "id" : 1
                 }
             )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+                done()
+            })
+    })
+
+    it('下游结算单 - 删除某个ID的下游结算单 DELETE: /api/business/ying/1/settlebuyerdownstream/1', function (done) {
+        server.delete('/api/business/ying/1/settlebuyerdownstream/1')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -433,4 +464,18 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
+    it('运输方结算单 - 删除某个ID的运输方结算单 DELETE: /api/business/ying/1/settletraffic/1', function (done) {
+        server.delete('/api/business/ying/1/settletraffic/1')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+                done()
+            })
+    })
 })

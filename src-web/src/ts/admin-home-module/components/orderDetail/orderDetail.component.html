@@ -27,13 +27,19 @@
                 <a class="nav-link" [class.active]="currentTabIndex === 6" (click)="changeTab(6)">还款管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentTabIndex === 7" (click)="changeTab(7)">结算管理</a>
+                <a class="nav-link" [class.active]="currentTabIndex === 7" (click)="changeTab(7)">上游结算管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentTabIndex === 8" (click)="changeTab(8)">费用管理</a>
+                <a class="nav-link" [class.active]="currentTabIndex === 8" (click)="changeTab(8)">下游结算管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentTabIndex === 9" (click)="changeTab(9)">发票管理</a>
+                <a class="nav-link" [class.active]="currentTabIndex === 9" (click)="changeTab(9)">运输方结算管理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="currentTabIndex === 20" (click)="changeTab(20)">费用管理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="currentTabIndex === 21" (click)="changeTab(21)">发票管理</a>
             </li>
         </ul>
 
@@ -82,6 +88,8 @@
         <app-repayment  *ngIf="currentTabIndex === 5" [currentOrder]="currentOrder"></app-repayment>
         <app-huankuan  *ngIf="currentTabIndex === 6" [currentOrder]="currentOrder"></app-huankuan>
 
-        <app-settle  *ngIf="currentTabIndex === 7" [currentOrder]="currentOrder"></app-settle>
-        <app-expense  *ngIf="currentTabIndex === 8" [currentOrder]="currentOrder"></app-expense>
-        <app-invoice  *ngIf="currentTabIndex === 9" [currentOrder]="currentOrder"></app-invoice>
+        <app-settle  *ngIf="currentTabIndex === 7" [currentOrder]="currentOrder" [settleType]="'settlesellerupstream'"></app-settle>
+        <app-settle  *ngIf="currentTabIndex === 8" [currentOrder]="currentOrder" [settleType]="'settlebuyerdownstream'"></app-settle>
+        <app-settle  *ngIf="currentTabIndex === 9" [currentOrder]="currentOrder" [settleType]="'settletraffic'"></app-settle>
+        <app-expense  *ngIf="currentTabIndex === 20" [currentOrder]="currentOrder"></app-expense>
+        <app-invoice  *ngIf="currentTabIndex === 21" [currentOrder]="currentOrder"></app-invoice>
