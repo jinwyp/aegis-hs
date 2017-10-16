@@ -80,7 +80,6 @@ public class TeamController {
      * @return
      */
     @PutMapping("/teams/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("id") Long id,
             @RequestBody Team team) {
@@ -98,7 +97,6 @@ public class TeamController {
      * 删除某个Team
      */
     @DeleteMapping("/teams/{id}")
-    @Transactional(readOnly = false)
     public ResponseEntity<Result<Integer>> delete(@PathVariable("id") long id) {
 
 
