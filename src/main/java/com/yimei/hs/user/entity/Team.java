@@ -19,6 +19,9 @@ public class Team implements Serializable {
     @NotEmpty(groups = {CreateGroup.class}, message = "部门不能为空")
     private Long deptId;
 
+    private boolean delete;
+
     private static final long serialVersionUID = 1L;
+
 }
 

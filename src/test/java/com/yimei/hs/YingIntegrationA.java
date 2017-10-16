@@ -96,21 +96,23 @@ public class YingIntegrationA extends HsTestBase {
         defaultUser();
         order();
         config();
-        fee();
-        traffic();
-        ruku();
-        chuku();
+//        fee();
+//        traffic();
+//        ruku();
+//        c
+// huku();
         huikuan();
         fukuan();
-        fayun();
-        jiekuan();
-        huankuan();
-        huankuanAuto();
-        jiekuan_huankuan();
+//        fayun();
+//        jiekuan();
+//        huankuan();
+//        huankuanAuto();
+//        jiekuan_huankuan();
 
         buyer();
-        buyerCang();
-        seller();
+//        seller();
+
+//        buyerCang();
 //        sellerCang();
     }
 

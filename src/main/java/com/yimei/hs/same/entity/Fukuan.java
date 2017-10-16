@@ -48,6 +48,7 @@ public class Fukuan implements Serializable {
 
 
 
+    private Long capitalId;
 
     private static final long serialVersionUID = 1L;
 

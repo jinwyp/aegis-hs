@@ -155,7 +155,7 @@ public class HuikuanController {
     ) {
         int cnt = huikuanService.delete(morderId, id);
         if (cnt != 1) {
-            return Result.error(4001, "更新失败");
+            return Result.error(4001, "删除失败");
         }
         return Result.ok(1);
     }

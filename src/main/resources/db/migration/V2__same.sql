@@ -142,7 +142,7 @@ alter table hs_same_fukuan add foreign key(receiveCompanyId) references hs_party
 -- 借款
 create table hs_same_jiekuan(
   id bigint(20)                  not null auto_increment,
-  fukuanId bigint(20)            comment '关联的付款id',
+  fukuanId bigint(20)            not null default 0 comment '关联的付款id',
   orderId bigint(20)             not null comment '订单id, 业务线id',
   hsId bigint(20)                not null comment '核算月id',
   amount decimal(10,2)           not null comment '借款金额',

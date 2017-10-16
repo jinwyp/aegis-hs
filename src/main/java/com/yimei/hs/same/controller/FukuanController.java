@@ -104,10 +104,11 @@ public class FukuanController {
         if (order == null) {
             return Result.error(4001, "创建失败");
         }
-        if (order.getMainAccounting() == fukuan.getCapitalId()) {
+        fukuan.setOrderId(morderId);
+        if (fukuan!=null && order.getMainAccounting() == fukuan.getCapitalId()) {
             if (fukuan.getJiekuan() != null) {
                 fukuan.setOrderId(morderId);
-                int rtn = fukuanService.create(fukuan);
+                int rtn = fukuanService.create(fukuan,true);
                 if (rtn != 1) {
                     logger.error("创建失败: {}", fukuan);
                     return Result.error(4001, "创建失败");
@@ -117,8 +118,8 @@ public class FukuanController {
                 return Result.error(4001, "参数不匹配");
             }
         } else {
-            fukuan.setOrderId(morderId);
-            int rtn = fukuanService.create(fukuan);
+
+            int rtn = fukuanService.create(fukuan,false);
             if (rtn != 1) {
                 logger.error("创建失败: {}", fukuan);
                 return Result.error(4001, "创建失败");
@@ -162,7 +163,7 @@ public class FukuanController {
     ) {
         int rtn = fukuanService.delete(morderId, id);
         if (rtn != 1) {
-            return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "更新删除", HttpStatus.NOT_FOUND);
         }
         return Result.ok(1);
     }
