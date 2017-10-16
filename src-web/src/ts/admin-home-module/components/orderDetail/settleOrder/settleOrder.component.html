@@ -32,6 +32,7 @@
 
 
         <div *ngIf="!isShowForm">
+
             <table class="table table-bordered table-hover table-responsive" *ngIf="settleType==='settlesellerupstream'">
                 <thead>
                 <tr>
@@ -72,6 +73,7 @@
                 </tbody>
             </table>
 
+
             <table class="table table-bordered table-hover table-responsive" *ngIf="settleType==='settlebuyerdownstream'">
                 <thead>
                 <tr>
@@ -80,8 +82,7 @@
                     <th>结算日期</th>
                     <th>结算数量(吨)</th>
                     <th>结算金额</th>
-
-                    <th>与哪个运输方结算</th>
+                    <th>结算扣吨</th>
 
                     <th></th>
                 </tr>
@@ -94,7 +95,6 @@
                     <td> {{settle.settleDate }}</td>
                     <td> {{settle.amount }}</td>
                     <td> {{settle.money }}</td>
-
                     <td> {{settle.settleGap }}</td>
 
                     <td>
@@ -105,6 +105,7 @@
                 </tbody>
             </table>
 
+
             <table class="table table-bordered table-hover table-responsive" *ngIf="settleType==='settletraffic'">
                 <thead>
                 <tr>
@@ -114,7 +115,7 @@
                     <th>结算数量(吨)</th>
                     <th>结算金额</th>
 
-                    <th>结算扣吨</th>
+                    <th>与哪个运输方结算</th>
 
                     <th></th>
                 </tr>
