@@ -14,6 +14,7 @@ import { HSOrderService } from '../../../../services/hsOrder.service'
 import {getEnum} from '../../../../services/localStorage'
 
 
+// 还款
 @Component({
   selector: 'app-huankuan',
   templateUrl: './repaymentHuanKuan.component.html',
@@ -191,7 +192,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
         this.repaymentHKForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
-            'skCompanyId'    : ['', [Validators.required ] ],
+            // 'skCompanyId'    : ['', [Validators.required ] ],
             'huankuankDate'    : [null, [Validators.required ] ]
             // 'huankuanPrincipal'    : ['', [Validators.required ] ],
             // 'huankuanInterest'    : ['', [Validators.required ] ],

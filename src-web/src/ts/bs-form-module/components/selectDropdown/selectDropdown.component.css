@@ -24,7 +24,6 @@
 .options_box .list-group-item {
     border-radius: 0;
     padding: 6px 1.25rem;
-    height: 35px;
 }
 .options_box li:hover{
     background-color: #f1f1f1;
