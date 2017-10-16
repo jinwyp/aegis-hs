@@ -93,9 +93,9 @@
         </where>
         group by seller.orderId
     </select>
-    <select id="findByOrderIdAndHsID" resultType="java.lang.Integer">
+    <select id="findByOrderIdAndHsID"  parameterType="java.lang.Long" resultType="java.lang.Integer">
          SELECT
-            <include refid="Base_Column_List"/>
+            IFNULL(id,0)
         FROM hs_same_settle_seller
         WHERE hsId=#{hsId ,jdbcType=BIGINT} and orderId=#{orderId ,jdbcType=BIGINT}
     </select>
