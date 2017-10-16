@@ -24,4 +24,6 @@ public interface TeamMapper {
     Page<Team> getPage(PageTeamDTO pageTeamDTO);
 
     boolean checkTeamExsit(long tid);
+
+    int delete(long id);
 }

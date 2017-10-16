@@ -38,7 +38,7 @@ public class TeamService {
 
     @Transactional(readOnly = false)
     public int delete(long id){
-        return teamMapper.deleteByPrimaryKey(id);
+        return teamMapper.delete(id);
     }
 
     @Transactional(readOnly = false)

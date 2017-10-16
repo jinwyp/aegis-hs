@@ -5,6 +5,7 @@
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="deptId" jdbcType="BIGINT" property="deptId"/>
+
     </resultMap>
     <sql id="Base_Column_List">
         id, name, deptId
@@ -40,6 +41,13 @@
         delete from hs_team
         where id = #{id,jdbcType=BIGINT}
     </delete>
+
+    <!-- 逻辑删除 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_team
+        SET deleted = 1, tsu = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
     <insert id="insert" parameterType="com.yimei.hs.user.entity.Team" useGeneratedKeys="true" keyProperty="id">
         insert into hs_team (id, name, deptId
         )

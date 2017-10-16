@@ -27,6 +27,8 @@ create table hs_team (
   id bigint(20)     not null auto_increment,
   name varchar(64)  not null comment '团队名称',
   deptId bigint(20) not null comment '所属部门',
+  deleted tinyint(1)             not null default 0 comment '是否删除',
+    tsu timestamp,
   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 

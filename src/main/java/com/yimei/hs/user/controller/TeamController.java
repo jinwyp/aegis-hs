@@ -99,9 +99,14 @@ public class TeamController {
      */
     @DeleteMapping("/teams/{id}")
     @Transactional(readOnly = false)
-    public String delete(@PathVariable("id") long id) {
-        teamService.delete(id);
-        return "Team";
+    public ResponseEntity<Result<Integer>> delete(@PathVariable("id") long id) {
+
+
+        int rtn = teamService.delete(id);
+        if (rtn != 1) {
+            return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
+        }
+        return Result.ok(1);
     }
 
 }
