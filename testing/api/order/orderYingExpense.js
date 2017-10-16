@@ -48,8 +48,8 @@ describe('应收订单 - 费用 : ', function () {
 
 
 
-    it('费用单 - 新建费用单1 POST: /api/ying/1/fees', function (done) {
-        server.post('/api/ying/1/fees')
+    it('费用单 - 新建费用单1 POST: /api/business/ying/1/fees', function (done) {
+        server.post('/api/business/ying/1/fees')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -72,8 +72,8 @@ describe('应收订单 - 费用 : ', function () {
             })
     })
 
-    it('费用单 - 新建费用单2 POST: /api/ying/1/fees', function (done) {
-        server.post('/api/ying/1/fees')
+    it('费用单 - 新建费用单2 POST: /api/business/ying/1/fees', function (done) {
+        server.post('/api/business/ying/1/fees')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -96,8 +96,8 @@ describe('应收订单 - 费用 : ', function () {
             })
     })
 
-    it('费用单 - 获取应收订单费用单列表 GET: /api/ying/1/fees?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/ying/1/fees?pageNo=1&pageSize=2')
+    it('费用单 - 获取应收订单费用单列表 GET: /api/business/ying/1/fees?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/ying/1/fees?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -113,8 +113,8 @@ describe('应收订单 - 费用 : ', function () {
             })
     })
 
-    it('费用单 - 获取某个ID的费用单信息 GET: /api/ying/1/fees/1', function (done) {
-        server.get('/api/ying/1/fees/1')
+    it('费用单 - 获取某个ID的费用单信息 GET: /api/business/ying/1/fees/1', function (done) {
+        server.get('/api/business/ying/1/fees/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -129,8 +129,8 @@ describe('应收订单 - 费用 : ', function () {
             })
     })
 
-    it('费用单 - 修改某个ID的费用单 PUT: /api/ying/1/fees/1', function (done) {
-        server.put('/api/ying/1/fees/1')
+    it('费用单 - 修改某个ID的费用单 PUT: /api/business/ying/1/fees/1', function (done) {
+        server.put('/api/business/ying/1/fees/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -152,8 +152,8 @@ describe('应收订单 - 费用 : ', function () {
             })
     })
 
-    it('费用单 - 删除某个ID的费用单 DELETE: /api/yings/1/fees/1', function (done) {
-        server.put('/api/yings/1/fees/1')
+    it('费用单 - 删除某个ID的费用单 DELETE: /api/business/ying/1/fees/1', function (done) {
+        server.put('/api/business/ying/1/fees/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})

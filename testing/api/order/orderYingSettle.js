@@ -50,8 +50,8 @@ describe('应收订单 - 结算 : ', function () {
 
 
 
-    it('上游结算单 - 新建上游结算单1 POST: /api/ying/1/settleupstream', function (done) {
-        server.post('/api/ying/1/settleupstream')
+    it('上游结算单 - 新建上游结算单1 POST: /api/business/ying/1/settleupstream', function (done) {
+        server.post('/api/business/ying/1/settleupstream')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -80,8 +80,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('上游结算单 - 新建上游结算单2 POST: /api/ying/1/settleupstream', function (done) {
-        server.post('/api/ying/1/settleupstream')
+    it('上游结算单 - 新建上游结算单2 POST: /api/business/ying/1/settleupstream', function (done) {
+        server.post('/api/business/ying/1/settleupstream')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -110,8 +110,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('上游结算单 - 获取应收订单上游结算单列表 GET: /api/ying/1/settleupstream?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/ying/1/settleupstream?pageNo=1&pageSize=2')
+    it('上游结算单 - 获取应收订单上游结算单列表 GET: /api/business/ying/1/settleupstream?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/ying/1/settleupstream?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -127,8 +127,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('上游结算单 - 获取某个ID的上游结算单信息 GET: /api/ying/1/settleupstream/1', function (done) {
-        server.get('/api/ying/1/settleupstream/1')
+    it('上游结算单 - 获取某个ID的上游结算单信息 GET: /api/business/ying/1/settleupstream/1', function (done) {
+        server.get('/api/business/ying/1/settleupstream/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -143,8 +143,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('上游结算单 - 修改某个ID的上游结算单 PUT: /api/ying/1/settleupstream/1', function (done) {
-        server.put('/api/ying/1/settleupstream/1')
+    it('上游结算单 - 修改某个ID的上游结算单 PUT: /api/business/ying/1/settleupstream/1', function (done) {
+        server.put('/api/business/ying/1/settleupstream/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -175,8 +175,8 @@ describe('应收订单 - 结算 : ', function () {
 
 
 
-    it('下游结算单 - 新建下游结算单1 POST: /api/ying/1/settledownstream', function (done) {
-        server.post('/api/ying/1/settledownstream')
+    it('下游结算单 - 新建下游结算单1 POST: /api/business/ying/1/settledownstream', function (done) {
+        server.post('/api/business/ying/1/settledownstream')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -207,8 +207,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('下游结算单 - 新建下游结算单2 POST: /api/ying/1/settledownstream', function (done) {
-        server.post('/api/ying/1/settledownstream')
+    it('下游结算单 - 新建下游结算单2 POST: /api/business/ying/1/settledownstream', function (done) {
+        server.post('/api/business/ying/1/settledownstream')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -239,8 +239,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('下游结算单 - 获取应收订单下游结算单列表 GET: /api/ying/1/settledownstream?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/ying/1/settledownstream?pageNo=1&pageSize=2')
+    it('下游结算单 - 获取应收订单下游结算单列表 GET: /api/business/ying/1/settledownstream?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/ying/1/settledownstream?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -256,8 +256,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('下游结算单 - 获取某个ID的下游结算单信息 GET: /api/ying/1/settledownstream/1', function (done) {
-        server.get('/api/ying/1/settledownstream/1')
+    it('下游结算单 - 获取某个ID的下游结算单信息 GET: /api/business/ying/1/settledownstream/1', function (done) {
+        server.get('/api/business/ying/1/settledownstream/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -272,8 +272,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('下游结算单 - 修改某个ID的下游结算单 PUT: /api/ying/1/settledownstream/1', function (done) {
-        server.put('/api/ying/1/settledownstream/1')
+    it('下游结算单 - 修改某个ID的下游结算单 PUT: /api/business/ying/1/settledownstream/1', function (done) {
+        server.put('/api/business/ying/1/settledownstream/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -305,8 +305,8 @@ describe('应收订单 - 结算 : ', function () {
 
 
 
-    it('运输方结算单 - 新建运输方结算单1 POST: /api/ying/1/settletraffic', function (done) {
-        server.post('/api/ying/1/settletraffic')
+    it('运输方结算单 - 新建运输方结算单1 POST: /api/business/ying/1/settletraffic', function (done) {
+        server.post('/api/business/ying/1/settletraffic')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -337,8 +337,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('运输方结算单 - 新建运输方结算单2 POST: /api/ying/1/settletraffic', function (done) {
-        server.post('/api/ying/1/settletraffic')
+    it('运输方结算单 - 新建运输方结算单2 POST: /api/business/ying/1/settletraffic', function (done) {
+        server.post('/api/business/ying/1/settletraffic')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -369,8 +369,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('运输方结算单 - 获取应收订单运输方结算单列表 GET: /api/ying/1/settletraffic?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/ying/1/settletraffic?pageNo=1&pageSize=2')
+    it('运输方结算单 - 获取应收订单运输方结算单列表 GET: /api/business/ying/1/settletraffic?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/ying/1/settletraffic?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -386,8 +386,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('运输方结算单 - 获取某个ID的运输方结算单信息 GET: /api/ying/1/settletraffic/1', function (done) {
-        server.get('/api/ying/1/settletraffic/1')
+    it('运输方结算单 - 获取某个ID的运输方结算单信息 GET: /api/business/ying/1/settletraffic/1', function (done) {
+        server.get('/api/business/ying/1/settletraffic/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -402,8 +402,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('运输方结算单 - 修改某个ID的运输方结算单 PUT: /api/ying/1/settletraffic/1', function (done) {
-        server.put('/api/ying/1/settletraffic/1')
+    it('运输方结算单 - 修改某个ID的运输方结算单 PUT: /api/business/ying/1/settletraffic/1', function (done) {
+        server.put('/api/business/ying/1/settletraffic/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(

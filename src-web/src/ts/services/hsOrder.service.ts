@@ -37,24 +37,24 @@ export class HSOrderService {
         if (query.createDateEnd) { params = params.append('createDateEnd', query.createDateEnd)}
         if (query.status) { params = params.append('status', query.status)}
 
-        return this.http.get(apiPath.hsGetOrderList, {params: params})
+        return this.http.get(apiPath.hsGetYingOrderList, {params: params})
     }
     getOrderByID(orderId: any): Observable<any> {
-        return this.http.get(apiPath.hsGetOrderList + '/' + orderId )
+        return this.http.get(apiPath.hsGetYingOrderList + '/' + orderId )
     }
 
     createNewOrder(order: any): Observable<any> {
-        return this.http.post(apiPath.hsGetOrderList, order)
+        return this.http.post(apiPath.hsGetYingOrderList, order)
     }
     modifyOrder(orderId: number, user: any): Observable<any> {
-        return this.http.put(apiPath.hsGetOrderList + '/' + orderId, user)
+        return this.http.put(apiPath.hsGetYingOrderList + '/' + orderId, user)
     }
     delOrder(orderId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetOrderList + '/' + orderId)
+        return this.http.delete(apiPath.hsGetYingOrderList + '/' + orderId)
     }
 
     transferOrder(orderId: number, userId: number): Observable<any> {
-        return this.http.post(apiPath.hsGetOrderList + '/' + orderId + '/to/' + userId, {} )
+        return this.http.post(apiPath.hsGetYingOrderList + '/' + orderId + '/to/' + userId, {} )
     }
 
 
@@ -63,16 +63,16 @@ export class HSOrderService {
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/units', {params: params} )
+        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/units', {params: params} )
     }
     createNewOrderUnit(orderId: number, unit: any): Observable<any> {
-        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/units', unit )
+        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/units', unit )
     }
     modifyOrderUnit(orderId: number, unitId: number, unit: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/units/' + unitId.toString() , unit)
+        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/units/' + unitId.toString() , unit)
     }
     delOrderUnit(orderId: number, unitId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetOrderConfig + '/' + orderId + '/units/' + unitId.toString())
+        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/units/' + unitId.toString())
     }
 
     getShippingListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
@@ -80,16 +80,16 @@ export class HSOrderService {
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/fayuns', {params: params} )
+        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fayuns', {params: params} )
     }
     createNewShipping(orderId: number, shipping: any): Observable<any> {
-        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/fayuns', shipping )
+        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fayuns', shipping )
     }
     modifyShipping(orderId: number, shippingId: number, shipping: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/fayuns/' + shippingId.toString() , shipping)
+        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fayuns/' + shippingId.toString() , shipping)
     }
     delShipping(orderId: number, shippingId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetOrderConfig + '/' + orderId + '/fayuns/' + shippingId.toString())
+        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fayuns/' + shippingId.toString())
     }
 
 
@@ -98,15 +98,15 @@ export class HSOrderService {
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/fukuans', {params: params} )
+        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fukuans', {params: params} )
     }
     createNewPayment(orderId: number, payment: any): Observable<any> {
 
-        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/fukuans', payment )
+        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fukuans', payment )
     }
     modifyPayment(orderId: number, paymentId: number, payment: any ): Observable<any> {
 
-        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/fukuans/' + paymentId.toString() , payment)
+        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fukuans/' + paymentId.toString() , payment)
     }
 
 
@@ -115,15 +115,15 @@ export class HSOrderService {
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/huikuans', {params: params} )
+        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huikuans', {params: params} )
     }
     createNewRepayment(orderId: number, repayment: any): Observable<any> {
 
-        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/huikuans', repayment )
+        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huikuans', repayment )
     }
     modifyRepayment(orderId: number, repaymentId: number, repayment: any ): Observable<any> {
 
-        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/huikuans/' + repaymentId.toString() , repayment)
+        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huikuans/' + repaymentId.toString() , repayment)
     }
 
 
@@ -132,15 +132,15 @@ export class HSOrderService {
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/huankuans', {params: params} )
+        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huankuans', {params: params} )
     }
     createNewRepaymentHK(orderId: number, repayment: any): Observable<any> {
 
-        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/huankuans', repayment )
+        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huankuans', repayment )
     }
     modifyRepaymentHK(orderId: number, repaymentId: number, repayment: any ): Observable<any> {
 
-        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/huankuans/' + repaymentId.toString() , repayment)
+        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huankuans/' + repaymentId.toString() , repayment)
     }
 
 
@@ -152,15 +152,15 @@ export class HSOrderService {
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/settleupstream', {params: params} )
+        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settleupstream', {params: params} )
     }
     createNewSettleUpstream(orderId: number, settle: any): Observable<any> {
 
-        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/settleupstream', settle )
+        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settleupstream', settle )
     }
     modifySettleUpstream(orderId: number, settleId: number, settle: any ): Observable<any> {
 
-        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/settleupstream/' + settleId.toString() , settle)
+        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settleupstream/' + settleId.toString() , settle)
     }
 
 
@@ -169,15 +169,15 @@ export class HSOrderService {
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/settledownstream', {params: params} )
+        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settledownstream', {params: params} )
     }
     createNewSettleDownstream(orderId: number, settle: any): Observable<any> {
 
-        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/settledownstream', settle )
+        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settledownstream', settle )
     }
     modifySettleDownstream(orderId: number, settleId: number, settle: any ): Observable<any> {
 
-        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/settledownstream/' + settleId.toString() , settle)
+        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settledownstream/' + settleId.toString() , settle)
     }
 
 
@@ -186,15 +186,15 @@ export class HSOrderService {
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/settletraffic', {params: params} )
+        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settletraffic', {params: params} )
     }
     createNewSettleTraffic(orderId: number, settle: any): Observable<any> {
 
-        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/settletraffic', settle )
+        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settletraffic', settle )
     }
     modifySettleTraffic(orderId: number, settleId: number, settle: any ): Observable<any> {
 
-        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/settletraffic/' + settleId.toString() , settle)
+        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settletraffic/' + settleId.toString() , settle)
     }
 
 
@@ -206,16 +206,16 @@ export class HSOrderService {
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/fees', {params: params} )
+        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fees', {params: params} )
     }
     createNewExpense(orderId: number, expense: any): Observable<any> {
-        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/fees', expense )
+        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fees', expense )
     }
     modifyExpense(orderId: number, expenseId: number, expense: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/fees/' + expenseId.toString() , expense)
+        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fees/' + expenseId.toString() , expense)
     }
     delExpense(orderId: number, expenseId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetOrderConfig + '/' + orderId + '/fees/' + expenseId.toString())
+        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fees/' + expenseId.toString())
     }
 
 
@@ -225,16 +225,16 @@ export class HSOrderService {
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetOrderConfig + '/' + orderId + '/invoices', {params: params} )
+        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/invoices', {params: params} )
     }
     createNewInvoice(orderId: number, invoice: any): Observable<any> {
-        return this.http.post(apiPath.hsGetOrderConfig + '/' + orderId + '/invoices', invoice )
+        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/invoices', invoice )
     }
     modifyInvoice(orderId: number, invoiceId: number, invoice: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetOrderConfig + '/' + orderId + '/invoices/' + invoiceId.toString() , invoice)
+        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/invoices/' + invoiceId.toString() , invoice)
     }
     delInvoice(orderId: number, invoiceId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetOrderConfig + '/' + orderId + '/invoices/' + invoiceId.toString())
+        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/invoices/' + invoiceId.toString())
     }
 
 }

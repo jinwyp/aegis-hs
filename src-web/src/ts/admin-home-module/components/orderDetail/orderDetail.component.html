@@ -1,7 +1,7 @@
 
 
         <h3>
-            核算详情  ID:{{currentOrderId}} - 业务线: {{currentOrder?.line}}
+            {{businessType === 'ying' ? '应收单' : '仓押单'}}详情  ID:{{currentOrderId}} - 业务线: {{currentOrder?.line}}
 
             <button type="button" class="btn btn-outline-secondary btn-sm float-right" [routerLink]="['/orders']">返回</button>
         </h3>
@@ -14,7 +14,7 @@
             <li class="nav-item">
                 <a class="nav-link" [class.active]="currentTabIndex === 2" (click)="changeTab(2)">核算月管理</a>
             </li>
-            <li class="nav-item" *ngIf="orderType==='ying'">
+            <li class="nav-item" *ngIf="businessType==='ying'">
                 <a class="nav-link" [class.active]="currentTabIndex === 3" (click)="changeTab(3)">发运管理</a>
             </li>
             <li class="nav-item">
@@ -77,7 +77,7 @@
 
 
         <app-unit  *ngIf="currentTabIndex === 2" [currentOrder]="currentOrder"></app-unit>
-        <app-shipping  *ngIf="currentTabIndex === 3 && orderType==='ying'" [currentOrder]="currentOrder"></app-shipping>
+        <app-shipping  *ngIf="currentTabIndex === 3 && businessType==='ying'" [currentOrder]="currentOrder"></app-shipping>
         <app-payment  *ngIf="currentTabIndex === 4" [currentOrder]="currentOrder"></app-payment>
         <app-repayment  *ngIf="currentTabIndex === 5" [currentOrder]="currentOrder"></app-repayment>
         <app-huankuan  *ngIf="currentTabIndex === 6" [currentOrder]="currentOrder"></app-huankuan>

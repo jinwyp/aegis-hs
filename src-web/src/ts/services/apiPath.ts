@@ -20,8 +20,12 @@ const apiPath = {
     hsGetPartyList : prefix + '/parties',
 
 
-    hsGetOrderList : '/api/yings',
-    hsGetOrderConfig : '/api/ying'
+    hsGetYingOrderList : prefix + '/business/yings',
+    hsGetYingOrderConfig : prefix + '/business/ying',
+
+    hsGetCangOrderList : prefix + '/business/cangs',
+    hsGetCangOrderConfig : prefix + '/business/cang'
+
 }
 
 

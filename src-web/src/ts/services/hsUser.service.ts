@@ -51,12 +51,13 @@ export class HSUserService {
         return this.http.get(apiPath.hsGetDepartmentList, {params: params})
     }
     createNewDepartment(department: any): Observable<any> {
-
         return this.http.post(apiPath.hsGetDepartmentList, department)
     }
     modifyDepartment(departmentId: number, department: any): Observable<any> {
-
         return this.http.put(apiPath.hsGetDepartmentList + '/' + departmentId, department)
+    }
+    delDepartment(departmentId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetDepartmentList + '/' + departmentId)
     }
 
 
@@ -68,14 +69,14 @@ export class HSUserService {
         return this.http.get(apiPath.hsGetTeamList, {params: params})
     }
     createNewTeam(team: any): Observable<any> {
-
         return this.http.post(apiPath.hsGetTeamList, team)
     }
     modifyTeam(teamId: number, team: any): Observable<any> {
-
         return this.http.put(apiPath.hsGetTeamList + '/' + teamId, team)
     }
-
+    delTeam(teamId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetTeamList + '/' + teamId)
+    }
 
     getPartyList(query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()

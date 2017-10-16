@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core'
 import { FormBuilder, FormGroup, Validators} from '@angular/forms'
+import { ActivatedRoute } from '@angular/router'
 
 import { HttpService } from '../../../bs-form-module/services/http.service'
 
@@ -13,12 +14,15 @@ import {getEnum} from '../../../services/localStorage'
 
 
 
+
 @Component({
   selector: 'app-order',
   templateUrl: './orderList.component.html',
   styleUrls: ['./orderList.component.css']
 })
 export class OrderListComponent implements OnInit {
+
+    businessType : string = 'ying'
 
     sessionUser : any
     currentOrderId : any
@@ -54,6 +58,7 @@ export class OrderListComponent implements OnInit {
 
 
     constructor(
+        private route: ActivatedRoute,
         private httpService: HttpService,
         private fb: FormBuilder,
         private userService: UserInfoService,
@@ -67,6 +72,9 @@ export class OrderListComponent implements OnInit {
 
 
     ngOnInit(): void {
+
+        this.route.data.subscribe( (data) => this.businessType = data.businessType)
+
         this.createOrderForm()
         this.createOrderOtherPartyForm()
         this.createOrderSearchForm()
@@ -104,7 +112,7 @@ export class OrderListComponent implements OnInit {
 
         query = (<any>Object).assign(query, this.orderSearchForm.value)
 
-        console.log(query)
+        console.log('query: ', query)
         this.hsOrderService.getOrderList(query).subscribe(
             data => {
                 this.orderList = data.data.results
@@ -250,7 +258,9 @@ export class OrderListComponent implements OnInit {
 
         const postData = this.orderForm.value
 
+        postData.businessType = this.businessType
         postData.orderPartyList = this.otherPartyList
+        delete postData.deptId
 
         if (this.isAddNew) {
             this.hsOrderService.createNewOrder(postData).subscribe(

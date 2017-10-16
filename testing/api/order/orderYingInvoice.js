@@ -48,8 +48,8 @@ describe('应收订单 - 发票 : ', function () {
 
 
 
-    it('发票 - 新建发票1 POST: /api/ying/1/invoices', function (done) {
-        server.post('/api/ying/1/invoices')
+    it('发票 - 新建发票1 POST: /api/business/ying/1/invoices', function (done) {
+        server.post('/api/business/ying/1/invoices')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -89,8 +89,8 @@ describe('应收订单 - 发票 : ', function () {
             })
     })
 
-    it('发票 - 新建发票2 POST: /api/ying/1/invoices', function (done) {
-        server.post('/api/ying/1/invoices')
+    it('发票 - 新建发票2 POST: /api/business/ying/1/invoices', function (done) {
+        server.post('/api/business/ying/1/invoices')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -130,8 +130,8 @@ describe('应收订单 - 发票 : ', function () {
             })
     })
 
-    it('发票 - 获取应收订单发票列表 GET: /api/ying/1/invoices?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/ying/1/invoices?pageNo=1&pageSize=2')
+    it('发票 - 获取应收订单发票列表 GET: /api/business/ying/1/invoices?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/ying/1/invoices?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -147,8 +147,8 @@ describe('应收订单 - 发票 : ', function () {
             })
     })
 
-    it('发票 - 获取某个ID的发票信息 GET: /api/ying/1/invoices/1', function (done) {
-        server.get('/api/ying/1/invoices/1')
+    it('发票 - 获取某个ID的发票信息 GET: /api/business/ying/1/invoices/1', function (done) {
+        server.get('/api/business/ying/1/invoices/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -163,8 +163,8 @@ describe('应收订单 - 发票 : ', function () {
             })
     })
 
-    it('发票 - 修改某个ID的发票 PUT: /api/ying/1/invoices/1', function (done) {
-        server.put('/api/ying/1/invoices/1')
+    it('发票 - 修改某个ID的发票 PUT: /api/business/ying/1/invoices/1', function (done) {
+        server.put('/api/business/ying/1/invoices/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -189,8 +189,8 @@ describe('应收订单 - 发票 : ', function () {
             })
     })
 
-    it('发票 - 删除某个ID的发票 DELETE: /api/yings/1/invoices/1', function (done) {
-        server.put('/api/yings/1/invoices/1')
+    it('发票 - 删除某个ID的发票 DELETE: /api/business/yings/1/invoices/1', function (done) {
+        server.put('/api/business/yings/1/invoices/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})

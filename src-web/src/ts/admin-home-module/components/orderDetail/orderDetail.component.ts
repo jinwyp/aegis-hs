@@ -25,7 +25,7 @@ import { HSOrderService } from '../../../services/hsOrder.service'
 })
 export class OrderDetailComponent implements OnInit {
 
-    orderType : string = 'ying'
+    businessType : string = 'ying'
 
     currentOrder : any
     currentOrderId : number
