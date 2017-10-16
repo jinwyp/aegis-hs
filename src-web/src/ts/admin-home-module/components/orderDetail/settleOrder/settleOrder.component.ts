@@ -404,7 +404,7 @@ export class SettleOrderComponent implements OnInit {
         }
 
         if (this.settleType === 'settletraffic') {
-            this.hsOrderService.delSettleTraffic(this.currentOrder.id, settle.id).subscribe(
+            this.hsOrderService.delSettleTraffic(this.currentOrder.id, 2).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
