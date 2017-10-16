@@ -27,4 +27,6 @@ public interface HuikuanMapMapper {
     List<HuikuanMap> loadAll(Long orderId);
 
     List<HuikuanMap> getListByFukuanId(Long fukuanId);
+
+    List<HuikuanMap> getListByHuikuanId(Long huikuanId);
 }

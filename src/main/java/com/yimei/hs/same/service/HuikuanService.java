@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.jvm.hotspot.debugger.LongHashMap;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -42,19 +43,19 @@ public class HuikuanService {
     private LogService logService;
 
     /**
-     *
      * @param pageHuikuanDTO
      * @return
      */
     public Page<Huikuan> getPage(PageHuikuanDTO pageHuikuanDTO) {
 
         // 获取回款列表
-        Page<Huikuan> huikuanPage=huikuanMapper.getPage(pageHuikuanDTO);
+        Page<Huikuan> huikuanPage = huikuanMapper.getPage(pageHuikuanDTO);
 
         // 对每一笔回款， 获取对应的付款列表
-        for (Huikuan huikuan:huikuanPage.getResults()) {
+        for (Huikuan huikuan : huikuanPage.getResults()) {
             List<Fukuan> fukuans = huikuanMapper.getFukuanListByHuikuanId(huikuan.getId());
             huikuan.setFukuanList(fukuans);
+            huikuan.setHuikuanMapsList(huikuanMapMapper.getListByHuikuanId(huikuan.getId()));
         }
         return huikuanPage;
     }
@@ -80,6 +81,7 @@ public class HuikuanService {
 
     /**
      * 创建回款
+     *
      * @param huikuan
      * @return
      */
@@ -117,6 +119,7 @@ public class HuikuanService {
 
     /**
      * 为某个订单重建 回款-付款 对应关系
+     *
      * @param orderId
      */
     public void createMapping(Long orderId) {
@@ -133,7 +136,7 @@ public class HuikuanService {
         List<HuikuanMap> toAdd = new ArrayList<>();
 
         // 1.  找出订单的回款记录 - 尚有未对应完的余额,  也就是回款还有余额
-        List<Huikuan> unfinished = huikuanMapper.getUnfinshedByOrderId(orderId);
+        List<Huikuan> unfinished = getALl(orderId);//huikuanMapper.getUnfinshedByOrderId(orderId);
 
         Iterator<Fukuan> it = unfinishedFukuan.iterator();
         for (Huikuan huikuan : unfinished) {
@@ -141,7 +144,7 @@ public class HuikuanService {
             // 尚未对应完的余额
             BigDecimal total = huikuan.getHuikuanAmount().subtract(huikuan.getFukuanTotal());
 
-            while(it.hasNext()) {
+            while (it.hasNext()) {
 
                 Fukuan cur = it.next();
 
@@ -152,7 +155,7 @@ public class HuikuanService {
 
                 BigDecimal toFinished = cur.getPayAmount().subtract(cur.getHuikuanTotal());
 
-                if(total.compareTo(toFinished) != -1) {
+                if (total.compareTo(toFinished) != -1) {
                     total = total.subtract(toFinished);
                     record.setAmount(toFinished);
                     toAdd.add(record);
@@ -168,6 +171,44 @@ public class HuikuanService {
             huikuanMapMapper.insert(record);
         }
     }
+
+//    找出订单的回款记录 - 尚有未对应完的余额,  也就是回款还有余额
+    //1 找出所有回款记录
+
+    public List<Huikuan> getALl(Long orderId) {
+
+        PageHuikuanDTO dto = new PageHuikuanDTO();
+        dto.setPageSize(100000000);
+        dto.setPageNo(1);
+        dto.setOrderId(orderId);
+        List<Huikuan> list = this.getPage(dto).getResults();
+        for (Huikuan huikuan :list) {
+        }
+        return this.getHuikuanUnifished(list);
+    }
+    //2 过滤已经对应完全的记录
+
+    /**
+     * 过滤回款列表: 返回付款没有被回款完的付款列表
+     *
+     * @param huikuans
+     * @return
+     */
+    private List<Huikuan> getHuikuanUnifished(List<Huikuan> huikuans) {
+        List<Huikuan> filter = new ArrayList<>();
+        for (Huikuan huikuan : huikuans) {
+            // 计算此回款被付款对应完总额
+            List<HuikuanMap> huikuanMap = huikuan.getHuikuanMapsList();
+            BigDecimal total = huikuanMap.stream().map(m -> m.getAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
+            huikuan.setFukuanTotal(total);
+
+            if (!total.equals(huikuan.getHuikuanAmount())) {
+                filter.add(huikuan);
+            }
+        }
+        return filter;
+    }
+
 }
 
 

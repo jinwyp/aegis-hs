@@ -75,6 +75,6 @@ public class Huikuan implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private List<Fukuan> fukuanList;  // 对应的付款列表
-
+    private List<HuikuanMap> huikuanMapsList;  // 对应的回款mapList
     private BigDecimal fukuanTotal;  // 对应掉的付款总额
 }

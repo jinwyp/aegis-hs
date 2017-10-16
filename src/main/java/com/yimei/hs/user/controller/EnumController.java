@@ -38,6 +38,7 @@ public class EnumController {
                     add(SettleMode.name);
                     add(SettleTarget.name);
                     add(TrafficMode.name);
+                    add(InStorageStatus.name);
                 }}
         );
     }
@@ -92,7 +93,9 @@ public class EnumController {
         }
         else if (type.equals(TrafficMode.name)) {
             data = TrafficMode.list();
-        } else {
+        } else if (type.equals(InStorageStatus.name)) {
+            data = InStorageStatus.list();
+        }else {
             Result.error(4001, "此类型" + type + "不存在");
         }
         return Result.ok(data);
