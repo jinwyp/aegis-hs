@@ -25,9 +25,10 @@ export class RepaymentHuanKuanComponent implements OnInit {
     currentHuanKuanId : number = 1
 
     repaymentHKForm: FormGroup
-    paymentForm: FormGroup
+    borrowForm: FormGroup
+
     ignoreDirty: boolean = false
-    ignoreDirtyPayment: boolean = false
+    ignoreDirtyBorrow: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
@@ -37,9 +38,9 @@ export class RepaymentHuanKuanComponent implements OnInit {
     partyListObject : any = {}
 
     unitList : any[] = []
-    paymentDropDownList : any[] = []
-    paymentPostList : any[] = []
-    paymentListObject : any = {}
+    borrowDropDownList : any[] = []
+    borrowPostList : any[] = []
+    borrowListObject : any = {}
 
 
     pagination: any = {
@@ -68,7 +69,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
         this.getRepaymentHKList()
 
         this.createHKForm()
-        this.createPaymentForm()
+        this.createBorrowForm()
 
         if (this.currentOrder) {
             if (Array.isArray(this.currentOrder.orderConfigList)) {
@@ -112,27 +113,27 @@ export class RepaymentHuanKuanComponent implements OnInit {
                     })
                 }
 
-                this.getPaymentList()
+                this.getBorrowList()
 
             },
             error => {this.httpService.errorHandler(error) }
         )
     }
 
-    getPaymentList () {
-        this.hsOrderService.getPaymentListByID(this.currentOrder.id).subscribe(
+    getBorrowList () {
+        this.hsOrderService.getBorrowListByID(this.currentOrder.id).subscribe(
             data => {
 
                 if (Array.isArray(data.data.results)) {
-                    data.data.results.forEach( (payment) => {
-                        if (payment) {
-                            this.paymentDropDownList.push ({
-                                id : payment.id,
-                                name : 'ID:' + payment.id + ' 日期:' + payment.payDate + ' 收款单位:' + this.partyListObject[payment.receiveCompanyId].name + ' 金额:' + payment.payAmount + ' 付款方式:' + payment.payMode
+                    data.data.results.forEach( (borrow) => {
+                        if (borrow) {
+                            this.borrowDropDownList.push ({
+                                id : borrow.id,
+                                name : 'ID:' + borrow.id + ' 日期:' + borrow.jiekuanDate + ' 资金方:' + this.partyListObject[borrow.capitalId].name + ' 金额:' + borrow.amount
                             })
                         }
 
-                        this.paymentListObject[payment.id] = payment
+                        this.borrowListObject[borrow.id] = borrow
                     })
                 }
 
@@ -142,10 +143,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
     }
 
     repaymentHKFormError : any = {}
-    paymentFormError : any = {
-        principal : 'aa',
-        amount : 'bb'
-    }
+    borrowFormError : any = {}
     repaymentHKFormValidationMessages: any = {
         'hsId'  : {
             'required'      : '请选择核算月!'
@@ -167,14 +165,17 @@ export class RepaymentHuanKuanComponent implements OnInit {
         },
 
 
-        'fukuanId'  : {
-            'required'      : '请选择付款!'
+        'jiekuanId'  : {
+            'required'      : '请选择借款!'
         },
         'principal'  : {
             'required'      : '请填写本金!'
         },
         'interest'  : {
             'required'      : '请填写利息!'
+        },
+        'fee'  : {
+            'required'      : '请填写服务费!'
         }
     }
 
@@ -182,8 +183,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
     repaymentHKFormInputChange(formInputData : any) {
         this.repaymentHKFormError = formErrorHandler(formInputData, this.repaymentHKForm, this.repaymentHKFormValidationMessages)
     }
-    paymentFormInputChange(formInputData : any) {
-        this.paymentFormError = formErrorHandler(formInputData, this.paymentForm, this.repaymentHKFormValidationMessages)
+    borrowFormInputChange(formInputData : any) {
+        this.borrowFormError = formErrorHandler(formInputData, this.borrowForm, this.repaymentHKFormValidationMessages)
     }
 
     createHKForm(): void {
@@ -191,10 +192,10 @@ export class RepaymentHuanKuanComponent implements OnInit {
         this.repaymentHKForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
             'skCompanyId'    : ['', [Validators.required ] ],
-            'huankuankDate'    : [null, [Validators.required ] ],
-            'huankuanPrincipal'    : ['', [Validators.required ] ],
-            'huankuanInterest'    : ['', [Validators.required ] ],
-            'huankuanFee'    : ['', [Validators.required ] ]
+            'huankuankDate'    : [null, [Validators.required ] ]
+            // 'huankuanPrincipal'    : ['', [Validators.required ] ],
+            // 'huankuanInterest'    : ['', [Validators.required ] ],
+            // 'huankuanFee'    : ['', [Validators.required ] ]
         } )
 
 
@@ -205,18 +206,19 @@ export class RepaymentHuanKuanComponent implements OnInit {
     }
 
 
-    createPaymentForm(): void {
+    createBorrowForm(): void {
 
-        this.paymentForm = this.fb.group({
-            'fukuanId'    : ['', [Validators.required ] ],
+        this.borrowForm = this.fb.group({
+            'jiekuanId'    : ['', [Validators.required ] ],
             'principal'    : ['', [Validators.required ] ],
-            'interest'    : ['', [Validators.required ] ]
+            'interest'    : ['', [Validators.required ] ],
+            'fee'    : ['', [Validators.required ] ]
         } )
 
-        this.paymentForm.valueChanges.subscribe(data => {
-            // console.log('this.ignoreDirtyPayment', this.ignoreDirtyPayment, data)
-            this.ignoreDirtyPayment = false
-            this.paymentFormInputChange(data)
+        this.borrowForm.valueChanges.subscribe(data => {
+            // console.log('this.ignoreDirtyBorrow', this.ignoreDirtyBorrow, data)
+            this.ignoreDirtyBorrow = false
+            this.borrowFormInputChange(data)
         })
     }
 
@@ -234,8 +236,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
         const postData = this.repaymentHKForm.value
         postData.orderId = this.currentOrder.id
-        postData.huankuanMapList = this.paymentPostList.map( payment => {
-            return { fukuanId : payment.id, principal : Number(payment.principal), interest : Number(payment.interest)}
+        postData.huankuanMapList = this.borrowPostList.map( borrow => {
+            return { jiekuanId : borrow.id, principal : Number(borrow.principal), interest : Number(borrow.interest), fee : Number(borrow.fee) }
         })
 
         if (this.isAddNew) {
@@ -281,10 +283,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             this.repaymentHKForm.patchValue({
                 'hsId'    : '',
                 'skCompanyId'    : '',
-                'huankuankDate'    : null,
-                'huankuanPrincipal'    : '',
-                'huankuanInterest'    : '',
-                'huankuanFee'    : ''
+                'huankuankDate'    : null
             })
 
 
@@ -292,7 +291,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             this.isAddNew = false
             this.currentHuanKuanId = repaymentHKOrder.id
 
-            this.paymentPostList = []
+            this.borrowPostList = []
             this.repaymentHKForm.patchValue(repaymentHKOrder)
         }
 
@@ -301,26 +300,26 @@ export class RepaymentHuanKuanComponent implements OnInit {
     }
 
 
-    createNewPayment () {
-        if (this.paymentForm.invalid) {
+    createNewBorrow () {
+        if (this.borrowForm.invalid) {
 
-            this.paymentFormInputChange(this.paymentForm.value)
-            this.ignoreDirtyPayment = true
+            this.borrowFormInputChange(this.borrowForm.value)
+            this.ignoreDirtyBorrow = true
 
-            // console.log('this.ignoreDirtyPayment2', this.ignoreDirtyPayment, this.paymentForm.value)
+            // console.log('this.ignoreDirtyBorrow2', this.ignoreDirtyBorrow, this.borrowForm.value)
 
             return
         }
 
-        this.paymentPostList.push((<any>Object).assign( {}, this.paymentListObject[this.paymentForm.value.id],
-            {fukuanId : this.paymentForm.value.id, principal : this.paymentForm.value.principal, interest : this.paymentForm.value.interest}) )
+        this.borrowPostList.push((<any>Object).assign( {}, this.borrowListObject[this.borrowForm.value.id],
+            {jiekuanId : this.borrowForm.value.id, principal : this.borrowForm.value.principal, interest : this.borrowForm.value.interest, fee : this.borrowForm.value.fee}) )
 
-        this.ignoreDirtyPayment = false
+        this.ignoreDirtyBorrow = false
     }
 
-    delPayment (payment: any) {
-        const index = this.paymentPostList.indexOf(payment)
-        this.paymentPostList.splice(index, 1)
+    delBorrow (borrow: any) {
+        const index = this.borrowPostList.indexOf(borrow)
+        this.borrowPostList.splice(index, 1)
     }
 
 }
