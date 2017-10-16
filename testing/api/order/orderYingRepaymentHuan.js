@@ -65,6 +65,7 @@ describe('应收订单 还款:', function () {
                     "orderId" : 1,
                     "huankuanMapList" : [
                         {
+                            "jiekuanId":"2",
                             "fukuanId" : 1,
                             "principal" : "100",
                             "interest" : "100",
@@ -168,6 +169,7 @@ describe('应收订单 还款:', function () {
                     "orderId" : 1,
                     "huankuanMapList" : [
                         {
+                            "huankuanId":15,
                             "fukuanId" : 1,
                             "principal" : 10000,
                             "interest" : 100,
