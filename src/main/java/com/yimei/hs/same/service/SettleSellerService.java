@@ -80,4 +80,8 @@ public class SettleSellerService {
     public int delete(long id) {
         return settleSellerMapper.delete(id);
     }
+
+    public int selectHsAndOrderId(Long orderId, Long hsId) {
+        return settleSellerMapper.findByOrderIdAndHsID(orderId,hsId);
+    }
 }
