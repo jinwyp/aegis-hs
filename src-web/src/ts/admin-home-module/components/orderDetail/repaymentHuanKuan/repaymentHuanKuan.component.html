@@ -3,7 +3,7 @@
             <form [formGroup]="repaymentHKForm" (ngSubmit)="repaymentHKFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
                 <bs-select formControlName="hsId" [fc]="repaymentHKForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty" [options]="unitList" [error]="repaymentHKFormError.hsId"></bs-select>
-                <bs-select formControlName="skCompanyId" [fc]="repaymentHKForm.get('skCompanyId')" [label]="'资金方:'" [dirty]="ignoreDirty" [options]="partyList" [error]="repaymentHKFormError.skCompanyId"></bs-select>
+                <!--<bs-select formControlName="skCompanyId" [fc]="repaymentHKForm.get('skCompanyId')" [label]="'资金方:'" [dirty]="ignoreDirty" [options]="partyList" [error]="repaymentHKFormError.skCompanyId"></bs-select>-->
                 <bs-datepicker formControlName="huankuankDate" [fc]="repaymentHKForm.get('huankuankDate')" [label]="'还款日期:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuankDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
 
                 <!--<bs-text-input formControlName="huankuanPrincipal" [fc]="repaymentHKForm.get('huankuanPrincipal')" [type]="'number'" [label]="'还款本金:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanPrincipal"></bs-text-input>-->
@@ -34,7 +34,7 @@
 
                             <div class="form-row ">
                                 <div class="col-5">
-                                    <bs-select formControlName ="jiekuanId" [fc]="borrowForm.get('jiekuanId')" [labelclass]="'d-none'" [inputclass]="'col-12'" [prompt]="'请选择付款:'" [dirty]="ignoreDirtyBorrow" [options]="borrowDropDownList" [error]="borrowFormError.jiekuanId"></bs-select>
+                                    <bs-select formControlName ="jiekuanId" [fc]="borrowForm.get('jiekuanId')" [labelclass]="'d-none'" [inputclass]="'col-12'" [prompt]="'请选择借款:'" [dirty]="ignoreDirtyBorrow" [options]="borrowDropDownList" [error]="borrowFormError.jiekuanId"></bs-select>
                                 </div>
 
                                 <div class="col-2">

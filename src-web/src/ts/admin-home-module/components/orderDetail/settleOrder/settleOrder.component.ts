@@ -22,6 +22,7 @@ import {getEnum} from '../../../../services/localStorage'
 export class SettleOrderComponent implements OnInit {
 
     @Input() currentOrder : any
+    @Input() businessType : string
     @Input() settleType : string = '' // ying : 1 settlesellerupstream 2 settlebuyerdownstream 3 settletraffic . // cang : 1 settlesellerdownstream 2 settlebuyerupstream
 
     currentSettleId : number = 1

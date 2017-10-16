@@ -22,6 +22,7 @@ import {getEnum} from '../../../../services/localStorage'
 export class BorrowComponent implements OnInit {
 
     @Input() currentOrder : any
+    @Input() businessType : string
     currentBorrowId : number = 0
 
     borrowForm: FormGroup

@@ -22,6 +22,7 @@ import {getEnum} from '../../../../services/localStorage'
 export class UnitComponent implements OnInit {
 
     @Input() currentOrder : any
+    @Input() businessType : string
 
     currentOrderUnitId : number
 
@@ -79,7 +80,7 @@ export class UnitComponent implements OnInit {
 
 
     getOrderUnitList () {
-        this.hsOrderService.getOrderUnitListByID(this.currentOrder.id).subscribe(
+        this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
                 this.unitList = data.data.results
 
@@ -155,7 +156,7 @@ export class UnitComponent implements OnInit {
         postData.expectHKDays = Number(this.orderUnitForm.value.expectHKDays)
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewOrderUnit(this.currentOrder.id, postData).subscribe(
+            this.hsOrderService.createNewOrderUnit(this.businessType, this.currentOrder.id, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -168,7 +169,7 @@ export class UnitComponent implements OnInit {
             )
         } else {
             postData.id = this.currentOrderUnitId
-            this.hsOrderService.modifyOrderUnit(this.currentOrder.id, this.currentOrderUnitId, postData).subscribe(
+            this.hsOrderService.modifyOrderUnit(this.businessType, this.currentOrder.id, this.currentOrderUnitId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
@@ -217,7 +218,7 @@ export class UnitComponent implements OnInit {
 
     deleteItem (unit : any) {
 
-        this.hsOrderService.delOrderUnit(this.currentOrder.id, unit.id).subscribe(
+        this.hsOrderService.delOrderUnit(this.businessType, this.currentOrder.id, unit.id).subscribe(
             data => {
                 console.log('保存成功: ', data)
                 this.httpService.successHandler(data)

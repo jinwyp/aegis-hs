@@ -1,0 +1,116 @@
+
+        <form [formGroup]="warehouseForm" (ngSubmit)="warehouseFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+
+            <bs-select formControlName="hsId" [fc]="warehouseForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="warehouseFormError.hsId"></bs-select>
+
+            <div [hidden]="warehouseType !== 'ruku'">
+                <bs-datepicker formControlName="rukuDate" [fc]="warehouseForm.get('rukuDate')" [label]="'入库日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="warehouseFormError.rukuDate" ></bs-datepicker>
+                <bs-select formControlName ="rukuStatus" [fc]="warehouseForm.get('rukuStatus')" [label]="'入库状态:'" [dirty]="ignoreDirty" [options]="warehouseStatusList" [error]="warehouseFormError.rukuStatus"></bs-select>
+                <bs-text-input formControlName="rukuAmount" [fc]="warehouseForm.get('rukuAmount')" [type]="'number'" [label]="'入库吨数(吨):'" [dirty]="ignoreDirty" [error]="warehouseFormError.rukuAmount"></bs-text-input>
+                <bs-text-input formControlName="rukuPrice" [fc]="warehouseForm.get('rukuPrice')" [type]="'number'" [label]="'入库单价(元/吨):'" [dirty]="ignoreDirty" [error]="warehouseFormError.rukuPrice"></bs-text-input>
+
+                <bs-radio formControlName ="trafficMode" [fc]="warehouseForm.get('trafficMode')" [label]="'上游运输方式:'" [dirty]="ignoreDirty" [sourceList]="trafficModeList" [error]="warehouseFormError.trafficMode" ></bs-radio>
+
+                <bs-text-input formControlName="cars" [fc]="warehouseForm.get('cars')" [type]="'number'" [label]="'上游汽运情况下的车数:'" [dirty]="ignoreDirty" [error]="warehouseFormError.cars" [hidden]="warehouseForm.get('trafficMode').value !=='MOTOR'"></bs-text-input>
+                <bs-text-input formControlName="jhh" [fc]="warehouseForm.get('jhh')" [type]="'text'" [label]="'上游火运情况下的计划号:'" [dirty]="ignoreDirty" [error]="warehouseFormError.jhh" [hidden]="warehouseForm.get('trafficMode').value !=='RAIL'"></bs-text-input>
+                <bs-text-input formControlName="ship" [fc]="warehouseForm.get('ship')" [type]="'text'" [label]="'上游船运情况下的船号:'" [dirty]="ignoreDirty" [error]="warehouseFormError.ship" [hidden]="warehouseForm.get('trafficMode').value !=='SHIP'"></bs-text-input>
+            </div>
+
+            <div [hidden]="warehouseType !== 'chuku'">
+                <bs-datepicker formControlName="chukuDate" [fc]="warehouseForm.get('chukuDate')" [label]="'出库日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="warehouseFormError.chukuDate" ></bs-datepicker>
+                <bs-text-input formControlName="chukuAmount" [fc]="warehouseForm.get('chukuAmount')" [type]="'number'" [label]="'出库吨数(吨):'" [dirty]="ignoreDirty" [error]="warehouseFormError.chukuAmount"></bs-text-input>
+                <bs-text-input formControlName="chukuPrice" [fc]="warehouseForm.get('chukuPrice')" [type]="'number'" [label]="'出库单价(元/吨):'" [dirty]="ignoreDirty" [error]="warehouseFormError.chukuPrice"></bs-text-input>
+            </div>
+
+            <bs-text-input formControlName="locality" [fc]="warehouseForm.get('locality')" [type]="'number'" [label]="'库房场地:'" [dirty]="ignoreDirty" [error]="warehouseFormError.locality"></bs-text-input>
+
+            <div class="form-group row">
+                <div class="col-10 ml-auto">
+                    <button type="submit" class="btn btn-info" >保存</button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
+                </div>
+            </div>
+        </form>
+
+
+        <div *ngIf="!isShowForm">
+
+            <table class="table table-bordered table-hover table-responsive" *ngIf="warehouseType==='ruku'">
+                <thead>
+                <tr>
+                    <th>入库单ID</th>
+                    <th>核算月</th>
+                    <th>入库日期</th>
+                    <th>入库状态</th>
+                    <th>入库吨数(吨)</th>
+                    <th>入库单价(元/吨)</th>
+                    <th>入库场地</th>
+
+                    <th>上游运输方式</th>
+                    <th>上游运输详细</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let warehouse of warehouseInList; trackBy: trackByFn">
+                    <td> {{warehouse.id}}</td>
+                    <td> {{warehouse.hsId | findKey : unitList : 'name'}}</td>
+
+                    <td> {{warehouse.rukuDate }}</td>
+                    <td> {{warehouse.rukuStatus | findKey : warehouseStatusList : 'name'}}</td>
+                    <td> {{warehouse.rukuAmount }}</td>
+                    <td> {{warehouse.rukuPrice }}</td>
+                    <td> {{warehouse.locality }}</td>
+
+                    <td> {{warehouse.trafficMode}}</td>
+                    <td>
+                        <span *ngIf="warehouse.trafficMode==='MOTOR'">上游汽运情况下的车数: {{warehouse.cars}}</span>
+                        <span *ngIf="warehouse.trafficMode==='RAIL'">上游火运情况下的计划号: {{warehouse.jhh}}</span>
+                        <span *ngIf="warehouse.trafficMode==='SHIP'">上游船运情况下的船号: {{warehouse.ship}}</span>
+                    </td>
+                    <td>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, warehouse)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(warehouse)"> 删除 </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <table class="table table-bordered table-hover table-responsive" *ngIf="warehouseType==='chuku'">
+                <thead>
+                <tr>
+                    <th>出库单ID</th>
+                    <th>核算月</th>
+                    <th>出库日期</th>
+                    <th>出库吨数(吨)</th>
+                    <th>出库单价(元/吨)</th>
+                    <th>出库场地</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let warehouse of warehouseOutList; trackBy: trackByFn">
+                    <td> {{warehouse.id}}</td>
+                    <td> {{warehouse.hsId | findKey : unitList : 'name'}}</td>
+
+                    <td> {{warehouse.chukuDate }}</td>
+                    <td> {{warehouse.chukuAmount }}</td>
+                    <td> {{warehouse.chukuPrice }}</td>
+                    <td> {{warehouse.locality }}</td>
+
+                    <td>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, warehouse)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(warehouse)"> 删除 </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+        <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加</button>

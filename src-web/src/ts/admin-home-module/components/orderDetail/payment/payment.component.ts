@@ -22,6 +22,8 @@ import {getEnum} from '../../../../services/localStorage'
 export class PaymentComponent implements OnInit {
 
     @Input() currentOrder : any
+    @Input() businessType : string
+
     currentPaymentId : number = 0
 
     paymentForm: FormGroup

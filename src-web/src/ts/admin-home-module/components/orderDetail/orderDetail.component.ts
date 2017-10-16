@@ -25,7 +25,7 @@ import { HSOrderService } from '../../../services/hsOrder.service'
 })
 export class OrderDetailComponent implements OnInit {
 
-    businessType : string = 'ying'
+    businessType : string = ''
 
     currentOrder : any
     currentOrderId : number
@@ -64,10 +64,11 @@ export class OrderDetailComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.route.data.subscribe( (data) => this.businessType = data.businessType)
 
         this.route.paramMap.switchMap( (params: ParamMap) => {
             this.currentOrderId = Number(params.get('orderId'))
-            return this.hsOrderService.getOrderByID(this.currentOrderId)
+            return this.hsOrderService.getOrderByID(this.businessType, this.currentOrderId)
         }).subscribe(
             data => {
                 if (data) {
@@ -92,7 +93,7 @@ export class OrderDetailComponent implements OnInit {
     }
 
     getOrder () {
-        this.hsOrderService.getOrderByID(this.currentOrderId).subscribe(
+        this.hsOrderService.getOrderByID(this.businessType, this.currentOrderId).subscribe(
             data => {
                 this.currentOrder = data.data
             },
@@ -202,7 +203,7 @@ export class OrderDetailComponent implements OnInit {
         }
 
 
-        this.hsOrderService.transferOrder(this.currentOrderId, this.transferForm.value.userId).subscribe(
+        this.hsOrderService.transferOrder(this.businessType, this.currentOrderId, this.transferForm.value.userId).subscribe(
             data => {
                 console.log('保存成功: ', data)
                 this.httpService.successHandler(data)
