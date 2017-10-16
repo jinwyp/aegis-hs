@@ -26,7 +26,7 @@ const server = supertest(config.path.urlApi)
 
 
 
-describe('应收订单 - 结算 : ', function () {
+describe('应收订单 结算单:', function () {
 
     let Authorization = ''
 

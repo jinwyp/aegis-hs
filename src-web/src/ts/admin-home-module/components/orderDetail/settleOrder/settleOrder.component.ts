@@ -231,6 +231,16 @@ export class SettleOrderComponent implements OnInit {
             this.settleForm.patchValue({trafficCompanyId : 99999999})
         }
 
+        if (this.settleType === 'settlesellerupstream') {
+            if (!this.settleForm.value.amount) {
+                this.settleForm.patchValue({amount : 99999999})
+            }
+            if (!this.settleForm.value.money) {
+                this.settleForm.patchValue({money : 99999999})
+            }
+        }
+
+
 
         if (this.settleForm.invalid) {
             this.settleFormInputChange(this.settleForm.value)

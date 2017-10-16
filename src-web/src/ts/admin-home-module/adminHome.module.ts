@@ -24,6 +24,7 @@ import { OrderDetailComponent } from './components/orderDetail/orderDetail.compo
 import { UnitComponent } from './components/orderDetail/unit/unit.component'
 import { ShippingOrderComponent } from './components/orderDetail/shippingOrder/shippingOrder.component'
 
+import { BorrowComponent } from './components/orderDetail/borrow/borrow.component'
 import { PaymentComponent } from './components/orderDetail/payment/payment.component'
 import { RepaymentComponent } from './components/orderDetail/repayment/repayment.component'
 import { RepaymentHuanKuanComponent } from './components/orderDetail/repaymentHuanKuan/repaymentHuanKuan.component'
@@ -93,6 +94,7 @@ const userHomeRoutes: Routes = [
         UnitComponent,
         ShippingOrderComponent,
 
+        BorrowComponent,
         PaymentComponent,
         RepaymentComponent,
         RepaymentHuanKuanComponent,

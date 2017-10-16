@@ -26,7 +26,7 @@ const server = supertest(config.path.urlApi)
 
 
 
-describe('应收订单 - 付款/回款/还款 : ', function () {
+describe('应收订单 - 付款/回款/还款: ', function () {
 
     let Authorization = ''
 
@@ -34,10 +34,7 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
 
         server.post('/api/login')
             .set(config.headers)
-            .send({
-                phone: "13022117050",
-                password: "123456"
-            })
+            .send(config.user.admin)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -46,7 +43,8 @@ describe('应收订单 - 付款/回款/还款 : ', function () {
                 done()
             })
 
-    });
+    })
+
 
 
 

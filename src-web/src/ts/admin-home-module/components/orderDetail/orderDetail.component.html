@@ -18,22 +18,25 @@
                 <a class="nav-link" [class.active]="currentTabIndex === 3" (click)="changeTab(3)">发运管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentTabIndex === 4" (click)="changeTab(4)">付款管理</a>
+                <a class="nav-link" [class.active]="currentTabIndex === 4" (click)="changeTab(4)">借款管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentTabIndex === 5" (click)="changeTab(5)">回款管理</a>
+                <a class="nav-link" [class.active]="currentTabIndex === 5" (click)="changeTab(5)">付款管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentTabIndex === 6" (click)="changeTab(6)">还款管理</a>
+                <a class="nav-link" [class.active]="currentTabIndex === 6" (click)="changeTab(6)">回款管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentTabIndex === 7" (click)="changeTab(7)">上游结算管理</a>
+                <a class="nav-link" [class.active]="currentTabIndex === 7" (click)="changeTab(7)">还款管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentTabIndex === 8" (click)="changeTab(8)">下游结算管理</a>
+                <a class="nav-link" [class.active]="currentTabIndex === 11" (click)="changeTab(11)">上游结算管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentTabIndex === 9" (click)="changeTab(9)">运输方结算管理</a>
+                <a class="nav-link" [class.active]="currentTabIndex === 12" (click)="changeTab(12)">下游结算管理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="currentTabIndex === 13" (click)="changeTab(13)">运输方结算管理</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" [class.active]="currentTabIndex === 20" (click)="changeTab(20)">费用管理</a>
@@ -84,12 +87,13 @@
 
         <app-unit  *ngIf="currentTabIndex === 2" [currentOrder]="currentOrder"></app-unit>
         <app-shipping  *ngIf="currentTabIndex === 3 && businessType==='ying'" [currentOrder]="currentOrder"></app-shipping>
-        <app-payment  *ngIf="currentTabIndex === 4" [currentOrder]="currentOrder"></app-payment>
-        <app-repayment  *ngIf="currentTabIndex === 5" [currentOrder]="currentOrder"></app-repayment>
-        <app-huankuan  *ngIf="currentTabIndex === 6" [currentOrder]="currentOrder"></app-huankuan>
+        <app-borrow  *ngIf="currentTabIndex === 4" [currentOrder]="currentOrder"></app-borrow>
+        <app-payment  *ngIf="currentTabIndex === 5" [currentOrder]="currentOrder"></app-payment>
+        <app-repayment  *ngIf="currentTabIndex === 6" [currentOrder]="currentOrder"></app-repayment>
+        <app-huankuan  *ngIf="currentTabIndex === 7" [currentOrder]="currentOrder"></app-huankuan>
 
-        <app-settle  *ngIf="currentTabIndex === 7" [currentOrder]="currentOrder" [settleType]="'settlesellerupstream'"></app-settle>
-        <app-settle  *ngIf="currentTabIndex === 8" [currentOrder]="currentOrder" [settleType]="'settlebuyerdownstream'"></app-settle>
-        <app-settle  *ngIf="currentTabIndex === 9" [currentOrder]="currentOrder" [settleType]="'settletraffic'"></app-settle>
+        <app-settle  *ngIf="currentTabIndex === 11" [currentOrder]="currentOrder" [settleType]="'settlesellerupstream'"></app-settle>
+        <app-settle  *ngIf="currentTabIndex === 12" [currentOrder]="currentOrder" [settleType]="'settlebuyerdownstream'"></app-settle>
+        <app-settle  *ngIf="currentTabIndex === 13" [currentOrder]="currentOrder" [settleType]="'settletraffic'"></app-settle>
         <app-expense  *ngIf="currentTabIndex === 20" [currentOrder]="currentOrder"></app-expense>
         <app-invoice  *ngIf="currentTabIndex === 21" [currentOrder]="currentOrder"></app-invoice>

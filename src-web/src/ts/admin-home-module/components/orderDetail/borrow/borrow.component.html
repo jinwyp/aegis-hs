@@ -1,0 +1,61 @@
+
+
+            <form [formGroup]="borrowForm" (ngSubmit)="borrowFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+
+                <bs-select formControlName="hsId" [fc]="borrowForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty" [options]="unitList" [error]="borrowFormError.hsId"></bs-select>
+                <bs-datepicker formControlName="jiekuanDate" [fc]="borrowForm.get('jiekuanDate')" [label]="'借款日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="borrowFormError.jiekuanDate"></bs-datepicker>
+                <bs-text-input formControlName="amount" [fc]="borrowForm.get('amount')" [type]="'number'" [label]="'借款金额:'" [dirty]="ignoreDirty" [error]="borrowFormError.amount"></bs-text-input>
+
+                <bs-select formControlName ="capitalId" [fc]="borrowForm.get('capitalId')" [label]="'资金方:'" [dirty]="ignoreDirty"  [options]="partyList" [error]="borrowFormError.capitalId"></bs-select>
+                <bs-text-input formControlName="useInterest" [fc]="borrowForm.get('useInterest')" [type]="'number'" [label]="'外部资金使用利率:'" [dirty]="ignoreDirty" [error]="borrowFormError.useInterest"></bs-text-input>
+                <bs-text-input formControlName="useDays" [fc]="borrowForm.get('useDays')" [type]="'number'" [label]="'外部资金使用天数:'" [dirty]="ignoreDirty" [error]="borrowFormError.useDays"></bs-text-input>
+
+
+                <div class="form-group row">
+                    <div class="col-10 ml-auto">
+                        <button type="submit" class="btn btn-info" >保存</button>
+                        <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
+                    </div>
+                </div>
+            </form>
+
+
+
+            <div *ngIf="!isShowForm">
+                <table class="table table-bordered table-hover table-responsive" >
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>核算月</th>
+                        <th>借款日期</th>
+                        <th>借款金额</th>
+
+                        <th>资金方</th>
+                        <th>外部资金使用利率/天数</th>
+
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let borrow of borrowList; trackBy: trackByFn">
+                        <td> {{borrow.id}}</td>
+                        <td> {{borrow.hsId | findKey : unitList : 'name'}}</td>
+                        <td> {{borrow.jiekuanDate }}</td>
+                        <td> {{borrow.amount  }}</td>
+
+                        <td> {{borrow.capitalId | findKey : partyList : 'name'}}</td>
+                        <td> {{borrow.useInterest }} / {{borrow.useDays }} </td>
+
+                        <td>
+                            <button class="btn btn-info btn-sm" (click)="showForm(false, borrow)"> 修改 </button>
+                            <button class="btn btn-link btn-sm" (click)="deleteItem(borrow)"> 删除 </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
+            <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加借款单</button>

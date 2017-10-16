@@ -132,7 +132,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
     }
 
     getDate(event : any) {
-
+        this.errorFormatInfo = ''
         this.value = event
         this.inputDisplayValue = this.dateFormatter(this.interValueDate, this.displayFormat)
     }
