@@ -178,7 +178,7 @@ describe('应收订单 - 结算 : ', function () {
 
 
 
-/*
+
 
 
     it('上游结算单 - 新建上游结算单1 POST: /api/business/ying/1/settlesellerupstream', function (done) {
@@ -302,8 +302,8 @@ describe('应收订单 - 结算 : ', function () {
             })
     })
 
-    it('上游结算单 - 删除某个ID的上游结算单 DELETE: /api/business/ying/1/settlesellerupstream/1', function (done) {
-        server.delete('/api/business/ying/1/settlesellerupstream/1')
+    it('上游结算单 - 删除某个ID的上游结算单 DELETE: /api/business/ying/1/settlesellerupstream/2', function (done) {
+        server.delete('/api/business/ying/1/settlesellerupstream/2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
@@ -316,7 +316,6 @@ describe('应收订单 - 结算 : ', function () {
                 done()
             })
     })
-*/
 
 
 
