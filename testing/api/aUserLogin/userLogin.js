@@ -26,7 +26,6 @@ describe('First test', () => {
 
 describe('用户注册登陆', function () {
 
-
     it('注册成功 POST: /api/register', function (done) {
         server.post('/api/register')
             .set('Accept', 'application/json')
@@ -43,23 +42,6 @@ describe('用户注册登陆', function () {
                 done()
             })
     })
-
-
-    it('登陆失败 POST: /api/login', function (done) {
-        server.post('/api/login')
-            .set('Accept', 'application/json')
-            .send({
-                phone: "18321805753",
-                password: "1234567"
-            })
-            .expect('Content-Type', /json/)
-            .expect(401)
-            .end(function(err, res) {
-                if (err) return done(err)
-                done()
-            })
-    })
-
 
     it('登陆成功 POST: /api/login', function (done) {
         server.post('/api/login')
@@ -78,6 +60,22 @@ describe('用户注册登陆', function () {
             })
     })
 
+    it('登陆失败 POST: /api/login', function (done) {
+        server.post('/api/login')
+            .set('Accept', 'application/json')
+            .send({
+                phone: "18321805753",
+                password: "1234567"
+            })
+            .expect('Content-Type', /json/)
+            .expect(401)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
+                done()
+            })
+    })
 
 })
 
