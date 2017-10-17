@@ -33,6 +33,7 @@
     <!-- 查找还款明细by还款Id-->
     <select id="getListByHuankuanId" resultType="com.yimei.hs.same.entity.HuankuanMap">
         SELECT
+            jiekuanId,
             huankuanId,
             principal,
             interest,

@@ -47,7 +47,7 @@ public class Fukuan implements Serializable {
     private LocalDateTime tsu;
 
 
-
+    @NotNull(groups = {CreateGroup.class}, message = "资金方Id不能为空")
     private Long capitalId;
 
     private static final long serialVersionUID = 1L;
