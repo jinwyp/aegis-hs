@@ -41,16 +41,16 @@ public class CurrentUserMethodArgumentHandler implements HandlerMethodArgumentRe
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 
-        User user =  new User();
-        user.setId(1L);
-        user.setIsActive(true);
-        user.setIsAdmin(true);
-        user.setPhone("13022117051");
-        user.setDeptId(1L);
-        return user;
+//        User user =  new User();
+//        user.setId(1L);
+//        user.setIsActive(true);
+//        user.setIsAdmin(true);
+//        user.setPhone("13022117051");
+//        user.setDeptId(1L);
+//        return user;
 
-//        HttpServletRequest httpServletRequest = (HttpServletRequest) webRequest.getNativeRequest();
-//        return support.doJwt(httpServletRequest);
+        HttpServletRequest httpServletRequest = (HttpServletRequest) webRequest.getNativeRequest();
+        return support.doJwt(httpServletRequest);
 
     }
 }
