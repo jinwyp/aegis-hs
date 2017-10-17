@@ -69,7 +69,7 @@ public class UserController {
             return Result.ok(userService.genAuthorization(record));
         }
 
-//        return Result.ok("test token");
+
 
     }
 
@@ -91,7 +91,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PutMapping(value = "/api/change_password")
+    @PutMapping(value = "/api/change_password", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Result<Integer>> change(
             @CurrentUser User user,
             @RequestBody @Validated(User.ChangePassword.class) User userUpdate

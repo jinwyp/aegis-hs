@@ -250,7 +250,7 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 
-    <update id="transfer">
+    <update id="transfer" parameterType="java.lang.Long">
         UPDATE
             hs_same_order
         SET

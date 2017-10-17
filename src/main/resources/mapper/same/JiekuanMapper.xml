@@ -267,7 +267,7 @@
             capitalId   = #{capitalId,jdbcType=BIGINT},
             useInterest = #{useInterest,jdbcType=DECIMAL},
             useDays     = #{useDays,jdbcType=INTEGER},
-            jiekuanDate         = #{jiekuanDate,jdbcType=TIMESTAMP},
+            jiekuanDate = #{jiekuanDate,jdbcType=TIMESTAMP},
             tsc         = #{tsc,jdbcType=TIMESTAMP},
             tsu         = #{tsu,jdbcType=TIMESTAMP}
         WHERE id = #{id,jdbcType=BIGINT}
