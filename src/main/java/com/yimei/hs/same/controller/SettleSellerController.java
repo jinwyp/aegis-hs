@@ -98,9 +98,9 @@ public class SettleSellerController {
         settleSeller.setOrderId(morderId);
         if (isValidReq(pos, businessType)) {
 
-            int  exit=settleSellerService.selectHsAndOrderId(morderId, settleSeller.getHsId());
-            if (exit != 1) {
-                return Result.error(4001, "创建失败");
+            boolean  exit=settleSellerService.selectHsAndOrderId(morderId, settleSeller.getHsId());
+            if (exit) {
+                return Result.error(4001, "记录已存在");
             } else {
                 int rtn = settleSellerService.create(settleSeller);
                 if (rtn != 1) {

@@ -4,7 +4,6 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.same.dto.PageSettleSellerDTO;
 import com.yimei.hs.same.entity.SettleSeller;
 import com.yimei.hs.same.mapper.SettleSellerMapper;
-import com.yimei.hs.ying.service.YingLogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +80,7 @@ public class SettleSellerService {
         return settleSellerMapper.delete(id);
     }
 
-    public int selectHsAndOrderId(Long orderId, Long hsId) {
-        return settleSellerMapper.findByOrderIdAndHsID(orderId,hsId);
+    public boolean selectHsAndOrderId(Long orderId, Long hsId) {
+        return settleSellerMapper.findByOrderIdAndHsId(orderId,hsId);
     }
 }
