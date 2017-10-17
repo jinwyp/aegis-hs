@@ -70,7 +70,7 @@ describe('应收订单 付款:', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(false)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.payDate).to.include('2017')
@@ -90,7 +90,7 @@ describe('应收订单 付款:', function () {
                     "payUsage" : "DEPOSITECASH",
                     "payAmount" : "6000",
                     "payMode" : "CASH",
-                    "capitalId" : 5,
+                    "capitalId" : 1,
                     "useInterest" : "0.4",
                     "useDays" : "30",
                     "orderId" : 1
@@ -140,7 +140,7 @@ describe('应收订单 付款:', function () {
                 done()
             })
     })
-
+    //
     it('付款单 - 修改某个ID的付款单 PUT: /api/business/ying/1/fukuans/1', function (done) {
         server.put('/api/business/ying/1/fukuans/1')
             .set('Authorization', Authorization)
@@ -394,15 +394,13 @@ describe('应收订单 付款:', function () {
                     "hsId" : 1,
                     "skCompanyId" : 1,
                     "huankuankDate" : "2017-10-07 00:00:00",
-                    "huankuanPrincipal" : "100",
-                    "huankuanInterest" : "100",
-                    "huankuanFee" : "100",
                     "orderId" : 1,
                     "huankuanMapList" : [
                         {
-                            "fukuanId" : 1,
+                            "jiekuanId" : 1,
                             "principal" : "100",
-                            "interest" : "100"
+                            "interest" : "100",
+                            "fee":100
                         }
                     ]
                 }
@@ -428,14 +426,12 @@ describe('应收订单 付款:', function () {
                     "hsId" : 1,
                     "skCompanyId" : 1,
                     "huankuankDate" : "2017-10-07 00:00:00",
-                    "huankuanPrincipal" : "100",
-                    "huankuanInterest" : "100",
-                    "huankuanFee" : "100",
                     "orderId" : 1,
                     "huankuanMapList" : [
                         {
-                            "fukuanId" : 1,
+                            "jiekuanId" : 1,
                             "principal" : "100",
+                            "fee":1000,
                             "interest" : "100"
                         }
                     ]
@@ -556,13 +552,19 @@ describe('应收订单 付款:', function () {
             .set(config.headers)
             .send(
                 {
+                    "id":1,
                     "hsId" : 1,
-                    "skCompanyId" : 1,
                     "huankuankDate" : "2017-09-01 00:00:00",
-                    "huankuanInterest" : 100,
-                    "huankuanFee" : 3000,
                     "orderId" : 1,
-                    "id" : 1
+                    "huankuanMapList" : [
+                        {
+
+                            "jiekuanId" : 1,
+                            "principal" : 10000,
+                            "interest" : 100,
+                            "fee":1000
+                        }
+                    ]
                 }
             )
             .expect('Content-Type', /json/)
