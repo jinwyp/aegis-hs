@@ -65,7 +65,7 @@ export class OrderDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.data.subscribe( (data) => this.businessType = data.businessType)
-
+        console.log('businessType', this.businessType)
         this.route.paramMap.switchMap( (params: ParamMap) => {
             this.currentOrderId = Number(params.get('orderId'))
             return this.hsOrderService.getOrderByID(this.businessType, this.currentOrderId)

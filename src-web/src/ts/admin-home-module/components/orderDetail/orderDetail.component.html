@@ -35,7 +35,7 @@
             <li class="nav-item">
                 <a class="nav-link" [class.active]="currentTabIndex === 12" (click)="changeTab(12)">下游结算管理</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="businessType==='ying'">
                 <a class="nav-link" [class.active]="currentTabIndex === 13" (click)="changeTab(13)">运输方结算管理</a>
             </li>
             <li class="nav-item">
@@ -99,9 +99,12 @@
         <app-repayment  *ngIf="currentTabIndex === 6" [currentOrder]="currentOrder" [businessType]="businessType" ></app-repayment>
         <app-huankuan  *ngIf="currentTabIndex === 7" [currentOrder]="currentOrder" [businessType]="businessType" ></app-huankuan>
 
-        <app-settle  *ngIf="currentTabIndex === 11" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerupstream'"></app-settle>
-        <app-settle  *ngIf="currentTabIndex === 12" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerdownstream'"></app-settle>
-        <app-settle  *ngIf="currentTabIndex === 13" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settletraffic'"></app-settle>
+        <app-settle  *ngIf="currentTabIndex === 11 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerupstream'"></app-settle>
+        <app-settle  *ngIf="currentTabIndex === 12 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerdownstream'"></app-settle>
+        <app-settle  *ngIf="currentTabIndex === 13 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settletraffic'"></app-settle>
+        <app-settle  *ngIf="currentTabIndex === 11 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerupstream'"></app-settle>
+        <app-settle  *ngIf="currentTabIndex === 12 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerdownstream'"></app-settle>
+
         <app-expense  *ngIf="currentTabIndex === 20" [currentOrder]="currentOrder" [businessType]="businessType" ></app-expense>
         <app-invoice  *ngIf="currentTabIndex === 21" [currentOrder]="currentOrder" [businessType]="businessType" ></app-invoice>
 

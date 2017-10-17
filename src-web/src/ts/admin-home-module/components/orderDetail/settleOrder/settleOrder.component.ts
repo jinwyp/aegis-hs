@@ -101,34 +101,56 @@ export class SettleOrderComponent implements OnInit {
 
     getSettleList () {
 
-        if (this.settleType === 'settlesellerupstream') {
-            this.hsOrderService.getSettleUpstreamListByID(this.currentOrder.id).subscribe(
-                data => {
-                    this.settleUpstreamList = data.data.results
+        if (this.businessType === 'ying') {
+            if (this.settleType === 'settlesellerupstream') {
+                this.hsOrderService.getSettleUpstreamListByID(this.businessType, this.settleType, this.currentOrder.id).subscribe(
+                    data => {
+                        this.settleUpstreamList = data.data.results
 
-                },
-                error => {this.httpService.errorHandler(error) }
-            )
-        }
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
 
-        if (this.settleType === 'settlebuyerdownstream') {
-            this.hsOrderService.getSettleDownstreamListByID(this.currentOrder.id).subscribe(
-                data => {
-                    this.settleDownstreamList = data.data.results
+            if (this.settleType === 'settlebuyerdownstream') {
+                this.hsOrderService.getSettleDownstreamListByID(this.businessType, this.settleType, this.currentOrder.id).subscribe(
+                    data => {
+                        this.settleDownstreamList = data.data.results
 
-                },
-                error => {this.httpService.errorHandler(error) }
-            )
-        }
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
 
-        if (this.settleType === 'settletraffic') {
-            this.hsOrderService.getSettleTrafficListByID(this.currentOrder.id).subscribe(
-                data => {
-                    this.settleTrafficList = data.data.results
+            if (this.settleType === 'settletraffic') {
+                this.hsOrderService.getSettleTrafficListByID(this.businessType, this.currentOrder.id).subscribe(
+                    data => {
+                        this.settleTrafficList = data.data.results
 
-                },
-                error => {this.httpService.errorHandler(error) }
-            )
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
+        } else {
+            if (this.settleType === 'settlebuyerupstream') {
+                this.hsOrderService.getSettleUpstreamListByID(this.businessType, this.settleType, this.currentOrder.id).subscribe(
+                    data => {
+                        this.settleUpstreamList = data.data.results
+
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
+
+            if (this.settleType === 'settlesellerdownstream') {
+                this.hsOrderService.getSettleDownstreamListByID(this.businessType, this.settleType, this.currentOrder.id).subscribe(
+                    data => {
+                        this.settleDownstreamList = data.data.results
+
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
         }
 
     }
@@ -258,7 +280,7 @@ export class SettleOrderComponent implements OnInit {
         if (this.isAddNew) {
 
             if (this.settleType === 'settlesellerupstream') {
-                this.hsOrderService.createNewSettleUpstream(this.currentOrder.id, postData).subscribe(
+                this.hsOrderService.createNewSettleUpstream(this.businessType, this.settleType, this.currentOrder.id, postData).subscribe(
                     data => {
                         console.log('保存成功: ', data)
                         this.httpService.successHandler(data)
@@ -272,7 +294,7 @@ export class SettleOrderComponent implements OnInit {
             }
 
             if (this.settleType === 'settlebuyerdownstream') {
-                this.hsOrderService.createNewSettleDownstream(this.currentOrder.id, postData).subscribe(
+                this.hsOrderService.createNewSettleDownstream(this.businessType, this.settleType, this.currentOrder.id, postData).subscribe(
                     data => {
                         console.log('保存成功: ', data)
                         this.httpService.successHandler(data)
@@ -286,7 +308,35 @@ export class SettleOrderComponent implements OnInit {
             }
 
             if (this.settleType === 'settletraffic') {
-                this.hsOrderService.createNewSettleTraffic(this.currentOrder.id, postData).subscribe(
+                this.hsOrderService.createNewSettleTraffic(this.businessType, this.currentOrder.id, postData).subscribe(
+                    data => {
+                        console.log('保存成功: ', data)
+                        this.httpService.successHandler(data)
+
+                        this.getSettleList()
+                        this.showForm()
+
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
+
+            if (this.settleType === 'settlebuyerupstream') {
+                this.hsOrderService.createNewSettleUpstream(this.businessType, this.settleType, this.currentOrder.id, postData).subscribe(
+                    data => {
+                        console.log('保存成功: ', data)
+                        this.httpService.successHandler(data)
+
+                        this.getSettleList()
+                        this.showForm()
+
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
+
+            if (this.settleType === 'settlesellerdownstream') {
+                this.hsOrderService.createNewSettleDownstream(this.businessType, this.settleType, this.currentOrder.id, postData).subscribe(
                     data => {
                         console.log('保存成功: ', data)
                         this.httpService.successHandler(data)
@@ -305,7 +355,7 @@ export class SettleOrderComponent implements OnInit {
 
 
             if (this.settleType === 'settlesellerupstream') {
-                this.hsOrderService.modifySettleUpstream(this.currentOrder.id, this.currentSettleId, postData).subscribe(
+                this.hsOrderService.modifySettleUpstream(this.businessType, this.settleType, this.currentOrder.id, this.currentSettleId, postData).subscribe(
                     data => {
                         console.log('修改成功: ', data)
                         this.httpService.successHandler(data)
@@ -320,7 +370,7 @@ export class SettleOrderComponent implements OnInit {
 
             if (this.settleType === 'settlebuyerdownstream') {
                 delete postData.amount
-                this.hsOrderService.modifySettleDownstream(this.currentOrder.id, this.currentSettleId, postData).subscribe(
+                this.hsOrderService.modifySettleDownstream(this.businessType, this.settleType, this.currentOrder.id, this.currentSettleId, postData).subscribe(
                     data => {
                         console.log('修改成功: ', data)
                         this.httpService.successHandler(data)
@@ -334,7 +384,36 @@ export class SettleOrderComponent implements OnInit {
             }
 
             if (this.settleType === 'settletraffic') {
-                this.hsOrderService.modifySettleTraffic(this.currentOrder.id, this.currentSettleId, postData).subscribe(
+                this.hsOrderService.modifySettleTraffic(this.businessType, this.currentOrder.id, this.currentSettleId, postData).subscribe(
+                    data => {
+                        console.log('修改成功: ', data)
+                        this.httpService.successHandler(data)
+
+                        this.getSettleList()
+                        this.showForm()
+
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
+
+            if (this.settleType === 'settlebuyerupstream') {
+                this.hsOrderService.modifySettleUpstream(this.businessType, this.settleType, this.currentOrder.id, this.currentSettleId, postData).subscribe(
+                    data => {
+                        console.log('修改成功: ', data)
+                        this.httpService.successHandler(data)
+
+                        this.getSettleList()
+                        this.showForm()
+
+                    },
+                    error => {this.httpService.errorHandler(error) }
+                )
+            }
+
+            if (this.settleType === 'settlesellerdownstream') {
+                delete postData.amount
+                this.hsOrderService.modifySettleDownstream(this.businessType, this.settleType, this.currentOrder.id, this.currentSettleId, postData).subscribe(
                     data => {
                         console.log('修改成功: ', data)
                         this.httpService.successHandler(data)
@@ -391,7 +470,7 @@ export class SettleOrderComponent implements OnInit {
     deleteItem (settle : any) {
 
         if (this.settleType === 'settlesellerupstream') {
-            this.hsOrderService.delSettleUpstream(this.currentOrder.id, settle.id).subscribe(
+            this.hsOrderService.delSettleUpstream(this.businessType, this.settleType, this.currentOrder.id, settle.id).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -403,7 +482,7 @@ export class SettleOrderComponent implements OnInit {
         }
 
         if (this.settleType === 'settlebuyerdownstream') {
-            this.hsOrderService.delSettleDownstream(this.currentOrder.id, settle.id).subscribe(
+            this.hsOrderService.delSettleDownstream(this.businessType, this.settleType, this.currentOrder.id, settle.id).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -415,7 +494,31 @@ export class SettleOrderComponent implements OnInit {
         }
 
         if (this.settleType === 'settletraffic') {
-            this.hsOrderService.delSettleTraffic(this.currentOrder.id, 2).subscribe(
+            this.hsOrderService.delSettleTraffic(this.businessType, this.currentOrder.id, 2).subscribe(
+                data => {
+                    console.log('保存成功: ', data)
+                    this.httpService.successHandler(data)
+
+                    this.getSettleList()
+                },
+                error => {this.httpService.errorHandler(error) }
+            )
+        }
+
+        if (this.settleType === 'settlebuyerupstream') {
+            this.hsOrderService.delSettleUpstream(this.businessType, this.settleType, this.currentOrder.id, settle.id).subscribe(
+                data => {
+                    console.log('保存成功: ', data)
+                    this.httpService.successHandler(data)
+
+                    this.getSettleList()
+                },
+                error => {this.httpService.errorHandler(error) }
+            )
+        }
+
+        if (this.settleType === 'settlesellerdownstream') {
+            this.hsOrderService.delSettleDownstream(this.businessType, this.settleType, this.currentOrder.id, settle.id).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
