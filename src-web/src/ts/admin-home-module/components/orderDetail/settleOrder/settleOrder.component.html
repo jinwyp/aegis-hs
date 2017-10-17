@@ -4,10 +4,10 @@
             <bs-select formControlName="hsId" [fc]="settleForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="settleFormError.hsId"></bs-select>
             <bs-datepicker formControlName="settleDate" [fc]="settleForm.get('settleDate')" [label]="'结算日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="settleFormError.settleDate" ></bs-datepicker>
 
-            <div [hidden]="settleType === 'settlesellerupstream'">
-                <bs-text-input formControlName="amount" [fc]="settleForm.get('amount')" [type]="'number'" [label]="'结算数量(吨):'" [dirty]="ignoreDirty" [error]="settleFormError.amount"></bs-text-input>
-                <bs-text-input formControlName="money" [fc]="settleForm.get('money')" [type]="'number'" [label]="'结算金额:'" [dirty]="ignoreDirty" [error]="settleFormError.money"></bs-text-input>
-            </div>
+            <!--<div [hidden]="settleType === 'settlesellerupstream'">-->
+                <!--<bs-text-input formControlName="amount" [fc]="settleForm.get('amount')" [type]="'number'" [label]="'结算数量(吨):'" [dirty]="ignoreDirty" [error]="settleFormError.amount"></bs-text-input>-->
+                <!--<bs-text-input formControlName="money" [fc]="settleForm.get('money')" [type]="'number'" [label]="'结算金额:'" [dirty]="ignoreDirty" [error]="settleFormError.money"></bs-text-input>-->
+            <!--</div>-->
 
             <div [hidden]="settleType !== 'settlesellerupstream'">
                 <bs-select formControlName ="discountType" [fc]="settleForm.get('discountType')" [label]="'折扣类型:'" [dirty]="ignoreDirty" [options]="settleDiscountModeList" [error]="settleFormError.discountType"></bs-select>

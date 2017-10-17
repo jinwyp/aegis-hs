@@ -387,8 +387,8 @@ describe('仓押订单', function () {
             .expect(400)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
                 done()
             })
     })
