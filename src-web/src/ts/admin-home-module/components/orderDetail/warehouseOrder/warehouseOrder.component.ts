@@ -86,7 +86,7 @@ export class WarehouseOrderComponent implements OnInit {
     getSettleList () {
 
         if (this.warehouseType === 'ruku') {
-            this.hsOrderService.getWarehouseInListByID('cang', this.currentOrder.id).subscribe(
+            this.hsOrderService.getWarehouseInListByID(this.businessType, this.currentOrder.id).subscribe(
                 data => {
                     this.warehouseInList = data.data.results
                 },
@@ -95,7 +95,7 @@ export class WarehouseOrderComponent implements OnInit {
         }
 
         if (this.warehouseType === 'chuku') {
-            this.hsOrderService.getWarehouseOutListByID('cang', this.currentOrder.id).subscribe(
+            this.hsOrderService.getWarehouseOutListByID(this.businessType, this.currentOrder.id).subscribe(
                 data => {
                     this.warehouseOutList = data.data.results
                 },
@@ -230,7 +230,7 @@ export class WarehouseOrderComponent implements OnInit {
         if (this.isAddNew) {
 
             if (this.warehouseType === 'ruku') {
-                this.hsOrderService.createNewWareInhouse('cang', this.currentOrder.id, postData).subscribe(
+                this.hsOrderService.createNewWareInhouse(this.businessType, this.currentOrder.id, postData).subscribe(
                     data => {
                         console.log('保存成功: ', data)
                         this.httpService.successHandler(data)
@@ -244,7 +244,7 @@ export class WarehouseOrderComponent implements OnInit {
             }
 
             if (this.warehouseType === 'chuku') {
-                this.hsOrderService.createNewWarehouseOut('cang', this.currentOrder.id, postData).subscribe(
+                this.hsOrderService.createNewWarehouseOut(this.businessType, this.currentOrder.id, postData).subscribe(
                     data => {
                         console.log('保存成功: ', data)
                         this.httpService.successHandler(data)
@@ -262,7 +262,7 @@ export class WarehouseOrderComponent implements OnInit {
 
 
             if (this.warehouseType === 'ruku') {
-                this.hsOrderService.modifyWarehouseIn('cang', this.currentOrder.id, this.currentWarehouseId, postData).subscribe(
+                this.hsOrderService.modifyWarehouseIn(this.businessType, this.currentOrder.id, this.currentWarehouseId, postData).subscribe(
                     data => {
                         console.log('修改成功: ', data)
                         this.httpService.successHandler(data)
@@ -277,7 +277,7 @@ export class WarehouseOrderComponent implements OnInit {
 
             if (this.warehouseType === 'chuku') {
                 delete postData.amount
-                this.hsOrderService.modifyWarehouseOut('cang', this.currentOrder.id, this.currentWarehouseId, postData).subscribe(
+                this.hsOrderService.modifyWarehouseOut(this.businessType, this.currentOrder.id, this.currentWarehouseId, postData).subscribe(
                     data => {
                         console.log('修改成功: ', data)
                         this.httpService.successHandler(data)
@@ -337,7 +337,7 @@ export class WarehouseOrderComponent implements OnInit {
     deleteItem (settle : any) {
 
         if (this.warehouseType === 'ruku') {
-            this.hsOrderService.delWarehouseIn('cang', this.currentOrder.id, settle.id).subscribe(
+            this.hsOrderService.delWarehouseIn(this.businessType, this.currentOrder.id, settle.id).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -349,7 +349,7 @@ export class WarehouseOrderComponent implements OnInit {
         }
 
         if (this.warehouseType === 'chuku') {
-            this.hsOrderService.delWarehouseOut('cang', this.currentOrder.id, settle.id).subscribe(
+            this.hsOrderService.delWarehouseOut(this.businessType, this.currentOrder.id, settle.id).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)

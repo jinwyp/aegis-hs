@@ -84,7 +84,7 @@ export class ShippingOrderComponent implements OnInit {
 
 
     getShippingList () {
-        this.hsOrderService.getShippingListByID(this.currentOrder.id).subscribe(
+        this.hsOrderService.getShippingListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
                 this.shippingList = data.data.results
 
@@ -166,7 +166,7 @@ export class ShippingOrderComponent implements OnInit {
 
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewShipping(this.currentOrder.id, postData).subscribe(
+            this.hsOrderService.createNewShipping(this.businessType, this.currentOrder.id, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -181,7 +181,7 @@ export class ShippingOrderComponent implements OnInit {
             postData.id = this.currentShippingOrderId
             delete postData.fyAmount
 
-            this.hsOrderService.modifyShipping(this.currentOrder.id, this.currentShippingOrderId, postData).subscribe(
+            this.hsOrderService.modifyShipping(this.businessType, this.currentOrder.id, this.currentShippingOrderId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
@@ -236,7 +236,7 @@ export class ShippingOrderComponent implements OnInit {
 
     deleteItem (shipping : any) {
 
-        this.hsOrderService.delShipping(this.currentOrder.id, shipping.id).subscribe(
+        this.hsOrderService.delShipping(this.businessType, this.currentOrder.id, shipping.id).subscribe(
             data => {
                 console.log('保存成功: ', data)
                 this.httpService.successHandler(data)
@@ -245,7 +245,6 @@ export class ShippingOrderComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
-
     }
 
 

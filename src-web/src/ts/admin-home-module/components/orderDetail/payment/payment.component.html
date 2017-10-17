@@ -8,7 +8,7 @@
                 <bs-select formControlName ="receiveCompanyId" [fc]="paymentForm.get('receiveCompanyId')" [label]="'收款单位:'" [dirty]="ignoreDirty" [options]="partyList" [error]="paymentFormError.receiveCompanyId"></bs-select>
                 <bs-select formControlName="payUsage" [fc]="paymentForm.get('payUsage')" [label]="'付款用途:'" [dirty]="ignoreDirty"  [options]="purposeList" [error]="paymentFormError.payUsage"></bs-select>
                 <bs-text-input formControlName="payAmount" [fc]="paymentForm.get('payAmount')" [type]="'number'" [label]="'付款金额:'" [dirty]="ignoreDirty" [error]="paymentFormError.payAmount"></bs-text-input>
-                <bs-select formControlName="payMode" [fc]="paymentForm.get('payMode')" [label]="'付款方式:'" [dirty]="ignoreDirty"  [options]="payModeList" [error]="paymentFormError.payMode"></bs-select>
+                <!--<bs-select formControlName="payMode" [fc]="paymentForm.get('payMode')" [label]="'付款方式:'" [dirty]="ignoreDirty"  [options]="payModeList" [error]="paymentFormError.payMode"></bs-select>-->
 
                 <!--<bs-select formControlName ="capitalId" [fc]="paymentForm.get('capitalId')" [label]="'资金方:'" [dirty]="ignoreDirty"  [options]="partyList" [error]="paymentFormError.capitalId"></bs-select>-->
                 <!--<bs-text-input formControlName="useInterest" [fc]="paymentForm.get('useInterest')" [type]="'number'" [label]="'外部资金使用利率:'" [dirty]="ignoreDirty" [error]="paymentFormError.useInterest"></bs-text-input>-->
@@ -36,10 +36,10 @@
                         <th>收款单位</th>
                         <th>付款用途</th>
                         <th>付款金额</th>
-                        <th>付款方式</th>
+                        <!--<th>付款方式</th>-->
 
-                        <th>资金方</th>
-                        <th>外部资金使用利率/天数</th>
+                        <!--<th>资金方</th>-->
+                        <!--<th>外部资金使用利率/天数</th>-->
 
                         <th></th>
                     </tr>
@@ -53,12 +53,15 @@
                         <td> {{payment.receiveCompanyId | findKey : partyList : 'name' }}</td>
                         <td> {{payment.payUsage | findKey : purposeList : 'name' }}</td>
                         <td> {{payment.payAmount  }}</td>
-                        <td> {{payment.payMode | findKey : payModeList : 'name' }}</td>
+                        <!--<td> {{payment.payMode | findKey : payModeList : 'name' }}</td>-->
 
-                        <td> {{payment.capitalId | findKey : partyList : 'name'}}</td>
-                        <td> {{payment.useInterest }} / {{payment.useDays }} </td>
+                        <!--<td> {{payment.capitalId | findKey : partyList : 'name'}}</td>-->
+                        <!--<td> {{payment.useInterest }} / {{payment.useDays }} </td>-->
 
-                        <td> <button class="btn btn-info btn-sm" (click)="showForm(false, payment)"> 修改 </button></td>
+                        <td>
+                            <button class="btn btn-link btn-sm" (click)="showForm(false, payment)"> 修改 </button>
+                            <button class="btn btn-link btn-sm" (click)="deleteItem(payment)"> 删除 </button>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

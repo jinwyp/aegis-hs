@@ -36,7 +36,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
     isShowForm: boolean = false
     isAddNew: boolean = true
 
-    shippingList : any[] = []
+    repaymentHKList : any[] = []
     partyList : any[] = []
     partyListObject : any = {}
 
@@ -95,9 +95,9 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
 
     getRepaymentHKList () {
-        this.hsOrderService.getRepaymentHKListByID(this.currentOrder.id).subscribe(
+        this.hsOrderService.getRepaymentHKListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
-                this.shippingList = data.data.results
+                this.repaymentHKList = data.data.results
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -124,7 +124,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
     }
 
     getBorrowList () {
-        this.hsOrderService.getBorrowListUnfinishedByID(this.currentOrder.id).subscribe(
+        this.hsOrderService.getBorrowListUnfinishedByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
 
                 if (Array.isArray(data.data)) {
@@ -244,7 +244,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
         })
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewRepaymentHK(this.currentOrder.id, postData).subscribe(
+            this.hsOrderService.createNewRepaymentHK(this.businessType, this.currentOrder.id, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -259,7 +259,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             postData.id = this.currentHuanKuanId
             delete postData.huankuanPrincipal
 
-            this.hsOrderService.modifyRepaymentHK(this.currentOrder.id, this.currentHuanKuanId, postData).subscribe(
+            this.hsOrderService.modifyRepaymentHK(this.businessType, this.currentOrder.id, this.currentHuanKuanId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
@@ -278,6 +278,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
     showForm(isAddNew : boolean = true, repaymentHKOrder?: any ) {
 
         this.ignoreDirty = false
+        this.borrowPostList = []
 
         if (isAddNew) {
             this.isAddNew = true
@@ -294,12 +295,35 @@ export class RepaymentHuanKuanComponent implements OnInit {
             this.isAddNew = false
             this.currentHuanKuanId = repaymentHKOrder.id
 
-            this.borrowPostList = []
+            const tempArray : any[] = []
+
+            if (Array.isArray(repaymentHKOrder.huankuanMapList)) {
+                repaymentHKOrder.huankuanMapList.forEach( item => {
+                    tempArray.push((<any>Object).assign( {}, this.borrowListObject[item.jiekuanId],
+                        {jiekuanId : item.jiekuanId, principal : item.principal, interest : item.interest, fee : item.fee}) )
+                })
+
+            }
+            this.borrowPostList = tempArray
             this.repaymentHKForm.patchValue(repaymentHKOrder)
         }
 
 
         this.isShowForm = !this.isShowForm
+    }
+
+
+    deleteItem (repaymentHK : any) {
+
+        this.hsOrderService.delRepaymentHK(this.businessType, this.currentOrder.id, repaymentHK.id).subscribe(
+            data => {
+                console.log('保存成功: ', data)
+                this.httpService.successHandler(data)
+
+                this.getRepaymentHKList()
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
     }
 
 
