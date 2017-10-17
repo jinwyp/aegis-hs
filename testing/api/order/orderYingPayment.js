@@ -400,7 +400,7 @@ describe('应收订单 付款:', function () {
                             "jiekuanId" : 1,
                             "principal" : "100",
                             "interest" : "100",
-                            "fee":100
+                            "fee":"100"
                         }
                     ]
                 }
@@ -431,7 +431,7 @@ describe('应收订单 付款:', function () {
                         {
                             "jiekuanId" : 1,
                             "principal" : "100",
-                            "fee":1000,
+                            "fee":"10000",
                             "interest" : "100"
                         }
                     ]

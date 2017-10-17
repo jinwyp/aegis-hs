@@ -88,6 +88,15 @@ public class OrderConfigController {
         }
     }
 
+    /**
+     *  更新核算月
+     * @param businessType
+     * @param morderId
+     * @param id
+     * @param orderConfig
+     * @return
+     */
+
     @PutMapping("/{morderId}/units/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("businessType") BusinessType businessType,
@@ -96,16 +105,22 @@ public class OrderConfigController {
             @RequestBody @Validated(UpdateGroup.class) OrderConfig orderConfig) {
 
 
-        logger.debug("orderConfig-====>" + id);
-        orderConfig.setId(id);
-        orderConfig.setOrderId(morderId);
+      OrderConfig orderConfigDB=  orderConfigService.findOne(id);
+        if (orderConfigDB.getOrderId() == morderId) {
+            logger.debug("orderConfig-====>" + id);
 
-        logger.debug("orderConfig-====>" + orderConfig);
-        int status = orderConfigService.update(orderConfig);
-        if (status == 1) {
-            return Result.ok(1);
+            orderConfig.setId(id);
+            orderConfig.setOrderId(morderId);
+
+            logger.debug("orderConfig-====>" + orderConfig);
+            int status = orderConfigService.update(orderConfig);
+            if (status == 1) {
+                return Result.ok(1);
+            } else {
+                return Result.error(5003, "更新失败");
+            }
         } else {
-            return Result.error(5003, "更新失败");
+            return Result.error(5003, "非法操作");
         }
 
     }
