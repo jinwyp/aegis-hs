@@ -169,13 +169,38 @@ describe('应收订单 发票:', function () {
             .set(config.headers)
             .send(
                 {
-                    "hsId" : 2,
+                    "hsId" : 3,
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
-                    "openDate" : "2017-09-02 00:00:00",
+                    "openDate" : "2017-10-06 00:00:00",
                     "openCompanyId" : 1,
                     "receiverId" : 2,
-                    "orderId" : 1,
+                    "orderId" : 9,
+                    "details" : [
+                        {
+                            "id" : 1,
+                            "invoiceId" : 1,
+                            "invoiceNumber" : "2000",
+                            "cargoAmount" : 1000,
+                            "taxRate" : 0.2,
+                            "priceAndTax" : 100,
+                            "tsc" : "2017-10-17 18:22:10"
+                        },
+                        {
+                            "id" : 2,
+                            "invoiceId" : 1,
+                            "invoiceNumber" : "2000",
+                            "cargoAmount" : 1000,
+                            "taxRate" : 0.2,
+                            "priceAndTax" : 100,
+                            "tsc" : "2017-10-17 18:22:10"
+                        },
+                        {"invoiceNumber" : "22",
+                            "cargoAmount" : "22",
+                            "taxRate" : "22",
+                            "priceAndTax" : "22"
+                        }
+                    ],
                     "id" : 1
                 }
             )

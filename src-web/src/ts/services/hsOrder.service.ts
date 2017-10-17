@@ -229,40 +229,40 @@ export class HSOrderService {
 
 
 
-    getExpenseListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getExpenseListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fees', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fees', {params: params} )
     }
-    createNewExpense(orderId: number, expense: any): Observable<any> {
-        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fees', expense )
+    createNewExpense(businessType : string, orderId: number, expense: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fees', expense )
     }
-    modifyExpense(orderId: number, expenseId: number, expense: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fees/' + expenseId.toString() , expense)
+    modifyExpense(businessType : string, orderId: number, expenseId: number, expense: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fees/' + expenseId.toString() , expense)
     }
-    delExpense(orderId: number, expenseId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fees/' + expenseId.toString())
+    delExpense(businessType : string, orderId: number, expenseId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fees/' + expenseId.toString())
     }
 
 
 
-    getInvoiceListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getInvoiceListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/invoices', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/invoices', {params: params} )
     }
-    createNewInvoice(orderId: number, invoice: any): Observable<any> {
-        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/invoices', invoice )
+    createNewInvoice(businessType : string, orderId: number, invoice: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/invoices', invoice )
     }
-    modifyInvoice(orderId: number, invoiceId: number, invoice: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/invoices/' + invoiceId.toString() , invoice)
+    modifyInvoice(businessType : string, orderId: number, invoiceId: number, invoice: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/invoices/' + invoiceId.toString() , invoice)
     }
-    delInvoice(orderId: number, invoiceId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/invoices/' + invoiceId.toString())
+    delInvoice(businessType : string, orderId: number, invoiceId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/invoices/' + invoiceId.toString())
     }
 
 

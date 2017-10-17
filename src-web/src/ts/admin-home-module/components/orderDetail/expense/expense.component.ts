@@ -84,7 +84,7 @@ export class ExpenseComponent implements OnInit {
 
 
     getExpenseList () {
-        this.hsOrderService.getExpenseListByID(this.currentOrder.id).subscribe(
+        this.hsOrderService.getExpenseListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
                 this.expenseList = data.data.results
 
@@ -145,7 +145,7 @@ export class ExpenseComponent implements OnInit {
 
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewExpense(this.currentOrder.id, postData).subscribe(
+            this.hsOrderService.createNewExpense(this.businessType, this.currentOrder.id, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -160,7 +160,7 @@ export class ExpenseComponent implements OnInit {
             postData.id = this.currentExpenseId
             // delete postData.huikuanAmount
 
-            this.hsOrderService.modifyExpense(this.currentOrder.id, this.currentExpenseId, postData).subscribe(
+            this.hsOrderService.modifyExpense(this.businessType, this.currentOrder.id, this.currentExpenseId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
@@ -203,7 +203,7 @@ export class ExpenseComponent implements OnInit {
 
     deleteItem (expense : any) {
 
-        this.hsOrderService.delExpense(this.currentOrder.id, expense.id).subscribe(
+        this.hsOrderService.delExpense(this.businessType, this.currentOrder.id, expense.id).subscribe(
             data => {
                 console.log('保存成功: ', data)
                 this.httpService.successHandler(data)

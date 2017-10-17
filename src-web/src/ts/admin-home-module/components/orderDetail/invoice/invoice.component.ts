@@ -93,7 +93,7 @@ export class InvoiceComponent implements OnInit {
 
 
     getInvoiceList () {
-        this.hsOrderService.getInvoiceListByID(this.currentOrder.id).subscribe(
+        this.hsOrderService.getInvoiceListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
                 this.invoiceList = data.data.results
 
@@ -214,7 +214,7 @@ export class InvoiceComponent implements OnInit {
         postData.details = this.invoiceDetailList
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewInvoice(this.currentOrder.id, postData).subscribe(
+            this.hsOrderService.createNewInvoice(this.businessType, this.currentOrder.id, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -229,7 +229,7 @@ export class InvoiceComponent implements OnInit {
             postData.id = this.currentInvoiceId
             // delete postData.huikuanAmount
 
-            this.hsOrderService.modifyInvoice(this.currentOrder.id, this.currentInvoiceId, postData).subscribe(
+            this.hsOrderService.modifyInvoice(this.businessType, this.currentOrder.id, this.currentInvoiceId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
@@ -280,7 +280,7 @@ export class InvoiceComponent implements OnInit {
 
     deleteItem (invoice : any) {
 
-        this.hsOrderService.delInvoice(this.currentOrder.id, invoice.id).subscribe(
+        this.hsOrderService.delInvoice(this.businessType, this.currentOrder.id, invoice.id).subscribe(
             data => {
                 console.log('保存成功: ', data)
                 this.httpService.successHandler(data)
