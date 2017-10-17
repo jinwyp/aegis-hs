@@ -23,7 +23,16 @@ export class AdminHomeComponent implements OnInit {
     currentUser : any
 
     isLeftMenuCollapsed : boolean = false
-    currentMenu : string = ''
+    currentMenu : number = 2
+    currentSubMenu : number = 21
+
+    menuList : any [] = [
+        true,
+        true,
+        true,
+        true,
+        true
+    ]
 
 
 
@@ -47,8 +56,16 @@ export class AdminHomeComponent implements OnInit {
         this.isLeftMenuCollapsed = !this.isLeftMenuCollapsed
     }
 
-    clickMenu (menu : string) {
-        this.currentMenu = menu
+
+    clickMenu (event: any, menu : number) {
+        event.preventDefault()
+        this.currentMenu = Number(menu)
+        this.menuList[this.currentMenu] = !this.menuList[this.currentMenu]
+    }
+
+    clickSubMenu (menu : string) {
+        this.currentMenu = Number(menu.toString().substr(0, 1))
+        this.currentSubMenu = Number(menu)
     }
 
 

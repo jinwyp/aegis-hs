@@ -22,8 +22,11 @@ const server = supertest(config.path.urlApi)
 describe('仓押订单', function () {
 
     let Authorization = ''
-    let orderId = ''
-    let delOrderId = ''
+    let orderId = config.order.getOrderCangId
+    let delOrderId = config.order.delOrderCangId
+
+    let unitId = 3
+    let delUnitId = 5
 
     before(function (done) {
 
@@ -67,6 +70,7 @@ describe('仓押订单', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.line).to.include('那曲')
+
                 orderId = res.body.data.id
                 done()
             })
@@ -171,8 +175,8 @@ describe('仓押订单', function () {
             })
     })
 
-    it('仓押订单 - 获取某个ID的仓押订单信息 GET: /api/business/cangs/9', function (done) {
-        server.get('/api/business/cangs/1')
+    it(`仓押订单 - 获取某个ID的仓押订单信息 GET: /api/business/cangs/${orderId}`, function (done) {
+        server.get(`/api/business/cangs/${orderId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -187,9 +191,9 @@ describe('仓押订单', function () {
             })
     })
 
-    it('仓押订单 - 修改某个ID的仓押订单 PUT: /api/business/cangs/9', function (done) {
-        console.log('提示信息: 修改某个ID的仓押订单 PUT: /api/business/cangs/' + orderId)
-        server.put('/api/business/cangs/' + orderId)
+    it(`仓押订单 - 修改某个ID的仓押订单 PUT: /api/business/cangs/${orderId}`, function (done) {
+        console.log(`提示信息: 修改某个ID的仓押订单 PUT: /api/business/cangs/${orderId}`)
+        server.put(`/api/business/cangs/${orderId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -220,9 +224,9 @@ describe('仓押订单', function () {
             })
     })
 
-    it('仓押订单 - 删除某个ID的仓押订单 DELETE: /api/business/cangs/11', function (done) {
-        console.log('提示信息: 删除某个ID的仓押订单 DELETE: /api/business/cangs/' + delOrderId)
-        server.delete('/api/business/cangs/' + delOrderId)
+    it(`仓押订单 - 删除某个ID的仓押订单 DELETE: /api/business/cangs/${delOrderId}`, function (done) {
+        console.log(`提示信息: 删除某个ID的仓押订单 DELETE: /api/business/cangs/${delOrderId}`)
+        server.delete(`/api/business/cangs/${delOrderId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
@@ -236,9 +240,9 @@ describe('仓押订单', function () {
             })
     })
 
-    it('仓押订单 - 不能重复删除某个ID的仓押订单 DELETE: /api/business/cangs/11', function (done) {
-        console.log('提示信息: 不能重复删除某个ID的仓押订单 DELETE: /api/business/cangs/' + delOrderId)
-        server.delete('/api/business/cangs/' + delOrderId)
+    it(`仓押订单 - 不能重复删除某个ID的仓押订单 DELETE: /api/business/cangs/${delOrderId}`, function (done) {
+        console.log(`提示信息: 不能重复删除某个ID的仓押订单 DELETE: /api/business/cangs/${delOrderId}`)
+        server.delete(`/api/business/cangs/${delOrderId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
@@ -255,8 +259,8 @@ describe('仓押订单', function () {
 
 
 
-    it('核算单元 - 新建核算单元1 POST: /api/business/cang/9/units', function (done) {
-        server.post('/api/business/cang/1/units')
+    it(`核算单元 - 新建核算单元1 POST: /api/business/cang/${orderId}/units`, function (done) {
+        server.post(`/api/business/cang/${orderId}/units`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -276,12 +280,14 @@ describe('仓押订单', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.hsMonth).to.include('201709')
+
+                unitId = res.body.data.id
                 done()
             })
     })
 
-    it('核算单元 - 新建核算单元2 POST: /api/business/cang/9/units', function (done) {
-        server.post('/api/business/cang/1/units')
+    it(`核算单元 - 新建核算单元2 POST: /api/business/cang/${orderId}/units`, function (done) {
+        server.post(`/api/business/cang/${orderId}/units`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -305,8 +311,8 @@ describe('仓押订单', function () {
             })
     })
 
-    it('核算单元 - 获取仓押订单核算单元列表 GET: /api/business/cang/9/units?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/business/cang/1/units?pageNo=1&pageSize=2')
+    it(`核算单元 - 获取仓押订单核算单元列表 GET: /api/business/cang/${orderId}/units?pageNo=1&pageSize=2`, function (done) {
+        server.get(`/api/business/cang/${orderId}/units?pageNo=1&pageSize=2`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -322,8 +328,8 @@ describe('仓押订单', function () {
             })
     })
 
-    it('核算单元 - 获取某个ID的核算单元信息 GET: /api/business/cang/9/units/1', function (done) {
-        server.get('/api/business/cang/1/units/1')
+    it(`核算单元 - 获取某个ID的核算单元信息 GET: /api/business/cang/${orderId}/units/${unitId}`, function (done) {
+        server.get(`/api/business/cang/${orderId}/units/${unitId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -338,12 +344,12 @@ describe('仓押订单', function () {
             })
     })
 
-    it('核算单元 - 修改某个ID的仓押订单核算单元 PUT: /api/business/cang/9/units/1', function (done) {
-        server.put('/api/business/cang/1/units/1')
+    it(`核算单元 - 修改某个ID的仓押订单核算单元 PUT: /api/business/cang/${orderId}/units/${unitId}`, function (done) {
+        server.put(`/api/business/cang/${orderId}/units/${unitId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
-                "id"                   : 1,
+                "id"                   : 3,
                 "hsMonth"           : "201709",
                 "maxPrepayRate"        : 0.9,
                 "unInvoicedRate"       : 0.7,
@@ -362,6 +368,30 @@ describe('仓押订单', function () {
             })
     })
 
+
+    // it(`核算单元 - 不能修改 不是自己订单下的核算单元 PUT: /api/business/cang/${orderId}/units/1`, function (done) {
+    //     server.put(`/api/business/cang/${orderId}/units/1`)
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send({
+    //             "id"                   : 1,
+    //             "hsMonth"           : "201709",
+    //             "maxPrepayRate"        : 0.9,
+    //             "unInvoicedRate"       : 0.7,
+    //             "contractBaseInterest" : 0.2,
+    //             "expectHKDays"         : 45,
+    //             "tradeAddPrice"        : 200,
+    //             "weightedPrice"        : 900
+    //         })
+    //         .expect('Content-Type', /json/)
+    //         .expect(400)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+    //             done()
+    //         })
+    // })
 
 })
 

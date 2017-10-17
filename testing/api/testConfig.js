@@ -29,4 +29,11 @@ exports.user = {
     }
 }
 
+exports.order = {
+    getOrderYingId : 1,
+    delOrderYingId : 3,
+    getOrderCangId : 9,
+    delOrderCangId : 11
+}
+
 exports.env = process.env.NODE_ENV || 'test'
