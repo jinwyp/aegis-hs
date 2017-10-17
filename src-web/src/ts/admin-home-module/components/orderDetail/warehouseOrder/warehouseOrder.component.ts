@@ -38,11 +38,7 @@ export class WarehouseOrderComponent implements OnInit {
 
     unitList : any[] = []
 
-    // warehouseStatusList : any[] = getEnum('InStorageStatus')
-    warehouseStatusList : any[] = [
-        {    id : 'IN_STORAGE' , name : '已入库' },
-        {    id : 'IN_TRANIT' , name : '运输中' }
-    ]
+    warehouseStatusList : any[] = getEnum('InStorageStatus')
     trafficModeList : any[] = getEnum('TrafficMode')
 
     pagination: any = {

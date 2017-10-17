@@ -1,7 +1,7 @@
 
 
         <h3>
-            应收单管理
+             {{ businessType === 'ying' ? '应收单管理' : '仓押单管理'}}
             <button type="button" class="btn btn-outline-info btn-sm float-right" *ngIf="!isShowForm" (click)="showForm(true)">添加</button>
         </h3>
 

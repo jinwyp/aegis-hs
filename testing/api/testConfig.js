@@ -22,7 +22,18 @@ exports.user = {
     user1 : {
         phone: "13564568304",
         password: "123456"
+    },
+    user2 : {
+        phone: "13564568301",
+        password: "123456"
     }
+}
+
+exports.order = {
+    getOrderYingId : 1,
+    delOrderYingId : 3,
+    getOrderCangId : 9,
+    delOrderCangId : 11
 }
 
 exports.env = process.env.NODE_ENV || 'test'

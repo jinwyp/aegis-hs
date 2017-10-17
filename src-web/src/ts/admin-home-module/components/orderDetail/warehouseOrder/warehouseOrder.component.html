@@ -22,7 +22,7 @@
                 <bs-text-input formControlName="chukuPrice" [fc]="warehouseForm.get('chukuPrice')" [type]="'number'" [label]="'出库单价(元/吨):'" [dirty]="ignoreDirty" [error]="warehouseFormError.chukuPrice"></bs-text-input>
             </div>
 
-            <bs-text-input formControlName="locality" [fc]="warehouseForm.get('locality')" [type]="'number'" [label]="'库房场地:'" [dirty]="ignoreDirty" [error]="warehouseFormError.locality"></bs-text-input>
+            <bs-text-input formControlName="locality" [fc]="warehouseForm.get('locality')" [type]="'text'" [label]="'库房场地:'" [dirty]="ignoreDirty" [error]="warehouseFormError.locality"></bs-text-input>
 
             <div class="form-group row">
                 <div class="col-10 ml-auto">

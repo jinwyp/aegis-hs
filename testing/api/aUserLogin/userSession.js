@@ -36,6 +36,8 @@ describe('当前登陆用户信息', function () {
     })
 
 
+
+
     it('获取当前登陆信息 GET: /api/user/session', function (done) {
         server.get('/api/user/session')
             .set('Authorization', Authorization)
@@ -50,7 +52,6 @@ describe('当前登陆用户信息', function () {
                 done()
             })
     })
-
 
     it('修改当前用户的密码 PUT: /api/change_password', function (done) {
         server.put('/api/change_password')
@@ -69,7 +70,6 @@ describe('当前登陆用户信息', function () {
                 done()
             })
     })
-
 
     it('退出登陆 GET: /api/logout', function (done) {
         server.get('/api/logout')

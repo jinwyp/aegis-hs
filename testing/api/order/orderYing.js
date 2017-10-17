@@ -22,6 +22,7 @@ const server = supertest(config.path.urlApi)
 describe('应收订单', function () {
 
     let Authorization = ''
+    let delOrderId = ''
 
     before(function (done) {
 
@@ -125,6 +126,8 @@ describe('应收订单', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.line).to.include('那曲')
+
+                delOrderId = res.body.data.id
                 done()
             })
     })
@@ -289,8 +292,9 @@ describe('应收订单', function () {
             })
     })
 
-    it('应收订单 - 删除某个ID的应收订单 DELETE: /api/business/yings/1', function (done) {
-        server.delete('/api/business/yings/21')
+    it('应收订单 - 删除某个ID的应收订单 DELETE: /api/business/yings/3', function (done) {
+        console.log('提示信息: 删除某个ID的应收订单 DELETE: /api/business/yings/' + delOrderId)
+        server.delete('/api/business/yings/' + delOrderId)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
@@ -304,6 +308,21 @@ describe('应收订单', function () {
             })
     })
 
+    it('应收订单 - 不能重复删除某个ID的应收订单 DELETE: /api/business/yings/3', function (done) {
+        console.log('提示信息: 不能重复删除某个ID的应收订单 DELETE: /api/business/yings/' + delOrderId)
+        server.delete('/api/business/yings/' + delOrderId)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+                done()
+            })
+    })
 
 
 
@@ -442,7 +461,7 @@ describe('应收订单', function () {
             })
     });
 
-    it('移交订单权限 - 新建应收订单11 POST: /api/business/yings', function (done) {
+    it('移交订单权限 - 新建应收订单7 POST: /api/business/yings', function (done) {
         server.post('/api/business/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -470,7 +489,7 @@ describe('应收订单', function () {
             })
     })
 
-    it('移交订单权限 - 新建应收订单12 POST: /api/business/yings', function (done) {
+    it('移交订单权限 - 新建应收订单8 POST: /api/business/yings', function (done) {
         server.post('/api/business/yings')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -493,14 +512,12 @@ describe('应收订单', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.line).to.include('那曲')
-                orderId = res.body.data.id
                 done()
             })
     })
 
-    it('移交订单权限 - 转移订单给另一个财务人员 POST: /api/business/yings/4/to/4', function (done) {
-
-        console.log('转移订单给另一个财务人员 POST: /api/business/yings/' + orderId + '/to/4')
+    it('移交订单权限 - 转移订单给另一个财务人员(13564568301) POST: /api/business/yings/7/to/4', function (done) {
+        console.log('提示信息: 转移订单给另一个财务人员(13564568301) POST: /api/business/yings/' + orderId + '/to/4')
         server.post('/api/business/yings/' + orderId + '/to/4')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -515,8 +532,7 @@ describe('应收订单', function () {
             })
     })
 
-    it('移交订单权限 - 不是自己的订单转移给另一个财务人员 非法输入 POST: /api/business/yings/1/to/4', function (done) {
-
+    it('移交订单权限 - 非法输入 不是自己的订单转移给另一个财务人员 POST: /api/business/yings/1/to/4', function (done) {
         server.post('/api/business/yings/1/to/4')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -532,3 +548,4 @@ describe('应收订单', function () {
     })
 
 })
+
