@@ -369,29 +369,29 @@ describe('仓押订单', function () {
     })
 
 
-    // it(`核算单元 - 不能修改 不是自己订单下的核算单元 PUT: /api/business/cang/${orderId}/units/1`, function (done) {
-    //     server.put(`/api/business/cang/${orderId}/units/1`)
-    //         .set('Authorization', Authorization)
-    //         .set(config.headers)
-    //         .send({
-    //             "id"                   : 1,
-    //             "hsMonth"           : "201709",
-    //             "maxPrepayRate"        : 0.9,
-    //             "unInvoicedRate"       : 0.7,
-    //             "contractBaseInterest" : 0.2,
-    //             "expectHKDays"         : 45,
-    //             "tradeAddPrice"        : 200,
-    //             "weightedPrice"        : 900
-    //         })
-    //         .expect('Content-Type', /json/)
-    //         .expect(400)
-    //         .end(function(err, res) {
-    //             if (err) return done(err)
-    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-    //             expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
-    //             done()
-    //         })
-    // })
+    it(`核算单元 - 不能修改 不是自己订单下的核算单元 PUT: /api/business/cang/${orderId}/units/1`, function (done) {
+        server.put(`/api/business/cang/${orderId}/units/1`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                "id"                   : 1,
+                "hsMonth"           : "201709",
+                "maxPrepayRate"        : 0.9,
+                "unInvoicedRate"       : 0.7,
+                "contractBaseInterest" : 0.2,
+                "expectHKDays"         : 45,
+                "tradeAddPrice"        : 200,
+                "weightedPrice"        : 900
+            })
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+                done()
+            })
+    })
 
 })
 

@@ -175,55 +175,55 @@ export class HSOrderService {
 
 
 
-    getSettleUpstreamListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getSettleUpstreamListByID(businessType : string, settleType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settlesellerupstream', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + settleType, {params: params} )
     }
-    createNewSettleUpstream(orderId: number, settle: any): Observable<any> {
-        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settlesellerupstream', settle )
+    createNewSettleUpstream(businessType : string, settleType : string, orderId: number, settle: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + settleType, settle )
     }
-    modifySettleUpstream(orderId: number, settleId: number, settle: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settlesellerupstream/' + settleId.toString() , settle)
+    modifySettleUpstream(businessType : string, settleType : string, orderId: number, settleId: number, settle: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + settleType + '/' + settleId.toString() , settle)
     }
-    delSettleUpstream(orderId: number, settleId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settlesellerupstream/' + settleId.toString())
+    delSettleUpstream(businessType : string, settleType : string, orderId: number, settleId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + settleType + '/' + settleId.toString())
     }
 
-    getSettleDownstreamListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getSettleDownstreamListByID(businessType : string, settleType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settlebuyerdownstream', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + settleType, {params: params} )
     }
-    createNewSettleDownstream(orderId: number, settle: any): Observable<any> {
-        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settlebuyerdownstream', settle )
+    createNewSettleDownstream(businessType : string, settleType : string, orderId: number, settle: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + settleType, settle )
     }
-    modifySettleDownstream(orderId: number, settleId: number, settle: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settlebuyerdownstream/' + settleId.toString() , settle)
+    modifySettleDownstream(businessType : string, settleType : string, orderId: number, settleId: number, settle: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + settleType + '/' + settleId.toString() , settle)
     }
-    delSettleDownstream(orderId: number, settleId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settlebuyerdownstream/' + settleId.toString())
+    delSettleDownstream(businessType : string, settleType : string, orderId: number, settleId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + settleType + '/' + settleId.toString())
     }
 
-    getSettleTrafficListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getSettleTrafficListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settletraffic', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/settletraffic', {params: params} )
     }
-    createNewSettleTraffic(orderId: number, settle: any): Observable<any> {
-        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settletraffic', settle )
+    createNewSettleTraffic(businessType : string, orderId: number, settle: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/settletraffic', settle )
     }
-    modifySettleTraffic(orderId: number, settleId: number, settle: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settletraffic/' + settleId.toString() , settle)
+    modifySettleTraffic(businessType : string, orderId: number, settleId: number, settle: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/settletraffic/' + settleId.toString() , settle)
     }
-    delSettleTraffic(orderId: number, settleId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/settletraffic/' + settleId.toString())
+    delSettleTraffic(businessType : string, orderId: number, settleId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/settletraffic/' + settleId.toString())
     }
 
 
