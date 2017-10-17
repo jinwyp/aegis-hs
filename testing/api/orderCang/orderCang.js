@@ -22,6 +22,8 @@ const server = supertest(config.path.urlApi)
 describe('仓押订单', function () {
 
     let Authorization = ''
+    let orderId = ''
+    let delOrderId = ''
 
     before(function (done) {
 
@@ -40,21 +42,23 @@ describe('仓押订单', function () {
 
 
 
-    it('仓押订单 - 新建仓押订单1 POST: /api/business/yings', function (done) {
-        server.post('/api/business/yings')
+    it('仓押订单 - 新建仓押订单1 POST: /api/business/cangs', function (done) {
+        server.post('/api/business/cangs')
             .set('Authorization', Authorization)
             .set(config.headers)
-            .send({
-                "businessType":"ying",
-                "teamId":1,
-                "line":"那曲 - 晋和 - 嘉瑞",
-                "cargoType":"COAL",
-                "upstreamSettleMode":"ONE_PAPER_SETTLE",
-                "downstreamSettleMode":"ONE_PAPER_SETTLE",
-                "mainAccounting":1,
-                "upstreamId":2,
-                "downstreamId":3
-            })
+            .send(
+                {
+                    "teamId":5,
+                    "line":"山瑞 - 那曲 - 宁夏瑞茂通",
+                    "cargoType":"COAL",
+                    "upstreamSettleMode":"ONE_PAPER_SETTLE",
+                    "downstreamSettleMode":"TWO_PAPER_SETTLE",
+                    "mainAccounting" : 2,
+                    "upstreamId" : 4,
+                    "downstreamId" : 5,
+                    "businessType" : "cang"
+                }
+            )
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -63,29 +67,48 @@ describe('仓押订单', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.line).to.include('那曲')
+                orderId = res.body.data.id
                 done()
             })
     })
 
-    it('仓押订单 - 新建仓押订单2 POST: /api/business/yings', function (done) {
-        server.post('/api/business/yings')
+    it('仓押订单 - 新建仓押订单2 POST: /api/business/cangs', function (done) {
+        server.post('/api/business/cangs')
             .set('Authorization', Authorization)
             .set(config.headers)
-            .send({
-                "businessType":"ying",
-                "teamId":1,
-                "line":"那曲 - 晋和 - 嘉瑞",
-                "cargoType":"COAL",
-                "upstreamSettleMode":"ONE_PAPER_SETTLE",
-                "downstreamSettleMode":"ONE_PAPER_SETTLE",
-                "mainAccounting":1,
-                "upstreamId":2,
-                "downstreamId":3,
-                "orderPartyList":[
-                    {"custType":"TRAFFICKCER","customerId":7},
-                    {"custType":"ACCOUNTING_COMPANY","customerId":16}
-                ]
-            })
+            .send(
+                {
+                    "teamId" : 6,
+                    "line" : "新疆瑞茂通 - 宁夏瑞茂通 - 和辉",
+                    "cargoType" : "STEELS",
+                    "upstreamSettleMode" : "TWO_PAPER_SETTLE",
+                    "downstreamSettleMode" : "ONE_PAPER_SETTLE",
+                    "mainAccounting" : 5,
+                    "upstreamId" : 10,
+                    "downstreamId" : 12,
+                    "businessType" : "cang",
+                    "orderPartyList" : [
+                        {
+                            "custType" : "UPSTREAM", "customerId" : 4
+                        },
+                        {
+                            "custType"   : "DOWNSTREAM", "customerId" : 7
+                        },
+                        {
+                            "custType" : "FUNDER", "customerId" : 17
+                        },
+                        {
+                            "custType"   : "TRAFFICKCER", "customerId" : 9
+                        },
+                        {
+                            "custType" : "TRANSPORT_COMPANY", "customerId" : 18
+                        },
+                        {
+                            "custType"   : "ACCOUNTING_COMPANY", "customerId" : 19
+                        }
+                    ]
+                }
+            )
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -93,17 +116,17 @@ describe('仓押订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.data.line).to.include('和辉')
                 done()
             })
     })
 
-    it('仓押订单 - 新建仓押订单3 POST: /api/business/yings', function (done) {
-        server.post('/api/business/yings')
+    it('仓押订单 - 新建仓押订单3 POST: /api/business/cangs', function (done) {
+        server.post('/api/business/cangs')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
-                "businessType":"ying",
+                "businessType":"cang",
                 "teamId":1,
                 "line":"那曲 - 晋和 - 嘉瑞",
                 "cargoType":"COAL",
@@ -125,107 +148,14 @@ describe('仓押订单', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.line).to.include('那曲')
+
+                delOrderId = res.body.data.id
                 done()
             })
     })
 
-    it('仓押订单 - 新建仓押订单 非法输入 不存在部门和团队 teamId:99999 POST: /api/business/yings', function (done) {
-        server.post('/api/business/yings')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "businessType":"ying",
-                    "teamId" : 99999,
-                    "line" : "嘉瑞 - 那曲 - 山瑞",
-                    "cargoType" : "COAL",
-                    "upstreamSettleMode" : "ONE_PAPER_SETTLE",
-                    "downstreamSettleMode" : "ONE_PAPER_SETTLE",
-                    "mainAccounting" : 2,
-                    "upstreamId" : 3,
-                    "downstreamId" : 4,
-                    "orderPartyList" : [
-                        { "custType" : "UPSTREAM", "customerId" : 1},
-                        { "custType" : "DOWNSTREAM", "customerId" : 2}
-                    ]
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(400)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
-                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
-                done()
-            })
-    })
-
-    it('仓押订单 - 新建仓押订单 非法输入 不存在的公司ID mainAccounting:9999, upstreamId:99999, downstreamId:99999 POST: /api/business/yings', function (done) {
-        server.post('/api/business/yings')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "businessType":"ying",
-                    "teamId" : 1,
-                    "line" : "嘉瑞 - 那曲 - 山瑞",
-                    "cargoType" : "COAL",
-                    "upstreamSettleMode" : "ONE_PAPER_SETTLE",
-                    "downstreamSettleMode" : "ONE_PAPER_SETTLE",
-                    "mainAccounting" : 99999,
-                    "upstreamId" : 99999,
-                    "downstreamId" : 99999,
-                    "orderPartyList" : [
-                        { "custType" : "UPSTREAM", "customerId" : 1},
-                        { "custType" : "DOWNSTREAM", "customerId" : 2}
-                    ]
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(400)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
-                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
-                done()
-            })
-    })
-
-    it('仓押订单 - 新建仓押订单 非法输入 不存在的参与方公司ID "custType" : "UPSTREAM", "customerId" : 9999 POST: /api/business/yings', function (done) {
-        server.post('/api/business/yings')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "businessType":"ying",
-                    "teamId" : 1,
-                    "line" : "嘉瑞 - 那曲 - 山瑞",
-                    "cargoType" : "COAL",
-                    "upstreamSettleMode" : "ONE_PAPER_SETTLE",
-                    "downstreamSettleMode" : "ONE_PAPER_SETTLE",
-                    "mainAccounting" : 2,
-                    "upstreamId" : 3,
-                    "downstreamId" : 4,
-                    "orderPartyList" : [
-                        { "custType" : "UPSTREAM", "customerId" : 9999},
-                        { "custType" : "DOWNSTREAM", "customerId" : 9999},
-                        { "custType" : "TRAFFICKCER", "customerId":9999},
-                        { "custType" : "ACCOUNTING_COMPANY", "customerId":9999}
-                    ]
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(400)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
-                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
-                done()
-            })
-    })
-
-    it('仓押订单 - 获取仓押订单列表 GET: /api/business/yings?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/business/yings?pageNo=1&pageSize=2')
+    it('仓押订单 - 获取仓押订单列表 GET: /api/business/cangs?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/cangs?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -236,13 +166,13 @@ describe('仓押订单', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.pageNo, 'pageNo值应该是1 但实际不是1').to.equal(1)
                 expect(res.body.data.pageSize, 'pageSize值应该是2 但实际不是2').to.equal(2)
-                expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
+                expect(res.body.data.results, 'data.results 的返回记录数量错误').to.have.lengthOf(2)
                 done()
             })
     })
 
-    it('仓押订单 - 获取某个ID的仓押订单信息 GET: /api/business/yings/1', function (done) {
-        server.get('/api/business/yings/1')
+    it('仓押订单 - 获取某个ID的仓押订单信息 GET: /api/business/cangs/9', function (done) {
+        server.get('/api/business/cangs/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -257,8 +187,9 @@ describe('仓押订单', function () {
             })
     })
 
-    it('仓押订单 - 修改某个ID的仓押订单 PUT: /api/business/yings/1', function (done) {
-        server.put('/api/business/yings/1')
+    it('仓押订单 - 修改某个ID的仓押订单 PUT: /api/business/cangs/9', function (done) {
+        console.log('提示信息: 修改某个ID的仓押订单 PUT: /api/business/cangs/' + orderId)
+        server.put('/api/business/cangs/' + orderId)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -289,8 +220,25 @@ describe('仓押订单', function () {
             })
     })
 
-    it('仓押订单 - 删除某个ID的仓押订单 DELETE: /api/business/yings/1', function (done) {
-        server.delete('/api/business/yings/21')
+    it('仓押订单 - 删除某个ID的仓押订单 DELETE: /api/business/cangs/11', function (done) {
+        console.log('提示信息: 删除某个ID的仓押订单 DELETE: /api/business/cangs/' + delOrderId)
+        server.delete('/api/business/cangs/' + delOrderId)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+                done()
+            })
+    })
+
+    it('仓押订单 - 不能重复删除某个ID的仓押订单 DELETE: /api/business/cangs/11', function (done) {
+        console.log('提示信息: 不能重复删除某个ID的仓押订单 DELETE: /api/business/cangs/' + delOrderId)
+        server.delete('/api/business/cangs/' + delOrderId)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
@@ -307,9 +255,8 @@ describe('仓押订单', function () {
 
 
 
-
-    it('核算单元 - 新建核算单元1 POST: /api/business/ying/1/units', function (done) {
-        server.post('/api/business/ying/1/units')
+    it('核算单元 - 新建核算单元1 POST: /api/business/cang/9/units', function (done) {
+        server.post('/api/business/cang/1/units')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -333,8 +280,8 @@ describe('仓押订单', function () {
             })
     })
 
-    it('核算单元 - 新建核算单元2 POST: /api/business/ying/1/units', function (done) {
-        server.post('/api/business/ying/1/units')
+    it('核算单元 - 新建核算单元2 POST: /api/business/cang/9/units', function (done) {
+        server.post('/api/business/cang/1/units')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -358,8 +305,8 @@ describe('仓押订单', function () {
             })
     })
 
-    it('核算单元 - 获取仓押订单核算单元列表 GET: /api/business/ying/1/units?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/business/ying/1/units?pageNo=1&pageSize=2')
+    it('核算单元 - 获取仓押订单核算单元列表 GET: /api/business/cang/9/units?pageNo=1&pageSize=2', function (done) {
+        server.get('/api/business/cang/1/units?pageNo=1&pageSize=2')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -375,8 +322,8 @@ describe('仓押订单', function () {
             })
     })
 
-    it('核算单元 - 获取某个ID的核算单元信息 GET: /api/business/ying/1/units/1', function (done) {
-        server.get('/api/business/ying/1/units/1')
+    it('核算单元 - 获取某个ID的核算单元信息 GET: /api/business/cang/9/units/1', function (done) {
+        server.get('/api/business/cang/1/units/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -391,8 +338,8 @@ describe('仓押订单', function () {
             })
     })
 
-    it('核算单元 - 修改某个ID的仓押订单核算单元 PUT: /api/business/ying/1/units/1', function (done) {
-        server.put('/api/business/ying/1/units/1')
+    it('核算单元 - 修改某个ID的仓押订单核算单元 PUT: /api/business/cang/9/units/1', function (done) {
+        server.put('/api/business/cang/1/units/1')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -416,119 +363,5 @@ describe('仓押订单', function () {
     })
 
 
-
-
 })
 
-
-
-
-describe('仓押订单', function () {
-
-    let Authorization = ''
-    let orderId = ''
-
-    before(function (done) {
-
-        server.post('/api/login')
-            .set(config.headers)
-            .send(config.user.user1)
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                Authorization = res.body.data
-                done()
-            })
-    });
-
-    it('移交订单权限 - 新建仓押订单11 POST: /api/business/yings', function (done) {
-        server.post('/api/business/yings')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({
-                "businessType":"ying",
-                "teamId":1,
-                "line":"那曲 - 晋和 - 嘉瑞",
-                "cargoType":"COAL",
-                "upstreamSettleMode":"ONE_PAPER_SETTLE",
-                "downstreamSettleMode":"ONE_PAPER_SETTLE",
-                "mainAccounting":1,
-                "upstreamId":2,
-                "downstreamId":3
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
-                orderId = res.body.data.id
-                done()
-            })
-    })
-
-    it('移交订单权限 - 新建仓押订单12 POST: /api/business/yings', function (done) {
-        server.post('/api/business/yings')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({
-                "businessType":"ying",
-                "teamId":1,
-                "line":"那曲 - 晋和 - 嘉瑞",
-                "cargoType":"COAL",
-                "upstreamSettleMode":"ONE_PAPER_SETTLE",
-                "downstreamSettleMode":"ONE_PAPER_SETTLE",
-                "mainAccounting":1,
-                "upstreamId":2,
-                "downstreamId":3
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
-                orderId = res.body.data.id
-                done()
-            })
-    })
-
-    it('移交订单权限 - 转移订单给另一个财务人员 POST: /api/business/yings/4/to/4', function (done) {
-
-        console.log('转移订单给另一个财务人员 POST: /api/business/yings/' + orderId + '/to/4')
-        server.post('/api/business/yings/' + orderId + '/to/4')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({})
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
-                done()
-            })
-    })
-
-    it('移交订单权限 - 不是自己的订单转移给另一个财务人员 非法输入 POST: /api/business/yings/1/to/4', function (done) {
-
-        server.post('/api/business/yings/1/to/4')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({})
-            .expect('Content-Type', /json/)
-            .expect(400)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
-                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
-                done()
-            })
-    })
-
-})
