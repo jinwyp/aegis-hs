@@ -147,7 +147,7 @@ describe('应收订单 发票:', function () {
             })
     })
 
-    it('发票 - 获取某个ID的发票信息 GET: /api/business/ying/1/invoices/1', function (done) {
+    it('发票 - 获取某个ID的发票信息 GET: /api/business/ying/1/invoices/5', function (done) {
         server.get('/api/business/ying/1/invoices/1')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -168,7 +168,7 @@ describe('应收订单 发票:', function () {
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
-                {
+                {   "id":1,
                     "hsId" : 3,
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
@@ -178,22 +178,22 @@ describe('应收订单 发票:', function () {
                     "orderId" : 9,
                     "details" : [
                         {
-                            "id" : 1,
+                            "id" : 5,
                             "invoiceId" : 1,
                             "invoiceNumber" : "2000",
                             "cargoAmount" : 1000,
                             "taxRate" : 0.2,
                             "priceAndTax" : 100,
-                            "tsc" : "2017-10-17 18:22:10"
+
                         },
                         {
-                            "id" : 2,
+                            "id" : 6,
                             "invoiceId" : 1,
                             "invoiceNumber" : "2000",
                             "cargoAmount" : 1000,
                             "taxRate" : 0.2,
                             "priceAndTax" : 100,
-                            "tsc" : "2017-10-17 18:22:10"
+
                         },
                         {"invoiceNumber" : "22",
                             "cargoAmount" : "22",
@@ -214,19 +214,19 @@ describe('应收订单 发票:', function () {
             })
     })
 
-    it('发票 - 删除某个ID的发票 DELETE: /api/business/ying/1/invoices/2', function (done) {
-        server.delete('/api/business/ying/1/invoices/2')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({})
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
-                done()
-            })
-    })
+    // it('发票 - 删除某个ID的发票 DELETE: /api/business/ying/1/invoices/2', function (done) {
+    //     server.delete('/api/business/ying/1/invoices/2')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send({})
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+    //             done()
+    //         })
+    // })
 
 })

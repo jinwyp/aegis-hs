@@ -70,7 +70,7 @@ describe('应收订单 付款:', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(false)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.payDate).to.include('2017')
