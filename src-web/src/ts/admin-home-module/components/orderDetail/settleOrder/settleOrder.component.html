@@ -4,19 +4,17 @@
             <bs-select formControlName="hsId" [fc]="settleForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="settleFormError.hsId"></bs-select>
             <bs-datepicker formControlName="settleDate" [fc]="settleForm.get('settleDate')" [label]="'结算日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="settleFormError.settleDate" ></bs-datepicker>
 
-            <!--<div [hidden]="settleType === 'settlesellerupstream'">-->
-                <!--<bs-text-input formControlName="amount" [fc]="settleForm.get('amount')" [type]="'number'" [label]="'结算数量(吨):'" [dirty]="ignoreDirty" [error]="settleFormError.amount"></bs-text-input>-->
-                <!--<bs-text-input formControlName="money" [fc]="settleForm.get('money')" [type]="'number'" [label]="'结算金额:'" [dirty]="ignoreDirty" [error]="settleFormError.money"></bs-text-input>-->
-            <!--</div>-->
-
-            <div [hidden]="settleType !== 'settlesellerupstream'">
+            <div [hidden]="settleType !== 'settlesellerupstream' && settleType !== 'settlesellerdownstream'">
                 <bs-select formControlName ="discountType" [fc]="settleForm.get('discountType')" [label]="'折扣类型:'" [dirty]="ignoreDirty" [options]="settleDiscountModeList" [error]="settleFormError.discountType"></bs-select>
                 <bs-text-input formControlName="discountInterest" [fc]="settleForm.get('discountInterest')" [type]="'number'" [label]="'利率折扣:'" [dirty]="ignoreDirty" [error]="settleFormError.discountInterest"></bs-text-input>
                 <bs-text-input formControlName="discountDays" [fc]="settleForm.get('discountDays')" [type]="'number'" [label]="'利率折扣天数:'" [dirty]="ignoreDirty" [error]="settleFormError.discountDays"></bs-text-input>
                 <bs-text-input formControlName="discountAmount" [fc]="settleForm.get('discountAmount')" [type]="'number'" [label]="'折扣金额:'" [dirty]="ignoreDirty" [error]="settleFormError.discountAmount"></bs-text-input>
             </div>
 
-            <div [hidden]="settleType !== 'settlebuyerdownstream'">
+            <div [hidden]="settleType !== 'settlebuyerdownstream' && settleType !== 'settlebuyerupstream'">
+                <bs-text-input formControlName="amount" [fc]="settleForm.get('amount')" [type]="'number'" [label]="'结算数量(吨):'" [dirty]="ignoreDirty" [error]="settleFormError.amount"></bs-text-input>
+                <bs-text-input formControlName="money" [fc]="settleForm.get('money')" [type]="'number'" [label]="'结算金额:'" [dirty]="ignoreDirty" [error]="settleFormError.money"></bs-text-input>
+
                 <bs-text-input formControlName="settleGap" [fc]="settleForm.get('settleGap')" [type]="'number'" [label]="'结算扣吨:'" [dirty]="ignoreDirty" [error]="settleFormError.settleGap"></bs-text-input>
             </div>
 
@@ -35,7 +33,7 @@
 
         <div *ngIf="!isShowForm">
 
-            <table class="table table-bordered table-hover table-responsive" *ngIf="settleType==='settlesellerupstream'">
+            <table class="table table-bordered table-hover table-responsive" *ngIf="settleType==='settlesellerupstream' || settleType==='settlesellerdownstream' ">
                 <thead>
                 <tr>
                     <th>上游结算ID</th>
@@ -76,7 +74,7 @@
             </table>
 
 
-            <table class="table table-bordered table-hover table-responsive" *ngIf="settleType==='settlebuyerdownstream'">
+            <table class="table table-bordered table-hover table-responsive" *ngIf="settleType==='settlebuyerdownstream' || settleType==='settlebuyerupstream'">
                 <thead>
                 <tr>
                     <th>下游结算ID</th>
