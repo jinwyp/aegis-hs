@@ -76,7 +76,10 @@
                         / 贴息:{{repayment.huikuanBusinessDiscount}} / 贴息率:{{repayment.huikuanBusinessDiscountRate}}
                     </td>
 
-                    <td> <button class="btn btn-info btn-sm" (click)="showForm(false, repayment)"> 修改 </button></td>
+                    <td>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, repayment)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(repayment)"> 删除 </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>

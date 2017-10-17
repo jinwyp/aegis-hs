@@ -88,7 +88,7 @@ export class PaymentComponent implements OnInit {
 
 
     getPaymentList () {
-        this.hsOrderService.getPaymentListByID(this.currentOrder.id).subscribe(
+        this.hsOrderService.getPaymentListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
                 this.paymentList = data.data.results
 
@@ -144,8 +144,12 @@ export class PaymentComponent implements OnInit {
             'receiveCompanyId'    : ['', [Validators.required ] ],
 
             'payUsage'    : ['', [Validators.required ] ],
-            'payAmount'    : ['', [Validators.required ] ],
-            'payMode'    : ['', [Validators.required ] ]
+            'payAmount'    : ['', [Validators.required ] ]
+            // 'payMode'    : ['', [Validators.required ] ],
+            //
+            // 'capitalId'    : ['', [Validators.required ] ],
+            // 'useInterest'    : ['', [] ],
+            // 'useDays'    : ['', [ ] ]
         } )
 
 
@@ -174,7 +178,7 @@ export class PaymentComponent implements OnInit {
 
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewPayment(this.currentOrder.id, postData).subscribe(
+            this.hsOrderService.createNewPayment(this.businessType, this.currentOrder.id, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -190,7 +194,7 @@ export class PaymentComponent implements OnInit {
             delete postData.payDate
             delete postData.payAmount
 
-            this.hsOrderService.modifyPayment(this.currentOrder.id, this.currentPaymentId, postData).subscribe(
+            this.hsOrderService.modifyPayment(this.businessType, this.currentOrder.id, this.currentPaymentId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
@@ -202,7 +206,6 @@ export class PaymentComponent implements OnInit {
                 error => {this.httpService.errorHandler(error) }
             )
         }
-
     }
 
 
@@ -234,11 +237,22 @@ export class PaymentComponent implements OnInit {
             this.paymentForm.patchValue(shippingOrder)
         }
 
-
         this.isShowForm = !this.isShowForm
     }
 
 
+    deleteItem (payment : any) {
+
+        this.hsOrderService.delPayment(this.businessType, this.currentOrder.id, payment.id).subscribe(
+            data => {
+                console.log('保存成功: ', data)
+                this.httpService.successHandler(data)
+
+                this.getPaymentList()
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
 
 }
 

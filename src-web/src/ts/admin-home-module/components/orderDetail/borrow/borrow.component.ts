@@ -36,8 +36,6 @@ export class BorrowComponent implements OnInit {
 
     unitList : any[] = []
 
-    purposeList : any[] = getEnum('PaymentPurpose')
-    payModeList : any[] = getEnum('PayMode')
 
 
     pagination: any = {
@@ -87,7 +85,7 @@ export class BorrowComponent implements OnInit {
 
 
     getBorrowList () {
-        this.hsOrderService.getBorrowListByID(this.currentOrder.id).subscribe(
+        this.hsOrderService.getBorrowListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
                 this.borrowList = data.data.results
 
@@ -166,7 +164,7 @@ export class BorrowComponent implements OnInit {
 
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewBorrow(this.currentOrder.id, postData).subscribe(
+            this.hsOrderService.createNewBorrow(this.businessType, this.currentOrder.id, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -182,7 +180,7 @@ export class BorrowComponent implements OnInit {
             delete postData.payDate
             delete postData.payAmount
 
-            this.hsOrderService.modifyBorrow(this.currentOrder.id, this.currentBorrowId, postData).subscribe(
+            this.hsOrderService.modifyBorrow(this.businessType, this.currentOrder.id, this.currentBorrowId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
@@ -226,7 +224,7 @@ export class BorrowComponent implements OnInit {
 
     deleteItem (borrow : any) {
 
-        this.hsOrderService.delBorrow(this.currentOrder.id, borrow.id).subscribe(
+        this.hsOrderService.delBorrow(this.businessType, this.currentOrder.id, borrow.id).subscribe(
             data => {
                 console.log('保存成功: ', data)
                 this.httpService.successHandler(data)

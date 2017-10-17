@@ -69,7 +69,7 @@ describe('仓押订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('那曲')
 
                 orderId = res.body.data.id
                 done()
@@ -120,7 +120,7 @@ describe('仓押订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('和辉')
+                expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('和辉')
                 done()
             })
     })
@@ -151,7 +151,7 @@ describe('仓押订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('那曲')
 
                 delOrderId = res.body.data.id
                 done()
@@ -186,7 +186,7 @@ describe('仓押订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('那曲')
                 done()
             })
     })
@@ -323,7 +323,7 @@ describe('仓押订单', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.pageNo, 'pageNo值应该是1 但实际不是1').to.equal(1)
                 expect(res.body.data.pageSize, 'pageSize值应该是2 但实际不是2').to.equal(2)
-                expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
+                expect(res.body.data.results, 'data.results 的返回记录数量错误').to.have.lengthOf(2)
                 done()
             })
     })

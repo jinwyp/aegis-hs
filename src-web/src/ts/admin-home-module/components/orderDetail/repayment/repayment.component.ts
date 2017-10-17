@@ -92,7 +92,7 @@ export class RepaymentComponent implements OnInit {
 
 
     getRepaymentList () {
-        this.hsOrderService.getRepaymentListByID(this.currentOrder.id).subscribe(
+        this.hsOrderService.getRepaymentListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
                 this.repaymentList = data.data.results
 
@@ -191,7 +191,7 @@ export class RepaymentComponent implements OnInit {
 
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewRepayment(this.currentOrder.id, postData).subscribe(
+            this.hsOrderService.createNewRepayment(this.businessType, this.currentOrder.id, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
@@ -206,7 +206,7 @@ export class RepaymentComponent implements OnInit {
             postData.id = this.currentRepaymentId
             delete postData.huikuanAmount
 
-            this.hsOrderService.modifyRepayment(this.currentOrder.id, this.currentRepaymentId, postData).subscribe(
+            this.hsOrderService.modifyRepayment(this.businessType, this.currentOrder.id, this.currentRepaymentId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
@@ -264,6 +264,18 @@ export class RepaymentComponent implements OnInit {
     }
 
 
+    deleteItem (repayment : any) {
+
+        this.hsOrderService.delRepayment(this.businessType, this.currentOrder.id, repayment.id).subscribe(
+            data => {
+                console.log('保存成功: ', data)
+                this.httpService.successHandler(data)
+
+                this.getRepaymentList()
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
 
 }
 

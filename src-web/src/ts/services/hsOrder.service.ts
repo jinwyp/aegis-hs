@@ -76,99 +76,100 @@ export class HSOrderService {
     }
 
 
-    getShippingListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getShippingListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fayuns', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fayuns', {params: params} )
     }
-    createNewShipping(orderId: number, shipping: any): Observable<any> {
-        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fayuns', shipping )
+    createNewShipping(businessType : string, orderId: number, shipping: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fayuns', shipping )
     }
-    modifyShipping(orderId: number, shippingId: number, shipping: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fayuns/' + shippingId.toString() , shipping)
+    modifyShipping(businessType : string, orderId: number, shippingId: number, shipping: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fayuns/' + shippingId.toString() , shipping)
     }
-    delShipping(orderId: number, shippingId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fayuns/' + shippingId.toString())
+    delShipping(businessType : string, orderId: number, shippingId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fayuns/' + shippingId.toString())
     }
 
-    getBorrowListUnfinishedByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+
+    getBorrowListUnfinishedByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/jiekuansUnfinished', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/jiekuansUnfinished', {params: params} )
     }
-    getBorrowListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getBorrowListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/jiekuans', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/jiekuans', {params: params} )
     }
-    createNewBorrow(orderId: number, borrow: any): Observable<any> {
-        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/jiekuans', borrow )
+    createNewBorrow(businessType : string, orderId: number, borrow: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/jiekuans', borrow )
     }
-    modifyBorrow(orderId: number, borrowId: number, borrow: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/jiekuans/' + borrowId.toString() , borrow)
+    modifyBorrow(businessType : string, orderId: number, borrowId: number, borrow: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/jiekuans/' + borrowId.toString() , borrow)
     }
-    delBorrow(orderId: number, borrowId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/jiekuans/' + borrowId.toString())
+    delBorrow(businessType : string, orderId: number, borrowId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/jiekuans/' + borrowId.toString())
     }
 
 
-    getPaymentListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getPaymentListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fukuans', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fukuans', {params: params} )
     }
-    createNewPayment(orderId: number, payment: any): Observable<any> {
-        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fukuans', payment )
+    createNewPayment(businessType : string, orderId: number, payment: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fukuans', payment )
     }
-    modifyPayment(orderId: number, paymentId: number, payment: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fukuans/' + paymentId.toString() , payment)
+    modifyPayment(businessType : string, orderId: number, paymentId: number, payment: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fukuans/' + paymentId.toString() , payment)
     }
-    delPayment(orderId: number, paymentId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fukuans/' + paymentId.toString())
+    delPayment(businessType : string, orderId: number, paymentId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fukuans/' + paymentId.toString())
     }
 
     // 回款
-    getRepaymentListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getRepaymentListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huikuans', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/huikuans', {params: params} )
     }
-    createNewRepayment(orderId: number, repayment: any): Observable<any> {
-        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huikuans', repayment )
+    createNewRepayment(businessType : string, orderId: number, repayment: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/huikuans', repayment )
     }
-    modifyRepayment(orderId: number, repaymentId: number, repayment: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huikuans/' + repaymentId.toString() , repayment)
+    modifyRepayment(businessType : string, orderId: number, repaymentId: number, repayment: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/huikuans/' + repaymentId.toString() , repayment)
     }
-    delRepayment(orderId: number, repaymentId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huikuans/' + repaymentId.toString())
+    delRepayment(businessType : string, orderId: number, repaymentId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/huikuans/' + repaymentId.toString())
     }
 
     // 还款
-    getRepaymentHKListByID(orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+    getRepaymentHKListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
-        return this.http.get(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huankuans', {params: params} )
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/huankuans', {params: params} )
     }
-    createNewRepaymentHK(orderId: number, repayment: any): Observable<any> {
-        return this.http.post(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huankuans', repayment )
+    createNewRepaymentHK(businessType : string, orderId: number, repayment: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/huankuans', repayment )
     }
-    modifyRepaymentHK(orderId: number, repaymentId: number, repayment: any ): Observable<any> {
-        return this.http.put(apiPath.hsGetYingOrderConfig + '/' + orderId + '/huankuans/' + repaymentId.toString() , repayment)
+    modifyRepaymentHK(businessType : string, orderId: number, repaymentId: number, repayment: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/huankuans/' + repaymentId.toString() , repayment)
     }
-    delRepaymentHK(orderId: number, repaymentId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetYingOrderConfig + '/' + orderId + '/fukuans/' + repaymentId.toString())
+    delRepaymentHK(businessType : string, orderId: number, repaymentId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fukuans/' + repaymentId.toString())
     }
 
 

@@ -22,7 +22,11 @@ const server = supertest(config.path.urlApi)
 describe('应收订单', function () {
 
     let Authorization = ''
-    let delOrderId = ''
+    let orderId = config.order.getOrderYingId
+    let delOrderId = config.order.delOrderYingId
+
+    let unitId = 1
+    let delUnitId = 3
 
     before(function (done) {
 
@@ -63,7 +67,9 @@ describe('应收订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('那曲')
+
+                orderId = res.body.data.id
                 done()
             })
     })
@@ -94,7 +100,7 @@ describe('应收订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('那曲')
                 done()
             })
     })
@@ -125,7 +131,7 @@ describe('应收订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('那曲')
 
                 delOrderId = res.body.data.id
                 done()
@@ -239,13 +245,13 @@ describe('应收订单', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.pageNo, 'pageNo值应该是1 但实际不是1').to.equal(1)
                 expect(res.body.data.pageSize, 'pageSize值应该是2 但实际不是2').to.equal(2)
-                expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
+                expect(res.body.data.results, 'data.results 的返回记录数量错误').to.have.lengthOf(2)
                 done()
             })
     })
 
-    it('应收订单 - 获取某个ID的应收订单信息 GET: /api/business/yings/1', function (done) {
-        server.get('/api/business/yings/1')
+    it(`应收订单 - 获取某个ID的应收订单信息 GET: /api/business/yings/${orderId}`, function (done) {
+        server.get(`/api/business/yings/${orderId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -255,13 +261,13 @@ describe('应收订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('那曲')
                 done()
             })
     })
 
-    it('应收订单 - 修改某个ID的应收订单 PUT: /api/business/yings/1', function (done) {
-        server.put('/api/business/yings/1')
+    it(`应收订单 - 修改某个ID的应收订单 PUT: /api/business/yings/${orderId}`, function (done) {
+        server.put(`/api/business/yings/${orderId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -292,9 +298,9 @@ describe('应收订单', function () {
             })
     })
 
-    it('应收订单 - 删除某个ID的应收订单 DELETE: /api/business/yings/3', function (done) {
-        console.log('提示信息: 删除某个ID的应收订单 DELETE: /api/business/yings/' + delOrderId)
-        server.delete('/api/business/yings/' + delOrderId)
+    it(`应收订单 - 删除某个ID的应收订单 DELETE: /api/business/yings/${delOrderId}`, function (done) {
+        console.log(`提示信息: 删除某个ID的应收订单 DELETE: /api/business/yings/` + delOrderId)
+        server.delete(`/api/business/yings/` + delOrderId)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
@@ -308,9 +314,9 @@ describe('应收订单', function () {
             })
     })
 
-    it('应收订单 - 不能重复删除某个ID的应收订单 DELETE: /api/business/yings/3', function (done) {
-        console.log('提示信息: 不能重复删除某个ID的应收订单 DELETE: /api/business/yings/' + delOrderId)
-        server.delete('/api/business/yings/' + delOrderId)
+    it(`应收订单 - 不能重复删除某个ID的应收订单 DELETE: /api/business/yings/${delOrderId}`, function (done) {
+        console.log(`提示信息: 不能重复删除某个ID的应收订单 DELETE: /api/business/yings/${delOrderId}`)
+        server.delete(`/api/business/yings/${delOrderId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
@@ -327,8 +333,8 @@ describe('应收订单', function () {
 
 
 
-    it('核算单元 - 新建核算单元1 POST: /api/business/ying/1/units', function (done) {
-        server.post('/api/business/ying/1/units')
+    it(`核算单元 - 新建核算单元1 POST: /api/business/ying/${orderId}/units`, function (done) {
+        server.post(`/api/business/ying/${orderId}/units`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -347,13 +353,15 @@ describe('应收订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.hsMonth).to.include('201709')
+                expect(res.body.data.hsMonth, '返回的数据data对象的hsMonth属性错误').to.include('201709')
+
+                unitId = res.body.data.id
                 done()
             })
     })
 
-    it('核算单元 - 新建核算单元2 POST: /api/business/ying/1/units', function (done) {
-        server.post('/api/business/ying/1/units')
+    it(`核算单元 - 新建核算单元2 POST: /api/business/ying/${orderId}/units`, function (done) {
+        server.post(`/api/business/ying/${orderId}/units`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -372,13 +380,13 @@ describe('应收订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.hsMonth).to.include('201710')
+                expect(res.body.data.hsMonth, '返回的数据data对象的hsMonth属性错误').to.include('201710')
                 done()
             })
     })
 
-    it('核算单元 - 获取应收订单核算单元列表 GET: /api/business/ying/1/units?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/business/ying/1/units?pageNo=1&pageSize=2')
+    it(`核算单元 - 获取应收订单核算单元列表 GET: /api/business/ying/${orderId}/units?pageNo=1&pageSize=2`, function (done) {
+        server.get(`/api/business/ying/${orderId}/units?pageNo=1&pageSize=2`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -389,13 +397,13 @@ describe('应收订单', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.pageNo, 'pageNo值应该是1 但实际不是1').to.equal(1)
                 expect(res.body.data.pageSize, 'pageSize值应该是2 但实际不是2').to.equal(2)
-                expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
+                expect(res.body.data.results, 'data.results 的返回记录数量错误').to.have.lengthOf(2)
                 done()
             })
     })
 
-    it('核算单元 - 获取某个ID的核算单元信息 GET: /api/business/ying/1/units/1', function (done) {
-        server.get('/api/business/ying/1/units/1')
+    it(`核算单元 - 获取某个ID的核算单元信息 GET: /api/business/ying/${orderId}/units/${unitId}`, function (done) {
+        server.get(`/api/business/ying/${orderId}/units/${unitId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -405,13 +413,13 @@ describe('应收订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.hsMonth).to.include('201709')
+                expect(res.body.data.hsMonth, '返回的数据data对象的hsMonth属性错误').to.include('201709')
                 done()
             })
     })
 
-    it('核算单元 - 修改某个ID的应收订单核算单元 PUT: /api/business/ying/1/units/1', function (done) {
-        server.put('/api/business/ying/1/units/1')
+    it(`核算单元 - 修改某个ID的应收订单核算单元 PUT: /api/business/ying/${orderId}/units/${unitId}`, function (done) {
+        server.put(`/api/business/ying/${orderId}/units/${unitId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -483,7 +491,7 @@ describe('应收订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('那曲')
                 orderId = res.body.data.id
                 done()
             })
@@ -511,7 +519,7 @@ describe('应收订单', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.line).to.include('那曲')
+                expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('那曲')
                 done()
             })
     })

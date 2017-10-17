@@ -22,9 +22,9 @@
 
                                     <ul class="list-group" >
                                         <li class="list-group-item mb-2" *ngFor=" let borrow of borrowPostList">
-                                            ID:{{borrow.id}} 借款日期:{{borrow.payDate}} 资金方:{{borrow.capitalId | findKey:partyList:'name'}}
+                                            ID:{{borrow.id}} 借款日期:{{borrow.jiekuanDate }} 资金方:{{borrow.capitalId | findKey:partyList:'name'}}
                                             金额:{{borrow.amount}}
-                                            对应本金:{{borrow.principal}} 对应利息:{{borrow.interest}} 服务费:{{borrow.fee}}
+                                            对应还款本金:{{borrow.principal}} 利息:{{borrow.interest}} 服务费:{{borrow.fee}}
                                             <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delBorrow(borrow)"> x </button>
                                         </li>
                                     </ul>
@@ -75,28 +75,35 @@
                     <tr>
                         <th>ID</th>
                         <th>核算月</th>
-                        <th>资金方</th>
+                        <!--<th>资金方</th>-->
 
                         <th>还款日期</th>
-                        <th>还款本金</th>
-                        <th>还款利息</th>
-                        <th>还款服务费</th>
+                        <th>对应付款</th>
+                        <!--<th>还款本金</th>-->
+                        <!--<th>还款利息</th>-->
+                        <!--<th>还款服务费</th>-->
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let shipping of shippingList; trackBy: trackByFn">
-                        <td> {{shipping.id}}</td>
-                        <td> {{shipping.hsId | findKey : unitList : 'name'}}</td>
-                        <td> {{shipping.skCompanyId | findKey : partyList : 'name'}}</td>
+                    <tr *ngFor="let repaymentHK of repaymentHKList; trackBy: trackByFn">
+                        <td> {{repaymentHK.id}}</td>
+                        <td> {{repaymentHK.hsId | findKey : unitList : 'name'}}</td>
+                        <!--<td> {{repaymentHK.skCompanyId | findKey : partyList : 'name'}}</td>-->
 
-                        <td> {{shipping.huankuankDate }}</td>
-                        <td> {{shipping.huankuanPrincipal }}</td>
-                        <td> {{shipping.huankuanInterest }}</td>
-                        <td> {{shipping.huankuanFee}}</td>
+                        <td> {{repaymentHK.huankuankDate }}</td>
+
 
                         <td>
-                            <!--<button class="btn btn-info btn-sm" (click)="showForm(false, shipping)"> 修改 </button>-->
+                            <span *ngFor="let item of repaymentHK.huankuanMapList" >对应付款ID:{{item.huankuanId }} 本金:{{item.principal }} 利息:{{item.interest }} 服务费:{{item.fee }}</span>
+                        </td>
+                        <!--<td> {{repaymentHK.huankuanPrincipal }}</td>-->
+                        <!--<td> {{repaymentHK.huankuanInterest }}</td>-->
+                        <!--<td> {{repaymentHK.huankuanFee}}</td>-->
+
+                        <td>
+                            <button class="btn btn-link btn-sm" (click)="showForm(false, repaymentHK)"> 修改 </button>
+                            <button class="btn btn-link btn-sm" (click)="deleteItem(repaymentHK)"> 删除 </button>
                         </td>
                     </tr>
                     </tbody>
