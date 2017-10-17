@@ -147,7 +147,7 @@ describe('应收订单 发票:', function () {
             })
     })
 
-    it('发票 - 获取某个ID的发票信息 GET: /api/business/ying/1/invoices/5', function (done) {
+    it('发票 - 获取某个ID的发票信息 GET: /api/business/ying/1/invoices/1', function (done) {
         server.get('/api/business/ying/1/invoices/1')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -169,7 +169,7 @@ describe('应收订单 发票:', function () {
             .set(config.headers)
             .send(
                 {   "id":1,
-                    "hsId" : 3,
+                    "hsId" : 2,
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-10-06 00:00:00",
@@ -178,7 +178,7 @@ describe('应收订单 发票:', function () {
                     "orderId" : 9,
                     "details" : [
                         {
-                            "id" : 5,
+                            "id" : 1,
                             "invoiceId" : 1,
                             "invoiceNumber" : "2000",
                             "cargoAmount" : 1000,
@@ -187,19 +187,15 @@ describe('应收订单 发票:', function () {
 
                         },
                         {
-                            "id" : 6,
+                            "id" : 2,
                             "invoiceId" : 1,
                             "invoiceNumber" : "2000",
                             "cargoAmount" : 1000,
                             "taxRate" : 0.2,
                             "priceAndTax" : 100,
 
-                        },
-                        {"invoiceNumber" : "22",
-                            "cargoAmount" : "22",
-                            "taxRate" : "22",
-                            "priceAndTax" : "22"
                         }
+
                     ],
                     "id" : 1
                 }
