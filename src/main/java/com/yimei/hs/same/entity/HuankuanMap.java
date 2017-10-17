@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HuankuanMap implements Serializable {
-    @NotNull(groups = {UpdateGroup.class}, message = "关联不能为空")
+
     private Long id;
 
     // @NotNull(groups = {CreateGroup.class}, message = "业务线id不能为空")

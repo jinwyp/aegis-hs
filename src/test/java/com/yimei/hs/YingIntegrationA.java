@@ -96,20 +96,20 @@ public class YingIntegrationA extends HsTestBase {
         defaultUser();
         order();
         config();
-//        fee();
-//        traffic();
-//        ruku();
-//        chuku();
-//        huikuan();
-//        fukuan();
-//        fayun();
-//        jiekuan();
-//        huankuan();
-//        huankuanAuto();
-//        jiekuan_huankuan();
+        fee();
+        traffic();
+        ruku();
+        chuku();
+        huikuan();
+        fukuan();
+        fayun();
+        jiekuan();
+        huankuan();
+        huankuanAuto();
+        jiekuan_huankuan();
 
-//        buyer();
-//        seller();
+        buyer();
+        seller();
 
 //        buyerCang();
 //        sellerCang();
@@ -1124,7 +1124,7 @@ public class YingIntegrationA extends HsTestBase {
             setReceiveCompanyId(yingOrderResult.getData().getUpstreamId());
             setPayUsage(PaymentPurpose.DEPOSITECASH);
             setPayAmount(new BigDecimal("510000"));
-            setCapitalId(1L);
+            setCapitalId(2L);
         }};
         Fukuan yingFukuantwo = new Fukuan() {{
             setOrderId(yingOrderResult.getData().getId());
@@ -1133,7 +1133,7 @@ public class YingIntegrationA extends HsTestBase {
             setReceiveCompanyId(yingOrderResult.getData().getUpstreamId());
             setPayUsage(PaymentPurpose.FIAL_PAYMENT);
             setPayAmount(new BigDecimal("54294.93"));
-            setCapitalId(1L);
+            setCapitalId(2L);
         }};
         fukuanResult = client.exchange(fukuanCreateUrl, HttpMethod.POST, new HttpEntity<>(yingFukuan), typeReferenceFukuan).getBody();
         if (fukuanResult.getSuccess()) {
