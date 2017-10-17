@@ -529,7 +529,6 @@ export class SettleOrderComponent implements OnInit {
             )
         }
 
-
     }
 
 
