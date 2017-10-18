@@ -11,6 +11,7 @@ import com.yimei.hs.same.entity.OrderParty;
 import com.yimei.hs.same.mapper.OrderConfigMapper;
 import com.yimei.hs.same.mapper.OrderMapper;
 import com.yimei.hs.same.mapper.OrderPartyMapper;
+import com.yimei.hs.user.mapper.PartyMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,8 @@ public class OrderService {
     private OrderConfigMapper orderConfigMapper;
 
     @Autowired
+    private PartyMapper partyMapper;
+    @Autowired
     LogService logService;
 
     /**
@@ -61,7 +64,13 @@ public class OrderService {
      * @return
      */
     public Order findOne(long id) {
-        return orderMapper.selectByPrimaryKey(id);
+        Order order = orderMapper.selectByPrimaryKey(id);
+        if (order != null) {
+            for (OrderParty orderParty:order.getOrderPartyList()) {
+                orderParty.setParty(partyMapper.selectByPrimaryKey(id));
+            }
+        }
+        return order;
     }
 
     /**

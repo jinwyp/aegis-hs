@@ -3,6 +3,7 @@ package com.yimei.hs.same.entity;
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.enums.CustomerType;
+import com.yimei.hs.user.entity.Party;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,8 @@ public class OrderParty implements Serializable {
 
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
+
+    private Party party;
 
     private static final long serialVersionUID = 1L;
 
