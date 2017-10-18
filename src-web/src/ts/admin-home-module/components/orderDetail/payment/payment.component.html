@@ -10,9 +10,16 @@
                 <bs-text-input formControlName="payAmount" [fc]="paymentForm.get('payAmount')" [type]="'number'" [label]="'付款金额:'" [dirty]="ignoreDirty" [error]="paymentFormError.payAmount"></bs-text-input>
                 <!--<bs-select formControlName="payMode" [fc]="paymentForm.get('payMode')" [label]="'付款方式:'" [dirty]="ignoreDirty"  [options]="payModeList" [error]="paymentFormError.payMode"></bs-select>-->
 
-                <!--<bs-select formControlName ="capitalId" [fc]="paymentForm.get('capitalId')" [label]="'资金方:'" [dirty]="ignoreDirty"  [options]="partyList" [error]="paymentFormError.capitalId"></bs-select>-->
-                <!--<bs-text-input formControlName="useInterest" [fc]="paymentForm.get('useInterest')" [type]="'number'" [label]="'外部资金使用利率:'" [dirty]="ignoreDirty" [error]="paymentFormError.useInterest"></bs-text-input>-->
-                <!--<bs-text-input formControlName="useDays" [fc]="paymentForm.get('useDays')" [type]="'number'" [label]="'外部资金使用天数:'" [dirty]="ignoreDirty" [error]="paymentFormError.useDays"></bs-text-input>-->
+                <bs-select formControlName ="capitalId" [fc]="paymentForm.get('capitalId')" [label]="'资金方:'" [dirty]="ignoreDirty"  [options]="partyList" [error]="paymentFormError.capitalId"></bs-select>
+
+                <div [hidden]="paymentForm.get('capitalId').value === currentOrder.mainAccounting">
+                    <bs-datepicker formControlName="jiekuanDate" [fc]="paymentForm.get('jiekuanDate')" [label]="'借款日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="paymentFormError.jiekuanDate"></bs-datepicker>
+                    <bs-text-input formControlName="amount" [fc]="paymentForm.get('amount')" [type]="'number'" [label]="'借款金额:'" [dirty]="ignoreDirty" [error]="paymentFormError.amount"></bs-text-input>
+
+                    <bs-text-input formControlName="useInterest" [fc]="paymentForm.get('useInterest')" [type]="'number'" [label]="'外部资金使用利率:'" [dirty]="ignoreDirty" [error]="paymentFormError.useInterest"></bs-text-input>
+                    <bs-text-input formControlName="useDays" [fc]="paymentForm.get('useDays')" [type]="'number'" [label]="'外部资金使用天数:'" [dirty]="ignoreDirty" [error]="paymentFormError.useDays"></bs-text-input>
+
+                </div>
 
 
                 <div class="form-group row">

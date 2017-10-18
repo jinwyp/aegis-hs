@@ -148,6 +148,16 @@ export class PaymentComponent implements OnInit {
         },
         'payMode'  : {
             'required'      : '请填写付款方式!'
+        },
+
+        'amount'  : {
+            'required'      : '请填写借款金额!'
+        },
+        'jiekuanDate'  : {
+            'required'      : '请填写借款日期!'
+        },
+        'capitalId'  : {
+            'required'      : '请填写资金方!'
         }
     }
 
@@ -158,17 +168,18 @@ export class PaymentComponent implements OnInit {
     createPaymentForm(): void {
 
         this.paymentForm = this.fb.group({
-            'hsId'    : ['', [Validators.required ] ],
-            'payDate'    : [null, [Validators.required ] ],
-            'receiveCompanyId'    : ['', [Validators.required ] ],
+            'hsId'             : ['', [Validators.required]],
+            'payDate'          : [null, [Validators.required]],
+            'receiveCompanyId' : ['', [Validators.required]],
 
-            'payUsage'    : ['', [Validators.required ] ],
-            'payAmount'    : ['', [Validators.required ] ]
-            // 'payMode'    : ['', [Validators.required ] ],
-            //
-            // 'capitalId'    : ['', [Validators.required ] ],
-            // 'useInterest'    : ['', [] ],
-            // 'useDays'    : ['', [ ] ]
+            'payUsage'  : ['', [Validators.required]],
+            'payAmount' : ['', [Validators.required]],
+
+            'amount'      : ['', [Validators.required]],
+            'jiekuanDate' : [null, [Validators.required]],
+            'capitalId'   : [this.currentOrder.mainAccounting, [Validators.required]],
+            'useInterest' : ['', []],
+            'useDays'     : ['', []]
         } )
 
 
@@ -183,6 +194,14 @@ export class PaymentComponent implements OnInit {
 
 
     paymentFormSubmit() {
+
+        if (!this.paymentForm.value.amount) {
+            this.paymentForm.patchValue({ amount : '99999999' })
+        }
+        if (!this.paymentForm.value.jiekuanDate) {
+            this.paymentForm.patchValue({jiekuanDate : '2299-12-30'})
+        }
+
 
         if (this.paymentForm.invalid) {
             this.paymentFormInputChange(this.paymentForm.value)
@@ -241,9 +260,10 @@ export class PaymentComponent implements OnInit {
 
                 'payUsage'    : '',
                 'payAmount'    : '',
-                'payMode'    : '',
 
-                'capitalId'    : '',
+                'amount'    : '',
+                'jiekuanDate'    : null,
+                'capitalId'    : this.currentOrder.mainAccounting,
                 'useInterest'    : '',
                 'useDays'    : ''
             })
