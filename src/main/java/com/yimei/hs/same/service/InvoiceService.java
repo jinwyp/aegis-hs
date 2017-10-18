@@ -87,7 +87,14 @@ public class InvoiceService {
      */
     @Transactional(readOnly = false)
     public int update(Invoice yingInvoice) {
-        return invoiceMapper.updateByPrimaryKeySelective(yingInvoice);
+        int rtn = invoiceMapper.updateByPrimaryKeySelective(yingInvoice);
+
+        List<InvoiceDetail> invoiceDetails = yingInvoice.getDetails();
+        for (InvoiceDetail invoiceDetail : invoiceDetails) {
+            invoiceDetailMapper.updateByPrimaryKeySelective(invoiceDetail);
+        }
+
+        return rtn;
     }
 
     /**
