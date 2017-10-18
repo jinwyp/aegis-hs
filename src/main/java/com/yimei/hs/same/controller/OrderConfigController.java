@@ -56,15 +56,21 @@ public class OrderConfigController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @RequestBody OrderConfig orderConfig) {
+        if (!orderConfigService.findOneByIdAndOrderId(orderConfig.getHsMonth(), morderId)) {
 
-        orderConfig.setOrderId(morderId);
-        int rtn = orderConfigService.create(orderConfig);
-        if (rtn != 1) {
-            logger.error("创建失败: {}", orderConfig);
-            return Result.error(5001, "创建失败");
+
+            orderConfig.setOrderId(morderId);
+            int rtn = orderConfigService.create(orderConfig);
+            if (rtn != 1) {
+                logger.error("创建失败: {}", orderConfig);
+                return Result.error(4001, "创建失败");
+            } else {
+                return Result.ok(orderConfig);
+            }
         } else {
-            return Result.ok(orderConfig);
+            return Result.error(4001, "不能重复创建核算月");
         }
+
     }
 
     /**
@@ -89,7 +95,8 @@ public class OrderConfigController {
     }
 
     /**
-     *  更新核算月
+     * 更新核算月
+     *
      * @param businessType
      * @param morderId
      * @param id
@@ -105,7 +112,7 @@ public class OrderConfigController {
             @RequestBody @Validated(UpdateGroup.class) OrderConfig orderConfig) {
 
 
-      OrderConfig orderConfigDB=  orderConfigService.findOne(id);
+        OrderConfig orderConfigDB = orderConfigService.findOne(id);
         if (orderConfigDB.getOrderId() == morderId) {
             logger.debug("orderConfig-====>" + id);
 
@@ -124,6 +131,7 @@ public class OrderConfigController {
         }
 
     }
+
 
 }
 

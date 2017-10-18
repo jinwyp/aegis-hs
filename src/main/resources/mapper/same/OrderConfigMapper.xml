@@ -41,6 +41,14 @@
         orderId = #{orderId, jdbcType=BIGINT}
     </select>
 
+    <select id="findOneByIdAndOrderId" resultType="java.lang.Boolean">
+        SELECT
+        count(id)
+        from hs_same_order_config
+        WHERE
+        orderId = #{orderId, jdbcType=BIGINT} and hsMonth = #{hsMonth ,jdbcType=CHAR}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_order_config
         WHERE id = #{id,jdbcType=BIGINT}

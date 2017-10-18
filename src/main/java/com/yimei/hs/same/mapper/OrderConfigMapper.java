@@ -3,6 +3,7 @@ package com.yimei.hs.same.mapper;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.same.dto.PageOrderConfigDTO;
 import com.yimei.hs.same.entity.OrderConfig;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface OrderConfigMapper {
     Page<OrderConfig> getPage(PageOrderConfigDTO pageOrerConfigDTO);
 
     List<OrderConfig> getList(Long orderId);
+
+    boolean findOneByIdAndOrderId(@Param("hsMonth") String hsMonth, @Param("orderId") Long orderId);
 }

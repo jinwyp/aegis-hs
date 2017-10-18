@@ -68,4 +68,8 @@ public class OrderConfigService {
     public int update(OrderConfig orderConfig) {
         return orderConfigMapper.updateByPrimaryKeySelective(orderConfig);
     }
+
+    public boolean findOneByIdAndOrderId(String hsMonth, Long morderId) {
+        return orderConfigMapper.findOneByIdAndOrderId(hsMonth, morderId);
+    }
 }
