@@ -5,17 +5,17 @@ import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
+import com.yimei.hs.enums.CustomerType;
 import com.yimei.hs.same.dto.PageOrderPartyDTO;
 import com.yimei.hs.same.entity.OrderParty;
 import com.yimei.hs.same.service.OrderPartyService;
-import com.yimei.hs.ying.dto.PageYingOrderPartyDTO;
-import com.yimei.hs.ying.entity.YingOrderParty;
-import com.yimei.hs.ying.service.YingPartyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by hary on 2017/9/25.
@@ -45,7 +45,15 @@ public class OrderPartyController {
         return Result.ok(orderPartyService.getPage(pageOrderPartyDTO));
     }
 
+    @GetMapping("/{morderId}/parties{customerType}")
+    public ResponseEntity<Result<List<OrderParty>>>getOrderPartyLisTByType(
+            @PathVariable("businessType") BusinessType businessType,
+            @PathVariable("morderId") Long morderId,
+            @PathVariable("customerType")CustomerType customerType
+            ){
+        return Result.ok(orderPartyService.getOrderPartyListByType(morderId,customerType));
 
+    }
     /**
      * update
      */
@@ -68,6 +76,9 @@ public class OrderPartyController {
 
     }
 
+
+
+
     /**
      * 逻辑删除
      */
@@ -86,5 +97,6 @@ public class OrderPartyController {
         }
 
     }
+
 
 }

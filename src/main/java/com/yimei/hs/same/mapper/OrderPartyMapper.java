@@ -1,8 +1,10 @@
 package com.yimei.hs.same.mapper;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.CustomerType;
 import com.yimei.hs.same.dto.PageOrderPartyDTO;
 import com.yimei.hs.same.entity.OrderParty;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,4 +26,6 @@ public interface OrderPartyMapper {
     int delete(Long id);
 
     List<OrderParty> getList(Long orderId);
+
+    List<OrderParty> getOrderPartyListByType(@Param("orderId")Long orderId,@Param("customerType") CustomerType customerType);
 }
