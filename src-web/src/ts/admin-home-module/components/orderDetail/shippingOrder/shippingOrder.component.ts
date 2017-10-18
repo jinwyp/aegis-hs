@@ -75,7 +75,6 @@ export class ShippingOrderComponent implements OnInit {
         this.hsOrderService.getShippingListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
                 this.shippingList = data.data.results
-
             },
             error => {this.httpService.errorHandler(error) }
         )
@@ -89,7 +88,7 @@ export class ShippingOrderComponent implements OnInit {
                 if (Array.isArray(data.data.results)) {
 
                     const tempArray = []
-                    this.currentOrder.orderConfigList.forEach( unit => {
+                    data.data.results.forEach( unit => {
                         unit.name = unit.hsMonth
                         tempArray.push(unit)
                     })

@@ -63,6 +63,7 @@ export class PaymentComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.getOrderUnitList()
         this.getPartyList()
         this.getPaymentList()
         this.createPaymentForm()
@@ -108,7 +109,25 @@ export class PaymentComponent implements OnInit {
         )
     }
 
+    getOrderUnitList () {
+        this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
+            data => {
+                this.unitList = data.data.results
 
+                if (Array.isArray(data.data.results)) {
+
+                    const tempArray = []
+                    data.data.results.forEach( unit => {
+                        unit.name = unit.hsMonth
+                        tempArray.push(unit)
+                    })
+
+                    this.unitList = tempArray
+                }
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
 
     paymentFormError : any = {}
     paymentFormValidationMessages: any = {

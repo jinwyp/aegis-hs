@@ -67,6 +67,7 @@ export class RepaymentComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.getOrderUnitList()
         this.getPartyList()
         this.getRepaymentList()
         this.createRepaymentForm()
@@ -112,7 +113,25 @@ export class RepaymentComponent implements OnInit {
         )
     }
 
+    getOrderUnitList () {
+        this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
+            data => {
+                this.unitList = data.data.results
 
+                if (Array.isArray(data.data.results)) {
+
+                    const tempArray = []
+                    data.data.results.forEach( unit => {
+                        unit.name = unit.hsMonth
+                        tempArray.push(unit)
+                    })
+
+                    this.unitList = tempArray
+                }
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
 
     repaymentFormError : any = {}
     repaymentFormValidationMessages: any = {

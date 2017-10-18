@@ -75,6 +75,7 @@ export class SettleOrderComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.getOrderUnitList()
         this.getPartyList()
         this.getSettleList()
         this.createSettleForm()
@@ -166,6 +167,25 @@ export class SettleOrderComponent implements OnInit {
         )
     }
 
+    getOrderUnitList () {
+        this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
+            data => {
+                this.unitList = data.data.results
+
+                if (Array.isArray(data.data.results)) {
+
+                    const tempArray = []
+                    data.data.results.forEach( unit => {
+                        unit.name = unit.hsMonth
+                        tempArray.push(unit)
+                    })
+
+                    this.unitList = tempArray
+                }
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
 
     settleFormError : any = {}
     settleFormValidationMessages: any = {
