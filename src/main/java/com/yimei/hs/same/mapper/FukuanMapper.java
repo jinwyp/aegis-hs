@@ -23,5 +23,5 @@ public interface FukuanMapper {
 
     Page<Fukuan> getPage(PageFukuanDTO pageFukuanDTO);
 
-    List<Fukuan> getList(Long orderId);
+    List<Fukuan> getunTradeDeficittlist(Long orderId);
 }

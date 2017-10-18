@@ -72,7 +72,7 @@ public class FukuanService {
      * @return
      */
     public List<Fukuan> getListUnfinished(long orderId) {
-        List<Fukuan> fukuans = getAll(orderId);
+        List<Fukuan> fukuans = fukuanMapper.getunTradeDeficittlist((orderId));
 
         // 2. 对每一笔付款， 关联回款列表, 回款map明细
         for (Fukuan fukuan : fukuans) {
@@ -100,7 +100,7 @@ public class FukuanService {
     public List<Fukuan> huikuanUnfinished(long orderId) {
 
         // 1. 获取订单的所有付款
-        List<Fukuan> all = this.getAll(orderId);
+        List<Fukuan> all = fukuanMapper.getunTradeDeficittlist(orderId);
 
         for (Fukuan fukuan : all) {
             // 设置付款所关联的回款明细
@@ -203,4 +203,7 @@ public class FukuanService {
 
         return rtn;
     }
+
 }
+
+

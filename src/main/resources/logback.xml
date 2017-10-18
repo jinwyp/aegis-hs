@@ -17,7 +17,7 @@
         </encoder>
     </appender>
 
-    <logger name="jdbc.sqltiming" level="WARN"/>
+    <logger name="jdbc.sqltiming" level="INFO"/>
 
     <logger name="jdbc.audit" level="OFF"/>
     <logger name="jdbc.sqlonly" level="OFF"/>
