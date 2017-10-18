@@ -59,22 +59,10 @@ export class ShippingOrderComponent implements OnInit {
 
     ngOnInit(): void {
 
-
+        this.getOrderUnitList()
         this.getShippingList()
         this.createShippingForm()
 
-        if (this.currentOrder) {
-            if (Array.isArray(this.currentOrder.orderConfigList)) {
-
-                const tempArray = []
-                this.currentOrder.orderConfigList.forEach( unit => {
-                    unit.name = unit.hsMonth
-                    tempArray.push(unit)
-                })
-
-                this.unitList = tempArray
-            }
-        }
     }
 
 
@@ -93,7 +81,26 @@ export class ShippingOrderComponent implements OnInit {
         )
     }
 
+    getOrderUnitList () {
+        this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
+            data => {
+                this.unitList = data.data.results
 
+                if (Array.isArray(data.data.results)) {
+
+                    const tempArray = []
+                    this.currentOrder.orderConfigList.forEach( unit => {
+                        unit.name = unit.hsMonth
+                        tempArray.push(unit)
+                    })
+
+                    this.unitList = tempArray
+                }
+
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
 
     shippingFormError : any = {}
     shippingFormValidationMessages: any = {
