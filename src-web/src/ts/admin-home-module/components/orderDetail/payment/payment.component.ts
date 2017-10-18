@@ -213,7 +213,15 @@ export class PaymentComponent implements OnInit {
 
         const postData = this.paymentForm.value
         postData.orderId = this.currentOrder.id
-
+        postData.jiekuan = {
+            orderId : this.currentOrder.id,
+            hsId : this.paymentForm.value.hsId,
+            jiekuanDate : this.paymentForm.value.jiekuanDate,
+            amount : this.paymentForm.value.amount,
+            capitalId : this.paymentForm.value.capitalId,
+            useInterest : this.paymentForm.value.useInterest,
+            useDays : this.paymentForm.value.useDays
+        }
 
         if (this.isAddNew) {
             this.hsOrderService.createNewPayment(this.businessType, this.currentOrder.id, postData).subscribe(
@@ -273,6 +281,11 @@ export class PaymentComponent implements OnInit {
             this.isAddNew = false
             this.currentPaymentId = shippingOrder.id
 
+            shippingOrder.jiekuanDate = shippingOrder.jiekuan.jiekuanDate
+            shippingOrder.amount = shippingOrder.jiekuan.amount
+            shippingOrder.useInterest = shippingOrder.jiekuan.useInterest
+            shippingOrder.useDays = shippingOrder.jiekuan.useDays
+            
             this.paymentForm.patchValue(shippingOrder)
         }
 
