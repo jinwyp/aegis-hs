@@ -56,21 +56,9 @@ export class UnitComponent implements OnInit {
 
     ngOnInit(): void {
 
-        // this.getOrderUnitList()
+        this.getOrderUnitList()
         this.createOrderUnitForm()
 
-        if (this.currentOrder) {
-            if (Array.isArray(this.currentOrder.orderConfigList)) {
-
-                const tempArray = []
-                this.currentOrder.orderConfigList.forEach( unit => {
-                    unit.name = unit.hsMonth
-                    tempArray.push(unit)
-                })
-
-                this.unitList = tempArray
-            }
-        }
     }
 
 
@@ -83,7 +71,6 @@ export class UnitComponent implements OnInit {
         this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
                 this.unitList = data.data.results
-
             },
             error => {this.httpService.errorHandler(error) }
         )
