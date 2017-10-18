@@ -7,6 +7,7 @@
         <result column="custType" jdbcType="VARCHAR" property="custType"/>
         <result column="customerId" jdbcType="BIGINT" property="customerId"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+        <result column="name" javaType="String" property="name"/>
     </resultMap>
     <sql id="Base_Column_List">
         id, orderId, custType, customerId, tsc
@@ -19,14 +20,14 @@
         where id = #{id,jdbcType=BIGINT} and deleted = 0
     </select>
 
-    <!---->
+
     <select id="getPage" resultType="com.yimei.hs.same.entity.OrderParty">
         select
         <include refid="Base_Column_List"/>
         from hs_same_order_party
         <where>
-            <if test="true">deleted = 0</if>
-            <if test="orderId!=null">orderId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="true"> AND deleted = 0</if>
+            <if test="orderId!=null"> AND orderId = #{orderId, jdbcType=BIGINT}</if>
         </where>
     </select>
 
@@ -36,11 +37,20 @@
         from hs_same_order_party
        WHERE  orderId=#{orderId,jdbcType=BIGINT}
     </select>
-    <select id="getOrderPartyListByType" resultType="com.yimei.hs.same.entity.OrderParty">
+
+    <!-- 根据参与方类型查询参与方-->
+    <select id="getOrderPartyListByType" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
-        from hs_same_order_party
-        WHERE  orderId=#{orderId,jdbcType=BIGINT} and custType=#{customerType ,jdbcType=VARCHAR}
+        orderparty.id,
+        orderparty.orderId,
+        orderparty.custType,
+        orderparty.customerId,
+        orderparty.tsc,
+
+        party.name
+        from hs_same_order_party orderparty
+        LEFT JOIN hs_party party ON party.id=orderparty.customerId
+        WHERE  orderparty.orderId=#{orderId,jdbcType=BIGINT} and orderparty.custType=#{customerType ,jdbcType=VARCHAR}
     </select>
 
     <!-- 物理删除-->

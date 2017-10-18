@@ -21,6 +21,8 @@ public class OrderParty implements Serializable {
 
     private Long orderId;
 
+    private String name;
+
     @NotNull(groups = {CreateGroup.class}, message = "客户类型不能为空")
     private CustomerType custType;
 
