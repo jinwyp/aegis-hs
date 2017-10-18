@@ -1,12 +1,15 @@
 package com.yimei.hs.same.service;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.CustomerType;
 import com.yimei.hs.same.dto.PageOrderPartyDTO;
 import com.yimei.hs.same.entity.OrderParty;
 import com.yimei.hs.same.mapper.OrderPartyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by hary on 2017/9/25.
@@ -34,5 +37,9 @@ public class OrderPartyService {
 
     public int delete(Long id) {
         return orderPartyMapper.delete(id);
+    }
+
+    public List<OrderParty> getOrderPartyListByType(Long morderId, CustomerType customerType) {
+        return orderPartyMapper.getOrderPartyListByType(morderId,customerType);
     }
 }

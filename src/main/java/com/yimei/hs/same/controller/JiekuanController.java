@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -94,12 +95,19 @@ public class JiekuanController {
             @RequestBody @Validated(CreateGroup.class) Jiekuan jiekuan
     ) {
         jiekuan.setOrderId(morderId);
-        int rtn = jiekuanService.create(jiekuan);
-        if (rtn != 1) {
-            logger.error("创建失败: {}", jiekuan);
+        if (jiekuan.getAmount().compareTo(BigDecimal.ZERO) ==1 && jiekuan.getAmount().compareTo(new BigDecimal("99999999.99")) <=0) {
+
+
+            int rtn = jiekuanService.create(jiekuan);
+            if (rtn != 1) {
+                logger.error("创建失败: {}", jiekuan);
+                return Result.error(4001, "创建失败");
+            }
+            return Result.ok(jiekuan);
+        } else {
             return Result.error(4001, "创建失败");
         }
-        return Result.ok(jiekuan);
+
     }
 
     /**

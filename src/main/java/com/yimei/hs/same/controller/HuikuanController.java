@@ -80,41 +80,47 @@ public class HuikuanController {
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) Huikuan huikuan
     ) {
-        if (huikuan.getHuikuanMode().equals(PayMode.BANK_ACCEPTANCE) && huikuan.getHuikuanBankPaper() == true) {
 
-            if (huikuan.getHuikuanBankPaperDate() == null) {
-                return Result.error(4001, "银行承兑收到票据原件日期不能为空", HttpStatus.BAD_REQUEST);
-            } else if (huikuan.getHuikuanBankDiscount() != null && huikuan.getHuikuanBankDiscount() == true &&
-                    huikuan.getHuikuanBankDiscountRate() == null) {
-                return Result.error(4001, "银行承兑贴息率不能为空", HttpStatus.BAD_REQUEST);
-            } else if (huikuan.getHuikuanBankPaperExpire() == null) {
-                return Result.error(4001, "银行承兑票据到期日不能为空", HttpStatus.BAD_REQUEST);
-            } else if (huikuan.getHuikuanBankDiscountRate() != null && huikuan.getHuikuanBankDiscountRate().compareTo(new BigDecimal(0)) == -1) {
-                return Result.error(4001, "银行承兑贴息率不能为负数", HttpStatus.BAD_REQUEST);
+        if (huikuan.getHuikuanAmount().compareTo(BigDecimal.ZERO) == 1 && huikuan.getHuikuanAmount().compareTo(new BigDecimal("99999999.99")) <= 0) {
+
+            if (huikuan.getHuikuanMode().equals(PayMode.BANK_ACCEPTANCE) && huikuan.getHuikuanBankPaper() == true) {
+
+                if (huikuan.getHuikuanBankPaperDate() == null) {
+                    return Result.error(4001, "银行承兑收到票据原件日期不能为空", HttpStatus.BAD_REQUEST);
+                } else if (huikuan.getHuikuanBankDiscount() != null && huikuan.getHuikuanBankDiscount() == true &&
+                        huikuan.getHuikuanBankDiscountRate() == null) {
+                    return Result.error(4001, "银行承兑贴息率不能为空", HttpStatus.BAD_REQUEST);
+                } else if (huikuan.getHuikuanBankPaperExpire() == null) {
+                    return Result.error(4001, "银行承兑票据到期日不能为空", HttpStatus.BAD_REQUEST);
+                } else if (huikuan.getHuikuanBankDiscountRate() != null && huikuan.getHuikuanBankDiscountRate().compareTo(new BigDecimal(0)) == -1) {
+                    return Result.error(4001, "银行承兑贴息率不能为负数", HttpStatus.BAD_REQUEST);
+                }
+
+            } else if (huikuan.getHuikuanMode().equals(PayMode.BUSINESS_ACCEPTANCE) && huikuan.getHuikuanBusinessPaper() == true) {
+                if (huikuan.getHuikuanBusinessPaperDate() == null) {
+                    return Result.error(4001, "商业承兑收到票据原件日期不能为空", HttpStatus.BAD_REQUEST);
+                } else if (huikuan.getHuikuanBusinessDiscount() != null && huikuan.getHuikuanBusinessDiscount() == true &&
+                        huikuan.getHuikuanBusinessDiscountRate() == null &&
+                        huikuan.getHuikuanBusinessDiscountRate().subtract(new BigDecimal(0)).doubleValue() <= 0) {
+                    return Result.error(4001, "商业承兑贴息率不能为空", HttpStatus.BAD_REQUEST);
+                } else if (huikuan.getHuikuanBusinessPaperExpire() == null) {
+                    return Result.error(4001, "商业承兑票据到期日不能为空", HttpStatus.BAD_REQUEST);
+                } else if (huikuan.getHuikuanBusinessDiscountRate() != null && huikuan.getHuikuanBusinessDiscountRate().compareTo(new BigDecimal(0)) == -1) {
+                    return Result.error(4001, "商业承兑贴息率不能为负数", HttpStatus.BAD_REQUEST);
+                }
+
             }
 
-        } else if (huikuan.getHuikuanMode().equals(PayMode.BUSINESS_ACCEPTANCE) && huikuan.getHuikuanBusinessPaper() == true) {
-            if (huikuan.getHuikuanBusinessPaperDate() == null) {
-                return Result.error(4001, "商业承兑收到票据原件日期不能为空", HttpStatus.BAD_REQUEST);
-            } else if (huikuan.getHuikuanBusinessDiscount() != null && huikuan.getHuikuanBusinessDiscount() == true &&
-                    huikuan.getHuikuanBusinessDiscountRate() == null &&
-                    huikuan.getHuikuanBusinessDiscountRate().subtract(new BigDecimal(0)).doubleValue() <= 0) {
-                return Result.error(4001, "商业承兑贴息率不能为空", HttpStatus.BAD_REQUEST);
-            } else if (huikuan.getHuikuanBusinessPaperExpire() == null) {
-                return Result.error(4001, "商业承兑票据到期日不能为空", HttpStatus.BAD_REQUEST);
-            } else if (huikuan.getHuikuanBusinessDiscountRate() != null && huikuan.getHuikuanBusinessDiscountRate().compareTo(new BigDecimal(0)) == -1) {
-                return Result.error(4001, "商业承兑贴息率不能为负数", HttpStatus.BAD_REQUEST);
+            huikuan.setOrderId(morderId);
+            int cnt = huikuanService.create(huikuan);
+            if (cnt != 1) {
+                logger.error("创建失败: {}", huikuan);
+                return Result.error(4001, "创建失败");
             }
-
+            return Result.ok(huikuan);
+        } else {
+            return Result.error(4001, "输入非法");
         }
-
-        huikuan.setOrderId(morderId);
-        int cnt = huikuanService.create(huikuan);
-        if (cnt != 1) {
-            logger.error("创建失败: {}", huikuan);
-            return Result.error(4001, "创建失败");
-        }
-        return Result.ok(huikuan);
     }
 
     /**

@@ -4,7 +4,7 @@ import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -25,7 +25,9 @@ public class Jiekuan implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "核算月id不能为空")
     private Long hsId;
 
-    @NotNull(groups = {CreateGroup.class}, message = "借款金额不能为空")
+    @NotNull(groups = {CreateGroup.class} , message = "借款金额不能为空")
+    @DecimalMax(value = "99999999.99" ,message = "借款金额")
+    @DecimalMin(value = "1")
     private BigDecimal amount;
 
     @NotNull(groups = {CreateGroup.class}, message = "资金方id不能为空")
