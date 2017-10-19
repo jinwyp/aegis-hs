@@ -104,6 +104,13 @@
              LEFT JOIN hs_same_jiekuan jiekuan ON  jiekuan.id=huankuannmap.jiekuanId
         where huankuannmap.huankuanId = #{huankuanId,jdbcType=BIGINT}
     </select>
+    <select id="getlimitInnerCapital" resultType="com.yimei.hs.same.entity.Jiekuan">
+        SELECT  <include refid="Base_Column_List"/>
+        FROM hs_same_jiekuan
+        WHERE orderId = #{orderId,jdbcType=BIGINT}
+               and deleted=0
+               and  capitalId != #{mainAccountId ,jdbcType=BIGINT}
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_jiekuan

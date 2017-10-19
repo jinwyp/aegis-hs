@@ -50,11 +50,14 @@ public class HuikuanService {
         // 获取回款列表
         Page<Huikuan> huikuanPage = huikuanMapper.getPage(pageHuikuanDTO);
 
-        // 对每一笔回款， 获取对应的付款列表
-        for (Huikuan huikuan : huikuanPage.getResults()) {
-            List<Fukuan> fukuans = huikuanMapper.getFukuanListByHuikuanId(huikuan.getId());
-            huikuan.setFukuanList(fukuans);
-            huikuan.setHuikuanMapsList(huikuanMapMapper.getListByHuikuanId(huikuan.getId()));
+        if (huikuanPage != null) {
+
+            // 对每一笔回款， 获取对应的付款列表
+            for (Huikuan huikuan : huikuanPage.getResults()) {
+                List<Fukuan> fukuans = huikuanMapper.getFukuanListByHuikuanId(huikuan.getId());
+                huikuan.setFukuanList(fukuans);
+                huikuan.setHuikuanMapsList(huikuanMapMapper.getListByHuikuanId(huikuan.getId()));
+            }
         }
         return huikuanPage;
     }
@@ -181,7 +184,7 @@ public class HuikuanService {
         dto.setPageNo(1);
         dto.setOrderId(orderId);
         List<Huikuan> list = this.getPage(dto).getResults();
-        for (Huikuan huikuan :list) {
+        for (Huikuan huikuan : list) {
         }
         return this.getHuikuanUnifished(list);
     }
