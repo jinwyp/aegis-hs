@@ -9,6 +9,7 @@ import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageJiekuanDTO;
 import com.yimei.hs.same.entity.Jiekuan;
 import com.yimei.hs.same.service.JiekuanService;
+import com.yimei.hs.same.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class JiekuanController {
 
     @Autowired
     private JiekuanService jiekuanService;
+    @Autowired
+    private OrderService orderService;
 
 
     /**
@@ -56,11 +59,11 @@ public class JiekuanController {
      *
      * @return
      */
-    @GetMapping("/{morderId}/jiekuansUnfinished/{capitalId}")
+    @GetMapping("/{morderId}/jiekuansUnfinished")
     public ResponseEntity<Result<List<Jiekuan>>> getListUnfinished(
             @PathVariable("businessType") BusinessType businessType,
-            @PathVariable("capitalId") Long capitalId,
             @PathVariable("morderId") Long morderId) {
+        Long capitalId = orderService.findOne(morderId).getMainAccounting();
         return Result.ok(jiekuanService.getListUnfinished(morderId,capitalId));
     }
 
