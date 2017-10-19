@@ -31,7 +31,6 @@ describe('应收订单 付款:', function () {
     let Authorization = ''
 
     let orderId = config.order.getOrderYingId
-    let delOrderId = config.order.delOrderYingId
 
     let paymentId = 1
     let delPaymentId = 3
@@ -163,7 +162,7 @@ describe('应收订单 付款:', function () {
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "2200",
                     "payMode" : "ELEC_REMITTANCE",
-                    "capitalId" : 1,
+                    "capitalId" : 2,
                     "useInterest" : "",
                     "useDays" : "",
                     "orderId" : 1

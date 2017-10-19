@@ -168,7 +168,8 @@ describe('应收订单 发票:', function () {
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
-                {   "id":1,
+                {
+                    "id":1,
                     "hsId" : 2,
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
@@ -195,9 +196,7 @@ describe('应收订单 发票:', function () {
                             "priceAndTax" : 100,
 
                         }
-
-                    ],
-                    "id" : 1
+                    ]
                 }
             )
             .expect('Content-Type', /json/)
