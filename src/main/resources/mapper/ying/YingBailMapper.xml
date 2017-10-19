@@ -34,9 +34,8 @@
     <!-- 获取保证金分页-->
     <select id="getPage" resultType="com.yimei.hs.ying.entity.YingBail">
         select
-        <include refid="Base_Column_List">
-            FROM hs_ying_bail
-        </include>
+        <include refid="Base_Column_List"/>
+        FROM hs_ying_bail
         <where>
             <if test="true">and deleted = 0</if>
             <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
@@ -120,13 +119,13 @@
 
     <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingBail">
         UPDATE hs_ying_bail
-        SET orderId               = #{orderId,jdbcType=BIGINT},
-            hsId                  = #{hsId,jdbcType=BIGINT},
-            bailDate                = #{bailDate,jdbcType=DATE},
-            bailAmount              = #{bailAmount,jdbcType=DECIMAL},
-            bailType          = #{bailType,jdbcType=VARCHAR},
-            tsc                   = #{tsc,jdbcType=TIMESTAMP},
-            tsu                   = current_timestamp
+        SET orderId    = #{orderId,jdbcType=BIGINT},
+            hsId       = #{hsId,jdbcType=BIGINT},
+            bailDate   = #{bailDate,jdbcType=DATE},
+            bailAmount = #{bailAmount,jdbcType=DECIMAL},
+            bailType   = #{bailType,jdbcType=VARCHAR},
+            tsc        = #{tsc,jdbcType=TIMESTAMP},
+            tsu        = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

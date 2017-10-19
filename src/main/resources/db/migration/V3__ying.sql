@@ -36,7 +36,8 @@ create table hs_ying_bail (
 
   deleted tinyint(1)          not null default 0 comment '是否删除',
   tsc timestamp               not null default current_timestamp,
-  tsu timestamp not null default current_timestamp
+  tsu timestamp not null default current_timestamp,
+  primary key (id)
 )engine=InnoDB default charset=utf8;
 alter table hs_ying_bail add foreign key(orderId) references hs_same_order(id);
 alter table hs_ying_bail add foreign key(hsId)    references hs_same_order_config(id);
