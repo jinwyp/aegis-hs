@@ -140,6 +140,12 @@ export class BorrowComponent implements OnInit {
         },
         'capitalId'  : {
             'required'      : '请填写资金方!'
+        },
+        'useInterest'  : {
+            'required'      : '请填写使用利率!'
+        },
+        'useDays'  : {
+            'required'      : '请填写使用天数!'
         }
     }
 
@@ -155,8 +161,8 @@ export class BorrowComponent implements OnInit {
             'amount'    : ['', [Validators.required ] ],
 
             'capitalId'    : ['', [Validators.required ] ],
-            'useInterest'    : ['', [] ],
-            'useDays'    : ['', [ ] ]
+            'useInterest'    : ['', [Validators.required] ],
+            'useDays'    : ['', [Validators.required ] ]
         } )
 
         this.borrowForm.valueChanges.subscribe(data => {

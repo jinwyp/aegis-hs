@@ -96,6 +96,14 @@ export class PaymentComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+
+        this.hsOrderService.getPaymentByID(this.businessType, this.currentOrder.id, 1).subscribe(
+            data => {
+                // this.paymentList = data.data.results
+
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
     }
 
     getPartyList () {
@@ -158,6 +166,12 @@ export class PaymentComponent implements OnInit {
         },
         'capitalId'  : {
             'required'      : '请填写资金方!'
+        },
+        'useInterest'  : {
+            'required'      : '请填写使用利率!'
+        },
+        'useDays'  : {
+            'required'      : '请填写使用天数!'
         }
     }
 
@@ -178,8 +192,8 @@ export class PaymentComponent implements OnInit {
             'amount'      : ['', [Validators.required]],
             'jiekuanDate' : [null, [Validators.required]],
             'capitalId'   : [this.currentOrder.mainAccounting, [Validators.required]],
-            'useInterest' : ['', []],
-            'useDays'     : ['', []]
+            'useInterest' : ['', [Validators.required]],
+            'useDays'     : ['', [Validators.required]]
         } )
 
 
@@ -285,7 +299,7 @@ export class PaymentComponent implements OnInit {
             shippingOrder.amount = shippingOrder.jiekuan.amount
             shippingOrder.useInterest = shippingOrder.jiekuan.useInterest
             shippingOrder.useDays = shippingOrder.jiekuan.useDays
-            
+
             this.paymentForm.patchValue(shippingOrder)
         }
 
