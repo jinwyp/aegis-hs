@@ -63,6 +63,13 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
                 if (m.matches()) {
                     String business = m.group(1);
 
+                    if ( business.equals("yings")) {
+                        business = "ying";
+                    }
+                    if ( business.equals("cangs")) {
+                        business = "cang";
+                    }
+
                     BusinessType type = BusinessType.valueOf(business);
 
                     long orderId = Long.parseLong(m.group(2));
@@ -74,10 +81,7 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
                     }
 
                 } else {
-                    response.setStatus(404);
-                    response.setContentType("application/json;charset=UTF-8");
-                    om.writeValue(response.getOutputStream(), new Result(4001, "页面不存在"));
-                    return false;
+                   return true;
                 }
             }
         }

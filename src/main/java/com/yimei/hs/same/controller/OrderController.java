@@ -46,6 +46,7 @@ public class OrderController {
             PageOrderDTO pageOrderDTO
     ) {
         // 如果不是管理员， 就只展示自己的订单
+        logger.debug("获取订单分页: {}, {}", user, pageOrderDTO);
         if (!user.getIsAdmin()) {
             pageOrderDTO.setOwnerId(user.getId());
         }
