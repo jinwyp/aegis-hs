@@ -186,7 +186,7 @@ describe('应收订单 借款单:', function () {
                     "useInterest" : "0.4",
                     "jiekuanDate" : "2017-10-01 00:00:00",
                     "useDays" : "60",
-                    "orderId" : 1
+                    "orderId" : orderId
                 }
             )
             .expect('Content-Type', /json/)
@@ -199,8 +199,8 @@ describe('应收订单 借款单:', function () {
             })
     })
 
-    it(`借款单 - 删除某个ID的借款单 DELETE: /api/business/${orderId}/jiekuans/${delBorrowId}`, function (done) {
-        server.delete(`/api/business/${orderId}/jiekuans/${delBorrowId}`)
+    it(`借款单 - 删除某个ID的借款单 DELETE: /api/business/ying/${orderId}/jiekuans/${delBorrowId}`, function (done) {
+        server.delete(`/api/business/ying/${orderId}/jiekuans/${delBorrowId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})

@@ -34,7 +34,7 @@ describe('应收订单 付款:', function () {
     let delOrderId = config.order.delOrderYingId
 
     let paymentId = 1
-    let delpaymentId = 3
+    let delPaymentId = 3
 
 
     before(function (done) {
@@ -55,8 +55,8 @@ describe('应收订单 付款:', function () {
 
 
 
-    it('付款单 - 新建付款单1 POST: /api/business/ying/1/fukuans', function (done) {
-        server.post('/api/business/ying/1/fukuans')
+    it(`付款单 - 新建付款单1 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -66,14 +66,12 @@ describe('应收订单 付款:', function () {
                     "receiveCompanyId" : 2,
                     "payUsage" : "TRADE_DEFICIT",
                     "payAmount" : "122",
-                    "amount" : "99999999",
-                    "jiekuanDate" : "2299-12-30 00:00:00",
-                    "capitalId" : 1,
+                    "capitalId" : 2,
                     "useInterest" : "",
                     "useDays" : "",
-                    "orderId" : 1,
+                    "orderId" : orderId,
                     "jiekuan" : {
-                        "orderId" : 1,
+                        "orderId" : orderId,
                         "hsId" : 1,
                         "jiekuanDate" : "2299-12-30 00:00:00",
                         "amount" : "99999999",
@@ -92,13 +90,13 @@ describe('应收订单 付款:', function () {
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.payDate).to.include('2017')
 
-                orderId = res.body.data.id
+                paymentId = res.body.data.id
                 done()
             })
     })
 
-    it('付款单 - 新建付款单2 POST: /api/business/ying/1/fukuans', function (done) {
-        server.post('/api/business/ying/1/fukuans')
+    it(`付款单 - 新建付款单2 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -109,16 +107,7 @@ describe('应收订单 付款:', function () {
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "122",
                     "capitalId" : 1,
-                    "orderId" : 1,
-                    "jiekuan" : {
-                        "orderId" : 1,
-                        "hsId" : 1,
-                        "jiekuanDate" : "2299-12-30 00:00:00",
-                        "amount" : "3000",
-                        "capitalId" : 1,
-                        "useInterest" : "",
-                        "useDays" : ""
-                    }
+                    "orderId" : orderId,
                 }
             )
             .expect('Content-Type', /json/)
@@ -133,8 +122,37 @@ describe('应收订单 付款:', function () {
             })
     })
 
-    it('付款单 - 新建付款单 非法输入 缺少借款金额和借款日期 POST: /api/business/ying/1/fukuans', function (done) {
-        server.post('/api/business/ying/1/fukuans')
+    it(`付款单 - 新建付款单3 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : 1,
+                    "payDate" : "2017-09-12 00:00:00",
+                    "receiveCompanyId" : 2,
+                    "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payAmount" : "122",
+                    "capitalId" : 1,
+                    "orderId" : orderId,
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.payDate).to.include('2017')
+
+                delPaymentId = res.body.data.id
+                done()
+            })
+    })
+
+    it(`付款单 - 新建付款单 非法输入 缺少借款金额和借款日期 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -162,8 +180,8 @@ describe('应收订单 付款:', function () {
     })
 
 
-    it('付款单 - 获取应收订单付款单列表 GET: /api/business/ying/1/fukuans?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/business/ying/1/fukuans?pageNo=1&pageSize=2')
+    it(`付款单 - 获取应收订单付款单列表 GET: /api/business/ying/${orderId}/fukuans?pageNo=1&pageSize=2`, function (done) {
+        server.get(`/api/business/ying/${orderId}/fukuans?pageNo=1&pageSize=2`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -179,8 +197,8 @@ describe('应收订单 付款:', function () {
             })
     })
 
-    it('付款单 - 获取某个ID的付款单信息 GET: /api/business/ying/1/fukuans/1', function (done) {
-        server.get('/api/business/ying/1/fukuans/1')
+    it(`付款单 - 获取某个ID的付款单信息 GET: /api/business/ying/${orderId}/fukuans/${paymentId}`, function (done) {
+        server.get(`/api/business/ying/${orderId}/fukuans/${paymentId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -195,13 +213,13 @@ describe('应收订单 付款:', function () {
             })
     })
 
-    it('付款单 - 修改某个ID的付款单 PUT: /api/business/ying/1/fukuans/1', function (done) {
-        server.put('/api/business/ying/1/fukuans/1')
+    it(`付款单 - 修改某个ID的付款单 PUT: /api/business/ying/${orderId}/fukuans/${paymentId}`, function (done) {
+        server.put(`/api/business/ying/${orderId}/fukuans/${paymentId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
                 {
-                    "id" : 1,
+                    "id" : paymentId,
                     "hsId" : 2,
                     "receiveCompanyId" : 3,
                     "payUsage" : "DEPOSITECASH",
@@ -209,7 +227,7 @@ describe('应收订单 付款:', function () {
                     "capitalId" : 5,
                     "useInterest" : "0.4",
                     "useDays" : "60",
-                    "orderId" : 1
+                    "orderId" : orderId
                 }
             )
             .expect('Content-Type', /json/)
@@ -222,8 +240,8 @@ describe('应收订单 付款:', function () {
             })
     })
 
-    it('付款单 - 删除某个ID的付款单 DELETE: /api/business/ying/1/fukuans/2', function (done) {
-        server.delete('/api/business/ying/1/fukuans/2')
+    it(`付款单 - 删除某个ID的付款单 DELETE: /api/business/ying/${orderId}/fukuans/${delPaymentId}`, function (done) {
+        server.delete(`/api/business/ying/${orderId}/fukuans/${delPaymentId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
@@ -238,411 +256,4 @@ describe('应收订单 付款:', function () {
     })
 
 
-
-
-
-    it('回款单 - 新建回款单1 POST: /api/business/ying/1/huikuans', function (done) {
-        server.post('/api/business/ying/1/huikuans')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : 1,
-                    "huikuanCompanyId" : 1,
-                    "huikuanDate" : "2017-09-03 00:00:00",
-                    "huikuanAmount" : "3000",
-                    "huikuanUsage" : "PAYMENT_FOR_GOODS",
-                    "huikuanMode" : "ELEC_REMITTANCE",
-                    "huikuanBankPaper" : "",
-                    "huikuanBankPaperDate" : "",
-                    "huikuanBankDiscount" : "",
-                    "huikuanBankDiscountRate" : "",
-                    "huikuanBankPaperExpire" : "",
-                    "huikuanBusinessPaper" : "",
-                    "huikuanBusinessPaperDate" : "",
-                    "huikuanBusinessDiscount" : "",
-                    "huikuanBusinessDiscountRate" : "",
-                    "huikuanBusinessPaperExpire" : "",
-                    "orderId" : 1
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.huikuanDate).to.include('2017')
-                done()
-            })
-    })
-
-    it('回款单 - 新建回款单2 POST: /api/business/ying/1/huikuans', function (done) {
-        server.post('/api/business/ying/1/huikuans')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : 1,
-                    "huikuanCompanyId" : 1,
-                    "huikuanDate" : "2017-09-03 00:00:00",
-                    "huikuanAmount" : "4000",
-                    "huikuanUsage" : "PAYMENT_FOR_GOODS",
-                    "huikuanMode" : "ELEC_REMITTANCE",
-                    "huikuanBankPaper" : "",
-                    "huikuanBankPaperDate" : "",
-                    "huikuanBankDiscount" : "",
-                    "huikuanBankDiscountRate" : "",
-                    "huikuanBankPaperExpire" : "",
-                    "huikuanBusinessPaper" : "",
-                    "huikuanBusinessPaperDate" : "",
-                    "huikuanBusinessDiscount" : "",
-                    "huikuanBusinessDiscountRate" : "",
-                    "huikuanBusinessPaperExpire" : "",
-                    "orderId" : 1
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.huikuanDate).to.include('2017')
-                done()
-            })
-    })
-
-    it('回款单 - 新建回款单3 POST: /api/business/ying/1/huikuans', function (done) {
-        server.post('/api/business/ying/1/huikuans')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : 2,
-                    "huikuanCompanyId" : 4,
-                    "huikuanDate" : "2017-10-27 00:00:00",
-                    "huikuanAmount" : "10000",
-                    "huikuanUsage" : "PAYMENT_FOR_GOODS",
-                    "huikuanMode" : "BANK_ACCEPTANCE",
-                    "huikuanBankPaper" : true,
-                    "huikuanBankPaperDate" : "2017-09-01 00:00:00",
-                    "huikuanBankDiscount" : true,
-                    "huikuanBankDiscountRate" : "0.3",
-                    "huikuanBankPaperExpire" : "2017-09-30 00:00:00",
-                    "huikuanBusinessPaper" : "",
-                    "huikuanBusinessPaperDate" : "",
-                    "huikuanBusinessDiscount" : "",
-                    "huikuanBusinessDiscountRate" : "",
-                    "huikuanBusinessPaperExpire" : "",
-                    "orderId" : 1
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.huikuanDate).to.include('2017')
-                done()
-            })
-    })
-
-    it('回款单 - 获取应收订单回款单列表 GET: /api/business/ying/1/huikuans?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/business/ying/1/huikuans?pageNo=1&pageSize=2')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.pageNo).to.equal(1)
-                expect(res.body.data.pageSize).to.equal(2)
-                expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
-                done()
-            })
-    })
-
-    it('回款单 - 获取某个ID的回款单信息 GET: /api/business/ying/1/huikuans/1', function (done) {
-        server.get('/api/business/ying/1/huikuans/1')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.huikuanDate).to.include('2017')
-                done()
-            })
-    })
-
-    it('回款单 - 修改某个ID的回款单 PUT: /api/business/ying/1/huikuans/1', function (done) {
-        server.put('/api/business/ying/1/huikuans/1')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : 2,
-                    "huikuanCompanyId" : 1,
-                    "huikuanDate" : "2017-09-03 00:00:00",
-                    "huikuanUsage" : "PAYMENT_FOR_GOODS",
-                    "huikuanMode" : "ELEC_REMITTANCE",
-                    "huikuanBankPaper" : "",
-                    "huikuanBankPaperDate" : "",
-                    "huikuanBankDiscount" : "",
-                    "huikuanBankDiscountRate" : "",
-                    "huikuanBankPaperExpire" : "",
-                    "huikuanBusinessPaper" : "",
-                    "huikuanBusinessPaperDate" : "",
-                    "huikuanBusinessDiscount" : "",
-                    "huikuanBusinessDiscountRate" : "",
-                    "huikuanBusinessPaperExpire" : "",
-                    "orderId" : 1,
-                    "id" : 1
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
-                done()
-            })
-    })
-
-    it('回款单 - 删除某个ID的回款单 DELETE: /api/business/ying/1/huikuans/2', function (done) {
-        server.delete('/api/business/ying/1/huikuans/2')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({})
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
-                done()
-            })
-    })
-
-
-
-
-
-    it('还款单 - 新建还款单1 POST: /api/business/ying/1/huankuans', function (done) {
-        server.post('/api/business/ying/1/huankuans')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : 1,
-                    "skCompanyId" : 1,
-                    "huankuankDate" : "2017-10-07 00:00:00",
-                    "orderId" : 1,
-                    "huankuanMapList" : [
-                        {
-                            "jiekuanId" : 1,
-                            "principal" : "100",
-                            "interest" : "100",
-                            "fee":"100"
-                        }
-                    ]
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.huankuankDate).to.include('2017')
-                done()
-            })
-    })
-
-    it('还款单 - 新建还款单2 POST: /api/business/ying/1/huankuans', function (done) {
-        server.post('/api/business/ying/1/huankuans')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : 1,
-                    "skCompanyId" : 1,
-                    "huankuankDate" : "2017-10-07 00:00:00",
-                    "orderId" : 1,
-                    "huankuanMapList" : [
-                        {
-                            "jiekuanId" : 1,
-                            "principal" : "100",
-                            "fee":"10000",
-                            "interest" : "100"
-                        }
-                    ]
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.huankuankDate).to.include('2017')
-                done()
-            })
-    })
-
-    it('还款单 - 新建还款单3 还款map明细的本金总计不符合, POST: /api/business/ying/1/huankuans', function (done) {
-        server.post('/api/business/ying/1/huankuans')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : 1,
-                    "skCompanyId" : 1,
-                    "huankuankDate" : "2017-09-01 00:00:00",
-                    "huankuanAmount" : "100",
-                    "huankuanInterest" : "100",
-                    "huankuanFee" : "10",
-                    "orderId" : 1,
-                    "huankuanMapList" : [
-                        {
-                            "fukuanId" : 1,
-                            "principal" : "100000",
-                            "interest" : "10000",
-                        }
-                    ]
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(400)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
-                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
-                done()
-            })
-    })
-
-    it('还款单 - 新建还款单4 还款map明细的本金总计不符合, POST: /api/business/ying/1/huankuans', function (done) {
-        server.post('/api/business/ying/1/huankuans')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : 1,
-                    "skCompanyId" : 1,
-                    "huankuankDate" : "2017-09-01 00:00:00",
-                    "huankuanAmount" : "10000",
-                    "huankuanInterest" : "100",
-                    "huankuanFee" : "10",
-                    "orderId" : 1,
-                    "huankuanMapList" : [
-                        {
-                            "fukuanId" : 1,
-                            "principal" : 10000,
-                            "interest" : 100,
-                        }
-                    ]
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(400)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
-                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
-                done()
-            })
-    })
-
-    it('还款单 - 获取应收订单还款单列表 GET: /api/business/ying/1/huankuans?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/business/ying/1/huankuans?pageNo=1&pageSize=2')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.pageNo).to.equal(1)
-                expect(res.body.data.pageSize).to.equal(2)
-                expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
-                done()
-            })
-    })
-
-    it('还款单 - 获取某个ID的还款单信息 GET: /api/business/ying/1/huankuans/1', function (done) {
-        server.get('/api/business/ying/1/huankuans/1')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.huankuankDate).to.include('2017')
-                done()
-            })
-    })
-
-    it('还款单 - 修改某个ID的还款单 PUT: /api/business/ying/1/huankuans/1', function (done) {
-        server.put('/api/business/ying/1/huankuans/1')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "id":1,
-                    "hsId" : 1,
-                    "huankuankDate" : "2017-09-01 00:00:00",
-                    "orderId" : 1,
-                    "huankuanMapList" : [
-                        {
-
-                            "jiekuanId" : 1,
-                            "principal" : 10000,
-                            "interest" : 100,
-                            "fee":1000
-                        }
-                    ]
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
-                done()
-            })
-    })
-
-    it('还款单 - 删除某个ID的还款单 DELETE: /api/business/ying/1/huankuans/2', function (done) {
-        server.delete('/api/business/ying/1/huankuans/2')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({})
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
-                done()
-            })
-    })
 })

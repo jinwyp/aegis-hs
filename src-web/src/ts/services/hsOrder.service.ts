@@ -126,6 +126,9 @@ export class HSOrderService {
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fukuans', {params: params} )
     }
+    getPaymentByID(businessType : string, orderId: number, paymentId: number): Observable<any> {
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fukuans/' + paymentId.toString())
+    }
     createNewPayment(businessType : string, orderId: number, payment: any): Observable<any> {
         return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fukuans', payment )
     }
