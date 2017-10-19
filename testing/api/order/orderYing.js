@@ -385,6 +385,31 @@ describe('应收订单', function () {
             })
     })
 
+    it(`核算单元 - 新建核算单元3 POST: /api/business/ying/${orderId}/units`, function (done) {
+        server.post(`/api/business/ying/${orderId}/units`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                "hsMonth"           : "201711",
+                "maxPrepayRate"        : 0.9,
+                "unInvoicedRate"       : 0.7,
+                "contractBaseInterest" : 0.2,
+                "expectHKDays"         : 50,
+                "tradeAddPrice"        : 0,
+                "weightedPrice"        : 300
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
+                expect(res.body.data.hsMonth, '返回的数据data对象的hsMonth属性错误').to.include('201710')
+                done()
+            })
+    })
+
     it(`核算单元 - 获取应收订单核算单元列表 GET: /api/business/ying/${orderId}/units?pageNo=1&pageSize=2`, function (done) {
         server.get(`/api/business/ying/${orderId}/units?pageNo=1&pageSize=2`)
             .set('Authorization', Authorization)

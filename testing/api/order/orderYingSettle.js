@@ -50,133 +50,133 @@ describe('应收订单 结算单:', function () {
 
 
 
-
-
-    it('下游结算单 - 新建下游结算单1 POST: /api/business/ying/1/settlebuyerdownstream', function (done) {
-        server.post('/api/business/ying/1/settlebuyerdownstream')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : 1,
-                    "orderId" : 1,
-                    "settleDate" : "2017-09-02 00:00:00",
-                    "amount" : "2000",
-                    "money" : "100",
-                    "settleGap" : "100"
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.settleDate).to.include('2017')
-                done()
-            })
-    })
-
-    it('下游结算单 - 新建下游结算单2 POST: /api/business/ying/1/settlebuyerdownstream', function (done) {
-        server.post('/api/business/ying/1/settlebuyerdownstream')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : 1,
-                    "orderId" : 1,
-                    "settleDate" : "2017-09-02 00:00:00",
-                    "amount" : "40000",
-                    "money" : "100",
-                    "settleGap" : "200"
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.settleDate).to.include('2017')
-                done()
-            })
-    })
-
-    it('下游结算单 - 获取应收订单下游结算单列表 GET: /api/business/ying/1/settlebuyerdownstream?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/business/ying/1/settlebuyerdownstream?pageNo=1&pageSize=2')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.pageNo).to.equal(1)
-                expect(res.body.data.pageSize).to.equal(2)
-                expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
-                done()
-            })
-    })
-
-    it('下游结算单 - 获取某个ID的下游结算单信息 GET: /api/business/ying/1/settlebuyerdownstream/1', function (done) {
-        server.get('/api/business/ying/1/settlebuyerdownstream/1')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.settleDate).to.include('2017')
-                done()
-            })
-    })
-
-    it('下游结算单 - 修改某个ID的下游结算单 PUT: /api/business/ying/1/settlebuyerdownstream/1', function (done) {
-        server.put('/api/business/ying/1/settlebuyerdownstream/1')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : 1,
-                    "settleDate" : "2017-09-23 00:00:00",
-                    "money" : "5000",
-                    "settleGap" : "330",
-                    "orderId" : 1,
-                    "id" : 1
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
-                done()
-            })
-    })
-
-    it('下游结算单 - 删除某个ID的下游结算单 DELETE: /api/business/ying/1/settlebuyerdownstream/2', function (done) {
-        server.delete('/api/business/ying/1/settlebuyerdownstream/2')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({})
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
-                done()
-            })
-    })
-
-
+    //
+    //
+    // it('下游结算单 - 新建下游结算单1 POST: /api/business/ying/1/settlebuyerdownstream', function (done) {
+    //     server.post('/api/business/ying/1/settlebuyerdownstream')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send(
+    //             {
+    //                 "hsId" : 1,
+    //                 "orderId" : 1,
+    //                 "settleDate" : "2017-09-02 00:00:00",
+    //                 "amount" : "2000",
+    //                 "money" : "100",
+    //                 "settleGap" : "100"
+    //             }
+    //         )
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+    //             expect(res.body.data.settleDate).to.include('2017')
+    //             done()
+    //         })
+    // })
+    //
+    // it('下游结算单 - 新建下游结算单2 POST: /api/business/ying/1/settlebuyerdownstream', function (done) {
+    //     server.post('/api/business/ying/1/settlebuyerdownstream')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send(
+    //             {
+    //                 "hsId" : 1,
+    //                 "orderId" : 1,
+    //                 "settleDate" : "2017-09-02 00:00:00",
+    //                 "amount" : "40000",
+    //                 "money" : "100",
+    //                 "settleGap" : "200"
+    //             }
+    //         )
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+    //             expect(res.body.data.settleDate).to.include('2017')
+    //             done()
+    //         })
+    // })
+    //
+    // it('下游结算单 - 获取应收订单下游结算单列表 GET: /api/business/ying/1/settlebuyerdownstream?pageNo=1&pageSize=2', function (done) {
+    //     server.get('/api/business/ying/1/settlebuyerdownstream?pageNo=1&pageSize=2')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.pageNo).to.equal(1)
+    //             expect(res.body.data.pageSize).to.equal(2)
+    //             expect(res.body.data.results, 'data.results 的返回记录数量错误').to.have.lengthOf(2)
+    //             done()
+    //         })
+    // })
+    //
+    // it('下游结算单 - 获取某个ID的下游结算单信息 GET: /api/business/ying/1/settlebuyerdownstream/1', function (done) {
+    //     server.get('/api/business/ying/1/settlebuyerdownstream/1')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+    //             expect(res.body.data.settleDate).to.include('2017')
+    //             done()
+    //         })
+    // })
+    //
+    // it('下游结算单 - 修改某个ID的下游结算单 PUT: /api/business/ying/1/settlebuyerdownstream/1', function (done) {
+    //     server.put('/api/business/ying/1/settlebuyerdownstream/1')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send(
+    //             {
+    //                 "hsId" : 1,
+    //                 "settleDate" : "2017-09-23 00:00:00",
+    //                 "money" : "5000",
+    //                 "settleGap" : "330",
+    //                 "orderId" : 1,
+    //                 "id" : 1
+    //             }
+    //         )
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+    //             done()
+    //         })
+    // })
+    //
+    // it('下游结算单 - 删除某个ID的下游结算单 DELETE: /api/business/ying/1/settlebuyerdownstream/2', function (done) {
+    //     server.delete('/api/business/ying/1/settlebuyerdownstream/2')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send({})
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+    //             done()
+    //         })
+    // })
+    //
+    //
 
 
 
@@ -218,9 +218,7 @@ describe('应收订单 结算单:', function () {
                 {
                     "tempSettleType" : "upstream",
                     "hsId" : 2,
-                    "settleDate" : "2017-09-30 00:00:00",
-                    "amount" : "5000",
-                    "money" : "500",
+                    "settleDate" : "2017-10-30 00:00:00",
                     "discountType" : "CASH_DISCOUNT",
                     "discountInterest" : "0.3",
                     "discountDays" : "60",
@@ -252,7 +250,7 @@ describe('应收订单 结算单:', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.pageNo).to.equal(1)
                 expect(res.body.data.pageSize).to.equal(2)
-                expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
+                expect(res.body.data.results, 'data.results 的返回记录数量错误').to.have.lengthOf(2)
                 done()
             })
     })
@@ -279,7 +277,6 @@ describe('应收订单 结算单:', function () {
             .set(config.headers)
             .send(
                 {
-                    "tempSettleType" : "upstream",
                     "hsId" : 1,
                     "settleDate" : "2017-09-02 00:00:00",
                     "amount" : 2000,
@@ -397,7 +394,7 @@ describe('应收订单 结算单:', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.pageNo).to.equal(1)
                 expect(res.body.data.pageSize).to.equal(2)
-                expect(res.body.data.results.length, 'data.results 的返回记录数量错误').to.equal(2)
+                expect(res.body.data.results, 'data.results 的返回记录数量错误').to.have.lengthOf(2)
                 done()
             })
     })
