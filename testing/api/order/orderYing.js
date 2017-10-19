@@ -250,8 +250,8 @@ describe('应收订单', function () {
             })
     })
 
-    it(`应收订单 - 获取某个ID的应收订单信息 GET: /api/business/yings/${orderId}`, function (done) {
-        server.get(`/api/business/yings/${orderId}`)
+    it('应收订单 - 获取某个ID的应收订单信息 GET: /api/business/yings/' + orderId, function (done) {
+        server.get('/api/business/yings/' + orderId)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
