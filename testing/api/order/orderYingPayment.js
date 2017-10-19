@@ -30,6 +30,13 @@ describe('应收订单 付款:', function () {
 
     let Authorization = ''
 
+    let orderId = config.order.getOrderYingId
+    let delOrderId = config.order.delOrderYingId
+
+    let unitId = 1
+    let delUnitId = 3
+
+
     before(function (done) {
 
         server.post('/api/login')
@@ -55,15 +62,64 @@ describe('应收订单 付款:', function () {
             .send(
                 {
                     "hsId" : 1,
-                    "payDate" : "2017-09-01 00:00:00",
-                    "receiveCompanyId" : 1,
-                    "payUsage" : "PAYMENT_FOR_GOODS",
-                    "payAmount" : "2200",
-                    "payMode" : "ELEC_REMITTANCE",
+                    "payDate" : "2017-10-12 00:00:00",
+                    "receiveCompanyId" : 2,
+                    "payUsage" : "TRADE_DEFICIT",
+                    "payAmount" : "122",
+                    "amount" : "99999999",
+                    "jiekuanDate" : "2299-12-30 00:00:00",
                     "capitalId" : 1,
                     "useInterest" : "",
                     "useDays" : "",
-                    "orderId" : 1
+                    "orderId" : 1,
+                    "jiekuan" : {
+                        "orderId" : 1,
+                        "hsId" : 1,
+                        "jiekuanDate" : "2299-12-30 00:00:00",
+                        "amount" : "99999999",
+                        "capitalId" : 1,
+                        "useInterest" : "",
+                        "useDays" : ""
+                    }
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                console.log('-------', res.body.data)
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.payDate).to.include('2017')
+
+                orderId = res.body.data.id
+                done()
+            })
+    })
+
+    it('付款单 - 新建付款单2 POST: /api/business/ying/1/fukuans', function (done) {
+        server.post('/api/business/ying/1/fukuans')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : 1,
+                    "payDate" : "2017-09-12 00:00:00",
+                    "receiveCompanyId" : 2,
+                    "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payAmount" : "122",
+                    "capitalId" : 1,
+                    "orderId" : 1,
+                    "jiekuan" : {
+                        "orderId" : 1,
+                        "hsId" : 1,
+                        "jiekuanDate" : "2299-12-30 00:00:00",
+                        "amount" : "3000",
+                        "capitalId" : 1,
+                        "useInterest" : "",
+                        "useDays" : ""
+                    }
                 }
             )
             .expect('Content-Type', /json/)
@@ -78,35 +134,34 @@ describe('应收订单 付款:', function () {
             })
     })
 
-    it('付款单 - 新建付款单2 POST: /api/business/ying/1/fukuans', function (done) {
+    it('付款单 - 新建付款单 非法输入 缺少借款金额和借款日期 POST: /api/business/ying/1/fukuans', function (done) {
         server.post('/api/business/ying/1/fukuans')
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
                 {
-                    "hsId" : 2,
-                    "payDate" : "2017-09-27 00:00:00",
-                    "receiveCompanyId" : 3,
-                    "payUsage" : "DEPOSITECASH",
-                    "payAmount" : "6000",
-                    "payMode" : "CASH",
+                    "hsId" : 1,
+                    "payDate" : "2017-09-01 00:00:00",
+                    "receiveCompanyId" : 1,
+                    "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payAmount" : "2200",
+                    "payMode" : "ELEC_REMITTANCE",
                     "capitalId" : 1,
-                    "useInterest" : "0.4",
-                    "useDays" : "30",
+                    "useInterest" : "",
+                    "useDays" : "",
                     "orderId" : 1
                 }
             )
             .expect('Content-Type', /json/)
-            .expect(200)
+            .expect(400)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.payDate).to.include('2017')
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
                 done()
             })
     })
+
 
     it('付款单 - 获取应收订单付款单列表 GET: /api/business/ying/1/fukuans?pageNo=1&pageSize=2', function (done) {
         server.get('/api/business/ying/1/fukuans?pageNo=1&pageSize=2')
@@ -140,7 +195,7 @@ describe('应收订单 付款:', function () {
                 done()
             })
     })
-    //
+
     it('付款单 - 修改某个ID的付款单 PUT: /api/business/ying/1/fukuans/1', function (done) {
         server.put('/api/business/ying/1/fukuans/1')
             .set('Authorization', Authorization)

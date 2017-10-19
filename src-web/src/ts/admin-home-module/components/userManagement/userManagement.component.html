@@ -11,9 +11,9 @@
             <bs-text-input formControlName="phone" [fc]="userForm.get('phone')" [type]="'text'" [label]="'手机号:'" [readOnly]="!isAddNew" [dirty]="ignoreDirty" [error]="userFormError.phone"></bs-text-input>
             <bs-text-input formControlName ="password" [fc]="userForm.get('password')" [type]="'text'" [label]="'密码:'" [dirty]="ignoreDirty" [error]="userFormError.password"></bs-text-input>
 
-            <bs-select formControlName ="deptId" [options]="departmentList" [label]="'部门:'" [error]="userFormError.deptId"></bs-select>
-            <bs-radio formControlName ="isAdmin" [sourceList]="dataIsAdmin" [label]="'是否为管理员:'" [error]="userFormError.isAdmin"></bs-radio>
-            <bs-radio formControlName ="isActive" [sourceList]="dataIsAdmin" [label]="'是否启用:'" [error]="userFormError.isActive"></bs-radio>
+            <bs-select formControlName ="deptId" [options]="departmentList" [label]="'部门:'" [dirty]="ignoreDirty" [error]="userFormError.deptId"></bs-select>
+            <bs-radio formControlName ="isAdmin" [sourceList]="dataIsAdmin" [label]="'是否为管理员:'" [dirty]="ignoreDirty" [error]="userFormError.isAdmin"></bs-radio>
+            <bs-radio formControlName ="isActive" [sourceList]="dataIsAdmin" [label]="'是否启用:'" [dirty]="ignoreDirty" [error]="userFormError.isActive"></bs-radio>
 
 
             <div class="form-group row">
