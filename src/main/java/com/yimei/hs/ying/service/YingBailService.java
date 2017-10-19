@@ -18,9 +18,6 @@ public class YingBailService {
     @Autowired
     private YingBailMapper yingBailMapper;
 
-    @Autowired
-    private YingLogService yingLogService;
-
     /**
      *  获取一页分页数据
      * @param pageYingBailDTO
