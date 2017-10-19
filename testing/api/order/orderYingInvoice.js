@@ -210,19 +210,19 @@ describe('应收订单 发票:', function () {
             })
     })
 
-    // it('发票 - 删除某个ID的发票 DELETE: /api/business/ying/1/invoices/2', function (done) {
-    //     server.delete('/api/business/ying/1/invoices/2')
-    //         .set('Authorization', Authorization)
-    //         .set(config.headers)
-    //         .send({})
-    //         .expect('Content-Type', /json/)
-    //         .expect(200)
-    //         .end(function(err, res) {
-    //             if (err) return done(err)
-    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-    //             expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
-    //             done()
-    //         })
-    // })
+    it('发票 - 删除某个ID的发票 DELETE: /api/business/ying/1/invoices/2', function (done) {
+        server.delete('/api/business/ying/1/invoices/2')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+                done()
+            })
+    })
 
 })

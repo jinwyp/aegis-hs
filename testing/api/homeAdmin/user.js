@@ -19,6 +19,9 @@ describe('管理用户', function () {
 
     let Authorization = ''
 
+    let userId = 2
+    let delUserId = 3
+
     before(function (done) {
 
         server.post('/api/login')
@@ -58,6 +61,8 @@ describe('管理用户', function () {
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.createBy).to.include('13022117050')
                 expect(res.body.data.phone).to.include('13564568304')
+
+                userId = res.body.data.id
                 done()
             })
     })
@@ -142,8 +147,8 @@ describe('管理用户', function () {
             })
     })
 
-    it('获取某个ID的用户信息 GET: /api/users/3' , function (done) {
-        server.get('/api/users/3')
+    it(`获取某个ID的用户信息 GET: /api/users/${userId}` , function (done) {
+        server.get(`/api/users/${userId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -158,8 +163,9 @@ describe('管理用户', function () {
             })
     })
 
-    it('修改某个ID的用户信息 PUT: /api/users/3', function (done) {
-        server.put('/api/users/3')
+    it(`修改某个ID的用户信息 PUT: /api/users/${userId}`, function (done) {
+        console.log(`提示信息: 修改某个ID的用户信息 PUT: /api/users/${userId}`)
+        server.put(`/api/users/${userId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
