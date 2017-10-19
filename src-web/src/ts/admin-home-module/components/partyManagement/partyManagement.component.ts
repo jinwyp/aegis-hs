@@ -105,7 +105,7 @@ export class PartyManagementComponent implements OnInit {
             'required'      : '请填写简称!'
         },
         'partyType'  : {
-            'required'      : '请填写类型!'
+            'required'      : '请填写参与方类型!'
         }
     }
 

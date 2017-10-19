@@ -136,6 +136,7 @@ describe('事业部门 - ', function () {
     })
 
     it(`修改某个ID的部门名称 PUT: /api/departments/${departmentId}`, function (done) {
+        console.log(`提示信息: 修改某个ID的部门名称 PUT: /api/departments/${departmentId}`)
         server.put(`/api/departments/${departmentId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -153,6 +154,7 @@ describe('事业部门 - ', function () {
     })
 
     it(`删除某个ID的部门 DELETE: /api/departments/${departmentId}`, function (done) {
+        console.log(`提示信息: 删除某个ID的部门 DELETE: /api/departments/${departmentId}`)
         server.delete(`/api/departments/${departmentId}`)
             .set('Authorization', Authorization)
             .set(config.headers)

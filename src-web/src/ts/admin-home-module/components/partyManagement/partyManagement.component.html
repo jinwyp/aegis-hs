@@ -11,7 +11,7 @@
             <bs-text-input formControlName="name" [fc]="partyForm.get('name')" [type]="'text'" [label]="'公司名称:'" [dirty]="ignoreDirty" [error]="partyFormError.name"></bs-text-input>
             <bs-text-input formControlName ="shortName" [fc]="partyForm.get('shortName')" [type]="'text'" [label]="'公司简称:'" [dirty]="ignoreDirty" [error]="partyFormError.shortName"></bs-text-input>
 
-            <bs-select formControlName ="partyType" [options]="partyType" [label]="'部门:'" [error]="partyFormError.partyType"></bs-select>
+            <bs-select formControlName ="partyType" [dirty]="ignoreDirty" [options]="partyType" [label]="'参与方类型:'" [error]="partyFormError.partyType"></bs-select>
 
 
             <div class="form-group row">

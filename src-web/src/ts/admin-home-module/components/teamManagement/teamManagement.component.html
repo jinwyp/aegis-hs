@@ -10,7 +10,7 @@
 
             <bs-text-input formControlName="name" [fc]="teamForm.get('name')" [type]="'text'" [label]="'团队名称:'" [dirty]="ignoreDirty" [error]="teamFormError.name"></bs-text-input>
 
-            <bs-select formControlName ="deptId" [fc]="teamForm.get('deptId')" [label]="'部门:'" [options]="departmentList" [error]="teamFormError.deptId"></bs-select>
+            <bs-select formControlName ="deptId" [fc]="teamForm.get('deptId')" [label]="'部门:'" [dirty]="ignoreDirty" [options]="departmentList" [error]="teamFormError.deptId"></bs-select>
 
 
             <div class="form-group row">
