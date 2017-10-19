@@ -19,8 +19,6 @@ import com.yimei.hs.user.entity.User;
 import com.yimei.hs.util.WebUtils;
 import com.yimei.hs.ying.dto.*;
 import com.yimei.hs.ying.entity.YingFayun;
-import com.yimei.hs.ying.entity.YingOrderConfig;
-import com.yimei.hs.ying.entity.YingSettleTraffic;
 import org.assertj.core.util.Lists;
 import org.junit.Ignore;
 import org.junit.Test;

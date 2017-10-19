@@ -1,6 +1,7 @@
 package com.yimei.hs.ying.service;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.same.service.LogService;
 import com.yimei.hs.ying.entity.YingFayun;
 import com.yimei.hs.ying.dto.PageYingFayunDTO;
 import com.yimei.hs.ying.mapper.YingFayunMapper;
@@ -17,9 +18,6 @@ public class YingFayunService {
 
     @Autowired
     private YingFayunMapper yingFayunMapper;
-
-    @Autowired
-    private YingLogService yingLogService;
 
     /**
      *  获取一页分页数据
