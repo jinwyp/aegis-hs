@@ -4,7 +4,6 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.same.dto.PageSettleBuyerDTO;
 import com.yimei.hs.same.entity.SettleBuyer;
 import com.yimei.hs.same.mapper.SettleBuyerMapper;
-import com.yimei.hs.ying.service.YingLogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
