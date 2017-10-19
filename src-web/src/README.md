@@ -10,5 +10,6 @@
 
 ## 生产环境
 
-1. 进入 src 目录后运行 npm run build:prod, 或 运行angular4 静态编译版本 npm run build:aot
+
+1. 进入 src 目录后运行 npm install, 然后运行 npm run build, 或 npm run build:prod, 或 运行angular4 静态编译版本 npm run build:aot
 2. 浏览器打开 http://localhost:8080/web/login 进行登陆
