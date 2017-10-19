@@ -30,7 +30,7 @@ export class TeamManagementComponent implements OnInit {
     departmentList : any[] = []
 
     pagination: any = {
-        pageSize : 20,
+        pageSize : 10,
         pageNo : 1,
         total : 1
     }
