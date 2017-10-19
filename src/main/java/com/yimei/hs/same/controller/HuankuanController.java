@@ -91,7 +91,7 @@ public class HuankuanController {
         List<HuankuanMap> huankuanMaps = huankuan.getHuankuanMapList();
 
         for (HuankuanMap huankuanMap : huankuanMaps) {
-            Jiekuan jiekuanDb= jiekuanService.findOne(huankuanMap.getOrderId());
+            Jiekuan jiekuanDb= jiekuanService.findOne(huankuan.getOrderId());
             if (jiekuanDb != null) {
                 if (huankuanMap.getPrincipal().compareTo(jiekuanDb.getAmount()) ==1 ) {
                     return Result.error(4001, "创建失败");
