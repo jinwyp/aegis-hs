@@ -7,10 +7,7 @@ import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageHuankuanDTO;
-import com.yimei.hs.same.entity.Fukuan;
-import com.yimei.hs.same.entity.Huankuan;
-import com.yimei.hs.same.entity.HuankuanMap;
-import com.yimei.hs.same.entity.Jiekuan;
+import com.yimei.hs.same.entity.*;
 import com.yimei.hs.same.mapper.HuankuanMapMapper;
 import com.yimei.hs.same.service.JiekuanService;
 import com.yimei.hs.same.service.HuankuanService;
@@ -89,9 +86,21 @@ public class HuankuanController {
             @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(CreateGroup.class) Huankuan huankuan
     ) {
-        // 1. 找出当前订单借款记录 - 还款尚未对应完成的记录 TODO check
-        List<Jiekuan> jiekuans = jiekuanService.huankuanUnfinished(huankuan.getOrderId());
+        // 1. 找出当前订单借款记录 - 还款尚未对应完成的记录
+//        List<Jiekuan> jiekuans = jiekuanService.huankuanUnfinished(huankuan.getOrderId());
+        List<HuankuanMap> huankuanMaps = huankuan.getHuankuanMapList();
 
+        for (HuankuanMap huankuanMap : huankuanMaps) {
+            Jiekuan jiekuanDb= jiekuanService.findOne(huankuanMap.getOrderId());
+            if (jiekuanDb != null) {
+                if (huankuanMap.getPrincipal().compareTo(jiekuanDb.getAmount()) ==1 ) {
+                    return Result.error(4001, "创建失败");
+                }
+            } else {
+                return Result.error(4001, "创建失败");
+            }
+
+        }
         // 2. 创建还款
         int rtn = huankuanService.create(huankuan);
         if (rtn != 1) {
