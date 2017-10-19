@@ -183,11 +183,11 @@ export class BSPaginationComponent implements OnInit, OnChanges {
 
 
     changePage (event: any, pageNo: number, buttonName? : string) {
-
+        console.log( pageNo, buttonName)
         event.stopPropagation()
         event.preventDefault()
 
-        if ( (buttonName === 'prev' && pageNo === 1)  || (buttonName === 'next' && pageNo === this._totalPageCount) || pageNo === this.page) {
+        if ( (buttonName === 'prev' && pageNo === 0)  || (buttonName === 'next' && pageNo === this._totalPageCount + 1) || pageNo === this.page) {
             return  //disabled, active不会触发
         }
 
