@@ -75,11 +75,11 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
                 if (propertyName === 'optionList' && currentChangeObject.currentValue && Array.isArray(currentChangeObject.currentValue)) {
 
-                    if (this.addAllOptions) {
-                        this.optionList.unshift({ id : '' , name : '全部' })
-                    }
-
                     this.filterOptionList = this.optionList.slice()
+                    // console.log('optionList', currentChangeObject.currentValue)
+                    if (this.addAllOptions === true) {
+                        this.filterOptionList.unshift({ id : '' , name : '全部' })
+                    }
 
                     this.writeValue(this.interValueCurrentSelected.id)
                 }
@@ -231,11 +231,11 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
     writeValue(value: any): void {
         // console.log('WriteValue: ', value)
 
-        if (Array.isArray(this.optionList)) {
+        if (Array.isArray(this.filterOptionList)) {
 
             let tempValue = { id : -1 , name : ''}
 
-            this.optionList.forEach( option => {
+            this.filterOptionList.forEach( option => {
                 if (option.id === value) {
                     tempValue = option
                 }

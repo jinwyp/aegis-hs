@@ -97,13 +97,13 @@ export class PaymentComponent implements OnInit {
             error => {this.httpService.errorHandler(error) }
         )
 
-        this.hsOrderService.getPaymentByID(this.businessType, this.currentOrder.id, 1).subscribe(
-            data => {
-                // this.paymentList = data.data.results
-
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
+        // this.hsOrderService.getPaymentByID(this.businessType, this.currentOrder.id, 1).subscribe(
+        //     data => {
+        //         this.paymentList = data.data.results
+        //
+        //     },
+        //     error => {this.httpService.errorHandler(error) }
+        // )
     }
 
     getPartyList () {
@@ -215,7 +215,12 @@ export class PaymentComponent implements OnInit {
         if (!this.paymentForm.value.jiekuanDate) {
             this.paymentForm.patchValue({jiekuanDate : '2299-12-30'})
         }
-
+        if (!this.paymentForm.value.useInterest) {
+            this.paymentForm.patchValue({useInterest : '99999999'})
+        }
+        if (!this.paymentForm.value.useDays) {
+            this.paymentForm.patchValue({jiekuanDate : '99999999'})
+        }
 
         if (this.paymentForm.invalid) {
             this.paymentFormInputChange(this.paymentForm.value)

@@ -32,7 +32,8 @@ export class OrderListComponent implements OnInit {
     orderSearchForm: FormGroup
     ignoreDirty: boolean = false
 
-    otherPartyList : any[] = []
+    otherParty1List : any[] = []
+    otherParty2List : any[] = []
 
     isShowForm: boolean = false
     isAddNew: boolean = true
@@ -42,13 +43,25 @@ export class OrderListComponent implements OnInit {
     teamList : any[] = []
     filterTeamList : any[] = []
     partyList : any[] = []
+    partyListObject : any = {}
+
+
+
 
     orderStatusList : any[] = getEnum('OrderStatus')
     payModeList : any[] = getEnum('SettleMode')
-    customerType : any[] = getEnum('CustomerType')
+
     cargoTypeList : any[] = getEnum('CargoType')
+    // customerType : any[] = getEnum('CustomerType')
+    customerType : any[] = [
+        {id: 'TRAFFICKCER', name: '贸易公司'},
+        {id: 'ACCOUNTING_COMPANY', name: '账务公司'}
+    ]
 
-
+    positionList : any[] = [
+        {id: 1, name: '上游与主账户公司之间'},
+        {id: 2, name: '主账户与下游公司之间'}
+    ]
 
     pagination: any = {
         pageSize : 20,
@@ -158,6 +171,13 @@ export class OrderListComponent implements OnInit {
             data => {
                 this.partyList = data.data.results
 
+                if (Array.isArray(data.data.results)) {
+                    data.data.results.forEach( company => {
+                        this.partyListObject[company.id] = company
+                    })
+                }
+
+
             },
             error => {this.httpService.errorHandler(error) }
         )
@@ -259,7 +279,7 @@ export class OrderListComponent implements OnInit {
         const postData = this.orderForm.value
 
         postData.businessType = this.businessType
-        postData.orderPartyList = this.otherPartyList
+        postData.orderPartyList = this.otherParty1List
         delete postData.deptId
 
         if (this.isAddNew) {
@@ -297,7 +317,7 @@ export class OrderListComponent implements OnInit {
         if (isAddNew) {
             this.isAddNew = true
 
-            this.otherPartyList = []
+            this.otherParty1List = []
             this.orderForm.patchValue({
                 'deptId'    : '',
                 'teamId'    : '',
@@ -319,7 +339,7 @@ export class OrderListComponent implements OnInit {
 
             this.orderForm.patchValue(order)
 
-            this.otherPartyList = order.orderPartyList
+            this.otherParty1List = order.orderPartyList
         }
 
 
@@ -344,7 +364,8 @@ export class OrderListComponent implements OnInit {
 
         this.orderOtherPartyForm = this.fb.group({
             'custType'    : ['', [Validators.required ] ],
-            'customerId'    : ['', [Validators.required ] ]
+            'customerId'    : ['', [Validators.required ] ],
+            'position'    : ['', [Validators.required ] ]
         } )
 
         this.orderOtherPartyForm.valueChanges.subscribe(data => {
@@ -361,13 +382,26 @@ export class OrderListComponent implements OnInit {
             return
         }
 
-        this.otherPartyList.push(this.orderOtherPartyForm.value)
+        if (this.orderOtherPartyForm.value.position === 1) {
+            this.otherParty1List.push(this.orderOtherPartyForm.value)
+        } else {
+            this.otherParty2List.push(this.orderOtherPartyForm.value)
+        }
+
+        this.lineName()
+
     }
 
-    delOtherParty (company: any) {
+    delOtherParty (company: any, position : number) {
 
-        const index = this.otherPartyList.indexOf(company)
-        this.otherPartyList.splice(index, 1)
+        if (position === 1) {
+            const index = this.otherParty1List.indexOf(company)
+            this.otherParty1List.splice(index, 1)
+        } else {
+            const index = this.otherParty2List.indexOf(company)
+            this.otherParty2List.splice(index, 1)
+        }
+
     }
 
 
@@ -375,21 +409,20 @@ export class OrderListComponent implements OnInit {
         let lineName = ''
 
         if (this.orderForm.value.upstreamId && this.orderForm.value.mainAccounting && this.orderForm.value.downstreamId ) {
-            this.partyList.forEach( company => {
-                if (company.id === this.orderForm.value.upstreamId) {
-                    lineName = company.shortName + ' - '
-                }
+
+            lineName = this.partyListObject[this.orderForm.value.upstreamId].shortName + ' - '
+
+            this.otherParty1List.forEach( company => {
+                lineName = lineName + this.partyListObject[this.orderOtherPartyForm.value.customerId].shortName + ' - '
             })
-            this.partyList.forEach( company => {
-                if (company.id === this.orderForm.value.mainAccounting) {
-                    lineName = lineName + company.shortName + ' - '
-                }
+
+            lineName = lineName + this.partyListObject[this.orderForm.value.mainAccounting].shortName + ' - '
+
+            this.otherParty2List.forEach( company => {
+                lineName = lineName + this.partyListObject[this.orderOtherPartyForm.value.customerId].shortName + ' - '
             })
-            this.partyList.forEach( company => {
-                if (company.id === this.orderForm.value.downstreamId) {
-                    lineName = lineName + company.shortName
-                }
-            })
+
+            lineName = lineName + this.partyListObject[this.orderForm.value.downstreamId].shortName
 
             this.orderForm.patchValue({line : lineName})
         }

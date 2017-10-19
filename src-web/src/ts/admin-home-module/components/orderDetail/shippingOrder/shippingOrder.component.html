@@ -5,7 +5,7 @@
                 <bs-select formControlName="hsId" [fc]="shippingForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty" [options]="unitList" [error]="shippingFormError.hsId"></bs-select>
                 <bs-datepicker formControlName="fyDate" [fc]="shippingForm.get('fyDate')" [label]="'发运日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty"  [error]="shippingFormError.fyDate" ></bs-datepicker>
 
-                <bs-text-input formControlName="fyAmount" [fc]="shippingForm.get('fyAmount')" [type]="'number'" [label]="'发运吨数:'" [dirty]="ignoreDirty" [error]="shippingFormError.fyAmount"></bs-text-input>
+                <bs-text-input formControlName="fyAmount" [fc]="shippingForm.get('fyAmount')" [type]="'number'" [label]="'发运吨数(吨):'" [dirty]="ignoreDirty" [error]="shippingFormError.fyAmount"></bs-text-input>
                 <bs-select formControlName="arriveStatus" [fc]="shippingForm.get('arriveStatus')" [label]="'到场状态:'"  [options]="arriveStatusList" [error]="shippingFormError.arriveStatus"></bs-select>
 
                 <bs-radio formControlName ="upstreamTrafficMode" [fc]="shippingForm.get('upstreamTrafficMode')" [label]="'上游运输方式:'" [dirty]="ignoreDirty" [sourceList]="trafficModeList" [error]="shippingFormError.upstreamTrafficMode" ></bs-radio>
