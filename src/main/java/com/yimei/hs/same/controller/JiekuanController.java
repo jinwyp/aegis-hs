@@ -52,15 +52,16 @@ public class JiekuanController {
 
 
     /**
-     * 获取所有借款
+     * 获取所有未对应完的借款
      *
      * @return
      */
-    @GetMapping("/{morderId}/jiekuansUnfinished")
+    @GetMapping("/{morderId}/jiekuansUnfinished/{capitalId}")
     public ResponseEntity<Result<List<Jiekuan>>> getListUnfinished(
             @PathVariable("businessType") BusinessType businessType,
+            @PathVariable("capitalId") Long capitalId,
             @PathVariable("morderId") Long morderId) {
-        return Result.ok(jiekuanService.getListUnfinished(morderId));
+        return Result.ok(jiekuanService.getListUnfinished(morderId,capitalId));
     }
 
     /**

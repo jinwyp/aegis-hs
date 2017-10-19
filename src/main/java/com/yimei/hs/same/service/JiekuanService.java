@@ -57,13 +57,14 @@ public class JiekuanService {
       * @param orderId
      * @return
      */
-    public List<Jiekuan> getListUnfinished(long orderId) {
+    public List<Jiekuan> getListUnfinished(long orderId,long mainAccoutId) {
+        // 过滤该订单 非主账务公司的借款1
         PageJiekuanDTO dto = new PageJiekuanDTO();
         dto.setPageNo(1);
         dto.setPageSize(100000000);
         dto.setOrderId(orderId);
-        List<Jiekuan> all = jiekuanMapper.getPage(dto).getResults();
-
+//        List<Jiekuan> all = jiekuanMapper.getPage(dto).getResults();
+        List<Jiekuan> all = jiekuanMapper.getlimitInnerCapital(orderId, mainAccoutId);
         List<Jiekuan> filter = new ArrayList<>();
 
         for (Jiekuan jiekuan : all) {

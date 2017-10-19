@@ -51,9 +51,11 @@ public class OrderService {
      */
     public Page<Order> getPage(PageOrderDTO pageOrderDTO) {
         Page<Order> orderPage = orderMapper.getPage(pageOrderDTO);
-        for (Order order : orderPage.getResults()) {
-            order.setOrderPartyList(orderPartyMapper.getList(order.getId()));
-            order.setOrderConfigList(orderConfigMapper.getList(order.getId()));
+        if (orderPage!=null) {
+            for (Order order : orderPage.getResults()) {
+                order.setOrderPartyList(orderPartyMapper.getList(order.getId()));
+                order.setOrderConfigList(orderConfigMapper.getList(order.getId()));
+            }
         }
         return orderPage;
     }
