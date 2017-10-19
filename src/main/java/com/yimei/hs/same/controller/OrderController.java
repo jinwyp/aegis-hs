@@ -137,6 +137,7 @@ public class OrderController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("toId") Long toId
     ) {
+        logger.debug("订单转移: orderId = {}, businessType = {} to = {} user = {}", morderId, businessType, toId, user);
         int cnt = orderService.updateTransfer(morderId, user.getId(), toId);
         if (cnt != 1) {
             return Result.error(4001, "转移失败", HttpStatus.NOT_FOUND);
