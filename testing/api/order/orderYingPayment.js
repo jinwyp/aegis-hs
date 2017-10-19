@@ -33,8 +33,8 @@ describe('应收订单 付款:', function () {
     let orderId = config.order.getOrderYingId
     let delOrderId = config.order.delOrderYingId
 
-    let unitId = 1
-    let delUnitId = 3
+    let paymentId = 1
+    let delpaymentId = 3
 
 
     before(function (done) {
@@ -86,7 +86,6 @@ describe('应收订单 付款:', function () {
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
-                console.log('-------', res.body.data)
                 if (err) return done(err)
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)

@@ -91,6 +91,31 @@ describe('管理用户', function () {
             })
     })
 
+    it('新建用户3 POST: /api/users', function (done) {
+        server.post('/api/users')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                phone : '13564568302',
+                password : '123456',
+                deptId : 2,
+                isActive  :  2,
+                isAdmin  : 1
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.createBy).to.include('13022117050')
+                expect(res.body.data.phone).to.include('13564568302')
+                done()
+            })
+    })
+
+
     it('新建用户 新建手机号已存在的用户 POST: /api/users', function (done) {
         server.post('/api/users')
             .set('Authorization', Authorization)
