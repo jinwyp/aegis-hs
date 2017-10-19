@@ -63,7 +63,7 @@ export class AdminHomeComponent implements OnInit {
         this.menuList[this.currentMenu] = !this.menuList[this.currentMenu]
     }
 
-    clickSubMenu (menu : string) {
+    clickSubMenu (menu : number) {
         this.currentMenu = Number(menu.toString().substr(0, 1))
         this.currentSubMenu = Number(menu)
     }

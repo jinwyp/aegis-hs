@@ -29,6 +29,8 @@ export class MultiSelectComponent implements OnInit, OnChanges, ControlValueAcce
     @Input() editable: boolean = false
 
     @Input() error: string = ''
+    @Input() dirty: boolean = false
+
 
     @Input('labelclass') labelClass: string = 'col-2'
     @Input('inputclass') inputClass: string = 'col-6'
