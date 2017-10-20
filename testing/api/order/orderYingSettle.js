@@ -458,7 +458,7 @@ describe('应收订单 结算单:', function () {
             })
     })
 
-    it('运输方结算单 - 第二次删除同一个ID的运输方结算单应该返回400 DELETE: /api/business/ying/1/settletraffic/2', function (done) {
+    it('运输方结算单 - 不能重复删除某个ID的运输方结算单 应该返回400 DELETE: /api/business/ying/1/settletraffic/2', function (done) {
         server.delete('/api/business/ying/1/settletraffic/2')
             .set('Authorization', Authorization)
             .set(config.headers)
