@@ -64,19 +64,6 @@ export class BorrowComponent implements OnInit {
         this.getPartyList()
         this.getBorrowList()
         this.createBorrowForm()
-
-        if (this.currentOrder) {
-            if (Array.isArray(this.currentOrder.orderConfigList)) {
-
-                const tempArray = []
-                this.currentOrder.orderConfigList.forEach( unit => {
-                    unit.name = unit.hsMonth
-                    tempArray.push(unit)
-                })
-
-                this.unitList = tempArray
-            }
-        }
     }
 
 

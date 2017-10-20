@@ -81,18 +81,6 @@ export class SettleOrderComponent implements OnInit {
         this.getSettleList()
         this.createSettleForm()
 
-        if (this.currentOrder) {
-            if (Array.isArray(this.currentOrder.orderConfigList)) {
-
-                const tempArray = []
-                this.currentOrder.orderConfigList.forEach( unit => {
-                    unit.name = unit.hsMonth
-                    tempArray.push(unit)
-                })
-
-                this.unitList = tempArray
-            }
-        }
     }
 
 

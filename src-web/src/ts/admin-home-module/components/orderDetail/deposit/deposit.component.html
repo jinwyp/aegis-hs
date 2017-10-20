@@ -1,10 +1,11 @@
 
-        <form [formGroup]="expenseForm" (ngSubmit)="expenseFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+        <form [formGroup]="depositForm" (ngSubmit)="depositFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-            <bs-select formControlName="hsId" [fc]="expenseForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="expenseFormError.hsId"></bs-select>
+            <bs-select formControlName="hsId" [fc]="depositForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="depositFormError.hsId"></bs-select>
 
-            <bs-select formControlName ="name" [fc]="expenseForm.get('name')" [label]="'费用科目:'" [dirty]="ignoreDirty" [options]="expensePurposeList" [error]="expenseFormError.name"></bs-select>
-            <bs-text-input formControlName="amount" [fc]="expenseForm.get('amount')" [type]="'number'" [label]="'金额(元):'" [dirty]="ignoreDirty" [error]="expenseFormError.amount"></bs-text-input>
+            <bs-datepicker formControlName="bailDate" [fc]="depositForm.get('bailDate')" [label]="'交纳日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty"  [error]="depositFormError.bailDate" ></bs-datepicker>
+            <bs-select formControlName ="bailType" [fc]="depositForm.get('bailType')" [label]="'保证金类型:'" [dirty]="ignoreDirty" [options]="depositTypeList" [error]="depositFormError.bailType"></bs-select>
+            <bs-text-input formControlName="bailAmount" [fc]="depositForm.get('bailAmount')" [type]="'number'" [label]="'保证金金额(元):'" [dirty]="ignoreDirty" [error]="depositFormError.bailAmount"></bs-text-input>
 
 
             <div class="form-group row">
@@ -29,16 +30,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let expense of expenseList; trackBy: trackByFn">
-                    <td> {{expense.id}}</td>
-                    <td> {{expense.hsId | findKey : unitList : 'name'}}</td>
+                <tr *ngFor="let deposit of depositList; trackBy: trackByFn">
+                    <td> {{deposit.id}}</td>
+                    <td> {{deposit.hsId | findKey : unitList : 'name'}}</td>
 
-                    <td> {{expense.name | findKey : expensePurposeList : 'name' }}</td>
-                    <td> {{expense.amount  }}</td>
+                    <td> {{deposit.bailDate  }}</td>
+                    <td> {{deposit.bailType | findKey : depositTypeList : 'name' }}</td>
+                    <td> {{deposit.bailAmount  }}</td>
 
                     <td>
-                        <button class="btn btn-link btn-sm" (click)="showForm(false, expense)"> 修改 </button>
-                        <button class="btn btn-link btn-sm" (click)="deleteItem(expense)"> 删除 </button>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, deposit)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(deposit)"> 删除 </button>
                     </td>
                 </tr>
                 </tbody>
@@ -48,4 +50,4 @@
 
 
 
-        <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加费用</button>
+        <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加保证金</button>

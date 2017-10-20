@@ -41,6 +41,11 @@
             <li class="nav-item">
                 <a class="nav-link" [class.active]="currentTabIndex === 23" (click)="changeTab(23)">运输方结算管理</a>
             </li>
+
+            <li class="nav-item" *ngIf="businessType==='ying'">
+                <a class="nav-link" [class.active]="currentTabIndex === 25" (click)="changeTab(25)">保证金管理</a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link" [class.active]="currentTabIndex === 31" (click)="changeTab(31)">费用管理</a>
             </li>
@@ -107,6 +112,7 @@
         <app-settle  *ngIf="currentTabIndex === 21 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerupstream'"></app-settle>
         <app-settle  *ngIf="currentTabIndex === 22 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerdownstream'"></app-settle>
 
+        <app-deposit  *ngIf="currentTabIndex === 25" [currentOrder]="currentOrder" [businessType]="businessType" ></app-deposit>
         <app-expense  *ngIf="currentTabIndex === 31" [currentOrder]="currentOrder" [businessType]="businessType" ></app-expense>
 
         <app-warehouse  *ngIf="currentTabIndex === 32 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'ruku'"></app-warehouse>

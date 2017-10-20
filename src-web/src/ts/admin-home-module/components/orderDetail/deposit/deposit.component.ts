@@ -15,29 +15,37 @@ import {getEnum} from '../../../../services/localStorage'
 
 
 @Component({
-    selector: 'app-expense',
-    templateUrl: './expense.component.html',
-    styleUrls: ['./expense.component.css']
+    selector: 'app-deposit',
+    templateUrl: './deposit.component.html',
+    styleUrls: ['./deposit.component.css']
 })
-export class ExpenseComponent implements OnInit {
+export class DepositComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
 
-    currentExpenseId : number = 1
+    currentDepositId : number = 1
 
-    expenseForm: FormGroup
+    depositForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
 
-    expenseList : any[] = []
+    depositList : any[] = []
     partyList : any[] = []
 
     unitList : any[] = []
 
-    expensePurposeList : any[] = getEnum('FeeClass')
+
+    // depositTypeList : any[] = getEnum('DepositType')
+    depositTypeList : any[] = [
+        { id : 1, name : '收上游保证金'},
+        { id : 2, name : '退上游保证金'},
+        { id : 3, name : '付下游保证金'},
+        { id : 4, name : '下游退保证金'}
+    ]
+
 
 
     pagination: any = {
@@ -61,21 +69,8 @@ export class ExpenseComponent implements OnInit {
     ngOnInit(): void {
 
         this.getOrderUnitList()
-        this.getExpenseList()
-        this.createExpenseForm()
-
-        if (this.currentOrder) {
-            if (Array.isArray(this.currentOrder.orderConfigList)) {
-
-                const tempArray = []
-                this.currentOrder.orderConfigList.forEach( unit => {
-                    unit.name = unit.hsMonth
-                    tempArray.push(unit)
-                })
-
-                this.unitList = tempArray
-            }
-        }
+        this.getDepositList()
+        this.createDepositForm()
     }
 
 
@@ -84,10 +79,10 @@ export class ExpenseComponent implements OnInit {
     }
 
 
-    getExpenseList () {
-        this.hsOrderService.getExpenseListByID(this.businessType, this.currentOrder.id).subscribe(
+    getDepositList () {
+        this.hsOrderService.getDepositListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
-                this.expenseList = data.data.results
+                this.depositList = data.data.results
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -115,78 +110,80 @@ export class ExpenseComponent implements OnInit {
     }
 
 
-    expenseFormError : any = {}
-    expenseFormValidationMessages: any = {
+    depositFormError : any = {}
+    depositFormValidationMessages: any = {
         'hsId'  : {
             'required'      : '请选择核算月!'
         },
-        'amount'  : {
-            'required'      : '请填写金额!'
+        'bailDate'  : {
+            'required'      : '请填写交纳日期!'
         },
-        'name'  : {
-            'required'      : '请填写费用科目!'
+        'bailType'  : {
+            'required'      : '请填写类型!'
+        },
+        'bailAmount'  : {
+            'required'      : '请填写金额!'
         }
     }
 
-    expenseFormInputChange(formInputData : any) {
-        this.expenseFormError = formErrorHandler(formInputData, this.expenseForm, this.expenseFormValidationMessages)
+    depositFormInputChange(formInputData : any) {
+        this.depositFormError = formErrorHandler(formInputData, this.depositForm, this.depositFormValidationMessages)
     }
 
-    createExpenseForm(): void {
+    createDepositForm(): void {
 
-        this.expenseForm = this.fb.group({
+        this.depositForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
-            'name'    : ['', [Validators.required ] ],
-            'amount'    : ['', [Validators.required ] ]
+            'bailDate'    : [null, [Validators.required ] ],
+            'bailType'    : ['', [Validators.required ] ],
+            'bailAmount'    : ['', [Validators.required ] ]
         } )
 
 
-        this.expenseForm.valueChanges.subscribe(data => {
+        this.depositForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
-            this.expenseFormInputChange(data)
+            this.depositFormInputChange(data)
         })
     }
 
 
 
+    depositFormSubmit() {
 
-
-    expenseFormSubmit() {
-
-        if (this.expenseForm.invalid) {
-            this.expenseFormInputChange(this.expenseForm.value)
+        if (this.depositForm.invalid) {
+            this.depositFormInputChange(this.depositForm.value)
             this.ignoreDirty = true
 
-            console.log('当前信息: ', this.expenseForm, this.expenseFormError)
+            console.log('当前信息: ', this.depositForm, this.depositFormError)
             return
         }
 
-        const postData = this.expenseForm.value
+        const postData = this.depositForm.value
         postData.orderId = this.currentOrder.id
 
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewExpense(this.businessType, this.currentOrder.id, postData).subscribe(
+            this.hsOrderService.createNewDeposit(this.businessType, this.currentOrder.id, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getExpenseList()
+                    this.getDepositList()
                     this.showForm()
 
                 },
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
-            postData.id = this.currentExpenseId
+            postData.id = this.currentDepositId
             // delete postData.huikuanAmount
 
-            this.hsOrderService.modifyExpense(this.businessType, this.currentOrder.id, this.currentExpenseId, postData).subscribe(
+            this.hsOrderService.modifyDeposit(this.businessType, this.currentOrder.id, this.currentDepositId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getExpenseList()
+                    this.getDepositList()
                     this.showForm()
 
                 },
@@ -197,39 +194,40 @@ export class ExpenseComponent implements OnInit {
     }
 
 
-    showForm(isAddNew : boolean = true, expense?: any ) {
+    showForm(isAddNew : boolean = true, deposit?: any ) {
 
         this.ignoreDirty = false
 
         if (isAddNew) {
             this.isAddNew = true
-            this.currentExpenseId = 0
+            this.currentDepositId = 0
 
-            this.expenseForm.patchValue({
+            this.depositForm.patchValue({
                 'hsId'    : '',
-                'name'    : '',
-                'amount'  : ''
+                'bailDate'    : null,
+                'bailType'    : '',
+                'bailAmount'  : ''
             })
 
         } else {
             this.isAddNew = false
-            this.currentExpenseId = expense.id
+            this.currentDepositId = deposit.id
 
-            this.expenseForm.patchValue(expense)
+            this.depositForm.patchValue(deposit)
         }
 
         this.isShowForm = !this.isShowForm
     }
 
 
-    deleteItem (expense : any) {
+    deleteItem (deposit : any) {
 
-        this.hsOrderService.delExpense(this.businessType, this.currentOrder.id, expense.id).subscribe(
+        this.hsOrderService.delDeposit(this.businessType, this.currentOrder.id, deposit.id).subscribe(
             data => {
                 console.log('保存成功: ', data)
                 this.httpService.successHandler(data)
 
-                this.getExpenseList()
+                this.getDepositList()
             },
             error => {this.httpService.errorHandler(error) }
         )
