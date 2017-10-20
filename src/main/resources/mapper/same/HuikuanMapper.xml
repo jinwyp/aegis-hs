@@ -221,7 +221,7 @@
     <update id="delete">
         UPDATE hs_same_huikuan
         SET deleted = 1, tsu = current_timestamp
-        WHERE id = #{id,jdbcType=BIGINT}
+        WHERE id = #{id,jdbcType=BIGINT} and deleted=0
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.same.entity.Huikuan" keyProperty="id" useGeneratedKeys="true">

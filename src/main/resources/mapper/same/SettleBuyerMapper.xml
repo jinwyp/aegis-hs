@@ -39,7 +39,7 @@
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_settle_buyer
-        WHERE id = #{id,jdbcType=BIGINT}
+        WHERE id = #{id,jdbcType=BIGINT} and deleted=0
     </delete>
 
     <!-- 逻辑删除 -->

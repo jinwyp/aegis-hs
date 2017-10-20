@@ -18,7 +18,7 @@
         select
         <include refid="Base_Column_List"/>
         from hs_cang_chuku
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT} and deleted=0
     </select>
     <select id="getPage" resultType="com.yimei.hs.cang.entity.CangChuku">
         select
@@ -123,13 +123,13 @@
       chukuAmount = #{chukuAmount,jdbcType=DECIMAL},
       chukuPrice = #{chukuPrice,jdbcType=DECIMAL},
       tsc = #{tsc,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT} and delete=0
   </update>
 
     <!-- 逻辑删除 -->
     <update id="delete" parameterType="java.lang.Long">
     UPDATE hs_cang_chuku
     SET deleted = 1, tsu = current_timestamp
-    WHERE id = #{id, jdbcType=BIGINT}
+    WHERE id = #{id, jdbcType=BIGINT} and deleted=0
   </update>
 </mapper>

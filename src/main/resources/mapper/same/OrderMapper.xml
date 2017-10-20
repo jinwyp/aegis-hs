@@ -118,6 +118,12 @@
         WHERE ownerId = #{ownerId} AND id = #{orderId}
               AND deleted = 0
     </select>
+    <select id="selectOrderListByDepartId" resultType="java.lang.Boolean">
+         SELECT count(id)
+        FROM hs_same_order
+        WHERE deptId = #{deptId,jdbcType=BIGINT}
+              AND deleted = 0
+    </select>
 
     <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -129,7 +135,7 @@
     <update id="delete" parameterType="java.lang.Long">
         UPDATE hs_same_order
         SET deleted = 1, tsu = current_timestamp
-        WHERE id = #{id,jdbcType=BIGINT}
+        WHERE id = #{id,jdbcType=BIGINT} and deleted=0
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.same.entity.Order" useGeneratedKeys="true" keyProperty="id">

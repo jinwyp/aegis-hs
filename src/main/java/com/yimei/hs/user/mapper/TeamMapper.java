@@ -26,4 +26,7 @@ public interface TeamMapper {
     boolean checkTeamExsit(long tid);
 
     int delete(long id);
+
+
+    boolean selectTeamByDepartId(String deptId);
 }

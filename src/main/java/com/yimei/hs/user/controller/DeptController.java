@@ -2,8 +2,11 @@ package com.yimei.hs.user.controller;
 
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.same.entity.Order;
+import com.yimei.hs.same.mapper.OrderMapper;
 import com.yimei.hs.user.dto.PageDeptDTO;
 import com.yimei.hs.user.entity.Dept;
+import com.yimei.hs.user.mapper.TeamMapper;
 import com.yimei.hs.user.service.DeptService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by hary on 2017/9/15.
@@ -24,6 +29,10 @@ public class DeptController {
 
     @Autowired
     private DeptService deptService;
+    @Autowired
+    private OrderMapper orderMapper;
+    @Autowired
+    private TeamMapper teamMapper;
 
     /**
      * 部门分页
@@ -91,6 +100,13 @@ public class DeptController {
      */
     @DeleteMapping("/departments/{id}")
     public ResponseEntity<Result<Integer>> delete(@PathVariable("id") String pid) {
-        return Result.ok(deptService.deleteDeptById(Long.parseLong(pid)));
+
+        if (!orderMapper.selectOrderListByDepartId(pid)
+                && !teamMapper.selectTeamByDepartId(pid)) {
+            return Result.ok(deptService.deleteDeptById(Long.parseLong(pid)));
+        } else {
+            return Result.error(4001, "该订单不能删除");
+        }
+
     }
 }

@@ -37,14 +37,14 @@
     <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_fee
-        WHERE id = #{id,jdbcType=BIGINT}
+        WHERE id = #{id,jdbcType=BIGINT} and deleted =0
     </delete>
 
     <!-- 逻辑删除 -->
     <update id="delete" parameterType="java.lang.Long">
         UPDATE hs_same_fee
         SET deleted = 1, tsu = current_timestamp
-        WHERE id = #{id,jdbcType=BIGINT}
+        WHERE id = #{id,jdbcType=BIGINT} and deleted=0
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.same.entity.Fee" keyProperty="id" useGeneratedKeys="true">

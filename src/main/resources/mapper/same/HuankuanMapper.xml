@@ -94,7 +94,7 @@
     <update id="delete" parameterType="java.lang.Long">
         UPDATE hs_same_huankuan
         SET deleted = 1, tsu = current_timestamp
-        WHERE id = #{id}
+        WHERE id = #{id} and deleted=0
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.same.entity.Huankuan" keyProperty="id" useGeneratedKeys="true">

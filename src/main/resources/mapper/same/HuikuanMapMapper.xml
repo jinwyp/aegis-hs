@@ -40,7 +40,7 @@
     <update id="deleteByOrderId" parameterType="java.lang.Long">
         UPDATE hs_same_huikuan_map
         SET deleted = 1, tsu = current_timestamp
-        WHERE orderId = #{orderId,jdbcType=BIGINT}
+        WHERE orderId = #{orderId,jdbcType=BIGINT} and deleted=0
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.same.entity.HuikuanMap" keyProperty="id"

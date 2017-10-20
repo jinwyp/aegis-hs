@@ -25,7 +25,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM hs_same_invoice_detail
-        where invoiceId = #{invoiceId,jdbcType=BIGINT}
+        where invoiceId = #{invoiceId,jdbcType=BIGINT} and deleted=0
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -36,14 +36,14 @@
     <update id="deleteByInvoiceId" parameterType="java.lang.Long">
          UPDATE hs_same_invoice_detail
          SET deleted = 1, tsu = current_timestamp
-         WHERE invoiceId =  #{invoiceId,jdbcType=BIGINT}
+         WHERE invoiceId =  #{invoiceId,jdbcType=BIGINT} and deleted=0
     </update>
 
     <!-- 逻辑删除 -->
     <update id="delete" parameterType="java.lang.Long">
         UPDATE hs_same_invoice_detail
         SET deleted = 1, tsu = current_timestamp
-        WHERE id = #{id,jdbcType=BIGINT}
+        WHERE id = #{id,jdbcType=BIGINT} and deleted=0
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.same.entity.InvoiceDetail" keyProperty="id"

@@ -24,7 +24,7 @@
         select
         <include refid="Base_Column_List"/>
         from hs_cang_ruku
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT} and deleted=0
     </select>
     <select id="getPage" resultType="com.yimei.hs.cang.entity.CangRuku">
         select
@@ -53,7 +53,7 @@
     <update id="delete" parameterType="java.lang.Long">
         UPDATE hs_cang_ruku
         SET deleted = 1, tsu = current_timestamp
-        WHERE id = #{id, jdbcType=BIGINT}
+        WHERE id = #{id, jdbcType=BIGINT} and  deleted=0
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.cang.entity.CangRuku" useGeneratedKeys="true" keyProperty="id">
@@ -107,6 +107,7 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.cang.entity.CangRuku">
         update hs_cang_ruku
         <set>
+            <if test="true">deleted=0</if>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
             <if test="rukuDate != null">rukuDate = #{rukuDate,jdbcType=TIMESTAMP},</if>
@@ -136,6 +137,6 @@
             jhh         = #{jhh,jdbcType=VARCHAR},
             ship        = #{ship,jdbcType=VARCHAR},
             tsc         = #{tsc,jdbcType=TIMESTAMP}
-        WHERE id = #{id,jdbcType=BIGINT}
+        WHERE id = #{id,jdbcType=BIGINT}  and deleted=0
     </update>
 </mapper>

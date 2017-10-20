@@ -19,6 +19,7 @@ create table hs_user (
 create table hs_dept (
   id bigint(20)    not null auto_increment,
   name varchar(64) not null comment '部门名称',
+  deleted tinyint(1)             not null default 0 comment '是否删除',
   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 

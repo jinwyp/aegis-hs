@@ -20,14 +20,14 @@
         select
         <include refid="Base_Column_List"/>
         from hs_same_huankuan_map
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT} and deleted=0
     </select>
 
     <select id="loadAll" resultType="com.yimei.hs.same.entity.HuankuanMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM hs_same_huankuan_map
-        WHERE orderId = #{orderId,jdbcType=BIGINT}
+        WHERE orderId = #{orderId,jdbcType=BIGINT} and deleted=0
     </select>
 
     <!-- 查找还款明细by还款Id-->
@@ -41,7 +41,7 @@
         FROM
             hs_same_huankuan_map
         WHERE
-            huankuanId = #{huankuanId,jdbcType=BIGINT}
+            huankuanId = #{huankuanId,jdbcType=BIGINT} and deleted=0
     </select>
 
     <!-- 查找还款明细by借款Id-->
@@ -55,7 +55,7 @@
         FROM
         hs_same_huankuan_map
         WHERE
-        jiekuanId = #{jiekuanId,jdbcType=BIGINT}
+        jiekuanId = #{jiekuanId,jdbcType=BIGINT} and deleted=0
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -74,7 +74,7 @@
     <update id="deleteByOrderId" parameterType="java.lang.Long">
         UPDATE hs_same_huankuan_map
         SET deleted = 1, tsu = current_timestamp
-        WHERE orderId = #{orderId,jdbcType=BIGINT}
+        WHERE orderId = #{orderId,jdbcType=BIGINT} and deleted=0
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.same.entity.HuankuanMap" keyProperty="id"

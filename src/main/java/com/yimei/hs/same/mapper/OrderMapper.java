@@ -6,6 +6,8 @@ import com.yimei.hs.same.dto.PageOrderDTO;
 import com.yimei.hs.same.entity.Order;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface OrderMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -26,4 +28,6 @@ public interface OrderMapper {
     boolean hasOrder(@Param("ownerId") long ownerId, @Param("businessType") BusinessType businessType, @Param("orderId") long orderId);
 
     int transfer(Long id, @Param("from") Long from, @Param("to") Long to);
+
+    boolean selectOrderListByDepartId(@Param("deptId") String deptId);
 }
