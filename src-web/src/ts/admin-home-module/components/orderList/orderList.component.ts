@@ -183,6 +183,7 @@ export class OrderListComponent implements OnInit {
                         this.partyListObject[company.id] = company
 
                         if (company.partyType === 1) {
+                            console.log(company)
                             tempArray.push(company)
                         }
                         this.partyListZhangWu = tempArray
