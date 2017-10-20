@@ -76,7 +76,7 @@
                                 <bs-select formControlName ="custType" [fc]="orderOtherPartyForm.get('custType')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择类型:'" [dirty]="ignoreDirty" [options]="customerType" [error]="orderOtherPartyFormError.custType"></bs-select>
                             </div>
                             <div class="col-4">
-                                <bs-select formControlName ="customerId" [fc]="orderOtherPartyForm.get('customerId')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择其他公司:'" [dirty]="ignoreDirty" [options]="partyListOther" [error]="orderOtherPartyFormError.customerId"></bs-select>
+                                <bs-select formControlName ="customerId" [fc]="orderOtherPartyForm.get('customerId')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择其他公司:'" [dirty]="ignoreDirty" [options]="partyListOtherPlus" [error]="orderOtherPartyFormError.customerId"></bs-select>
                             </div>
                             <div class="col-3">
                                 <bs-select formControlName ="position" [fc]="orderOtherPartyForm.get('position')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择位置:'" [dirty]="ignoreDirty" [options]="positionList" [error]="orderOtherPartyFormError.position"></bs-select>

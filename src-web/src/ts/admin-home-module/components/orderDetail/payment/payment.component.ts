@@ -196,18 +196,21 @@ export class PaymentComponent implements OnInit {
 
     paymentFormSubmit() {
 
-        if (!this.paymentForm.value.amount) {
-            this.paymentForm.patchValue({ amount : '99999999' })
+        if (this.paymentForm.get('capitalId').value === this.currentOrder.mainAccounting) {
+            if (!this.paymentForm.value.amount) {
+                this.paymentForm.patchValue({ amount : '99999999' })
+            }
+            if (!this.paymentForm.value.jiekuanDate) {
+                this.paymentForm.patchValue({jiekuanDate : '2299-12-30'})
+            }
+            if (!this.paymentForm.value.useInterest) {
+                this.paymentForm.patchValue({useInterest : '99999999'})
+            }
+            if (!this.paymentForm.value.useDays) {
+                this.paymentForm.patchValue({useDays : '99999999'})
+            }
         }
-        if (!this.paymentForm.value.jiekuanDate) {
-            this.paymentForm.patchValue({jiekuanDate : '2299-12-30'})
-        }
-        if (!this.paymentForm.value.useInterest) {
-            this.paymentForm.patchValue({useInterest : '99999999'})
-        }
-        if (!this.paymentForm.value.useDays) {
-            this.paymentForm.patchValue({jiekuanDate : '99999999'})
-        }
+
 
         if (this.paymentForm.invalid) {
             this.paymentFormInputChange(this.paymentForm.value)
