@@ -15,7 +15,7 @@
                 <bs-datepicker formControlName="huikuanBankPaperDate" [fc]="repaymentForm.get('huikuanBankPaperDate')" [label]="'收到票据原件日期:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBankPaperDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
                 <bs-datepicker formControlName="huikuanBankPaperExpire" [fc]="repaymentForm.get('huikuanBankPaperExpire')" [label]="'票据到期日:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBankPaperExpire" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
                 <bs-radio formControlName ="huikuanBankDiscount" [sourceList]="dataIsGot" [label]="'是否贴息:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBankDiscount"></bs-radio>
-                <bs-text-input formControlName="huikuanBankDiscountRate" [fc]="repaymentForm.get('huikuanBankDiscountRate')" [type]="'number'" [label]="'贴息率:'" [prompt]="'百分比 例如88.88%'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBankDiscountRate"></bs-text-input>
+                <bs-text-input formControlName="huikuanBankDiscountRate" [fc]="repaymentForm.get('huikuanBankDiscountRate')" [type]="'number'" [label]="'贴息率(%):'" [prompt]="'百分比 例如88.88'" [percent]="true" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBankDiscountRate"></bs-text-input>
             </div>
 
 
@@ -24,7 +24,7 @@
                 <bs-datepicker formControlName="huikuanBusinessPaperDate" [fc]="repaymentForm.get('huikuanBusinessPaperDate')" [label]="'收到票据原件日期:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBusinessPaperDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
                 <bs-datepicker formControlName="huikuanBusinessPaperExpire" [fc]="repaymentForm.get('huikuanBusinessPaperExpire')" [label]="'票据到期日:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBusinessPaperExpire" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
                 <bs-radio formControlName ="huikuanBusinessDiscount" [sourceList]="dataIsGot" [label]="'是否贴息:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBusinessDiscount"></bs-radio>
-                <bs-text-input formControlName="huikuanBusinessPaperExpire" [fc]="repaymentForm.get('huikuanBusinessPaperExpire')" [type]="'number'" [label]="'贴息率:'" [prompt]="'百分比 例如88.88%'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBusinessPaperExpire"></bs-text-input>
+                <bs-text-input formControlName="huikuanBusinessPaperExpire" [fc]="repaymentForm.get('huikuanBusinessPaperExpire')" [type]="'number'" [label]="'贴息率(%):'" [prompt]="'百分比 例如88.88'" [percent]="true" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBusinessPaperExpire"></bs-text-input>
             </div>
 
 
@@ -69,11 +69,11 @@
 
                     <td>
                         收到票据:{{repayment.huikuanBankPaper ? '是' : '否'}} / 票据原件日期:{{repayment.huikuanBankPaperDate}} / 票据到期日:{{repayment.huikuanBankPaperExpire}}
-                        / 贴息:{{repayment.huikuanBankDiscount}} / 贴息率:{{repayment.huikuanBankDiscountRate}}
+                        / 贴息:{{repayment.huikuanBankDiscount}} / 贴息率:{{repayment.huikuanBankDiscountRate * 100 | percent:'1.0-2'}}
                     </td>
                     <td>
                         收到票据:{{repayment.huikuanBusinessPaper ? '是' : '否'}} / 票据原件日期:{{repayment.huikuanBusinessPaperDate}} / 票据到期日:{{repayment.huikuanBusinessPaperExpire}}
-                        / 贴息:{{repayment.huikuanBusinessDiscount}} / 贴息率:{{repayment.huikuanBusinessDiscountRate}}
+                        / 贴息:{{repayment.huikuanBusinessDiscount}} / 贴息率:{{repayment.huikuanBusinessDiscountRate * 100 | percent:'1.0-2'}}
                     </td>
 
                     <td>

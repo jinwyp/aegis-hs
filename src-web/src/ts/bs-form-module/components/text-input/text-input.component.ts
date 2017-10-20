@@ -23,6 +23,7 @@ export class TextInputComponent implements ControlValueAccessor, OnInit, OnChang
     @Input() error: string = ''
     @Input() dirty: boolean = false
     @Input() readOnly: boolean = false
+    @Input() percent: boolean = false
     @Input() passwordTip: boolean = false
 
     @Input('labelclass') labelClass: string = 'col-2'
@@ -71,13 +72,24 @@ export class TextInputComponent implements ControlValueAccessor, OnInit, OnChang
 
     get value() {
         // console.log('getter: ', this.interValue)
+
+        if (this.percent && this.interValue) {
+            return Math.floor(Number(this.interValue) * 10000) / 100
+        }
         return this.interValue
     }
 
     set value(val: any) {
         // console.log('Setter: ', val)
-        this.interValue = val
-        this.onChange(val)
+
+        if (this.percent) {
+            this.interValue = Math.floor(Number(val) * 100) / 10000
+        } else {
+            this.interValue = val
+        }
+        console.log(this.interValue)
+
+        this.onChange(this.interValue)
         this.onTouched()
     }
 
@@ -124,5 +136,7 @@ export class TextInputComponent implements ControlValueAccessor, OnInit, OnChang
         max = Math.floor(max)
         return Math.floor(Math.random() * (max - min)) + min  //The maximum is exclusive and the minimum is inclusive
     }
+
+
 
 }
