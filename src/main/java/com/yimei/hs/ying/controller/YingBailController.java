@@ -63,7 +63,7 @@ public class YingBailController {
 
         YingBail bail = yingBailService.findOne(id);
         if (bail == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
             return Result.ok(bail);
         }
@@ -102,7 +102,7 @@ public class YingBailController {
         yingBail.setId(id);
         int cnt = yingBailService.update(yingBail);
         if (cnt != 1) {
-            return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "更新失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }
@@ -122,7 +122,7 @@ public class YingBailController {
     ) {
         int cnt = yingBailService.delete(morderId, id);
         if (cnt != 1) {
-            return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "删除失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }

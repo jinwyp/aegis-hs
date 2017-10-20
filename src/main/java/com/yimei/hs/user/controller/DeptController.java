@@ -1,6 +1,7 @@
 package com.yimei.hs.user.controller;
 
 import com.yimei.hs.boot.api.Result;
+import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.same.entity.Order;
 import com.yimei.hs.same.mapper.OrderMapper;
@@ -23,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api")
+@Logined(isAdmin = true)
 public class DeptController {
 
     private static final Logger logger = LoggerFactory.getLogger(DeptController.class);
@@ -55,7 +57,7 @@ public class DeptController {
     public ResponseEntity<Result<Dept>> read(@PathVariable(value = "id") long id) {
         Dept dept = deptService.findOne(id);
         if (dept == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
             return Result.ok(dept);
         }

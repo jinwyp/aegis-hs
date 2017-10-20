@@ -73,7 +73,7 @@ public class TeamController {
     public ResponseEntity<Result<Team>> read(@PathVariable("id") long id) {
         Team team = teamService.findOne(id);
         if (team == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(team);
     }
@@ -105,7 +105,7 @@ public class TeamController {
 
         int rtn = teamService.delete(id);
         if (rtn != 1) {
-            return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "删除失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }

@@ -67,7 +67,7 @@ public class OrderController {
     ) {
         Order order = orderService.findOne(id);
         if (order == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
             return Result.ok(order);
         }
@@ -140,7 +140,7 @@ public class OrderController {
         logger.debug("订单转移: orderId = {}, businessType = {} to = {} user = {}", morderId, businessType, toId, user);
         int cnt = orderService.updateTransfer(morderId, user.getId(), toId);
         if (cnt != 1) {
-            return Result.error(4001, "转移失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "转移失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }

@@ -55,7 +55,7 @@ public class CangChukuController {
     ) {
         CangChuku cangRuku = cangChukuService.findOne(id);
         if (cangRuku == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
             return Result.ok(cangRuku);
         }
@@ -75,7 +75,7 @@ public class CangChukuController {
         int rtn = cangChukuService.create(cangRuku);
         if (rtn != 1) {
             logger.error("创建失败: {}", cangRuku);
-            return Result.error(5001, "创建失败", HttpStatus.NOT_ACCEPTABLE);
+            return Result.error(5001, "创建失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(cangRuku);
     }
@@ -97,7 +97,7 @@ public class CangChukuController {
         cangRuku.setId(id);
         int rtn = cangChukuService.update(cangRuku);
         if (rtn != 1) {
-            return Result.error(5001, "更新失败", HttpStatus.NOT_FOUND);
+            return Result.error(5001, "更新失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }
@@ -116,7 +116,7 @@ public class CangChukuController {
     ) {
         int rtn = cangChukuService.delete(id);
         if (rtn != 1) {
-            return Result.error(5001, "删除失败", HttpStatus.NOT_FOUND);
+            return Result.error(5001, "删除失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }

@@ -91,7 +91,7 @@
             <if test="settleDate != null">AND seller.settleDate=#{settleDate,jdbcType=DATE}</if>
             <if test="true">AND seller.deleted = 0</if>
         </where>
-        group by seller.orderId
+        group by seller.orderId, seller.hsId
     </select>
     <select id="findByOrderIdAndHsId" parameterType="java.lang.Long" resultType="java.lang.Boolean">
          SELECT
