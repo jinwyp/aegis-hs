@@ -313,7 +313,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
             this.repaymentHKForm.patchValue({
                 'hsId'    : '',
-                'skCompanyId'    : '',
+                'promise'    : '',
                 'huankuankDate'    : null
             })
 
