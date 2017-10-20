@@ -1,0 +1,51 @@
+
+        <form [formGroup]="expenseForm" (ngSubmit)="expenseFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+
+            <bs-select formControlName="hsId" [fc]="expenseForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="expenseFormError.hsId"></bs-select>
+
+            <bs-select formControlName ="name" [fc]="expenseForm.get('name')" [label]="'费用科目:'" [dirty]="ignoreDirty" [options]="expensePurposeList" [error]="expenseFormError.name"></bs-select>
+            <bs-text-input formControlName="amount" [fc]="expenseForm.get('amount')" [type]="'number'" [label]="'金额(元):'" [dirty]="ignoreDirty" [error]="expenseFormError.amount"></bs-text-input>
+
+
+            <div class="form-group row">
+                <div class="col-10 ml-auto">
+                    <button type="submit" class="btn btn-info" >保存</button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
+                </div>
+            </div>
+        </form>
+
+
+        <div *ngIf="!isShowForm">
+            <table class="table table-bordered table-hover table-responsive" >
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>核算月</th>
+
+                    <th>费用科目</th>
+                    <th>金额</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let expense of expenseList; trackBy: trackByFn">
+                    <td> {{expense.id}}</td>
+                    <td> {{expense.hsId | findKey : unitList : 'name'}}</td>
+
+                    <td> {{expense.name | findKey : expensePurposeList : 'name' }}</td>
+                    <td> {{expense.amount  }}</td>
+
+                    <td>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, expense)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(expense)"> 删除 </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+        <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加费用</button>
