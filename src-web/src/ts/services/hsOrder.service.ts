@@ -232,6 +232,27 @@ export class HSOrderService {
 
 
 
+    getDepositListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+        const params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
+
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/bails', {params: params} )
+    }
+    createNewDeposit(businessType : string, orderId: number, invoice: any): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/bails', invoice )
+    }
+    modifyDeposit(businessType : string, orderId: number, invoiceId: number, invoice: any ): Observable<any> {
+        return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/bails/' + invoiceId.toString() , invoice)
+    }
+    delDeposit(businessType : string, orderId: number, invoiceId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/bails/' + invoiceId.toString())
+    }
+
+
+
+
+
     getExpenseListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)

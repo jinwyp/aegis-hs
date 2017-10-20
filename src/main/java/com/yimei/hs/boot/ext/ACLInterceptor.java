@@ -52,7 +52,7 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
 
             if (isAdmin) {
                 if (user.getIsAdmin() == null || user.getIsAdmin() == false) {
-                    response.setStatus(401);
+                    response.setStatus(400);
                     response.setContentType("application/json;charset=UTF-8");
                     om.writeValue(response.getOutputStream(), new Result(4001, "管理员才能访问"));
                     return false;
@@ -73,7 +73,7 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
 
                     long orderId = Long.parseLong(m.group(2));
                     if (!orderService.hasOrder(user.getId(), type, orderId)) {
-                        response.setStatus(401);
+                        response.setStatus(400);
                         response.setContentType("application/json;charset=UTF-8");
                         om.writeValue(response.getOutputStream(), new Result(4001, "你不是这条业务线的主人"));
                         return false;

@@ -34,6 +34,8 @@ import { ExpenseComponent } from './components/orderDetail/expense/expense.compo
 import { InvoiceComponent } from './components/orderDetail/invoice/invoice.component'
 import { WarehouseOrderComponent } from './components/orderDetail/warehouseOrder/warehouseOrder.component'
 
+import { DepositComponent } from './components/orderDetail/deposit/deposit.component'
+
 
 
 
@@ -102,7 +104,9 @@ const userHomeRoutes: Routes = [
         SettleOrderComponent,
         ExpenseComponent,
         InvoiceComponent,
-        WarehouseOrderComponent
+        WarehouseOrderComponent,
+
+        DepositComponent
 
     ],
     imports      : [

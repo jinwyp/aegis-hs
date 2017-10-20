@@ -77,7 +77,6 @@ import {HttpService} from './services/http.service'
         MultiSelectComponent,
         RadioComponent,
         DatePickerComponent,
-        RadioComponent,
         AddressDropdownComponent,
         CheckboxComponent
     ],

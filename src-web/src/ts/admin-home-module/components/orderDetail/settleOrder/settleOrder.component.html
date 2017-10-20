@@ -19,7 +19,7 @@
             </div>
 
             <div [hidden]="settleType !== 'settletraffic'">
-                <bs-select formControlName ="trafficCompanyId" [fc]="settleForm.get('trafficCompanyId')" [label]="'与哪个运输方结算:'" [dirty]="ignoreDirty" [options]="partyList" [error]="settleFormError.trafficCompanyId"></bs-select>
+                <bs-select formControlName ="trafficCompanyId" [fc]="settleForm.get('trafficCompanyId')" [label]="'与哪个运输方结算:'" [dirty]="ignoreDirty" [options]="partyListOther" [error]="settleFormError.trafficCompanyId"></bs-select>
             </div>
 
             <div class="form-group row">

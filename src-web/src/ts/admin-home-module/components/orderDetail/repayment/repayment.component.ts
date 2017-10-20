@@ -71,19 +71,6 @@ export class RepaymentComponent implements OnInit {
         this.getPartyList()
         this.getRepaymentList()
         this.createRepaymentForm()
-
-        if (this.currentOrder) {
-            if (Array.isArray(this.currentOrder.orderConfigList)) {
-
-                const tempArray = []
-                this.currentOrder.orderConfigList.forEach( unit => {
-                    unit.name = unit.hsMonth
-                    tempArray.push(unit)
-                })
-
-                this.unitList = tempArray
-            }
-        }
     }
 
 
@@ -139,9 +126,9 @@ export class RepaymentComponent implements OnInit {
             'required'      : '请选择核算月!'
         },
 
-        'huikuanCompanyId'  : {
-            'required'      : '请填写回款公司!'
-        },
+        // 'huikuanCompanyId'  : {
+        //     'required'      : '请填写回款公司!'
+        // },
         'huikuanDate'  : {
             'required'      : '请填写回款日期!'
         },
@@ -165,7 +152,7 @@ export class RepaymentComponent implements OnInit {
         this.repaymentForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
 
-            'huikuanCompanyId'    : ['', [Validators.required ] ],
+            // 'huikuanCompanyId'    : ['', [Validators.required ] ],
             'huikuanDate'    : [null, [Validators.required ] ],
             'huikuanAmount'    : ['', [Validators.required ] ],
             'huikuanUsage'    : ['', [Validators.required ] ],

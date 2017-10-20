@@ -63,7 +63,7 @@
                     <td> {{warehouse.rukuPrice }}</td>
                     <td> {{warehouse.locality }}</td>
 
-                    <td> {{warehouse.trafficMode}}</td>
+                    <td> {{warehouse.trafficMode | findKey : trafficModeList : 'name'}}</td>
                     <td>
                         <span *ngIf="warehouse.trafficMode==='MOTOR'">上游汽运情况下的车数: {{warehouse.cars}}</span>
                         <span *ngIf="warehouse.trafficMode==='RAIL'">上游火运情况下的计划号: {{warehouse.jhh}}</span>

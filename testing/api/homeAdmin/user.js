@@ -75,7 +75,7 @@ describe('管理用户', function () {
                 phone : '13564568301',
                 password : '123456',
                 deptId : 2,
-                isActive  :  2,
+                isActive  :  1,
                 isAdmin  : 1
             })
             .expect('Content-Type', /json/)

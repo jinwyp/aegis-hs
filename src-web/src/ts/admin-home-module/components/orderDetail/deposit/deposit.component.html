@@ -1,0 +1,54 @@
+
+        <form [formGroup]="depositForm" (ngSubmit)="depositFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+
+            <bs-select formControlName="hsId" [fc]="depositForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="depositFormError.hsId"></bs-select>
+
+            <bs-datepicker formControlName="bailDate" [fc]="depositForm.get('bailDate')" [label]="'交纳日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty"  [error]="depositFormError.bailDate" ></bs-datepicker>
+            <bs-select formControlName ="bailType" [fc]="depositForm.get('bailType')" [label]="'保证金类型:'" [dirty]="ignoreDirty" [options]="depositTypeList" [error]="depositFormError.bailType"></bs-select>
+            <bs-text-input formControlName="bailAmount" [fc]="depositForm.get('bailAmount')" [type]="'number'" [label]="'保证金金额(元):'" [dirty]="ignoreDirty" [error]="depositFormError.bailAmount" [hidden]="!isAddNew"></bs-text-input>
+
+
+            <div class="form-group row">
+                <div class="col-10 ml-auto">
+                    <button type="submit" class="btn btn-info" >保存</button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
+                </div>
+            </div>
+        </form>
+
+
+        <div *ngIf="!isShowForm">
+            <table class="table table-bordered table-hover table-responsive" >
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>核算月</th>
+
+                    <th>交纳时间</th>
+                    <th>类型</th>
+                    <th>保证金金额(元)</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let deposit of depositList; trackBy: trackByFn">
+                    <td> {{deposit.id}}</td>
+                    <td> {{deposit.hsId | findKey : unitList : 'name'}}</td>
+
+                    <td> {{deposit.bailDate  }}</td>
+                    <td> {{deposit.bailType | findKey : depositTypeList : 'name' }}</td>
+                    <td> {{deposit.bailAmount  }}</td>
+
+                    <td>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, deposit)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(deposit)"> 删除 </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+        <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加保证金</button>

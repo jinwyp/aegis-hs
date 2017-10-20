@@ -72,19 +72,6 @@ export class InvoiceComponent implements OnInit {
         this.getInvoiceList()
         this.createInvoiceForm()
         this.createInvoiceDetailForm()
-
-        if (this.currentOrder) {
-            if (Array.isArray(this.currentOrder.orderConfigList)) {
-
-                const tempArray = []
-                this.currentOrder.orderConfigList.forEach( unit => {
-                    unit.name = unit.hsMonth
-                    tempArray.push(unit)
-                })
-
-                this.unitList = tempArray
-            }
-        }
     }
 
 

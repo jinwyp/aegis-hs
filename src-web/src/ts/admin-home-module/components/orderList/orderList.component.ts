@@ -43,6 +43,8 @@ export class OrderListComponent implements OnInit {
     teamList : any[] = []
     filterTeamList : any[] = []
     partyList : any[] = []
+    partyListZhangWu : any[] = []
+    partyListOther : any[] = []
     partyListObject : any = {}
 
 
@@ -154,6 +156,10 @@ export class OrderListComponent implements OnInit {
             data => {
                 this.teamList = data.data.results
 
+                this.filterTeamList = this.teamList.filter( team => {
+                    return team.deptId === this.sessionUser.deptId
+                })
+
             },
             error => {this.httpService.errorHandler(error) }
         )
@@ -172,12 +178,22 @@ export class OrderListComponent implements OnInit {
                 this.partyList = data.data.results
 
                 if (Array.isArray(data.data.results)) {
+                    const tempArray : any[] = []
+                    const tempArray2 : any[] = []
+
                     data.data.results.forEach( company => {
                         this.partyListObject[company.id] = company
+
+                        if (company.partyType === 1) {
+                            tempArray.push(company)
+                        }
+                        if (company.partyType !== 2) {
+                            tempArray2.push(company)
+                        }
+                        this.partyListZhangWu = tempArray
+                        this.partyListOther = tempArray2
                     })
                 }
-
-
             },
             error => {this.httpService.errorHandler(error) }
         )
@@ -247,7 +263,7 @@ export class OrderListComponent implements OnInit {
     createOrderForm(): void {
 
         this.orderForm = this.fb.group({
-            'deptId'    : ['', [Validators.required ] ],
+            // 'deptId'    : ['', [Validators.required ] ],
             'teamId'    : ['', [Validators.required ] ],
             'line'    : ['', [Validators.required ] ],
             'cargoType'    : ['', [Validators.required ] ],

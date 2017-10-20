@@ -185,6 +185,13 @@ export class AdminHomeComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+
+        this.orderService.getEnumList('BailType').subscribe(
+            data => {
+                saveEnum('BailType', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
     }
 
     logout () {

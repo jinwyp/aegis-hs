@@ -15,26 +15,36 @@ import {getEnum} from '../../../../services/localStorage'
 
 
 @Component({
-  selector: 'app-borrow',
-  templateUrl: './borrow.component.html',
-  styleUrls: ['./borrow.component.css']
+    selector: 'app-deposit',
+    templateUrl: './deposit.component.html',
+    styleUrls: ['./deposit.component.css']
 })
-export class BorrowComponent implements OnInit {
+export class DepositComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
-    currentBorrowId : number = 0
 
-    borrowForm: FormGroup
+    currentDepositId : number = 1
+
+    depositForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
 
-    borrowList : any[] = []
+    depositList : any[] = []
     partyList : any[] = []
 
     unitList : any[] = []
+
+
+    depositTypeList : any[] = getEnum('BailType')
+    // depositTypeList : any[] = [
+    //     { id : 1, name : '收上游保证金'},
+    //     { id : 2, name : '退上游保证金'},
+    //     { id : 3, name : '付下游保证金'},
+    //     { id : 4, name : '下游退保证金'}
+    // ]
 
 
 
@@ -45,11 +55,9 @@ export class BorrowComponent implements OnInit {
     }
 
 
-
     constructor(
         private httpService: HttpService,
         private fb: FormBuilder,
-        private hsUserService: HSUserService,
         private hsOrderService: HSOrderService
 
     ) {
@@ -61,9 +69,8 @@ export class BorrowComponent implements OnInit {
     ngOnInit(): void {
 
         this.getOrderUnitList()
-        this.getPartyList()
-        this.getBorrowList()
-        this.createBorrowForm()
+        this.getDepositList()
+        this.createDepositForm()
     }
 
 
@@ -72,21 +79,10 @@ export class BorrowComponent implements OnInit {
     }
 
 
-    getBorrowList () {
-        this.hsOrderService.getBorrowListByID(this.businessType, this.currentOrder.id).subscribe(
+    getDepositList () {
+        this.hsOrderService.getDepositListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
-                this.borrowList = data.data.results
-
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-    }
-
-    getPartyList () {
-
-        this.hsUserService.getPartyList().subscribe(
-            data => {
-                this.partyList = data.data.results
+                this.depositList = data.data.results
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -114,140 +110,129 @@ export class BorrowComponent implements OnInit {
     }
 
 
-    borrowFormError : any = {}
-    borrowFormValidationMessages: any = {
+    depositFormError : any = {}
+    depositFormValidationMessages: any = {
         'hsId'  : {
             'required'      : '请选择核算月!'
         },
-        'jiekuanDate'  : {
-            'required'      : '请填写借款日期!'
+        'bailDate'  : {
+            'required'      : '请填写交纳日期!'
         },
-        'amount'  : {
-            'required'      : '请填写借款金额!'
+        'bailType'  : {
+            'required'      : '请填写类型!'
         },
-        'capitalId'  : {
-            'required'      : '请填写资金方!'
-        },
-        'useInterest'  : {
-            'required'      : '请填写使用利率!'
-        },
-        'useDays'  : {
-            'required'      : '请填写使用天数!'
+        'bailAmount'  : {
+            'required'      : '请填写金额!'
         }
     }
 
-    borrowFormInputChange(formInputData : any) {
-        this.borrowFormError = formErrorHandler(formInputData, this.borrowForm, this.borrowFormValidationMessages)
+    depositFormInputChange(formInputData : any) {
+        this.depositFormError = formErrorHandler(formInputData, this.depositForm, this.depositFormValidationMessages)
     }
 
-    createBorrowForm(): void {
+    createDepositForm(): void {
 
-        this.borrowForm = this.fb.group({
+        this.depositForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
-            'jiekuanDate'    : [null, [Validators.required ] ],
-            'amount'    : ['', [Validators.required ] ],
-
-            'capitalId'    : ['', [Validators.required ] ],
-            'useInterest'    : ['', [Validators.required] ],
-            'useDays'    : ['', [Validators.required ] ]
+            'bailDate'    : [null, [Validators.required ] ],
+            'bailType'    : ['', [Validators.required ] ],
+            'bailAmount'    : ['', [Validators.required ] ]
         } )
 
-        this.borrowForm.valueChanges.subscribe(data => {
+
+        this.depositForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
-            this.borrowFormInputChange(data)
+            this.depositFormInputChange(data)
         })
     }
 
 
 
+    depositFormSubmit() {
 
-
-    borrowFormSubmit() {
-
-        if (this.borrowForm.invalid) {
-            this.borrowFormInputChange(this.borrowForm.value)
+        if (this.depositForm.invalid) {
+            this.depositFormInputChange(this.depositForm.value)
             this.ignoreDirty = true
 
-            console.log('当前信息: ', this.borrowForm, this.borrowFormError)
+            console.log('当前信息: ', this.depositForm, this.depositFormError)
             return
         }
 
-        const postData = this.borrowForm.value
+        const postData = this.depositForm.value
         postData.orderId = this.currentOrder.id
 
 
         if (this.isAddNew) {
-            this.hsOrderService.createNewBorrow(this.businessType, this.currentOrder.id, postData).subscribe(
+            this.hsOrderService.createNewDeposit(this.businessType, this.currentOrder.id, postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getBorrowList()
+                    this.getDepositList()
                     this.showForm()
 
                 },
                 error => {this.httpService.errorHandler(error) }
             )
         } else {
-            postData.id = this.currentBorrowId
-            delete postData.payDate
-            delete postData.payAmount
+            postData.id = this.currentDepositId
+            delete postData.bailAmount
 
-            this.hsOrderService.modifyBorrow(this.businessType, this.currentOrder.id, this.currentBorrowId, postData).subscribe(
+            this.hsOrderService.modifyDeposit(this.businessType, this.currentOrder.id, this.currentDepositId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getBorrowList()
+                    this.getDepositList()
                     this.showForm()
 
                 },
                 error => {this.httpService.errorHandler(error) }
             )
         }
+
     }
 
 
-    showForm(isAddNew : boolean = true, borrowOrder?: any ) {
+    showForm(isAddNew : boolean = true, deposit?: any ) {
+
+        this.ignoreDirty = false
 
         if (isAddNew) {
             this.isAddNew = true
-            this.currentBorrowId = 0
+            this.currentDepositId = 0
 
-            this.borrowForm.patchValue({
+            this.depositForm.patchValue({
                 'hsId'    : '',
-                'jiekuanDate'    : null,
-                'amount'    : '',
-
-                'capitalId'    : '',
-                'useInterest'    : '',
-                'useDays'    : ''
+                'bailDate'    : null,
+                'bailType'    : '',
+                'bailAmount'  : ''
             })
 
         } else {
             this.isAddNew = false
-            this.currentBorrowId = borrowOrder.id
+            this.currentDepositId = deposit.id
 
-            this.borrowForm.patchValue(borrowOrder)
+            this.depositForm.patchValue(deposit)
         }
 
         this.isShowForm = !this.isShowForm
     }
 
 
-    deleteItem (borrow : any) {
+    deleteItem (deposit : any) {
 
-        this.hsOrderService.delBorrow(this.businessType, this.currentOrder.id, borrow.id).subscribe(
+        this.hsOrderService.delDeposit(this.businessType, this.currentOrder.id, deposit.id).subscribe(
             data => {
                 console.log('保存成功: ', data)
                 this.httpService.successHandler(data)
 
-                this.getBorrowList()
+                this.getDepositList()
             },
             error => {this.httpService.errorHandler(error) }
         )
-    }
 
+    }
 
 }
 

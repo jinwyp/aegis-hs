@@ -38,6 +38,7 @@ export class SettleOrderComponent implements OnInit {
     settleTrafficList : any[] = []
 
     partyList : any[] = []
+    partyListOther : any[] = []
 
     unitList : any[] = []
 
@@ -80,18 +81,6 @@ export class SettleOrderComponent implements OnInit {
         this.getSettleList()
         this.createSettleForm()
 
-        if (this.currentOrder) {
-            if (Array.isArray(this.currentOrder.orderConfigList)) {
-
-                const tempArray = []
-                this.currentOrder.orderConfigList.forEach( unit => {
-                    unit.name = unit.hsMonth
-                    tempArray.push(unit)
-                })
-
-                this.unitList = tempArray
-            }
-        }
     }
 
 
@@ -161,6 +150,18 @@ export class SettleOrderComponent implements OnInit {
         this.hsUserService.getPartyList().subscribe(
             data => {
                 this.partyList = data.data.results
+
+                if (Array.isArray(data.data.results)) {
+                    const tempArray : any[] = []
+
+                    data.data.results.forEach( company => {
+
+                        if (company.partyType === 3) {
+                            tempArray.push(company)
+                        }
+                        this.partyListOther = tempArray
+                    })
+                }
 
             },
             error => {this.httpService.errorHandler(error) }
