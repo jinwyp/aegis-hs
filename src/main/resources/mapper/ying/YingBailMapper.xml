@@ -34,12 +34,19 @@
     <!-- 获取保证金分页-->
     <select id="getPage" resultType="com.yimei.hs.ying.entity.YingBail">
         select
-        <include refid="Base_Column_List"/>
+        id,
+        orderId,
+        hsId,
+        bailDate,
+        bailAmount,
+        bailType,
+        tsc,
+        tsu
         FROM hs_ying_bail
         <where>
             <if test="true">and deleted = 0</if>
             <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
-            <if test="fyDate!=null">and fyDate = #{fyDate, jdbcType=TIMESTAMP}</if>
+            <if test="bailDate!=null">and fyDate = #{fyDate, jdbcType=TIMESTAMP}</if>
             <if test="hsId!=null">and hsId = #{hsId, jdbcType=VARCHAR}</if>
         </where>
     </select>
@@ -62,7 +69,7 @@
     <update id="delete" parameterType="java.lang.Long">
         UPDATE hs_ying_bail
         SET deleted = 1, tsu = current_timestamp
-        WHERE id = #{id, jdbcType=BIGINT}
+        WHERE id = #{id, jdbcType=BIGINT} and deleted=0
     </update>
 
     <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingBail" useGeneratedKeys="true" keyProperty="id">

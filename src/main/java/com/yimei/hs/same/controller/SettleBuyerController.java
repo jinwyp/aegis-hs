@@ -35,6 +35,9 @@ public class SettleBuyerController {
     @Autowired
     private SettleBuyerService settleBuyeService;
 
+    @Autowired
+    private SettleSellerService settleSellerService;
+
     private boolean isValidReq(String pos, BusinessType businessType) {
         return (
                 businessType.equals(BusinessType.ying) && pos.equals("downstream")
@@ -84,7 +87,7 @@ public class SettleBuyerController {
 
             SettleBuyer settleDownstream = settleBuyeService.findOne(id);
             if (settleDownstream == null) {
-                return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+                return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
             } else {
                 return Result.ok(settleDownstream);
             }
@@ -100,15 +103,22 @@ public class SettleBuyerController {
     @PostMapping("/{morderId}/settlebuyer{pos}")
     public ResponseEntity<Result<SettleBuyer>> create(
             @PathVariable("pos") String pos,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(CreateGroup.class) SettleBuyer settleBuyer
     ) {
-        if (isValidReq(pos, businessType)) {
+        if (settleSellerService.selectHsAndOrderId(morderId, settleBuyer.getHsId())) {
 
-            settleBuyeService.create(settleBuyer);
-            return Result.ok(settleBuyer);
+            if (isValidReq(pos, businessType)) {
+
+                settleBuyeService.create(settleBuyer);
+                return Result.ok(settleBuyer);
+            }
+            return Result.error(4001, "invalid request");
+        } else {
+            return Result.error(4001,"本核算月结算已经完成，不能添加该月下游结算",HttpStatus.BAD_REQUEST);
+
         }
-        return Result.error(4001, "invalid request");
     }
 
     /**
@@ -129,7 +139,7 @@ public class SettleBuyerController {
             int rtn = settleBuyeService.update(settleBuyer);
             if (rtn != 1) {
                 logger.error("更新失败: {}", settleBuyer);
-                return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+                return Result.error(4001, "更新失败", HttpStatus.BAD_REQUEST);
             }
 
             return Result.ok(1);
@@ -152,7 +162,7 @@ public class SettleBuyerController {
         if (isValidReq(pos, businessType)) {
             int rtn = settleBuyeService.delete(id);
             if (rtn != 1) {
-                return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
+                return Result.error(4001, "删除失败", HttpStatus.BAD_REQUEST);
             }
 
             return Result.ok(1);

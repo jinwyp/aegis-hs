@@ -5,6 +5,7 @@ import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.dto.PageTeamDTO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TeamMapper {
     int deleteByPrimaryKey(Long id);
@@ -29,4 +30,6 @@ public interface TeamMapper {
 
 
     boolean selectTeamByDepartId(String deptId);
+
+    List<Team> getListBySameDeptId(Long deptId);
 }

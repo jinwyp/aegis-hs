@@ -7,6 +7,7 @@ import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.TrafficMode;
+import com.yimei.hs.same.service.SettleSellerService;
 import com.yimei.hs.ying.dto.PageYingFayunDTO;
 import com.yimei.hs.ying.entity.YingFayun;
 import com.yimei.hs.ying.service.YingFayunService;
@@ -34,6 +35,8 @@ public class YingFayunController {
     @Autowired
     YingFayunService yingFayunService;
 
+    @Autowired
+    SettleSellerService settleSellerService;
     /**
      * 获取所有fayun
      *
@@ -63,7 +66,7 @@ public class YingFayunController {
 
         YingFayun fayun = yingFayunService.findOne(id);
         if (fayun == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
             return Result.ok(fayun);
         }
@@ -122,15 +125,20 @@ public class YingFayunController {
         }
         yingFayun.setOrderId(morderId);
         int rtn;
-        try {
-            rtn = yingFayunService.create(yingFayun);
-        } catch (Exception e) {
-            return Result.error(4001, "创建失败", HttpStatus.BAD_REQUEST);
+        if (settleSellerService.selectHsAndOrderId(morderId, yingFayun.getHsId())) {
+
+            try {
+                rtn = yingFayunService.create(yingFayun);
+            } catch (Exception e) {
+                return Result.error(4001, "创建失败", HttpStatus.BAD_REQUEST);
+            }
+            if (rtn != 1) {
+                return Result.error(4001, "创建失败", HttpStatus.BAD_REQUEST);
+            }
+            return Result.ok(yingFayun);
+        } else {
+            return Result.error(4001,"本核算月结算已经完成，不能添加发运",HttpStatus.BAD_REQUEST);
         }
-        if (rtn != 1) {
-            return Result.error(4001, "创建失败", HttpStatus.BAD_REQUEST);
-        }
-        return Result.ok(yingFayun);
     }
 
     /**
@@ -147,7 +155,7 @@ public class YingFayunController {
         yingFayun.setId(id);
         int cnt = yingFayunService.update(yingFayun);
         if (cnt != 1) {
-            return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "更新失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }
@@ -167,7 +175,7 @@ public class YingFayunController {
     ) {
         int cnt = yingFayunService.delete(morderId, id);
         if (cnt != 1) {
-            return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "删除失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }

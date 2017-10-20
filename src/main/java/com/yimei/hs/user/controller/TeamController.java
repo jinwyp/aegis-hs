@@ -1,9 +1,11 @@
 package com.yimei.hs.user.controller;
 
 import com.yimei.hs.boot.api.Result;
+import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.user.dto.PageTeamDTO;
 import com.yimei.hs.user.entity.Team;
+import com.yimei.hs.user.entity.User;
 import com.yimei.hs.user.service.DeptService;
 import com.yimei.hs.user.service.TeamService;
 import org.slf4j.Logger;
@@ -14,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by hary on 2017/9/15.
@@ -69,7 +73,7 @@ public class TeamController {
     public ResponseEntity<Result<Team>> read(@PathVariable("id") long id) {
         Team team = teamService.findOne(id);
         if (team == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(team);
     }
@@ -99,12 +103,21 @@ public class TeamController {
     @DeleteMapping("/teams/{id}")
     public ResponseEntity<Result<Integer>> delete(@PathVariable("id") long id) {
 
-        logger.debug("teamid -> {}",id);
         int rtn = teamService.delete(id);
         if (rtn != 1) {
-            return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "删除失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }
+
+    /**
+     * 获取同一部门所有团队
+     */
+    @GetMapping("/teams/list_dept_team")
+    public ResponseEntity<Result<List<Team>>> getListBySameDeptId(@CurrentUser User user) {
+
+        return Result.ok(teamService.getListBySameDeptId(user.getDeptId()));
+    }
+
 
 }

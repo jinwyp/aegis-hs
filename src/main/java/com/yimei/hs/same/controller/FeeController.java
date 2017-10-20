@@ -61,7 +61,7 @@ public class FeeController {
     ) {
         Fee fee = feeService.findOne(id);
         if (fee == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
             return Result.ok(fee);
         }
@@ -101,7 +101,7 @@ public class FeeController {
         fee.setId(id);
         int rtn = feeService.update(fee);
         if (rtn != 1) {
-            return Result.error(5001, "更新失败", HttpStatus.NOT_FOUND);
+            return Result.error(5001, "更新失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }
@@ -119,7 +119,7 @@ public class FeeController {
     ) {
         int rtn = feeService.delete(id);
         if (rtn != 1) {
-            return Result.error(5001, "删除失败", HttpStatus.NOT_FOUND);
+            return Result.error(5001, "删除失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }

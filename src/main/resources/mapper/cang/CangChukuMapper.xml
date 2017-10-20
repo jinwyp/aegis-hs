@@ -121,9 +121,9 @@
       chukuDate = #{chukuDate,jdbcType=TIMESTAMP},
       locality = #{locality,jdbcType=VARCHAR},
       chukuAmount = #{chukuAmount,jdbcType=DECIMAL},
-      chukuPrice = #{chukuPrice,jdbcType=DECIMAL},
-      tsc = #{tsc,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT} and delete=0
+      chukuPrice = #{chukuPrice,jdbcType=DECIMAL}
+
+    where id = #{id,jdbcType=BIGINT} and deleted=0
   </update>
 
     <!-- 逻辑删除 -->

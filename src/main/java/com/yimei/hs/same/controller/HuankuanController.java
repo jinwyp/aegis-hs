@@ -69,7 +69,7 @@ public class HuankuanController {
     ) {
         Huankuan huankuan = huankuanService.findOne(id);
         if (huankuan == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
             return Result.ok(huankuan);
         }
@@ -91,7 +91,7 @@ public class HuankuanController {
         List<HuankuanMap> huankuanMaps = huankuan.getHuankuanMapList();
 
         for (HuankuanMap huankuanMap : huankuanMaps) {
-            Jiekuan jiekuanDb= jiekuanService.findOne(huankuan.getOrderId());
+            Jiekuan jiekuanDb= jiekuanService.findOne(huankuanMap.getJiekuanId());
             if (jiekuanDb != null) {
                 if (huankuanMap.getPrincipal().compareTo(jiekuanDb.getAmount()) ==1 ) {
                     return Result.error(4001, "创建失败");
@@ -132,7 +132,7 @@ public class HuankuanController {
         huankuanMapMapper.deleteByPrimaryKey(huankuan.getId());
         int cnt = huankuanService.update(huankuan);
         if (cnt != 1) {
-            return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "更新失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }
@@ -154,7 +154,7 @@ public class HuankuanController {
             huankuanMapMapper.deleteByPrimaryKey(huankuanMap.getId());
         }
         if (cnt != 1) {
-            return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "删除失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }

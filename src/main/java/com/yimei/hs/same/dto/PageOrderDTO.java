@@ -4,9 +4,7 @@ import com.yimei.hs.boot.persistence.BaseFilter;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.OrderStatus;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -17,6 +15,8 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class PageOrderDTO extends BaseFilter<PageOrderDTO> {
 
     private BusinessType businessType;
@@ -39,7 +39,7 @@ public class PageOrderDTO extends BaseFilter<PageOrderDTO> {
 
     private OrderStatus status;
 
-    //
+
     private LocalDateTime createDateStart;
 
     private LocalDateTime createDateEnd;

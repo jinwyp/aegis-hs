@@ -5,7 +5,7 @@
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="deptId" jdbcType="BIGINT" property="deptId"/>
-
+        <result column="deleted" jdbcType="BIGINT" property="delete"/>
     </resultMap>
     <sql id="Base_Column_List">
         id, name, deptId
@@ -14,7 +14,7 @@
         select
         <include refid="Base_Column_List"/>
         from hs_team
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}  and deleted=0
     </select>
     <select id="getAllTeams" resultType="com.yimei.hs.user.entity.Team">
         SELECT * from hs_team
@@ -41,6 +41,12 @@
         count(id)
         from hs_team
         where deptId = #{deptId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getListBySameDeptId" resultType="com.yimei.hs.user.entity.Team">
+        SELECT <include refid="Base_Column_List" />
+        from hs_team
+        WHERE   deptId = #{deptId,jdbcType=BIGINT} and deleted=0
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from hs_team

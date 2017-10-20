@@ -10,6 +10,7 @@ import com.yimei.hs.same.dto.PageJiekuanDTO;
 import com.yimei.hs.same.entity.Jiekuan;
 import com.yimei.hs.same.service.JiekuanService;
 import com.yimei.hs.same.service.OrderService;
+import com.yimei.hs.same.service.SettleSellerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class JiekuanController {
     private JiekuanService jiekuanService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private SettleSellerService settleSellerService;
 
 
     /**
@@ -99,17 +102,21 @@ public class JiekuanController {
             @RequestBody @Validated(CreateGroup.class) Jiekuan jiekuan
     ) {
         jiekuan.setOrderId(morderId);
-        if (jiekuan.getAmount().compareTo(BigDecimal.ZERO) ==1 && jiekuan.getAmount().compareTo(new BigDecimal("99999999.99")) <=0) {
+        if (settleSellerService.selectHsAndOrderId(morderId, jiekuan.getHsId())) {
+            if (jiekuan.getAmount().compareTo(BigDecimal.ZERO) == 1 && jiekuan.getAmount().compareTo(new BigDecimal("99999999.99")) <= 0) {
 
 
-            int rtn = jiekuanService.create(jiekuan);
-            if (rtn != 1) {
-                logger.error("创建失败: {}", jiekuan);
+                int rtn = jiekuanService.create(jiekuan);
+                if (rtn != 1) {
+                    logger.error("创建失败: {}", jiekuan);
+                    return Result.error(4001, "创建失败");
+                }
+                return Result.ok(jiekuan);
+            } else {
                 return Result.error(4001, "创建失败");
             }
-            return Result.ok(jiekuan);
         } else {
-            return Result.error(4001, "创建失败");
+            return Result.error(4001,"本核算月结算已经完成，不能添加该月借款",HttpStatus.BAD_REQUEST);
         }
 
     }
