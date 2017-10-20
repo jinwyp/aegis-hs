@@ -35,6 +35,9 @@ public class SettleBuyerController {
     @Autowired
     private SettleBuyerService settleBuyeService;
 
+    @Autowired
+    private SettleSellerService settleSellerService;
+
     private boolean isValidReq(String pos, BusinessType businessType) {
         return (
                 businessType.equals(BusinessType.ying) && pos.equals("downstream")
@@ -100,15 +103,22 @@ public class SettleBuyerController {
     @PostMapping("/{morderId}/settlebuyer{pos}")
     public ResponseEntity<Result<SettleBuyer>> create(
             @PathVariable("pos") String pos,
+            @PathVariable("morderId") Long morderId,
             @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(CreateGroup.class) SettleBuyer settleBuyer
     ) {
-        if (isValidReq(pos, businessType)) {
+        if (settleSellerService.selectHsAndOrderId(morderId, settleBuyer.getHsId())) {
 
-            settleBuyeService.create(settleBuyer);
-            return Result.ok(settleBuyer);
+            if (isValidReq(pos, businessType)) {
+
+                settleBuyeService.create(settleBuyer);
+                return Result.ok(settleBuyer);
+            }
+            return Result.error(4001, "invalid request");
+        } else {
+            return Result.error(4001,"本核算月结算已经完成，不能添加该月下游结算",HttpStatus.BAD_REQUEST);
+
         }
-        return Result.error(4001, "invalid request");
     }
 
     /**
