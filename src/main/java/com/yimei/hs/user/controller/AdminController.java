@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController()
 @RequestMapping("/api")
-
+@Logined(isAdmin = true)
 public class AdminController {
 
     public static final Logger logger = LoggerFactory.getLogger(AdminController.class);
@@ -36,7 +36,6 @@ public class AdminController {
      * @return
      */
     @PostMapping("/users")
-    @Logined(isAdmin = true)
     public ResponseEntity<Result<User>> create(
             @CurrentUser User admin,
             @RequestBody @Validated User user
@@ -89,7 +88,6 @@ public class AdminController {
      * @return
      */
     @PutMapping("/users/{id}")
-    @Logined(isAdmin = true)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("id") Long id,
             @RequestBody User user

@@ -24,7 +24,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api")
-@Logined(isAdmin = true)
 public class DeptController {
 
     private static final Logger logger = LoggerFactory.getLogger(DeptController.class);
@@ -70,6 +69,7 @@ public class DeptController {
      * @return
      */
     @PostMapping("/departments")
+    @Logined(isAdmin = true)
     public ResponseEntity<Result<Dept>> create(@RequestBody Dept dept) {
         int rtn = deptService.create(dept);
         if (rtn != 1) {
@@ -85,6 +85,7 @@ public class DeptController {
      * @return
      */
     @PutMapping("/departments/{id}")
+    @Logined(isAdmin = true)
     public ResponseEntity<Result<Integer>> update(
             @PathVariable(value = "id") Long id,
             @RequestBody Dept dept) {
@@ -101,6 +102,7 @@ public class DeptController {
      * delete
      */
     @DeleteMapping("/departments/{id}")
+    @Logined(isAdmin = true)
     public ResponseEntity<Result<Integer>> delete(@PathVariable("id") String pid) {
 
         if (!orderMapper.selectOrderListByDepartId(pid)
