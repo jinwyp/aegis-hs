@@ -8,14 +8,17 @@
 
         <form [formGroup]="orderForm"  (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
+
             <div class="form-row ">
+                <!--<div class="col">-->
+                    <!--<bs-select formControlName ="deptId" [fc]="orderForm.get('deptId')" [label]="'事业部门:'" [labelclass]="'col-4'" [dirty]="ignoreDirty" [options]="departmentList" [error]="orderFormError.deptId" (change)="filterTeams($event)" ></bs-select>-->
+                <!--</div>-->
                 <div class="col">
-                    <bs-select formControlName ="deptId" [fc]="orderForm.get('deptId')" [label]="'事业部门:'" [labelclass]="'col-4'" [dirty]="ignoreDirty" [options]="departmentList" [error]="orderFormError.deptId" (change)="filterTeams($event)" ></bs-select>
-                </div>
-                <div class="col">
-                    <bs-select formControlName ="teamId" [fc]="orderForm.get('teamId')" [label]="'团队:'" [labelclass]="'col-4'" [dirty]="ignoreDirty" [options]="filterTeamList" [error]="orderFormError.teamId"></bs-select>
                 </div>
             </div>
+
+            <bs-select formControlName ="teamId" [fc]="orderForm.get('teamId')" [label]="'团队:'" [dirty]="ignoreDirty" [options]="filterTeamList" [error]="orderFormError.teamId"></bs-select>
+
 
             <div class="form-row ">
                 <div class="col">

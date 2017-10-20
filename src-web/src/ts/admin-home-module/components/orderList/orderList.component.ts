@@ -154,6 +154,10 @@ export class OrderListComponent implements OnInit {
             data => {
                 this.teamList = data.data.results
 
+                this.filterTeamList = this.teamList.filter( team => {
+                    return team.deptId === this.sessionUser.deptId
+                })
+
             },
             error => {this.httpService.errorHandler(error) }
         )
