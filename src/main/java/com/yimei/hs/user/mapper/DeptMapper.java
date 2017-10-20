@@ -4,6 +4,8 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.dto.PageDeptDTO;
 
+import java.util.List;
+
 public interface DeptMapper {
     int deleteByPrimaryKey(Long id);
 

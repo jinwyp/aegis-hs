@@ -1,6 +1,7 @@
 package com.yimei.hs.user.service;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.dto.PageTeamDTO;
 import com.yimei.hs.user.mapper.TeamMapper;
@@ -9,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by hary on 2017/9/15.
@@ -53,5 +56,9 @@ public class TeamService {
 
     public boolean checkTeamExist(long tid) {
         return teamMapper.checkTeamExsit(tid);
+    }
+
+    public List<Team> getListBySameDeptId(Long deptId) {
+        return teamMapper.getListBySameDeptId(deptId);
     }
 }

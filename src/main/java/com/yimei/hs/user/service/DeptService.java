@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by hary on 2017/9/15.
  */
@@ -48,4 +50,6 @@ public class DeptService {
     public boolean checkDeptExist(Long id){
         return deptMapper.checkDeptExist(id);
     }
+
+
 }

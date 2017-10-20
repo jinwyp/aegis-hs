@@ -163,6 +163,7 @@ create table hs_same_huankuan (
   hsId bigint(20)         not null comment '核算月id',
   huankuankDate datetime  not null comment '还款日期',
   deleted tinyint(1)               not null default 0 comment '是否删除',
+  promise tinyint(1)               not null default 0 comment 'true 为未来的  false 为实际的',
   tsc timestamp           not null default current_timestamp,
   tsu timestamp not null default current_timestamp,
   primary key (id)

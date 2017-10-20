@@ -7,6 +7,7 @@
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
         <result column="huankuankDate" jdbcType="TIMESTAMP" property="huankuankDate"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+        <result column="promise" jdbcType="TINYINT" property="promise"/>
     </resultMap>
 
     <!-- 还款， 以及其关联的付款 -->
@@ -31,6 +32,7 @@
             t1.id  AS  t1Id,
             t1.orderId,
             t1.hsId,
+            t1.promise,
             t1.huankuankDate,
             t1.tsc,
 
@@ -59,6 +61,7 @@
         t1.id,
         t1.orderId,
         t1.hsId,
+        t1.promise,
         t1.huankuankDate,
         t1.tsc
         from hs_same_huankuan t1
@@ -78,7 +81,8 @@
             huankuan.hsId,
             huankuan.huankuankDate,
             huankuan.tsc,
-            huankuan.tsu
+            huankuan.tsu,
+            huankuan.promise
         FROM hs_same_huankuan_map huankuanmap
             LEFT JOIN hs_same_huankuan huankuan ON huankuanmap.huankuanId = huankuan.id
         WHERE huankuanmap.jiekuanId = #{jiekuanId, jdbcType=BIGINT} AND huankuan.deleted = 0
@@ -103,15 +107,15 @@
             orderId,
             hsId,
             huankuankDate,
-            tsc,
-            tsu
+            promise,
+            tsc
         )
         VALUES (
             #{id,jdbcType=BIGINT},
             #{orderId,jdbcType=BIGINT},
             #{hsId,jdbcType=BIGINT},
             #{huankuankDate,jdbcType=TIMESTAMP},
-            #{tsc,jdbcType=TIMESTAMP},
+            #{promise,jdbcType=TINYINT},
             current_timestamp
         )
     </insert>
@@ -124,14 +128,14 @@
             <if test="orderId != null">orderId,</if>
             <if test="hsId != null">hsId,</if>
             <if test="huankuankDate != null">huankuankDate,</if>
-            <if test="tsc != null">tsc,</if>
+            <if test="promise != null">promise</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id,jdbcType=BIGINT},</if>
             <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
             <if test="huankuankDate != null">#{huankuankDate,jdbcType=TIMESTAMP},</if>
-            <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="promise != null">#{tsc,jdbcType=TINYINT}</if>
         </trim>
     </insert>
 
@@ -142,7 +146,9 @@
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
             <if test="huankuankDate != null">huankuankDate = #{huankuankDate,jdbcType=TIMESTAMP},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="promise != null">promise=#{tsc,jdbcType=TINYINT},</if>
             <if test="true">tsu = current_timestamp</if>
+
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -152,7 +158,7 @@
         SET orderId       = #{orderId,jdbcType=BIGINT},
             hsId          = #{hsId,jdbcType=BIGINT},
             huankuankDate = #{huankuankDate,jdbcType=TIMESTAMP},
-            tsc           = #{tsc,jdbcType=TIMESTAMP},
+            promise=#{tsc,jdbcType=TINYINT},
             tsu           = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
