@@ -2,8 +2,6 @@ package com.yimei.hs.same.entity;
 
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
-import com.yimei.hs.ying.entity.YingFukuan;
-import com.yimei.hs.ying.entity.YingHuankuanMap;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

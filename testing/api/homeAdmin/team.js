@@ -143,5 +143,18 @@ describe('业务团队', function () {
             })
     })
 
+    it('获取 已删除的ID的团队信息 应该返回400  GET: /api/teams/17', function (done) {
+        server.get('/api/teams/17')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
+                done()
+            })
+    })
 })
 

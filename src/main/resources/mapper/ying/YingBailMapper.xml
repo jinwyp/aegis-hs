@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yimei.hs.ying.mapper.YingBailMapper">
+    <resultMap id="BaseResultMap" type="com.yimei.hs.ying.entity.YingBail">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="orderId" jdbcType="BIGINT" property="orderId"/>
+        <result column="hsId" jdbcType="BIGINT" property="hsId"/>
+        <result column="bailDate" jdbcType="DATE" property="bailDate"/>
+        <result column="bailAmount" jdbcType="DECIMAL" property="bailAmount"/>
+        <result column="bailType" jdbcType="VARCHAR" property="bailType"/>
+        <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+        <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, orderId, hsId, bailDate, bailAmount, bailType, bailAmount, tsc, tsu
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+            id,
+            orderId,
+            hsId,
+            bailDate,
+            bailAmount,
+            bailType,
+            tsc,
+            tsu
+        FROM hs_ying_bail
+        WHERE id = #{id,jdbcType=BIGINT} AND deleted = 0
+
+    </select>
+
+    <!-- 获取保证金分页-->
+    <select id="getPage" resultType="com.yimei.hs.ying.entity.YingBail">
+        select
+        <include refid="Base_Column_List"/>
+        FROM hs_ying_bail
+        <where>
+            <if test="true">and deleted = 0</if>
+            <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
+            <if test="fyDate!=null">and fyDate = #{fyDate, jdbcType=TIMESTAMP}</if>
+            <if test="hsId!=null">and hsId = #{hsId, jdbcType=VARCHAR}</if>
+        </where>
+    </select>
+
+    <select id="getList" resultType="com.yimei.hs.ying.entity.YingBail">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM hs_ying_bail
+        WHERE orderId = #{orderId,jdbcType=BIGINT}
+        AND deleted = 0
+    </select>
+
+    <!-- 物理删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM hs_ying_bail
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 逻辑删除 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_ying_bail
+        SET deleted = 1, tsu = current_timestamp
+        WHERE id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <insert id="insert" parameterType="com.yimei.hs.ying.entity.YingBail" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO hs_ying_bail (
+            id,
+            orderId,
+            hsId,
+            bailDate,
+            bailAmount,
+            bailType
+        )
+        VALUES (
+            #{id,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT},
+            #{hsId,jdbcType=BIGINT},
+            #{bailDate,jdbcType=DATE},
+            #{bailAmount,jdbcType=DECIMAL},
+            #{bailType,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.yimei.hs.ying.entity.YingBail" useGeneratedKeys="true"
+            keyColumn="id">
+        insert into hs_ying_bail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">orderId,</if>
+            <if test="hsId != null">hsId,</if>
+            <if test="bailDate != null">bailDate,</if>
+            <if test="bailAmount != null">bailAmount,</if>
+            <if test="bailType != null">bailType,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
+            <if test="bailDate != null">#{bailDate,jdbcType=DATE},</if>
+            <if test="bailAmount != null">#{bailAmount,jdbcType=DECIMAL},</if>
+            <if test="bailType != null">#{bailType,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.ying.entity.YingBail">
+        update hs_ying_bail
+        <set>
+            <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
+            <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
+            <if test="bailDate != null">bailDate = #{bailDate,jdbcType=DATE},</if>
+            <if test="bailAmount != null">bailAmount = #{bailAmount,jdbcType=DECIMAL},</if>
+            <if test="bailType != null">bailType = #{bailType,jdbcType=VARCHAR},</if>
+            <if test="true">tsu = current_timestamp,</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.ying.entity.YingBail">
+        UPDATE hs_ying_bail
+        SET orderId    = #{orderId,jdbcType=BIGINT},
+            hsId       = #{hsId,jdbcType=BIGINT},
+            bailDate   = #{bailDate,jdbcType=DATE},
+            bailAmount = #{bailAmount,jdbcType=DECIMAL},
+            bailType   = #{bailType,jdbcType=VARCHAR},
+            tsc        = #{tsc,jdbcType=TIMESTAMP},
+            tsu        = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

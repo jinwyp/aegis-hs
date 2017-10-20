@@ -1,10 +1,9 @@
 package com.yimei.hs.ying.service;
 
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.same.service.LogService;
-import com.yimei.hs.ying.entity.YingFayun;
-import com.yimei.hs.ying.dto.PageYingFayunDTO;
-import com.yimei.hs.ying.mapper.YingFayunMapper;
+import com.yimei.hs.ying.dto.PageYingBailDTO;
+import com.yimei.hs.ying.entity.YingBail;
+import com.yimei.hs.ying.mapper.YingBailMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,18 +13,18 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class YingFayunService {
+public class YingBailService {
 
     @Autowired
-    private YingFayunMapper yingFayunMapper;
+    private YingBailMapper yingBailMapper;
 
     /**
      *  获取一页分页数据
-     * @param pageYingFayunDTO
+     * @param pageYingBailDTO
      * @return
      */
-    public Page<YingFayun> getPage(PageYingFayunDTO pageYingFayunDTO) {
-        return yingFayunMapper.getPage(pageYingFayunDTO);
+    public Page<YingBail> getPage(PageYingBailDTO pageYingBailDTO) {
+        return yingBailMapper.getPage(pageYingBailDTO);
     }
 
     /**
@@ -33,28 +32,28 @@ public class YingFayunService {
      * @param id
      * @return
      */
-    public YingFayun findOne(long id) {
-        return yingFayunMapper.selectByPrimaryKey(id);
+    public YingBail findOne(long id) {
+        return yingBailMapper.selectByPrimaryKey(id);
     }
 
     /**
      * 创建一条发运记录
-     * @param yingFayun
+     * @param yingBail
      * @return
      */
     @Transactional(readOnly = false)
-    public int create(YingFayun yingFayun) {
-        return yingFayunMapper.insert(yingFayun);
+    public int create(YingBail yingBail) {
+        return yingBailMapper.insert(yingBail);
     }
 
     /**
      * 更新发运记录
-     * @param yingFayun
+     * @param yingBail
      * @return
      */
     @Transactional(readOnly = false)
-    public int update(YingFayun yingFayun) {
-        return yingFayunMapper.updateByPrimaryKeySelective(yingFayun);
+    public int update(YingBail yingBail) {
+        return yingBailMapper.updateByPrimaryKeySelective(yingBail);
     }
 
     /**
@@ -66,6 +65,6 @@ public class YingFayunService {
      */
     @Transactional(readOnly = false)
     public int delete(Long orderId, long id) {
-        return yingFayunMapper.delete(id);
+        return yingBailMapper.delete(id);
     }
 }
