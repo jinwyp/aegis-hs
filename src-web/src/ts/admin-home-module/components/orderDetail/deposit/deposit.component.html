@@ -5,7 +5,7 @@
 
             <bs-datepicker formControlName="bailDate" [fc]="depositForm.get('bailDate')" [label]="'交纳日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty"  [error]="depositFormError.bailDate" ></bs-datepicker>
             <bs-select formControlName ="bailType" [fc]="depositForm.get('bailType')" [label]="'保证金类型:'" [dirty]="ignoreDirty" [options]="depositTypeList" [error]="depositFormError.bailType"></bs-select>
-            <bs-text-input formControlName="bailAmount" [fc]="depositForm.get('bailAmount')" [type]="'number'" [label]="'保证金金额(元):'" [dirty]="ignoreDirty" [error]="depositFormError.bailAmount"></bs-text-input>
+            <bs-text-input formControlName="bailAmount" [fc]="depositForm.get('bailAmount')" [type]="'number'" [label]="'保证金金额(元):'" [dirty]="ignoreDirty" [error]="depositFormError.bailAmount" [hidden]="!isAddNew"></bs-text-input>
 
 
             <div class="form-group row">
@@ -24,8 +24,9 @@
                     <th>ID</th>
                     <th>核算月</th>
 
-                    <th>费用科目</th>
-                    <th>金额</th>
+                    <th>交纳时间</th>
+                    <th>类型</th>
+                    <th>保证金金额(元)</th>
                     <th></th>
                 </tr>
                 </thead>
