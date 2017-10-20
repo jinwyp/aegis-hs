@@ -61,7 +61,7 @@
 
 
                     <td> {{settle?.discountType | findKey : settleDiscountModeList : 'name' }}</td>
-                    <td> {{settle.discountInterest * 100 | percent:'1.0-2'}}</td>
+                    <td> {{settle.discountInterest | percent:'1.0-2'}}</td>
                     <td> {{settle.discountDays }}</td>
                     <td> {{settle.discountAmount }}</td>
 

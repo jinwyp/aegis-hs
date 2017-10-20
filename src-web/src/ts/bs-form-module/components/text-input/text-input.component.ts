@@ -87,6 +87,7 @@ export class TextInputComponent implements ControlValueAccessor, OnInit, OnChang
         } else {
             this.interValue = val
         }
+        console.log(this.interValue)
 
         this.onChange(this.interValue)
         this.onTouched()

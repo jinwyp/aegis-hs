@@ -40,10 +40,10 @@
                 <tr *ngFor="let unit of unitList; trackBy: trackByFn">
                     <td> {{unit.id}}</td>
                     <td> {{unit.hsMonth}}</td>
-                    <td> {{unit.maxPrepayRate * 100 | percent:'1.0-2'}}</td>
-                    <td> {{unit.unInvoicedRate * 100| percent:'1.0-2'}}</td>
+                    <td> {{unit.maxPrepayRate | percent:'1.0-2'}}</td>
+                    <td> {{unit.unInvoicedRate | percent:'1.0-2'}}</td>
 
-                    <td> {{unit.contractBaseInterest * 100| percent:'1.0-2'}}</td>
+                    <td> {{unit.contractBaseInterest | percent:'1.0-2'}}</td>
                     <td> {{unit.expectHKDays }}</td>
                     <td> {{unit.tradeAddPrice }}</td>
                     <td> {{unit.weightedPrice }}</td>
