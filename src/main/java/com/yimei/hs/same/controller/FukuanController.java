@@ -83,7 +83,7 @@ public class FukuanController {
     ) {
         Fukuan fukuan = fukuanService.findOne(id);
         if (fukuan == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
             return Result.ok(fukuan);
         }
@@ -143,7 +143,7 @@ public class FukuanController {
         fukuan.setId(id);
         int rtn = fukuanService.update(fukuan);
         if (rtn != 1) {
-            return Result.error(4001, "更新失败", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "更新失败", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }
@@ -161,7 +161,7 @@ public class FukuanController {
     ) {
         int rtn = fukuanService.delete(morderId, id);
         if (rtn != 1) {
-            return Result.error(4001, "更新删除", HttpStatus.NOT_FOUND);
+            return Result.error(4001, "更新删除", HttpStatus.BAD_REQUEST);
         }
         return Result.ok(1);
     }
