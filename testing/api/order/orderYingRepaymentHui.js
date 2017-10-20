@@ -56,7 +56,7 @@ describe('应收订单 回款:', function () {
             .send(
                 {
                     "hsId" : 1,
-                    "huikuanCompanyId" : 1,
+                    // "huikuanCompanyId" : 1,
                     "huikuanDate" : "2017-09-03 00:00:00",
                     "huikuanAmount" : "3000",
                     "huikuanUsage" : "PAYMENT_FOR_GOODS",
@@ -93,7 +93,7 @@ describe('应收订单 回款:', function () {
             .send(
                 {
                     "hsId" : 1,
-                    "huikuanCompanyId" : 1,
+                    // "huikuanCompanyId" : 1,
                     "huikuanDate" : "2017-09-03 00:00:00",
                     "huikuanAmount" : "4000",
                     "huikuanUsage" : "PAYMENT_FOR_GOODS",
@@ -130,7 +130,7 @@ describe('应收订单 回款:', function () {
             .send(
                 {
                     "hsId" : 2,
-                    "huikuanCompanyId" : 4,
+                    // "huikuanCompanyId" : 4,
                     "huikuanDate" : "2017-10-27 00:00:00",
                     "huikuanAmount" : "10000",
                     "huikuanUsage" : "PAYMENT_FOR_GOODS",
@@ -200,7 +200,7 @@ describe('应收订单 回款:', function () {
             .send(
                 {
                     "hsId" : 2,
-                    "huikuanCompanyId" : 1,
+                    // "huikuanCompanyId" : 1,
                     "huikuanDate" : "2017-09-03 00:00:00",
                     "huikuanUsage" : "PAYMENT_FOR_GOODS",
                     "huikuanMode" : "ELEC_REMITTANCE",
