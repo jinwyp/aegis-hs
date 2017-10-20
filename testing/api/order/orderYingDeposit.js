@@ -176,7 +176,7 @@ describe('应收订单 保证金:', function () {
                     "hsId" : 1,
                     "bailDate" : "2017-10-05 00:00:00",
                     "bailType" : 1,
-                    "bailAmount" : "28000",
+                    // "bailAmount" : "28000",
                     "orderId" : orderId
                 }
             )

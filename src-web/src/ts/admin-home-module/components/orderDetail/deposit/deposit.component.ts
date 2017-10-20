@@ -176,7 +176,7 @@ export class DepositComponent implements OnInit {
             )
         } else {
             postData.id = this.currentDepositId
-            // delete postData.huikuanAmount
+            delete postData.bailAmount
 
             this.hsOrderService.modifyDeposit(this.businessType, this.currentOrder.id, this.currentDepositId, postData).subscribe(
                 data => {
