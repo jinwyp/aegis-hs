@@ -43,6 +43,7 @@ export class OrderListComponent implements OnInit {
     teamList : any[] = []
     filterTeamList : any[] = []
     partyList : any[] = []
+    partyListZhangWu : any[] = []
     partyListObject : any = {}
 
 
@@ -176,12 +177,17 @@ export class OrderListComponent implements OnInit {
                 this.partyList = data.data.results
 
                 if (Array.isArray(data.data.results)) {
+                    const tempArray : any[] = []
+
                     data.data.results.forEach( company => {
                         this.partyListObject[company.id] = company
+
+                        if (company.partyType === 1) {
+                            tempArray.push(company)
+                        }
+                        this.partyListZhangWu = tempArray
                     })
                 }
-
-
             },
             error => {this.httpService.errorHandler(error) }
         )
