@@ -183,7 +183,7 @@ export class BSPaginationComponent implements OnInit, OnChanges {
 
 
     changePage (event: any, pageNo: number, buttonName? : string) {
-        console.log( pageNo, buttonName)
+        // console.log( pageNo, buttonName)
         event.stopPropagation()
         event.preventDefault()
 
