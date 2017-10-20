@@ -3,7 +3,7 @@
             <form [formGroup]="repaymentHKForm" (ngSubmit)="repaymentHKFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
                 <bs-select formControlName="hsId" [fc]="repaymentHKForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty" [options]="unitList" [error]="repaymentHKFormError.hsId"></bs-select>
-                <bs-radio formControlName="promise" [fc]="repaymentHKForm.get('promise')" [label]="'预计发生:'" [dirty]="ignoreDirty" [sourceList]="promiseStatusList" [error]="repaymentHKFormError.promise"></bs-radio>
+                <bs-radio formControlName="promise" [fc]="repaymentHKForm.get('promise')" [label]="'还款状态:'" [dirty]="ignoreDirty" [sourceList]="promiseStatusList" [error]="repaymentHKFormError.promise"></bs-radio>
                 <!--<bs-select formControlName="skCompanyId" [fc]="repaymentHKForm.get('skCompanyId')" [label]="'资金方:'" [dirty]="ignoreDirty" [options]="partyList" [error]="repaymentHKFormError.skCompanyId"></bs-select>-->
                 <bs-datepicker formControlName="huankuankDate" [fc]="repaymentHKForm.get('huankuankDate')" [label]="'还款日期:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuankDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
 
@@ -79,6 +79,7 @@
                         <!--<th>资金方</th>-->
 
                         <th>还款日期</th>
+                        <th>还款状态</th>
                         <th>对应付款</th>
                         <!--<th>还款本金</th>-->
                         <!--<th>还款利息</th>-->
@@ -93,8 +94,8 @@
                         <!--<td> {{repaymentHK.skCompanyId | findKey : partyList : 'name'}}</td>-->
 
                         <td> {{repaymentHK.huankuankDate }}</td>
-
-
+                        <td> {{repaymentHK.promise | findKey : promiseStatusList : 'name' }}</td>
+                        
                         <td>
                             <span *ngFor="let item of repaymentHK.huankuanMapList" >对应付款ID:{{item.huankuanId }} 本金:{{item.principal }} 利息:{{item.interest }} 服务费:{{item.fee }}</span>
                         </td>

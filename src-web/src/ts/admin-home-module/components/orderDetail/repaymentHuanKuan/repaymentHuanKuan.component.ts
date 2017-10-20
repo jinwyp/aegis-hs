@@ -47,8 +47,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
 
     promiseStatusList : any[] = [
-        {id: false , name : '实际的'},
-        {id: true , name : '未来的'}
+        {id: false , name : '未还款'},
+        {id: true , name : '已还款'}
     ]
 
     pagination: any = {
@@ -329,7 +329,6 @@ export class RepaymentHuanKuanComponent implements OnInit {
                     tempArray.push((<any>Object).assign( {}, this.borrowListObject[item.jiekuanId],
                         {jiekuanId : item.jiekuanId, principal : item.principal, interest : item.interest, fee : item.fee}) )
                 })
-
             }
             this.borrowPostList = tempArray
             this.repaymentHKForm.patchValue(repaymentHKOrder)
