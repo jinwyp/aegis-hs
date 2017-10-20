@@ -39,7 +39,7 @@ describe('仓押订单 入库/出库:', function () {
 
         server.post('/api/login')
             .set(config.headers)
-            .send(config.user.admin)
+            .send(config.user.user1)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {

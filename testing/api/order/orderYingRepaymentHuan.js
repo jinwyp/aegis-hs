@@ -40,7 +40,7 @@ describe('应收订单 还款:', function () {
 
         server.post('/api/login')
             .set(config.headers)
-            .send(config.user.admin)
+            .send(config.user.user1)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {

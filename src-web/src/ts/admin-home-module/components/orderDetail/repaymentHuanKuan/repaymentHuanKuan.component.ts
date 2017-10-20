@@ -46,6 +46,11 @@ export class RepaymentHuanKuanComponent implements OnInit {
     borrowListObject : any = {}
 
 
+    promiseStatusList : any[] = [
+        {id: false , name : '实际的'},
+        {id: true , name : '未来的'}
+    ]
+
     pagination: any = {
         pageSize : 20,
         pageNo : 1,
@@ -172,8 +177,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
         'hsId'  : {
             'required'      : '请选择核算月!'
         },
-        'skCompanyId'  : {
-            'required'      : '请填写资金方!'
+        'promise'  : {
+            'required'      : '请填写状态!'
         },
         'huankuankDate'  : {
             'required'      : '请填写还款日期!'
@@ -215,6 +220,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
         this.repaymentHKForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
+            'promise'    : ['', [Validators.required ] ],
             // 'skCompanyId'    : ['', [Validators.required ] ],
             'huankuankDate'    : [null, [Validators.required ] ]
             // 'huankuanPrincipal'    : ['', [Validators.required ] ],

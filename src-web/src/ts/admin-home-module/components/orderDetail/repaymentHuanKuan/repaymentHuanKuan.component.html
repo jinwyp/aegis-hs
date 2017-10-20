@@ -3,6 +3,7 @@
             <form [formGroup]="repaymentHKForm" (ngSubmit)="repaymentHKFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
                 <bs-select formControlName="hsId" [fc]="repaymentHKForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty" [options]="unitList" [error]="repaymentHKFormError.hsId"></bs-select>
+                <bs-radio formControlName="promise" [fc]="repaymentHKForm.get('promise')" [label]="'预计发生:'" [dirty]="ignoreDirty" [sourceList]="promiseStatusList" [error]="repaymentHKFormError.promise"></bs-radio>
                 <!--<bs-select formControlName="skCompanyId" [fc]="repaymentHKForm.get('skCompanyId')" [label]="'资金方:'" [dirty]="ignoreDirty" [options]="partyList" [error]="repaymentHKFormError.skCompanyId"></bs-select>-->
                 <bs-datepicker formControlName="huankuankDate" [fc]="repaymentHKForm.get('huankuankDate')" [label]="'还款日期:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuankDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
 
