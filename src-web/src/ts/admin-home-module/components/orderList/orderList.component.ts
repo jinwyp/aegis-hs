@@ -257,7 +257,7 @@ export class OrderListComponent implements OnInit {
     createOrderForm(): void {
 
         this.orderForm = this.fb.group({
-            'deptId'    : ['', [Validators.required ] ],
+            // 'deptId'    : ['', [Validators.required ] ],
             'teamId'    : ['', [Validators.required ] ],
             'line'    : ['', [Validators.required ] ],
             'cargoType'    : ['', [Validators.required ] ],
