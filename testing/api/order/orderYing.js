@@ -485,7 +485,7 @@ describe('应收订单', function () {
 
         server.post('/api/login')
             .set(config.headers)
-            .send(config.user.user1)
+            .send(config.user.user2)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
@@ -550,8 +550,8 @@ describe('应收订单', function () {
             })
     })
 
-    it(`移交订单权限 - 转移订单给另一个财务人员(13564568301) POST: /api/business/yings/${orderId}/to/4`, function (done) {
-        console.log(`提示信息: 转移订单给另一个财务人员(13564568301) POST: /api/business/yings/${orderId}/to/4`)
+    it(`移交订单权限 - 转移订单给另一个财务人员(13564568304) POST: /api/business/yings/${orderId}/to/3`, function (done) {
+        console.log(`提示信息: 转移订单给另一个财务人员(13564568304) POST: /api/business/yings/${orderId}/to/3`)
         server.post(`/api/business/yings/${orderId}/to/3`)
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -580,8 +580,8 @@ describe('应收订单', function () {
             })
     })
 
-    it('移交订单权限 - 不是自己的订单转移给另一个财务人员(13564568301) POST: /api/business/yings/1/to/3', function (done) {
-        console.log(`提示信息: 转移订单给另一个财务人员(13564568301) POST: /api/business/yings/1/to/3`)
+    it('移交订单权限 - 不是自己的订单转移给另一个财务人员(13564568304) POST: /api/business/yings/1/to/3', function (done) {
+        console.log(`提示信息: 转移订单给另一个财务人员(13564568304) POST: /api/business/yings/1/to/3`)
         server.post('/api/business/yings/1/to/3')
             .set('Authorization', Authorization)
             .set(config.headers)
