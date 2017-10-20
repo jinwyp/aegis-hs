@@ -103,6 +103,7 @@ public class DeptController {
      */
     @DeleteMapping("/departments/{id}")
     @Logined(isAdmin = true)
+
     public ResponseEntity<Result<Integer>> delete(@PathVariable("id") String pid) {
 
         if (!orderMapper.selectOrderListByDepartId(pid)
