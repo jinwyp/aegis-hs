@@ -88,7 +88,7 @@
             <div id="collapse3" class="collapse" [class.show]="menuList[3]" role="tabpanel" aria-labelledby="headingOne">
                 <ul class="list-group">
                     <li routerLinkActive="active" *ngIf="currentUser?.isAdmin"> <a routerLink="/users" (click)="clickSubMenu(31)">用户管理</a> </li>
-                    <li routerLinkActive="active"> <a routerLink="/departments" (click)="clickSubMenu(32)">事业部门管理</a> </li>
+                    <li routerLinkActive="active" *ngIf="currentUser?.isAdmin"> <a routerLink="/departments" (click)="clickSubMenu(32)">事业部门管理</a> </li>
                     <li routerLinkActive="active"> <a routerLink="/teams" (click)="clickSubMenu(33)">业务团队管理</a> </li>
                     <li routerLinkActive="active"> <a routerLink="/companies" (click)="clickSubMenu(34)">参与商公司管理</a> </li>
                 </ul>
