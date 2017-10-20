@@ -44,6 +44,7 @@ export class OrderListComponent implements OnInit {
     filterTeamList : any[] = []
     partyList : any[] = []
     partyListZhangWu : any[] = []
+    partyListOther : any[] = []
     partyListObject : any = {}
 
 
@@ -178,6 +179,7 @@ export class OrderListComponent implements OnInit {
 
                 if (Array.isArray(data.data.results)) {
                     const tempArray : any[] = []
+                    const tempArray2 : any[] = []
 
                     data.data.results.forEach( company => {
                         this.partyListObject[company.id] = company
@@ -185,7 +187,11 @@ export class OrderListComponent implements OnInit {
                         if (company.partyType === 1) {
                             tempArray.push(company)
                         }
+                        if (company.partyType !== 2) {
+                            tempArray2.push(company)
+                        }
                         this.partyListZhangWu = tempArray
+                        this.partyListOther = tempArray2
                     })
                 }
             },

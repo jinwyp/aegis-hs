@@ -32,7 +32,7 @@
             <bs-text-input formControlName="line" [fc]="orderForm.get('line')" [type]="'text'" [label]="'业务线名称:'" [readOnly]="true" [dirty]="ignoreDirty" [error]="orderFormError.line"></bs-text-input>
             <bs-select formControlName ="cargoType" [fc]="orderForm.get('cargoType')" [label]="'货物种类:'" [dirty]="ignoreDirty" [options]="cargoTypeList" [error]="orderFormError.cargoType"></bs-select>
 
-            <bs-select formControlName ="upstreamId" [fc]="orderForm.get('upstreamId')" [label]="'上游供应商:'" [dirty]="ignoreDirty" [options]="partyList" [error]="orderFormError.upstreamId" (change)="lineName()"></bs-select>
+            <bs-select formControlName ="upstreamId" [fc]="orderForm.get('upstreamId')" [label]="'上游供应商:'" [dirty]="ignoreDirty" [options]="partyListOther" [error]="orderFormError.upstreamId" (change)="lineName()"></bs-select>
 
             <div class="form-group row">
                 <label class="col-2 col-form-label" ></label>
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <bs-select formControlName ="mainAccounting" [fc]="orderForm.get('mainAccounting')" [label]="'主账务公司:'" [dirty]="ignoreDirty" [options]="partyList" [error]="orderFormError.mainAccounting" (change)="lineName()"></bs-select>
+            <bs-select formControlName ="mainAccounting" [fc]="orderForm.get('mainAccounting')" [label]="'主账务公司:'" [dirty]="ignoreDirty" [options]="partyListZhangWu" [error]="orderFormError.mainAccounting" (change)="lineName()"></bs-select>
 
             <div class="form-group row">
                 <label class="col-2 col-form-label" ></label>
@@ -62,7 +62,7 @@
                 </div>
             </div>
 
-            <bs-select formControlName ="downstreamId" [fc]="orderForm.get('downstreamId')" [label]="'下游客户:'" [dirty]="ignoreDirty" [options]="partyList" [error]="orderFormError.downstreamId" (change)="lineName()"></bs-select>
+            <bs-select formControlName ="downstreamId" [fc]="orderForm.get('downstreamId')" [label]="'下游客户:'" [dirty]="ignoreDirty" [options]="partyListOther" [error]="orderFormError.downstreamId" (change)="lineName()"></bs-select>
 
             <div class="form-group row">
                 <label class="col-2 col-form-label" >其他参与方:</label>
@@ -76,7 +76,7 @@
                                 <bs-select formControlName ="custType" [fc]="orderOtherPartyForm.get('custType')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择类型:'" [dirty]="ignoreDirty" [options]="customerType" [error]="orderOtherPartyFormError.custType"></bs-select>
                             </div>
                             <div class="col-4">
-                                <bs-select formControlName ="customerId" [fc]="orderOtherPartyForm.get('customerId')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择其他公司:'" [dirty]="ignoreDirty" [options]="partyList" [error]="orderOtherPartyFormError.customerId"></bs-select>
+                                <bs-select formControlName ="customerId" [fc]="orderOtherPartyForm.get('customerId')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择其他公司:'" [dirty]="ignoreDirty" [options]="partyListOther" [error]="orderOtherPartyFormError.customerId"></bs-select>
                             </div>
                             <div class="col-3">
                                 <bs-select formControlName ="position" [fc]="orderOtherPartyForm.get('position')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择位置:'" [dirty]="ignoreDirty" [options]="positionList" [error]="orderOtherPartyFormError.position"></bs-select>
