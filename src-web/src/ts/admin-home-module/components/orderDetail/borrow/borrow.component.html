@@ -7,7 +7,7 @@
                 <bs-text-input formControlName="amount" [fc]="borrowForm.get('amount')" [type]="'number'" [label]="'借款金额(元):'" [dirty]="ignoreDirty" [error]="borrowFormError.amount"></bs-text-input>
 
                 <bs-select formControlName ="capitalId" [fc]="borrowForm.get('capitalId')" [label]="'资金方:'" [dirty]="ignoreDirty"  [options]="partyList" [error]="borrowFormError.capitalId"></bs-select>
-                <bs-text-input formControlName="useInterest" [fc]="borrowForm.get('useInterest')" [type]="'number'" [label]="'外部资金使用利率:'" [prompt]="'百分比 例如88.88%'" [dirty]="ignoreDirty" [error]="borrowFormError.useInterest"></bs-text-input>
+                <bs-text-input formControlName="useInterest" [fc]="borrowForm.get('useInterest')" [type]="'number'" [label]="'外部资金使用利率(%):'" [prompt]="'百分比 例如88.88'" [dirty]="ignoreDirty" [percent]="true" [error]="borrowFormError.useInterest"></bs-text-input>
                 <bs-text-input formControlName="useDays" [fc]="borrowForm.get('useDays')" [type]="'number'" [label]="'外部资金使用天数:'" [dirty]="ignoreDirty" [error]="borrowFormError.useDays"></bs-text-input>
 
 
@@ -44,7 +44,7 @@
                         <td> {{borrow.amount  }}</td>
 
                         <td> {{borrow.capitalId | findKey : partyList : 'name'}}</td>
-                        <td> {{borrow.useInterest }} / {{borrow.useDays }} </td>
+                        <td> {{borrow.useInterest * 100 | percent:'1.0-2' }} / {{borrow.useDays }} </td>
 
                         <td>
                             <button class="btn btn-link btn-sm" (click)="showForm(false, borrow)"> 修改 </button>

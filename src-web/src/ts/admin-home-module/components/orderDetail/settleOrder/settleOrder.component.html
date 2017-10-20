@@ -6,7 +6,7 @@
 
             <div [hidden]="settleType !== 'settlesellerupstream' && settleType !== 'settlesellerdownstream'">
                 <bs-select formControlName ="discountType" [fc]="settleForm.get('discountType')" [label]="'折扣类型:'" [dirty]="ignoreDirty" [options]="settleDiscountModeList" [error]="settleFormError.discountType" ></bs-select>
-                <bs-text-input formControlName="discountInterest" [fc]="settleForm.get('discountInterest')" [type]="'number'" [label]="'利率折扣:'" [prompt]="'百分比 例如88.88%'" [dirty]="ignoreDirty" [error]="settleFormError.discountInterest" [hidden]="settleForm.get('discountType').value !=='RATE_DISCOUNT'"></bs-text-input>
+                <bs-text-input formControlName="discountInterest" [fc]="settleForm.get('discountInterest')" [type]="'number'" [label]="'利率折扣(%):'" [prompt]="'百分比 例如88.88'" [percent]="true" [dirty]="ignoreDirty" [error]="settleFormError.discountInterest" [hidden]="settleForm.get('discountType').value !=='RATE_DISCOUNT'"></bs-text-input>
                 <bs-text-input formControlName="discountDays" [fc]="settleForm.get('discountDays')" [type]="'number'" [label]="'利率折扣天数:'" [dirty]="ignoreDirty" [error]="settleFormError.discountDays" [hidden]="settleForm.get('discountType').value !=='RATE_DISCOUNT'"></bs-text-input>
                 <bs-text-input formControlName="discountAmount" [fc]="settleForm.get('discountAmount')" [type]="'number'" [label]="'折扣金额(元):'" [dirty]="ignoreDirty" [error]="settleFormError.discountAmount" [hidden]="settleForm.get('discountType').value !=='RATE_DISCOUNT'"></bs-text-input>
             </div>
@@ -61,7 +61,7 @@
 
 
                     <td> {{settle?.discountType | findKey : settleDiscountModeList : 'name' }}</td>
-                    <td> {{settle.discountInterest }}</td>
+                    <td> {{settle.discountInterest * 100 | percent:'1.0-2'}}</td>
                     <td> {{settle.discountDays }}</td>
                     <td> {{settle.discountAmount }}</td>
 

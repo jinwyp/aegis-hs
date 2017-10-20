@@ -16,7 +16,7 @@
                     <bs-datepicker formControlName="jiekuanDate" [fc]="paymentForm.get('jiekuanDate')" [label]="'借款日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="paymentFormError.jiekuanDate"></bs-datepicker>
                     <bs-text-input formControlName="amount" [fc]="paymentForm.get('amount')" [type]="'number'" [label]="'借款金额(元):'" [dirty]="ignoreDirty" [error]="paymentFormError.amount"></bs-text-input>
 
-                    <bs-text-input formControlName="useInterest" [fc]="paymentForm.get('useInterest')" [type]="'number'" [label]="'外部资金使用利率:'" [prompt]="'百分比 例如88.88%'" [dirty]="ignoreDirty" [error]="paymentFormError.useInterest"></bs-text-input>
+                    <bs-text-input formControlName="useInterest" [fc]="paymentForm.get('useInterest')" [type]="'number'" [label]="'外部资金使用利率(%):'" [prompt]="'百分比 例如88.88'" [percent]="true" [dirty]="ignoreDirty" [error]="paymentFormError.useInterest"></bs-text-input>
                     <bs-text-input formControlName="useDays" [fc]="paymentForm.get('useDays')" [type]="'number'" [label]="'外部资金使用天数:'" [dirty]="ignoreDirty" [error]="paymentFormError.useDays"></bs-text-input>
 
                 </div>
