@@ -138,7 +138,8 @@ public class HuikuanService {
         List<HuikuanMap> toAdd = new ArrayList<>();
 
         // 1.  找出订单的回款记录 - 尚有未对应完的余额,  也就是回款还有余额
-        List<Huikuan> unfinished = getALl(orderId);//huikuanMapper.getUnfinshedByOrderId(orderId);
+        List<Huikuan> unfinished = getALl(orderId);
+//        huikuanMapper.getUnfinshedByOrderId(orderId);
 
         Iterator<Fukuan> it = unfinishedFukuan.iterator();
         for (Huikuan huikuan : unfinished) {

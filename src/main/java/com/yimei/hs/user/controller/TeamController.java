@@ -99,7 +99,7 @@ public class TeamController {
     @DeleteMapping("/teams/{id}")
     public ResponseEntity<Result<Integer>> delete(@PathVariable("id") long id) {
 
-
+        logger.debug("teamid -> {}",id);
         int rtn = teamService.delete(id);
         if (rtn != 1) {
             return Result.error(4001, "删除失败", HttpStatus.NOT_FOUND);
