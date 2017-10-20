@@ -189,10 +189,10 @@ export class OrderListComponent implements OnInit {
                         if (company.partyType === 1) {
                             tempArray.push(company)
                         }
-                        if (company.partyType !== 2) {
+                        if (company.partyType === 3) {
                             tempArray2.push(company)
                         }
-                        if (company.partyType === 3) {
+                        if (company.partyType !== 2) {
                             tempArray3.push(company)
                         }
                         this.partyListZhangWu = tempArray
