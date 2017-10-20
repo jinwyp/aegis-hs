@@ -38,13 +38,13 @@ export class DepositComponent implements OnInit {
     unitList : any[] = []
 
 
-    // depositTypeList : any[] = getEnum('DepositType')
-    depositTypeList : any[] = [
-        { id : 1, name : '收上游保证金'},
-        { id : 2, name : '退上游保证金'},
-        { id : 3, name : '付下游保证金'},
-        { id : 4, name : '下游退保证金'}
-    ]
+    depositTypeList : any[] = getEnum('BailType')
+    // depositTypeList : any[] = [
+    //     { id : 1, name : '收上游保证金'},
+    //     { id : 2, name : '退上游保证金'},
+    //     { id : 3, name : '付下游保证金'},
+    //     { id : 4, name : '下游退保证金'}
+    // ]
 
 
 
