@@ -27,7 +27,7 @@ public interface OrderMapper {
 
     boolean hasOrder(@Param("ownerId") long ownerId, @Param("businessType") BusinessType businessType, @Param("orderId") long orderId);
 
-    int transfer(Long id, @Param("from") Long from, @Param("to") Long to);
+    int transfer(@Param("id") Long id, @Param("from") Long from, @Param("to") Long to);
 
     boolean selectOrderListByDepartId(@Param("deptId") String deptId);
 }
