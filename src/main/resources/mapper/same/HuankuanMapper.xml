@@ -146,7 +146,7 @@
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
             <if test="huankuankDate != null">huankuankDate = #{huankuankDate,jdbcType=TIMESTAMP},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
-            <if test="promise != null">promise=#{tsc,jdbcType=TINYINT},</if>
+            <if test="promise != null">promise=#{promise,jdbcType=TINYINT},</if>
             <if test="true">tsu = current_timestamp</if>
 
         </set>

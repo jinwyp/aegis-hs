@@ -84,13 +84,22 @@ public class HuankuanController {
     @PostMapping("/{morderId}/huankuans")
     public ResponseEntity<Result<Huankuan>> create(
             @PathVariable("businessType") BusinessType businessType,
+            @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) Huankuan huankuan
     ) {
+        assert (morderId == huankuan.getOrderId());
         // 1. 找出当前订单借款记录 - 还款尚未对应完成的记录
 //        List<Jiekuan> jiekuans = jiekuanService.huankuanUnfinished(huankuan.getOrderId());
         List<HuankuanMap> huankuanMaps = huankuan.getHuankuanMapList();
 
+        if (huankuanMaps==null
+                ||huankuanMaps.size()==0) {
+            return Result.error(4001, "借款不能为空");
+        }
         for (HuankuanMap huankuanMap : huankuanMaps) {
+            if (huankuanMap.getJiekuanId()==null) {
+                return Result.error(4001, "借款款id不能为空");
+            }
             Jiekuan jiekuanDb= jiekuanService.findOne(huankuanMap.getJiekuanId());
             if (jiekuanDb != null) {
                 if (huankuanMap.getPrincipal().compareTo(jiekuanDb.getAmount()) ==1 ) {
@@ -123,11 +132,9 @@ public class HuankuanController {
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) Huankuan huankuan
     ) {
-        //
-        huankuan.setId(id);
+
         assert (morderId == huankuan.getOrderId());
-
-
+        huankuan.setId(id);
         // 2删除还款记录详情
         huankuanMapMapper.deleteByPrimaryKey(huankuan.getId());
         int cnt = huankuanService.update(huankuan);
