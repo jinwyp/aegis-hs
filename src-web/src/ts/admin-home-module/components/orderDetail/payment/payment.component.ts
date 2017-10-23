@@ -290,11 +290,6 @@ export class PaymentComponent implements OnInit {
             this.isAddNew = false
             this.currentPaymentId = shippingOrder.id
 
-            shippingOrder.jiekuanDate = shippingOrder.jiekuan.jiekuanDate
-            shippingOrder.amount = shippingOrder.jiekuan.amount
-            shippingOrder.useInterest = shippingOrder.jiekuan.useInterest
-            shippingOrder.useDays = shippingOrder.jiekuan.useDays
-
             this.paymentForm.patchValue(shippingOrder)
         }
 
