@@ -172,7 +172,7 @@ export class HSOrderService {
         return this.http.put(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/huankuans/' + repaymentId.toString() , repayment)
     }
     delRepaymentHK(businessType : string, orderId: number, repaymentId: number): Observable<any> {
-        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fukuans/' + repaymentId.toString())
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/huankuans/' + repaymentId.toString())
     }
 
 
