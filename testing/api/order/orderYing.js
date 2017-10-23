@@ -470,144 +470,144 @@ describe('应收订单', function () {
 })
 
 
-//
-//
-// describe('应收订单', function () {
-//
-//     let Authorization = ''
-//     let orderId = 7
-//     let orderId2 = 8
-//
-//     before(function (done) {
-//
-//         server.post('/api/login')
-//             .set(config.headers)
-//             .send(config.user.user2)
-//             .expect('Content-Type', /json/)
-//             .expect(200)
-//             .end(function(err, res) {
-//                 if (err) return done(err)
-//                 Authorization = res.body.data
-//                 done()
-//             })
-//     });
-//
-//     it('移交订单权限 - 新建应收订单7 POST: /api/business/yings', function (done) {
-//         server.post('/api/business/yings')
-//             .set('Authorization', Authorization)
-//             .set(config.headers)
-//             .send({
-//                 "businessType":"ying",
-//                 "teamId":1,
-//                 "line":"那曲 - 晋和 - 嘉瑞",
-//                 "cargoType":"COAL",
-//                 "upstreamSettleMode":"ONE_PAPER_SETTLE",
-//                 "downstreamSettleMode":"ONE_PAPER_SETTLE",
-//                 "mainAccounting":1,
-//                 "upstreamId":2,
-//                 "downstreamId":3
-//             })
-//             .expect('Content-Type', /json/)
-//             .expect(200)
-//             .end(function(err, res) {
-//                 if (err) return done(err)
-//                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-//                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-//                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-//                 expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('那曲')
-//                 orderId = res.body.data.id
-//                 done()
-//             })
-//     })
-//
-//     it('移交订单权限 - 新建应收订单8 POST: /api/business/yings', function (done) {
-//         server.post('/api/business/yings')
-//             .set('Authorization', Authorization)
-//             .set(config.headers)
-//             .send({
-//                 "businessType":"ying",
-//                 "teamId":1,
-//                 "line":"那曲 - 晋和 - 嘉瑞",
-//                 "cargoType":"COAL",
-//                 "upstreamSettleMode":"ONE_PAPER_SETTLE",
-//                 "downstreamSettleMode":"ONE_PAPER_SETTLE",
-//                 "mainAccounting":1,
-//                 "upstreamId":2,
-//                 "downstreamId":3
-//             })
-//             .expect('Content-Type', /json/)
-//             .expect(200)
-//             .end(function(err, res) {
-//                 if (err) return done(err)
-//                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-//                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-//                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-//                 expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('那曲')
-//                 done()
-//             })
-//     })
-//
-//     it(`移交订单权限 - 转移订单给另一个财务人员(13564568304) POST: /api/business/yings/${orderId}/to/3`, function (done) {
-//         console.log(`提示信息: 转移订单给另一个财务人员(13564568304) POST: /api/business/yings/${orderId}/to/3`)
-//         server.post(`/api/business/yings/${orderId}/to/3`)
-//             .set('Authorization', Authorization)
-//             .set(config.headers)
-//             .send({})
-//             .expect('Content-Type', /json/)
-//             .expect(200)
-//             .end(function(err, res) {
-//                 if (err) return done(err)
-//                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-//                 expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
-//                 done()
-//             })
-//     })
-//
-//     it(`移交订单权限 - 转移订单后不能在查看原订单 GET: /api/business/yings/${orderId}`, function (done) {
-//         server.get(`/api/business/yings/${orderId}`)
-//             .set('Authorization', Authorization)
-//             .set(config.headers)
-//             .expect('Content-Type', /json/)
-//             .expect(400)
-//             .end(function(err, res) {
-//                 if (err) return done(err)
-//                 expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
-//                 expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
-//                 done()
-//             })
-//     })
-//
-//     it('移交订单权限 - 不是自己的订单转移给另一个财务人员(13564568304) POST: /api/business/yings/1/to/3', function (done) {
-//         console.log(`提示信息: 转移订单给另一个财务人员(13564568304) POST: /api/business/yings/1/to/3`)
-//         server.post('/api/business/yings/1/to/3')
-//             .set('Authorization', Authorization)
-//             .set(config.headers)
-//             .send({})
-//             .expect('Content-Type', /json/)
-//             .expect(400)
-//             .end(function(err, res) {
-//                 if (err) return done(err)
-//                 expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
-//                 expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
-//                 done()
-//             })
-//     })
-//
-//     it(`移交订单权限 - 转移订单给不存在的财务人员 POST: /api/business/yings/${orderId2}/to/99999`, function (done) {
-//         console.log(`提示信息: 转移订单给另一个财务人员(13564568301) POST: /api/business/yings/${orderId2}/to/99999`)
-//         server.post(`/api/business/yings/${orderId2}/to/99999`)
-//             .set('Authorization', Authorization)
-//             .set(config.headers)
-//             .send({})
-//             .expect('Content-Type', /json/)
-//             .expect(400)
-//             .end(function(err, res) {
-//                 if (err) return done(err)
-//                 expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
-//                 expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
-//                 done()
-//             })
-//     })
-//
-// })
-//
+
+
+describe('应收订单', function () {
+
+    let Authorization = ''
+    let orderId = 7
+    let orderId2 = 8
+
+    before(function (done) {
+
+        server.post('/api/login')
+            .set(config.headers)
+            .send(config.user.user2)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                Authorization = res.body.data
+                done()
+            })
+    });
+
+    it('移交订单权限 - 新建应收订单7 POST: /api/business/yings', function (done) {
+        server.post('/api/business/yings')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                "businessType":"ying",
+                "teamId":1,
+                "line":"那曲 - 晋和 - 嘉瑞",
+                "cargoType":"COAL",
+                "upstreamSettleMode":"ONE_PAPER_SETTLE",
+                "downstreamSettleMode":"ONE_PAPER_SETTLE",
+                "mainAccounting":1,
+                "upstreamId":2,
+                "downstreamId":3
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('那曲')
+                orderId = res.body.data.id
+                done()
+            })
+    })
+
+    it('移交订单权限 - 新建应收订单8 POST: /api/business/yings', function (done) {
+        server.post('/api/business/yings')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                "businessType":"ying",
+                "teamId":1,
+                "line":"那曲 - 晋和 - 嘉瑞",
+                "cargoType":"COAL",
+                "upstreamSettleMode":"ONE_PAPER_SETTLE",
+                "downstreamSettleMode":"ONE_PAPER_SETTLE",
+                "mainAccounting":1,
+                "upstreamId":2,
+                "downstreamId":3
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.line, '返回的数据data对象的line属性错误').to.include('那曲')
+                done()
+            })
+    })
+
+    it(`移交订单权限 - 转移订单给另一个财务人员(13564568304) POST: /api/business/yings/${orderId}/to/3`, function (done) {
+        console.log(`提示信息: 转移订单给另一个财务人员(13564568304) POST: /api/business/yings/${orderId}/to/3`)
+        server.post(`/api/business/yings/${orderId}/to/3`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+                done()
+            })
+    })
+
+    it(`移交订单权限 - 转移订单后不能在查看原订单 GET: /api/business/yings/${orderId}`, function (done) {
+        server.get(`/api/business/yings/${orderId}`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
+                done()
+            })
+    })
+
+    it('移交订单权限 - 不是自己的订单转移给另一个财务人员(13564568304) POST: /api/business/yings/1/to/3', function (done) {
+        console.log(`提示信息: 转移订单给另一个财务人员(13564568304) POST: /api/business/yings/1/to/3`)
+        server.post('/api/business/yings/1/to/3')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
+                done()
+            })
+    })
+
+    it(`移交订单权限 - 转移订单给不存在的财务人员 POST: /api/business/yings/${orderId2}/to/99999`, function (done) {
+        console.log(`提示信息: 转移订单给另一个财务人员(13564568301) POST: /api/business/yings/${orderId2}/to/99999`)
+        server.post(`/api/business/yings/${orderId2}/to/99999`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
+                done()
+            })
+    })
+
+})
+
