@@ -33,7 +33,7 @@ public class Huikuan implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "核算月不能为空")
     private Long hsId;
 
-    @NotNull(groups = {CreateGroup.class}, message = "回款公司不能为空")
+//    @NotNull(groups = {CreateGroup.class}, message = "回款公司不能为空")
     private Long huikuanCompanyId;
 
     @NotNull(groups = {CreateGroup.class}, message = "回款日期不能为空")

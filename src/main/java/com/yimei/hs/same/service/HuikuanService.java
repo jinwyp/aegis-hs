@@ -8,6 +8,7 @@ import com.yimei.hs.same.entity.HuikuanMap;
 import com.yimei.hs.same.mapper.FukuanMapper;
 import com.yimei.hs.same.mapper.HuikuanMapMapper;
 import com.yimei.hs.same.mapper.HuikuanMapper;
+import com.yimei.hs.same.mapper.OrderMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class HuikuanService {
     private HuikuanMapMapper huikuanMapMapper;
 
     @Autowired
-    private FukuanMapper fukuanMapper;
+    private OrderMapper orderMapper;
 
     @Autowired
     private HuikuanMapper huikuanMapper;
@@ -89,6 +90,9 @@ public class HuikuanService {
      */
     @Transactional(readOnly = false)
     public int create(Huikuan huikuan) {
+
+        Long huikuanCompanyId=orderMapper.selectByPrimaryKey(huikuan.getOrderId()).getDownstreamId();
+        huikuan.setHuikuanCompanyId(huikuanCompanyId);
         // 1. 插入回款记录
         int rtn = huikuanMapper.insert(huikuan);
 
