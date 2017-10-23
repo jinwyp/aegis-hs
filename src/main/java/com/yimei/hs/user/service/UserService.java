@@ -48,26 +48,30 @@ public class UserService {
     @Transactional(readOnly = false)
     public int create(User user, User admin) {
 
-        byte[] passwordSalt = Digests.generateSalt(SALT_SIZE);
-        byte[] hashPassword = Digests.sha1(user.getPassword().getBytes(), passwordSalt, HASH_INTERATIONS);
+        if (userMapper.loadByPhone(user.getPhone()) == null) {
 
-        user.setIsActive(true);
-        user.setIsAdmin(false);
-        user.setPassword(Encodes.encodeHex(hashPassword));
-        user.setPasswordSalt(Encodes.encodeHex(passwordSalt));
-        user.setCreateDate(LocalDateTime.now());
+            byte[] passwordSalt = Digests.generateSalt(SALT_SIZE);
+            byte[] hashPassword = Digests.sha1(user.getPassword().getBytes(), passwordSalt, HASH_INTERATIONS);
 
-        if (admin == null) {
-            user.setCreateBy("sys");
+            user.setIsActive(true);
+            user.setIsAdmin(false);
+            user.setPassword(Encodes.encodeHex(hashPassword));
+            user.setPasswordSalt(Encodes.encodeHex(passwordSalt));
+            user.setCreateDate(LocalDateTime.now());
+
+            if (admin == null) {
+                user.setCreateBy("sys");
+            } else {
+                user.setCreateBy(admin.getPhone().toString());
+            }
+            try {
+                userMapper.insert(user);
+            } catch (Exception e) {
+                return 0;
+            }
         } else {
-            user.setCreateBy(admin.getPhone().toString());
-        }
-        try {
-            userMapper.insert(user);
-        } catch (Exception e) {
             return 0;
         }
-
         return 1;
     }
 
@@ -90,6 +94,7 @@ public class UserService {
 
     /**
      * 查询用户 - 分页
+     *
      * @param pageUserDTO
      * @return
      */
@@ -104,6 +109,7 @@ public class UserService {
 
     /**
      * 更新用户
+     *
      * @param user
      * @return
      */
@@ -119,6 +125,7 @@ public class UserService {
 
     /**
      * 修改密码
+     *
      * @param userUpdate
      * @return
      */
@@ -142,6 +149,7 @@ public class UserService {
 
     /**
      * 获取用户同部门的其他用户
+     *
      * @param user
      * @return
      */
