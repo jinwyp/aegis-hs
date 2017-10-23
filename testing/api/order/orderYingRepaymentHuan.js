@@ -63,6 +63,8 @@ describe('应收订单 还款:', function () {
                 {
                     "hsId" : 1,
                     "orderId" : orderId,
+                    "promise" : false,
+
                     "huankuankDate" : "2017-10-07 00:00:00",
                     "huankuanMapList" : [
                         {
@@ -97,6 +99,7 @@ describe('应收订单 还款:', function () {
                     "hsId" : 1,
                     "huankuankDate" : "2017-10-07 00:00:00",
                     "orderId" : orderId,
+                    "promise" : false,
                     "huankuanMapList" : [
                         {
                             "jiekuanId":"2",
@@ -129,6 +132,7 @@ describe('应收订单 还款:', function () {
                 {
                     "hsId" : 1,
                     "skCompanyId" : 1,
+                    "promise" : false,
                     "huankuankDate" : "2017-10-07 00:00:00",
                     "huankuanPrincipal" : "100",
                     "huankuanInterest" : "100",
@@ -136,7 +140,7 @@ describe('应收订单 还款:', function () {
                     "orderId" : 1,
                     "huankuanMapList" : [
                         {
-                            "fukuanId" : 1,
+                            "jiekuanId":"2",
                             "principal" : "100",
                             "interest" : "100",
                             "fee" : "100"
@@ -163,6 +167,7 @@ describe('应收订单 还款:', function () {
                 {
                     "hsId" : 1,
                     "skCompanyId" : 1,
+                    "promise" : false,
                     "huankuankDate" : "2017-10-07 00:00:00",
                     "huankuanPrincipal" : "100",
                     "huankuanInterest" : "100",
@@ -170,7 +175,6 @@ describe('应收订单 还款:', function () {
                     "orderId" : orderId,
                     "huankuanMapList" : [
                         {
-                            "fukuanId" : 1,
                             "principal" : "100",
                             "interest" : "100",
                             "fee" : "100"
@@ -189,38 +193,39 @@ describe('应收订单 还款:', function () {
     })
 
 
-    // it(`还款单 - 新建还款单 还款map明细的本金总计不符合, POST: /api/business/ying/${orderId}/huankuans`, function (done) {
-    //     server.post(`/api/business/ying/${orderId}/huankuans`)
-    //         .set('Authorization', Authorization)
-    //         .set(config.headers)
-    //         .send(
-    //             {
-    //                 "hsId" : 1,
-    //                 "skCompanyId" : 1,
-    //                 "huankuankDate" : "2017-09-01 00:00:00",
-    //                 "huankuanAmount" : "100",
-    //                 "huankuanInterest" : "100",
-    //                 "huankuanFee" : "10",
-    //                 "orderId" : orderId,
-    //                 "huankuanMapList" : [
-    //                     {
-    //                         "fukuanId" : 1,
-    //                         "principal" : "100000",
-    //                         "interest" : "10000",
-    //                         "fee" : "100"
-    //                     }
-    //                 ]
-    //             }
-    //         )
-    //         .expect('Content-Type', /json/)
-    //         .expect(400)
-    //         .end(function(err, res) {
-    //             if (err) return done(err)
-    //             expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
-    //             expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
-    //             done()
-    //         })
-    // })
+    it(`还款单 - 新建还款单 还款map明细的本金总计不符合, POST: /api/business/ying/${orderId}/huankuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/huankuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : 1,
+                    "skCompanyId" : 1,
+                    "promise" : false,
+                    "huankuankDate" : "2017-09-01 00:00:00",
+                    "huankuanAmount" : "100",
+                    "huankuanInterest" : "100",
+                    "huankuanFee" : "10",
+                    "orderId" : orderId,
+                    "huankuanMapList" : [
+                        {
+                            "jiekuanId":"2",
+                            "principal" : "100000",
+                            "interest" : "10000",
+                            "fee" : "100"
+                        }
+                    ]
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
+                done()
+            })
+    })
 
 
     it(`还款单 - 获取应收订单还款单列表 GET: /api/business/ying/${orderId}/huankuans?pageNo=1&pageSize=2`, function (done) {
@@ -264,6 +269,7 @@ describe('应收订单 还款:', function () {
                 {
                     "hsId" : 1,
                     "skCompanyId" : 1,
+                    "promise" : true,
                     "huankuankDate" : "2017-11-01 00:00:00",
                     "orderId" : orderId,
                     "id" : repaymentId,
