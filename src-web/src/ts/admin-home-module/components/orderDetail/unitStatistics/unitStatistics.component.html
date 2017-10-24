@@ -1,63 +1,21 @@
 
-        <form [formGroup]="orderUnitForm" (ngSubmit)="orderUnitFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-            <bs-datepicker formControlName="hsMonth" [fc]="orderUnitForm.get('hsMonth')" [label]="'核算月名称:'" [format]="'yyyymm'" [displayFormat]="'yyyymm'" [dirty]="ignoreDirty" [error]="orderUnitFormError.hsMonth"></bs-datepicker>
-            <bs-text-input formControlName="maxPrepayRate" [fc]="orderUnitForm.get('maxPrepayRate')" [type]="'number'" [label]="'最高预付款比例(%):'" [prompt]="'百分比 例如88.88'" [percent]="true"  [dirty]="ignoreDirty" [error]="orderUnitFormError.maxPrepayRate"></bs-text-input>
-            <bs-text-input formControlName="unInvoicedRate" [fc]="orderUnitForm.get('unInvoicedRate')" [type]="'number'" [label]="'未开票款付款比例(%):'" [prompt]="'百分比 例如88.88'" [percent]="true" [dirty]="ignoreDirty" [error]="orderUnitFormError.unInvoicedRate"></bs-text-input>
-            <bs-text-input formControlName="contractBaseInterest" [fc]="orderUnitForm.get('contractBaseInterest')" [type]="'number'" [label]="'合同基准利率(%):'" [prompt]="'百分比 例如88.88'" [percent]="true" [dirty]="ignoreDirty" [error]="orderUnitFormError.contractBaseInterest"></bs-text-input>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }}统计信息</h5>
+                    <button type="button" class="btn btn-outline-info btn-sm float-right" (click)="backTo()" >返回列表</button>
 
-            <bs-text-input formControlName="expectHKDays" [fc]="orderUnitForm.get('expectHKDays')" [type]="'number'" [label]="'预计回款天数:'" [dirty]="ignoreDirty" [error]="orderUnitFormError.expectHKDays"></bs-text-input>
-            <bs-text-input formControlName="tradeAddPrice" [fc]="orderUnitForm.get('tradeAddPrice')" [type]="'number'" [label]="'贸易公司加价(吨):'" [dirty]="ignoreDirty" [error]="orderUnitFormError.tradeAddPrice"></bs-text-input>
-            <bs-text-input formControlName="weightedPrice" [fc]="orderUnitForm.get('weightedPrice')" [type]="'number'" [label]="'加权单价(元):'" [dirty]="ignoreDirty" [error]="orderUnitFormError.weightedPrice"></bs-text-input>
+                    <div class="row mt-4">
+                        <div class="col-4">
+                            <p class="card-text">事业部门: {{currentOrder?.deptId | findKey : departmentList : 'name'}}</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text">业务团队: {{currentOrder?.teamId | findKey : teamList : 'name'}}</p>
+                        </div>
+                    </div>
 
-
-            <div class="form-group row">
-                <div class="col-10 ml-auto">
-                    <button type="submit" class="btn btn-info" >保存</button>
-                    <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
                 </div>
             </div>
-        </form>
 
 
-        <div *ngIf="!isShowForm">
-            <table class="table table-bordered table-hover table-responsive" >
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>核算月</th>
-                    <th>最高预付款比例(%)</th>
-                    <th>未开票款付款比例(%)</th>
-
-                    <th>合同基准利率(%)</th>
-                    <th>预计回款天数</th>
-                    <th>贸易公司加价(元/吨)</th>
-                    <th>加权单价</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let unit of unitList; trackBy: trackByFn">
-                    <td> {{unit.id}}</td>
-                    <td> {{unit.hsMonth}}</td>
-                    <td> {{unit.maxPrepayRate | percent:'1.0-2'}}</td>
-                    <td> {{unit.unInvoicedRate | percent:'1.0-2'}}</td>
-
-                    <td> {{unit.contractBaseInterest | percent:'1.0-2'}}</td>
-                    <td> {{unit.expectHKDays }}</td>
-                    <td> {{unit.tradeAddPrice }}</td>
-                    <td> {{unit.weightedPrice }}</td>
-                    <td>
-                        <button class="btn btn-link btn-sm" (click)="showForm(false, unit)"> 修改 </button>
-                        <button class="btn btn-link btn-sm" (click)="deleteItem(unit)"> 删除 </button>
-                        <button class="btn btn-link btn-sm" (click)="deleteItem(unit)"> 统计 </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-        </div>
-
-
-
-        <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加新核算月</button>
+            <button type="button" class="btn btn-outline-secondary" (click)="backTo()" >返回</button>

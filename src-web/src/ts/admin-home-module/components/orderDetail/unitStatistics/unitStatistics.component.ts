@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core'
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
 import { FormBuilder, FormGroup, Validators} from '@angular/forms'
 
 
@@ -15,24 +15,14 @@ import {getEnum} from '../../../../services/localStorage'
 
 
 @Component({
-    selector: 'app-unit',
-    templateUrl: './unit.component.html',
-    styleUrls: ['./unit.component.css']
+    selector: 'app-statistics',
+    templateUrl: './unitStatistics.component.html',
+    styleUrls: ['./unitStatistics.component.css']
 })
-export class UnitComponent implements OnInit {
+export class UnitStatisticsComponent implements OnInit {
 
-    @Input() currentOrder : any
-    @Input() businessType : string
-
-    currentOrderUnitId : number
-
-    orderUnitForm: FormGroup
-    ignoreDirty: boolean = false
-
-    isShowForm: boolean = false
-    isAddNew: boolean = true
-
-    unitList : any[] = []
+    @Input() currentUnit : any
+    @Output() back: any = new EventEmitter<boolean>()
 
 
     pagination: any = {
@@ -56,9 +46,7 @@ export class UnitComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.getOrderUnitList()
-        this.createOrderUnitForm()
-
+        console.log('currentUnit: ', this.currentUnit)
     }
 
 
@@ -68,154 +56,19 @@ export class UnitComponent implements OnInit {
 
 
     getOrderUnitList () {
-        this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
-            data => {
-                this.unitList = data.data.results
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
+        // this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
+        //     data => {
+        //         this.unitList = data.data.results
+        //     },
+        //     error => {this.httpService.errorHandler(error) }
+        // )
+    }
+
+    backTo() {
+        this.back.emit(false)
     }
 
 
-
-    orderUnitFormError : any = {}
-    orderUnitFormValidationMessages: any = {
-        'hsMonth'  : {
-            'required'      : '请填写名称!'
-        },
-        'maxPrepayRate'  : {
-            'required'      : '请填写比例!'
-        },
-        'unInvoicedRate'  : {
-            'required'      : '请填写比例!'
-        },
-        'contractBaseInterest'  : {
-            'required'      : '请填写利率!'
-        },
-        'expectHKDays'  : {
-            'required'      : '请填写天数!',
-            'int'      : '请填写整数!'
-        },
-        'tradeAddPrice'  : {
-            'required'      : '请填写加价!'
-        },
-        'weightedPrice'  : {
-            'required'      : '请填写价格!'
-        }
-    }
-
-    orderUnitFormInputChange(formInputData : any) {
-        this.orderUnitFormError = formErrorHandler(formInputData, this.orderUnitForm, this.orderUnitFormValidationMessages)
-    }
-
-    createOrderUnitForm(): void {
-
-        this.orderUnitForm = this.fb.group({
-            'hsMonth'    : ['', [Validators.required ] ],
-            'maxPrepayRate'    : ['', [Validators.required ] ],
-            'unInvoicedRate'    : ['', [Validators.required ] ],
-            'contractBaseInterest'    : ['', [Validators.required ] ],
-
-            'expectHKDays'    : ['', [Validators.required, isInt() ] ],
-            'tradeAddPrice'    : ['', [Validators.required ] ],
-            'weightedPrice'    : ['', [Validators.required ] ]
-        } )
-
-
-        this.orderUnitForm.valueChanges.subscribe(data => {
-            this.ignoreDirty = false
-            this.orderUnitFormInputChange(data)
-        })
-    }
-
-
-    orderUnitFormSubmit() {
-
-        if (this.orderUnitForm.invalid) {
-            this.orderUnitFormInputChange(this.orderUnitForm.value)
-            this.ignoreDirty = true
-
-            console.log('当前信息: ', this.orderUnitForm, this.orderUnitFormError)
-            return
-        }
-
-        const postData = this.orderUnitForm.value
-        postData.expectHKDays = Number(this.orderUnitForm.value.expectHKDays)
-
-        if (this.isAddNew) {
-            this.hsOrderService.createNewOrderUnit(this.businessType, this.currentOrder.id, postData).subscribe(
-                data => {
-                    console.log('保存成功: ', data)
-                    this.httpService.successHandler(data)
-
-                    this.getOrderUnitList()
-                    this.showForm()
-
-                },
-                error => {this.httpService.errorHandler(error) }
-            )
-        } else {
-            postData.id = this.currentOrderUnitId
-            this.hsOrderService.modifyOrderUnit(this.businessType, this.currentOrder.id, this.currentOrderUnitId, postData).subscribe(
-                data => {
-                    console.log('修改成功: ', data)
-                    this.httpService.successHandler(data)
-
-                    this.getOrderUnitList()
-                    this.showForm()
-
-                },
-                error => {this.httpService.errorHandler(error) }
-            )
-        }
-
-    }
-
-
-    showForm(isAddNew : boolean = true, unit?: any ) {
-
-        if (isAddNew) {
-            this.isAddNew = true
-            this.currentOrderUnitId = 0
-
-            this.orderUnitForm.patchValue({
-                'hsMonth'    : '',
-                'maxPrepayRate'    : '',
-                'unInvoicedRate'    : '',
-                'contractBaseInterest'    : '',
-
-                'expectHKDays'    : '',
-                'tradeAddPrice'    : '',
-                'weightedPrice'    : ''
-
-            })
-
-        } else {
-            this.isAddNew = false
-            this.currentOrderUnitId = unit.id
-
-            this.orderUnitForm.patchValue(unit)
-        }
-
-
-        this.isShowForm = !this.isShowForm
-    }
-
-
-
-    deleteItem (unit : any) {
-
-        this.hsOrderService.delOrderUnit(this.businessType, this.currentOrder.id, unit.id).subscribe(
-            data => {
-                console.log('保存成功: ', data)
-                this.httpService.successHandler(data)
-
-                this.getOrderUnitList()
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-
-    }
 
 
 }

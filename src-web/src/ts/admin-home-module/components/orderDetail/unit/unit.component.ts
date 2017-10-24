@@ -25,12 +25,14 @@ export class UnitComponent implements OnInit {
     @Input() businessType : string
 
     currentOrderUnitId : number
+    currentUnit : any
 
     orderUnitForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
+    isShowStat: boolean = false
 
     unitList : any[] = []
 
@@ -217,6 +219,12 @@ export class UnitComponent implements OnInit {
 
     }
 
+
+    showStat (unit : any) {
+        this.currentUnit = unit
+        this.isShowForm = !this.isShowForm
+        this.isShowStat = !this.isShowStat
+    }
 
 }
 

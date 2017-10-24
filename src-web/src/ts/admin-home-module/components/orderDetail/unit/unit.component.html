@@ -1,5 +1,5 @@
 
-        <form [formGroup]="orderUnitForm" (ngSubmit)="orderUnitFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+        <form [formGroup]="orderUnitForm" (ngSubmit)="orderUnitFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm && !isShowStat">
 
             <bs-datepicker formControlName="hsMonth" [fc]="orderUnitForm.get('hsMonth')" [label]="'核算月名称:'" [format]="'yyyymm'" [displayFormat]="'yyyymm'" [dirty]="ignoreDirty" [error]="orderUnitFormError.hsMonth"></bs-datepicker>
             <bs-text-input formControlName="maxPrepayRate" [fc]="orderUnitForm.get('maxPrepayRate')" [type]="'number'" [label]="'最高预付款比例(%):'" [prompt]="'百分比 例如88.88'" [percent]="true"  [dirty]="ignoreDirty" [error]="orderUnitFormError.maxPrepayRate"></bs-text-input>
@@ -20,7 +20,7 @@
         </form>
 
 
-        <div *ngIf="!isShowForm">
+        <div *ngIf="!isShowForm && !isShowStat">
             <table class="table table-bordered table-hover table-responsive" >
                 <thead>
                 <tr>
@@ -50,7 +50,7 @@
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, unit)"> 修改 </button>
                         <button class="btn btn-link btn-sm" (click)="deleteItem(unit)"> 删除 </button>
-                        <button class="btn btn-link btn-sm" (click)="deleteItem(unit)"> 统计 </button>
+                        <button class="btn btn-link btn-sm" (click)="showStat(unit)"> 统计 </button>
                     </td>
                 </tr>
                 </tbody>
@@ -60,4 +60,8 @@
 
 
 
-        <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加新核算月</button>
+        <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm && !isShowStat" (click)="showForm(true)">添加新核算月</button>
+
+
+        <app-statistics *ngIf="isShowStat" [currentUnit]="currentUnit" (back)="showStat()"></app-statistics>
+
