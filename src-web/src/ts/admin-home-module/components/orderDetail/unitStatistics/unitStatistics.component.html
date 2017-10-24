@@ -2,20 +2,22 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }}统计信息</h5>
-                    <button type="button" class="btn btn-outline-info btn-sm float-right" (click)="backTo()" >返回列表</button>
+                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }}统计信息
+                        <button type="button" class="btn btn-outline-secondary btn-sm float-right" (click)="backTo()" >返回列表</button>
+                    </h5>
+
 
                     <div class="row mt-4">
                         <div class="col-4">
-                            <p class="card-text">事业部门: {{currentOrder?.deptId | findKey : departmentList : 'name'}}</p>
+                            <p class="card-text" title="汇总：付款用途 = “运费”的付款金额 ">付运费: {{currentOrder?.deptId | findKey : departmentList : 'name'}}</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text">业务团队: {{currentOrder?.teamId | findKey : teamList : 'name'}}</p>
                         </div>
                         <div class="col-4">
                             <p class="card-text">业务团队: {{currentOrder?.teamId | findKey : teamList : 'name'}}</p>
                         </div>
                     </div>
-
                 </div>
             </div>
 
-
-            <button type="button" class="btn btn-outline-secondary" (click)="backTo()" >返回</button>
