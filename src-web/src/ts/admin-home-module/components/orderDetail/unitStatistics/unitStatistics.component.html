@@ -9,15 +9,29 @@
 
                     <div class="row mt-4">
                         <div class="col-4">
-                            <p class="card-text" title="汇总：付款用途 = “运费”的付款金额 ">付运费: {{currentOrder?.deptId | findKey : departmentList : 'name'}}</p>
+                            <p class="card-text" title="汇总：付款用途 = “运费”的付款金额">付款运费合计: {{ currentUnit?.id }}</p>
                         </div>
                         <div class="col-4">
-                            <p class="card-text">业务团队: {{currentOrder?.teamId | findKey : teamList : 'name'}}</p>
+                            <p class="card-text" title="汇总：付款用途 = “贸易差价”的付款金额 ">付款贸易差价合计: {{ currentUnit?.id }}</p>
                         </div>
                         <div class="col-4">
-                            <p class="card-text">业务团队: {{currentOrder?.teamId | findKey : teamList : 'name'}}</p>
+                            <p class="card-text" title="汇总：付款金额">付款金额合计: {{ currentUnit?.id }}</p>
                         </div>
                     </div>
+
+                    <div class="row mt-4">
+                        <div class="col-4">
+                            <p class="card-text" title="汇总：借款金额">借款金额合计: {{ currentUnit?.id }}</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text" title="汇总：对应还款ID = null 的借款预估成本">未还借款预估成本合计: {{ currentUnit?.id }}</p>
+                        </div>
+                        <div class="col-4">
+                            <!--<p class="card-text" title="汇总：付款金额">付款金额合计: {{ currentUnit?.id }}</p>-->
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
 
