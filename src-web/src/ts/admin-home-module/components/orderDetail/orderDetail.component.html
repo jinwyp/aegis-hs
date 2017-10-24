@@ -60,18 +60,50 @@
         </ul>
 
 
-        <div *ngIf="currentTabIndex === 1">
-            <ul class="list-group" >
-                <li class="list-group-item">事业部门: {{currentOrder?.deptId | findKey : departmentList : 'name'}} -- 业务团队: {{currentOrder?.teamId | findKey : teamList : 'name'}}</li>
-                <li class="list-group-item">业务线名称: {{currentOrder?.line }}</li>
-                <li class="list-group-item">上游结算方式: {{currentOrder?.upstreamSettleMode | settleMode }} -- 下游结算方式: {{currentOrder?.downstreamSettleMode | settleMode}}</li>
-                <li class="list-group-item">商品品类: {{currentOrder?.cargoType | cargoType }}</li>
-                <li class="list-group-item">主账务公司: {{currentOrder?.mainAccounting | findKey:partyList:'name' }} -- 上游供应商: {{currentOrder?.upstreamId | findKey:partyList:'name' }} -- 下游客户: {{currentOrder?.downstreamId | findKey:partyList:'name' }}</li>
-            </ul>
+        <div *ngIf="currentTabIndex === 1" >
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">业务线名称: {{currentOrder?.line }}</h5>
 
-            <ul class="list-group mt-2" >
-                <li class="list-group-item" *ngFor="let company of currentOrder?.orderPartyList">参与方公司: {{company.custType | customerType}} - {{company.customerId | findKey : partyList : 'name'}}</li>
-            </ul>
+                    <div class="row mt-4">
+                        <div class="col-4">
+                            <p class="card-text">事业部门: {{currentOrder?.deptId | findKey : departmentList : 'name'}}</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text">业务团队: {{currentOrder?.teamId | findKey : teamList : 'name'}}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-4">
+                            <p class="card-text">上游结算方式: {{currentOrder?.upstreamSettleMode | settleMode }}</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text">下游结算方式: {{currentOrder?.downstreamSettleMode | settleMode}}</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text">商品品类: {{currentOrder?.cargoType | cargoType }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-4">
+                            <p class="card-text">主账务公司: {{currentOrder?.mainAccounting | findKey:partyList:'name' }}</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text">上游供应商: {{currentOrder?.upstreamId | findKey:partyList:'name' }}</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text">下游客户: {{currentOrder?.downstreamId | findKey:partyList:'name' }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4" *ngFor="let company of currentOrder?.orderPartyList">
+                        <div class="col-12" >
+                            <p class="card-text">参与方公司: {{company.custType | customerType}} - {{company.customerId | findKey : partyList : 'name'}}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
 
 
             <div class="card mt-3">
@@ -118,8 +150,3 @@
         <app-warehouse  *ngIf="currentTabIndex === 32 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'ruku'"></app-warehouse>
         <app-warehouse  *ngIf="currentTabIndex === 33 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'chuku'"></app-warehouse>
 
-
-
-        <div>
-            
-        </div>
