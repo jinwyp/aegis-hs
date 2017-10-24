@@ -50,8 +50,7 @@
                     <th>回款用途</th>
                     <th>回款方式</th>
 
-                    <th>银行承兑详细</th>
-                    <th>商业承兑</th>
+                    <th>银行承兑/商业承兑详细</th>
 
                     <th></th>
                 </tr>
@@ -68,12 +67,16 @@
                     <td> {{repayment.huikuanMode | findKey : payModeList : 'name' }}</td>
 
                     <td>
-                        收到票据:{{repayment.huikuanBankPaper ? '是' : '否'}} / 票据原件日期:{{repayment.huikuanBankPaperDate}} / 票据到期日:{{repayment.huikuanBankPaperExpire}}
-                        / 贴息:{{repayment.huikuanBankDiscount}} / 贴息率:{{repayment.huikuanBankDiscountRate * 100 | percent:'1.0-2'}}
-                    </td>
-                    <td>
-                        收到票据:{{repayment.huikuanBusinessPaper ? '是' : '否'}} / 票据原件日期:{{repayment.huikuanBusinessPaperDate}} / 票据到期日:{{repayment.huikuanBusinessPaperExpire}}
-                        / 贴息:{{repayment.huikuanBusinessDiscount}} / 贴息率:{{repayment.huikuanBusinessDiscountRate * 100 | percent:'1.0-2'}}
+                        <span *ngIf="repayment.huikuanMode === 'BANK_ACCEPTANCE'">
+                            收到票据:{{repayment.huikuanBankPaper ? '是' : '否'}} <br>
+                            票据原件日期:{{repayment.huikuanBankPaperDate}} <br> 票据到期日:{{repayment.huikuanBankPaperExpire}} <br>
+                            贴息: {{repayment.huikuanBankDiscount ? '是' : '否'}} / 贴息率:{{repayment.huikuanBankDiscountRate ? (repayment.huikuanBankDiscountRate * 100 | percent:'1.0-2' ): ''}}
+                        </span>
+                        <span *ngIf="repayment.huikuanMode === 'BUSINESS_ACCEPTANCE'">
+                            收到票据:{{repayment.huikuanBusinessPaper ? '是' : '否'}} <br>
+                            票据原件日期:{{repayment.huikuanBusinessPaperDate }} <br> 票据到期日:{{repayment.huikuanBusinessPaperExpire}} <br>
+                            贴息:{{repayment.huikuanBusinessDiscount ? '是' : '否'}} / 贴息率:{{repayment.huikuanBusinessDiscountRate ? (repayment.huikuanBusinessDiscountRate * 100 || 0 | percent:'1.0-2') : ''}}
+                        </span>
                     </td>
 
                     <td>
