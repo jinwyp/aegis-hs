@@ -31,7 +31,6 @@ describe('应收订单 借款单:', function () {
     let Authorization = ''
 
     let orderId = config.order.getOrderYingId
-    let delOrderId = config.order.delOrderYingId
 
     let borrowId = 1
     let delBorrowId = 3

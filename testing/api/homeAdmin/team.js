@@ -20,6 +20,9 @@ describe('业务团队', function () {
 
     let Authorization = ''
 
+    let teamId = 16
+    let delTeamId = 17
+
     before(function (done) {
 
         server.post('/api/login')
@@ -70,6 +73,8 @@ describe('业务团队', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.name).to.include('新的团队')
+
+                teamId = res.body.data.id
                 done()
             })
     })
@@ -90,6 +95,8 @@ describe('业务团队', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.name).to.include('新的团队')
+
+                delTeamId = res.body.data.id
                 done()
             })
     })
@@ -128,8 +135,9 @@ describe('业务团队', function () {
             })
     })
 
-    it('删除某个ID的部门 DELETE: /api/teams/17', function (done) {
-        server.delete('/api/teams/17')
+    it(`删除某个ID的团队名称 DELETE: /api/teams/${delTeamId}`, function (done) {
+        console.log(`删除某个ID的团队名称 DELETE: /api/teams/${delTeamId}`)
+        server.delete(`/api/teams/${delTeamId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
@@ -143,8 +151,8 @@ describe('业务团队', function () {
             })
     })
 
-    it('获取 已删除的ID的团队信息 应该返回400  GET: /api/teams/17', function (done) {
-        server.get('/api/teams/17')
+    it(`获取 已删除的ID的团队信息 应该返回400  GET: /api/teams/${delTeamId}`, function (done) {
+        server.get(`/api/teams/${delTeamId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)

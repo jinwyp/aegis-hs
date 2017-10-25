@@ -30,6 +30,11 @@ describe('应收订单 回款:', function () {
 
     let Authorization = ''
 
+    let orderId = config.order.getOrderYingId
+
+    let repaymentId = 1
+    let delRepaymentId = 3
+    
     before(function (done) {
 
         server.post('/api/login')
@@ -49,8 +54,8 @@ describe('应收订单 回款:', function () {
 
 
 
-    it('回款单 - 新建回款单1 POST: /api/business/ying/1/huikuans', function (done) {
-        server.post('/api/business/ying/1/huikuans')
+    it(`回款单 - 新建回款单1 POST: /api/business/ying/${orderId}/huikuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/huikuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -82,12 +87,14 @@ describe('应收订单 回款:', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.huikuanDate).to.include('2017')
+
+                repaymentId = res.body.data.id
                 done()
             })
     })
 
-    it('回款单 - 新建回款单2 POST: /api/business/ying/1/huikuans', function (done) {
-        server.post('/api/business/ying/1/huikuans')
+    it(`回款单 - 新建回款单2 POST: /api/business/ying/${orderId}/huikuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/huikuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -123,8 +130,8 @@ describe('应收订单 回款:', function () {
             })
     })
 
-    it('回款单 - 新建回款单3 POST: /api/business/ying/1/huikuans', function (done) {
-        server.post('/api/business/ying/1/huikuans')
+    it(`回款单 - 新建回款单3 POST: /api/business/ying/${orderId}/huikuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/huikuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -156,12 +163,14 @@ describe('应收订单 回款:', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.huikuanDate).to.include('2017')
+
+                delRepaymentId = res.body.data.id
                 done()
             })
     })
 
-    it('回款单 - 获取应收订单回款单列表 GET: /api/business/ying/1/huikuans?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/business/ying/1/huikuans?pageNo=1&pageSize=2')
+    it(`回款单 - 获取应收订单回款单列表 GET: /api/business/ying/${orderId}/huikuans?pageNo=1&pageSize=2`, function (done) {
+        server.get(`/api/business/ying/${orderId}/huikuans?pageNo=1&pageSize=2`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -177,8 +186,8 @@ describe('应收订单 回款:', function () {
             })
     })
 
-    it('回款单 - 获取某个ID的回款单信息 GET: /api/business/ying/1/huikuans/1', function (done) {
-        server.get('/api/business/ying/1/huikuans/1')
+    it(`回款单 - 获取某个ID的回款单信息 GET: /api/business/ying/${orderId}/huikuans/${repaymentId}`, function (done) {
+        server.get(`/api/business/ying/${orderId}/huikuans/${repaymentId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -193,8 +202,8 @@ describe('应收订单 回款:', function () {
             })
     })
 
-    it('回款单 - 修改某个ID的回款单 PUT: /api/business/ying/1/huikuans/1', function (done) {
-        server.put('/api/business/ying/1/huikuans/1')
+    it(`回款单 - 修改某个ID的回款单 PUT: /api/business/ying/${orderId}/huikuans/${repaymentId}`, function (done) {
+        server.put(`/api/business/ying/${orderId}/huikuans/${repaymentId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -228,8 +237,8 @@ describe('应收订单 回款:', function () {
             })
     })
 
-    it('回款单 - 删除某个ID的回款单 DELETE: /api/business/ying/1/huikuans/2', function (done) {
-        server.delete('/api/business/ying/1/huikuans/2')
+    it(`回款单 - 删除某个ID的回款单 DELETE: /api/business/ying/${orderId}/huikuans/${delRepaymentId}`, function (done) {
+        server.delete(`/api/business/ying/${orderId}/huikuans/${delRepaymentId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
@@ -242,8 +251,6 @@ describe('应收订单 回款:', function () {
                 done()
             })
     })
-
-
 
 
 })
