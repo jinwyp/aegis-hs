@@ -8,28 +8,51 @@
 
 
                     <div class="row mt-4">
-                        <div class="col-4">
+                        <div class="col-2">
                             <p class="card-text" title="汇总：付款用途 = “运费”的付款金额">付款运费合计: {{ currentUnit?.id }}</p>
                         </div>
-                        <div class="col-4">
+                        <div class="col-2">
                             <p class="card-text" title="汇总：付款用途 = “贸易差价”的付款金额 ">付款贸易差价合计: {{ currentUnit?.id }}</p>
                         </div>
-                        <div class="col-4">
+                        <div class="col-2">
                             <p class="card-text" title="汇总：付款金额">付款金额合计: {{ currentUnit?.id }}</p>
                         </div>
                     </div>
 
                     <div class="row mt-4">
-                        <div class="col-4">
+                        <div class="col-2">
                             <p class="card-text" title="汇总：借款金额">借款金额合计: {{ currentUnit?.id }}</p>
                         </div>
-                        <div class="col-4">
+                        <div class="col-2">
                             <p class="card-text" title="汇总：对应还款ID = null 的借款预估成本">未还借款预估成本合计: {{ currentUnit?.id }}</p>
                         </div>
-                        <div class="col-4">
+                        <div class="col-2">
                             <!--<p class="card-text" title="汇总：付款金额">付款金额合计: {{ currentUnit?.id }}</p>-->
                         </div>
                     </div>
+
+                    <div class="row mt-4">
+                        <div class="col-2">
+                            <p class="card-text" title="汇总：还款本金">还款本金合计: {{ currentUnit?.id }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p class="card-text" title="汇总：还款利息">还款利息合计: {{ currentUnit?.id }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p class="card-text" title="汇总：还款状态= “未还款”的还款本金">登记未还本金金额合计: {{ currentUnit?.id }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p class="card-text" title="汇总：还款状态= “未还款”的还款利息">登记未还利息金额合计: {{ currentUnit?.id }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p class="card-text" title="汇总：还款服务费">还款服务费合计: {{ currentUnit?.id }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p class="card-text" title="【1006】未还款预估成本 +【1008】还款利息合计 + 【1011】还款服务费合计">外部资金使用成本: {{ currentUnit?.id }}</p>
+                        </div>
+                    </div>
+
+
 
 
                 </div>
