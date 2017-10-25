@@ -19,7 +19,7 @@ describe('管理用户', function () {
 
     let Authorization = ''
 
-    let userId = 2
+    let userId = 3
     let delUserId = 3
 
     before(function (done) {
@@ -173,6 +173,7 @@ describe('管理用户', function () {
     })
 
     it(`获取某个ID的用户信息 GET: /api/users/${userId}` , function (done) {
+        console.log(`提示信息: 获取某个ID的用户信息 GET: /api/users/${userId}`)
         server.get(`/api/users/${userId}`)
             .set('Authorization', Authorization)
             .set(config.headers)

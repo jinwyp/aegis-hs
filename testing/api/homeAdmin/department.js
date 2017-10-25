@@ -153,9 +153,9 @@ describe('事业部门 - ', function () {
             })
     })
 
-    it(`删除某个ID的部门 DELETE: /api/departments/${departmentId}`, function (done) {
-        console.log(`提示信息: 删除某个ID的部门 DELETE: /api/departments/${departmentId}`)
-        server.delete(`/api/departments/${departmentId}`)
+    it(`删除某个ID的部门 DELETE: /api/departments/${delDepartmentId}`, function (done) {
+        console.log(`提示信息: 删除某个ID的部门 DELETE: /api/departments/${delDepartmentId}`)
+        server.delete(`/api/departments/${delDepartmentId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
