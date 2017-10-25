@@ -233,7 +233,7 @@ from v_1022
 group by orderId,hsId;
 
 --1024 买方结算   1024  1025 1026
-create view v_1023 as
+create view v_1024 as
 select
 orderId,
 hsId,
