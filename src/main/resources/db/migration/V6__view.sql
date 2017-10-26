@@ -380,26 +380,83 @@ group by hsId,OrderId;
 
 
 
+--出库入库相关
+--3001	入库总数量	totalInstorageNum	【入库】	备查账	汇总：入库数量
+--3002	入库总金额	totalInstorageAmount	【入库】		汇总：入库金额
+--3004	入库单价	InstorageUnitPrice	计算		【3002】入库总金额 ／ 【3001】入库总数量
+create view v_3001  as
+select
+hsId,
+orderId,
+sum(rukuAmount) as totalInstorageNum,
+sum(rukuAmount * rukuPrice) as totalInstorageAmount,
+sum(rukuAmount * rukuPrice)/sum(rukuAmount) as InstorageUnitPrice
+from hs_cang_ruku
+group by hsId, orderId;
 
---1040 核算结算量  yingFinalSettleAmount
+--3003	已出库数量	totaloutstorageNum	【出库】	备查账	汇总：出库数量
+--3005	库存数量	totalStockNum	计算	备查账/占压	【3001】入库总数量 - 【3003】已出库数量
+create view v_3003  as
+select
+v_3001.hsId,
+v_3001.orderId,
+sum(chukuAmount) as totaloutstorageNum,
+v_3001.totalInstorageNum-sum(chukuAmount) as totalStockNum
+from hs_cang_chuku chuku
+     left join v_3001 on v_3001.hsId=v_3001.hsId
+group by hsId, orderId;
+
+--3006	库存金额	totalStockMoney	计算	占压	【3004】入库单价 * 【3005】库存数量
+create view v_3006  as
+select
+v_3001.hsId,
+v_3001.orderId,
+v_3001.InstorageUnitPrice *v_3003.totalStockNum as totalStockMoney
+from v_3003
+     left join v_3001 on v_3001.hsId=v_3003.hsId
+group by hsId, orderId;
+
+
+
+
+
+--应收
+--1040 核算结算量  yinalSettleAmount
 --1041	贸易公司加价	tradingCompanyAddMoney
 --1042	买方未结算数量	unsettlerBuyerNumber
 --1043	卖方未结算金额	unsettlerBuyerMoneyAmount
---1044	销售货款总额	yingSaleCargoAmountofMoney
+--1044	销售货款总额	saleCargoAmountofMoney
+create view v_1041_cang as
+select
+v_3001.hsId,
+v_3001.orderId,
+v_3001.totalInstorageNum as finalSettleAmount,
+v_3001.totalInstorageNum-v_1024.totalBuyerNums as  unsettlerBuyerNumber,
+v_3001.totalInstorageNum * config.tradeAddPrice as tradingCompanyAddMoney,
+(v_3001.totalInstorageNum-v_1024.totalBuyerNums) * config.weightedPrice as unsettlerBuyerMoneyAmount,
+(v_3001.totalInstorageNum-v_1024.totalBuyerNums) * config.weightedPrice +v_1024.totalBuyerMoney as saleCargoAmountofMoney
+from v_3001
+     left join v_1024 on v_3001.hsId=v_1024.hsId
+     left join hs_same_order_config config on config.id=v_3001.hsId
+group by hsId, orderId;
 
-create view v_1041 as
+--应收
+create view v_1041_ying as
 select
 v_2001.hsId,
 v_2001.orderId,
-v_2001.totalFayunNum-v_1024.totalBuyersettleGap as yingFinalSettleAmount,
+v_2001.totalFayunNum-v_1024.totalBuyersettleGap as finalSettleAmount,
 v_2001.totalFayunNum-v_1024.totalBuyersettleGap-v_1024.totalBuyerNums as  unsettlerBuyerNumber,
 (v_2001.totalFayunNum-v_1024.totalBuyersettleGap) * config.tradeAddPrice as tradingCompanyAddMoney,
 (v_2001.totalFayunNum-v_1024.totalBuyersettleGap-v_1024.totalBuyerNums) * config.weightedPrice as unsettlerBuyerMoneyAmount,
-(v_2001.totalFayunNum-v_1024.totalBuyersettleGap-v_1024.totalBuyerNums) * config.weightedPrice +v_1024.totalBuyerMoney as yingSaleCargoAmountofMoney
+(v_2001.totalFayunNum-v_1024.totalBuyersettleGap-v_1024.totalBuyerNums) * config.weightedPrice +v_1024.totalBuyerMoney as saleCargoAmountofMoney
 from v_2001
      left join v_1024 on v_2001.hsId=v_1024.hsId
      left join hs_same_order_config config on config.id=v_2001.hsId
 group by hsId, orderId;
+
+
+
 
 --1045 瑞茂通总收益  【1021】合同利息收益 - 【1012】外部资金使用成本 + 【1023】贴现息合计
 create view v_1045 as
@@ -416,16 +473,24 @@ group by hsId, orderId;
 --1046 采购货款总额 【1044】销售货款总额 - 【1045】瑞茂通总收益
 create view v_1046 as
 select
-v_1041.hsId,
-v_1041.orderId,
-v_1041.yingSaleCargoAmountofMoney-v_1045.CCSProfile as purchaseCargoAmountofMoney
-from v_1041
-     left join v_1045 on v_1041.hsId=v_1045.hsId
+v_1041_ying.hsId,
+v_1041_ying.orderId,
+v_1041_ying.saleCargoAmountofMoney-v_1045.CCSProfile as purchaseCargoAmountofMoney
+from v_1041_ying
+     left join v_1045 on v_1041_ying.hsId=v_1045.hsId
 group by hsId, orderId;
 
 
---1047 外部资金使用率  【1004】借款金额合计 - 【1007】还款本金合计  + 【1009】登记未还款本金
+create view v_1046_cang as
+select
+v_1041_cang.hsId,
+v_1041_cang.orderId,
+v_1041_cang.saleCargoAmountofMoney-v_1045.CCSProfile as purchaseCargoAmountofMoney
+from v_1041_cang
+     left join v_1045 on v_1041_cang.hsId=v_1045.hsId
+group by hsId, orderId;
 
+--1047 外部资金使用率  【1004】借款金额合计 - 【1007】还款本金合计  + 【1009】登记未还款本金
 create view v_1047 as
 select
 v_1004.hsId,
@@ -460,42 +525,88 @@ from v_1047
      left join v_1046 on v_1046.hsId=v_1047.hsId
 group by hsId, orderId;
 
-
+create view v_1049_cang as
+select
+v_1047.hsId,
+v_1047.orderId,
+v_1047.externalCapitalPaymentAmount+v_1048.ownerCapitalPaymentAmount-v_1046_cang.purchaseCargoAmountofMoney as upstreamCapitalPressure
+from v_1047
+     left join v_1048 on v_1048.hsId=v_1047.hsId
+     left join v_1046_cang on v_1046_cang.hsId=v_1047.hsId
+group by hsId, orderId;
 --1050 下游资金占压	downstreamCapitalPressure	计算	备查账／占压表	【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额
+
 create view v_1050 as
 select
-v_1041.hsId,
-v_1041.orderId,
-v_1041.yingSaleCargoAmountofMoney-v_1013.totalpaymentMoney-v_2008.balanceDownStreamBail as yingDownstreamCapitalPressure
-from v_1041
-     left join v_1013 on v_1041.hsId=v_1013.hsId
-     left join v_2008 on v_1041.hsId=v_2008.hsId
+v_1041_ying.hsId,
+v_1041_ying.orderId,
+v_1041_ying.saleCargoAmountofMoney-v_1013.totalpaymentMoney+v_2008.balanceDownStreamBail as yingDownstreamCapitalPressure
+from v_1041_ying
+     left join v_1013 on v_1041_ying.hsId=v_1013.hsId
+     left join v_2008 on v_1041_ying.hsId=v_2008.hsId
 group by hsId, orderId;
+
+--【1044】销售货款总额 - 【1013】已回款金额
+create view v_1050_cang as
+select
+v_1041_cang.hsId,
+v_1041_cang.orderId,
+v_1041_cang.saleCargoAmountofMoney-v_1013.totalpaymentMoney as yingDownstreamCapitalPressure
+from v_1041_cang
+     left join v_1013 on v_1041_cang.hsId=v_1013.hsId
+     left join v_2008 on v_1041_cang.hsId=v_2008.hsId
+group by hsId, orderId;
+
 
 --1051 CCS未收到进项数量	CCSUnInTypeNum	计算	备查账	【1040】核算结算量 - 【1037】CCS已收进项数量
 
 create view v_1051 as
 select
-v_1041.hsId,
-v_1041.orderId,
-v_1041.yingFinalSettleAmount-v_1037.totalCSSInTypeNumber
-from v_1041
-     left join v_1037 on v_1037.hsId=v_1041.hsId
+v_1041_ying.hsId,
+v_1041_ying.orderId,
+v_1041_ying.finalSettleAmount-v_1037.totalCSSInTypeNumber
+from v_1041_ying
+     left join v_1037 on v_1037.hsId=v_1041_ying.hsId
 group by hsId, orderId;
+
+create view v_1051_cang as
+select
+v_1041_cang.hsId,
+v_1041_cang.orderId,
+v_1041_cang.finalSettleAmount-v_1037.totalCSSInTypeNumber
+from v_1041_cang
+     left join v_1037 on v_1037.hsId=v_1041_cang.hsId
+group by hsId, orderId;
+
 
 --1052 CCS未收到进项金额	CCSUnInTypeMoney	     	【1046】采购货款总额 + 【1041】贸易公司加价 - 【1038】CCS已收进项金额 - 【1027】代收代垫运费
 --1053	占压表未开票金额	unInvoicedAmountofMoney		【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费
-create view v_1052  as
+create view v_1052_ying  as
 select
 v_1046.hsId,
 v_1046.orderId,
-v_1046.purchaseCargoAmountofMoney+v_1041.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.DSDDFee as CCSUnInTypeMoney,
-v_1046.purchaseCargoAmountofMoney+v_1041.tradingCompanyAddMoney-v_1039.InvoicedMoneyAmount-v_1027.DSDDFee as unInvoicedAmountofMoney
+v_1046.purchaseCargoAmountofMoney+v_1041_ying.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.DSDDFee as CCSUnInTypeMoney,
+v_1046.purchaseCargoAmountofMoney+v_1041_ying.tradingCompanyAddMoney-v_1039.InvoicedMoneyAmount-v_1027.DSDDFee as unInvoicedAmountofMoney
 from v_1046
-     left join v_1041 on v_1046.hsId=v_1041.hsId
+     left join v_1041_ying on v_1046.hsId=v_1041_ying.hsId
      left join v_1037 on v_1037.hsId=v_1046.hsId
      left join v_1027 on v_1027.hsId=v_1046.hsId
      left join v_1039 on v_1039.hsId=v_1046.hsId
+group by hsId, orderId;
+
+
+
+create view v_1052_cang  as
+select
+v_1046_cang.hsId,
+v_1046_cang.orderId,
+v_1046_cang.purchaseCargoAmountofMoney+v_1041_cang.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.DSDDFee as CCSUnInTypeMoney,
+v_1046_cang.purchaseCargoAmountofMoney+v_1041_cang.tradingCompanyAddMoney-v_1039.InvoicedMoneyAmount-v_1027.DSDDFee as unInvoicedAmountofMoney
+from v_1046_cang
+     left join v_1041_cang on v_1046_cang.hsId=v_1041_cang.hsId
+     left join v_1037 on v_1037.hsId=v_1046_cang.hsId
+     left join v_1027 on v_1027.hsId=v_1046_cang.hsId
+     left join v_1039 on v_1039.hsId=v_1046_cang.hsId
 group by hsId, orderId;
 
 --1054	预收款	yingPrePayment	计算	占压表	IF（【1014】付货款金额 <= 【1013】已回款金额）？【1014】付货款金额 - 【1013】已回款金额 + 【2009】下游保证金余额  ：0 +【2009】下游保证金余额
@@ -513,56 +624,21 @@ group by hsId, orderId;
 
 
 
---出库入库相关
---3001	入库总数量	totalInstorageNum	【入库】	备查账	汇总：入库数量
---3002	入库总金额	totalInstorageAmount	【入库】		汇总：入库金额
---3004	入库单价	InstorageUnitPrice	计算		【3002】入库总金额 ／ 【3001】入库总数量
-create view v_3001  as
-select
-hsId,
-orderId,
-sum(rukuAmount) as totalInstorageNum,
-sum(rukuAmount * rukuPrice) as totalInstorageAmount,
-sum(rukuAmount * rukuPrice)/sum(rukuAmount) as InstorageUnitPrice
-from hs_cang_ruku
-group by hsId, orderId;
-
---3003	已出库数量	totaloutstorageNum	【出库】	备查账	汇总：出库数量
---3005	库存数量	totalStockNum	计算	备查账/占压	【3001】入库总数量 - 【3003】已出库数量
-create view v_3003  as
-select
-v_3001.hsId,
-v_3001.orderId,
-sum(chukuAmount) as totaloutstorageNum,
-v_3001.totalInstorageNum-sum(chukuAmount) as totalStockNum
-from hs_cang_chuku chuku
-left join v_3001 on v_3001.hsId=v_3001.hsId
-group by hsId, orderId;
-
---3006	库存金额	totalStockMoney	计算	占压	【3004】入库单价 * 【3005】库存数量
-create view v_3006  as
-select
-v_3001.hsId,
-v_3001.orderId,
-v_3001.InstorageUnitPrice *v_3003.totalStockNum as totalStockMoney
-from v_3003
-     left join v_3001 on v_3001.hsId=v_3003.hsId
-group by hsId, orderId;
 
 
 --1055 毛利结算量	settleGrossProfileNum	计算	毛利表	【1040】核算用结算量
 --仓押毛利结算量 【3003】已出库数量
 create view v_1055 as
 select
-v_1041.hsId,
-v_1041.orderId,
-v_1041.yingFinalSettleAmount as yingSettleGrossProfileNum
-from v_1041
+v_1041_ying.hsId,
+v_1041_ying.orderId,
+v_1041_ying.finalSettleAmount as yingSettleGrossProfileNum
+from v_1041_ying
 group by hsId, orderId;
 
 --1056 yingshou采购含税总额	purchaseIncludeTaxTotalAmount	计算	毛利表	【1046】采购货款总额
--- 仓押采购含税总额   purchaseIncludeTaxTotalAmount【3004】入库单价 * 【1055】毛利结算量   todo  应收仓押作区分
-create view v_1056  as
+-- 仓押采购含税总额   purchaseIncludeTaxTotalAmount【3004】入库单价 * 【1055】毛利结算量
+create view v_1056_cang  as
 select
 v_3001.hsId,
 v_3001.orderId,
@@ -573,17 +649,17 @@ group by hsId, orderId;
 
 --1057	仓押销售含税总额	saleIncludeTaxTotalAmount	【1056】采购含税总额 + 【1045】瑞茂通总收益
 --1057  应收 【1044】销售货款总额
-create view v_1057  as
+create view v_1057_cang  as
 select
-v_1056.hsId,
-v_1056.orderId,
-v_1056.purchaseIncludeTaxTotalAmount * v_1045.CCSProfile  as saleIncludeTaxTotalAmount
-from v_1056
-     left join v_1045 on  v_1056.hsId=v_1045.hsId
+v_1056_cang.hsId,
+v_1056_cang.orderId,
+v_1056_cang.purchaseIncludeTaxTotalAmount * v_1045.CCSProfile  as saleIncludeTaxTotalAmount
+from v_1056_cang
+     left join v_1045 on  v_1056_cang.hsId=v_1045.hsId
 group by hsId, orderId;
 
 --1058	毛利贸易公司加价	TradeCompanyAddMoney	计算	毛利表	【1055】毛利结算量 * 【核算月配置】贸易公司加价
-create view v_1058  as
+create view v_1058_ying  as
 select
 v_1055.hsId,
 v_1055.orderId,
@@ -592,25 +668,42 @@ from v_1055
      left join hs_same_order_config config on  v_1055.hsId=config.id
 group by hsId, orderId;
 
---1059	不含税收入	withoutTaxIncome	计算	毛利表	（【1057】销售含税总额 - 【1027】代收代垫运费 ）／ 1.17
-create view v_1059  as
+create view v_1058_cang  as
 select
-v_1057.hsId,
-v_1057.orderId,
-(v_1057.saleIncludeTaxTotalAmount - v_1027.DSDDFee)/1.17  as withoutTaxIncome
-from v_1057
-     left join v_1027  on  v_1027.hsId=v_1057.hsId
+v_3003.hsId,
+v_3003.orderId,
+v_3003.totaloutstorageNum * config.tradeAddPrice  as TradeCompanyAddMoney
+from v_3003
+     left join hs_same_order_config config on  v_3003.hsId=config.id
+group by hsId, orderId;
+--1059	不含税收入	withoutTaxIncome	计算	毛利表	（【1057】销售含税总额 - 【1027】代收代垫运费 ）／ 1.17
+create view v_1059_ying  as
+select
+v_1041_ying.hsId,
+v_1041_ying.orderId,
+(v_1041_ying.saleCargoAmountofMoney - v_1027.DSDDFee)/1.17  as withoutTaxIncome
+from v_1041_ying
+     left join v_1027  on  v_1027.hsId=v_1041_ying.hsId
+group by hsId, orderId;
+
+create view v_1059_cang  as
+select
+v_1057_cang.hsId,
+v_1057_cang.orderId,
+(v_1057_cang.saleIncludeTaxTotalAmount - v_1027.DSDDFee)/1.17  as withoutTaxIncome
+from v_1057_cang
+     left join v_1027  on  v_1027.hsId=v_1057_cang.hsId
 group by hsId, orderId;
 
 --1060	不含税成本	withoutTaxCost	计算	毛利表	（【1056】采购含税总额 - 【1027】代收代垫运费 + 【1058】毛利贸易公司加价）／1.17
 create view v_1060_cang  as
 select
-v_1056.hsId,
-v_1056.orderId,
-(v_1056.purchaseIncludeTaxTotalAmount - v_1027.DSDDFee+v_1058.TradeCompanyAddMoney)/1.17  as cangWithoutTaxIncome
-from v_1056
-     left join v_1027  on  v_1027.hsId=v_1056.hsId
-     left join v_1058  on  v_1056.hsId=v_1058.hsId
+v_1056_cang.hsId,
+v_1056_cang.orderId,
+(v_1056_cang.purchaseIncludeTaxTotalAmount - v_1027.DSDDFee+v_1058_cang.TradeCompanyAddMoney)/1.17  as cangWithoutTaxIncome
+from v_1056_cang
+     left join v_1027  on  v_1027.hsId=v_1056_cang.hsId
+     left join v_1058_cang  on  v_1056_cang.hsId=v_1058_cang.hsId
 group by hsId, orderId;
 
 
@@ -618,73 +711,116 @@ create view v_1060_ying  as
 select
 v_1046.hsId,
 v_1046.orderId,
-(v_1046.purchaseCargoAmountofMoney - v_1027.DSDDFee+v_1058.TradeCompanyAddMoney)/1.17  as yingWithoutTaxIncome
+(v_1046.purchaseCargoAmountofMoney - v_1027.DSDDFee+v_1058_ying.TradeCompanyAddMoney)/1.17  as yingWithoutTaxIncome
 from v_1046
      left join v_1027  on  v_1027.hsId=v_1046.hsId
-     left join v_1058  on  v_1046.hsId=v_1058.hsId
+     left join v_1058_ying  on  v_1046.hsId=v_1058_ying.hsId
 group by hsId, orderId;
 
 --1061	应交增值税	VAT	计算	毛利表	IF（【1059】不含税收入 <= 【1060】不含税成本？0 : （【1059】不含税收入 - 【1060】不含税成本）*0.17）
 --1062	税金及附加	additionalTax	计算	毛利表	【1061】应交增值税 * 0.12
 create view v_1061_cang  as
 select
-v_1059.hsId,
-v_1059.orderId,
+v_1059_cang.hsId,
+v_1059_cang.orderId,
 IFNULL(
-case when v_1059.withoutTaxIncome <= v_1060_cang.cangWithoutTaxIncome then 0 else (v_1059.withoutTaxIncome -v_1060_cang.cangWithoutTaxIncome)*0.17 end,
+case when v_1059_cang.withoutTaxIncome <= v_1060_cang.cangWithoutTaxIncome then 0 else (v_1059_cang.withoutTaxIncome -v_1060_cang.cangWithoutTaxIncome)*0.17 end,
 0) as cang_VAT,
 IFNULL(
-case when v_1059.withoutTaxIncome <= v_1060_cang.cangWithoutTaxIncome then 0 else (v_1059.withoutTaxIncome -v_1060_cang.cangWithoutTaxIncome)*0.17*0.12 end,
+case when v_1059_cang.withoutTaxIncome <= v_1060_cang.cangWithoutTaxIncome then 0 else (v_1059_cang.withoutTaxIncome -v_1060_cang.cangWithoutTaxIncome)*0.17*0.12 end,
 0) as cangAdditionalTax
-from v_1059
-     left join v_1060_cang  on  v_1060_cang.hsId = v_1059.hsId
+from v_1059_cang
+     left join v_1060_cang  on  v_1060_cang.hsId = v_1059_cang.hsId
 group by hsId, orderId;
 
 create view v_1061_ying  as
 select
-v_1059.hsId,
-v_1059.orderId,
+v_1059_ying.hsId,
+v_1059_ying.orderId,
 IFNULL(
-case when v_1059.withoutTaxIncome <= v_1060_ying.yingWithoutTaxIncome then 0 else (v_1059.withoutTaxIncome -v_1060_ying.yingWithoutTaxIncome)*0.17 end,
+case when v_1059_ying.withoutTaxIncome <= v_1060_ying.yingWithoutTaxIncome then 0 else (v_1059_ying.withoutTaxIncome -v_1060_ying.yingWithoutTaxIncome)*0.17 end,
 0) as ying_VAT,
 IFNULL(
-case when v_1059.withoutTaxIncome <= v_1060_ying.yingWithoutTaxIncome then 0 else (v_1059.withoutTaxIncome -v_1060_ying.yingWithoutTaxIncome)*0.17 end,
+case when v_1059_ying.withoutTaxIncome <= v_1060_ying.yingWithoutTaxIncome then 0 else (v_1059_ying.withoutTaxIncome -v_1060_ying.yingWithoutTaxIncome)*0.17 end,
 0) as yingAdditionalTax
-from v_1059
-     left join v_1060_ying  on  v_1060_ying.hsId = v_1059.hsId
+from v_1059_ying
+     left join v_1060_ying  on  v_1060_ying.hsId = v_1059_ying.hsId
 group by hsId, orderId;
 
 
 --1063	印花税	stampDuty	计算	毛利表	（【1057】销售含税总额 + 【1056】采购含税总额 + 【1058】毛利贸易公司加价 - 【1027】代收代垫运费 * 2 ） * 0.0003
 create view v_1063_cang  as
 select
-v_1057.hsId,
-v_1057.orderId,
-(v_1057.saleIncludeTaxTotalAmount +v_1056.purchaseIncludeTaxTotalAmount+v_1058.TradeCompanyAddMoney- v_1027.DSDDFee*2)/1.17  as stampDuty
-from v_1057
-     left join v_1027  on  v_1027.hsId=v_1057.hsId
-     left join v_1056 on  v_1056.hsId=v_1057.hsId
-     left join v_1058  on  v_1058.hsId=v_1057.hsId
+v_1057_cang.hsId,
+v_1057_cang.orderId,
+(v_1057_cang.saleIncludeTaxTotalAmount +v_1056_cang.purchaseIncludeTaxTotalAmount+v_1058_cang.TradeCompanyAddMoney- v_1027.DSDDFee*2)/1.17  as stampDuty
+from v_1057_cang
+     left join v_1027  on  v_1027.hsId=v_1057_cang.hsId
+     left join v_1056_cang on  v_1056_cang.hsId=v_1057_cang.hsId
+     left join v_1058_cang  on  v_1058_cang.hsId=v_1057_cang.hsId
 group by hsId, orderId;
 
 
 create view v_1063_ying  as
 select
-v_1041.hsId,
-v_1041.orderId,
-(v_1041.yingSaleCargoAmountofMoney +v_1046.purchaseCargoAmountofMoney+v_1058.TradeCompanyAddMoney- v_1027.DSDDFee*2)/1.17  as stampDuty
-from v_1041
-     left join v_1027  on  v_1027.hsId=v_1041.hsId
-     left join v_1046 on  v_1046.hsId=v_1041.hsId
-     left join v_1058  on  v_1058.hsId=v_1041.hsId
+v_1041_ying.hsId,
+v_1041_ying.orderId,
+(v_1041_ying.saleCargoAmountofMoney +v_1046.purchaseCargoAmountofMoney+v_1058_ying.TradeCompanyAddMoney- v_1027.DSDDFee*2)/1.17  as stampDuty
+from v_1041_ying
+     left join v_1027  on  v_1027.hsId=v_1041_ying.hsId
+     left join v_1046 on  v_1046.hsId=v_1041_ying.hsId
+     left join v_1058_ying  on  v_1058_ying.hsId=v_1041_ying.hsId
 group by hsId, orderId;
---1064	经营毛利	opreationCrocsProfile	计算	毛利表	【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 - （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06 - 【1033】业务费
+--1064	经营毛利	opreationCrocsProfile	计算	毛利表	【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 -
+--（【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06 - 【1033】业务费
 
+create view v_1064_cang as
+select
+v_1059_cang.hsId,
+v_1059_cang.orderId,
+v_1059_cang.withoutTaxIncome-v_1060_cang.cangWithoutTaxIncome-v_1061_cang.cangAdditionalTax-v_1063_cang.stampDuty
+-(v_1027.HSQYFee+v_1027.HSSYFee+v_1027.HSHYFee)/1.11-v_1027.superviseFee/1.06-v_1027.serviceFee/1.06-v_1027.businessFee as opreationCrossProfile
+from v_1059_cang
+left join v_1060_cang on v_1059_cang.hsId=v_1060_cang.hsId
+left join v_1061_cang  on v_1059_cang.hsId=v_1061_cang.hsId
+left join v_1063_cang  on v_1059_cang.hsId=v_1063_cang.hsId
+left join v_1027  on v_1059_cang.hsId=v_1027.hsId
+group by hsId, orderId;
+
+
+create view v_1064_ying as
+select
+v_1059_ying.hsId,
+v_1059_ying.orderId,
+v_1059_ying.withoutTaxIncome-v_1060_ying.yingWithoutTaxIncome-v_1061_ying.yingAdditionalTax-v_1063_ying.stampDuty
+-(v_1027.HSQYFee+v_1027.HSSYFee+v_1027.HSHYFee)/1.11-v_1027.superviseFee/1.06-v_1027.serviceFee/1.06-v_1027.businessFee as opreationCrossProfile
+from v_1059_ying
+     left join v_1060_ying on v_1059_ying.hsId=v_1060_ying.hsId
+     left join v_1061_ying  on v_1059_ying.hsId=v_1061_ying.hsId
+     left join v_1063_ying  on v_1059_ying.hsId=v_1063_ying.hsId
+     left join v_1027  on v_1059_ying.hsId=v_1027.hsId
+group by hsId, orderId;
 
 
 --1065	单吨毛利	crossProfileATon	计算	毛利表	【1064】经营毛利 / 【1055】毛利结算量
 
+create view v_1065_ying as
+select
+v_1064_ying.hsId,
+v_1064_ying.orderId,
+v_1064_ying.opreationCrossProfile / v_1055.yingSettleGrossProfileNum as crossProfileATon
+from v_1064_ying
+     left join v_1055  on v_1064_ying.hsId=v_1055.hsId
+group by hsId, orderId;
 
+create view v_1065_cang as
+select
+v_1064_cang.hsId,
+v_1064_cang.orderId,
+v_1064_cang.opreationCrossProfile / v_3003.totaloutstorageNum as crossProfileATon
+from v_1064_cang
+     left join v_3003  on v_1064_cang.hsId=v_3003.hsId
+group by hsId, orderId;
 
 
 
