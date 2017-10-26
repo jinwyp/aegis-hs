@@ -20,3 +20,10 @@ genmapper.sh 重新生成所有mybatis的mapper dao entity
 [chai]: http://chaijs.com/
 [superagent]: https://github.com/visionmedia/superagent
 
+
+
+## 测试环境环境地址
+
+1. testing 环境地址 https://hs-test.yimei180.com/web/login
+2. staging 环境地址 https://hs-staging.yimei180.com/web/login
+
