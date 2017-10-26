@@ -129,7 +129,7 @@ v_1003.hsId,
 v_1003.totalpaymentAmount-v_1001.totalPayTrafficFee-v_1002.totalTradeGapFee as payCargoAmount
 from v_1003
 left join v_1001 on v_1001.hsId =v_1003.hsId
-left join v_1002 on V_1002.hsId=v_1003.hsId
+left join v_1002 on v_1002.hsId=v_1003.hsId
 group by  orderId, hsId;
 
 
