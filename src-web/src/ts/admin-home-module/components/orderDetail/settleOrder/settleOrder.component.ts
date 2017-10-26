@@ -237,8 +237,7 @@ export class SettleOrderComponent implements OnInit {
         this.settleForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
             'settleDate'    : [null, [Validators.required ] ],
-            'amount'    : ['', [Validators.required ] ],
-            'money'    : ['', [Validators.required ] ],
+
 
 
             'discountType'    : ['', [Validators.required ] ],
@@ -246,6 +245,8 @@ export class SettleOrderComponent implements OnInit {
             'discountDays'    : ['', [] ],
             'discountAmount'    : ['', [] ],
 
+            'amount'    : ['', [Validators.required ] ],
+            'money'    : ['', [Validators.required ] ],
             'settleGap'    : ['', [Validators.required ] ],
 
             'trafficCompanyId'    : ['', [Validators.required ] ]
@@ -265,13 +266,6 @@ export class SettleOrderComponent implements OnInit {
 
     settleFormSubmit() {
 
-        if (!this.settleForm.value.discountType) {
-            this.settleForm.patchValue({ discountType : '99999999' })
-        }
-        if (!this.settleForm.value.trafficCompanyId) {
-            this.settleForm.patchValue({trafficCompanyId : 99999999})
-        }
-
         if (this.settleType === 'settlesellerupstream' || this.settleType === 'settlesellerdownstream') {
             if (!this.settleForm.value.amount) {
                 this.settleForm.patchValue({amount : 99999999})
@@ -282,7 +276,39 @@ export class SettleOrderComponent implements OnInit {
             if (!this.settleForm.value.settleGap) {
                 this.settleForm.patchValue({settleGap : 99999999})
             }
+
+            if (!this.settleForm.value.trafficCompanyId) {
+                this.settleForm.patchValue({trafficCompanyId : 99999999})
+            }
         }
+
+        if (this.settleType === 'settlebuyerdownstream' || this.settleType === 'settlebuyerupstream') {
+            if (!this.settleForm.value.discountType) {
+                this.settleForm.patchValue({ discountType : '99999999' })
+            }
+
+            if (!this.settleForm.value.trafficCompanyId) {
+                this.settleForm.patchValue({trafficCompanyId : 99999999})
+            }
+        }
+
+        if (this.settleType === 'settletraffic') {
+            if (!this.settleForm.value.amount) {
+                this.settleForm.patchValue({amount : 99999999})
+            }
+            if (!this.settleForm.value.money) {
+                this.settleForm.patchValue({money : 99999999})
+            }
+            if (!this.settleForm.value.settleGap) {
+                this.settleForm.patchValue({settleGap : 99999999})
+            }
+
+            if (!this.settleForm.value.discountType) {
+                this.settleForm.patchValue({ discountType : '99999999' })
+            }
+        }
+
+
 
 
 
