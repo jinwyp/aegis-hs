@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yimei.hs.cang.mapper.CangAnalysisDataMapper">
+  <resultMap id="BaseResultMap" type="com.yimei.hs.cang.dto.CangAnalysisData">
+    <result column="hsId" jdbcType="BIGINT" property="hsId" />
+    <result column="orderId" jdbcType="BIGINT" property="orderId" />
+    <result column="totalPayTrafficFee" jdbcType="DECIMAL" property="totalPayTrafficFee" />
+    <result column="totalTradeGapFee" jdbcType="DECIMAL" property="totalTradeGapFee" />
+    <result column="totalpaymentAmount" jdbcType="DECIMAL" property="totalpaymentAmount" />
+    <result column="totalLoadMoney" jdbcType="DECIMAL" property="totalLoadMoney" />
+    <result column="LoadEstimateCost" jdbcType="DECIMAL" property="loadEstimateCost" />
+    <result column="totalUnrepaymentEstimateCost" jdbcType="DECIMAL" property="totalUnrepaymentEstimateCost" />
+    <result column="totalRepaymentPrincipeAmount" jdbcType="DECIMAL" property="totalRepaymentPrincipeAmount" />
+    <result column="totalrepaymentFee" jdbcType="DECIMAL" property="totalrepaymentFee" />
+    <result column="totalrepaymentInterest" jdbcType="DECIMAL" property="totalrepaymentInterest" />
+    <result column="totalUnpayFee" jdbcType="DECIMAL" property="totalUnpayFee" />
+    <result column="totalUnpayInterest" jdbcType="DECIMAL" property="totalUnpayInterest" />
+    <result column="outCapitalAmout" jdbcType="DECIMAL" property="outCapitalAmout" />
+    <result column="totalpaymentMoney" jdbcType="DECIMAL" property="totalpaymentMoney" />
+    <result column="payCargoAmount" jdbcType="DECIMAL" property="payCargoAmount" />
+    <result column="unpaymentMoney" jdbcType="DECIMAL" property="unpaymentMoney" />
+    <result column="unpaymentEstimateProfile" jdbcType="DECIMAL" property="unpaymentEstimateProfile" />
+    <result column="interestDays" jdbcType="DECIMAL" property="interestDays" />
+    <result column="actualUtilizationRate" jdbcType="DECIMAL" property="actualUtilizationRate" />
+    <result column="rate" jdbcType="DECIMAL" property="rate" />
+    <result column="totalPaymentedRateMoney" jdbcType="DECIMAL" property="totalPaymentedRateMoney" />
+    <result column="contractRateProfile" jdbcType="DECIMAL" property="contractRateProfile" />
+    <result column="tiexianRate" jdbcType="DECIMAL" property="tiexianRate" />
+    <result column="tiexianRateAmount" jdbcType="DECIMAL" property="tiexianRateAmount" />
+    <result column="totalBuyerMoney" jdbcType="DECIMAL" property="totalBuyerMoney" />
+    <result column="totalBuyerNums" jdbcType="DECIMAL" property="totalBuyerNums" />
+    <result column="totalBuyersettleGap" jdbcType="DECIMAL" property="totalBuyersettleGap" />
+    <result column="DSDDFee" jdbcType="DECIMAL" property="DSDDFee" />
+    <result column="HSHYFee" jdbcType="DECIMAL" property="HSHYFee" />
+    <result column="HSQYFee" jdbcType="DECIMAL" property="HSQYFee" />
+    <result column="HSSYFee" jdbcType="DECIMAL" property="HSSYFee" />
+    <result column="businessFee" jdbcType="DECIMAL" property="businessFee" />
+    <result column="superviseFee" jdbcType="DECIMAL" property="superviseFee" />
+    <result column="serviceFee" jdbcType="DECIMAL" property="serviceFee" />
+    <result column="salesFeeAmount" jdbcType="DECIMAL" property="salesFeeAmount" />
+    <result column="totalCCSInTypeMoney" jdbcType="DECIMAL" property="totalCCSInTypeMoney" />
+    <result column="totalCSSInTypeNumber" jdbcType="DECIMAL" property="totalCSSInTypeNumber" />
+    <result column="InvoicedMoneyNum" jdbcType="DECIMAL" property="invoicedMoneyNum" />
+    <result column="InvoicedMoneyAmount" jdbcType="DECIMAL" property="invoicedMoneyAmount" />
+    <result column="finalSettleAmount" jdbcType="DECIMAL" property="finalSettleAmount" />
+    <result column="saleCargoAmountofMoney" jdbcType="DECIMAL" property="saleCargoAmountofMoney" />
+    <result column="tradingCompanyAddMoney" jdbcType="DECIMAL" property="tradingCompanyAddMoney" />
+    <result column="unsettlerBuyerMoneyAmount" jdbcType="DECIMAL" property="unsettlerBuyerMoneyAmount" />
+    <result column="unsettlerBuyerNumber" jdbcType="DECIMAL" property="unsettlerBuyerNumber" />
+    <result column="CCSProfile" jdbcType="DECIMAL" property="CCSProfile" />
+    <result column="purchaseCargoAmountofMoney" jdbcType="DECIMAL" property="purchaseCargoAmountofMoney" />
+    <result column="externalCapitalPaymentAmount" jdbcType="DECIMAL" property="externalCapitalPaymentAmount" />
+    <result column="ownerCapitalPaymentAmount" jdbcType="DECIMAL" property="ownerCapitalPaymentAmount" />
+    <result column="upstreamCapitalPressure" jdbcType="DECIMAL" property="upstreamCapitalPressure" />
+    <result column="downstreamCapitalPressure" jdbcType="DECIMAL" property="downstreamCapitalPressure" />
+    <result column="CCSUnInTypeNum" jdbcType="DECIMAL" property="CCSUnInTypeNum" />
+    <result column="CCSUnInTypeMoney" jdbcType="DECIMAL" property="CCSUnInTypeMoney" />
+    <result column="unInvoicedAmountofMoney" jdbcType="DECIMAL" property="unInvoicedAmountofMoney" />
+    <result column="cangPrePayment" jdbcType="DECIMAL" property="cangPrePayment" />
+    <result column="settleGrossProfileNum" jdbcType="DECIMAL" property="settleGrossProfileNum" />
+    <result column="purchaseIncludeTaxTotalAmount" jdbcType="DECIMAL" property="purchaseIncludeTaxTotalAmount" />
+    <result column="saleIncludeTaxTotalAmount" jdbcType="DECIMAL" property="saleIncludeTaxTotalAmount" />
+    <result column="TradeCompanyAddMoney" jdbcType="DECIMAL" property="tradeCompanyAddMoney" />
+    <result column="withoutTaxIncome" jdbcType="DECIMAL" property="withoutTaxIncome" />
+    <result column="withoutTaxCost" jdbcType="DECIMAL" property="withoutTaxCost" />
+    <result column="cangAdditionalTax" jdbcType="DECIMAL" property="cangAdditionalTax" />
+    <result column="cang_VAT" jdbcType="DECIMAL" property="cang_VAT" />
+    <result column="stampDuty" jdbcType="DECIMAL" property="stampDuty" />
+    <result column="opreationCrossProfile" jdbcType="DECIMAL" property="opreationCrossProfile" />
+    <result column="crossProfileATon" jdbcType="DECIMAL" property="crossProfileATon" />
+    <result column="totalInstorageNum" jdbcType="DECIMAL" property="totalInstorageNum" />
+    <result column="totalInstorageAmount" jdbcType="DECIMAL" property="totalInstorageAmount" />
+    <result column="InstorageUnitPrice" jdbcType="DECIMAL" property="instorageUnitPrice" />
+    <result column="totalStockNum" jdbcType="DECIMAL" property="totalStockNum" />
+    <result column="totaloutstorageNum" jdbcType="DECIMAL" property="totaloutstorageNum" />
+    <result column="totalStockMoney" jdbcType="DECIMAL" property="totalStockMoney" />
+  </resultMap>
+  <insert id="insert" parameterType="com.yimei.hs.cang.dto.CangAnalysisData">
+    insert into cang_date (hsId, orderId, totalPayTrafficFee, 
+      totalTradeGapFee, totalpaymentAmount, totalLoadMoney, 
+      LoadEstimateCost, totalUnrepaymentEstimateCost, 
+      totalRepaymentPrincipeAmount, totalrepaymentFee, 
+      totalrepaymentInterest, totalUnpayFee, 
+      totalUnpayInterest, outCapitalAmout, totalpaymentMoney, 
+      payCargoAmount, unpaymentMoney, unpaymentEstimateProfile, 
+      interestDays, actualUtilizationRate, rate, 
+      totalPaymentedRateMoney, contractRateProfile, 
+      tiexianRate, tiexianRateAmount, totalBuyerMoney, 
+      totalBuyerNums, totalBuyersettleGap, DSDDFee, 
+      HSHYFee, HSQYFee, HSSYFee, 
+      businessFee, superviseFee, serviceFee, 
+      salesFeeAmount, totalCCSInTypeMoney, totalCSSInTypeNumber, 
+      InvoicedMoneyNum, InvoicedMoneyAmount, 
+      finalSettleAmount, saleCargoAmountofMoney, 
+      tradingCompanyAddMoney, unsettlerBuyerMoneyAmount, 
+      unsettlerBuyerNumber, CCSProfile, purchaseCargoAmountofMoney, 
+      externalCapitalPaymentAmount, ownerCapitalPaymentAmount, 
+      upstreamCapitalPressure, downstreamCapitalPressure, 
+      CCSUnInTypeNum, CCSUnInTypeMoney, unInvoicedAmountofMoney, 
+      cangPrePayment, settleGrossProfileNum, 
+      purchaseIncludeTaxTotalAmount, saleIncludeTaxTotalAmount, 
+      TradeCompanyAddMoney, withoutTaxIncome, 
+      withoutTaxCost, cangAdditionalTax, cang_VAT, 
+      stampDuty, opreationCrossProfile, crossProfileATon, 
+      totalInstorageNum, totalInstorageAmount, 
+      InstorageUnitPrice, totalStockNum, totaloutstorageNum, 
+      totalStockMoney)
+    values (#{hsId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{totalPayTrafficFee,jdbcType=DECIMAL}, 
+      #{totalTradeGapFee,jdbcType=DECIMAL}, #{totalpaymentAmount,jdbcType=DECIMAL}, #{totalLoadMoney,jdbcType=DECIMAL}, 
+      #{loadEstimateCost,jdbcType=DECIMAL}, #{totalUnrepaymentEstimateCost,jdbcType=DECIMAL}, 
+      #{totalRepaymentPrincipeAmount,jdbcType=DECIMAL}, #{totalrepaymentFee,jdbcType=DECIMAL}, 
+      #{totalrepaymentInterest,jdbcType=DECIMAL}, #{totalUnpayFee,jdbcType=DECIMAL}, 
+      #{totalUnpayInterest,jdbcType=DECIMAL}, #{outCapitalAmout,jdbcType=DECIMAL}, #{totalpaymentMoney,jdbcType=DECIMAL}, 
+      #{payCargoAmount,jdbcType=DECIMAL}, #{unpaymentMoney,jdbcType=DECIMAL}, #{unpaymentEstimateProfile,jdbcType=DECIMAL}, 
+      #{interestDays,jdbcType=DECIMAL}, #{actualUtilizationRate,jdbcType=DECIMAL}, #{rate,jdbcType=DECIMAL}, 
+      #{totalPaymentedRateMoney,jdbcType=DECIMAL}, #{contractRateProfile,jdbcType=DECIMAL}, 
+      #{tiexianRate,jdbcType=DECIMAL}, #{tiexianRateAmount,jdbcType=DECIMAL}, #{totalBuyerMoney,jdbcType=DECIMAL}, 
+      #{totalBuyerNums,jdbcType=DECIMAL}, #{totalBuyersettleGap,jdbcType=DECIMAL}, #{DSDDFee,jdbcType=DECIMAL}, 
+      #{HSHYFee,jdbcType=DECIMAL}, #{HSQYFee,jdbcType=DECIMAL}, #{HSSYFee,jdbcType=DECIMAL}, 
+      #{businessFee,jdbcType=DECIMAL}, #{superviseFee,jdbcType=DECIMAL}, #{serviceFee,jdbcType=DECIMAL}, 
+      #{salesFeeAmount,jdbcType=DECIMAL}, #{totalCCSInTypeMoney,jdbcType=DECIMAL}, #{totalCSSInTypeNumber,jdbcType=DECIMAL}, 
+      #{invoicedMoneyNum,jdbcType=DECIMAL}, #{invoicedMoneyAmount,jdbcType=DECIMAL}, 
+      #{finalSettleAmount,jdbcType=DECIMAL}, #{saleCargoAmountofMoney,jdbcType=DECIMAL}, 
+      #{tradingCompanyAddMoney,jdbcType=DECIMAL}, #{unsettlerBuyerMoneyAmount,jdbcType=DECIMAL}, 
+      #{unsettlerBuyerNumber,jdbcType=DECIMAL}, #{CCSProfile,jdbcType=DECIMAL}, #{purchaseCargoAmountofMoney,jdbcType=DECIMAL}, 
+      #{externalCapitalPaymentAmount,jdbcType=DECIMAL}, #{ownerCapitalPaymentAmount,jdbcType=DECIMAL}, 
+      #{upstreamCapitalPressure,jdbcType=DECIMAL}, #{downstreamCapitalPressure,jdbcType=DECIMAL}, 
+      #{CCSUnInTypeNum,jdbcType=DECIMAL}, #{CCSUnInTypeMoney,jdbcType=DECIMAL}, #{unInvoicedAmountofMoney,jdbcType=DECIMAL}, 
+      #{cangPrePayment,jdbcType=DECIMAL}, #{settleGrossProfileNum,jdbcType=DECIMAL}, 
+      #{purchaseIncludeTaxTotalAmount,jdbcType=DECIMAL}, #{saleIncludeTaxTotalAmount,jdbcType=DECIMAL}, 
+      #{tradeCompanyAddMoney,jdbcType=DECIMAL}, #{withoutTaxIncome,jdbcType=DECIMAL}, 
+      #{withoutTaxCost,jdbcType=DECIMAL}, #{cangAdditionalTax,jdbcType=DECIMAL}, #{cang_VAT,jdbcType=DECIMAL}, 
+      #{stampDuty,jdbcType=DECIMAL}, #{opreationCrossProfile,jdbcType=DECIMAL}, #{crossProfileATon,jdbcType=DECIMAL}, 
+      #{totalInstorageNum,jdbcType=DECIMAL}, #{totalInstorageAmount,jdbcType=DECIMAL}, 
+      #{instorageUnitPrice,jdbcType=DECIMAL}, #{totalStockNum,jdbcType=DECIMAL}, #{totaloutstorageNum,jdbcType=DECIMAL}, 
+      #{totalStockMoney,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yimei.hs.cang.dto.CangAnalysisData">
+    insert into cang_date
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hsId != null">
+        hsId,
+      </if>
+      <if test="orderId != null">
+        orderId,
+      </if>
+      <if test="totalPayTrafficFee != null">
+        totalPayTrafficFee,
+      </if>
+      <if test="totalTradeGapFee != null">
+        totalTradeGapFee,
+      </if>
+      <if test="totalpaymentAmount != null">
+        totalpaymentAmount,
+      </if>
+      <if test="totalLoadMoney != null">
+        totalLoadMoney,
+      </if>
+      <if test="loadEstimateCost != null">
+        LoadEstimateCost,
+      </if>
+      <if test="totalUnrepaymentEstimateCost != null">
+        totalUnrepaymentEstimateCost,
+      </if>
+      <if test="totalRepaymentPrincipeAmount != null">
+        totalRepaymentPrincipeAmount,
+      </if>
+      <if test="totalrepaymentFee != null">
+        totalrepaymentFee,
+      </if>
+      <if test="totalrepaymentInterest != null">
+        totalrepaymentInterest,
+      </if>
+      <if test="totalUnpayFee != null">
+        totalUnpayFee,
+      </if>
+      <if test="totalUnpayInterest != null">
+        totalUnpayInterest,
+      </if>
+      <if test="outCapitalAmout != null">
+        outCapitalAmout,
+      </if>
+      <if test="totalpaymentMoney != null">
+        totalpaymentMoney,
+      </if>
+      <if test="payCargoAmount != null">
+        payCargoAmount,
+      </if>
+      <if test="unpaymentMoney != null">
+        unpaymentMoney,
+      </if>
+      <if test="unpaymentEstimateProfile != null">
+        unpaymentEstimateProfile,
+      </if>
+      <if test="interestDays != null">
+        interestDays,
+      </if>
+      <if test="actualUtilizationRate != null">
+        actualUtilizationRate,
+      </if>
+      <if test="rate != null">
+        rate,
+      </if>
+      <if test="totalPaymentedRateMoney != null">
+        totalPaymentedRateMoney,
+      </if>
+      <if test="contractRateProfile != null">
+        contractRateProfile,
+      </if>
+      <if test="tiexianRate != null">
+        tiexianRate,
+      </if>
+      <if test="tiexianRateAmount != null">
+        tiexianRateAmount,
+      </if>
+      <if test="totalBuyerMoney != null">
+        totalBuyerMoney,
+      </if>
+      <if test="totalBuyerNums != null">
+        totalBuyerNums,
+      </if>
+      <if test="totalBuyersettleGap != null">
+        totalBuyersettleGap,
+      </if>
+      <if test="DSDDFee != null">
+        DSDDFee,
+      </if>
+      <if test="HSHYFee != null">
+        HSHYFee,
+      </if>
+      <if test="HSQYFee != null">
+        HSQYFee,
+      </if>
+      <if test="HSSYFee != null">
+        HSSYFee,
+      </if>
+      <if test="businessFee != null">
+        businessFee,
+      </if>
+      <if test="superviseFee != null">
+        superviseFee,
+      </if>
+      <if test="serviceFee != null">
+        serviceFee,
+      </if>
+      <if test="salesFeeAmount != null">
+        salesFeeAmount,
+      </if>
+      <if test="totalCCSInTypeMoney != null">
+        totalCCSInTypeMoney,
+      </if>
+      <if test="totalCSSInTypeNumber != null">
+        totalCSSInTypeNumber,
+      </if>
+      <if test="invoicedMoneyNum != null">
+        InvoicedMoneyNum,
+      </if>
+      <if test="invoicedMoneyAmount != null">
+        InvoicedMoneyAmount,
+      </if>
+      <if test="finalSettleAmount != null">
+        finalSettleAmount,
+      </if>
+      <if test="saleCargoAmountofMoney != null">
+        saleCargoAmountofMoney,
+      </if>
+      <if test="tradingCompanyAddMoney != null">
+        tradingCompanyAddMoney,
+      </if>
+      <if test="unsettlerBuyerMoneyAmount != null">
+        unsettlerBuyerMoneyAmount,
+      </if>
+      <if test="unsettlerBuyerNumber != null">
+        unsettlerBuyerNumber,
+      </if>
+      <if test="CCSProfile != null">
+        CCSProfile,
+      </if>
+      <if test="purchaseCargoAmountofMoney != null">
+        purchaseCargoAmountofMoney,
+      </if>
+      <if test="externalCapitalPaymentAmount != null">
+        externalCapitalPaymentAmount,
+      </if>
+      <if test="ownerCapitalPaymentAmount != null">
+        ownerCapitalPaymentAmount,
+      </if>
+      <if test="upstreamCapitalPressure != null">
+        upstreamCapitalPressure,
+      </if>
+      <if test="downstreamCapitalPressure != null">
+        downstreamCapitalPressure,
+      </if>
+      <if test="CCSUnInTypeNum != null">
+        CCSUnInTypeNum,
+      </if>
+      <if test="CCSUnInTypeMoney != null">
+        CCSUnInTypeMoney,
+      </if>
+      <if test="unInvoicedAmountofMoney != null">
+        unInvoicedAmountofMoney,
+      </if>
+      <if test="cangPrePayment != null">
+        cangPrePayment,
+      </if>
+      <if test="settleGrossProfileNum != null">
+        settleGrossProfileNum,
+      </if>
+      <if test="purchaseIncludeTaxTotalAmount != null">
+        purchaseIncludeTaxTotalAmount,
+      </if>
+      <if test="saleIncludeTaxTotalAmount != null">
+        saleIncludeTaxTotalAmount,
+      </if>
+      <if test="tradeCompanyAddMoney != null">
+        TradeCompanyAddMoney,
+      </if>
+      <if test="withoutTaxIncome != null">
+        withoutTaxIncome,
+      </if>
+      <if test="withoutTaxCost != null">
+        withoutTaxCost,
+      </if>
+      <if test="cangAdditionalTax != null">
+        cangAdditionalTax,
+      </if>
+      <if test="cang_VAT != null">
+        cang_VAT,
+      </if>
+      <if test="stampDuty != null">
+        stampDuty,
+      </if>
+      <if test="opreationCrossProfile != null">
+        opreationCrossProfile,
+      </if>
+      <if test="crossProfileATon != null">
+        crossProfileATon,
+      </if>
+      <if test="totalInstorageNum != null">
+        totalInstorageNum,
+      </if>
+      <if test="totalInstorageAmount != null">
+        totalInstorageAmount,
+      </if>
+      <if test="instorageUnitPrice != null">
+        InstorageUnitPrice,
+      </if>
+      <if test="totalStockNum != null">
+        totalStockNum,
+      </if>
+      <if test="totaloutstorageNum != null">
+        totaloutstorageNum,
+      </if>
+      <if test="totalStockMoney != null">
+        totalStockMoney,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hsId != null">
+        #{hsId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="totalPayTrafficFee != null">
+        #{totalPayTrafficFee,jdbcType=DECIMAL},
+      </if>
+      <if test="totalTradeGapFee != null">
+        #{totalTradeGapFee,jdbcType=DECIMAL},
+      </if>
+      <if test="totalpaymentAmount != null">
+        #{totalpaymentAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalLoadMoney != null">
+        #{totalLoadMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="loadEstimateCost != null">
+        #{loadEstimateCost,jdbcType=DECIMAL},
+      </if>
+      <if test="totalUnrepaymentEstimateCost != null">
+        #{totalUnrepaymentEstimateCost,jdbcType=DECIMAL},
+      </if>
+      <if test="totalRepaymentPrincipeAmount != null">
+        #{totalRepaymentPrincipeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalrepaymentFee != null">
+        #{totalrepaymentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="totalrepaymentInterest != null">
+        #{totalrepaymentInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="totalUnpayFee != null">
+        #{totalUnpayFee,jdbcType=DECIMAL},
+      </if>
+      <if test="totalUnpayInterest != null">
+        #{totalUnpayInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="outCapitalAmout != null">
+        #{outCapitalAmout,jdbcType=DECIMAL},
+      </if>
+      <if test="totalpaymentMoney != null">
+        #{totalpaymentMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="payCargoAmount != null">
+        #{payCargoAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="unpaymentMoney != null">
+        #{unpaymentMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="unpaymentEstimateProfile != null">
+        #{unpaymentEstimateProfile,jdbcType=DECIMAL},
+      </if>
+      <if test="interestDays != null">
+        #{interestDays,jdbcType=DECIMAL},
+      </if>
+      <if test="actualUtilizationRate != null">
+        #{actualUtilizationRate,jdbcType=DECIMAL},
+      </if>
+      <if test="rate != null">
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPaymentedRateMoney != null">
+        #{totalPaymentedRateMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="contractRateProfile != null">
+        #{contractRateProfile,jdbcType=DECIMAL},
+      </if>
+      <if test="tiexianRate != null">
+        #{tiexianRate,jdbcType=DECIMAL},
+      </if>
+      <if test="tiexianRateAmount != null">
+        #{tiexianRateAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalBuyerMoney != null">
+        #{totalBuyerMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="totalBuyerNums != null">
+        #{totalBuyerNums,jdbcType=DECIMAL},
+      </if>
+      <if test="totalBuyersettleGap != null">
+        #{totalBuyersettleGap,jdbcType=DECIMAL},
+      </if>
+      <if test="DSDDFee != null">
+        #{DSDDFee,jdbcType=DECIMAL},
+      </if>
+      <if test="HSHYFee != null">
+        #{HSHYFee,jdbcType=DECIMAL},
+      </if>
+      <if test="HSQYFee != null">
+        #{HSQYFee,jdbcType=DECIMAL},
+      </if>
+      <if test="HSSYFee != null">
+        #{HSSYFee,jdbcType=DECIMAL},
+      </if>
+      <if test="businessFee != null">
+        #{businessFee,jdbcType=DECIMAL},
+      </if>
+      <if test="superviseFee != null">
+        #{superviseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceFee != null">
+        #{serviceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="salesFeeAmount != null">
+        #{salesFeeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalCCSInTypeMoney != null">
+        #{totalCCSInTypeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="totalCSSInTypeNumber != null">
+        #{totalCSSInTypeNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="invoicedMoneyNum != null">
+        #{invoicedMoneyNum,jdbcType=DECIMAL},
+      </if>
+      <if test="invoicedMoneyAmount != null">
+        #{invoicedMoneyAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="finalSettleAmount != null">
+        #{finalSettleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="saleCargoAmountofMoney != null">
+        #{saleCargoAmountofMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="tradingCompanyAddMoney != null">
+        #{tradingCompanyAddMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="unsettlerBuyerMoneyAmount != null">
+        #{unsettlerBuyerMoneyAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="unsettlerBuyerNumber != null">
+        #{unsettlerBuyerNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="CCSProfile != null">
+        #{CCSProfile,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseCargoAmountofMoney != null">
+        #{purchaseCargoAmountofMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="externalCapitalPaymentAmount != null">
+        #{externalCapitalPaymentAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="ownerCapitalPaymentAmount != null">
+        #{ownerCapitalPaymentAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="upstreamCapitalPressure != null">
+        #{upstreamCapitalPressure,jdbcType=DECIMAL},
+      </if>
+      <if test="downstreamCapitalPressure != null">
+        #{downstreamCapitalPressure,jdbcType=DECIMAL},
+      </if>
+      <if test="CCSUnInTypeNum != null">
+        #{CCSUnInTypeNum,jdbcType=DECIMAL},
+      </if>
+      <if test="CCSUnInTypeMoney != null">
+        #{CCSUnInTypeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="unInvoicedAmountofMoney != null">
+        #{unInvoicedAmountofMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="cangPrePayment != null">
+        #{cangPrePayment,jdbcType=DECIMAL},
+      </if>
+      <if test="settleGrossProfileNum != null">
+        #{settleGrossProfileNum,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseIncludeTaxTotalAmount != null">
+        #{purchaseIncludeTaxTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="saleIncludeTaxTotalAmount != null">
+        #{saleIncludeTaxTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeCompanyAddMoney != null">
+        #{tradeCompanyAddMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="withoutTaxIncome != null">
+        #{withoutTaxIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="withoutTaxCost != null">
+        #{withoutTaxCost,jdbcType=DECIMAL},
+      </if>
+      <if test="cangAdditionalTax != null">
+        #{cangAdditionalTax,jdbcType=DECIMAL},
+      </if>
+      <if test="cang_VAT != null">
+        #{cang_VAT,jdbcType=DECIMAL},
+      </if>
+      <if test="stampDuty != null">
+        #{stampDuty,jdbcType=DECIMAL},
+      </if>
+      <if test="opreationCrossProfile != null">
+        #{opreationCrossProfile,jdbcType=DECIMAL},
+      </if>
+      <if test="crossProfileATon != null">
+        #{crossProfileATon,jdbcType=DECIMAL},
+      </if>
+      <if test="totalInstorageNum != null">
+        #{totalInstorageNum,jdbcType=DECIMAL},
+      </if>
+      <if test="totalInstorageAmount != null">
+        #{totalInstorageAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="instorageUnitPrice != null">
+        #{instorageUnitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalStockNum != null">
+        #{totalStockNum,jdbcType=DECIMAL},
+      </if>
+      <if test="totaloutstorageNum != null">
+        #{totaloutstorageNum,jdbcType=DECIMAL},
+      </if>
+      <if test="totalStockMoney != null">
+        #{totalStockMoney,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="findOne" resultType="com.yimei.hs.cang.dto.CangAnalysisData">
+      SELECT
+      hsId,
+      orderId,
+      totalPayTrafficFee,
+      totalTradeGapFee,
+      totalpaymentAmount,
+      totalLoadMoney,
+      LoadEstimateCost,
+      totalUnrepaymentEstimateCost,
+      totalRepaymentPrincipeAmount,
+      totalrepaymentFee,
+      totalrepaymentInterest,
+      totalUnpayFee,
+      totalUnpayInterest,
+      outCapitalAmout,
+      totalpaymentMoney,
+      payCargoAmount,
+      unpaymentMoney,
+      unpaymentEstimateProfile,
+      interestDays,
+      actualUtilizationRate,
+      rate,
+      totalPaymentedRateMoney,
+      contractRateProfile,
+      tiexianRate,
+      tiexianRateAmount,
+      totalBuyerMoney,
+      totalBuyerNums,
+      totalBuyersettleGap,
+      DSDDFee,
+      HSHYFee,
+      HSQYFee,
+      HSSYFee,
+      businessFee,
+      superviseFee,
+      serviceFee,
+      salesFeeAmount,
+      totalCCSInTypeMoney,
+      totalCSSInTypeNumber,
+      InvoicedMoneyNum,
+      InvoicedMoneyAmount,
+      finalSettleAmount,
+      saleCargoAmountofMoney,
+      tradingCompanyAddMoney,
+      unsettlerBuyerMoneyAmount,
+      unsettlerBuyerNumber,
+      CCSProfile,
+      purchaseCargoAmountofMoney,
+      externalCapitalPaymentAmount,
+      ownerCapitalPaymentAmount,
+      upstreamCapitalPressure,
+      downstreamCapitalPressure,
+      CCSUnInTypeNum,
+      CCSUnInTypeMoney,
+      unInvoicedAmountofMoney,
+      cangPrePayment,
+      settleGrossProfileNum,
+      purchaseIncludeTaxTotalAmount,
+      saleIncludeTaxTotalAmount,
+      TradeCompanyAddMoney,
+      withoutTaxIncome,
+      withoutTaxCost,
+      cangAdditionalTax,
+      cang_VAT,
+      stampDuty,
+      opreationCrossProfile,
+      crossProfileATon,
+      totalInstorageNum,
+      totalInstorageAmount,
+      InstorageUnitPrice,
+      totalStockNum,
+      totaloutstorageNum,
+      totalStockMoney
+      FROM hs_cangDatabaseAnalysis
+     WHERE hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
+  </select>
+</mapper>

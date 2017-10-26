@@ -40,7 +40,7 @@
         <javaClientGenerator type="XMLMAPPER"  targetPackage="com.yimei.hs.same.mapper" targetProject="src/main/java"> <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="hs_same_jiekuan" domainObjectName="Jiekuan" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
+        <table tableName="cang_date" domainObjectName="CangAnalysisData" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>
 
         <!--<table tableName="hs_cang_chuku" domainObjectName="CangChuku" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>-->
         <!--<table tableName="hs_cang_fee" domainObjectName="CangFee" enableCountByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false" > <property name="useActualColumnNames" value="true"/> </table>-->
