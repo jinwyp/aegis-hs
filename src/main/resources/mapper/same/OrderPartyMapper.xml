@@ -53,6 +53,14 @@
         WHERE  orderparty.orderId=#{orderId,jdbcType=BIGINT} and orderparty.custType=#{customerType ,jdbcType=VARCHAR} and orderparty.deleted=0
     </select>
 
+    <select id="findListByCustTypeAndOrderId" resultType="com.yimei.hs.same.entity.OrderParty">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from hs_same_order_party
+        WHERE
+        orderId = #{orderId, jdbcType=BIGINT} and custType = #{custType ,jdbcType=CHAR} and deleted=0
+    </select>
+
     <!-- 物理删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_order_party

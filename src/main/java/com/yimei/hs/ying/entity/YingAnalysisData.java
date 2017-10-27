@@ -156,7 +156,9 @@ public class YingAnalysisData implements Serializable {
 
     private BigDecimal balanceDownStreamBail;
     //贸易公司已收到进项数量
-    private BigDecimal tradingCompanyInTypeAmount;
+    private BigDecimal tradingCompanyInTypeNum;
+
+    private BigDecimal tradingCompanyInTpeMoneyAmount;
 
     private static final long serialVersionUID = 1L;
 

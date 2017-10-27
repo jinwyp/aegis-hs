@@ -42,4 +42,6 @@ public class OrderPartyService {
     public List<OrderParty> getOrderPartyListByType(Long morderId, CustomerType customerType) {
         return orderPartyMapper.getOrderPartyListByType(morderId,customerType);
     }
+
+
 }

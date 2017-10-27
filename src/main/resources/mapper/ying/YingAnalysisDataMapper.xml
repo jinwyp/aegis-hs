@@ -678,4 +678,16 @@
         WHERE jiekuan.hsId= #{hsId,jdbcType=BIGINT} and jiekuan.orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
+    <select id="findByOrderIdOpenCompanyId" resultType="com.yimei.hs.same.entity.InvoiceAnalysis">
+        select
+        hsId,
+        orderId,
+        aa.receiverId,
+        aa.totalPriceTax,
+        aa.totalAmount
+        from v_1037_child2 as aa
+        left JOIN hs_same_order orderSame on aa.orderId =orderSame.id
+        where aa.openCompanyId  =  orderSame.upstreamId and orderId = #{orderId, jdbcType=BIGINT} and aa.deleted =0
+    </select>
+
 </mapper>
