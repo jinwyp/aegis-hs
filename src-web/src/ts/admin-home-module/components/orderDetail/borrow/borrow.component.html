@@ -46,7 +46,7 @@
 
                         <td> {{borrow.capitalId | findKey : partyList : 'name'}}</td>
                         <td> {{borrow.useInterest | percent:'1.0-2' }} / {{borrow.useDays }} </td>
-                        <td> {{ (borrow.amount * borrow.useInterest * borrow.useDays || 0 / 360).toFixed(2)  }}  </td>
+                        <td> {{ ((borrow.amount * borrow.useInterest * borrow.useDays || 0) / 360).toFixed(2)  }}  </td>
 
                         <td>
                             <button class="btn btn-link btn-sm" (click)="showForm(false, borrow)"> 修改 </button>

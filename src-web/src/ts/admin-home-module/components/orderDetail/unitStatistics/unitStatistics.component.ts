@@ -50,7 +50,6 @@ export class UnitStatisticsComponent implements OnInit {
 
     ngOnInit(): void {
         this.getOrderUnitStat()
-        console.log('currentUnit: ', this.currentUnit)
     }
 
 
@@ -62,7 +61,7 @@ export class UnitStatisticsComponent implements OnInit {
     getOrderUnitStat () {
         this.hsOrderService.getOrderUnitStatisticsByID(this.businessType, this.currentOrder.id, this.currentUnit.id).subscribe(
             data => {
-                console.log(data.data)
+                console.log('currentUnitStatistics: ', data.data)
                 this.unitStatistics = data.data
             },
             error => {this.httpService.errorHandler(error) }
