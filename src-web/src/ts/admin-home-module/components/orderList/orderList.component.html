@@ -167,7 +167,7 @@
                     <td>
                         <a class="btn btn-link btn-sm" *ngIf="businessType==='ying'" [routerLink]="['/yingorders', order.id]" role="button">查看</a>
                         <a class="btn btn-link btn-sm"  *ngIf="businessType==='cang'" [routerLink]="['/cangorders', order.id]" role="button">查看</a>
-                        <button class="btn btn-link btn-sm" (click)="showForm(false, order)"> 修改 </button>
+                        <!--<button class="btn btn-link btn-sm" (click)="showForm(false, order)"> 修改 </button>-->
                         <button class="btn btn-link btn-sm" (click)="deleteItem(order)"> 删除 </button>
                     </td>
                 </tr>
