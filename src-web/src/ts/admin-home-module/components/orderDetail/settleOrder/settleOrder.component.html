@@ -36,7 +36,7 @@
             <table class="table table-bordered table-hover table-responsive" *ngIf="settleType==='settlesellerupstream' || settleType==='settlesellerdownstream' ">
                 <thead>
                 <tr>
-                    <th>上游结算ID</th>
+                    <th>结算ID</th>
                     <th>核算月</th>
                     <th>结算日期</th>
                     <!--<th>结算数量(吨)</th>-->
@@ -51,7 +51,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let settle of settleUpstreamList; trackBy: trackByFn">
+                <tr *ngFor="let settle of settleYingUpstreamList; trackBy: trackByFn">
+                    <td> {{settle.id}}</td>
+                    <td> {{settle.hsId | findKey : unitList : 'name'}}</td>
+
+                    <td> {{settle.settleDate }}</td>
+                    <!--<td> {{settle.amount }}</td>-->
+                    <!--<td> {{settle.money }}</td>-->
+
+
+                    <td> {{settle?.discountType | findKey : settleDiscountModeList : 'name' }}</td>
+                    <td> {{settle.discountInterest | percent:'1.0-2'}}</td>
+                    <td> {{settle.discountDays }}</td>
+                    <td> {{settle.discountAmount }}</td>
+
+                    <td>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, settle)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(settle)"> 删除 </button>
+                    </td>
+                </tr>
+
+                <tr *ngFor="let settle of settleCangDownstreamList; trackBy: trackByFn">
                     <td> {{settle.id}}</td>
                     <td> {{settle.hsId | findKey : unitList : 'name'}}</td>
 
@@ -77,7 +97,7 @@
             <table class="table table-bordered table-hover table-responsive" *ngIf="settleType==='settlebuyerdownstream' || settleType==='settlebuyerupstream'">
                 <thead>
                 <tr>
-                    <th>下游结算ID</th>
+                    <th>结算ID</th>
                     <th>核算月</th>
                     <th>结算日期</th>
                     <th>结算数量(吨)</th>
@@ -88,7 +108,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let settle of settleDownstreamList; trackBy: trackByFn">
+                <tr *ngFor="let settle of settleYingDownstreamList; trackBy: trackByFn">
                     <td> {{settle.id}}</td>
                     <td> {{settle.hsId | findKey : unitList : 'name'}}</td>
 
@@ -102,6 +122,22 @@
                         <button class="btn btn-link btn-sm" (click)="deleteItem(settle)"> 删除 </button>
                     </td>
                 </tr>
+
+                <tr *ngFor="let settle of settleCangUpstreamList; trackBy: trackByFn">
+                    <td> {{settle.id}}</td>
+                    <td> {{settle.hsId | findKey : unitList : 'name'}}</td>
+
+                    <td> {{settle.settleDate }}</td>
+                    <td> {{settle.amount }}</td>
+                    <td> {{settle.money }}</td>
+                    <td> {{settle.settleGap }}</td>
+
+                    <td>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, settle)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(settle)"> 删除 </button>
+                    </td>
+                </tr>
+
                 </tbody>
             </table>
 
