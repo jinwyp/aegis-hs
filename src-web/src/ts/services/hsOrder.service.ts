@@ -74,7 +74,9 @@ export class HSOrderService {
     delOrderUnit(businessType : string, orderId: number, unitId: number): Observable<any> {
         return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/units/' + unitId.toString())
     }
-
+    getOrderUnitStatisticsByID(businessType : string, orderId: number, unitId: number): Observable<any> {
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/analysis/' + unitId.toString() )
+    }
 
     getShippingListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         const params = new HttpParams()
