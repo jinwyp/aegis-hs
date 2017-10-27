@@ -21,9 +21,13 @@ import {getEnum} from '../../../../services/localStorage'
 })
 export class UnitStatisticsComponent implements OnInit {
 
+    @Input() currentOrder : any
+    @Input() businessType : string
     @Input() currentUnit : any
     @Output() back: any = new EventEmitter<boolean>()
 
+
+    unitStatistics : any = {}
 
     pagination: any = {
         pageSize : 20,
@@ -45,7 +49,7 @@ export class UnitStatisticsComponent implements OnInit {
 
 
     ngOnInit(): void {
-
+        this.getOrderUnitStat()
         console.log('currentUnit: ', this.currentUnit)
     }
 
@@ -55,13 +59,13 @@ export class UnitStatisticsComponent implements OnInit {
     }
 
 
-    getOrderUnitList () {
-        // this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
-        //     data => {
-        //         this.unitList = data.data.results
-        //     },
-        //     error => {this.httpService.errorHandler(error) }
-        // )
+    getOrderUnitStat () {
+        this.hsOrderService.getOrderUnitStatisticsByID(this.businessType, this.currentOrder.id, this.currentUnit.id).subscribe(
+            data => {
+                this.unitStatistics = data.data.results
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
     }
 
     backTo() {
