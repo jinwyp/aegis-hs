@@ -25,8 +25,8 @@ public class Jiekuan implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "核算月id不能为空")
     private Long hsId;
 
-    @NotNull(groups = {CreateGroup.class} , message = "借款金额不能为空")
-    @DecimalMax(value = "99999999.99" ,message = "借款金额")
+    @NotNull(groups = {CreateGroup.class}, message = "借款金额不能为空")
+    @DecimalMax(value = "99999999.99", message = "借款金额")
     @DecimalMin(value = "1")
     private BigDecimal amount;
 
@@ -50,11 +50,13 @@ public class Jiekuan implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-//    @NotNull(groups = {UpdateGroup.class}, message = "借款对应的还款明细不能为空")
+    //    @NotNull(groups = {UpdateGroup.class}, message = "借款对应的还款明细不能为空")
     private List<HuankuanMap> huankuanMapList; //
 
-//    @NotNull(groups = {UpdateGroup.class}, message = "借款对应的还款不能为空")
+    //    @NotNull(groups = {UpdateGroup.class}, message = "借款对应的还款不能为空")
     private List<Huankuan> huankuanList;       // 借款对应的还款列表
 
     private BigDecimal huankuanTotal;
+    //借款预估成本
+    private BigDecimal loadEstimateCost;
 }

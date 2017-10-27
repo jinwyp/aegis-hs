@@ -642,4 +642,40 @@
      WHERE hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
   </select>
 
+    <select id="findJiekuanByhsId" resultType="com.yimei.hs.same.entity.Jiekuan">
+        SELECT
+         id,
+         fukuanId,
+         orderId,
+         hsId,
+         amount,
+         capitalId,
+         useInterest,
+         useDays,
+         jiekuanDate,
+         deleted,
+         tsc,
+         IFNULL (amount*useInterest*useDays/360,0) as loadEstimateCost,
+         tsu
+        FROM hs_same_jiekuan
+        WHERE hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
+    </select>
+
+    <select id="findJiekuanMathchedHuankuan" resultType="com.yimei.hs.same.entity.Jiekuan">
+        SELECT
+         jiekuan.id,
+         jiekuan.fukuanId,
+         jiekuan.orderId,
+         jiekuan.hsId,
+         jiekuan.amount,
+         jiekuan.capitalId,
+         jiekuan.useInterest,
+         jiekuan.useDays,
+         jiekuan.jiekuanDate,
+         jiekuan.deleted
+        FROM hs_same_jiekuan jiekuan
+        LEFT join hs_same_huankuan_map map on jiekuan.id= map.jiekuanId
+        WHERE jiekuan.hsId= #{hsId,jdbcType=BIGINT} and jiekuan.orderId=#{orderId,jdbcType=BIGINT }
+    </select>
+
 </mapper>
