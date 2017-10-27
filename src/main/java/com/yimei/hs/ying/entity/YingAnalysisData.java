@@ -16,7 +16,7 @@ public class YingAnalysisData implements Serializable {
 
     private BigDecimal totalTradeGapFee;
 
-    private BigDecimal totalpaymentAmount;
+    private BigDecimal totalPaymentAmount;
 
     private BigDecimal totalLoadMoney;
 
@@ -34,7 +34,7 @@ public class YingAnalysisData implements Serializable {
 
     private BigDecimal outCapitalAmout;
 
-    private BigDecimal totalpaymentMoney;
+    private BigDecimal totalHuikuanPaymentMoney;
 
     private BigDecimal payCargoAmount;
 
@@ -142,7 +142,7 @@ public class YingAnalysisData implements Serializable {
 
     private BigDecimal totalUnarriveNum;
 
-    private BigDecimal totalarriveNum;
+    private BigDecimal totalArriveNum;
 
     private BigDecimal totalPayDownBail;
 
@@ -150,7 +150,7 @@ public class YingAnalysisData implements Serializable {
 
     private BigDecimal totalRefundUpBail;
 
-    private BigDecimal totalUpstream;
+    private BigDecimal totalUpstreamBail;
 
     private BigDecimal balanceUpstreamBail;
 
