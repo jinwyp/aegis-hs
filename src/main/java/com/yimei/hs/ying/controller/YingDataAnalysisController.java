@@ -40,7 +40,6 @@ public class YingDataAnalysisController {
     @GetMapping("/{morderId}/analysis/{hsId}")
     public ResponseEntity<Result<YingAnalysisData>> read(
             @PathVariable("morderId") Long morderId,
-            @PathVariable("businessType") BusinessType businessType,
             @PathVariable("hsId") long hsId) {
         logger.debug("id {}",hsId);
         YingAnalysisData bail = yingDataAnalysisService.findOne(morderId,hsId);
