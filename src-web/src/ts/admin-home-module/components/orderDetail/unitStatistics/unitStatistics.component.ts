@@ -62,6 +62,7 @@ export class UnitStatisticsComponent implements OnInit {
     getOrderUnitStat () {
         this.hsOrderService.getOrderUnitStatisticsByID(this.businessType, this.currentOrder.id, this.currentUnit.id).subscribe(
             data => {
+                console.log(data.data)
                 this.unitStatistics = data.data
             },
             error => {this.httpService.errorHandler(error) }
