@@ -973,7 +973,7 @@ group by temp.hsId,temp.orderId;
 
 
 
-create view yingDatabaseAnalysis as
+create view hs_yingDatabaseAnalysis as
 select
 temp.hsId,
 temp.orderId,

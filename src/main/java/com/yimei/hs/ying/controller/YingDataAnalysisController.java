@@ -31,21 +31,6 @@ public class YingDataAnalysisController {
     @Autowired
     YingDataAnalysisService yingDataAnalysisService;
 
-//    /**
-//     * 获取所有bail
-//     *
-//     * @return
-//     */
-//    @GetMapping("/{morderId}/analysis")
-//    public ResponseEntity<Result<Page<YingBail>>> list(
-//            @PathVariable("morderId") Long morderId,
-//            @PathVariable("businessType") BusinessType businessType,
-//            PageYingBailDTO pageYingBailDTO) {
-//        pageYingBailDTO.setOrderId(morderId);
-//        Page<YingBail> page = yingDataAnalysisService.getPage(pageYingBailDTO);
-//        return Result.ok(page);
-//    }
-
     /**
      * 获取bail
      *
