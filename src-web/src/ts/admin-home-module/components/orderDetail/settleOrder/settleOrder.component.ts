@@ -33,8 +33,10 @@ export class SettleOrderComponent implements OnInit {
     isShowForm: boolean = false
     isAddNew: boolean = true
 
-    settleUpstreamList : any[] = []
-    settleDownstreamList : any[] = []
+    settleYingUpstreamList : any[] = []
+    settleCangUpstreamList : any[] = []
+    settleYingDownstreamList : any[] = []
+    settleCangDownstreamList : any[] = []
     settleTrafficList : any[] = []
 
     partyList : any[] = []
@@ -95,7 +97,7 @@ export class SettleOrderComponent implements OnInit {
             if (this.settleType === 'settlesellerupstream') {
                 this.hsOrderService.getSettleUpstreamListByID(this.businessType, this.settleType, this.currentOrder.id).subscribe(
                     data => {
-                        this.settleUpstreamList = data.data.results
+                        this.settleYingUpstreamList = data.data.results
 
                     },
                     error => {this.httpService.errorHandler(error) }
@@ -105,7 +107,7 @@ export class SettleOrderComponent implements OnInit {
             if (this.settleType === 'settlebuyerdownstream') {
                 this.hsOrderService.getSettleDownstreamListByID(this.businessType, this.settleType, this.currentOrder.id).subscribe(
                     data => {
-                        this.settleDownstreamList = data.data.results
+                        this.settleYingDownstreamList = data.data.results
 
                     },
                     error => {this.httpService.errorHandler(error) }
@@ -125,7 +127,7 @@ export class SettleOrderComponent implements OnInit {
             if (this.settleType === 'settlebuyerupstream') {
                 this.hsOrderService.getSettleUpstreamListByID(this.businessType, this.settleType, this.currentOrder.id).subscribe(
                     data => {
-                        this.settleUpstreamList = data.data.results
+                        this.settleCangUpstreamList = data.data.results
 
                     },
                     error => {this.httpService.errorHandler(error) }
@@ -135,7 +137,7 @@ export class SettleOrderComponent implements OnInit {
             if (this.settleType === 'settlesellerdownstream') {
                 this.hsOrderService.getSettleDownstreamListByID(this.businessType, this.settleType, this.currentOrder.id).subscribe(
                     data => {
-                        this.settleDownstreamList = data.data.results
+                        this.settleCangDownstreamList = data.data.results
 
                     },
                     error => {this.httpService.errorHandler(error) }
