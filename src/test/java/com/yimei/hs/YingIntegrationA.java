@@ -91,23 +91,27 @@ public class YingIntegrationA extends HsTestBase {
     @Test
     public void yingIntegration() throws JsonProcessingException {
         System.out.println("开始应收集成测试");
-        defaultUser();
-        order();
-        config();
-        fee();
-        traffic();
-        ruku();
-        chuku();
-        huikuan();
-        fukuan();
-        fayun();
-        jiekuan();
-        huankuan();
-        huankuanAuto();
-        jiekuan_huankuan();
+        BigDecimal bigDecimal = new BigDecimal("0");
+        BigDecimal add=bigDecimal.add(new BigDecimal("12")).add(new BigDecimal("12"));
+        logger.info("=> {}",add);
 
-        buyer();
-        seller();
+//        defaultUser();
+//        order();
+//        config();
+//        fee();
+//        traffic();
+//        ruku();
+//        chuku();
+//        huikuan();
+//        fukuan();
+//        fayun();
+//        jiekuan();
+//        huankuan();
+//        huankuanAuto();
+//        jiekuan_huankuan();
+//
+//        buyer();
+//        seller();
 
 //        buyerCang();
 //        sellerCang();
