@@ -36,7 +36,7 @@ public class YingDataAnalysisService {
 
 
     BigDecimal matchedUnloadEstimateCost = new BigDecimal("0");
-
+    List<InvoiceAnalysis> invoiceAnalyses;
     public YingAnalysisData findOne(Long morderId, long hsId) {
         BigDecimal unLoadEstimateCosts = new BigDecimal("0");
         //借款预估成本列表
@@ -57,10 +57,11 @@ public class YingDataAnalysisService {
         List<InvoiceAnalysis> invoiceAnalysisList = getDate(morderId);
         BigDecimal tradingCompanyInTypeNum= invoiceAnalysisList.stream().map(m -> m.getTotalAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal tradingCompanyInTpeMoneyAmount =invoiceAnalysisList.stream().map(m -> m.getTotalPriceTax()).reduce(BigDecimal.ZERO, BigDecimal::add);
-
+        BigDecimal invoicedMoneyAmount=invoiceAnalyses.stream().map(m -> m.getTotalPriceTax()).reduce(BigDecimal.ZERO, BigDecimal::add);
 
         if (yingAnalysisData != null) {
             yingAnalysisData.setTotalUnrepaymentEstimateCost(unLoadEstimateCosts);
+            yingAnalysisData.setInvoicedMoneyAmount(invoicedMoneyAmount);
             yingAnalysisData.setTradingCompanyInTypeNum(tradingCompanyInTypeNum);
             yingAnalysisData.setTradingCompanyInTpeMoneyAmount(tradingCompanyInTpeMoneyAmount);
         }
@@ -117,7 +118,7 @@ public class YingDataAnalysisService {
         }
         List<InvoiceAnalysis> invoiceAnalyseNeed = new ArrayList<InvoiceAnalysis>();
         //获得所有开票单位为上游的发票列表
-        List<InvoiceAnalysis> invoiceAnalyses = yingAnalysisDataMapper.findByOrderIdOpenCompanyId(order.getUpstreamId(),morderId);
+         invoiceAnalyses = yingAnalysisDataMapper.findByOrderIdOpenCompanyId(order.getUpstreamId(),morderId);
 
         //过滤非贸易公司的发票记录
         for (InvoiceAnalysis invoiceAnalysis :invoiceAnalyses) {

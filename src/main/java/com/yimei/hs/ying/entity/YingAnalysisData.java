@@ -30,7 +30,11 @@ public class YingAnalysisData implements Serializable {
 
     private BigDecimal totalUnpayInterest;
 
+    private BigDecimal totalServiceCharge;
+
     private BigDecimal totalUnpayPrincipal;
+
+    private BigDecimal totalRepaymentInterest;
 
     private BigDecimal outCapitalAmout;
 
@@ -62,13 +66,13 @@ public class YingAnalysisData implements Serializable {
 
     private BigDecimal totalBuyersettleGap;
 
-    private BigDecimal DSDDFee;
+    private BigDecimal dsddFee;
 
-    private BigDecimal HSHYFee;
+    private BigDecimal hshyFee;
 
-    private BigDecimal HSSYFee;
+    private BigDecimal hssyFee;
 
-    private BigDecimal HSQYFee;
+    private BigDecimal hsqyFee;
 
     private BigDecimal businessFee;
 
@@ -82,7 +86,7 @@ public class YingAnalysisData implements Serializable {
 
     private BigDecimal totalCSSInTypeNumber;
 
-    private BigDecimal invoicedMoneyNum;
+    private BigDecimal InvoicedMoneyNum;
 
     private BigDecimal invoicedMoneyAmount;
 
@@ -96,7 +100,7 @@ public class YingAnalysisData implements Serializable {
 
     private BigDecimal unsettlerBuyerNumber;
 
-    private BigDecimal CCSProfile;
+    private BigDecimal ccsProfile;
 
     private BigDecimal purchaseCargoAmountofMoney;
 
@@ -128,9 +132,9 @@ public class YingAnalysisData implements Serializable {
 
     private BigDecimal withoutTaxCost;
 
-    private BigDecimal ying_VAT;
+    private BigDecimal vat;
 
-    private BigDecimal yingAdditionalTax;
+    private BigDecimal additionalTax;
 
     private BigDecimal stampDuty;
 

@@ -124,6 +124,8 @@ public class CangAnalysisData implements Serializable {
 
     private BigDecimal withoutTaxIncome;
 
+    private BigDecimal totalServiceCharge;
+
     private BigDecimal withoutTaxCost;
 
     private BigDecimal additionalTax;

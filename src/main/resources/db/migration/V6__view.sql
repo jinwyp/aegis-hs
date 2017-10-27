@@ -258,10 +258,10 @@ group by orderId,hsId;
 
 --1027 费用相关 1027->1034
 
---1027	代收代垫运费	DSDDFee	【费用】	毛利表	汇总：费用科目 = “代收代垫运费”的费用金额
---1028	含税汽运费	HSQYFee	【费用】	毛利表	汇总：费用科目 = “含税汽运费”的费用金额
---1029	含税水运费	HSSYFee	【费用】	毛利表	汇总：费用科目 = “含税水运费”的费用金额
---1030	含税火运费	HSHYFee	【费用】	毛利表	汇总：费用科目 = “含税火运费”的费用金额
+--1027	代收代垫运费	dsddFee	【费用】	毛利表	汇总：费用科目 = “代收代垫运费”的费用金额
+--1028	含税汽运费	hsqyFee	【费用】	毛利表	汇总：费用科目 = “含税汽运费”的费用金额
+--1029	含税水运费	hssyFee	【费用】	毛利表	汇总：费用科目 = “含税水运费”的费用金额
+--1030	含税火运费	hshyFee	【费用】	毛利表	汇总：费用科目 = “含税火运费”的费用金额
 --1031	服务费	serviceFee	【费用】	毛利表	汇总：费用科目 = “监管费”的费用金额
 --1032	管理费	superviseFee	【费用】	毛利表	汇总：费用科目 = “管理费”的费用金额
 --1033	业务费	businessFee	【费用】	毛利表	汇总：费用科目 = “业务费”的费用金额
@@ -270,10 +270,10 @@ create view v_1027 as
 select
 orderId,
 hsId,
-sum(case when name='HELP_RECIVE_PAY_FEE' then amount else 0 end) as DSDDFee,
-sum(case when name='TAX_MOTRO_FREIGHT' then amount else 0 end) as HSQYFee,
-sum(case when name='TAX_SHIP_FREIGHT' then amount else 0 end) as HSSYFee,
-sum(case when name='TAX_RAIL_FREIGHT' then amount else 0 end) as HSHYFee,
+sum(case when name='HELP_RECIVE_PAY_FEE' then amount else 0 end) as dsddFee,
+sum(case when name='TAX_MOTRO_FREIGHT' then amount else 0 end) as hsqyFee,
+sum(case when name='TAX_SHIP_FREIGHT' then amount else 0 end) as hssyFee,
+sum(case when name='TAX_RAIL_FREIGHT' then amount else 0 end) as hshyFee,
 sum(case when name='SERVICE_FEE' then amount else 0 end) as serviceFee,
 sum(case when name='SUPERVISE_FEE' then amount else 0 end) as superviseFee,
 sum(case when name='BUSINESS_FEE' then amount else 0 end) as businessFee,
@@ -324,7 +324,7 @@ select
 hsId,
 orderId,
 sum(totalAmount) as InvoicedMoneyNum,
-sum(totalPriceTax) as InvoicedMoneyAmount
+sum(totalPriceTax) as invoicedMoneyAmount
 from
 v_1037_child2 as aa
 left JOIN hs_same_order orderSame on aa.orderId =orderSame.id
@@ -591,8 +591,8 @@ create view v_1052_ying  as
 select
 v_1046_ying.hsId,
 v_1046_ying.orderId,
-v_1046_ying.purchaseCargoAmountofMoney+v_1041_ying.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.DSDDFee as CCSUnInTypeMoney,
-v_1046_ying.purchaseCargoAmountofMoney+v_1041_ying.tradingCompanyAddMoney-v_1039.InvoicedMoneyAmount-v_1027.DSDDFee as unInvoicedAmountofMoney
+v_1046_ying.purchaseCargoAmountofMoney+v_1041_ying.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.dsddFee as CCSUnInTypeMoney,
+v_1046_ying.purchaseCargoAmountofMoney+v_1041_ying.tradingCompanyAddMoney-v_1039.invoicedMoneyAmount-v_1027.dsddFee as unInvoicedAmountofMoney
 from v_1046_ying
      left join v_1041_ying on v_1046_ying.hsId=v_1041_ying.hsId
      left join v_1037 on v_1037.hsId=v_1046_ying.hsId
@@ -606,8 +606,8 @@ create view v_1052_cang  as
 select
 v_1046_cang.hsId,
 v_1046_cang.orderId,
-v_1046_cang.purchaseCargoAmountofMoney+v_1041_cang.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.DSDDFee as CCSUnInTypeMoney,
-v_1046_cang.purchaseCargoAmountofMoney+v_1041_cang.tradingCompanyAddMoney-v_1039.InvoicedMoneyAmount-v_1027.DSDDFee as unInvoicedAmountofMoney
+v_1046_cang.purchaseCargoAmountofMoney+v_1041_cang.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.dsddFee as CCSUnInTypeMoney,
+v_1046_cang.purchaseCargoAmountofMoney+v_1041_cang.tradingCompanyAddMoney-v_1039.invoicedMoneyAmount-v_1027.dsddFee as unInvoicedAmountofMoney
 from v_1046_cang
      left join v_1041_cang on v_1046_cang.hsId=v_1041_cang.hsId
      left join v_1037 on v_1037.hsId=v_1046_cang.hsId
@@ -687,7 +687,7 @@ create view v_1059_ying  as
 select
 v_1041_ying.hsId,
 v_1041_ying.orderId,
-(v_1041_ying.saleCargoAmountofMoney - v_1027.DSDDFee)/1.17  as withoutTaxIncome
+(v_1041_ying.saleCargoAmountofMoney - v_1027.dsddFee)/1.17  as withoutTaxIncome
 from v_1041_ying
      left join v_1027  on  v_1027.hsId=v_1041_ying.hsId
 group by hsId, orderId;
@@ -696,7 +696,7 @@ create view v_1059_cang  as
 select
 v_1057_cang.hsId,
 v_1057_cang.orderId,
-(v_1057_cang.saleIncludeTaxTotalAmount - v_1027.DSDDFee)/1.17  as withoutTaxIncome
+(v_1057_cang.saleIncludeTaxTotalAmount - v_1027.dsddFee)/1.17  as withoutTaxIncome
 from v_1057_cang
      left join v_1027  on  v_1027.hsId=v_1057_cang.hsId
 group by hsId, orderId;
@@ -706,7 +706,7 @@ create view v_1060_cang  as
 select
 v_1056_cang.hsId,
 v_1056_cang.orderId,
-(v_1056_cang.purchaseIncludeTaxTotalAmount - v_1027.DSDDFee+v_1058_cang.tradeCompanyAddMoney)/1.17  as withoutTaxCost
+(v_1056_cang.purchaseIncludeTaxTotalAmount - v_1027.dsddFee+v_1058_cang.tradeCompanyAddMoney)/1.17  as withoutTaxCost
 from v_1056_cang
      left join v_1027  on  v_1027.hsId=v_1056_cang.hsId
      left join v_1058_cang  on  v_1056_cang.hsId=v_1058_cang.hsId
@@ -717,13 +717,13 @@ create view v_1060_ying  as
 select
 v_1046_ying.hsId,
 v_1046_ying.orderId,
-(v_1046_ying.purchaseCargoAmountofMoney - v_1027.DSDDFee+v_1058_ying.tradeCompanyAddMoney)/1.17  as withoutTaxCost
+(v_1046_ying.purchaseCargoAmountofMoney - v_1027.dsddFee+v_1058_ying.tradeCompanyAddMoney)/1.17  as withoutTaxCost
 from v_1046_ying
      left join v_1027  on  v_1027.hsId=v_1046_ying.hsId
      left join v_1058_ying  on  v_1046_ying.hsId=v_1058_ying.hsId
 group by hsId, orderId;
 
---1061	应交增值税	VAT	计算	毛利表	IF（【1059】不含税收入 <= 【1060】不含税成本？0 : （【1059】不含税收入 - 【1060】不含税成本）*0.17）
+--1061	应交增值税	vat	计算	毛利表	IF（【1059】不含税收入 <= 【1060】不含税成本？0 : （【1059】不含税收入 - 【1060】不含税成本）*0.17）
 --1062	税金及附加	additionalTax	计算	毛利表	【1061】应交增值税 * 0.12
 create view v_1061_cang  as
 select
@@ -731,7 +731,7 @@ v_1059_cang.hsId,
 v_1059_cang.orderId,
 IFNULL(
 case when v_1059_cang.withoutTaxIncome <= v_1060_cang.withoutTaxCost then 0 else (v_1059_cang.withoutTaxIncome -v_1060_cang.withoutTaxCost)*0.17 end,
-0) as VAT,
+0) as vat,
 IFNULL(
 case when v_1059_cang.withoutTaxIncome <= v_1060_cang.withoutTaxCost then 0 else (v_1059_cang.withoutTaxIncome -v_1060_cang.withoutTaxCost)*0.17*0.12 end,
 0) as AdditionalTax
@@ -745,7 +745,7 @@ v_1059_ying.hsId,
 v_1059_ying.orderId,
 IFNULL(
 case when v_1059_ying.withoutTaxIncome <= v_1060_ying.withoutTaxCost then 0 else (v_1059_ying.withoutTaxIncome -v_1060_ying.withoutTaxCost)*0.17 end,
-0) as VAT,
+0) as vat,
 IFNULL(
 case when v_1059_ying.withoutTaxIncome <= v_1060_ying.withoutTaxCost then 0 else (v_1059_ying.withoutTaxIncome -v_1060_ying.withoutTaxCost)*0.17 end,
 0) as additionalTax
@@ -759,7 +759,7 @@ create view v_1063_cang  as
 select
 v_1057_cang.hsId,
 v_1057_cang.orderId,
-(v_1057_cang.saleIncludeTaxTotalAmount +v_1056_cang.purchaseIncludeTaxTotalAmount+v_1058_cang.tradeCompanyAddMoney- v_1027.DSDDFee*2)/1.17  as stampDuty
+(v_1057_cang.saleIncludeTaxTotalAmount +v_1056_cang.purchaseIncludeTaxTotalAmount+v_1058_cang.tradeCompanyAddMoney- v_1027.dsddFee*2)/1.17  as stampDuty
 from v_1057_cang
      left join v_1027  on  v_1027.hsId=v_1057_cang.hsId
      left join v_1056_cang on  v_1056_cang.hsId=v_1057_cang.hsId
@@ -771,7 +771,7 @@ create view v_1063_ying  as
 select
 v_1041_ying.hsId,
 v_1041_ying.orderId,
-(v_1041_ying.saleCargoAmountofMoney +v_1046_ying.purchaseCargoAmountofMoney+v_1058_ying.tradeCompanyAddMoney- v_1027.DSDDFee*2)/1.17  as stampDuty
+(v_1041_ying.saleCargoAmountofMoney +v_1046_ying.purchaseCargoAmountofMoney+v_1058_ying.tradeCompanyAddMoney- v_1027.dsddFee*2)/1.17  as stampDuty
 from v_1041_ying
      left join v_1027  on  v_1027.hsId=v_1041_ying.hsId
      left join v_1046_ying on  v_1046_ying.hsId=v_1041_ying.hsId
@@ -785,7 +785,7 @@ select
 v_1059_cang.hsId,
 v_1059_cang.orderId,
 v_1059_cang.withoutTaxIncome-v_1060_cang.withoutTaxCost-v_1061_cang.AdditionalTax-v_1063_cang.stampDuty
--(v_1027.HSQYFee+v_1027.HSSYFee+v_1027.HSHYFee)/1.11-v_1027.superviseFee/1.06-v_1027.serviceFee/1.06-v_1027.businessFee as opreationCrossProfile
+-(v_1027.hsqyFee+v_1027.hssyFee+v_1027.hshyFee)/1.11-v_1027.superviseFee/1.06-v_1027.serviceFee/1.06-v_1027.businessFee as opreationCrossProfile
 from v_1059_cang
 left join v_1060_cang on v_1059_cang.hsId=v_1060_cang.hsId
 left join v_1061_cang  on v_1059_cang.hsId=v_1061_cang.hsId
@@ -799,7 +799,7 @@ select
 v_1059_ying.hsId,
 v_1059_ying.orderId,
 v_1059_ying.withoutTaxIncome-v_1060_ying.withoutTaxCost-v_1061_ying.additionalTax-v_1063_ying.stampDuty
--(v_1027.HSQYFee+v_1027.HSSYFee+v_1027.HSHYFee)/1.11-v_1027.superviseFee/1.06-v_1027.serviceFee/1.06-v_1027.businessFee as opreationCrossProfile
+-(v_1027.hsqyFee+v_1027.hssyFee+v_1027.hshyFee)/1.11-v_1027.superviseFee/1.06-v_1027.serviceFee/1.06-v_1027.businessFee as opreationCrossProfile
 from v_1059_ying
      left join v_1060_ying on v_1059_ying.hsId=v_1060_ying.hsId
      left join v_1061_ying  on v_1059_ying.hsId=v_1061_ying.hsId
@@ -875,10 +875,10 @@ v_1023.tiexianRateAmount,
 v_1024.totalBuyerMoney,
 v_1024.totalBuyerNums,
 v_1024.totalBuyersettleGap,
-v_1027.DSDDFee,
-v_1027.HSHYFee,
-v_1027.HSQYFee,
-v_1027.HSSYFee,
+v_1027.dsddFee,
+v_1027.hshyFee,
+v_1027.hsqyFee,
+v_1027.hssyFee,
 v_1027.businessFee,
 v_1027.superviseFee,
 v_1027.serviceFee,
@@ -886,7 +886,7 @@ v_1027.salesFeeAmount,
 v_1037.totalCCSInTypeMoney,
 v_1037.totalCSSInTypeNumber,
 v_1039.InvoicedMoneyNum,
-v_1039.InvoicedMoneyAmount,
+v_1039.invoicedMoneyAmount,
 v_1041_cang.finalSettleAmount,
 v_1041_cang.saleCargoAmountofMoney,
 v_1041_cang.tradingCompanyAddMoney,
@@ -909,7 +909,7 @@ v_1058_cang.tradeCompanyAddMoney,
 v_1059_cang.withoutTaxIncome,
 v_1060_cang.withoutTaxCost,
 v_1061_cang.additionalTax,
-v_1061_cang.VAT,
+v_1061_cang.vat,
 v_1063_cang.stampDuty,
 v_1064_cang.opreationCrossProfile,
 v_1065_cang.crossProfileATon,
@@ -999,10 +999,10 @@ v_1023.tiexianRateAmount,
 v_1024.totalBuyerMoney,
 v_1024.totalBuyerNums,
 v_1024.totalBuyersettleGap,
-v_1027.DSDDFee,
-v_1027.HSHYFee,
-v_1027.HSQYFee,
-v_1027.HSSYFee,
+v_1027.dsddFee,
+v_1027.hshyFee,
+v_1027.hsqyFee,
+v_1027.hssyFee,
 v_1027.businessFee,
 v_1027.superviseFee,
 v_1027.serviceFee,
@@ -1010,7 +1010,7 @@ v_1027.salesFeeAmount,
 v_1037.totalCCSInTypeMoney,
 v_1037.totalCSSInTypeNumber,
 v_1039.InvoicedMoneyNum,
-v_1039.InvoicedMoneyAmount,
+v_1039.invoicedMoneyAmount,
 v_1041_ying.finalSettleAmount,
 v_1041_ying.saleCargoAmountofMoney,
 v_1041_ying.tradingCompanyAddMoney,
@@ -1032,7 +1032,7 @@ v_1041_ying.saleCargoAmountofMoney as saleIncludeTaxTotalAmount,
 v_1058_ying.tradeCompanyAddMoney,
 v_1059_ying.withoutTaxIncome,
 v_1060_ying.withoutTaxCost,
-v_1061_ying.VAT,
+v_1061_ying.vat,
 v_1061_ying.additionalTax,
 v_1063_ying.stampDuty,
 v_1064_ying.opreationCrossProfile,
