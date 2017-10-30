@@ -108,7 +108,7 @@ create view v_1012 as
 select
 v_1006.orderId,
 v_1006.hsId,
-v_1006.totalUnrepaymentEstimateCost-v_1007.totalRepaymentInterest-v_1007.totalServiceCharge as outCapitalAmout
+IFNULL(v_1006.totalUnrepaymentEstimateCost,0)-IFNULL(v_1007.totalRepaymentInterest,0)-IFNULL(v_1007.totalServiceCharge,0) as outCapitalAmout
 from v_1006
 left join v_1007 on  v_1006.hsId=v_1007.hsId and v_1006.orderId=v_1007.orderId;
 
@@ -128,23 +128,22 @@ create view v_1014 as
 select
 v_1003.orderId,
 v_1003.hsId,
-v_1003.totalPaymentAmount-v_1001.totalPayTrafficFee-v_1002.totalTradeGapFee as payCargoAmount
+IFNULL(v_1003.totalPaymentAmount,0)-IFNULL(v_1001.totalPayTrafficFee,0)-IFNULL(v_1002.totalTradeGapFee,0) as payCargoAmount
 from v_1003
 left join v_1001 on v_1001.hsId =v_1003.hsId
 left join v_1002 on v_1002.hsId=v_1003.hsId
 group by  orderId, hsId;
 
 
---1005未回款金额
+--1015未回款金额
 
 create view v_1015 as
 select
 v_1014.orderId,
 v_1014.hsId,
-case  when v_1014.payCargoAmount > v_1013.totalHuikuanPaymentMoney
-THEN  v_1014.payCargoAmount - v_1013.totalHuikuanPaymentMoney
+case  when IFNULL(v_1014.payCargoAmount,0) > IFNULL(v_1013.totalHuikuanPaymentMoney,0)
+THEN  IFNULL(v_1014.payCargoAmount,0) - IFNULL(v_1013.totalHuikuanPaymentMoney,0)
 ELSE 0 end  as unpaymentMoney
-
 from v_1014
      left JOIN v_1013  on v_1014.hsId = v_1013.hsId
 group by orderId,hsId;
@@ -155,7 +154,7 @@ create view v_1016 as
 select
 v_1015.orderId,
 v_1015.hsId,
-v_1015.unpaymentMoney * config.contractBaseInterest * config.expectHKDays / 360 as unpaymentEstimateProfile
+IFNULL(v_1015.unpaymentMoney,0) * IFNULL(config.contractBaseInterest,0) * IFNULL(config.expectHKDays,0) / 360 as unpaymentEstimateProfile
 from v_1015
      left JOIN hs_same_order_config config  on config.id = v_1015.hsId
 group by orderId,hsId;
@@ -179,7 +178,7 @@ create view v_1018 as
 select
 seller.orderId,
 seller.hsId,
-config.contractBaseInterest- IFNULL(seller.discountInterest,0) as actualUtilizationRate
+IFNULL(config.contractBaseInterest,0)- IFNULL(seller.discountInterest,0) as actualUtilizationRate
 from hs_same_order_config config
      left join hs_same_settle_seller seller on config.id=seller.hsId
 group by orderId,hsId;
@@ -189,12 +188,12 @@ create view v_1019 as
 select
 huikuan.orderId,
 huikuan.hsId,
-CASE WHEN v_1017.interestDays>0  AND v_1017.interestDays<60
-THEN map.amount*v_1017.interestDays*v_1018.actualUtilizationRate/360
-WHEN v_1017.interestDays>=60  AND v_1017.interestDays<90
-THEN map.amount*((v_1017.interestDays-60)*(v_1018.actualUtilizationRate+0.05)+60*v_1018.actualUtilizationRate)/360
-WHEN v_1017.interestDays>=90
-THEN map.amount*((v_1017.interestDays-90)*(v_1018.actualUtilizationRate+0.05)+30*(v_1018.actualUtilizationRate+0.05)+60*v_1018.actualUtilizationRate)/360
+CASE WHEN IFNULL(v_1017.interestDays,0)>0  AND IFNULL(v_1017.interestDays,0)<60
+THEN IFNULL(map.amount,0)*IFNULL(v_1017.interestDays,0)*IFNULL(v_1018.actualUtilizationRate,0)/360
+WHEN IFNULL(v_1017.interestDays,0)>=60  AND IFNULL(v_1017.interestDays,0)<90
+THEN IFNULL(map.amount,0)*((v_1017.interestDays-60)*(v_1018.actualUtilizationRate+0.05)+60*v_1018.actualUtilizationRate)/360
+WHEN IFNULL(v_1017.interestDays,0)>=90
+THEN IFNULL(map.amount,0)*((v_1017.interestDays-90)*(v_1018.actualUtilizationRate+0.05)+30*(v_1018.actualUtilizationRate+0.05)+60*v_1018.actualUtilizationRate)/360
 ELSE 0 END as rate
 
 from hs_same_huikuan huikuan
@@ -234,7 +233,7 @@ id,
 orderId,
 hsId,
 CASE WHEN huikuanMode ='BANK_ACCEPTANCE'
-THEN TIMEDIFF(huikuanBankPaperExpire,huikuanBankPaperDate)/24 *huikuanAmount * IFNULL(huikuanBankDiscountRate,0)*1.17/360
+THEN TIMEDIFF(huikuanBankPaperExpire,huikuanBankPaperDate)/24 *IFNULL(huikuanAmount ,0)* IFNULL(huikuanBankDiscountRate,0)*1.17/360
 ELSE 0 END as tiexianRate
 from hs_same_huikuan
 where deleted= 0;
@@ -610,14 +609,13 @@ from v_1041_cang
      left join v_1037 on v_1037.hsId=v_1041_cang.hsId
 group by hsId, orderId;
 
-
---1052 CCS未收到进项金额	ccsUninTypeMoney	     	【1046】采购货款总额 + 【1041】贸易公司加价 - 【1038】CCS已收进项金额 - 【1027】代收代垫运费
+--1052 CCS未收到进项金额	cssUninTypeMoney	     	【1046】采购货款总额 + 【1041】贸易公司加价 - 【1038】CCS已收进项金额 - 【1027】代收代垫运费
 --1053	占压表未开票金额	unInvoicedAmountofMoney		【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费
 create view v_1052_ying  as
 select
 v_1046_ying.hsId,
 v_1046_ying.orderId,
-v_1046_ying.purchaseCargoAmountofMoney+v_1041_ying.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.dsddFee as ccsUninTypeMoney,
+v_1046_ying.purchaseCargoAmountofMoney+v_1041_ying.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.dsddFee as cssUninTypeMoney,
 v_1046_ying.purchaseCargoAmountofMoney+v_1041_ying.tradingCompanyAddMoney-v_1039.invoicedMoneyAmount-v_1027.dsddFee as unInvoicedAmountofMoney
 from v_1046_ying
      left join v_1041_ying on v_1046_ying.hsId=v_1041_ying.hsId
@@ -632,7 +630,7 @@ create view v_1052_cang  as
 select
 v_1046_cang.hsId,
 v_1046_cang.orderId,
-v_1046_cang.purchaseCargoAmountofMoney+v_1041_cang.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.dsddFee as ccsUninTypeMoney,
+v_1046_cang.purchaseCargoAmountofMoney+v_1041_cang.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.dsddFee as cssUninTypeMoney,
 v_1046_cang.purchaseCargoAmountofMoney+v_1041_cang.tradingCompanyAddMoney-v_1039.invoicedMoneyAmount-v_1027.dsddFee as unInvoicedAmountofMoney
 from v_1046_cang
      left join v_1041_cang on v_1046_cang.hsId=v_1041_cang.hsId
@@ -970,7 +968,7 @@ v_1048_cang.ownerCapitalPaymentAmount,
 v_1049_cang.upstreamCapitalPressure,
 v_1050_cang.downstreamCapitalPressure,
 v_1051_cang.cssUninTypeNum,
-v_1052_cang.ccsUninTypeMoney,
+v_1052_cang.cssUninTypeMoney,
 v_1052_cang.unInvoicedAmountofMoney,
 v_1054_cang.cangPrePayment,
 v_3003.totalOutstorageNum as settleGrossProfileNum,
@@ -1098,7 +1096,7 @@ v_1048_ying.ownerCapitalPaymentAmount,
 v_1049_ying.upstreamCapitalPressure,
 v_1050_ying.downstreamCapitalPressure,
 v_1051_ying.cssUninTypeNum,
-v_1052_ying.ccsUninTypeMoney,
+v_1052_ying.cssUninTypeMoney,
 v_1052_ying.unInvoicedAmountofMoney,
 v_1054_ying.yingPrePayment,
 v_1055.settleGrossProfileNum,
