@@ -114,15 +114,6 @@ export class SettleOrderComponent implements OnInit {
                 )
             }
 
-            if (this.settleType === 'settletraffic') {
-                this.hsOrderService.getSettleTrafficListByID(this.businessType, this.currentOrder.id).subscribe(
-                    data => {
-                        this.settleTrafficList = data.data.results
-
-                    },
-                    error => {this.httpService.errorHandler(error) }
-                )
-            }
         } else {
             if (this.settleType === 'settlebuyerupstream') {
                 this.hsOrderService.getSettleUpstreamListByID(this.businessType, this.settleType, this.currentOrder.id).subscribe(
@@ -221,10 +212,6 @@ export class SettleOrderComponent implements OnInit {
 
         'settleGap'  : {
             'required'      : '结算扣吨!'
-        },
-
-        'trafficCompanyId'  : {
-            'required'      : '与哪个运输方结算!'
         }
 
     }
@@ -249,9 +236,7 @@ export class SettleOrderComponent implements OnInit {
 
             'amount'    : ['', [Validators.required ] ],
             'money'    : ['', [Validators.required ] ],
-            'settleGap'    : ['', [Validators.required ] ],
-
-            'trafficCompanyId'    : ['', [Validators.required ] ]
+            'settleGap'    : ['', [Validators.required ] ]
 
         } )
 
@@ -293,23 +278,6 @@ export class SettleOrderComponent implements OnInit {
                 this.settleForm.patchValue({trafficCompanyId : 99999999})
             }
         }
-
-        if (this.settleType === 'settletraffic') {
-            if (!this.settleForm.value.amount) {
-                this.settleForm.patchValue({amount : 99999999})
-            }
-            if (!this.settleForm.value.money) {
-                this.settleForm.patchValue({money : 99999999})
-            }
-            if (!this.settleForm.value.settleGap) {
-                this.settleForm.patchValue({settleGap : 99999999})
-            }
-
-            if (!this.settleForm.value.discountType) {
-                this.settleForm.patchValue({ discountType : '99999999' })
-            }
-        }
-
 
 
 
@@ -356,19 +324,6 @@ export class SettleOrderComponent implements OnInit {
                 )
             }
 
-            if (this.settleType === 'settletraffic') {
-                this.hsOrderService.createNewSettleTraffic(this.businessType, this.currentOrder.id, postData).subscribe(
-                    data => {
-                        console.log('保存成功: ', data)
-                        this.httpService.successHandler(data)
-
-                        this.getSettleList()
-                        this.showForm()
-
-                    },
-                    error => {this.httpService.errorHandler(error) }
-                )
-            }
 
             if (this.settleType === 'settlebuyerupstream') {
                 this.hsOrderService.createNewSettleUpstream(this.businessType, this.settleType, this.currentOrder.id, postData).subscribe(
@@ -420,20 +375,6 @@ export class SettleOrderComponent implements OnInit {
             if (this.settleType === 'settlebuyerdownstream') {
                 delete postData.amount
                 this.hsOrderService.modifySettleDownstream(this.businessType, this.settleType, this.currentOrder.id, this.currentSettleId, postData).subscribe(
-                    data => {
-                        console.log('修改成功: ', data)
-                        this.httpService.successHandler(data)
-
-                        this.getSettleList()
-                        this.showForm()
-
-                    },
-                    error => {this.httpService.errorHandler(error) }
-                )
-            }
-
-            if (this.settleType === 'settletraffic') {
-                this.hsOrderService.modifySettleTraffic(this.businessType, this.currentOrder.id, this.currentSettleId, postData).subscribe(
                     data => {
                         console.log('修改成功: ', data)
                         this.httpService.successHandler(data)
@@ -499,9 +440,7 @@ export class SettleOrderComponent implements OnInit {
                 'discountDays'    : '',
                 'discountAmount'    : '',
 
-                'settleGap'    : '',
-
-                'trafficCompanyId'    : ''
+                'settleGap'    : ''
             })
 
         } else {
@@ -541,19 +480,7 @@ export class SettleOrderComponent implements OnInit {
                 error => {this.httpService.errorHandler(error) }
             )
         }
-
-        if (this.settleType === 'settletraffic') {
-            this.hsOrderService.delSettleTraffic(this.businessType, this.currentOrder.id, 2).subscribe(
-                data => {
-                    console.log('保存成功: ', data)
-                    this.httpService.successHandler(data)
-
-                    this.getSettleList()
-                },
-                error => {this.httpService.errorHandler(error) }
-            )
-        }
-
+        
         if (this.settleType === 'settlebuyerupstream') {
             this.hsOrderService.delSettleUpstream(this.businessType, this.settleType, this.currentOrder.id, settle.id).subscribe(
                 data => {
