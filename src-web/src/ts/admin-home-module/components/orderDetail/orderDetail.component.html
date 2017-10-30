@@ -3,7 +3,8 @@
         <h3>
             {{businessType === 'ying' ? '应收单' : '仓押单'}}详情  ID:{{currentOrderId}} - 业务线: {{currentOrder?.line}}
 
-            <button type="button" class="btn btn-outline-secondary btn-sm float-right" [routerLink]="['/orders']">返回</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm float-right" [routerLink]="['/yingorders']" *ngIf="businessType === 'ying'">返回</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm float-right" [routerLink]="['/cangorders']" *ngIf="businessType === 'cang'">返回</button>
         </h3>
 
 

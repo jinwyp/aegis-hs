@@ -480,7 +480,7 @@ export class SettleOrderComponent implements OnInit {
                 error => {this.httpService.errorHandler(error) }
             )
         }
-        
+
         if (this.settleType === 'settlebuyerupstream') {
             this.hsOrderService.delSettleUpstream(this.businessType, this.settleType, this.currentOrder.id, settle.id).subscribe(
                 data => {
