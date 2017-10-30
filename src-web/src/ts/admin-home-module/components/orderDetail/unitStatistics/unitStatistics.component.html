@@ -144,6 +144,11 @@
                     </div>
 
 
+
+
+
+
+
                     <div class="row mt-4">
                         <div class="col-3">
                             <p class="card-text" title="汇总：到场状态 = “已到场”的发运数量">备查账 - 未到场数量: {{ unitStatistics?.totalUnarriveNum | number }}</p>
@@ -176,6 +181,9 @@
                         <div class="col-3">
                             <p class="card-text" title="【2006】付下游保证金 - 【2007】下游退保证金">下游保证金余额: {{ unitStatistics?.balanceDownStreamBail | number }}</p>
                         </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款">占压表 - 下游已结算未回款金额: {{ unitStatistics?.settledDownstreamHuikuanMoneny | number }}</p>
+                        </div>
                     </div>
 
 
@@ -197,6 +205,10 @@
                         </div>
                         <div class="col-3">
                             <p class="card-text" title="【3004】入库单价 * 【3005】库存数量">占压表 - 库存金额: {{ unitStatistics?.totalStockMoney | number }}</p>
+                        </div>
+
+                        <div class="col-3">
+                            <p class="card-text" title="汇总出库金额">已出库金额: {{ unitStatistics?.totaloutstorageMoney | number }}</p>
                         </div>
                     </div>
 
@@ -280,6 +292,7 @@
                             <p class="card-text" title="【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费">CCS未收到进项金额: {{ unitStatistics?.CCSUnInTypeMoney | number }}</p>
                         </div>
 
+
                         <div class="col-3">
                             <p class="card-text" title="汇总：到场状态 = “已到场”的发运数量">备查账 - 未到场数量: {{ unitStatistics?.totalUnarriveNum | number }}</p>
                         </div>
@@ -289,6 +302,7 @@
                         <div class="col-3">
                             <p class="card-text" title="【2001】未到场数量 +【2002】已到场数量">备查账 - 发运总数量: {{ unitStatistics?.totalFayunNum | number }}</p>
                         </div>
+
 
                         <div class="col-3">
                             <p class="card-text" title="汇总：入库数量">备查账 - 入库总数量: {{ unitStatistics?.totalInstorageNum | number }}</p>
@@ -320,6 +334,14 @@
                         </div>
                         <div class="col-3">
                             <p class="card-text" title="IF（【1014】付货款金额 <= 【1013】已回款金额）？【1014】付货款金额 - 【1013】已回款金额 + 【2009】下游保证金余额：0 +【2009】下游保证金余额">预收款: {{ unitStatistics?.yingPrePayment | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1048】自有资金付款金额-【1046】采购货款总额">自有资金占压: {{ unitStatistics?.ownerCapitalPressure | number }}</p>
+                        </div>
+
+
+                        <div class="col-3">
+                            <p class="card-text" title="【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款">占压表 - 下游已结算未回款金额: {{ unitStatistics?.settledDownstreamHuikuanMoneny | number }}</p>
                         </div>
 
 
