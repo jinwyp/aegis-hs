@@ -30,6 +30,7 @@ import { RepaymentComponent } from './components/orderDetail/repayment/repayment
 import { RepaymentHuanKuanComponent } from './components/orderDetail/repaymentHuanKuan/repaymentHuanKuan.component'
 
 import { SettleOrderComponent } from './components/orderDetail/settleOrder/settleOrder.component'
+import { SettleTrafficOrderComponent } from './components/orderDetail/settleTrafficOrder/settleTrafficOrder.component'
 import { ExpenseComponent } from './components/orderDetail/expense/expense.component'
 import { InvoiceComponent } from './components/orderDetail/invoice/invoice.component'
 import { WarehouseOrderComponent } from './components/orderDetail/warehouseOrder/warehouseOrder.component'
@@ -104,6 +105,7 @@ const userHomeRoutes: Routes = [
         RepaymentComponent,
         RepaymentHuanKuanComponent,
         SettleOrderComponent,
+        SettleTrafficOrderComponent,
         ExpenseComponent,
         InvoiceComponent,
         WarehouseOrderComponent,
