@@ -42,10 +42,12 @@ export class OrderListComponent implements OnInit {
     departmentList : any[] = []
     teamList : any[] = []
     filterTeamList : any[] = []
+
     partyList : any[] = []
-    partyListZhangWu : any[] = []
+    partyListSearchZhangWu : any[] = []
+    partyListUpstreamAndDownstream : any[] = []
     partyListOther : any[] = []
-    partyListOtherPlus : any[] = []
+    partyListOtherFilter : any[] = []
     partyListObject : any = {}
 
 
@@ -195,9 +197,10 @@ export class OrderListComponent implements OnInit {
                         if (company.partyType !== 2) {
                             tempArray3.push(company)
                         }
-                        this.partyListZhangWu = tempArray
-                        this.partyListOther = tempArray2
-                        this.partyListOtherPlus = tempArray3
+                        this.partyListSearchZhangWu = tempArray
+                        this.partyListUpstreamAndDownstream = tempArray2
+                        this.partyListOther = tempArray3.slice()
+                        this.partyListOtherFilter = tempArray3.slice()
                     })
                 }
             },
@@ -404,11 +407,14 @@ export class OrderListComponent implements OnInit {
             return
         }
 
+
         if (this.orderOtherPartyForm.value.position === 1) {
             this.otherParty1List.push(this.orderOtherPartyForm.value)
         } else {
             this.otherParty2List.push(this.orderOtherPartyForm.value)
         }
+
+        this.filterParty()
 
         this.lineName()
 
@@ -424,8 +430,34 @@ export class OrderListComponent implements OnInit {
             this.otherParty2List.splice(index, 1)
         }
 
+        this.filterParty()
+
     }
 
+    filterParty () {
+        this.partyListOtherFilter = this.partyList.slice()
+
+        this.partyList.forEach( (company => {
+
+            this.otherParty1List.forEach( (company2 => {
+                if (company2.customerId === company.id) {
+                    const index1 = this.partyListOtherFilter.indexOf(company)
+                    this.partyListOtherFilter.splice(index1, 1)
+                }
+            }))
+
+            this.otherParty2List.forEach( (company3 => {
+                if (company3.customerId === company.id) {
+                    const index2 = this.partyListOtherFilter.indexOf(company)
+                    this.partyListOtherFilter.splice(index2, 1)
+                }
+            }))
+
+        }))
+
+        // console.log(this.partyList)
+        // console.log(this.partyListOtherFilter)
+    }
 
     lineName() {
         let lineName = ''
@@ -435,13 +467,13 @@ export class OrderListComponent implements OnInit {
             lineName = this.partyListObject[this.orderForm.value.upstreamId].shortName + ' - '
 
             this.otherParty1List.forEach( company => {
-                lineName = lineName + this.partyListObject[this.orderOtherPartyForm.value.customerId].shortName + ' - '
+                lineName = lineName + this.partyListObject[company.customerId].shortName + ' - '
             })
 
             lineName = lineName + this.partyListObject[this.orderForm.value.mainAccounting].shortName + ' - '
 
             this.otherParty2List.forEach( company => {
-                lineName = lineName + this.partyListObject[this.orderOtherPartyForm.value.customerId].shortName + ' - '
+                lineName = lineName + this.partyListObject[company.customerId].shortName + ' - '
             })
 
             lineName = lineName + this.partyListObject[this.orderForm.value.downstreamId].shortName

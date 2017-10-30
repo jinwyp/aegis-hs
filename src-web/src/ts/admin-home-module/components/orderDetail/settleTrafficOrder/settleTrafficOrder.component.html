@@ -1,0 +1,58 @@
+
+        <form [formGroup]="settleTrafficForm" (ngSubmit)="settleTrafficFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
+
+            <bs-select formControlName="hsId" [fc]="settleTrafficForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="settleTrafficFormError.hsId"></bs-select>
+            <bs-datepicker formControlName="settleDate" [fc]="settleTrafficForm.get('settleDate')" [label]="'结算日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="settleTrafficFormError.settleDate" ></bs-datepicker>
+            <bs-text-input formControlName="amount" [fc]="settleTrafficForm.get('amount')" [type]="'number'" [label]="'结算数量(吨):'" [dirty]="ignoreDirty" [error]="settleTrafficFormError.amount"></bs-text-input>
+            <bs-text-input formControlName="money" [fc]="settleTrafficForm.get('money')" [type]="'number'" [label]="'结算金额(元):'" [dirty]="ignoreDirty" [error]="settleTrafficFormError.money"></bs-text-input>
+            <bs-select formControlName ="trafficCompanyId" [fc]="settleTrafficForm.get('trafficCompanyId')" [label]="'与哪个运输方结算:'" [dirty]="ignoreDirty" [options]="partyListOther" [error]="settleTrafficFormError.trafficCompanyId"></bs-select>
+
+            <div class="form-group row">
+                <div class="col-10 ml-auto">
+                    <button type="submit" class="btn btn-info" >保存</button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)" >返回</button>
+                </div>
+            </div>
+        </form>
+
+
+        <div *ngIf="!isShowForm">
+
+            <table class="table table-bordered table-hover table-responsive" >
+                <thead>
+                <tr>
+                    <th>运输方结算ID</th>
+                    <th>核算月</th>
+                    <th>结算日期</th>
+                    <th>结算数量(吨)</th>
+                    <th>结算金额</th>
+
+                    <th>与哪个运输方结算</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let settle of settleTrafficList; trackBy: trackByFn">
+                    <td> {{settle.id}}</td>
+                    <td> {{settle.hsId | findKey : unitList : 'name'}}</td>
+
+                    <td> {{settle.settleDate }}</td>
+                    <td> {{settle.amount }}</td>
+                    <td> {{settle.money }}</td>
+
+                    <td> {{settle.trafficCompanyId | findKey : partyList : 'name'}}</td>
+
+                    <td>
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, settle)"> 修改 </button>
+                        <button class="btn btn-link btn-sm" (click)="deleteItem(settle)"> 删除 </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+        <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm" (click)="showForm(true)">添加结算</button>

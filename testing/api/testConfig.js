@@ -26,6 +26,10 @@ exports.user = {
     user2 : {
         phone: "13564568301",
         password: "123456"
+    },
+    user3 : {
+        phone: "18321805753",
+        password: "123456"
     }
 }
 

@@ -3,7 +3,8 @@
         <h3>
             {{businessType === 'ying' ? '应收单' : '仓押单'}}详情  ID:{{currentOrderId}} - 业务线: {{currentOrder?.line}}
 
-            <button type="button" class="btn btn-outline-secondary btn-sm float-right" [routerLink]="['/orders']">返回</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm float-right" [routerLink]="['/yingorders']" *ngIf="businessType === 'ying'">返回</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm float-right" [routerLink]="['/cangorders']" *ngIf="businessType === 'cang'">返回</button>
         </h3>
 
 
@@ -140,7 +141,8 @@
 
         <app-settle  *ngIf="currentTabIndex === 21 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerupstream'"></app-settle>
         <app-settle  *ngIf="currentTabIndex === 22 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerdownstream'"></app-settle>
-        <app-settle  *ngIf="currentTabIndex === 23 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settletraffic'"></app-settle>
+        <app-settletraffic  *ngIf="currentTabIndex === 23 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" ></app-settletraffic>
+
         <app-settle  *ngIf="currentTabIndex === 21 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerupstream'"></app-settle>
         <app-settle  *ngIf="currentTabIndex === 22 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerdownstream'"></app-settle>
 
