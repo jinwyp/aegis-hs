@@ -52,8 +52,8 @@
     <result column="ownerCapitalPaymentAmount" jdbcType="DECIMAL" property="ownerCapitalPaymentAmount" />
     <result column="upstreamCapitalPressure" jdbcType="DECIMAL" property="upstreamCapitalPressure" />
     <result column="downstreamCapitalPressure" jdbcType="DECIMAL" property="downstreamCapitalPressure" />
-    <result column="CCSUnInTypeNum" jdbcType="DECIMAL" property="CCSUnInTypeNum" />
-    <result column="CCSUnInTypeMoney" jdbcType="DECIMAL" property="CCSUnInTypeMoney" />
+    <result column="cssUninTypeNum" jdbcType="DECIMAL" property="cssUninTypeNum" />
+    <result column="cssUninTypeMoney" jdbcType="DECIMAL" property="cssUninTypeMoney" />
     <result column="unInvoicedAmountofMoney" jdbcType="DECIMAL" property="unInvoicedAmountofMoney" />
     <result column="cangPrePayment" jdbcType="DECIMAL" property="cangPrePayment" />
     <result column="settleGrossProfileNum" jdbcType="DECIMAL" property="settleGrossProfileNum" />
@@ -129,8 +129,8 @@
       ownerCapitalPaymentAmount,
       upstreamCapitalPressure,
       downstreamCapitalPressure,
-      CCSUnInTypeNum,
-      CCSUnInTypeMoney,
+      cssUninTypeNum,
+      cssUninTypeMoney,
       unInvoicedAmountofMoney,
       totalRepaymentInterest,
       totalServiceCharge,
@@ -150,7 +150,7 @@
       totalInstorageAmount,
       InstorageUnitPrice,
       totalStockNum,
-      totaloutstorageNum,
+      totalOutstorageNum,
       totalStockMoney,
       totalOutstorageMoney,
       ownerCapitalPressure

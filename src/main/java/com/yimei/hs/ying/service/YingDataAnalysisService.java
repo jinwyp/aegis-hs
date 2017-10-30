@@ -1,5 +1,7 @@
 package com.yimei.hs.ying.service;
 
+import com.yimei.hs.cang.dto.CangAnalysisData;
+import com.yimei.hs.cang.mapper.CangAnalysisDataMapper;
 import com.yimei.hs.same.entity.*;
 import com.yimei.hs.same.mapper.HuankuanMapMapper;
 import com.yimei.hs.same.mapper.OrderMapper;
@@ -37,7 +39,16 @@ public class YingDataAnalysisService {
 
     BigDecimal matchedUnloadEstimateCost = new BigDecimal("0");
     List<InvoiceAnalysis> invoiceAnalyses;
-    public YingAnalysisData findOne(Long morderId, long hsId) {
+
+
+
+
+    @Autowired
+    CangAnalysisDataMapper cangAnalysisDataMapper;
+
+
+
+    public YingAnalysisData findOneYing(Long morderId, long hsId) {
         BigDecimal unLoadEstimateCosts = new BigDecimal("0");
         //借款预估成本列表
         List<Jiekuan> unMathchjiekuans = removeMatchList(morderId, hsId);
@@ -67,6 +78,44 @@ public class YingDataAnalysisService {
         }
         return yingAnalysisData;
     }
+
+
+
+    public CangAnalysisData findOneCang(Long hsId, Long orderId) {
+
+
+
+
+        BigDecimal unLoadEstimateCosts = new BigDecimal("0");
+        //借款预估成本列表
+        List<Jiekuan> unMathchjiekuans = removeMatchList(orderId, hsId);
+        if (unMathchjiekuans!=null && unMathchjiekuans.size()>0) {
+
+            for (Jiekuan jiekuan : unMathchjiekuans) {
+                unLoadEstimateCosts = unLoadEstimateCosts.add(jiekuan.getLoadEstimateCost());
+            }
+        }
+
+        //未匹配完成的借款预估成本
+        unLoadEstimateCosts = unLoadEstimateCosts.add(matchedUnloadEstimateCost);
+        CangAnalysisData cangAnalysisData = cangAnalysisDataMapper.findOne(hsId,orderId);
+
+
+        //** 获取贸易公司已收到发票进项数量
+        List<InvoiceAnalysis> invoiceAnalysisList = getDate(orderId);
+        BigDecimal tradingCompanyInTypeNum= invoiceAnalysisList.stream().map(m -> m.getTotalAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal tradingCompanyInTpeMoneyAmount =invoiceAnalysisList.stream().map(m -> m.getTotalPriceTax()).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal invoicedMoneyAmount=invoiceAnalyses.stream().map(m -> m.getTotalPriceTax()).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        if (cangAnalysisData != null) {
+            cangAnalysisData.setTotalUnrepaymentEstimateCost(unLoadEstimateCosts);
+            cangAnalysisData.setInvoicedMoneyAmount(invoicedMoneyAmount);
+            cangAnalysisData.setTradingCompanyInTypeNum(tradingCompanyInTypeNum);
+            cangAnalysisData.setTradingCompanyInTpeMoneyAmount(tradingCompanyInTpeMoneyAmount);
+        }
+        return cangAnalysisData;
+    }
+
 
     /**
      * 获取核算月所有借款

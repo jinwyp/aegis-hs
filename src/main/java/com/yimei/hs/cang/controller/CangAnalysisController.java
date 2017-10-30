@@ -23,31 +23,11 @@ import org.springframework.web.bind.annotation.*;
  * Created by hary on 2017/9/15.
  */
 @RestController
-@RequestMapping("/api/business/cang")
+@RequestMapping("/api/business")
 public class CangAnalysisController {
 
     private static final Logger logger = LoggerFactory.getLogger(CangAnalysisController.class);
 
-    @Autowired
-    CangAnalysisService cangAnalysisService;
-    /**
-     *
-     * @param morderId
-     * @param hsId
-     * @return
-     */
-    @GetMapping("/{morderId}/analysis/{hsId}")
-    public ResponseEntity<Result<CangAnalysisData>> read(
-            @PathVariable("morderId") Long morderId,
-            @PathVariable("hsId") long hsId
-    ) {
-        CangAnalysisData cangAnalysisData = cangAnalysisService.findOne(hsId,morderId);
-        if (cangAnalysisData == null) {
-            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
-        } else {
-            return Result.ok(cangAnalysisData);
-        }
-    }
 
 
 

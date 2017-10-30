@@ -110,9 +110,9 @@ public class CangAnalysisData implements Serializable {
 
     private BigDecimal downstreamCapitalPressure;
 
-    private BigDecimal CCSUnInTypeNum;
+    private BigDecimal cssUninTypeNum;
 
-    private BigDecimal CCSUnInTypeMoney;
+    private BigDecimal cssUninTypeMoney;
 
     private BigDecimal unInvoicedAmountofMoney;
 

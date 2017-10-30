@@ -585,13 +585,13 @@ from v_1041_cang
 group by hsId, orderId;
 
 
---1051 CCS未收到进项数量	CCSUnInTypeNum	计算	备查账	【1040】核算结算量 - 【1037】CCS已收进项数量
+--1051 CCS未收到进项数量	cssUnIntypeNum	计算	备查账	【1040】核算结算量 - 【1037】CCS已收进项数量
 
 create view v_1051_ying as
 select
 v_1041_ying.hsId,
 v_1041_ying.orderId,
-v_1041_ying.finalSettleAmount-v_1037.totalCSSInTypeNumber as CCSUnInTypeNum
+v_1041_ying.finalSettleAmount-v_1037.totalCSSInTypeNumber as cssUnIntypeNum
 from v_1041_ying
      left join v_1037 on v_1037.hsId=v_1041_ying.hsId
 group by hsId, orderId;
@@ -600,19 +600,19 @@ create view v_1051_cang as
 select
 v_1041_cang.hsId,
 v_1041_cang.orderId,
-v_1041_cang.finalSettleAmount-v_1037.totalCSSInTypeNumber as CCSUnInTypeNum
+v_1041_cang.finalSettleAmount-v_1037.totalCSSInTypeNumber as cssUnIntypeNum
 from v_1041_cang
      left join v_1037 on v_1037.hsId=v_1041_cang.hsId
 group by hsId, orderId;
 
 
---1052 CCS未收到进项金额	CCSUnInTypeMoney	     	【1046】采购货款总额 + 【1041】贸易公司加价 - 【1038】CCS已收进项金额 - 【1027】代收代垫运费
+--1052 CCS未收到进项金额	ccsUnInTypeMoney	     	【1046】采购货款总额 + 【1041】贸易公司加价 - 【1038】CCS已收进项金额 - 【1027】代收代垫运费
 --1053	占压表未开票金额	unInvoicedAmountofMoney		【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费
 create view v_1052_ying  as
 select
 v_1046_ying.hsId,
 v_1046_ying.orderId,
-v_1046_ying.purchaseCargoAmountofMoney+v_1041_ying.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.dsddFee as CCSUnInTypeMoney,
+v_1046_ying.purchaseCargoAmountofMoney+v_1041_ying.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.dsddFee as ccsUnInTypeMoney,
 v_1046_ying.purchaseCargoAmountofMoney+v_1041_ying.tradingCompanyAddMoney-v_1039.invoicedMoneyAmount-v_1027.dsddFee as unInvoicedAmountofMoney
 from v_1046_ying
      left join v_1041_ying on v_1046_ying.hsId=v_1041_ying.hsId
@@ -627,7 +627,7 @@ create view v_1052_cang  as
 select
 v_1046_cang.hsId,
 v_1046_cang.orderId,
-v_1046_cang.purchaseCargoAmountofMoney+v_1041_cang.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.dsddFee as CCSUnInTypeMoney,
+v_1046_cang.purchaseCargoAmountofMoney+v_1041_cang.tradingCompanyAddMoney-v_1037.totalCCSInTypeMoney-v_1027.dsddFee as ccsUnInTypeMoney,
 v_1046_cang.purchaseCargoAmountofMoney+v_1041_cang.tradingCompanyAddMoney-v_1039.invoicedMoneyAmount-v_1027.dsddFee as unInvoicedAmountofMoney
 from v_1046_cang
      left join v_1041_cang on v_1046_cang.hsId=v_1041_cang.hsId
@@ -964,8 +964,8 @@ v_1047.externalCapitalPaymentAmount,
 v_1048_cang.ownerCapitalPaymentAmount,
 v_1049_cang.upstreamCapitalPressure,
 v_1050_cang.downstreamCapitalPressure,
-v_1051_cang.CCSUnInTypeNum,
-v_1052_cang.CCSUnInTypeMoney,
+v_1051_cang.cssUnIntypeNum,
+v_1052_cang.ccsUnInTypeMoney,
 v_1052_cang.unInvoicedAmountofMoney,
 v_1054_cang.cangPrePayment,
 v_3003.totalOutstorageNum as settleGrossProfileNum,
@@ -1092,8 +1092,8 @@ v_1047.externalCapitalPaymentAmount,
 v_1048_ying.ownerCapitalPaymentAmount,
 v_1049_ying.upstreamCapitalPressure,
 v_1050_ying.downstreamCapitalPressure,
-v_1051_ying.CCSUnInTypeNum,
-v_1052_ying.CCSUnInTypeMoney,
+v_1051_ying.cssUnIntypeNum,
+v_1052_ying.ccsUnInTypeMoney,
 v_1052_ying.unInvoicedAmountofMoney,
 v_1054_ying.yingPrePayment,
 v_1055.settleGrossProfileNum,

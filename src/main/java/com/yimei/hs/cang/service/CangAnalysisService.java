@@ -15,13 +15,5 @@ import org.springframework.stereotype.Service;
 @Service
 public class CangAnalysisService {
 
-    @Autowired
-    CangAnalysisDataMapper cangAnalysisDataMapper;
-
-
-
-    public CangAnalysisData findOne(Long hsId, Long orderId) {
-        return cangAnalysisDataMapper.findOne(hsId,orderId);
-    }
 
 }
