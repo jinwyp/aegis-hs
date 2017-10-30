@@ -26,30 +26,27 @@ describe('First test', () => {
 
 describe('用户注册登陆', function () {
 
-    it('注册成功 POST: /api/register', function (done) {
-        server.post('/api/register')
-            .set('Accept', 'application/json')
-            .send({
-                deptId : 2,
-                phone: "18321805753",
-                password: "123456"
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                done()
-            })
-    })
+    // it('注册成功 POST: /api/register', function (done) {
+    //     server.post('/api/register')
+    //         .set('Accept', 'application/json')
+    //         .send({
+    //             deptId : 2,
+    //             phone: "18321805753",
+    //             password: "123456"
+    //         })
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             done()
+    //         })
+    // })
 
     it('登陆成功 POST: /api/login', function (done) {
         server.post('/api/login')
             .set('Accept', 'application/json')
-            .send({
-                phone: "18321805753",
-                password: "123456"
-            })
+            .send(config.user.admin)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {

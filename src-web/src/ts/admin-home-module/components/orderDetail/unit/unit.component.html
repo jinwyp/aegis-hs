@@ -7,8 +7,8 @@
             <bs-text-input formControlName="contractBaseInterest" [fc]="orderUnitForm.get('contractBaseInterest')" [type]="'number'" [label]="'合同基准利率(%):'" [prompt]="'百分比 例如88.88'" [percent]="true" [dirty]="ignoreDirty" [error]="orderUnitFormError.contractBaseInterest"></bs-text-input>
 
             <bs-text-input formControlName="expectHKDays" [fc]="orderUnitForm.get('expectHKDays')" [type]="'number'" [label]="'预计回款天数:'" [dirty]="ignoreDirty" [error]="orderUnitFormError.expectHKDays"></bs-text-input>
-            <bs-text-input formControlName="tradeAddPrice" [fc]="orderUnitForm.get('tradeAddPrice')" [type]="'number'" [label]="'贸易公司加价(吨):'" [dirty]="ignoreDirty" [error]="orderUnitFormError.tradeAddPrice"></bs-text-input>
-            <bs-text-input formControlName="weightedPrice" [fc]="orderUnitForm.get('weightedPrice')" [type]="'number'" [label]="'加权单价(元):'" [dirty]="ignoreDirty" [error]="orderUnitFormError.weightedPrice"></bs-text-input>
+            <bs-text-input formControlName="tradeAddPrice" [fc]="orderUnitForm.get('tradeAddPrice')" [type]="'number'" [label]="'贸易公司加价(元/吨):'" [dirty]="ignoreDirty" [error]="orderUnitFormError.tradeAddPrice"></bs-text-input>
+            <bs-text-input formControlName="weightedPrice" [fc]="orderUnitForm.get('weightedPrice')" [type]="'number'" [label]="'加权单价(元/吨):'" [dirty]="ignoreDirty" [error]="orderUnitFormError.weightedPrice"></bs-text-input>
 
 
             <div class="form-group row">
@@ -32,7 +32,7 @@
                     <th>合同基准利率(%)</th>
                     <th>预计回款天数</th>
                     <th>贸易公司加价(元/吨)</th>
-                    <th>加权单价</th>
+                    <th>加权单价(元/吨)</th>
                     <th></th>
                 </tr>
                 </thead>
