@@ -1,8 +1,10 @@
 package com.yimei.hs.cang.dto;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
-
+@Data
 public class CangAnalysisData implements Serializable {
     private Long hsId;
 
@@ -22,13 +24,15 @@ public class CangAnalysisData implements Serializable {
 
     private BigDecimal totalRepaymentPrincipeAmount;
 
-    private BigDecimal totalrepaymentFee;
+    private BigDecimal totalRepaymentFee;
 
-    private BigDecimal totalrepaymentInterest;
+    private BigDecimal totalRepaymentInterest;
 
     private BigDecimal totalUnpayFee;
 
     private BigDecimal totalUnpayInterest;
+
+    private BigDecimal totalUnpayPrincipal;
 
     private BigDecimal outCapitalAmout;
 
@@ -60,13 +64,13 @@ public class CangAnalysisData implements Serializable {
 
     private BigDecimal totalBuyersettleGap;
 
-    private BigDecimal DSDDFee;
+    private BigDecimal dsddFee;
 
-    private BigDecimal HSHYFee;
+    private BigDecimal hssyFee;
 
-    private BigDecimal HSQYFee;
+    private BigDecimal hsqyFee;
 
-    private BigDecimal HSSYFee;
+    private BigDecimal hshyFee;
 
     private BigDecimal businessFee;
 
@@ -94,7 +98,7 @@ public class CangAnalysisData implements Serializable {
 
     private BigDecimal unsettlerBuyerNumber;
 
-    private BigDecimal CCSProfile;
+    private BigDecimal ccsProfile;
 
     private BigDecimal purchaseCargoAmountofMoney;
 
@@ -130,7 +134,7 @@ public class CangAnalysisData implements Serializable {
 
     private BigDecimal additionalTax;
 
-    private BigDecimal VAT;
+    private BigDecimal vat;
 
     private BigDecimal stampDuty;
 
@@ -155,6 +159,9 @@ public class CangAnalysisData implements Serializable {
 
     private BigDecimal tradingCompanyInTpeMoneyAmount;
 
+    private BigDecimal ownerCapitalPressure;
+    private BigDecimal totalOutstorageMoney;
+
     private static final long serialVersionUID = 1L;
 
-   }
+}

@@ -33,7 +33,6 @@ public class CangAnalysisController {
     /**
      *
      * @param morderId
-     * @param businessType
      * @param hsId
      * @return
      */
@@ -42,11 +41,11 @@ public class CangAnalysisController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("hsId") long hsId
     ) {
-        CangAnalysisData cangRuku = cangAnalysisService.findOne(hsId,morderId);
-        if (cangRuku == null) {
+        CangAnalysisData cangAnalysisData = cangAnalysisService.findOne(hsId,morderId);
+        if (cangAnalysisData == null) {
             return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
-            return Result.ok(cangRuku);
+            return Result.ok(cangAnalysisData);
         }
     }
 

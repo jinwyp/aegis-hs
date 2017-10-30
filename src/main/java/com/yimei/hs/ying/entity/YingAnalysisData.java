@@ -163,6 +163,10 @@ public class YingAnalysisData implements Serializable {
     private BigDecimal tradingCompanyInTypeNum;
 
     private BigDecimal tradingCompanyInTpeMoneyAmount;
+    //下游已结算未回款金额
+    private BigDecimal settledDownstreamHuikuanMoneny;
+
+    private BigDecimal ownerCapitalPressure;
 
     private static final long serialVersionUID = 1L;
 

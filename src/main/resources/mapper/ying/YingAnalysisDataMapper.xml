@@ -75,6 +75,10 @@
         <result column="totalUpstreamBail" jdbcType="DECIMAL" property="totalUpstreamBail"/>
         <result column="balanceUpstreamBail" jdbcType="DECIMAL" property="balanceUpstreamBail"/>
         <result column="balanceDownStreamBail" jdbcType="DECIMAL" property="balanceDownStreamBail"/>
+        <result column="ownerCapitalPressure" jdbcType="DECIMAL" property="ownerCapitalPressure"/>
+        <result column="settledDownstreamHuikuanMoneny" jdbcType="DECIMAL" property="settledDownstreamHuikuanMoneny"/>
+
+
     </resultMap>
 
     <select id="findOne" resultType="com.yimei.hs.ying.entity.YingAnalysisData">
@@ -153,7 +157,9 @@
       totalRefundUpBail,
       totalUpstreamBail,
       balanceUpstreamBail,
-      balanceDownStreamBail
+      balanceDownStreamBail,
+      settledDownstreamHuikuanMoneny,
+      ownerCapitalPressure
     FROM hs_yingDatabaseAnalysis
 
      WHERE hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }

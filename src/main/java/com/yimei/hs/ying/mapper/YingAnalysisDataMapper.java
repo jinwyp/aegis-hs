@@ -8,9 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface YingAnalysisDataMapper {
-    int insert(YingAnalysisData record);
 
-    int insertSelective(YingAnalysisData record);
 
     YingAnalysisData findOne(@Param("orderId") Long orderId, @Param("hsId")long hsId);
 
