@@ -195,10 +195,10 @@
                             <p class="card-text" title="汇总：入库金额">入库总金额: {{ unitStatistics?.totalInstorageAmount | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：出库数量">备查账 - 已出库数量: {{ unitStatistics?.totaloutstorageNum | number }}</p>
+                            <p class="card-text" title="汇总：出库数量">备查账 - 已出库数量: {{ unitStatistics?.totalOutstorageNum | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="【3002】入库总金额 ／ 【3001】入库总数量">入库单价: {{ unitStatistics?.InstorageUnitPrice | number }}</p>
+                            <p class="card-text" title="【3002】入库总金额 ／ 【3001】入库总数量">入库单价: {{ unitStatistics?.instorageUnitPrice | number }}</p>
                         </div>
                         <div class="col-3">
                             <p class="card-text" title="【3001】入库总数量 - 【3003】已出库数量">备查账/占压表 - 库存数量: {{ unitStatistics?.totalStockNum | number }}</p>
@@ -208,7 +208,7 @@
                         </div>
 
                         <div class="col-3">
-                            <p class="card-text" title="汇总出库金额">已出库金额: {{ unitStatistics?.totaloutstorageMoney | number }}</p>
+                            <p class="card-text" title="汇总出库金额">已出库金额: {{ unitStatistics?.totalOutstorageMoney | number }}</p>
                         </div>
                     </div>
 

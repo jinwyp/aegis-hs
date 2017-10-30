@@ -51,8 +51,8 @@
         <result column="ownerCapitalPaymentAmount" jdbcType="DECIMAL" property="ownerCapitalPaymentAmount"/>
         <result column="upstreamCapitalPressure" jdbcType="DECIMAL" property="upstreamCapitalPressure"/>
         <result column="downstreamCapitalPressure" jdbcType="DECIMAL" property="downstreamCapitalPressure"/>
-        <result column="cssUnInTypeNum" jdbcType="DECIMAL" property="cssUnInTypeNum"/>
-        <result column="cssUnInTypeMoney" jdbcType="DECIMAL" property="cssUnInTypeMoney"/>
+        <result column="cssUninTypeNum" jdbcType="DECIMAL" property="cssUninTypeNum"/>
+        <result column="cssUninTypeMoney" jdbcType="DECIMAL" property="cssUninTypeMoney"/>
         <result column="unInvoicedAmountofMoney" jdbcType="DECIMAL" property="unInvoicedAmountofMoney"/>
         <result column="yingPrePayment" jdbcType="DECIMAL" property="yingPrePayment"/>
         <result column="settleGrossProfileNum" jdbcType="DECIMAL" property="settleGrossProfileNum"/>
@@ -132,8 +132,8 @@
       ownerCapitalPaymentAmount,
       upstreamCapitalPressure,
       downstreamCapitalPressure,
-      cssUnInTypeNum,
-      cssUnInTypeMoney,
+      cssUninTypeNum,
+      cssUninTypeMoney,
       unInvoicedAmountofMoney,
       totalRepaymentInterest,
       totalServiceCharge,
