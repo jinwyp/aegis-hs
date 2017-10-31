@@ -1,13 +1,13 @@
 use hsdb;
 --运费相关 付款运费金额
 create view v_1001 as
-                   select
-                   orderId,
-                   hsId,
-                   sum(payAmount) as totalPayTrafficFee
-                   from hs_same_fukuan
-                   where payUsage= 'FREIGNHT' and deleted=0
-                   group by  orderId, hsId;
+select
+orderId,
+hsId,
+sum(payAmount) as totalPayTrafficFee
+from hs_same_fukuan
+where payUsage= 'FREIGNHT' and deleted=0
+group by  orderId, hsId;
 
 
 create view v_1002 as
@@ -333,15 +333,16 @@ group by  hsId,orderId;
 
 
 --v_2001 已到场数量  未到场数量  发运总数量
-create view  v_2001 as select
-                       orderId,
-                       hsId,
-                       case when  arriveStatus = 'ARRIVE' then sum(fyamount) else 0 end as  totalUnarriveNum,
-                       case when  arriveStatus = 'UNARRIVE' then sum(fyamount) else 0 end as  totalArriveNum,
-                       sum(hsdb.hs_ying_fayun.fyamount) as totalFayunNum
-                       from hsdb.hs_ying_fayun
-                       where deleted = 0
-                       group by orderId, hsId;
+create view  v_2001 as
+select
+orderId,
+hsId,
+sum(case when  arriveStatus = 'ARRIVE' then fyamount else 0 end ) as  totalArriveNum,
+sum(case when  arriveStatus=  'UNARRIVE' then fyamount else 0 end ) as  totalUnarriveNum ,
+sum(hsdb.hs_ying_fayun.fyamount) as totalFayunNum
+from hsdb.hs_ying_fayun
+where deleted = 0
+group by orderId, hsId;
 
 --2004  保证金相关
 --2004收上游保证金	totalUpstreamBail	【保证金】		汇总： 保证金类型 = “收上游保证金”的保证金金额
