@@ -120,10 +120,10 @@
 
                 <div class="form-row ">
                     <div class="col-3">
-                        <bs-datepicker formControlName="createDateStart" [fc]="orderSearchForm.get('createDateStart')" [label]="'创建时间:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
+                        <bs-datepicker formControlName="createDateStart" [fc]="orderSearchForm.get('createDateStart')" [label]="'创建时间:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
                     </div>
                     <div class="col-3">
-                        <bs-datepicker formControlName="createDateEnd" [fc]="orderSearchForm.get('createDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
+                        <bs-datepicker formControlName="createDateEnd" [fc]="orderSearchForm.get('createDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
                     </div>
                     <div class="col-6">
                         <bs-select formControlName ="status" [fc]="orderSearchForm.get('status')" [label]="'状态:'" [options]="orderStatusList" [addAllOptions]="true"></bs-select>
