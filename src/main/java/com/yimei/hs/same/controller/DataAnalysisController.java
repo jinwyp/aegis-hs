@@ -1,23 +1,15 @@
-package com.yimei.hs.ying.controller;
+package com.yimei.hs.same.controller;
 
-import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.Result;
-import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
-import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.cang.dto.CangAnalysisData;
-import com.yimei.hs.cang.service.CangAnalysisService;
-import com.yimei.hs.enums.BusinessType;
-import com.yimei.hs.ying.dto.PageYingBailDTO;
 import com.yimei.hs.ying.entity.YingAnalysisData;
-import com.yimei.hs.ying.entity.YingBail;
-import com.yimei.hs.ying.service.YingDataAnalysisService;
+import com.yimei.hs.same.service.DataAnalysisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -26,16 +18,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/business")
 @RestController
 @Logined
-public class YingDataAnalysisController {
+public class DataAnalysisController {
 
-    private static final Logger logger = LoggerFactory.getLogger(YingDataAnalysisController.class);
-
-    @Autowired
-    YingDataAnalysisService yingDataAnalysisService;
+    private static final Logger logger = LoggerFactory.getLogger(DataAnalysisController.class);
 
     @Autowired
-    CangAnalysisService cangAnalysisService;
-
+    DataAnalysisService dataAnalysisService;
 
     /**
      * 获取bail
@@ -48,7 +36,7 @@ public class YingDataAnalysisController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("hsId") long hsId) {
         logger.debug("id {}",hsId);
-        YingAnalysisData bail = yingDataAnalysisService.findOneYing(morderId,hsId);
+        YingAnalysisData bail = dataAnalysisService.findOneYing(morderId,hsId);
         if (bail == null) {
             return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
@@ -66,7 +54,7 @@ public class YingDataAnalysisController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("hsId") long hsId
     ) {
-        CangAnalysisData cangAnalysisData = yingDataAnalysisService.findOneCang(hsId,morderId);
+        CangAnalysisData cangAnalysisData = dataAnalysisService.findOneCang(hsId,morderId);
         if (cangAnalysisData == null) {
             return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
