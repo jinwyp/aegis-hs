@@ -107,7 +107,7 @@ public class SettleBuyerController {
             @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(CreateGroup.class) SettleBuyer settleBuyer
     ) {
-//        if (settleSellerService.selectHsAndOrderId(morderId, settleBuyer.getHsId())) {
+        if (!settleSellerService.selectHsAndOrderId(morderId, settleBuyer.getHsId())) {
 
             if (isValidReq(pos, businessType)) {
 
@@ -115,10 +115,10 @@ public class SettleBuyerController {
                 return Result.ok(settleBuyer);
             }
             return Result.error(4001, "invalid request");
-//        } else {
-//            return Result.error(4001,"本核算月结算已经完成，不能添加该月下游结算",HttpStatus.BAD_REQUEST);
-//
-//        }
+        } else {
+            return Result.error(4001,"本核算月结算已经完成，不能添加该月下游结算",HttpStatus.BAD_REQUEST);
+
+        }
     }
 
     /**

@@ -5,6 +5,7 @@ import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.OrderStatus;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -41,8 +42,10 @@ public class PageOrderDTO extends BaseFilter<PageOrderDTO> {
     private OrderStatus status;
 
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate createDateStart;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate createDateEnd;
 
 }

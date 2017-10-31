@@ -5,13 +5,16 @@ import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.cang.dto.CangAnalysisData;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageFukuanDTO;
 import com.yimei.hs.same.entity.Fukuan;
 import com.yimei.hs.same.entity.Order;
+import com.yimei.hs.same.service.DataAnalysisService;
 import com.yimei.hs.same.service.FukuanService;
 import com.yimei.hs.same.service.JiekuanService;
 import com.yimei.hs.same.service.OrderService;
+import com.yimei.hs.ying.entity.YingAnalysisData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -38,6 +42,9 @@ public class FukuanController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private DataAnalysisService dataAnalysisService;
 
     /**
      * 获取付款-分页
@@ -100,30 +107,54 @@ public class FukuanController {
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) Fukuan fukuan
     ) {
-        Order order = orderService.findOne(fukuan.getOrderId());
-        if (order == null) {
-            return Result.error(4001, "创建失败");
+
+        BigDecimal totalPaymentMoney = fukuan.getPayAmount();
+        BigDecimal purchaseCargoAmountofMoney = new BigDecimal("0");
+
+        if (businessType.equals(BusinessType.ying)) {
+            YingAnalysisData yingAnalysisData = dataAnalysisService.findOneYing(morderId, fukuan.getHsId());
+            totalPaymentMoney = totalPaymentMoney.add((yingAnalysisData.getTotalPaymentAmount() == null ? new BigDecimal("0") : yingAnalysisData.getTotalPaymentAmount()));
+            purchaseCargoAmountofMoney = purchaseCargoAmountofMoney.add((yingAnalysisData.getPurchaseCargoAmountofMoney() == null ? new BigDecimal("0") : yingAnalysisData.getPurchaseCargoAmountofMoney()));
+        } else if (businessType.equals(BusinessType.cang)) {
+            CangAnalysisData cangAnalysisData = dataAnalysisService.findOneCang(morderId, fukuan.getHsId());
+            totalPaymentMoney = totalPaymentMoney.add((cangAnalysisData.getTotalPaymentAmount() == null ? new BigDecimal("0") : cangAnalysisData.getTotalPaymentAmount()));
+            purchaseCargoAmountofMoney = purchaseCargoAmountofMoney.add((cangAnalysisData.getPurchaseCargoAmountofMoney() == null ? new BigDecimal("0") : cangAnalysisData.getPurchaseCargoAmountofMoney()));
         }
-        fukuan.setOrderId(morderId);
-        if (order.getMainAccounting() != fukuan.getCapitalId()) {
-            if (fukuan.getJiekuan() != null) {
-                int rtn = fukuanService.create(fukuan,true);
-                if (rtn != 1) {
+
+        if (purchaseCargoAmountofMoney != null) {
+            // 付款的限制条件：付款总金额 < 当前计算出的采购货款总额
+            if (purchaseCargoAmountofMoney.compareTo(totalPaymentMoney) == 1) {
+                Order order = orderService.findOne(fukuan.getOrderId());
+                if (order == null) {
                     return Result.error(4001, "创建失败");
                 }
-                return Result.ok(fukuan);
+                fukuan.setOrderId(morderId);
+                if (order.getMainAccounting() != fukuan.getCapitalId()) {
+                    if (fukuan.getJiekuan() != null) {
+                        int rtn = fukuanService.create(fukuan, true);
+                        if (rtn != 1) {
+                            return Result.error(4001, "创建失败");
+                        }
+                        return Result.ok(fukuan);
+                    } else {
+                        return Result.error(4001, "参数不匹配");
+                    }
+                } else {
+
+                    int rtn = fukuanService.create(fukuan, false);
+                    if (rtn != 1) {
+                        logger.error("创建失败: {}", fukuan);
+                        return Result.error(4001, "创建失败");
+                    }
+                    return Result.ok(fukuan);
+                }
             } else {
-                return Result.error(4001, "参数不匹配");
+                return Result.error(4001, "付款总金额不能大于采购货款总额");
             }
         } else {
-
-            int rtn = fukuanService.create(fukuan,false);
-            if (rtn != 1) {
-                logger.error("创建失败: {}", fukuan);
-                return Result.error(4001, "创建失败");
-            }
-            return Result.ok(fukuan);
+            return Result.error(4001, "创建失败,采购货款总额为空");
         }
+
 
     }
 

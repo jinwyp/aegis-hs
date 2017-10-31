@@ -125,7 +125,7 @@ public class YingFayunController {
         }
         yingFayun.setOrderId(morderId);
         int rtn;
-//        if (settleSellerService.selectHsAndOrderId(morderId, yingFayun.getHsId())) {
+        if (!settleSellerService.selectHsAndOrderId(morderId, yingFayun.getHsId())) {
 
             try {
                 rtn = yingFayunService.create(yingFayun);
@@ -136,9 +136,9 @@ public class YingFayunController {
                 return Result.error(4001, "创建失败", HttpStatus.BAD_REQUEST);
             }
             return Result.ok(yingFayun);
-//        } else {
-//            return Result.error(4001,"本核算月结算已经完成，不能添加发运",HttpStatus.BAD_REQUEST);
-//        }
+        } else {
+            return Result.error(4001,"本核算月结算已经完成，不能添加发运",HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**

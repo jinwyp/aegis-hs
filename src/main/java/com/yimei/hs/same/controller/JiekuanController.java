@@ -67,7 +67,7 @@ public class JiekuanController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId) {
         Long capitalId = orderService.findOne(morderId).getMainAccounting();
-        return Result.ok(jiekuanService.getListUnfinished(morderId,capitalId));
+        return Result.ok(jiekuanService.getListUnfinished(morderId, capitalId));
     }
 
     /**
@@ -102,7 +102,7 @@ public class JiekuanController {
             @RequestBody @Validated(CreateGroup.class) Jiekuan jiekuan
     ) {
         jiekuan.setOrderId(morderId);
-//        if (settleSellerService.selectHsAndOrderId(morderId, jiekuan.getHsId())) {
+        if (!settleSellerService.selectHsAndOrderId(morderId, jiekuan.getHsId())) {
             if (jiekuan.getAmount().compareTo(BigDecimal.ZERO) == 1 && jiekuan.getAmount().compareTo(new BigDecimal("99999999.99")) <= 0) {
 
 
@@ -115,9 +115,9 @@ public class JiekuanController {
             } else {
                 return Result.error(4001, "创建失败");
             }
-//        } else {
-//            return Result.error(4001,"本核算月结算已经完成，不能添加该月借款",HttpStatus.BAD_REQUEST);
-//        }
+        } else {
+            return Result.error(4001, "本核算月结算已经完成，不能添加该月借款", HttpStatus.BAD_REQUEST);
+        }
 
     }
 

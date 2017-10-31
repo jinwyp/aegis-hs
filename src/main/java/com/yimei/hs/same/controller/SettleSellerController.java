@@ -5,10 +5,13 @@ import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.cang.dto.CangAnalysisData;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageSettleSellerDTO;
 import com.yimei.hs.same.entity.SettleSeller;
+import com.yimei.hs.same.service.DataAnalysisService;
 import com.yimei.hs.same.service.SettleSellerService;
+import com.yimei.hs.ying.entity.YingAnalysisData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 /**
  * Created by hary on 2017/9/21.
@@ -29,6 +34,9 @@ public class SettleSellerController {
 
     @Autowired
     private SettleSellerService settleSellerService;
+
+    @Autowired
+    private DataAnalysisService dataAnalysisService;
 
     private boolean isValidReq(String pos, BusinessType businessType) {
         return (businessType.equals(BusinessType.ying) && pos.equals("upstream"))
@@ -49,8 +57,6 @@ public class SettleSellerController {
             PageSettleSellerDTO pageSettleSellerDTO) {
 
         pageSettleSellerDTO.setOrderId(morderId);
-
-
         if (isValidReq(pos, businessType)) {
             return Result.ok(settleSellerService.getPage(pageSettleSellerDTO));
         }
@@ -98,16 +104,39 @@ public class SettleSellerController {
         settleSeller.setOrderId(morderId);
         if (isValidReq(pos, businessType)) {
 
-            boolean  exit=settleSellerService.selectHsAndOrderId(morderId, settleSeller.getHsId());
+            BigDecimal totalHuikuanPaymentMoney = new BigDecimal("0");
+            BigDecimal totalPaymentAmount = new BigDecimal("0");
+
+            if (businessType.equals(BusinessType.ying)) {
+                YingAnalysisData yingAnalysisData = dataAnalysisService.findOneYing(morderId, settleSeller.getHsId());
+                totalHuikuanPaymentMoney = totalHuikuanPaymentMoney.add((yingAnalysisData.getTotalHuikuanPaymentMoney()==null?new BigDecimal("0"):yingAnalysisData.getTotalHuikuanPaymentMoney()));
+                totalPaymentAmount = totalPaymentAmount.add((yingAnalysisData.getPurchaseCargoAmountofMoney() == null ? new BigDecimal("0") : yingAnalysisData.getPurchaseCargoAmountofMoney())
+                        .subtract((yingAnalysisData.getTotalTradeGapFee() == null ? new BigDecimal("0") : yingAnalysisData.getTotalTradeGapFee())
+                        ));
+            } else if (businessType.equals(BusinessType.cang)) {
+                CangAnalysisData cangAnalysisData = dataAnalysisService.findOneCang(morderId, settleSeller.getHsId());
+                totalHuikuanPaymentMoney = totalHuikuanPaymentMoney.add((cangAnalysisData.getTotalHuikuanPaymentMoney()==null?new BigDecimal("0"):cangAnalysisData.getTotalHuikuanPaymentMoney()));
+                totalPaymentAmount = totalPaymentAmount.add((cangAnalysisData.getPurchaseCargoAmountofMoney() == null ? new BigDecimal("0") : cangAnalysisData.getPurchaseCargoAmountofMoney())
+                        .subtract((cangAnalysisData.getTotalTradeGapFee() == null ? new BigDecimal("0") : cangAnalysisData.getTotalTradeGapFee())
+                        ));
+            }
+
+            boolean exit = settleSellerService.selectHsAndOrderId(morderId, settleSeller.getHsId());
             if (exit) {
                 return Result.error(4001, "记录已存在");
             } else {
-                int rtn = settleSellerService.create(settleSeller);
-                if (rtn != 1) {
-                    logger.error("创建失败: {}", settleSeller);
+                 //    上游结算的限制条件：汇总回款总额 > 除贸易差价外的付款总额；
+                if (totalHuikuanPaymentMoney.compareTo(totalPaymentAmount) == 1) {
+
+                    int rtn = settleSellerService.create(settleSeller);
+                    if (rtn != 1) {
+                        logger.error("创建失败: {}", settleSeller);
+                        return Result.error(4001, "创建失败");
+                    }
+                    return Result.ok(settleSeller);
+                } else {
                     return Result.error(4001, "创建失败");
                 }
-                return Result.ok(settleSeller);
             }
 
         }

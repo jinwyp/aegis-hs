@@ -106,12 +106,15 @@
             <if test="downstreamId!=null">AND downstreamId = #{downstreamId, jdbcType=BIGINT}</if>
             <if test="mainAccounting!=null">AND mainAccounting = #{mainAccounting, jdbcType=BIGINT}</if>
             <if test="status!=null">AND status = #{status, jdbcType=VARCHAR}</if>
-            <if test="createDateStart!=null"> AND not tsc lt #{createDateStart, jdbcType=TIMESTAMP}</if>
-            <if test="createDateEnd!=null"> AND not tsc gt  #{createDateEnd, jdbcType=TIMESTAMP}</if>
+            <if test="createDateStart!=null">  <![CDATA[   AND DATE_FORMAT(tsc, '%Y-%m-%d')>=  DATE_FORMAT(#{createDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="createDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(tsc, '%Y-%m-%d') <= DATE_FORMAT(#{createDateEnd}, '%Y-%m-%d')]]></if>
         </where>
+
 
     </select>
 
+    <!--<if test="createDateStart!=null"> AND  tsc > #{createDateStart, jdbcType=TIMESTAMP}</if>-->
+    <!--<if test="createDateEnd!=null"> AND    tsc <  #{createDateEnd, jdbcType=TIMESTAMP}</if>-->
     <select id="hasOrder" resultType="java.lang.Boolean">
         SELECT count(id)
         FROM hs_same_order
