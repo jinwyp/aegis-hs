@@ -62,7 +62,7 @@ select
 jiekuan.hsId,
 jiekuan.orderId,
 jiekuan.id,
-sum(amount*IFNULL(useInterest,0) * IFNULL(useDays,0)/360)  as totalUnrepaymentEstimateCost
+IFNULL(sum(IFNULL(amount,0)*IFNULL(useInterest,0) * IFNULL(useDays,0)/360),0)  as totalUnrepaymentEstimateCost
 from hs_same_jiekuan jiekuan
      left join hs_same_huankuan_map map
      on jiekuan.id=map.jiekuanId
@@ -289,52 +289,47 @@ group by orderId,hsId;
 --发票相关
 --1035 贸易公司已收到的进项数量 金额 --1035  1036
 
---1037 ccs一手到进项数量
-create view v_1037_child1 as
+create view v_1035 as
 select
-invoiceId ,
-sum(priceAndTax) as totalPriceTax,
-sum(cargoAmount) as totalAmount
-from hs_same_invoice_detail
-where deleted=0
-group by invoiceId ;
-
-create view v_1037_child2 as
-select *
-from hs_same_invoice invoice
-left join v_1037_child1
-on invoice.id=v_1037_child1.invoiceId
-where invoice.invoiceDirection='INCOME'and deleted=0;
+invoice.hsId,
+invoice.orderId,
+sum(detail.cargoAmount) as tradingCompanyInTypeNum,
+sum(detail.priceAndTax) as tradingCompanyInTpeMoneyAmount
+from hs_same_invoice_detail detail
+     inner join hs_same_invoice invoice on detail.invoiceId= invoice.id
+     inner join hs_same_order orders on invoice.orderId=orders.id
+     inner join hs_same_order_party party on party.orderId=orders.id and party.custType='TRAFFICKCER'and invoice.receiverId=party.customerId
+where detail.deleted =0 and invoice.invoiceDirection='INCOME' and invoice.openCompanyId=orders.upstreamId
+group by  hsId,orderId;
 
 
+--1037 ccs一手到进项数量
 --1037Css已收到进项数量   1038Css已收到进项金额
 create view v_1037 as
 select
-hsId,
-orderId,
-sum(totalAmount) as totalCSSInTypeNumber,
-sum(totalPriceTax) as totalCCSInTypeMoney
-from
-v_1037_child2 as aa
-left JOIN hs_same_order orderSame on aa.orderId =orderSame.id
-where aa.openCompanyId =orderSame.mainAccounting and aa.deleted =0
+invoice.hsId,
+invoice.orderId,
+sum(detail.cargoAmount) as totalCSSInTypeNumber,
+sum(detail.priceAndTax) as totalCCSInTypeMoney
+from hs_same_invoice_detail detail
+     inner join hs_same_invoice invoice on detail.invoiceId= invoice.id
+     inner join hs_same_order orders on invoice.orderId=orders.id
+where detail.deleted =0 and invoice.invoiceDirection='INCOME' and invoice.openCompanyId=orders.mainAccounting
 group by hsId,orderId;
 
 
---1039占压表已开票金额
-
+--  invoicedMoneyAmount 1039占压表已开票金额
 create view v_1039 as
 select
-hsId,
-orderId,
-sum(totalAmount) as InvoicedMoneyNum,
-sum(totalPriceTax) as invoicedMoneyAmount
-from
-v_1037_child2 as aa
-left JOIN hs_same_order orderSame on aa.orderId =orderSame.id
-where aa.openCompanyId =orderSame.upstreamId and aa.deleted =0
-group by hsId,orderId;
-
+invoice.hsId,
+invoice.orderId,
+sum(detail.cargoAmount) as invoicedMoneyNum,
+sum(detail.priceAndTax) as invoicedMoneyAmount
+from hs_same_invoice_detail detail
+     inner join hs_same_invoice invoice on detail.invoiceId= invoice.id
+     inner join hs_same_order orders on invoice.orderId=orders.id
+where detail.deleted =0 and invoice.invoiceDirection='INCOME' and invoice.openCompanyId=orders.upstreamId
+group by  hsId,orderId;
 
 
 --v_2001 已到场数量  未到场数量  发运总数量
@@ -954,7 +949,9 @@ v_1027.serviceFee,
 v_1027.salesFeeAmount,
 v_1037.totalCCSInTypeMoney,
 v_1037.totalCSSInTypeNumber,
-v_1039.InvoicedMoneyNum,
+v_1035.tradingCompanyInTypeNum,
+v_1035.tradingCompanyInTpeMoneyAmount,
+v_1039.invoicedMoneyNum,
 v_1039.invoicedMoneyAmount,
 v_1041_cang.finalSettleAmount,
 v_1041_cang.saleCargoAmountofMoney,
@@ -1012,6 +1009,7 @@ from base as temp
      left join v_1023   on v_1023.hsId=temp.hsId
      left join v_1024   on v_1024.hsId=temp.hsId
      left join v_1027   on v_1027.hsId=temp.hsId
+     left join v_1035   on v_1035.hsId=temp.hsId
      left join v_1037   on v_1037.hsId=temp.hsId
      left join v_1039  on  v_1039.hsId=temp.hsId
      left join v_1041_cang  on  v_1041_cang.hsId=temp.hsId
@@ -1080,9 +1078,11 @@ v_1027.businessFee,
 v_1027.superviseFee,
 v_1027.serviceFee,
 v_1027.salesFeeAmount,
+v_1035.tradingCompanyInTypeNum,
+v_1035.tradingCompanyInTpeMoneyAmount,
 v_1037.totalCCSInTypeMoney,
 v_1037.totalCSSInTypeNumber,
-v_1039.InvoicedMoneyNum,
+v_1039.invoicedMoneyNum,
 v_1039.invoicedMoneyAmount,
 v_1041_ying.finalSettleAmount,
 v_1041_ying.saleCargoAmountofMoney,
@@ -1144,6 +1144,7 @@ from base as temp
      left join v_1023   on v_1023.hsId=temp.hsId
      left join v_1024   on v_1024.hsId=temp.hsId
      left join v_1027   on v_1027.hsId=temp.hsId
+     left join v_1035   on v_1035.hsId=temp.hsId
      left join v_1037   on v_1037.hsId=temp.hsId
      left join v_1039   on  v_1039.hsId=temp.hsId
      left join v_1041_ying on  v_1041_ying.hsId=temp.hsId
@@ -1189,106 +1190,3 @@ group by temp.hsId,temp.orderId;
 
 
 
-
-----settle_buyyer 下游结算
---create view settle_buyer_v1 as  select
---                  orderId,
---                  hsId,
---                  sum(amount) as amount,
---                  sum(money) as money,
---                  sum(settleGap) as settleGap
---               from hsdb.hs_same_settle_buyer
---               where deleted = 0
---               group by orderId, hsId;
---
---create view settle_buyer as select
---         a.orderId,
---         a.hsId,
---         a.amount as amount,
---         a.money as moneny,
---         a.settleGap as settleGap,
---         a.amount * config.tradeAddPrice as tradeAddMoney
---        from settle_buyer_v1 a
---      left join hsdb.hs_same_order_config config on a.hsId = config.id
---      group by a.orderId, a.orderId;
---
---
-----104 核算结算量
---create view  v_104 as select
---   v_103.orderId,
---   v_103.hsId,
---   v_103.fYAmount - settle_buyer.settleGap as hsAmount
---   from  v_103
---   left join settle_buyer on v_103.hsId=settle_buyer.hsId and settle_buyer.orderId=v_103.orderId
---   group by orderId, hsId;
---
---
--- --105 贸易公司加价  核算结算量* 贸易公司加价
---create view v_105 as select
---         v_104.orderId,
---         v_104.hsId,
---         hsAmount * config.tradeAddPrice as  tradeAddMoney
---         from  v_104
---               left join hsdb.hs_same_order_config config on v_104.hsId = config.id
---         group by orderId, hsId;
---
-----106 汇总 运费为代收代垫运费的金额
---
---create view  v_106 as select
---       orderId,
---       hsId,
---       sum(amount) as amount
---       from hs_same_fee
---       where name='HELP_RECIVE_PAY_FEE'
---       group by orderId, hsId;
---
-----107 汇总 运费为代收代垫运费的金额
---
---create view  v_107 as select
---                      hs_same_fee.orderId,
---                      hs_same_fee.hsId,
---                      sum(hs_same_fee.amount) - v_106.amount as amount
---                      from hs_same_fee
---                      left  join  v_106  on v_106.hsId=hs_same_fee.hsId and v_106.orderId=hs_same_fee.orderId
---                      group by orderId, hsId;
---
-----108 下游已结算数量
-----109 下游已结算数量
-----settle_buyer 108 amount 109 money
---
-----110 下游未结算量
---create view  v_110 as select
---                      v_104.orderId,
---                      v_104.hsId,
---                      v_104.hsAmount - settle_buyer.amount as amount
---                      from v_104
---                       left  join  settle_buyer  on v_104.hsId=settle_buyer.hsId and v_104.orderId=settle_buyer.orderId
---                      group by orderId, hsId;
---
-----create view  v_110 as select
-----                      hs_same_fee.orderId,
-----                      hs_same_fee.hsId,
-----
-----                      from
-----                       left  join  v_106  on v_106.hsId=hs_same_fee.hsId and v_106.orderId=hs_same_fee.orderId
-----                      group by orderId, hsId;
---
-----
-----create view v_all as select
-----  order.id,
-----  order.businessType,
-----  v_101.arriveAmount
-----from hs_same_order order
-----left join v_101 on order.id = v_101.orderId
-----left join v_102 on order.id = v_102.orderId
---
---
-----select a.*, main.name from (
-----
-----select m_101.orderId, m_101.hsId, m_101.i101, m_102.i102 from m_101  left join m_102 on m_101.orderId = m_102.orderId and m_101.hsId = m_102.hsId
-----union
-----select m_102.orderId, m_102.hsId, m_101.i101, m_102.i102 from m_102  left join m_101 on m_101.orderId = m_102.orderId and m_101.hsId = m_102.hsId
-----
-----) a left join main on a.orderId = main.id;
---
---

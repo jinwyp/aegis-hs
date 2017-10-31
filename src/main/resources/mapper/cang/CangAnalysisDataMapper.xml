@@ -39,8 +39,8 @@
     <result column="salesFeeAmount" jdbcType="DECIMAL" property="salesFeeAmount" />
     <result column="totalCCSInTypeMoney" jdbcType="DECIMAL" property="totalCCSInTypeMoney" />
     <result column="totalCSSInTypeNumber" jdbcType="DECIMAL" property="totalCSSInTypeNumber" />
-    <result column="InvoicedMoneyNum" jdbcType="DECIMAL" property="invoicedMoneyNum" />
-    <result column="InvoicedMoneyAmount" jdbcType="DECIMAL" property="invoicedMoneyAmount" />
+    <result column="invoicedMoneyNum" jdbcType="DECIMAL" property="invoicedMoneyNum" />
+    <result column="invoicedMoneyAmount" jdbcType="DECIMAL" property="invoicedMoneyAmount" />
     <result column="finalSettleAmount" jdbcType="DECIMAL" property="finalSettleAmount" />
     <result column="saleCargoAmountofMoney" jdbcType="DECIMAL" property="saleCargoAmountofMoney" />
     <result column="tradingCompanyAddMoney" jdbcType="DECIMAL" property="tradingCompanyAddMoney" />
@@ -116,7 +116,9 @@
       salesFeeAmount,
       totalCCSInTypeMoney,
       totalCSSInTypeNumber,
-      InvoicedMoneyNum,
+      tradingCompanyInTypeNum,
+      tradingCompanyInTpeMoneyAmount,
+      invoicedMoneyNum,
       invoicedMoneyAmount,
       finalSettleAmount,
       saleCargoAmountofMoney,
