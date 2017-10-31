@@ -258,6 +258,9 @@ export class OrderListComponent implements OnInit {
         },
         'customerId'  : {
             'required'      : '请选择公司!'
+        },
+        'position'  : {
+            'required'      : '请选择位置!'
         }
     }
 
@@ -304,7 +307,7 @@ export class OrderListComponent implements OnInit {
         const postData = this.orderForm.value
 
         postData.businessType = this.businessType
-        postData.orderPartyList = this.otherParty1List
+        postData.orderPartyList = this.otherParty1List.concat(this.otherParty2List)
         delete postData.deptId
 
         if (this.isAddNew) {
@@ -343,6 +346,7 @@ export class OrderListComponent implements OnInit {
             this.isAddNew = true
 
             this.otherParty1List = []
+            this.otherParty2List = []
             this.orderForm.patchValue({
                 'deptId'    : '',
                 'teamId'    : '',
@@ -400,10 +404,29 @@ export class OrderListComponent implements OnInit {
     }
 
     createNewOtherParty () {
+
         if (this.orderOtherPartyForm.invalid) {
             this.orderOtherPartyFormInputChange(this.orderOtherPartyForm.value)
             this.ignoreDirty = true
 
+            return
+        }
+
+        if (this.orderOtherPartyForm.value.custType === -1 || this.orderOtherPartyForm.value.customerId === -1 || this.orderOtherPartyForm.value.position === -1) {
+
+            if (this.orderOtherPartyForm.value.custType === -1) {
+                this.orderOtherPartyFormError['custType'] = '请选择客户类型!'
+            }
+
+            if (this.orderOtherPartyForm.value.customerId === -1) {
+                this.orderOtherPartyFormError['customerId'] = '请选择公司!'
+            }
+
+            if (this.orderOtherPartyForm.value.position === -1) {
+                this.orderOtherPartyFormError['position'] = '请选择位置!'
+            }
+            // console.log(this.orderOtherPartyFormError)
+            this.ignoreDirty = true
             return
         }
 
@@ -418,6 +441,12 @@ export class OrderListComponent implements OnInit {
 
         this.lineName()
 
+        this.orderOtherPartyForm.reset({
+            'custType'    : ['', [Validators.required ] ],
+            'customerId'    : ['', [Validators.required ] ],
+            'position'    : ['', [Validators.required ] ]
+        })
+
     }
 
     delOtherParty (company: any, position : number) {
@@ -431,6 +460,8 @@ export class OrderListComponent implements OnInit {
         }
 
         this.filterParty()
+
+        this.lineName()
 
     }
 
