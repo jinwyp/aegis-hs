@@ -6,6 +6,7 @@ import com.yimei.hs.enums.CargoType;
 import com.yimei.hs.enums.OrderStatus;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -40,8 +41,8 @@ public class PageOrderDTO extends BaseFilter<PageOrderDTO> {
     private OrderStatus status;
 
 
-    private LocalDateTime createDateStart;
+    private LocalDate createDateStart;
 
-    private LocalDateTime createDateEnd;
+    private LocalDate createDateEnd;
 
 }
