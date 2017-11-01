@@ -55,6 +55,14 @@ public enum EntityType {
     yingFeeUpdate("应收业务线-费用修改"),
     yingFeeDel("应收业务线-费用删除"),
 
+    yingJiekuanInsert("应收业务线-借款新增"),
+    yingJiekuanUpdate("应收业务线-借款修改"),
+    yingJiekuanDel("应收业务线-借款删除"),
+
+    yingFukuanInsert("应收业务线-付新增"),
+    yingFukuanUpdate("应收业务线-付款修改"),
+    yingFukuanDel("应收业务线-付款删除"),
+
     yingBailInsert("应收业务线-保证金新增"),
     yingBailUpdate("应收业务线-保证金修改"),
     yingBailDel("应收业务线-保证金删除"),
@@ -121,6 +129,14 @@ public enum EntityType {
     cangRuKuInsert("仓押业务线-入库新增"),
     cangRuKuUpdate("仓押业务线-入库修改"),
     cangRuKuDel("仓押业务线-入库删除"),
+
+    cangJiekuanInsert("仓押业务线-借款新增"),
+    cangJiekuanUpdate("仓押业务线-借款修改"),
+    cangJiekuanDel("仓押业务线-借款删除"),
+
+    cangFukuanInsert("仓押业务线-付款新增"),
+    cangFukuanUpdate("仓押业务线-付款修改"),
+    cangFukuanDel("仓押业务线-付款删除"),
 
     cangChuKuInsert("仓押业务线-出库新增"),
     cangChuKuUpdate("仓押业务线-出库修改"),
