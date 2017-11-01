@@ -5,7 +5,7 @@
     <resultMap id="BaseResultMap" type="com.yimei.hs.same.entity.Log">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
-        <result column="hsId" jdbcType="BIGINT" property="hsId"/>
+        <result column="editorId" jdbcType="BIGINT" property="editorId"/>
         <result column="entityId" jdbcType="BIGINT" property="entityId"/>
         <result column="entityType" jdbcType="VARCHAR" property="entityType"/>
         <result column="memo" jdbcType="VARCHAR" property="memo"/>
@@ -13,7 +13,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, entityId, entityType, memo, tsc
+        id, orderId,editorId, hsId, entityId, entityType, memo, tsc
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -31,6 +31,7 @@
         <where>
             <if test="orderId">AND orderId = #{orderId, jdbcType=BIGINT}</if>
             <if test="hsId">AND hsId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="editorId">AND editorId = #{editorId, jdbcType=BIGINT}</if>
             <if test="entityType">AND entityType = #{entityType, jdbcType=VARCHAR}</if>
         </where>
     </select>
@@ -46,6 +47,7 @@
             orderId,
             hsId,
             entityId,
+            editorId,
             entityType,
             memo,
             tsc)
@@ -53,6 +55,7 @@
             #{id,jdbcType=BIGINT},
             #{orderId,jdbcType=BIGINT},
             #{hsId,jdbcType=BIGINT},
+            #{editorId,jdbcType=BIGINT},
             #{entityId,jdbcType=BIGINT},
             #{entityType,jdbcType=VARCHAR},
             #{memo,jdbcType=VARCHAR},
@@ -66,6 +69,7 @@
             <if test="id != null">id,</if>
             <if test="orderId != null">orderId,</if>
             <if test="hsId != null">hsId,</if>
+            <if test="editorId != null">editorId</if>
             <if test="entityId != null">entityId,</if>
             <if test="entityType != null">entityType,</if>
             <if test="memo != null">memo,</if>
@@ -75,6 +79,7 @@
             <if test="id != null">#{id,jdbcType=BIGINT},</if>
             <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
+            <if test="editorId != null">#{editorId,jdbcType=BIGINT},</if>
             <if test="entityId != null">#{entityId,jdbcType=BIGINT},</if>
             <if test="entityType != null">#{entityType,jdbcType=VARCHAR},</if>
             <if test="memo != null">#{memo,jdbcType=VARCHAR},</if>
@@ -88,6 +93,7 @@
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
             <if test="entityId != null">entityId = #{entityId,jdbcType=BIGINT},</if>
+            <if test="editorId != null">entityId = #{entityId,jdbcType=BIGINT},</if>
             <if test="entityType != null">entityType = #{entityType,jdbcType=VARCHAR},</if>
             <if test="memo != null">memo = #{memo,jdbcType=VARCHAR},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
@@ -101,6 +107,7 @@
         SET orderId    = #{orderId,jdbcType=BIGINT},
             hsId       = #{hsId,jdbcType=BIGINT},
             entityId   = #{entityId,jdbcType=BIGINT},
+            editorId   = #{editorId,jdbcType=BIGINT},
             entityType = #{entityType,jdbcType=VARCHAR},
             memo       = #{memo,jdbcType=VARCHAR},
             tsc        = #{tsc,jdbcType=TIMESTAMP},

@@ -26,7 +26,8 @@ insert into hs_team(name, deptId) values
 -- 用户
 insert into hs_user(deptId, phone, password, passwordSalt, createDate, createBy, isAdmin) values
  (1, '13022117050', 'c9ca4cc1ce82a2c7c21feb41df67ebdd12a471f5', 'd379e428ee88629f', '2017-01-01', 'hary', 1);
-
+insert into hs_user(deptId, phone, password, passwordSalt, createDate, createBy, isAdmin) values
+                                                                                          (2, '18321805753', 'c9ca4cc1ce82a2c7c21feb41df67ebdd12a471f5', 'd379e428ee88629f', '2017-01-01', 'hary', 0);
 
 -- 参与方
 insert into hs_party(partyType, name, shortName) values

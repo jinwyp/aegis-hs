@@ -296,9 +296,11 @@ alter table hs_same_settle_traffic add foreign key(trafficCompanyId) references 
 create table hs_same_log (
   id bigint(20)           not null auto_increment,
   orderId bigint(20)      not null comment '订单编号',
+  editorId bigint(20)      not null comment '操作人',
+  hsId bigint(20)      not null comment '核算月',
   entityId bigint(20)     not null comment '实体id',
   entityType varchar(32)  not null comment '实体类型',
-  memo varchar(128)       not null comment '修改日志',
+  memo varchar(628)       not null comment '修改日志',
   deleted tinyint(1)          not null default 0 comment '逻辑删除',
   tsc timestamp           not null default current_timestamp,
   tsu timestamp not null default current_timestamp,

@@ -22,6 +22,8 @@ public class PageLogDTO extends BaseFilter<PageLogDTO> {
 
     private Long hsId;
 
+    private Long editorId;
+
     @NotNull(message = "实体类型不能为空")
     private String entityType;
 }

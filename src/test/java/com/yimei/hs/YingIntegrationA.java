@@ -2,6 +2,7 @@ package com.yimei.hs;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yimei.hs.boot.api.Logutil;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.cang.dto.PageCangChukuDTO;
@@ -89,11 +90,10 @@ public class YingIntegrationA extends HsTestBase {
     Result<YingFayun> fayunCreateResult = null;
 
     @Test
-    public void yingIntegration() throws JsonProcessingException {
+    public void yingIntegration() throws Exception {
         System.out.println("开始应收集成测试");
-        BigDecimal bigDecimal = new BigDecimal("0");
-        BigDecimal add=bigDecimal.add(new BigDecimal("12")).add(new BigDecimal("12"));
-        logger.info("=> {}",add);
+        YingFayun yingFayun = new YingFayun();
+        yingFayun.setId(5l);
 
 //        defaultUser();
 //        order();
