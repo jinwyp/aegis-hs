@@ -99,9 +99,9 @@ describe('应收订单 回款:', function () {
             .set(config.headers)
             .send(
                 {
-                    "hsId" : 1,
+                    "hsId" : 2,
                     // "huikuanCompanyId" : 1,
-                    "huikuanDate" : "2017-09-03 00:00:00",
+                    "huikuanDate" : "2017-10-03 00:00:00",
                     "huikuanAmount" : "4000",
                     "huikuanUsage" : "PAYMENT_FOR_GOODS",
                     "huikuanMode" : "ELEC_REMITTANCE",
@@ -136,10 +136,48 @@ describe('应收订单 回款:', function () {
             .set(config.headers)
             .send(
                 {
-                    "hsId" : 2,
+                    "hsId" : 3,
                     // "huikuanCompanyId" : 4,
                     "huikuanDate" : "2017-10-27 00:00:00",
                     "huikuanAmount" : "10000",
+                    "huikuanUsage" : "PAYMENT_FOR_GOODS",
+                    "huikuanMode" : "BANK_ACCEPTANCE",
+                    "huikuanBankPaper" : true,
+                    "huikuanBankPaperDate" : "2017-09-01 00:00:00",
+                    "huikuanBankDiscount" : true,
+                    "huikuanBankDiscountRate" : "0.3",
+                    "huikuanBankPaperExpire" : "2017-09-30 00:00:00",
+                    "huikuanBusinessPaper" : "",
+                    "huikuanBusinessPaperDate" : "",
+                    "huikuanBusinessDiscount" : "",
+                    "huikuanBusinessDiscountRate" : "",
+                    "huikuanBusinessPaperExpire" : "",
+                    "orderId" : 1
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.huikuanDate).to.include('2017')
+
+                done()
+            })
+    })
+
+    it(`回款单 - 新建回款单4 POST: /api/business/ying/${orderId}/huikuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/huikuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : 3,
+                    // "huikuanCompanyId" : 4,
+                    "huikuanDate" : "2017-10-29 00:00:00",
+                    "huikuanAmount" : "60000",
                     "huikuanUsage" : "PAYMENT_FOR_GOODS",
                     "huikuanMode" : "BANK_ACCEPTANCE",
                     "huikuanBankPaper" : true,
@@ -208,7 +246,7 @@ describe('应收订单 回款:', function () {
             .set(config.headers)
             .send(
                 {
-                    "hsId" : 2,
+                    "hsId" : 1,
                     // "huikuanCompanyId" : 1,
                     "huikuanDate" : "2017-09-03 00:00:00",
                     "huikuanUsage" : "PAYMENT_FOR_GOODS",

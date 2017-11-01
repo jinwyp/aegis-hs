@@ -61,7 +61,7 @@ describe('应收订单 付款:', function () {
             .send(
                 {
                     "hsId" : 1,
-                    "payDate" : "2017-10-12 00:00:00",
+                    "payDate" : "2017-09-10 00:00:00",
                     "receiveCompanyId" : 2,
                     "payUsage" : "TRADE_DEFICIT",
                     "payAmount" : "122",
@@ -101,7 +101,7 @@ describe('应收订单 付款:', function () {
             .send(
                 {
                     "hsId" : 1,
-                    "payDate" : "2017-09-12 00:00:00",
+                    "payDate" : "2017-10-12 00:00:00",
                     "receiveCompanyId" : 2,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "122",
@@ -128,7 +128,7 @@ describe('应收订单 付款:', function () {
             .send(
                 {
                     "hsId" : 1,
-                    "payDate" : "2017-09-12 00:00:00",
+                    "payDate" : "2017-11-17 00:00:00",
                     "receiveCompanyId" : 2,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "122",
@@ -219,7 +219,7 @@ describe('应收订单 付款:', function () {
             .send(
                 {
                     "id" : paymentId,
-                    "hsId" : 2,
+                    "hsId" : 1,
                     "receiveCompanyId" : 3,
                     "payUsage" : "DEPOSITECASH",
                     "payMode" : "CASH",
