@@ -37,10 +37,8 @@ export class SettleOrderComponent implements OnInit {
     settleCangUpstreamList : any[] = []
     settleYingDownstreamList : any[] = []
     settleCangDownstreamList : any[] = []
-    settleTrafficList : any[] = []
 
     partyList : any[] = []
-    partyListOther : any[] = []
 
     unitList : any[] = []
 
@@ -143,19 +141,6 @@ export class SettleOrderComponent implements OnInit {
         this.hsUserService.getPartyList().subscribe(
             data => {
                 this.partyList = data.data.results
-
-                if (Array.isArray(data.data.results)) {
-                    const tempArray : any[] = []
-
-                    data.data.results.forEach( company => {
-
-                        if (company.partyType === 3) {
-                            tempArray.push(company)
-                        }
-                        this.partyListOther = tempArray
-                    })
-                }
-
             },
             error => {this.httpService.errorHandler(error) }
         )
