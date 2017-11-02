@@ -83,7 +83,11 @@ public class OrderController {
             @CurrentUser User user,
             @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(CreateGroup.class) Order order) {
+
+        assert (businessType.equals(order.getBusinessType()));
+
         order.setCreatorId(user.getId());
+        order.setBusinessType(businessType);
         order.setOwnerId(user.getId());
         order.setDeptId(user.getDeptId());
         order.setStatus(OrderStatus.UNCOMPLETED);

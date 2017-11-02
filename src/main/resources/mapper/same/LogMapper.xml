@@ -69,7 +69,7 @@
             <if test="id != null">id,</if>
             <if test="orderId != null">orderId,</if>
             <if test="hsId != null">hsId,</if>
-            <if test="editorId != null">editorId</if>
+            <if test="editorId != null">editorId,</if>
             <if test="entityId != null">entityId,</if>
             <if test="entityType != null">entityType,</if>
             <if test="memo != null">memo,</if>

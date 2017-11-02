@@ -60,6 +60,7 @@
             t1.upstreamSettleMode,
             t1.downstreamId,
             t1.downstreamSettleMode,
+            t1.businessType,
             t1.status,
             t1.tsc,
 

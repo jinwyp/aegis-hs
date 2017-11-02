@@ -30,7 +30,7 @@ public class LogService {
 
     @Transactional(readOnly = false)
     public int create(Log log) {
-        return logMapper.insert(log);
+        return logMapper.insertSelective(log);
     }
 
     @Transactional(readOnly = false)

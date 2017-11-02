@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Aspect
 @Configuration
-public class LogAspect {
+public class LogAspect<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(com.yimei.hs.same.aop.LogAspect.class);
 
@@ -37,12 +37,13 @@ public class LogAspect {
      * 创建memo
      */
     @After("execution(* com.yimei.hs.same.service..*.create(..))")
-    public void create(JoinPoint joinPoint) throws  Exception{
+    public void create(JoinPoint joinPoint) {
         Object arg = (joinPoint.getArgs().length > 0 ? joinPoint.getArgs()[0] : null);
 
         if (arg instanceof Order) {
             Order  order= (Order) arg;
-            Logutil.create(om, orderMapper, logService, order,(order.getBusinessType().equals(BusinessType.ying)?EntityType.yingOrderInsert:EntityType.cangOrderInsert));
+            Logutil.create(om, orderMapper,
+                    logService, order,(order.getBusinessType().equals(BusinessType.ying)?EntityType.yingOrderInsert:EntityType.cangOrderInsert));
         } else if (arg instanceof SettleTraffic) {
             SettleTraffic settleTraffic = (SettleTraffic) arg;
             Logutil.create(om, orderMapper, logService, settleTraffic,EntityType.cangSettleTrafficInsert);
@@ -53,7 +54,11 @@ public class LogAspect {
         } else if (arg instanceof OrderConfig) {
             OrderConfig orderConfig = (OrderConfig) arg;
             Order order = orderMapper.selectByPrimaryKey(orderConfig.getOrderId());
-            Logutil.create(om, orderMapper, logService, orderConfig,(order.getBusinessType().equals(BusinessType.ying)?EntityType.yingConfigInsert:EntityType.cangOrderInsert));
+            Logutil.createforConfig(om,
+                    orderMapper,
+                    logService,
+                    orderConfig,
+                    (order.getBusinessType().equals(BusinessType.ying)?EntityType.yingConfigInsert:EntityType.cangOrderInsert));
         } else if (arg instanceof OrderParty) {
             OrderParty orderParty = (OrderParty) arg;
             Order order = orderMapper.selectByPrimaryKey(orderParty.getOrderId());
