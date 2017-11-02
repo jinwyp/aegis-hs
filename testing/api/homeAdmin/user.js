@@ -46,7 +46,7 @@ describe('管理用户', function () {
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
-                phone : '18321805753',
+                phone : '13564568304',
                 password : '123456',
                 deptId : 2,
                 isActive  :  true,
@@ -60,7 +60,7 @@ describe('管理用户', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.createBy).to.include('13022117050')
-                expect(res.body.data.phone).to.include('18321805753')
+                expect(res.body.data.phone).to.include('13564568304')
                 done()
             })
     })
@@ -70,7 +70,7 @@ describe('管理用户', function () {
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
-                phone : '13564568304',
+                phone : '13564568301',
                 password : '123456',
                 deptId : 2,
                 isActive  :  false,
@@ -84,7 +84,7 @@ describe('管理用户', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.createBy).to.include('13022117050')
-                expect(res.body.data.phone).to.include('13564568304')
+                expect(res.body.data.phone).to.include('13564568301')
 
                 userId = res.body.data.id
                 done()
@@ -92,30 +92,6 @@ describe('管理用户', function () {
     })
 
     it('新建用户3 POST: /api/users', function (done) {
-        server.post('/api/users')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({
-                phone : '13564568301',
-                password : '123456',
-                deptId : 2,
-                isActive  :  true,
-                isAdmin  : false
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.createBy).to.include('13022117050')
-                expect(res.body.data.phone).to.include('13564568301')
-                done()
-            })
-    })
-
-    it('新建用户4 POST: /api/users', function (done) {
         server.post('/api/users')
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -135,6 +111,30 @@ describe('管理用户', function () {
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
                 expect(res.body.data.createBy).to.include('13022117050')
                 expect(res.body.data.phone).to.include('13564568302')
+                done()
+            })
+    })
+
+    it('新建用户4 POST: /api/users', function (done) {
+        server.post('/api/users')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                phone : '13564568303',
+                password : '123456',
+                deptId : 2,
+                isActive  :  true,
+                isAdmin  : false
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.createBy).to.include('13022117050')
+                expect(res.body.data.phone).to.include('13564568303')
                 done()
             })
     })

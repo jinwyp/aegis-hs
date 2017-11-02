@@ -171,7 +171,7 @@ export class PaymentComponent implements OnInit {
         this.paymentForm = this.fb.group({
             'hsId'             : ['', [Validators.required]],
             'payDate'          : [null, [Validators.required]],
-            'receiveCompanyId' : ['', [Validators.required]],
+            'receiveCompanyId' : [this.currentOrder.upstreamId, [Validators.required]],
 
             'payUsage'  : ['', [Validators.required]],
             'payAmount' : ['', [Validators.required]],
@@ -270,10 +270,10 @@ export class PaymentComponent implements OnInit {
             this.isAddNew = true
             this.currentPaymentId = 0
 
-            this.paymentForm.patchValue({
+            this.paymentForm.reset({
                 'hsId'    : '',
                 'payDate'    : null,
-                'receiveCompanyId'    : '',
+                'receiveCompanyId'    : this.currentOrder.upstreamId,
 
                 'payUsage'    : '',
                 'payAmount'    : '',
@@ -293,6 +293,7 @@ export class PaymentComponent implements OnInit {
             this.paymentForm.patchValue(shippingOrder)
         }
 
+        this.ignoreDirty = false
         this.isShowForm = !this.isShowForm
     }
 

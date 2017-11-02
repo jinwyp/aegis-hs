@@ -490,6 +490,758 @@ describe('应收订单 统计范例1', function () {
                 done()
             })
     })
+
+
+
+
+
+
+
+    it(`付款单 - 新建付款单1 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "orderId" : orderId,
+                    "hsId" : unitId,
+                    "payDate" : "2017-04-28 00:00:00",
+                    "receiveCompanyId" : 26,
+                    "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payAmount" : "9600000",
+                    "capitalId" : 17,
+                    "jiekuan" : {
+                        "orderId" : orderId,
+                        "hsId" : unitId,
+                        "jiekuanDate" : "2017-04-28 00:00:00",
+                        "amount" : "9600000",
+                        "capitalId" : 17,
+                        "useInterest" : 0.075,
+                        "useDays" : "45"
+                    }
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.payDate).to.include('2017')
+                done()
+            })
+    })
+    it(`付款单 - 新建付款单2 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "payDate" : "2017-05-08 00:00:00",
+                    "receiveCompanyId" : 26,
+                    "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payAmount" : "2000000",
+                    "orderId" : orderId,
+                    "capitalId" : 17,
+                    "jiekuan" : {
+                        "orderId" : orderId,
+                        "hsId" : unitId,
+                        "jiekuanDate" : "2017-05-08 00:00:00",
+                        "amount" : "2000000",
+                        "capitalId" : 17,
+                        "useInterest" : 0.075,
+                        "useDays" : "45"
+                    }
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.payDate).to.include('2017')
+                done()
+            })
+    })
+    it(`付款单 - 新建付款单3 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "payDate" : "2017-05-09 00:00:00",
+                    "receiveCompanyId" : 26,
+                    "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payAmount" : "2000000",
+                    "orderId" : orderId,
+                    "capitalId" : 17,
+                    "jiekuan" : {
+                        "orderId" : orderId,
+                        "hsId" : unitId,
+                        "jiekuanDate" : "2017-05-09 00:00:00",
+                        "amount" : "2000000",
+                        "capitalId" : 17,
+                        "useInterest" : 0.075,
+                        "useDays" : "45"
+                    }
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.payDate).to.include('2017')
+                done()
+            })
+    })
+    it(`付款单 - 新建付款单4 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "payDate" : "2017-05-10 00:00:00",
+                    "receiveCompanyId" : 26,
+                    "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payAmount" : "3090000",
+                    "orderId" : orderId,
+                    "capitalId" : 17,
+                    "jiekuan" : {
+                        "orderId" : orderId,
+                        "hsId" : unitId,
+                        "jiekuanDate" : "2017-05-10 00:00:00",
+                        "amount" : "3090000",
+                        "capitalId" : 17,
+                        "useInterest" : 0.075,
+                        "useDays" : "45"
+                    }
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.payDate).to.include('2017')
+                done()
+            })
+    })
+
+    it(`付款单 - 新建付款单5 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "payDate" : "2017-04-28 00:00:00",
+                    "receiveCompanyId" : 26,
+                    "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payAmount" : "4450000",
+                    "orderId" : orderId,
+                    "capitalId" : 2,
+                    "jiekuan" : {
+                        "orderId" : orderId,
+                        "hsId" : unitId,
+                        "jiekuanDate" : "2299-12-30 00:00:00",
+                        "amount" : "99999999",
+                        "capitalId" : 2,
+                        "useInterest" : "99999999",
+                        "useDays" : "99999999"
+                    }
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.payDate).to.include('2017')
+                done()
+            })
+    })
+    it(`付款单 - 新建付款单7 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "payDate" : "2017-05-25 00:00:00",
+                    "receiveCompanyId" : 26,
+                    "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payAmount" : "26968.08",
+                    "orderId" : orderId,
+                    "capitalId" : 2,
+                    "jiekuan" : {
+                        "orderId" : orderId,
+                        "hsId" : unitId,
+                        "jiekuanDate" : "2299-12-30 00:00:00",
+                        "amount" : "99999999",
+                        "capitalId" : 2,
+                        "useInterest" : "99999999",
+                        "useDays" : "99999999"
+                    }
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.payDate).to.include('2017')
+                done()
+            })
+    })
+    it(`付款单 - 新建付款单7 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "payDate" : "2017-05-31 00:00:00",
+                    "receiveCompanyId" : 26,
+                    "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payAmount" : "19832.88",
+                    "orderId" : orderId,
+                    "capitalId" : 2,
+                    "jiekuan" : {
+                        "orderId" : orderId,
+                        "hsId" : unitId,
+                        "jiekuanDate" : "2299-12-30 00:00:00",
+                        "amount" : "99999999",
+                        "capitalId" : 2,
+                        "useInterest" : "99999999",
+                        "useDays" : "99999999"
+                    }
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.payDate).to.include('2017')
+                done()
+            })
+    })
+    it(`付款单 - 新建付款单8 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "payDate" : "2017-06-01 00:00:00",
+                    "receiveCompanyId" : 26,
+                    "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payAmount" : "21232.86",
+                    "orderId" : orderId,
+                    "capitalId" : 2,
+                    "jiekuan" : {
+                        "orderId" : orderId,
+                        "hsId" : unitId,
+                        "jiekuanDate" : "2299-12-30 00:00:00",
+                        "amount" : "99999999",
+                        "capitalId" : 2,
+                        "useInterest" : "99999999",
+                        "useDays" : "99999999"
+                    }
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.payDate).to.include('2017')
+                done()
+            })
+    })
+    it(`付款单 - 新建付款单9 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "payDate" : "2017-06-02 00:00:00",
+                    "receiveCompanyId" : 26,
+                    "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payAmount" : "23223.08",
+                    "orderId" : orderId,
+                    "capitalId" : 2,
+                    "jiekuan" : {
+                        "orderId" : orderId,
+                        "hsId" : unitId,
+                        "jiekuanDate" : "2299-12-30 00:00:00",
+                        "amount" : "99999999",
+                        "capitalId" : 2,
+                        "useInterest" : "99999999",
+                        "useDays" : "99999999"
+                    }
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.payDate).to.include('2017')
+                done()
+            })
+    })
+    it(`付款单 - 新建付款单10 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "payDate" : "2017-06-30 00:00:00",
+                    "receiveCompanyId" : 26,
+                    "payUsage" : "FIAL_PAYMENT",
+                    "payAmount" : "2585420.67",
+                    "orderId" : orderId,
+                    "capitalId" : 2,
+                    "jiekuan" : {
+                        "orderId" : orderId,
+                        "hsId" : unitId,
+                        "jiekuanDate" : "2299-12-30 00:00:00",
+                        "amount" : "99999999",
+                        "capitalId" : 2,
+                        "useInterest" : "99999999",
+                        "useDays" : "99999999"
+                    }
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.payDate).to.include('2017')
+                done()
+            })
+    })
+
+
+
+
+
+
+    it(`还款单 - 新建还款单1 POST: /api/business/ying/${orderId}/huankuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/huankuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "orderId" : orderId,
+                    "promise" : true,
+                    "huankuankDate" : "2017-05-25 00:00:00",
+                    "huankuanMapList" : [
+                        {
+                            "jiekuanId":"5",
+                            "principal" : "9600000",
+                            "interest" : "26968.08",
+                            "fee" : "5176.66"
+                        }
+                    ]
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.huankuankDate).to.include('2017')
+                done()
+            })
+    })
+    it(`还款单 - 新建还款单2 POST: /api/business/ying/${orderId}/huankuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/huankuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "orderId" : orderId,
+                    "promise" : true,
+                    "huankuankDate" : "2017-05-31 00:00:00",
+                    "huankuanMapList" : [
+                        {
+                            "jiekuanId":"6",
+                            "principal" : "2000000",
+                            "interest" : "19832.88",
+                            "fee" : "3783.34"
+                        }
+                    ]
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.huankuankDate).to.include('2017')
+                done()
+            })
+    })
+    it(`还款单 - 新建还款单3 POST: /api/business/ying/${orderId}/huankuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/huankuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "orderId" : orderId,
+                    "promise" : true,
+                    "huankuankDate" : "2017-06-01 00:00:00",
+                    "huankuanMapList" : [
+                        {
+                            "jiekuanId":"7",
+                            "principal" : "2000000",
+                            "interest" : "21232.86",
+                            "fee" : "4710"
+                        }
+                    ]
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.huankuankDate).to.include('2017')
+                done()
+            })
+    })
+    it(`还款单 - 新建还款单4 POST: /api/business/ying/${orderId}/huankuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/huankuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "orderId" : orderId,
+                    "promise" : true,
+                    "huankuankDate" : "2017-05-25 00:00:00",
+                    "huankuanMapList" : [
+                        {
+                            "jiekuanId":"8",
+                            "principal" : "3090000",
+                            "interest" : "23223.08",
+                            "fee" : "6158"
+                        }
+                    ]
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.huankuankDate).to.include('2017')
+                done()
+            })
+    })
+
+
+
+
+
+    it(`回款单 - 新建回款单1 POST: /api/business/ying/${orderId}/huikuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/huikuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "huikuanDate" : "2017-06-23 00:00:00",
+                    "huikuanAmount" : "24166823.1",
+                    "huikuanUsage" : "PAYMENT_FOR_GOODS",
+                    "huikuanMode" : "ELEC_REMITTANCE",
+                    "huikuanBankPaper" : "",
+                    "huikuanBankPaperDate" : null,
+                    "huikuanBankDiscount" : "",
+                    "huikuanBankDiscountRate" : "",
+                    "huikuanBankPaperExpire" : null,
+                    "huikuanBusinessPaper" : "",
+                    "huikuanBusinessPaperDate" : null,
+                    "huikuanBusinessDiscount" : "",
+                    "huikuanBusinessDiscountRate" : "",
+                    "huikuanBusinessPaperExpire" : null,
+                    "orderId" : orderId
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.huikuanDate).to.include('2017')
+                done()
+            })
+    })
+
+
+
+
+    it(`下游结算单 - 新建下游结算单1 POST: /api/business/ying/${orderId}/settlebuyerdownstream`, function (done) {
+        server.post(`/api/business/ying/${orderId}/settlebuyerdownstream`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "settleDate" : "2017-06-17 00:00:00",
+                    "amount" : "40530",
+                    "money" : "24166823.1",
+                    "settleGap" : "0",
+                    "orderId" : orderId
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.settleDate).to.include('2017')
+                done()
+            })
+    })
+
+    it(`上游结算单 - 新建上游结算单1 POST: /api/business/ying/${orderId}/settlesellerupstream`, function (done) {
+        server.post(`/api/business/ying/${orderId}/settlesellerupstream`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "settleDate" : "2017-09-02 00:00:00",
+                    "amount" : "99999",
+                    "money" : "99999",
+                    "discountType" : "NO_DISCOUNT",
+                    "discountInterest" : "9999",
+                    "discountDays" : "9999",
+                    "discountAmount" : "9999",
+                    "orderId" : orderId
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.settleDate).to.include('2017')
+                done()
+            })
+    })
+
+
+
+
+
+
+    it(`发票 - 新建发票1 POST: /api/business/ying/${orderId}/invoices`, function (done) {
+        server.post(`/api/business/ying/${orderId}/invoices`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "invoiceDirection" : "INCOME",
+                    "invoiceType" : "GOODS_INVOICE",
+                    "openDate" : "2017-05-05 00:00:00",
+                    "openCompanyId" : 26,
+                    "receiverId" : 28,
+                    "orderId" : orderId,
+                    "details" : [{
+                        "invoiceNumber" : "43211234",
+                        "cargoAmount" : "36200",
+                        "taxRate" : "17",
+                        "priceAndTax" : "21140000"
+                    }]
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.openDate).to.include('2017')
+                done()
+            })
+    })
+    it(`发票 - 新建发票2 POST: /api/business/ying/${orderId}/invoices`, function (done) {
+        server.post(`/api/business/ying/${orderId}/invoices`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "invoiceDirection" : "INCOME",
+                    "invoiceType" : "GOODS_INVOICE",
+                    "openDate" : "2017-05-23 00:00:00",
+                    "openCompanyId" : 29,
+                    "receiverId" : 2,
+                    "orderId" : orderId,
+                    "details" : [{
+                        "invoiceNumber" : "43211235",
+                        "cargoAmount" : "18584",
+                        "taxRate" : "17",
+                        "priceAndTax" : "10889812.93"
+                    }]
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.openDate).to.include('2017')
+                done()
+            })
+    })
+    it(`发票 - 新建发票3 POST: /api/business/ying/${orderId}/invoices`, function (done) {
+        server.post(`/api/business/ying/${orderId}/invoices`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "invoiceDirection" : "INCOME",
+                    "invoiceType" : "GOODS_INVOICE",
+                    "openDate" : "2017-05-24 00:00:00",
+                    "openCompanyId" : 29,
+                    "receiverId" : 2,
+                    "orderId" : orderId,
+                    "details" : [{
+                        "invoiceNumber" : "43211236",
+                        "cargoAmount" : "16512",
+                        "taxRate" : "17",
+                        "priceAndTax" : "9675667.49"
+                    }]
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.openDate).to.include('2017')
+                done()
+            })
+    })
+    it(`发票 - 新建发票4 POST: /api/business/ying/${orderId}/invoices`, function (done) {
+        server.post(`/api/business/ying/${orderId}/invoices`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "invoiceDirection" : "INCOME",
+                    "invoiceType" : "GOODS_INVOICE",
+                    "openDate" : "2017-05-27 00:00:00",
+                    "openCompanyId" : 29,
+                    "receiverId" : 2,
+                    "orderId" : orderId,
+                    "details" : [{
+                        "invoiceNumber" : "43211237",
+                        "cargoAmount" : "1104",
+                        "taxRate" : "17",
+                        "priceAndTax" : "646919.58"
+                    }]
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.openDate).to.include('2017')
+                done()
+            })
+    })
+    it(`发票 - 新建发票5 POST: /api/business/ying/${orderId}/invoices`, function (done) {
+        server.post(`/api/business/ying/${orderId}/invoices`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "invoiceDirection" : "INCOME",
+                    "invoiceType" : "GOODS_INVOICE",
+                    "openDate" : "2017-06-28 00:00:00",
+                    "openCompanyId" : 26,
+                    "receiverId" : 28,
+                    "orderId" : orderId,
+                    "details" : [{
+                        "invoiceNumber" : "43211238",
+                        "cargoAmount" : "4330",
+                        "taxRate" : "17",
+                        "priceAndTax" : "2676677.57"
+                    }]
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.openDate).to.include('2017')
+                done()
+            })
+    })
 })
 
 

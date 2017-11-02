@@ -347,7 +347,7 @@ export class OrderListComponent implements OnInit {
 
             this.otherParty1List = []
             this.otherParty2List = []
-            this.orderForm.patchValue({
+            this.orderForm.reset({
                 'deptId'    : '',
                 'teamId'    : '',
                 'line'    : '',
@@ -370,7 +370,6 @@ export class OrderListComponent implements OnInit {
 
             this.otherParty1List = order.orderPartyList
         }
-
 
         this.isShowForm = !this.isShowForm
     }
@@ -442,9 +441,9 @@ export class OrderListComponent implements OnInit {
         this.lineName()
 
         this.orderOtherPartyForm.reset({
-            'custType'    : ['', [Validators.required ] ],
-            'customerId'    : ['', [Validators.required ] ],
-            'position'    : ['', [Validators.required ] ]
+            'custType'    : '',
+            'customerId'    : '',
+            'position'    : ''
         })
 
     }

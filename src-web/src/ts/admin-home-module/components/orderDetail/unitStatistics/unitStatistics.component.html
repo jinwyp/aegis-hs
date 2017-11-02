@@ -86,7 +86,7 @@
 
                     <div class="row mt-4">
                         <div class="col-3">
-                            <p class="card-text" title="汇总：回款金额">备查账 - 已回款金额合计: {{ unitStatistics?.totalBuyerNums | number }}</p>
+                            <p class="card-text" title="汇总：回款金额">备查账 - 买方已结算数量: {{ unitStatistics?.totalBuyerNums | number }}</p>
                         </div>
                         <div class="col-3">
                             <p class="card-text" title="汇总：卖方结算数量">备查账 - 卖方已结算数量: {{ unitStatistics?.totalBuyerMoney | number }}</p>
@@ -229,7 +229,10 @@
 
                     <div class="row mt-4">
                         <div class="col-3">
-                            <p class="card-text" title="汇总：回款金额">备查账 - 已回款金额合计: {{ unitStatistics?.totalBuyerNums | number }}</p>
+                            <p class="card-text" title="汇总：回款金额">备查账 - 已回款金额合计: {{ unitStatistics?.totalHuikuanPaymentMoney | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：回款金额">备查账 - 买方已结算数量: {{ unitStatistics?.totalBuyerNums | number }}</p>
                         </div>
                         <div class="col-3">
                             <p class="card-text" title="汇总：卖方结算数量">备查账 - 卖方已结算数量: {{ unitStatistics?.totalBuyerMoney | number }}</p>
@@ -238,10 +241,10 @@
                             <p class="card-text" title="【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费 + 【1031】监管费 + 【1032】管理费 + 【1033】业务费 ">备查账 - 销售费用总额: {{ unitStatistics?.salesFeeAmount | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “上游供应商ID”且收票单位 = “贸易公司ID”的票面数量">备查账 - 贸易公司已收到进项数量: {{ unitStatistics?.TradingCompanyInTypeAmount | number }}</p>
+                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “上游供应商ID”且收票单位 = “贸易公司ID”的票面数量">备查账 - 贸易公司已收到进项数量: {{ unitStatistics?.tradingCompanyInTypeNum | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “上游供应商ID”且收票单位 = “贸易公司ID”的价税合计">备查账 - 贸易公司已收到进项金额: {{ unitStatistics?.TradingCompanyInTpeMoneyAmount | number }}</p>
+                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “上游供应商ID”且收票单位 = “贸易公司ID”的价税合计">备查账 - 贸易公司已收到进项金额: {{ unitStatistics?.tradingCompanyInTpeMoneyAmount | number }}</p>
                         </div>
                         <div class="col-3">
                             <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “主账务公司ID”的票面数量">备查账 - CCS已收到进项数量: {{ unitStatistics?.totalCSSInTypeNumber | number }}</p>
@@ -297,7 +300,7 @@
                             <p class="card-text" title="汇总：到场状态 = “已到场”的发运数量">备查账 - 未到场数量: {{ unitStatistics?.totalUnarriveNum | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：到场状态 = “未到场”的发运数量">备查账 - 已到场数量: {{ unitStatistics?.totalarriveNum | number }}</p>
+                            <p class="card-text" title="汇总：到场状态 = “未到场”的发运数量">备查账 - 已到场数量: {{ unitStatistics?.totalArriveNum | number }}</p>
                         </div>
                         <div class="col-3">
                             <p class="card-text" title="【2001】未到场数量 +【2002】已到场数量">备查账 - 发运总数量: {{ unitStatistics?.totalFayunNum | number }}</p>
@@ -308,7 +311,7 @@
                             <p class="card-text" title="汇总：入库数量">备查账 - 入库总数量: {{ unitStatistics?.totalInstorageNum | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：出库数量">备查账 - 已出库数量: {{ unitStatistics?.totaloutstorageNum | number }}</p>
+                            <p class="card-text" title="汇总：出库数量">备查账 - 已出库数量: {{ unitStatistics?.totalOutstorageNum | number }}</p>
                         </div>
 
 
@@ -324,10 +327,10 @@
 
                     <div class="row mt-4">
                         <div class="col-3">
-                            <p class="card-text" title="IF（【1014】付货款金额 > 【1013】已回款金额？（【1014】付货款金额 - 【1013】已回款金额）：0）">占压表 - 未回款金额合计: {{ unitStatistics?.unaymentMoney | number }}</p>
+                            <p class="card-text" title="IF（【1014】付货款金额 > 【1013】已回款金额？（【1014】付货款金额 - 【1013】已回款金额）：0）">占压表 - 未回款金额合计: {{ unitStatistics?.unpaymentMoney | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “上游供应商ID”的价税合计">占压表 - 已开票金额: {{ unitStatistics?.InvoicedMoneyNum | number }}</p>
+                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “上游供应商ID”的价税合计">占压表 - 已开票金额: {{ unitStatistics?.invoicedMoneyAmount | number }}</p>
                         </div>
                         <div class="col-3">
                             <p class="card-text" title="【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费">占压表 - 未开票金额: {{ unitStatistics?.unInvoicedAmountofMoney | number }}</p>
