@@ -26,7 +26,7 @@ public enum EntityType {
 
 
     yingHuankuanInsert("应收业务线-还款新增"),
-    YingHuankuanUpdate("应收业务线-还款修改"),
+    yingHuankuanUpdate("应收业务线-还款修改"),
     yingHuankuanDel("应收业务线-还款删除"),
 
     yingHukuanInsert("应收业务线-付款新增"),

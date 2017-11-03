@@ -85,12 +85,9 @@ public class YingLogAspect<T> {
      */
     @After("execution(* com.yimei.hs.ying.service..*.delete(..))")
     public void deleteYing(JoinPoint joinPoint) throws Exception {
-        Object args = (joinPoint.getArgs().length > 0 ? joinPoint.getArgs() : null);
-        Long orderId = (Long) joinPoint.getArgs()[0];
-        Long id = (Long) joinPoint.getArgs()[1];
+        Long id = (Long) joinPoint.getArgs()[0];
 
         String fileName = joinPoint.getSignature().getDeclaringTypeName();
-        joinPoint.getTarget().getClass();
         if (fileName.equals(YingFayunService.class.getName())) {
             YingFayun yingFayun = yingFayunMapper.selectByPrimaryKey(id);
             Logutil.create(om, orderMapper, logService, yingFayun, EntityType.yingFayunDel);
