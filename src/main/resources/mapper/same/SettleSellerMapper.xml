@@ -101,7 +101,7 @@
     </select>
     <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.SettleSeller">
                  SELECT
-            count(id)
+                 <include refid="Base_Column_List"/>
         FROM hs_same_settle_seller
         WHERE hsId=#{hsId ,jdbcType=BIGINT} and deleted= 1
     </select>
