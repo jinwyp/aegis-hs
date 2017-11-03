@@ -47,7 +47,7 @@
     <result column="unsettlerBuyerMoneyAmount" jdbcType="DECIMAL" property="unsettlerBuyerMoneyAmount" />
     <result column="unsettlerBuyerNumber" jdbcType="DECIMAL" property="unsettlerBuyerNumber" />
     <result column="ccsProfile" jdbcType="DECIMAL" property="ccsProfile" />
-    <result column="purchaseCargoAmountofMoney" jdbcType="DECIMAL" property="purchaseCargoAmountofMoney" />
+    <result column="purchaseCargoAmountOfMoney" jdbcType="DECIMAL" property="purchaseCargoAmountOfMoney" />
     <result column="externalCapitalPaymentAmount" jdbcType="DECIMAL" property="externalCapitalPaymentAmount" />
     <result column="ownerCapitalPaymentAmount" jdbcType="DECIMAL" property="ownerCapitalPaymentAmount" />
     <result column="upstreamCapitalPressure" jdbcType="DECIMAL" property="upstreamCapitalPressure" />
@@ -126,7 +126,7 @@
       unsettlerBuyerMoneyAmount,
       unsettlerBuyerNumber,
       ccsProfile,
-      purchaseCargoAmountofMoney,
+      purchaseCargoAmountOfMoney,
       externalCapitalPaymentAmount,
       ownerCapitalPaymentAmount,
       upstreamCapitalPressure,
@@ -207,7 +207,7 @@
       unsettlerBuyerMoneyAmount,
       unsettlerBuyerNumber,
       ccsProfile,
-      purchaseCargoAmountofMoney,
+      purchaseCargoAmountOfMoney,
       externalCapitalPaymentAmount,
       ownerCapitalPaymentAmount,
       upstreamCapitalPressure,
