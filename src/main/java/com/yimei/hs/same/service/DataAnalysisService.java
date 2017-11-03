@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
 
 @Service
@@ -26,7 +27,10 @@ public class DataAnalysisService {
         YingAnalysisData yingAnalysisData = yingAnalysisDataMapper.findOne(morderId, hsId);
         return yingAnalysisData;
     }
-
+    public List<YingAnalysisData> findYingList(Long morderId) {
+        List<YingAnalysisData> yingAnalysisDataList = yingAnalysisDataMapper.findList(morderId);
+        return yingAnalysisDataList;
+    }
 
 
     public CangAnalysisData findOneCang(Long hsId, Long orderId) {
@@ -36,5 +40,10 @@ public class DataAnalysisService {
         return cangAnalysisData;
     }
 
+    public List<CangAnalysisData> findCangList(Long orderId) {
 
+        List<CangAnalysisData> cangAnalysisDataList = cangAnalysisDataMapper.findList(orderId);
+
+        return cangAnalysisDataList;
+    }
 }

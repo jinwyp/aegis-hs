@@ -18,4 +18,5 @@ public interface YingAnalysisDataMapper {
 
     List<InvoiceAnalysis> findByOrderIdOpenCompanyId(@Param("openCompanyId") Long openCompanyId, @Param("orderId") Long orderId);
 
+    List<YingAnalysisData> findList(Long orderId);
 }

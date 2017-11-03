@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by hary on 2017/9/15.
  */
@@ -43,6 +45,24 @@ public class DataAnalysisController {
             return Result.ok(bail);
         }
     }
+
+
+    /**
+     *
+     * @param morderId
+     * @return
+     */
+    @GetMapping("/ying/{morderId}/analysis")
+    public ResponseEntity<Result<List<YingAnalysisData>>> readYingList(
+            @PathVariable("morderId") Long morderId
+    ) {
+        List<YingAnalysisData> yingAnalysisData = dataAnalysisService.findYingList(morderId);
+        if (yingAnalysisData == null) {
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
+        } else {
+            return Result.ok(yingAnalysisData);
+        }
+    }
     /**
      *
      * @param morderId
@@ -63,4 +83,20 @@ public class DataAnalysisController {
     }
 
 
+    /**
+     *
+     * @param morderId
+     * @return
+     */
+    @GetMapping("/cang/{morderId}/analysis")
+    public ResponseEntity<Result<List<CangAnalysisData>>> readCangList(
+            @PathVariable("morderId") Long morderId
+    ) {
+        List<CangAnalysisData> cangAnalysisData = dataAnalysisService.findCangList(morderId);
+        if (cangAnalysisData == null) {
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
+        } else {
+            return Result.ok(cangAnalysisData);
+        }
+    }
 }
