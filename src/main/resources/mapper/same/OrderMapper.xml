@@ -128,6 +128,13 @@
         WHERE deptId = #{deptId,jdbcType=BIGINT}
               AND deleted = 0
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.Order">
+       SELECT
+       <include refid="Base_Column_List"/>
+        FROM  hs_same_order
+        WHERE  id=#{id,jdbcType=BIGINT} and deleted=1
+
+    </select>
 
     <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

@@ -49,6 +49,14 @@
         WHERE
         orderId = #{orderId, jdbcType=BIGINT} and hsMonth = #{hsMonth ,jdbcType=CHAR} and deleted=0
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.OrderConfig">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from hs_same_order_config
+        WHERE
+        id = #{id, jdbcType=BIGINT}  and deleted=1
+
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_order_config

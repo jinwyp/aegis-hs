@@ -16,6 +16,7 @@ public interface FukuanMapper {
     int insertSelective(Fukuan record);
 
     Fukuan selectByPrimaryKey(Long id);
+    Fukuan selectByPrimaryKeyDeleted(Long id);
 
     int updateByPrimaryKeySelective(Fukuan record);
 

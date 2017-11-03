@@ -111,6 +111,13 @@
                and deleted=0
                and  capitalId != #{mainAccountId ,jdbcType=BIGINT}
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.Jiekuan">
+        SELECT  <include refid="Base_Column_List"/>
+        FROM hs_same_jiekuan
+        WHERE id = #{id,jdbcType=BIGINT}
+        and deleted=1
+
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_jiekuan

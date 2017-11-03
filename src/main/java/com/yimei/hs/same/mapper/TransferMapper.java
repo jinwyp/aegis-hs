@@ -13,6 +13,8 @@ public interface TransferMapper {
 
     Transfer selectByPrimaryKey(Long id);
 
+    Transfer selectByPrimaryKeyDeleted(Long id);
+
     int updateByPrimaryKeySelective(Transfer record);
 
     int updateByPrimaryKey(Transfer record);

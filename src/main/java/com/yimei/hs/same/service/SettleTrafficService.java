@@ -54,7 +54,8 @@ public class SettleTrafficService {
      * @return
      */
     @Transactional(readOnly = false)
-    public int udpateTraffic(SettleTraffic yingSettleTraffic) {
+    public int update(SettleTraffic yingSettleTraffic) {
+
         return settleTrafficMapper.updateByPrimaryKeySelective(yingSettleTraffic);
     }
 

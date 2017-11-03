@@ -15,6 +15,8 @@ public interface InvoiceDetailMapper {
 
     InvoiceDetail selectByPrimaryKey(Long id);
 
+    InvoiceDetail selectByPrimaryKeyDeleted(Long id);
+
     int updateByPrimaryKeySelective(InvoiceDetail record);
 
     int updateByPrimaryKey(InvoiceDetail record);

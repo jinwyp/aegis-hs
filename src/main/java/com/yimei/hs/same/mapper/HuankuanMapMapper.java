@@ -7,6 +7,8 @@ import java.util.List;
 public interface HuankuanMapMapper {
     int deleteByPrimaryKey(Long id);
 
+    HuankuanMap selectByPrimaryKeyDeleted(Long id);
+
     int insert(HuankuanMap record);
 
     int deleteByOrderId(long orderId);

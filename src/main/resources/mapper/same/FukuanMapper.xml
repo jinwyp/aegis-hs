@@ -119,6 +119,13 @@
         where orderId = #{orderId,jdbcType=BIGINT} and deleted = 0 and payUsage  !='TRADE_DEFICIT'
         order by payDate asc
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.Fukuan">
+
+        SELECT  <include refid="Base_Column_List"/>
+         FROM hs_same_fukuan fukuan
+        WHERE fukuan.id = #{id,jdbcType=BIGINT} and fukuan.deleted =1
+
+    </select>
 
     <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

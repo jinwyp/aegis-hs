@@ -27,6 +27,12 @@
         FROM hs_same_invoice_detail
         where invoiceId = #{invoiceId,jdbcType=BIGINT} and deleted=0
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.InvoiceDetail">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM hs_same_invoice_detail
+        where invoiceId = #{invoiceId,jdbcType=BIGINT} and deleted=1
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_invoice_detail

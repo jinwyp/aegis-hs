@@ -13,6 +13,8 @@ public interface SettleBuyerMapper {
 
     SettleBuyer selectByPrimaryKey(Long id);
 
+    SettleBuyer selectByPrimaryKeyDeleted(Long id);
+
     int updateByPrimaryKeySelective(SettleBuyer record);
 
     int updateByPrimaryKey(SettleBuyer record);

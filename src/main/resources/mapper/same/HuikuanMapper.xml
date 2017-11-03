@@ -210,6 +210,11 @@
         HAVING fukuanTotal <![CDATA[ <  ]]>  huikuan.huikuanAmount
         ORDER BY huikuan.huikuanDate asc
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.Huikuan">
+        SELECT  <include refid="Base_Column_List"/>
+        FROM hs_same_huikuan
+        WHERE id = #{id,jdbcType=BIGINT} and deleted=1
+    </select>
 
     <!-- 物理删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
