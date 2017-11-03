@@ -156,7 +156,9 @@ public class LogAspect<T> {
         if (arg instanceof Order) {
             Order order = (Order) arg;
             Logutil.createforOrder(om, orderMapper,
-                    logService, order, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingOrderUpdate: EntityType.cangOrderUpdate));
+                    logService,
+                    order,
+                    (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingOrderUpdate: EntityType.cangOrderUpdate));
         } else if (arg instanceof SettleTraffic) {
             SettleTraffic settleTraffic = (SettleTraffic) arg;
             Order order = orderMapper.selectByPrimaryKey(settleTraffic.getOrderId());

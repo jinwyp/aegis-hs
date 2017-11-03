@@ -119,6 +119,7 @@ public class OrderController {
             @RequestBody @Validated(UpdateGroup.class) Order order
     ) {
         order.setId(id);
+        order.setBusinessType(businessType);
         int rtn = orderService.update(order);
         logger.error("order" + order);
         if (rtn != 1) {
