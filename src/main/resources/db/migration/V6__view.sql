@@ -480,7 +480,7 @@ create view v_1046_ying as
 select
 v_1041_ying.hsId,
 v_1041_ying.orderId,
-IFNULL(v_1041_ying.saleCargoAmountofMoney,0)-IFNULL(v_1045.ccsProfile ,0)as purchaseCargoAmountofMoney
+IFNULL(v_1041_ying.saleCargoAmountofMoney,0)-IFNULL(v_1045.ccsProfile ,0)as purchaseCargoAmountOfMoney
 from v_1041_ying
      left join v_1045 on v_1041_ying.hsId=v_1045.hsId
 group by hsId, orderId;

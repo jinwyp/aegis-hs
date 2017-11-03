@@ -100,7 +100,7 @@ public class CangAnalysisData implements Serializable {
 
     private BigDecimal ccsProfile;
 
-    private BigDecimal purchaseCargoAmountofMoney;
+    private BigDecimal purchaseCargoAmountOfMoney;
 
     private BigDecimal externalCapitalPaymentAmount;
 

@@ -110,13 +110,13 @@ public class SettleSellerController {
             if (businessType.equals(BusinessType.ying)) {
                 YingAnalysisData yingAnalysisData = dataAnalysisService.findOneYing(morderId, settleSeller.getHsId());
                 totalHuikuanPaymentMoney = totalHuikuanPaymentMoney.add((yingAnalysisData.getTotalHuikuanPaymentMoney()==null?new BigDecimal("0"):yingAnalysisData.getTotalHuikuanPaymentMoney()));
-                totalPaymentAmount = totalPaymentAmount.add((yingAnalysisData.getPurchaseCargoAmountofMoney() == null ? new BigDecimal("0") : yingAnalysisData.getPurchaseCargoAmountofMoney())
+                totalPaymentAmount = totalPaymentAmount.add((yingAnalysisData.getPurchaseCargoAmountOfMoney() == null ? new BigDecimal("0") : yingAnalysisData.getPurchaseCargoAmountOfMoney())
                         .subtract((yingAnalysisData.getTotalTradeGapFee() == null ? new BigDecimal("0") : yingAnalysisData.getTotalTradeGapFee())
                         ));
             } else if (businessType.equals(BusinessType.cang)) {
                 CangAnalysisData cangAnalysisData = dataAnalysisService.findOneCang(morderId, settleSeller.getHsId());
                 totalHuikuanPaymentMoney = totalHuikuanPaymentMoney.add((cangAnalysisData.getTotalHuikuanPaymentMoney()==null?new BigDecimal("0"):cangAnalysisData.getTotalHuikuanPaymentMoney()));
-                totalPaymentAmount = totalPaymentAmount.add((cangAnalysisData.getPurchaseCargoAmountofMoney() == null ? new BigDecimal("0") : cangAnalysisData.getPurchaseCargoAmountofMoney())
+                totalPaymentAmount = totalPaymentAmount.add((cangAnalysisData.getPurchaseCargoAmountOfMoney() == null ? new BigDecimal("0") : cangAnalysisData.getPurchaseCargoAmountOfMoney())
                         .subtract((cangAnalysisData.getTotalTradeGapFee() == null ? new BigDecimal("0") : cangAnalysisData.getTotalTradeGapFee())
                         ));
             }

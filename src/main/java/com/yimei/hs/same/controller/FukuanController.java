@@ -114,11 +114,11 @@ public class FukuanController {
         if (businessType.equals(BusinessType.ying)) {
             YingAnalysisData yingAnalysisData = dataAnalysisService.findOneYing(morderId, fukuan.getHsId());
             totalPaymentMoney = totalPaymentMoney.add((yingAnalysisData.getTotalPaymentAmount() == null ? new BigDecimal("0") : yingAnalysisData.getTotalPaymentAmount()));
-            purchaseCargoAmountofMoney = purchaseCargoAmountofMoney.add((yingAnalysisData.getPurchaseCargoAmountofMoney() == null ? new BigDecimal("0") : yingAnalysisData.getPurchaseCargoAmountofMoney()));
+            purchaseCargoAmountofMoney = purchaseCargoAmountofMoney.add((yingAnalysisData.getPurchaseCargoAmountOfMoney() == null ? new BigDecimal("0") : yingAnalysisData.getPurchaseCargoAmountOfMoney()));
         } else if (businessType.equals(BusinessType.cang)) {
             CangAnalysisData cangAnalysisData = dataAnalysisService.findOneCang(morderId, fukuan.getHsId());
             totalPaymentMoney = totalPaymentMoney.add((cangAnalysisData.getTotalPaymentAmount() == null ? new BigDecimal("0") : cangAnalysisData.getTotalPaymentAmount()));
-            purchaseCargoAmountofMoney = purchaseCargoAmountofMoney.add((cangAnalysisData.getPurchaseCargoAmountofMoney() == null ? new BigDecimal("0") : cangAnalysisData.getPurchaseCargoAmountofMoney()));
+            purchaseCargoAmountofMoney = purchaseCargoAmountofMoney.add((cangAnalysisData.getPurchaseCargoAmountOfMoney() == null ? new BigDecimal("0") : cangAnalysisData.getPurchaseCargoAmountOfMoney()));
         }
 
         if (purchaseCargoAmountofMoney != null) {
