@@ -20,9 +20,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
 
 @Aspect
-@Configuration
+@Service
 public class LogAspect<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(com.yimei.hs.same.aop.LogAspect.class);
@@ -232,19 +233,19 @@ public class LogAspect<T> {
 
         String fileName = joinPoint.getSignature().getDeclaringTypeName();
         if (fileName.equals(OrderService.class.getName())) {
-            Order order = orderMapper.selectByPrimaryKey(id);
+            Order order = orderMapper.selectByPrimaryKeyDeleted(id);
             Logutil.create(om, orderMapper,
                     logService, order, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingOrderDel: EntityType.cangOrderDel));
         } else if (fileName.equals(SettleTrafficService.class.getName())) {
-            SettleTraffic settleTraffic = settleTrafficMapper.selectByPrimaryKey(id);
+            SettleTraffic settleTraffic = settleTrafficMapper.selectByPrimaryKeyDeleted(id);
             Order order = orderMapper.selectByPrimaryKey(settleTraffic.getOrderId());
             Logutil.create(om, orderMapper, logService, settleTraffic, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingSettleTrafficDel: EntityType.cangSettleTrafficDel));
         } else if ( fileName.equals(FeeService.class.getName())) {
-            Fee fee = feeMapper.selectByPrimaryKey(id) ;
+            Fee fee = feeMapper.selectByPrimaryKeyDeleted(id) ;
             Order order = orderMapper.selectByPrimaryKey(fee.getOrderId());
             Logutil.create(om, orderMapper, logService, fee, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingFeeDel: EntityType.cangFeeDel));
         } else if (fileName.equals(OrderConfigService.class.getName())) {
-            OrderConfig orderConfig = orderConfigMapper.selectByPrimaryKey(id);
+            OrderConfig orderConfig = orderConfigMapper.selectByPrimaryKeyDeleted(id);
             Order order = orderMapper.selectByPrimaryKey(orderConfig.getOrderId());
             Logutil.createforConfig(om,
                     orderMapper,
@@ -252,45 +253,45 @@ public class LogAspect<T> {
                     orderConfig,
                     (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingConfigDel: EntityType.cangOrderDel));
         } else if (fileName.equals(OrderPartyService.class.getName())) {
-            OrderParty orderParty = orderPartyMapper.selectByPrimaryKey(id);
+            OrderParty orderParty = orderPartyMapper.selectByPrimaryKeyDeleted(id);
             Order order = orderMapper.selectByPrimaryKey(orderParty.getOrderId());
             Logutil.create(om, orderMapper, logService, orderParty, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingPartyDel: EntityType.cangPartyDel));
         } else if (fileName.equals(InvoiceService.class.getName())) {
-            Invoice invoice = invoiceMapper.selectByPrimaryKey(id);
+            Invoice invoice = invoiceMapper.selectByPrimaryKeyDeleted(id);
             Order order = orderMapper.selectByPrimaryKey(invoice.getOrderId());
             Logutil.create(om, orderMapper, logService, invoice, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingInvoiceDel: EntityType.cangInvoiceDel));
         } else if (fileName.equals(HuikuanService.class.getName())) {
 
-            Huikuan huikuan = huikuanMapper.selectByPrimaryKey(id);
+            Huikuan huikuan = huikuanMapper.selectByPrimaryKeyDeleted(id);
             Order order = orderMapper.selectByPrimaryKey(huikuan.getOrderId());
             Logutil.create(om, orderMapper, logService, huikuan, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingHuikuanDel: EntityType.cangHuankuanDel));
 
         } else if (fileName.equals(HuankuanService.class.getName())) {
 
-            Huankuan huankuan = huankuanMapper.selectByPrimaryKey(id);
+            Huankuan huankuan = huankuanMapper.selectByPrimaryKeyDeleted(id);
             Order order = orderMapper.selectByPrimaryKey(huankuan.getOrderId());
             Logutil.create(om, orderMapper, logService, huankuan, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingHuankuanDel: EntityType.cangHuankuanDel));
 
         } else if (fileName.equals(JiekuanService.class.getName())) {
 
-            Jiekuan jiekuan = jiekuanMapper.selectByPrimaryKey(id);
+            Jiekuan jiekuan = jiekuanMapper.selectByPrimaryKeyDeleted(id);
             Order order = orderMapper.selectByPrimaryKey(jiekuan.getOrderId());
             Logutil.create(om, orderMapper, logService, jiekuan, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingJiekuanDel: EntityType.cangJiekuanDel));
 
         } else if (fileName.equals(FukuanService.class.getName())) {
 
-            Fukuan fukuan = fukuanMapper.selectByPrimaryKey(id);
+            Fukuan fukuan = fukuanMapper.selectByPrimaryKeyDeleted(id);
             Order order = orderMapper.selectByPrimaryKey(fukuan.getOrderId());
             Logutil.create(om, orderMapper, logService, fukuan, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingFukuanDel: EntityType.cangFukuanDel));
 
         } else if (fileName.equals(SettleSellerService.class.getName())) {
 
-            SettleSeller settleSeller = settleSellerMapper.selectByPrimaryKey(id);
+            SettleSeller settleSeller = settleSellerMapper.selectByPrimaryKeyDeleted(id);
             Order order = orderMapper.selectByPrimaryKey(settleSeller.getOrderId());
             Logutil.create(om, orderMapper, logService, settleSeller, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingSettleUpstreamDel: EntityType.cangSettleUpstreamDel));
 
         } else if (fileName.equals(SettleBuyerService.class.getName())) {
-            SettleBuyer settleBuyer = settleBuyerMapper.selectByPrimaryKey(id);
+            SettleBuyer settleBuyer = settleBuyerMapper.selectByPrimaryKeyDeleted(id);
             Order order = orderMapper.selectByPrimaryKey(settleBuyer.getOrderId());
             Logutil.create(om, orderMapper, logService, settleBuyer, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingSettleDownDel: EntityType.cangSettleDownDel));
         }

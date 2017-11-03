@@ -60,6 +60,13 @@
         WHERE
         orderId = #{orderId, jdbcType=BIGINT} and custType = #{custType ,jdbcType=CHAR} and deleted=0
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.OrderParty">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from hs_same_order_party
+        WHERE
+        id = #{id, jdbcType=BIGINT} and deleted =1
+    </select>
 
     <!-- 物理删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

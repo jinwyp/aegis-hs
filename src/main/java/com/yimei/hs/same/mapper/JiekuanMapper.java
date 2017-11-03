@@ -16,6 +16,8 @@ public interface JiekuanMapper {
 
     Jiekuan selectByPrimaryKey(Long id);
 
+    Jiekuan selectByPrimaryKeyDeleted(Long id);
+
     int updateByPrimaryKeySelective(Jiekuan record);
 
     int updateByPrimaryKey(Jiekuan record);

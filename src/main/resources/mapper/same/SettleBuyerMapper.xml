@@ -36,6 +36,12 @@
             <if test="settleDate!=null">AND settleDate = #{settleDate, jdcbType=TIMESTAMP}</if>
         </where>
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.SettleBuyer">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_settle_buyer
+        where id = #{id,jdbcType=BIGINT} and deleted = 1
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_settle_buyer

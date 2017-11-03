@@ -15,6 +15,8 @@ public interface FeeMapper {
 
     Fee selectByPrimaryKey(Long id);
 
+    Fee selectByPrimaryKeyDeleted(Long id);
+
     int updateByPrimaryKeySelective(Fee record);
 
     int updateByPrimaryKey(Fee record);

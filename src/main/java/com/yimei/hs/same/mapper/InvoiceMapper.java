@@ -19,6 +19,8 @@ public interface InvoiceMapper {
      */
     Invoice selectByPrimaryKey(@Param("id") Long id);
 
+    Invoice selectByPrimaryKeyDeleted(@Param("id") Long id);
+
     int updateByPrimaryKeySelective(Invoice record);
 
     int updateByPrimaryKey(Invoice record);

@@ -31,6 +31,12 @@
             <if test="fromUserID">AND fromUserID = #{fromUserID, jdcbType=BIGINT}</if>
         </where>
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.Transfer">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_transfer
+        where id = #{id,jdbcType=BIGINT} and deleted=1
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_transfer

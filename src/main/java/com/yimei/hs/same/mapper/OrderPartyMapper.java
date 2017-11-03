@@ -18,6 +18,8 @@ public interface OrderPartyMapper {
 
     OrderParty selectByPrimaryKey(Long id);
 
+    OrderParty selectByPrimaryKeyDeleted(Long id);
+
     int updateByPrimaryKeySelective(OrderParty record);
 
     int updateByPrimaryKey(OrderParty record);

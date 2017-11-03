@@ -13,6 +13,8 @@ public interface SettleTrafficMapper {
 
     SettleTraffic selectByPrimaryKey(Long id);
 
+    SettleTraffic selectByPrimaryKeyDeleted(Long id);
+
     int updateByPrimaryKeySelective(SettleTraffic record);
 
     int updateByPrimaryKey(SettleTraffic record);

@@ -99,6 +99,12 @@
         FROM hs_same_settle_seller
         WHERE hsId=#{hsId ,jdbcType=BIGINT} and orderId=#{orderId ,jdbcType=BIGINT}
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.SettleSeller">
+                 SELECT
+            count(id)
+        FROM hs_same_settle_seller
+        WHERE hsId=#{hsId ,jdbcType=BIGINT} and deleted= 1
+    </select>
 
     <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

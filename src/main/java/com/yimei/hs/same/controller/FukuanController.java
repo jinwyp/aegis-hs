@@ -131,7 +131,7 @@ public class FukuanController {
                 fukuan.setOrderId(morderId);
                 if (order.getMainAccounting() != fukuan.getCapitalId()) {
                     if (fukuan.getJiekuan() != null) {
-                        int rtn = fukuanService.create(fukuan, true);
+                        int rtn = fukuanService.create(fukuan );
                         if (rtn != 1) {
                             return Result.error(4001, "创建失败");
                         }
@@ -141,7 +141,7 @@ public class FukuanController {
                     }
                 } else {
 
-                    int rtn = fukuanService.create(fukuan, false);
+                    int rtn = fukuanService.create(fukuan);
                     if (rtn != 1) {
                         logger.error("创建失败: {}", fukuan);
                         return Result.error(4001, "创建失败");

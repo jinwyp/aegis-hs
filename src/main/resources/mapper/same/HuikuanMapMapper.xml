@@ -124,5 +124,14 @@
         WHERE
             huikuanId = #{huikuanId, jdbcType=BIGINT} and deleted=0;
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.HuikuanMap">
+      SELECT
+      <include refid="Base_Column_List"/>
+        FROM
+            hs_same_huikuan_map
+        WHERE
+            id = #{id, jdbcType=BIGINT} and deleted=1;
+
+    </select>
 
 </mapper>

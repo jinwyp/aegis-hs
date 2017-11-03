@@ -18,6 +18,8 @@ public interface HuankuanMapper {
 
     Huankuan selectByPrimaryKey(Long id);
 
+    Huankuan selectByPrimaryKeyDeleted(Long id);
+
     int updateByPrimaryKeySelective(Huankuan record);
 
     int updateByPrimaryKey(Huankuan record);

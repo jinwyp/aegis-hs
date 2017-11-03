@@ -18,6 +18,8 @@ public interface OrderConfigMapper {
 
     OrderConfig selectByPrimaryKey(Long id);
 
+    OrderConfig selectByPrimaryKeyDeleted(Long id);
+
     int updateByPrimaryKeySelective(OrderConfig record);
 
     int updateByPrimaryKey(OrderConfig record);

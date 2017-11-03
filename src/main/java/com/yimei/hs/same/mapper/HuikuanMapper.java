@@ -19,6 +19,8 @@ public interface HuikuanMapper {
 
     Huikuan selectByPrimaryKey(Long id);
 
+    Huikuan selectByPrimaryKeyDeleted(Long id);
+
     int updateByPrimaryKeySelective(Huikuan record);
 
     int updateByPrimaryKey(Huikuan record);

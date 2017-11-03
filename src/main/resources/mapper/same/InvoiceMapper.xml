@@ -75,6 +75,12 @@
             <if test="receiverId!=null">AND receiverId=#{receiverId, jdbcType=BIGINT}</if>
         </where>
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.Invoice">
+        SELECT  <include refid="Base_Column_List"/>
+        FROM hs_same_invoice
+        WHERE id = #{id,jdbcType=BIGINT} and deleted=1
+    </select>
+
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_invoice

@@ -103,7 +103,7 @@ public class SettleTrafficController {
             @RequestBody @Validated(UpdateGroup.class) SettleTraffic settleTraffic
     ) {
         assert (morderId == settleTraffic.getOrderId());
-        int rtn = settleService.udpateTraffic(settleTraffic);
+        int rtn = settleService.update(settleTraffic);
         if (rtn != 1) {
             return Result.error(4001, "更新失败", HttpStatus.BAD_REQUEST);
         }
