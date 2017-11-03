@@ -271,7 +271,7 @@ describe('应收订单', function () {
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
-                "id":1,
+                "id":orderId,
                 "deptId":2,
                 "teamId":2,
                 "line":"那曲 - 晋和 - 嘉瑞",
