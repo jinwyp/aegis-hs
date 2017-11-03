@@ -269,7 +269,7 @@ export class SettleTrafficOrderComponent implements OnInit {
 
     deleteItem (settle : any) {
 
-        this.hsOrderService.delSettleTraffic(this.businessType, this.currentOrder.id, 2).subscribe(
+        this.hsOrderService.delSettleTraffic(this.businessType, this.currentOrder.id, settle.id).subscribe(
             data => {
                 console.log('保存成功: ', data)
                 this.httpService.successHandler(data)
