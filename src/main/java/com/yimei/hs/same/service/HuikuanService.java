@@ -109,7 +109,7 @@ public class HuikuanService {
      * @return
      */
     @Transactional(readOnly = false)
-    public int delete(long orderId, long id) {
+    public int delete(long id,long orderId) {
 
         // 1. 删除所有的回款对应明细
         huikuanMapMapper.deleteByOrderId(orderId);

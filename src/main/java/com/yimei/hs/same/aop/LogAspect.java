@@ -77,7 +77,7 @@ public class LogAspect<T> {
 
         if (arg instanceof Order) {
             Order order = (Order) arg;
-            Logutil.create(om, orderMapper,
+            Logutil.createforOrder(om, orderMapper,
                     logService, order, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingOrderInsert : EntityType.cangOrderInsert));
         } else if (arg instanceof SettleTraffic) {
             SettleTraffic settleTraffic = (SettleTraffic) arg;
@@ -155,7 +155,7 @@ public class LogAspect<T> {
         Object arg = (joinPoint.getArgs().length > 0 ? joinPoint.getArgs()[0] : null);
         if (arg instanceof Order) {
             Order order = (Order) arg;
-            Logutil.create(om, orderMapper,
+            Logutil.createforOrder(om, orderMapper,
                     logService, order, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingOrderUpdate: EntityType.cangOrderUpdate));
         } else if (arg instanceof SettleTraffic) {
             SettleTraffic settleTraffic = (SettleTraffic) arg;
@@ -234,7 +234,7 @@ public class LogAspect<T> {
         String fileName = joinPoint.getSignature().getDeclaringTypeName();
         if (fileName.equals(OrderService.class.getName())) {
             Order order = orderMapper.selectByPrimaryKeyDeleted(id);
-            Logutil.create(om, orderMapper,
+            Logutil.createforOrder(om, orderMapper,
                     logService, order, (order.getBusinessType().equals(BusinessType.ying) ? EntityType.yingOrderDel: EntityType.cangOrderDel));
         } else if (fileName.equals(SettleTrafficService.class.getName())) {
             SettleTraffic settleTraffic = settleTrafficMapper.selectByPrimaryKeyDeleted(id);

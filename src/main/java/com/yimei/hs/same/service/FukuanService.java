@@ -191,7 +191,7 @@ public class FukuanService {
      * @return
      */
     @Transactional(readOnly = false)
-    public int delete(Long orderId, long id) {
+    public int delete( long id,Long orderId) {
 
         // 1. 删除订单的所有 回款-付款 映射
         huikuanMapMapper.deleteByOrderId(orderId);

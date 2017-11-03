@@ -90,7 +90,7 @@
     <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.Huankuan">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM hs_same_map
+        FROM hs_same_huankuan
         WHERE  id=#{id,jdbcType=BIGINT} and deleted=1
 
     </select>

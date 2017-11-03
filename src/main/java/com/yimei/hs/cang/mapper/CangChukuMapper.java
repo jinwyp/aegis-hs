@@ -20,4 +20,6 @@ public interface CangChukuMapper {
     Page<CangChuku> getPage(PageCangChukuDTO pageCangChukuDTO);
 
     int delete(Long id);
+
+    CangChuku selectByPrimaryKeyDeleted(Long id);
 }

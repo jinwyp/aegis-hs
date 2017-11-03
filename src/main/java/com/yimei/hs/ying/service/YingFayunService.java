@@ -65,7 +65,7 @@ public class YingFayunService {
      * @return
      */
     @Transactional(readOnly = false)
-    public int delete(Long orderId, long id) {
+    public int delete(Long id,Long orderId) {
         return yingFayunMapper.delete(id);
     }
 }

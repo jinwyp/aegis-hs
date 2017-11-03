@@ -190,7 +190,7 @@ public class FukuanController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
-        int rtn = fukuanService.delete(morderId, id);
+        int rtn = fukuanService.delete( id,morderId);
         if (rtn != 1) {
             return Result.error(4001, "更新删除", HttpStatus.BAD_REQUEST);
         }

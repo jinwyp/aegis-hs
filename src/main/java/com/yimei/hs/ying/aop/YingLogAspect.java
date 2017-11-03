@@ -74,7 +74,7 @@ public class YingLogAspect<T> {
             YingFayun yingFayun = (YingFayun) arg;
             Logutil.create(om, orderMapper, logService, yingFayun, EntityType.yingFayunUpdate);
         } else if (arg instanceof YingBail) {
-            YingFayun yingFayun = (YingFayun) arg;
+            YingBail yingFayun = (YingBail) arg;
             Logutil.create(om, orderMapper, logService, yingFayun, EntityType.yingBailUpdate);
         }
         return;
@@ -89,11 +89,11 @@ public class YingLogAspect<T> {
 
         String fileName = joinPoint.getSignature().getDeclaringTypeName();
         if (fileName.equals(YingFayunService.class.getName())) {
-            YingFayun yingFayun = yingFayunMapper.selectByPrimaryKey(id);
+            YingFayun yingFayun = yingFayunMapper.selectByPrimaryKeyDeleted(id);
             Logutil.create(om, orderMapper, logService, yingFayun, EntityType.yingFayunDel);
 
         } else if (fileName.equals(YingBailService.class.getName())) {
-            YingBail yingBail = yingBailMapper.selectByPrimaryKey(id);
+            YingBail yingBail = yingBailMapper.selectByPrimaryKeyDeleted(id);
             Logutil.create(om, orderMapper, logService, yingBail, EntityType.yingFayunDel);
         }
 

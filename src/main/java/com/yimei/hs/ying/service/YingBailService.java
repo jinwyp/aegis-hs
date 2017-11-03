@@ -64,7 +64,7 @@ public class YingBailService {
      * @return
      */
     @Transactional(readOnly = false)
-    public int delete(Long orderId, long id) {
+    public int delete(Long id,Long  orderId) {
         return yingBailMapper.delete(id);
     }
 }

@@ -86,18 +86,17 @@ public class CangLogAspect<T> {
      */
     @After("execution(* com.yimei.hs.cang.service..*.delete(..))")
     public void deleteYing(JoinPoint joinPoint) throws Exception {
-        Long[] args = (joinPoint.getArgs().length > 0 ? (Long[]) joinPoint.getArgs() : null);
-        Long orderId =(Long) joinPoint.getArgs()[0];
-        Long id  =(Long) joinPoint.getArgs()[1];
+
+        Long id  =(Long) joinPoint.getArgs()[0];
 
         String fileName = joinPoint.getSignature().getDeclaringTypeName();
 
         if (fileName.equals(CangRukuService.class.getName())) {
-           CangRuku  cangRuku = cangRukuMapper.selectByPrimaryKey(id);
+           CangRuku  cangRuku = cangRukuMapper.selectByPrimaryKeyDeleted(id);
             Logutil.create(om, orderMapper, logService, cangRuku, EntityType.cangRuKuDel);
 
         } else if (fileName.equals(CangChukuService.class.getName())) {
-            CangChuku cangChuku = cangChukuMapper.selectByPrimaryKey(id);
+            CangChuku cangChuku = cangChukuMapper.selectByPrimaryKeyDeleted(id);
             Logutil.create(om, orderMapper, logService, cangChuku, EntityType.cangChuKuDel);
         }
 

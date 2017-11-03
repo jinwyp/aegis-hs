@@ -173,7 +173,7 @@ public class YingFayunController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("id") Long id
     ) {
-        int cnt = yingFayunService.delete(morderId, id);
+        int cnt = yingFayunService.delete(id,morderId);
         if (cnt != 1) {
             return Result.error(4001, "删除失败", HttpStatus.BAD_REQUEST);
         }

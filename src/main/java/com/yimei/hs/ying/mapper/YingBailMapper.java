@@ -26,4 +26,5 @@ public interface YingBailMapper {
     List<YingBail> getList(Long orderId);
 
 
+    YingBail selectByPrimaryKeyDeleted(Long id);
 }

@@ -135,7 +135,7 @@ public class SettleSellerController {
                     }
                     return Result.ok(settleSeller);
                 } else {
-                    return Result.error(4001, "创建失败");
+                    return Result.error(4001, "汇总回款总额要大于除贸易差价外的付款总额");
                 }
             }
 

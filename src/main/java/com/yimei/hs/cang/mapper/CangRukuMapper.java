@@ -21,4 +21,5 @@ public interface CangRukuMapper {
 
     int delete(Long id);
 
+    CangRuku selectByPrimaryKeyDeleted(Long id);
 }

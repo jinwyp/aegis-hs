@@ -63,4 +63,26 @@ public class Logutil<T> {
         return;
     }
 
-}
+
+    public static final <T> void createforOrder(ObjectMapper om, OrderMapper orderMapper, LogService logService, T data, EntityType entityType) {
+
+        //输出date的方法 和参数
+
+        Long id = (Long) Reflections.getFieldValue(data, "id");
+        Long ownerId = (Long) Reflections.getFieldValue(data, "ownerId");
+
+
+        try {
+            logService.create(
+                    new Log(id,
+                            id,
+                            ownerId,
+                            id,
+                            entityType,
+                            om.writeValueAsString(data)));
+        } catch (Exception e) {
+
+            System.out.printf("error" + e.getMessage());
+        }
+        return;
+    }}

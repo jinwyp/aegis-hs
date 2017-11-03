@@ -58,6 +58,13 @@
         WHERE orderId = #{orderId,jdbcType=BIGINT}
         AND deleted = 0
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.ying.entity.YingBail">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM hs_ying_bail
+        WHERE id  = #{id,jdbcType=BIGINT}
+        AND deleted = 1
+    </select>
 
     <!-- 物理删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

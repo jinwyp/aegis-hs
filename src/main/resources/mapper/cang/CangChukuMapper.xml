@@ -37,6 +37,12 @@
 
         </where>
     </select>
+    <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.cang.entity.CangChuku">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_cang_chuku
+        where id = #{id,jdbcType=BIGINT} and deleted=1
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from hs_cang_chuku
     where id = #{id,jdbcType=BIGINT}

@@ -120,7 +120,7 @@ public class YingBailController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("id") Long id
     ) {
-        int cnt = yingBailService.delete(morderId, id);
+        int cnt = yingBailService.delete(id,morderId);
         if (cnt != 1) {
             return Result.error(4001, "删除失败", HttpStatus.BAD_REQUEST);
         }

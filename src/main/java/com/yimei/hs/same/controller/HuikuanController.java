@@ -159,7 +159,7 @@ public class HuikuanController {
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
     ) {
-        int cnt = huikuanService.delete(morderId, id);
+        int cnt = huikuanService.delete(id,morderId );
         if (cnt != 1) {
             return Result.error(4001, "删除失败");
         }

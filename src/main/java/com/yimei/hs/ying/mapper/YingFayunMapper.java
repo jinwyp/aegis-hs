@@ -26,4 +26,5 @@ public interface YingFayunMapper {
     List<YingFayun> getList(Long orderId);
 
 
+    YingFayun selectByPrimaryKeyDeleted(Long id);
 }
