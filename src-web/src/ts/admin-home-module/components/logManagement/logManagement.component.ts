@@ -78,7 +78,7 @@ export class LogManagementComponent implements OnInit {
         )
     }
 
-    getLogList () {
+    getLogList (event?: any) {
 
         let query : any = {
             pageSize: this.pagination.pageSize,
