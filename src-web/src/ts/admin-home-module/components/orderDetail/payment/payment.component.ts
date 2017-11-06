@@ -35,6 +35,7 @@ export class PaymentComponent implements OnInit {
     paymentList : any[] = []
     partyList : any[] = []
     partyListFilter : any[] = []
+    partyListFilterZhiJin : any[] = []
 
     unitList : any[] = []
 
@@ -102,6 +103,8 @@ export class PaymentComponent implements OnInit {
 
                 if (Array.isArray(data.data.results)) {
 
+                    const tempArray : any[] = []
+
                     data.data.results.forEach( company => {
 
                         if ( company.id === this.currentOrder.upstreamId || company.id === this.currentOrder.mainAccounting || company.id === this.currentOrder.downstreamId) {
@@ -113,7 +116,13 @@ export class PaymentComponent implements OnInit {
                                 this.partyListFilter.push(company)
                             }
                         })
+
+                        if (company.partyType === 2 || company.id === this.currentOrder.mainAccounting) {
+                            tempArray.push(company)
+                        }
                     })
+
+                    this.partyListFilterZhiJin = tempArray
 
                 }
             },
