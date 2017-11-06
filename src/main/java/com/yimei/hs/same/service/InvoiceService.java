@@ -91,7 +91,12 @@ public class InvoiceService {
 
         List<InvoiceDetail> invoiceDetails = yingInvoice.getDetails();
         for (InvoiceDetail invoiceDetail : invoiceDetails) {
-            invoiceDetailMapper.updateByPrimaryKeySelective(invoiceDetail);
+            if (invoiceDetail.getId() == null) {
+                invoiceDetailMapper.insert(invoiceDetail);
+            } else {
+                invoiceDetailMapper.updateByPrimaryKeySelective(invoiceDetail);
+            }
+
         }
 
         return rtn;

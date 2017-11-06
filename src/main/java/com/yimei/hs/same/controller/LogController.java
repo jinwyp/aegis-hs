@@ -1,11 +1,13 @@
 package com.yimei.hs.same.controller;
 
 import com.yimei.hs.boot.api.Result;
+import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.EntityType;
 import com.yimei.hs.same.dto.PageLogDTO;
 import com.yimei.hs.same.entity.Log;
 import com.yimei.hs.same.service.LogService;
+import com.yimei.hs.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by hary on 2017/9/27.
  */
 @RestController
-@RequestMapping("/api/business/{businessType}")
+@RequestMapping("/api/business")
 public class LogController {
 
     @Autowired
@@ -28,12 +30,13 @@ public class LogController {
      * @param pageLogDTO
      * @return
      */
-    @GetMapping("/{morderId}/log/{entityType}")
+    @GetMapping("/{businessType}/{morderId}/log/{entityType}")
     public ResponseEntity<Result<Page<Log>>> getPage(
             @PathVariable("morderId") Long morderId,
             @PathVariable("entityType") EntityType entityType,
             PageLogDTO pageLogDTO
     ) {
+        pageLogDTO.setOrderId(morderId);
         Page<Log> page = logService.getPage(pageLogDTO);
         return Result.ok(page);
     }
@@ -60,7 +63,7 @@ public class LogController {
      * @param id
      * @return
      */
-    @GetMapping("/orderId/log/{entityType}/{id}")
+    @GetMapping("/{businessType}//{morderId}/log/{entityType}/{id}")
     public ResponseEntity<Result<Log>> findOne(
             @PathVariable("morderId") Long morderId,
             @PathVariable("entityType") EntityType entityType,
@@ -69,4 +72,17 @@ public class LogController {
         Log log = logService.findOne(id);
         return Result.ok(log);
     }
-}
+
+
+    /**
+     * 查询日志分页
+     *
+     * @return
+     */
+    @GetMapping("/logs")
+    public ResponseEntity<Result<Page<Log>>> getALlPage(@CurrentUser User user,
+                                                        PageLogDTO pageLogDTO
+    ) {
+        Page<Log> page = logService.getPage(pageLogDTO);
+        return Result.ok(page);
+    }}

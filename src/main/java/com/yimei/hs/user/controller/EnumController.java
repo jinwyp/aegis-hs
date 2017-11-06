@@ -40,6 +40,7 @@ public class EnumController {
                     add(TrafficMode.name);
                     add(InStorageStatus.name);
                     add(BailType.name);
+                    add(EntityType.name);
                 }}
         );
     }
@@ -98,6 +99,8 @@ public class EnumController {
             data = InStorageStatus.list();
         } else if (type.equals(BailType.name)) {
             data = BailType.list();
+        } else if (type.equals(EntityType.name)) {
+            data = EntityType.list();
         }else {
             Result.error(4001, "此类型" + type + "不存在");
         }
