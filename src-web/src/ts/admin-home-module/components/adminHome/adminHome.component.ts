@@ -31,6 +31,7 @@ export class AdminHomeComponent implements OnInit {
         true,
         true,
         true,
+        true,
         true
     ]
 

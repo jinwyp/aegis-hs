@@ -8,6 +8,10 @@ import { BSFormModule } from '../bs-form-module/bs-form.module'
 import { BSCommonModule } from '../bs-common-module/bs-common.module'
 
 
+
+import { LogManagementComponent } from './components/logManagement/logManagement.component'
+
+
 import { AdminHomeComponent } from './components/adminHome/adminHome.component'
 import { BasicInfoComponent } from './components/basicInfo/basicInfo.component'
 import { ModifyPasswordComponent } from './components/modifyPassword/modifyPassword.component'
@@ -56,6 +60,8 @@ import { PipeSubstringId, PipeOrderStatus, PipePaymentSettleMode, PipeCargoType,
 
 const userHomeRoutes: Routes = [
     {path : '', redirectTo : '/info/basic', pathMatch : 'full'},
+    {path : 'logs', component : LogManagementComponent},
+
     {path : 'info/basic', component : BasicInfoComponent},
     {path : 'info/password', component : ModifyPasswordComponent},
 
@@ -69,7 +75,6 @@ const userHomeRoutes: Routes = [
 
     {path : 'cangorders', component : OrderListComponent, data: { businessType: 'cang' }},
     {path : 'cangorders/:orderId', component : OrderDetailComponent, data: { businessType: 'cang' }},
-
 
     {path : '**', redirectTo : '/info/basic', pathMatch : 'full'}
 ]
@@ -85,6 +90,8 @@ const userHomeRoutes: Routes = [
         PipeCargoArriveStatus,
         PipeTrafficMode,
 
+
+        LogManagementComponent,
 
         AdminHomeComponent,
         BasicInfoComponent,

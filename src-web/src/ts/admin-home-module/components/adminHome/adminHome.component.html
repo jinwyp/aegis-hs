@@ -111,6 +111,22 @@
             </div>
         </div>
 
+
+        <div class="card" [class.active] = "currentMenu===3">
+
+            <a data-toggle="collapse" href="#collapse4" role="tab" aria-expanded="true" aria-controls="collapseOne" (click)="clickMenu($event, 5)">
+                <i class="fa fa-file-archive-o" aria-hidden="true"></i>
+                <span class="ml-2" >日志管理</span>
+            </a>
+
+            <div id="collapse5" class="collapse" [class.show]="menuList[5]" role="tabpanel" aria-labelledby="headingOne">
+                <ul class="list-group">
+                    <li routerLinkActive="active" *ngIf="currentUser?.isAdmin"> <a routerLink="/logs" (click)="clickSubMenu(51)">日志管理</a> </li>
+                </ul>
+            </div>
+        </div>
+
+
     </div>
 
 

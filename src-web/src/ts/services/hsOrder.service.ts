@@ -22,9 +22,23 @@ export class HSOrderService {
     }
 
 
+
+
     getEnumList(path: string): Observable<any> {
         return this.http.get(apiPath.dictionary + '/' + path)
     }
+
+
+    getLogList(query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
+        let params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
+
+        if (query.orderId) { params = params.append('orderId', query.orderId)}
+        return this.http.get(apiPath.hsGetOrderList + '/logs', {params: params})
+    }
+
+
 
     getOrderList(businessType : string, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         let params = new HttpParams()
