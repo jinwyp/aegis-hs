@@ -197,11 +197,12 @@ export class OrderListComponent implements OnInit {
                         if (company.partyType !== 2) {
                             tempArray3.push(company)
                         }
-                        this.partyListSearchZhangWu = tempArray
-                        this.partyListUpstreamAndDownstream = tempArray2
-                        this.partyListOther = tempArray3.slice()
-                        this.partyListOtherFilter = tempArray3.slice()
                     })
+
+                    this.partyListSearchZhangWu = tempArray
+                    this.partyListUpstreamAndDownstream = tempArray2
+                    this.partyListOther = tempArray3.slice()
+                    this.partyListOtherFilter = tempArray3.slice()
                 }
             },
             error => {this.httpService.errorHandler(error) }

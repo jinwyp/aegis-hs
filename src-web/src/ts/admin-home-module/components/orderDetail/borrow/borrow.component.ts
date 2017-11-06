@@ -90,20 +90,16 @@ export class BorrowComponent implements OnInit {
                 this.partyList = data.data.results
 
                 if (Array.isArray(data.data.results)) {
+                    const tempArray : any[] = []
 
                     data.data.results.forEach( company => {
 
-                        if ( company.id === this.currentOrder.upstreamId || company.id === this.currentOrder.mainAccounting || company.id === this.currentOrder.downstreamId) {
-                            this.partyListFilter.push(company)
+                        if (company.partyType === 2) {
+                            tempArray.push(company)
                         }
-
-                        this.currentOrder.orderPartyList.forEach( company2 => {
-                            if (company.id === company2.customerId) {
-                                this.partyListFilter.push(company)
-                            }
-                        })
                     })
 
+                    this.partyListFilter = tempArray
                 }
             },
             error => {this.httpService.errorHandler(error) }
