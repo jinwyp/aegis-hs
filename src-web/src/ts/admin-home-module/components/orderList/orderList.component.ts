@@ -46,8 +46,10 @@ export class OrderListComponent implements OnInit {
     partyList : any[] = []
     partyListSearchZhangWu : any[] = []
     partyListUpstreamAndDownstream : any[] = []
+
+    partyListZhangWu : any[] = []
     partyListOther : any[] = []
-    partyListOtherFilter : any[] = []
+    partyListFilterOther : any[] = []
     partyListObject : any = {}
 
 
@@ -183,7 +185,6 @@ export class OrderListComponent implements OnInit {
                 if (Array.isArray(data.data.results)) {
                     const tempArray : any[] = []
                     const tempArray2 : any[] = []
-                    const tempArray3 : any[] = []
 
                     data.data.results.forEach( company => {
                         this.partyListObject[company.id] = company
@@ -194,15 +195,13 @@ export class OrderListComponent implements OnInit {
                         if (company.partyType === 3) {
                             tempArray2.push(company)
                         }
-                        if (company.partyType !== 2) {
-                            tempArray3.push(company)
-                        }
                     })
 
                     this.partyListSearchZhangWu = tempArray
                     this.partyListUpstreamAndDownstream = tempArray2
-                    this.partyListOther = tempArray3.slice()
-                    this.partyListOtherFilter = tempArray3.slice()
+                    this.partyListZhangWu = tempArray.slice()
+                    this.partyListOther = tempArray2.slice()
+
                 }
             },
             error => {this.httpService.errorHandler(error) }
@@ -403,6 +402,12 @@ export class OrderListComponent implements OnInit {
         })
     }
 
+
+    getFilterCompanyList (event : any) {
+        this.filterParty()
+    }
+
+
     createNewOtherParty () {
 
         if (this.orderOtherPartyForm.invalid) {
@@ -447,6 +452,7 @@ export class OrderListComponent implements OnInit {
             'position'    : ''
         })
 
+        this.partyListFilterOther = []
     }
 
     delOtherParty (company: any, position : number) {
@@ -466,28 +472,34 @@ export class OrderListComponent implements OnInit {
     }
 
     filterParty () {
-        this.partyListOtherFilter = this.partyList.slice()
+
+
+        if (this.orderOtherPartyForm.value.custType === 'ACCOUNTING_COMPANY') {
+            this.partyListFilterOther = this.partyListZhangWu.slice()
+        }
+
+        if (this.orderOtherPartyForm.value.custType === 'TRAFFICKCER') {
+            this.partyListFilterOther = this.partyListOther.slice()
+        }
 
         this.partyList.forEach( (company => {
 
             this.otherParty1List.forEach( (company2 => {
                 if (company2.customerId === company.id) {
-                    const index1 = this.partyListOtherFilter.indexOf(company)
-                    this.partyListOtherFilter.splice(index1, 1)
+                    const index1 = this.partyListFilterOther.indexOf(company)
+                    this.partyListFilterOther.splice(index1, 1)
                 }
             }))
 
             this.otherParty2List.forEach( (company3 => {
                 if (company3.customerId === company.id) {
-                    const index2 = this.partyListOtherFilter.indexOf(company)
-                    this.partyListOtherFilter.splice(index2, 1)
+                    const index2 = this.partyListFilterOther.indexOf(company)
+                    this.partyListFilterOther.splice(index2, 1)
                 }
             }))
 
         }))
 
-        // console.log(this.partyList)
-        // console.log(this.partyListOtherFilter)
     }
 
     lineName() {
