@@ -32,8 +32,6 @@
                     <th>所属订单ID</th>
                     <th>所属核算月ID</th>
                     <th>操作人员</th>
-
-                    <th>操作实体ID</th>
                     <th>操作类型</th>
                     <th>其他信息</th>
 
@@ -41,14 +39,14 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let log of logList; trackBy: trackByFn">
-                    <td> {{log.tsc }}</td>
+                    <td> {{log.tsc }} </td>
                     <td> {{log.id}} </td>
-                    <td> {{log.orderId}}</td>
-                    <td> {{log.hsId}}</td>
-                    <td> {{log.editorId}}</td>
-                    <td> {{log.entityId}}</td>
-                    <td> {{log.entityType}}</td>
-                    <td> {{log.memo }}</td>
+                    <td> {{log.orderId}} <br> {{log.orderDesc}} </td>
+                    <td> {{log.hsIdDesc}}</td>
+                    <td> {{log.editorDesc}}</td>
+
+                    <td> {{log.entityTypeDesc}}</td>
+                    <td > {{log.memo }}</td>
 
 
                 </tr>

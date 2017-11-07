@@ -370,7 +370,6 @@ describe('应收订单 统计范例3', function () {
             .expect(200)
             .end(function(err, res) {
                 console.log(res.body)
-                console.log(res.body)
                 if (err) return done(err)
 
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
@@ -491,7 +490,7 @@ describe('应收订单 统计范例3', function () {
 
 
 
-    
+
 
 
     it(`上游结算单 - 新建上游结算单1 POST: /api/business/ying/${orderId}/settlesellerupstream`, function (done) {
