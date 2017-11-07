@@ -19,7 +19,7 @@ const server = supertest(config.path.urlApi)
 
 
 
-describe('应收订单 统计范例1', function () {
+describe('应收订单 统计范例1 ', function () {
 
     let Authorization = ''
     let orderId = 12
@@ -673,7 +673,7 @@ describe('应收订单 统计范例1', function () {
                 done()
             })
     })
-    it(`付款单 - 新建付款单7 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+    it(`付款单 - 新建付款单6 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
         server.post(`/api/business/ying/${orderId}/fukuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
