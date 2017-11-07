@@ -41,6 +41,10 @@ public class Log implements Serializable {
     @Null(groups = {UpdateGroup.class}, message = "创建时间有数据库生成")
     private LocalDateTime tsc;
 
+    private String orderDesc;
+    private String editorDesc;
+    private String entityTypeDesc;
+    private String hsIdDesc;
     private static final long serialVersionUID = 1L;
 
     public Log(Long orderId, Long hsId, Long editorId, Long entityId, EntityType entityType, String memo) {

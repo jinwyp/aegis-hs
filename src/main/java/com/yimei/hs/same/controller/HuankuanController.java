@@ -20,7 +20,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by hary on 2017/9/22.
@@ -110,6 +116,17 @@ public class HuankuanController {
             }
 
         }
+        NaturalSupplier personSupplier = new NaturalSupplier();
+        personSupplier.setHuikuanMaps((ArrayList)huankuanMaps);
+
+        Map<Long, List<HuikuanMap>> huiparts = Stream.generate(personSupplier).limit(huankuanMaps.size()-1).collect(Collectors.groupingBy(HuikuanMap::getId));
+
+
+         logger.info("map;---->",huiparts);
+        //        Map<Boolean, List<HuikuanMap>> children = Stream.generate(new PersonSupplier()).
+//                limit(100).
+//                collect(Collectors.partitioningBy(p -> p.getAge() < 18));
+
         // 2. 创建还款
         int rtn = huankuanService.create(huankuan);
         if (rtn != 1) {
@@ -165,4 +182,18 @@ public class HuankuanController {
         }
         return Result.ok(1);
     }
-}
+
+    class NaturalSupplier implements Supplier<HuikuanMap> {
+
+        List<HuikuanMap> huikuanMaps;
+
+        int i = 0;
+        public HuikuanMap get() {
+
+            return this.huikuanMaps.get(i++);
+        }
+
+        public void setHuikuanMaps(List<HuikuanMap> maps){
+            huikuanMaps.addAll(maps) ;
+        }
+    }}

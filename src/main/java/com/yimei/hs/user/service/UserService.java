@@ -156,4 +156,8 @@ public class UserService {
     public List<User> getUsersOfSameDept(User user) {
         return userMapper.getUsersOfSameDept(user);
     }
+
+    public User getUserById(Long id){
+        return userMapper.selectByPrimaryKey(id);
+    }
 }
