@@ -26,8 +26,22 @@
     <!-- 获取分页日志-->
     <select id="getPage" resultType="com.yimei.hs.same.entity.Log">
         select
-        <include refid="Base_Column_List"/>
-        from hs_same_log
+        orders.line as orderDesc,
+        config.hsMonth as hsIdDesc ,
+        user.phone  as editorDesc,
+        log.id,
+        log.orderId,
+        log.editorId,
+        log.hsId,
+        log.entityId,
+        log.entityType,
+        log.memo,
+        log.tsc
+
+        from hs_same_log log
+        left join hs_same_order orders  on orders.id=log.orderId
+        left join hs_same_order_config config on config.id=log.hsId
+        left join hs_user user on user.id=log.editorId
         <where>
             <if test="orderId">AND orderId = #{orderId, jdbcType=BIGINT}</if>
             <if test="hsId">AND hsId = #{orderId, jdbcType=BIGINT}</if>
