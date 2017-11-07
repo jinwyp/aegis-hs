@@ -231,31 +231,6 @@ describe('应收订单 统计范例3', function () {
 
 
 
-    it(`下游结算单 - 新建下游结算单1 POST: /api/business/ying/${orderId}/settlebuyerdownstream`, function (done) {
-        server.post(`/api/business/ying/${orderId}/settlebuyerdownstream`)
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : unitId,
-                    "settleDate" : "2017-05-03 00:00:00",
-                    "amount" : "4455.00",
-                    "money" : "1849569.52",
-                    "settleGap" : "0",
-                    "orderId" : orderId
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.settleDate).to.include('2017')
-                done()
-            })
-    })
 
 
 
@@ -394,6 +369,8 @@ describe('应收订单 统计范例3', function () {
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
+                console.log(res.body)
+                console.log(res.body)
                 if (err) return done(err)
 
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
@@ -483,6 +460,38 @@ describe('应收订单 统计范例3', function () {
 
 
 
+
+
+    it(`下游结算单 - 新建下游结算单1 POST: /api/business/ying/${orderId}/settlebuyerdownstream`, function (done) {
+        server.post(`/api/business/ying/${orderId}/settlebuyerdownstream`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "settleDate" : "2017-05-03 00:00:00",
+                    "amount" : "4455.00",
+                    "money" : "1849569.52",
+                    "settleGap" : "0",
+                    "orderId" : orderId
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.settleDate).to.include('2017')
+                done()
+            })
+    })
+
+
+
+
+    
 
 
     it(`上游结算单 - 新建上游结算单1 POST: /api/business/ying/${orderId}/settlesellerupstream`, function (done) {
