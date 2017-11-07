@@ -110,7 +110,7 @@ public class SettleSellerController {
             if (businessType.equals(BusinessType.ying)) {
                 YingAnalysisData yingAnalysisData = dataAnalysisService.findOneYing(morderId, settleSeller.getHsId());
                 totalHuikuanPaymentMoney = totalHuikuanPaymentMoney.add((yingAnalysisData.getTotalHuikuanPaymentMoney()==null?new BigDecimal("0"):yingAnalysisData.getTotalHuikuanPaymentMoney()));
-                totalPaymentAmount = totalPaymentAmount.add((yingAnalysisData.getPurchaseCargoAmountOfMoney() == null ? new BigDecimal("0") : yingAnalysisData.getPurchaseCargoAmountOfMoney())
+                totalPaymentAmount = totalPaymentAmount.add((yingAnalysisData.getTotalPaymentAmount() == null ? new BigDecimal("0") : yingAnalysisData.getTotalPaymentAmount())
                         .subtract((yingAnalysisData.getTotalTradeGapFee() == null ? new BigDecimal("0") : yingAnalysisData.getTotalTradeGapFee())
                         ));
             } else if (businessType.equals(BusinessType.cang)) {
