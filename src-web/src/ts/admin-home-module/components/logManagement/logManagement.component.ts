@@ -95,7 +95,7 @@ export class LogManagementComponent implements OnInit {
                 this.pagination.pageSize = data.data.pageSize
                 this.pagination.pageNo = data.data.pageNo
                 this.pagination.total = data.data.totalRecord
-                
+
             },
             error => {this.httpService.errorHandler(error) }
         )
