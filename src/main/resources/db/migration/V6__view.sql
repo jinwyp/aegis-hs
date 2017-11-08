@@ -98,7 +98,7 @@ sum(IFNULL(map.interest,0))as  totalUnpayInterest,
 sum(IFNULL(map.fee,0)) as  totalUnpayFee
 from hs_same_huankuan huankuan
 left join hs_same_huankuan_map map on huankuan.id= map.huankuanId
-where huankuan.deleted=0 and promise=true and map.deleted=0
+where huankuan.deleted=0 and promise=false and map.deleted=0
 group by  orderId, hsId;
 
 --  1012 外部资金使用成本   【1006】未还款预估成本 +【1008】还款利息合计 + 【1011】还款服务费合计
@@ -106,11 +106,11 @@ group by  orderId, hsId;
 
 create view v_1012 as
 select
-v_1006.orderId,
-v_1006.hsId,
-IFNULL(v_1006.totalUnrepaymentEstimateCost,0)-IFNULL(v_1007.totalRepaymentInterest,0)-IFNULL(v_1007.totalServiceCharge,0) as outCapitalAmout
-from v_1006
-left join v_1007 on  v_1006.hsId=v_1007.hsId and v_1006.orderId=v_1007.orderId;
+v_1007.orderId,
+v_1007.hsId,
+IFNULL(v_1006.totalUnrepaymentEstimateCost,0)+IFNULL(v_1007.totalRepaymentInterest,0)+IFNULL(v_1007.totalServiceCharge,0) as outCapitalAmout
+from v_1007
+left join v_1006 on  v_1006.hsId=v_1007.hsId and v_1006.orderId=v_1007.orderId;
 
 
 --1013 已回款金额  【1006】未还款预估成本 +【1008】还款利息合计 + 【1011】还款服务费合计
@@ -126,6 +126,7 @@ group by  orderId, hsId;
 --付货款金额
 create view v_1014 as
 select
+
 v_1003.orderId,
 v_1003.hsId,
 IFNULL(v_1003.totalPaymentAmount,0)-IFNULL(v_1001.totalPayTrafficFee,0)-IFNULL(v_1002.totalTradeGapFee,0) as payCargoAmount
@@ -203,20 +204,20 @@ huikuan.hsId,
 huikuan.orderId,
 map.amount,
 v_1018.actualUtilizationRate,
-case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-seller.discountDays else 0 end as time,
+case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end as time,
 
-CASE WHEN IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-seller.discountDays else 0 end,0)>0
-          AND IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-seller.discountDays else 0 end,0)<60
-THEN IFNULL(map.amount,0)*IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-seller.discountDays else 0 end,0)
+CASE WHEN IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end,0)>0
+          AND IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end,0)<60
+THEN IFNULL(map.amount,0)*IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end,0)
      *IFNULL(v_1018.actualUtilizationRate,0)/360
 
-WHEN IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-seller.discountDays else 0 end,0)>=60
-     AND IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-seller.discountDays else 0 end,0)<90
-THEN IFNULL(map.amount,0)*((case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-seller.discountDays else 0 end-60)*
+WHEN IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end,0)>=60
+     AND IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end,0)<90
+THEN IFNULL(map.amount,0)*((case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end-60)*
                                                                                                                                                                           (v_1018.actualUtilizationRate+0.05)+60*v_1018.actualUtilizationRate)/360
-WHEN IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-seller.discountDays else 0 end,0)>=90
+WHEN IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end,0)>=90
 THEN IFNULL(map.amount,0)*
-                         ((case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-seller.discountDays else 0 end-90)
+                         ((case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end-90)
                           *(v_1018.actualUtilizationRate+0.05)+30*(v_1018.actualUtilizationRate+0.05)+60*v_1018.actualUtilizationRate)/360
 ELSE 0 END as rate
 
@@ -338,7 +339,7 @@ sum(IFNULL(detail.priceAndTax,0)) as totalCCSIntypeMoney
 from hs_same_invoice_detail detail
      inner join hs_same_invoice invoice on detail.invoiceId= invoice.id
      inner join hs_same_order orders on invoice.orderId=orders.id
-where detail.deleted =0 and invoice.invoiceDirection='INCOME' and invoice.openCompanyId=orders.mainAccounting
+where detail.deleted =0 and invoice.invoiceDirection='INCOME' and invoice.receiverId=orders.mainAccounting
 group by hsId,orderId;
 
 
@@ -560,11 +561,11 @@ seller.hsId,
 seller.orderId,
 case  when seller.orderId is not null and seller.hsId is not null
 then
-IFNULL(v_1047.externalCapitalPaymentAmount,0)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0)
-- IFNULL(v_1002.totalTradeGapFee,0)-v_1001.totalPayTrafficFee
+IFNULL(IFNULL(v_1047.externalCapitalPaymentAmount,0)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0)
+       - IFNULL(v_1002.totalTradeGapFee,0)-v_1001.totalPayTrafficFee,0)
 else
-IFNULL(v_1047.externalCapitalPaymentAmount,0)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0)
-- IFNULL(v_1002.totalTradeGapFee,0)
+IFNULL(IFNULL(v_1047.externalCapitalPaymentAmount,0)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0)
+       - IFNULL(v_1002.totalTradeGapFee,0),0)
 end
 as upstreamCapitalPressure
 from hs_same_settle_seller seller
@@ -615,7 +616,7 @@ create view v_1051_ying as
 select
 v_1041_ying.hsId,
 v_1041_ying.orderId,
-IFNULL(v_1041_ying.finalSettleAmount,0)-IFNULL(v_1037.totalCSSIntypeNumber ,0)as cssUninTypeNum
+IFNULL(IFNULL(v_1041_ying.finalSettleAmount,0)-IFNULL(v_1037.totalCSSIntypeNumber ,0),0)as cssUninTypeNum
 from v_1041_ying
      left join v_1037 on v_1037.hsId=v_1041_ying.hsId
 group by hsId, orderId;
@@ -624,7 +625,7 @@ create view v_1051_cang as
 select
 v_1041_cang.hsId,
 v_1041_cang.orderId,
-IFNULL(v_1041_cang.finalSettleAmount,0)-IFNULL(v_1037.totalCSSIntypeNumber ,0)as cssUninTypeNum
+IFNULL(IFNULL(v_1041_cang.finalSettleAmount,0)-IFNULL(v_1037.totalCSSIntypeNumber ,0),0)as cssUninTypeNum
 from v_1041_cang
      left join v_1037 on v_1037.hsId=v_1041_cang.hsId
 group by hsId, orderId;
@@ -812,7 +813,7 @@ create view v_1063_cang  as
 select
 v_1057_cang.hsId,
 v_1057_cang.orderId,
-(IFNULL(v_1057_cang.saleIncludeTaxTotalAmount ,0)+IFNULL(v_1056_cang.purchaseIncludeTaxTotalAmount,0)+IFNULL(v_1058_cang.tradeCompanyAddMoney,0)- IFNULL(v_1027.dsddFee,0)*2)/1.17  as stampDuty
+(IFNULL(v_1057_cang.saleIncludeTaxTotalAmount ,0)+IFNULL(v_1056_cang.purchaseIncludeTaxTotalAmount,0)+IFNULL(v_1058_cang.tradeCompanyAddMoney,0)- IFNULL(v_1027.dsddFee,0)*2)*0.0003  as stampDuty
 from v_1057_cang
      left join v_1027  on  v_1027.hsId=v_1057_cang.hsId
      left join v_1056_cang on  v_1056_cang.hsId=v_1057_cang.hsId
@@ -824,7 +825,7 @@ create view v_1063_ying  as
 select
 v_1041_ying.hsId,
 v_1041_ying.orderId,
-(IFNULL(v_1041_ying.saleCargoAmountofMoney ,0)+IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0)+IFNULL(v_1058_ying.tradeCompanyAddMoney,0)- IFNULL(v_1027.dsddFee,0)*2)/1.17  as stampDuty
+(IFNULL(v_1041_ying.saleCargoAmountofMoney ,0)+IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0)+IFNULL(v_1058_ying.tradeCompanyAddMoney,0)- IFNULL(v_1027.dsddFee,0)*2)*0.0003  as stampDuty
 from v_1041_ying
      left join v_1027  on  v_1027.hsId=v_1041_ying.hsId
      left join v_1046_ying on  v_1046_ying.hsId=v_1041_ying.hsId
@@ -1146,7 +1147,6 @@ v_2004.totalUpstreamBail,
 v_2008.balanceUpstreamBail,
 v_2008.balanceDownStreamBail,
 v_2010_ying.settledDownstreamHuikuanMoneny
-
 from base as temp
      left join v_1001   on v_1001.hsId=temp.hsId
      left join v_1002   on v_1002.hsId=temp.hsId
