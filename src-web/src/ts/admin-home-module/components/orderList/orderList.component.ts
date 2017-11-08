@@ -123,7 +123,7 @@ export class OrderListComponent implements OnInit {
         )
     }
 
-    getOrderList () {
+    getOrderList (event? : any) {
 
         let query : any = {
             pageSize: this.pagination.pageSize,
