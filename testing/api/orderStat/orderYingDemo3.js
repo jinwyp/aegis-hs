@@ -504,9 +504,6 @@ describe('应收订单 统计范例3', function () {
                     "amount" : "99999",
                     "money" : "99999",
                     "discountType" : "NO_DISCOUNT",
-                    "discountInterest" : "9999",
-                    "discountDays" : "9999",
-                    "discountAmount" : "9999",
                     "orderId" : orderId
                 }
             )
