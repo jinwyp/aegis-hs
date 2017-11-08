@@ -37,8 +37,8 @@
     <result column="superviseFee" jdbcType="DECIMAL" property="superviseFee" />
     <result column="serviceFee" jdbcType="DECIMAL" property="serviceFee" />
     <result column="salesFeeAmount" jdbcType="DECIMAL" property="salesFeeAmount" />
-    <result column="totalCCSInTypeMoney" jdbcType="DECIMAL" property="totalCCSInTypeMoney" />
-    <result column="totalCSSInTypeNumber" jdbcType="DECIMAL" property="totalCSSInTypeNumber" />
+    <result column="totalCCSIntypeMoney" jdbcType="DECIMAL" property="totalCCSIntypeMoney" />
+    <result column="totalCSSIntypeNumber" jdbcType="DECIMAL" property="totalCSSIntypeNumber" />
     <result column="invoicedMoneyNum" jdbcType="DECIMAL" property="invoicedMoneyNum" />
     <result column="invoicedMoneyAmount" jdbcType="DECIMAL" property="invoicedMoneyAmount" />
     <result column="finalSettleAmount" jdbcType="DECIMAL" property="finalSettleAmount" />
@@ -114,8 +114,8 @@
       superviseFee,
       serviceFee,
       salesFeeAmount,
-      totalCCSInTypeMoney,
-      totalCSSInTypeNumber,
+      totalCCSIntypeMoney,
+      totalCSSIntypeNumber,
       tradingCompanyInTypeNum,
       tradingCompanyInTpeMoneyAmount,
       invoicedMoneyNum,
@@ -195,8 +195,8 @@
       superviseFee,
       serviceFee,
       salesFeeAmount,
-      totalCCSInTypeMoney,
-      totalCSSInTypeNumber,
+      totalCCSIntypeMoney,
+      totalCSSIntypeNumber,
       tradingCompanyInTypeNum,
       tradingCompanyInTpeMoneyAmount,
       invoicedMoneyNum,
