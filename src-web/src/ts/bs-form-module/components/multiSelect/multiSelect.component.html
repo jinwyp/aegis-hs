@@ -15,7 +15,7 @@
         </ul>
 
         <ul class="list-group options_box pr-0"  [class.d-none]="!isShowSelectOptionList">
-            <li *ngFor="let option of filterOptionList; let i = index" class="list-group-item" [class.selected]="contains(option)" [class.active]="i === currentSelectIndexByKeyboard" (click)="clickOption(option)">{{option.name}}</li>
+            <li *ngFor="let option of filterOptionList; let i = index" class="list-group-item" [class.selected]="option.selected" [class.active]="i === currentSelectIndexByKeyboard" (click)="clickOption(option)">{{option.name}}</li>
         </ul>
 
         <div class="invalid-feedback" *ngIf="error && (currentFormControl.dirty || dirty)">

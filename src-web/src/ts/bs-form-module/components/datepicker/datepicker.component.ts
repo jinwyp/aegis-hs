@@ -112,13 +112,13 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
             //     result = currentDate.year.toString() + plus0(currentDate.month.toString())
             // }
 
-            result = formatText.replace(token, function (match) {
+            result = formatText.replace(token, function ( match: any ) {
                 // console.log('match', match, flags[match])
 
                 if (match in flags) {
                     return flags[match]
                 }
-                return match.slice(1, match.length - 1);
+                return match.slice(1, match.length - 1)
             })
 
         }
@@ -216,7 +216,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
 
                     isValid = true
 
-                    now = new Date( Number(value.substr(0,4)), Number(value.substr(4,2)) - 1 )
+                    now = new Date( Number(value.substr(0, 4)), Number(value.substr(4, 2)) - 1 )
 
                     this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
                     this.inputDisplayValue =  this.dateFormatter(this.interValueDate, this.displayFormat)
