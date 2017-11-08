@@ -39,13 +39,13 @@
                                 </div>
 
                                 <div class="col-2">
-                                    <bs-text-input formControlName="principal" [fc]="borrowForm.get('principal')" [type]="'text'" [prompt]="'本金:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyBorrow" [error]="borrowFormError.principal"></bs-text-input>
+                                    <bs-text-input formControlName="principal" [fc]="borrowForm.get('principal')" [type]="'number'" [prompt]="'本金:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyBorrow" [error]="borrowFormError.principal"></bs-text-input>
                                 </div>
                                 <div class="col-2">
-                                    <bs-text-input formControlName="interest" [fc]="borrowForm.get('interest')" [type]="'text'" [prompt]="'利息:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyBorrow" [error]="borrowFormError.interest"></bs-text-input>
+                                    <bs-text-input formControlName="interest" [fc]="borrowForm.get('interest')" [type]="'number'" [prompt]="'利息:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyBorrow" [error]="borrowFormError.interest"></bs-text-input>
                                 </div>
                                 <div class="col-2">
-                                    <bs-text-input formControlName="fee" [fc]="borrowForm.get('fee')" [type]="'text'" [prompt]="'服务费:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyBorrow" [error]="borrowFormError.fee"></bs-text-input>
+                                    <bs-text-input formControlName="fee" [fc]="borrowForm.get('fee')" [type]="'number'" [prompt]="'服务费:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyBorrow" [error]="borrowFormError.fee"></bs-text-input>
                                 </div>
 
                                 <div class="col-1">
