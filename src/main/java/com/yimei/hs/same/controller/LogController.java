@@ -107,7 +107,7 @@ public class LogController {
         Page<Log> pages = logService.getPage(pageLogDTO);
 
         for (Log log : pages.getResults()) {
-//            log.setEntityTypeDesc(EntityType.class.);
+            log.setEntityTypeDesc(log.getEntityType().getValue());
         }
         return Result.ok(pages);
     }}

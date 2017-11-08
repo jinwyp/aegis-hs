@@ -159,4 +159,9 @@ public enum EntityType {
 
     public static String name = "EntityType";
 
+    public String getValue() {
+        return value;
+    }
+
+
 }
