@@ -416,9 +416,6 @@ describe('应收订单 统计范例2', function () {
                     "amount" : "99999",
                     "money" : "99999",
                     "discountType" : "NO_DISCOUNT",
-                    "discountInterest" : "9999",
-                    "discountDays" : "9999",
-                    "discountAmount" : "9999",
                     "orderId" : orderId
                 }
             )
@@ -456,13 +453,13 @@ describe('应收订单 统计范例2', function () {
                         {
                             "invoiceNumber" : "66661234",
                             "cargoAmount" : "1000",
-                            "taxRate" : "17",
+                            "taxRate" : "0.17",
                             "priceAndTax" : "340000"
                         },
                         {
                             "invoiceNumber" : "66661235",
                             "cargoAmount" : "367",
-                            "taxRate" : "17",
+                            "taxRate" : "0.17",
                             "priceAndTax" : "170000"
                         }
                     ]
@@ -495,7 +492,7 @@ describe('应收订单 统计范例2', function () {
                     "details" : [{
                         "invoiceNumber" : "66661236",
                         "cargoAmount" : "143.61",
-                        "taxRate" : "17",
+                        "taxRate" : "0.17",
                         "priceAndTax" : "55994.95"
                     }]
                 }

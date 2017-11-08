@@ -1059,9 +1059,6 @@ describe('应收订单 统计范例1 ', function () {
                     "amount" : "99999",
                     "money" : "99999",
                     "discountType" : "NO_DISCOUNT",
-                    "discountInterest" : "9999",
-                    "discountDays" : "9999",
-                    "discountAmount" : "9999",
                     "orderId" : orderId
                 }
             )
@@ -1098,7 +1095,7 @@ describe('应收订单 统计范例1 ', function () {
                     "details" : [{
                         "invoiceNumber" : "43211234",
                         "cargoAmount" : "36200",
-                        "taxRate" : "17",
+                        "taxRate" : "0.17",
                         "priceAndTax" : "21140000"
                     }]
                 }
@@ -1130,7 +1127,7 @@ describe('应收订单 统计范例1 ', function () {
                     "details" : [{
                         "invoiceNumber" : "43211235",
                         "cargoAmount" : "18584",
-                        "taxRate" : "17",
+                        "taxRate" : "0.17",
                         "priceAndTax" : "10889812.93"
                     }]
                 }
@@ -1162,7 +1159,7 @@ describe('应收订单 统计范例1 ', function () {
                     "details" : [{
                         "invoiceNumber" : "43211236",
                         "cargoAmount" : "16512",
-                        "taxRate" : "17",
+                        "taxRate" : "0.17",
                         "priceAndTax" : "9675667.49"
                     }]
                 }
@@ -1194,7 +1191,7 @@ describe('应收订单 统计范例1 ', function () {
                     "details" : [{
                         "invoiceNumber" : "43211237",
                         "cargoAmount" : "1104",
-                        "taxRate" : "17",
+                        "taxRate" : "0.17",
                         "priceAndTax" : "646919.58"
                     }]
                 }
@@ -1226,7 +1223,7 @@ describe('应收订单 统计范例1 ', function () {
                     "details" : [{
                         "invoiceNumber" : "43211238",
                         "cargoAmount" : "4330",
-                        "taxRate" : "17",
+                        "taxRate" : "0.17",
                         "priceAndTax" : "2676677.57"
                     }]
                 }

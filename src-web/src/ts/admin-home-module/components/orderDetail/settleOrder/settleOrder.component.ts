@@ -270,19 +270,11 @@ export class SettleOrderComponent implements OnInit {
             if (!this.settleForm.value.settleGap) {
                 this.settleForm.patchValue({settleGap : 99999999})
             }
-
-            if (!this.settleForm.value.trafficCompanyId) {
-                this.settleForm.patchValue({trafficCompanyId : 99999999})
-            }
         }
 
         if (this.settleType === 'settlebuyerdownstream' || this.settleType === 'settlebuyerupstream') {
             if (!this.settleForm.value.discountType) {
                 this.settleForm.patchValue({ discountType : '99999999' })
-            }
-
-            if (!this.settleForm.value.trafficCompanyId) {
-                this.settleForm.patchValue({trafficCompanyId : 99999999})
             }
         }
 

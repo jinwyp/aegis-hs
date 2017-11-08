@@ -41,13 +41,12 @@
                 <tr *ngFor="let log of logList; trackBy: trackByFn">
                     <td> {{log.tsc }} </td>
                     <td> {{log.id}} </td>
-                    <td> {{log.orderId}} <br> {{log.orderDesc}} </td>
+                    <td> 订单ID: {{log.orderId}} <br> {{log.orderDesc}} </td>
                     <td> {{log.hsIdDesc}}</td>
                     <td> {{log.editorDesc}}</td>
 
                     <td> {{log.entityTypeDesc}}</td>
-                    <td > {{log.memo }}</td>
-
+                    <td><pre><code>{{log.memoJson}}</code></pre></td>
 
                 </tr>
                 </tbody>
