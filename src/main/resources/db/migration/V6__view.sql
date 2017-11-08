@@ -801,7 +801,7 @@ IFNULL(
 case when IFNULL(v_1059_ying.withoutTaxIncome ,0)<= IFNULL(v_1060_ying.withoutTaxCost ,0)then 0 else (IFNULL(v_1059_ying.withoutTaxIncome,0) -IFNULL(v_1060_ying.withoutTaxCost,0))*0.17 end,
 0) as vat,
 IFNULL(
-case when IFNULL(v_1059_ying.withoutTaxIncome ,0)<= IFNULL(v_1060_ying.withoutTaxCost ,0)then 0 else (IFNULL(v_1059_ying.withoutTaxIncome ,0)-IFNULL(v_1060_ying.withoutTaxCost,0))*0.7*0.12 end,
+case when IFNULL(v_1059_ying.withoutTaxIncome ,0)<= IFNULL(v_1060_ying.withoutTaxCost ,0)then 0 else (IFNULL(v_1059_ying.withoutTaxIncome ,0)-IFNULL(v_1060_ying.withoutTaxCost,0))*0.17*0.12 end,
 0)as additionalTax
 from v_1059_ying
      left join v_1060_ying  on  v_1060_ying.hsId = v_1059_ying.hsId
