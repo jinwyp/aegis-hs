@@ -90,11 +90,21 @@ export class LogManagementComponent implements OnInit {
         console.log('query: ', query)
         this.hsOrderService.getLogList( query).subscribe(
             data => {
-                this.logList = data.data.results
 
                 this.pagination.pageSize = data.data.pageSize
                 this.pagination.pageNo = data.data.pageNo
                 this.pagination.total = data.data.totalRecord
+
+                if (Array.isArray(data.data.results)) {
+
+                    const tempArray = []
+                    data.data.results.forEach( log => {
+                        log.memoJson = JSON.stringify(JSON.parse(log.memo), null, 4)
+                        tempArray.push(log)
+                    })
+
+                    this.logList = tempArray
+                }
 
             },
             error => {this.httpService.errorHandler(error) }
