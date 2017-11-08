@@ -35,15 +35,15 @@
                                 <bs-text-input formControlName="invoiceNumber" [fc]="invoiceDetailForm.get('invoiceNumber')" [type]="'text'" [label]="'发票号:'" [labelclass]="'col-3'" [inputclass]="'col-9'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.invoiceNumber"></bs-text-input>
                             </div>
                             <div class="col-7">
-                                <bs-text-input formControlName="cargoAmount" [fc]="invoiceDetailForm.get('cargoAmount')" [type]="'text'" [label]="'发票上货物数量(吨):'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.cargoAmount"></bs-text-input>
+                                <bs-text-input formControlName="cargoAmount" [fc]="invoiceDetailForm.get('cargoAmount')" [type]="'number'" [label]="'发票上货物数量(吨):'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.cargoAmount"></bs-text-input>
                             </div>
                         </div>
                         <div class="form-row ">
                             <div class="col-4">
-                                <bs-text-input formControlName="taxRate" [fc]="invoiceDetailForm.get('taxRate')" [type]="'text'" [label]="'税率:'" [labelclass]="'col-3'" [inputclass]="'col-9'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.taxRate"></bs-text-input>
+                                <bs-text-input formControlName="taxRate" [fc]="invoiceDetailForm.get('taxRate')" [type]="'number'" [label]="'税率:'" [labelclass]="'col-3'" [inputclass]="'col-9'" [prompt]="'百分比 例如88.88'" [percent]="true" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.taxRate"></bs-text-input>
                             </div>
                             <div class="col-4">
-                                <bs-text-input formControlName="priceAndTax" [fc]="invoiceDetailForm.get('priceAndTax')" [type]="'text'" [label]="'价税合计:'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.priceAndTax"></bs-text-input>
+                                <bs-text-input formControlName="priceAndTax" [fc]="invoiceDetailForm.get('priceAndTax')" [type]="'number'" [label]="'价税合计:'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.priceAndTax"></bs-text-input>
                             </div>
                             <div class="col-2">
                                 <button type="button" class="btn btn-info" (click)="createInvoiceDetail()">添加明细</button>
