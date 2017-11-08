@@ -73,10 +73,10 @@ public class CangLogAspect<T> {
         Object arg = (joinPoint.getArgs().length > 0 ? joinPoint.getArgs()[0] : null);
         if (arg instanceof CangRuku){
             CangRuku cangRuku = (CangRuku) arg;
-            Logutil.create(om, orderMapper, logService, cangRuku, EntityType.cangRuKuInsert);
+            Logutil.create(om, orderMapper, logService, cangRuku, EntityType.cangRuKuUpdate);
         } else if (arg instanceof CangChuku) {
             CangChuku cangChuku = (CangChuku) arg;
-            Logutil.create(om, orderMapper, logService, cangChuku, EntityType.cangChuKuInsert);
+            Logutil.create(om, orderMapper, logService, cangChuku, EntityType.cangChuKuUpdate);
         }
 
     }

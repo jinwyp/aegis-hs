@@ -80,9 +80,9 @@ public class CangAnalysisData implements Serializable {
 
     private BigDecimal salesFeeAmount;
 
-    private BigDecimal totalCCSInTypeMoney;
+    private BigDecimal totalCCSIntypeMoney;
 
-    private BigDecimal totalCSSInTypeNumber;
+    private BigDecimal totalCSSIntypeNumber;
 
     private BigDecimal invoicedMoneyNum;
 
