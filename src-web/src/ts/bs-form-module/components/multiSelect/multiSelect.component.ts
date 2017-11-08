@@ -85,18 +85,10 @@ export class MultiSelectComponent implements OnInit, OnChanges, ControlValueAcce
         this.inputEl.nativeElement.focus()
     }
 
-    contains(obj) {
-        var i = this.interValueCurrentSelected.length;
-        while (i--) {
-            if (this.interValueCurrentSelected[i] === obj) {
-                return true;
-            }
-        }
-        return false;
-    }
+
     filterOptions(event: KeyboardEvent) {
 
-        if (event.keyCode !== 13 && event.keyCode !== 38 && event.keyCode !== 40)  {
+        if (event.keyCode !== 13 && event.keyCode !== 38 && event.keyCode !== 40 && event.keyCode !== 8)  {
             this.isShowSelectOptionList = true
 
             const inputText: string = (<HTMLInputElement>event.target).value
@@ -129,6 +121,9 @@ export class MultiSelectComponent implements OnInit, OnChanges, ControlValueAcce
 
         if ( this.interValueCurrentSelected.indexOf(currentOption) === -1) {
             this.interValueCurrentSelected.push(currentOption)
+
+            const tempIndex = this.filterOptionList.indexOf(currentOption)
+            this.filterOptionList[tempIndex].selected = true
         }
 
         this.value = this.interValueCurrentSelected
@@ -198,8 +193,16 @@ export class MultiSelectComponent implements OnInit, OnChanges, ControlValueAcce
 
         }
 
-        if(event.keyCode === 8 && this.inputEl.nativeElement.value === '' && this.inputEl.nativeElement === document.activeElement) {
-            this.interValueCurrentSelected.splice(this.interValueCurrentSelected.length - 1, 1)
+        if ( event.keyCode === 8 && this.inputEl.nativeElement.value === '' && this.inputEl.nativeElement === document.activeElement) {
+            const tempOptions = this.interValueCurrentSelected.splice(this.interValueCurrentSelected.length - 1, 1)
+
+            this.filterOptionList.forEach( option => {
+                if ( option.id === tempOptions[0].id) {
+                    option.selected = false
+                }
+            })
+
+            console.log('index: ', tempOptions, this.currentSelectIndexByKeyboard)
         }
     }
 
@@ -240,13 +243,15 @@ export class MultiSelectComponent implements OnInit, OnChanges, ControlValueAcce
     writeValue(value: any): void {
         console.log('WriteValue: ', value)
 
-        if(value && Array.isArray(value) && Array.isArray(this.optionList) && this.optionList.length > 0) {
+        if ( value && Array.isArray(value) && Array.isArray(this.filterOptionList) && this.filterOptionList.length > 0) {
 
             const tempValue : any[] = []
-            this.optionList.forEach( (option) => {
+
+            this.filterOptionList.forEach( (option) => {
                 value.forEach( (id) => {
-                    if(option.id === id) {
+                    if ( option.id === id) {
                         tempValue.push(option)
+                        option.selected = true
                     }
                 })
             })
