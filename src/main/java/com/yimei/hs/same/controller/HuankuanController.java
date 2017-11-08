@@ -116,13 +116,13 @@ public class HuankuanController {
             }
 
         }
-        NaturalSupplier personSupplier = new NaturalSupplier();
-        personSupplier.setHuikuanMaps((ArrayList)huankuanMaps);
-
-        Map<Long, List<HuikuanMap>> huiparts = Stream.generate(personSupplier).limit(huankuanMaps.size()-1).collect(Collectors.groupingBy(HuikuanMap::getId));
-
-
-         logger.info("map;---->",huiparts);
+//        NaturalSupplier personSupplier = new NaturalSupplier();
+//        personSupplier.setHuikuanMaps((ArrayList)huankuanMaps);
+//
+//        Map<Long, List<HuikuanMap>> huiparts = Stream.generate(personSupplier).limit(huankuanMaps.size()-1).collect(Collectors.groupingBy(HuikuanMap::getId));
+//
+//
+//         logger.info("map;---->",huiparts);
         //        Map<Boolean, List<HuikuanMap>> children = Stream.generate(new PersonSupplier()).
 //                limit(100).
 //                collect(Collectors.partitioningBy(p -> p.getAge() < 18));
