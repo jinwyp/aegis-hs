@@ -4,7 +4,7 @@ create view v_1001 as
 select
 orderId,
 hsId,
-ROUND(sum(IFNULL(payAmount,0)) ,0)as totalPayTrafficFee
+ROUND(sum(IFNULL(payAmount,0.00)) ,0.00)as totalPayTrafficFee
 from hs_same_fukuan
 where payUsage= 'FREIGNHT' and deleted=0
 group by  orderId, hsId;
@@ -14,7 +14,7 @@ create view v_1002 as
 select
 orderId,
 hsId,
-ROUND(sum(IFNULL(payAmount,0)) ,2)as totalTradeGapFee
+ROUND(sum(IFNULL(payAmount,0.00)) ,2)as totalTradeGapFee
 from hs_same_fukuan
 where payUsage= 'TRADE_DEFICIT' and deleted=0
 group by  orderId, hsId;
@@ -24,7 +24,7 @@ create view v_1003 as
 select
 orderId,
 hsId,
-ROUND(sum(IFNULL(payAmount,0)) ,2)as totalPaymentAmount
+ROUND(sum(IFNULL(payAmount,0.00)) ,2)as totalPaymentAmount
 from hs_same_fukuan
 where deleted=0
 group by  orderId, hsId;
@@ -36,7 +36,7 @@ create view v_1004 as
 select
 orderId,
 hsId,
-ROUND(sum(IFNULL(amount,0)) ,2)as totalLoadMoney
+ROUND(sum(IFNULL(amount,0.00)) ,2)as totalLoadMoney
 from hs_same_jiekuan
 where deleted=0
 group by  orderId, hsId;
@@ -46,7 +46,7 @@ create view v_1005 as
 select
 orderId,
 hsId,
-ROUND(amount*IFNULL(useInterest,0)*IFNULL(useDays,0)/360 ,2)as loadEstimateCost
+ROUND(amount*IFNULL(useInterest,0.00)*IFNULL(useDays,0.00)/360 ,2)as loadEstimateCost
 from hs_same_jiekuan
 where deleted =0
 group by  orderId, hsId;
@@ -62,7 +62,7 @@ select
 jiekuan.hsId,
 jiekuan.orderId,
 jiekuan.id,
-ROUND(IFNULL(sum(IFNULL(amount,0)*IFNULL(useInterest,0) * IFNULL(useDays,0)/360),0),2)  as totalUnrepaymentEstimateCost
+ROUND(IFNULL(sum(IFNULL(amount,0.00)*IFNULL(useInterest,0.00) * IFNULL(useDays,0.00)/360),0.00),2)  as totalUnrepaymentEstimateCost
 from hs_same_jiekuan jiekuan
      left join hs_same_huankuan_map map
      on jiekuan.id=map.jiekuanId
@@ -78,9 +78,9 @@ create view v_1007 as
 select
 huankuan.orderId,
 huankuan.hsId,
-ROUND(sum(IFNULL(map.principal,0)),2) as totalRepaymentPrincipeAmount,
-ROUND(sum(IFNULL(map.interest,0)),2) as  totalRepaymentInterest,
-ROUND(sum(IFNULL(map.fee,0)),2) as  totalServiceCharge
+ROUND(sum(IFNULL(map.principal,0.00)),2) as totalRepaymentPrincipeAmount,
+ROUND(sum(IFNULL(map.interest,0.00)),2) as  totalRepaymentInterest,
+ROUND(sum(IFNULL(map.fee,0.00)),2) as  totalServiceCharge
 from hs_same_huankuan huankuan
 left join hs_same_huankuan_map map on huankuan.id= map.huankuanId
 where huankuan.deleted=0
@@ -93,9 +93,9 @@ create view v_1009 as
 select
 huankuan.orderId,
 huankuan.hsId,
-ROUND(sum(IFNULL(map.principal,0)) ,2)as totalUnpayPrincipal,
-ROUND(sum(IFNULL(map.interest,0)),2)as  totalUnpayInterest,
-ROUND(sum(IFNULL(map.fee,0)),2)as  totalUnpayFee
+ROUND(sum(IFNULL(map.principal,0.00)) ,2)as totalUnpayPrincipal,
+ROUND(sum(IFNULL(map.interest,0.00)),2)as  totalUnpayInterest,
+ROUND(sum(IFNULL(map.fee,0.00)),2)as  totalUnpayFee
 from hs_same_huankuan huankuan
 left join hs_same_huankuan_map map on huankuan.id= map.huankuanId
 where huankuan.deleted=0 and promise=false and map.deleted=0
@@ -108,7 +108,7 @@ create view v_1012 as
 select
 v_1007.orderId,
 v_1007.hsId,
-ROUND(IFNULL(v_1006.totalUnrepaymentEstimateCost,0)+IFNULL(v_1007.totalRepaymentInterest,0)+IFNULL(v_1007.totalServiceCharge,0) ,2)as outCapitalAmout
+ROUND(IFNULL(v_1006.totalUnrepaymentEstimateCost,0.00)+IFNULL(v_1007.totalRepaymentInterest,0.00)+IFNULL(v_1007.totalServiceCharge,0.00) ,2)as outCapitalAmout
 from v_1007
 left join v_1006 on  v_1006.hsId=v_1007.hsId and v_1006.orderId=v_1007.orderId;
 
@@ -118,7 +118,7 @@ create view v_1013 as
 select
 orderId,
 hsId,
-ROUND(sum(IFNULL(huikuanAmount,0)) ,2)as totalHuikuanPaymentMoney
+ROUND(sum(IFNULL(huikuanAmount,0.00)) ,2)as totalHuikuanPaymentMoney
 from hs_same_huikuan
 where deleted =0
 group by  orderId, hsId;
@@ -129,7 +129,7 @@ select
 
 v_1003.orderId,
 v_1003.hsId,
-ROUND(IFNULL(v_1003.totalPaymentAmount,0)-IFNULL(v_1001.totalPayTrafficFee,0)-IFNULL(v_1002.totalTradeGapFee,0),2) as payCargoAmount
+ROUND(IFNULL(v_1003.totalPaymentAmount,0.00)-IFNULL(v_1001.totalPayTrafficFee,0.00)-IFNULL(v_1002.totalTradeGapFee,0.00),2) as payCargoAmount
 from v_1003
 left join v_1001 on v_1001.hsId =v_1003.hsId
 left join v_1002 on v_1002.hsId=v_1003.hsId
@@ -142,8 +142,8 @@ create view v_1015 as
 select
 v_1014.orderId,
 v_1014.hsId,
-case  when IFNULL(v_1014.payCargoAmount,0) > IFNULL(v_1013.totalHuikuanPaymentMoney,0)
-THEN  ROUND(IFNULL(v_1014.payCargoAmount,0) - IFNULL(v_1013.totalHuikuanPaymentMoney,0),2)
+case  when IFNULL(v_1014.payCargoAmount,0.00) > IFNULL(v_1013.totalHuikuanPaymentMoney,0.00)
+THEN  ROUND(IFNULL(v_1014.payCargoAmount,0.00) - IFNULL(v_1013.totalHuikuanPaymentMoney,0.00),2)
 ELSE 0 end  as unpaymentMoney
 from v_1014
      left JOIN v_1013  on v_1014.hsId = v_1013.hsId
@@ -155,7 +155,7 @@ create view v_1016 as
 select
 v_1015.orderId,
 v_1015.hsId,
-ROUND(IFNULL(v_1015.unpaymentMoney,0) * IFNULL(config.contractBaseInterest,0) * IFNULL(config.expectHKDays,0) / 360 ,2)as unpaymentEstimateProfile
+ROUND(IFNULL(v_1015.unpaymentMoney,0.00) * IFNULL(config.contractBaseInterest,0.00) * IFNULL(config.expectHKDays,0.00) / 360 ,2)as unpaymentEstimateProfile
 from v_1015
      left JOIN hs_same_order_config config  on config.id = v_1015.hsId
 group by orderId,hsId;
@@ -172,14 +172,14 @@ case when
                 datediff(huikuan.huikuanDate,fukuan.payDate)<0
                then 0 else datediff(huikuan.huikuanDate,fukuan.payDate)
                end
-               -IFNULL(seller.discountDays,0)
+               -IFNULL(seller.discountDays,0.00)
                 <0
 then 0
           else
               case  when datediff(huikuan.huikuanDate,fukuan.payDate)<0
                then 0 else datediff(huikuan.huikuanDate,fukuan.payDate)
                end
-               -IFNULL(seller.discountDays,0)
+               -IFNULL(seller.discountDays,0.00)
                 <0
           end as interestDays
 from hs_same_huikuan huikuan
@@ -192,7 +192,7 @@ create view v_1018 as
 select
 seller.orderId,
 seller.hsId,
-ROUND(IFNULL(config.contractBaseInterest,0)- IFNULL(seller.discountInterest,0) ,2)as actualUtilizationRate
+ROUND(IFNULL(config.contractBaseInterest,0.00)- IFNULL(seller.discountInterest,0.00) ,2)as actualUtilizationRate
 from hs_same_order_config config
      left join hs_same_settle_seller seller on config.id=seller.hsId
 group by orderId,hsId;
@@ -204,20 +204,20 @@ huikuan.hsId,
 huikuan.orderId,
 map.amount,
 v_1018.actualUtilizationRate,
-case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end as time,
+case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0.00)else 0 end as time,
 
-CASE WHEN IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end,0)>0
-          AND IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end,0)<60
-THEN IFNULL(map.amount,0)*IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end,0)
-     *IFNULL(v_1018.actualUtilizationRate,0)/360
+CASE WHEN IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0.00)else 0 end,0.00)>0
+          AND IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0.00)else 0 end,0.00)<60
+THEN IFNULL(map.amount,0.00)*IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0.00)else 0 end,0.00)
+     *IFNULL(v_1018.actualUtilizationRate,0.00)/360
 
-WHEN IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end,0)>=60
-     AND IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end,0)<90
-THEN IFNULL(map.amount,0)*((case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end-60)*
+WHEN IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0.00)else 0 end,0.00)>=60
+     AND IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0.00)else 0 end,0.00)<90
+THEN IFNULL(map.amount,0.00)*((case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0.00)else 0 end-60.00)*
                                                                                                                                                                           (v_1018.actualUtilizationRate+0.05)+60*v_1018.actualUtilizationRate)/360
-WHEN IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end,0)>=90
-THEN IFNULL(map.amount,0)*
-                         ((case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0)else 0 end-90)
+WHEN IFNULL(case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0.00)else 0 end,0.00)>=90
+THEN IFNULL(map.amount,0.00)*
+                         ((case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0.00)else 0 end-90)
                           *(v_1018.actualUtilizationRate+0.05)+30*(v_1018.actualUtilizationRate+0.05)+60*v_1018.actualUtilizationRate)/360
 ELSE 0 END as rate
 
@@ -234,7 +234,7 @@ create view v_1020 as
 select
 orderId,
 hsId,
-ROUND(sum(IFNULL(rate,0)) ,2)as totalPaymentedRateMoney
+ROUND(sum(IFNULL(rate,0.00)) ,2)as totalPaymentedRateMoney
 from v_1019
 group by orderId,hsId;
 
@@ -244,7 +244,7 @@ create view v_1021 as
 select
 v_1016.orderId,
 v_1016.hsId,
-ROUND(IFNULL(v_1016.unpaymentEstimateProfile,0)+IFNULL(v_1020.totalPaymentedRateMoney,0)-IFNULL(seller.discountAmount,0),2) as contractRateProfile
+ROUND(IFNULL(v_1016.unpaymentEstimateProfile,0.00)+IFNULL(v_1020.totalPaymentedRateMoney,0.00)-IFNULL(seller.discountAmount,0.00),2) as contractRateProfile
 from v_1016
      left join v_1020 on v_1016.hsId=v_1020.hsId
      left join hs_same_settle_seller seller on v_1016.hsId=seller.hsId and seller.orderId=v_1016.orderId
@@ -258,7 +258,7 @@ id,
 orderId,
 hsId,
 CASE WHEN huikuanMode ='BANK_ACCEPTANCE'
-THEN ROUND(TIMEDIFF(huikuanBankPaperExpire,huikuanBankPaperDate)/24 *IFNULL(huikuanAmount ,0)* IFNULL(huikuanBankDiscountRate,0)*1.17/360,2)
+THEN ROUND(TIMEDIFF(huikuanBankPaperExpire,huikuanBankPaperDate)/24 *IFNULL(huikuanAmount ,0.00)* IFNULL(huikuanBankDiscountRate,0.00)*1.17/360,2)
 ELSE 0 END as tiexianRate
 from hs_same_huikuan
 where deleted= 0;
@@ -269,7 +269,7 @@ create  view v_1023 as
 select
 orderId,
 hsId,
-ROUND(sum(IFNULL(tiexianRate,0)) ,2)as tiexianRateAmount
+ROUND(sum(IFNULL(tiexianRate,0.00)) ,2)as tiexianRateAmount
 from v_1022
 group by orderId,hsId;
 
@@ -278,9 +278,9 @@ create view v_1024 as
 select
 orderId,
 hsId,
-ROUND(sum(IFNULL(amount,0)),2) as totalBuyerNums,
-ROUND(sum(IFNULL(money,0)) ,2)as totalBuyerMoney,
-ROUND(sum(IFNULL(settleGap,0)),2) as totalBuyersettleGap
+ROUND(sum(IFNULL(amount,0.00)),2) as totalBuyerNums,
+ROUND(sum(IFNULL(money,0.00)) ,2)as totalBuyerMoney,
+ROUND(sum(IFNULL(settleGap,0.00)),2) as totalBuyersettleGap
 from hs_same_settle_buyer
 where deleted=0
 group by orderId,hsId;
@@ -299,14 +299,14 @@ create view v_1027 as
 select
 orderId,
 hsId,
-ROUND(sum(case when name='HELP_RECIVE_PAY_FEE' then IFNULL(amount ,0)else 0 end),2) as dsddFee,
-ROUND(sum(case when name='TAX_MOTRO_FREIGHT' then  IFNULL(amount ,0) else 0 end) ,2)as hsqyFee,
-ROUND(sum(case when name='TAX_SHIP_FREIGHT' then  IFNULL(amount ,0) else 0 end) ,2)as hssyFee,
-ROUND(sum(case when name='TAX_RAIL_FREIGHT' then  IFNULL(amount ,0)else 0 end) ,2)as hshyFee,
-ROUND(sum(case when name='SERVICE_FEE' then  IFNULL(amount ,0) else 0 end) ,2)as serviceFee,
-ROUND(sum(case when name='SUPERVISE_FEE' then  IFNULL(amount ,0)  else 0 end),2) as superviseFee,
-ROUND(sum(case when name='BUSINESS_FEE' then  IFNULL(amount ,0)  else 0 end) ,2)as businessFee,
-ROUND(sum(case when name !='HELP_RECIVE_PAY_FEE' then  IFNULL(amount ,0)  else 0 end),2) as salesFeeAmount
+ROUND(sum(case when name='HELP_RECIVE_PAY_FEE' then IFNULL(amount ,0.00)else 0 end),2) as dsddFee,
+ROUND(sum(case when name='TAX_MOTRO_FREIGHT' then  IFNULL(amount ,0.00) else 0 end) ,2)as hsqyFee,
+ROUND(sum(case when name='TAX_SHIP_FREIGHT' then  IFNULL(amount ,0.00) else 0 end) ,2)as hssyFee,
+ROUND(sum(case when name='TAX_RAIL_FREIGHT' then  IFNULL(amount ,0.00)else 0 end) ,2)as hshyFee,
+ROUND(sum(case when name='SERVICE_FEE' then  IFNULL(amount ,0.00) else 0 end) ,2)as serviceFee,
+ROUND(sum(case when name='SUPERVISE_FEE' then  IFNULL(amount ,0.00)  else 0 end),2) as superviseFee,
+ROUND(sum(case when name='BUSINESS_FEE' then  IFNULL(amount ,0.00)  else 0 end) ,2)as businessFee,
+ROUND(sum(case when name !='HELP_RECIVE_PAY_FEE' then  IFNULL(amount ,0.00)  else 0 end),2) as salesFeeAmount
 from hs_same_fee
 where  deleted=0
 group by orderId,hsId;
@@ -318,8 +318,8 @@ create view v_1035 as
 select
 invoice.hsId,
 invoice.orderId,
-ROUND(sum(IFNULL(detail.cargoAmount,0)) ,2)as tradingCompanyInTypeNum,
-ROUND(sum(IFNULL(detail.priceAndTax,0)) ,2)as tradingCompanyInTpeMoneyAmount
+ROUND(sum(IFNULL(detail.cargoAmount,0.00)) ,2)as tradingCompanyInTypeNum,
+ROUND(sum(IFNULL(detail.priceAndTax,0.00)) ,2)as tradingCompanyInTpeMoneyAmount
 from hs_same_invoice_detail detail
      inner join hs_same_invoice invoice on detail.invoiceId= invoice.id
      inner join hs_same_order orders on invoice.orderId=orders.id
@@ -334,8 +334,8 @@ create view v_1037 as
 select
 invoice.hsId,
 invoice.orderId,
-ROUND(sum(IFNULL(detail.cargoAmount,0)) ,2)as totalCSSIntypeNumber,
-ROUND(sum(IFNULL(detail.priceAndTax,0)),2) as totalCCSIntypeMoney
+ROUND(sum(IFNULL(detail.cargoAmount,0.00)) ,2)as totalCSSIntypeNumber,
+ROUND(sum(IFNULL(detail.priceAndTax,0.00)),2) as totalCCSIntypeMoney
 from hs_same_invoice_detail detail
      inner join hs_same_invoice invoice on detail.invoiceId= invoice.id
      inner join hs_same_order orders on invoice.orderId=orders.id
@@ -348,8 +348,8 @@ create view v_1039 as
 select
 invoice.hsId,
 invoice.orderId,
-ROUND(sum(IFNULL(detail.cargoAmount,0)),2) as invoicedMoneyNum,
-ROUND(sum(IFNULL(detail.priceAndTax,0)) ,2)as invoicedMoneyAmount
+ROUND(sum(IFNULL(detail.cargoAmount,0.00)),2) as invoicedMoneyNum,
+ROUND(sum(IFNULL(detail.priceAndTax,0.00)) ,2)as invoicedMoneyAmount
 from hs_same_invoice_detail detail
      inner join hs_same_invoice invoice on detail.invoiceId= invoice.id
      inner join hs_same_order orders on invoice.orderId=orders.id
@@ -362,8 +362,8 @@ create view  v_2001 as
 select
 orderId,
 hsId,
-ROUND(sum(case when  arriveStatus = 'ARRIVE' then IFNULL(fyamount ,0)else 0 end ) ,2)as  totalArriveNum,
-ROUND(sum(case when  arriveStatus=  'UNARRIVE' then IFNULL(fyamount ,0) else 0 end ),2) as  totalUnarriveNum ,
+ROUND(sum(case when  arriveStatus = 'ARRIVE' then IFNULL(fyamount ,0.00)else 0 end ) ,2)as  totalArriveNum,
+ROUND(sum(case when  arriveStatus=  'UNARRIVE' then IFNULL(fyamount ,0.00) else 0 end ),2) as  totalUnarriveNum ,
 ROUND(sum(hsdb.hs_ying_fayun.fyamount) ,2)as totalFayunNum
 from hsdb.hs_ying_fayun
 where deleted = 0
@@ -378,10 +378,10 @@ create view v_2004 as
 select
 hsId,
 orderId,
-ROUND(sum(case when bailType='RECV_UP' then IFNULL(bailAmount ,0) else 0 end) ,2)as totalUpstreamBail,
-ROUND(sum(case when bailType='BACK_UP' then IFNULL(bailAmount ,0) else 0 end) ,2)as totalRefundUpBail,
-ROUND(sum(case when bailType='PAY_DOWN' then IFNULL(bailAmount ,0) else 0 end) ,2)as totalPayDownBail,
-ROUND(sum(case when bailType='BACK_DOWN' then IFNULL(bailAmount ,0) else 0 end),2) as totalRefundDownBail
+ROUND(sum(case when bailType='RECV_UP' then IFNULL(bailAmount ,0.00) else 0 end) ,2)as totalUpstreamBail,
+ROUND(sum(case when bailType='BACK_UP' then IFNULL(bailAmount ,0.00) else 0 end) ,2)as totalRefundUpBail,
+ROUND(sum(case when bailType='PAY_DOWN' then IFNULL(bailAmount ,0.00) else 0 end) ,2)as totalPayDownBail,
+ROUND(sum(case when bailType='BACK_DOWN' then IFNULL(bailAmount ,0.00) else 0 end),2) as totalRefundDownBail
 from hs_ying_bail
 where  deleted=0
 group by hsId,OrderId;
@@ -392,8 +392,8 @@ create view v_2008 as
 select
 hsId,
 orderId,
-ROUND(IFNULL(totalUpstreamBail,0)-IFNULL(totalRefundUpBail ,0),0) as balanceUpstreamBail,
-ROUND(IFNULL(totalPayDownBail,0)-IFNULL(totalRefundDownBail ,0),0)as balanceDownStreamBail
+ROUND(IFNULL(totalUpstreamBail,0.00)-IFNULL(totalRefundUpBail ,0.00),0.00) as balanceUpstreamBail,
+ROUND(IFNULL(totalPayDownBail,0.00)-IFNULL(totalRefundDownBail ,0.00),0.00)as balanceDownStreamBail
 from v_2004
 group by hsId,OrderId;
 
@@ -407,9 +407,9 @@ create view v_3001  as
 select
 hsId,
 orderId,
-sum(IFNULL(rukuAmount,0)) as totalInstorageNum,
-sum(IFNULL(rukuAmount,0) * IFNULL(rukuPrice,0)) as totalInstorageAmount,
-sum(IFNULL(rukuAmount,0) * IFNULL(rukuPrice,0))/sum(IFNULL(rukuAmount,0)) as instorageUnitPrice
+sum(IFNULL(rukuAmount,0.00)) as totalInstorageNum,
+sum(IFNULL(rukuAmount,0.00) * IFNULL(rukuPrice,0.00)) as totalInstorageAmount,
+sum(IFNULL(rukuAmount,0.00) * IFNULL(rukuPrice,0.00))/sum(IFNULL(rukuAmount,0.00)) as instorageUnitPrice
 from hs_cang_ruku
 where deleted =0
 group by hsId, orderId;
@@ -421,8 +421,8 @@ create view v_3003 as
 select
 chuku.orderId,
 chuku.hsId,
-ROUND(sum(IFNULL(chukuAmount,0)) ,2)as totalOutstorageNum,
-ROUND(sum(IFNULL(chukuPrice,0)*IFNULL(chukuAmount,0)) ,2)as totalOutstorageMoney
+ROUND(sum(IFNULL(chukuAmount,0.00)) ,2)as totalOutstorageNum,
+ROUND(sum(IFNULL(chukuPrice,0.00)*IFNULL(chukuAmount,0.00)) ,2)as totalOutstorageMoney
 from hs_cang_chuku chuku
 where deleted =0
 group by hsId, orderId;
@@ -433,7 +433,7 @@ create view v_3005  as
 select
 v_3001.hsId,
 v_3001.orderId,
-ROUND(IFNULL(v_3001.totalInstorageNum,0)-IFNULL(v_3003.totalOutstorageNum ,0),2)as totalStockNum
+ROUND(IFNULL(v_3001.totalInstorageNum,0.00)-IFNULL(v_3003.totalOutstorageNum ,0.00),2)as totalStockNum
 from v_3001
      left join v_3003 on v_3001.hsId=v_3003.hsId
 group by hsId, orderId;
@@ -443,7 +443,7 @@ create view v_3006  as
 select
 v_3001.hsId,
 v_3001.orderId,
-ROUND(IFNULL(v_3001.instorageUnitPrice ,0)*IFNULL(v_3005.totalStockNum ,0),2)as totalStockMoney
+ROUND(IFNULL(v_3001.instorageUnitPrice ,0.00)*IFNULL(v_3005.totalStockNum ,0.00),2)as totalStockMoney
 from v_3001
      left join v_3005 on v_3005.hsId=v_3001.hsId
 group by hsId, orderId;
@@ -460,11 +460,11 @@ create view v_1041_cang as
 select
 v_3001.hsId,
 v_3001.orderId,
-ROUND(IFNULL(v_3001.totalInstorageNum ,0),2)as finalSettleAmount,
-ROUND(IFNULL(v_3001.totalInstorageNum ,0)-IFNULL(v_1024.totalBuyerNums ,0),2)as  unsettlerBuyerNumber,
-ROUND(IFNULL(v_3001.totalInstorageNum ,0) * IFNULL(config.tradeAddPrice ,0),2)as tradingCompanyAddMoney,
-ROUND((IFNULL(v_3001.totalInstorageNum ,0)-IFNULL(v_1024.totalBuyerNums,0)) * IFNULL(config.weightedPrice,0) ,2)as unsettlerBuyerMoneyAmount,
-ROUND((IFNULL(v_3001.totalInstorageNum ,0)-IFNULL(v_1024.totalBuyerNums,0)) * IFNULL(config.weightedPrice ,0)+IFNULL(v_1024.totalBuyerMoney ,0),2)as saleCargoAmountofMoney
+ROUND(IFNULL(v_3001.totalInstorageNum ,0.00),2)as finalSettleAmount,
+ROUND(IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums ,0.00),2)as  unsettlerBuyerNumber,
+ROUND(IFNULL(v_3001.totalInstorageNum ,0.00) * IFNULL(config.tradeAddPrice ,0.00),2)as tradingCompanyAddMoney,
+ROUND((IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums,0.00)) * IFNULL(config.weightedPrice,0.00) ,2)as unsettlerBuyerMoneyAmount,
+ROUND((IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums,0.00)) * IFNULL(config.weightedPrice ,0.00)+IFNULL(v_1024.totalBuyerMoney ,0.00),2)as saleCargoAmountofMoney
 from v_3001
      left join v_1024 on v_3001.hsId=v_1024.hsId
      left join hs_same_order_config config on config.id=v_3001.hsId
@@ -475,11 +475,11 @@ create view v_1041_ying as
 select
 v_2001.hsId,
 v_2001.orderId,
-ROUND(IFNULL(v_2001.totalFayunNum,0)-IFNULL(v_1024.totalBuyersettleGap,0) ,2)as finalSettleAmount,
-ROUND(IFNULL(v_2001.totalFayunNum,0)-IFNULL(v_1024.totalBuyersettleGap,0) -IFNULL(v_1024.totalBuyerNums,0),2) as  unsettlerBuyerNumber,
-ROUND((IFNULL(v_2001.totalFayunNum,0)-IFNULL(v_1024.totalBuyersettleGap,0) ) * config.tradeAddPrice ,2)as tradingCompanyAddMoney,
-ROUND((IFNULL(v_2001.totalFayunNum,0)-IFNULL(v_1024.totalBuyersettleGap,0) -IFNULL(v_1024.totalBuyerNums,0) ) * IFNULL(config.weightedPrice ,0),2) as unsettlerBuyerMoneyAmount,
-ROUND((IFNULL(v_2001.totalFayunNum,0)-IFNULL(v_1024.totalBuyersettleGap,0) -IFNULL(v_1024.totalBuyerNums,0) ) * IFNULL(config.weightedPrice ,0)+IFNULL(v_1024.totalBuyerMoney,0),2)as saleCargoAmountofMoney
+ROUND(IFNULL(v_2001.totalFayunNum,0.00)-IFNULL(v_1024.totalBuyersettleGap,0.00) ,2)as finalSettleAmount,
+ROUND(IFNULL(v_2001.totalFayunNum,0.00)-IFNULL(v_1024.totalBuyersettleGap,0.00) -IFNULL(v_1024.totalBuyerNums,0.00),2) as  unsettlerBuyerNumber,
+ROUND((IFNULL(v_2001.totalFayunNum,0.00)-IFNULL(v_1024.totalBuyersettleGap,0.00) ) * config.tradeAddPrice ,2)as tradingCompanyAddMoney,
+ROUND((IFNULL(v_2001.totalFayunNum,0.00)-IFNULL(v_1024.totalBuyersettleGap,0.00) -IFNULL(v_1024.totalBuyerNums,0.00) ) * IFNULL(config.weightedPrice ,0.00),2) as unsettlerBuyerMoneyAmount,
+ROUND((IFNULL(v_2001.totalFayunNum,0.00)-IFNULL(v_1024.totalBuyersettleGap,0.00) -IFNULL(v_1024.totalBuyerNums,0.00) ) * IFNULL(config.weightedPrice ,0.00)+IFNULL(v_1024.totalBuyerMoney,0.00),2)as saleCargoAmountofMoney
 from v_2001
      left join v_1024 on v_2001.hsId=v_1024.hsId
      left join hs_same_order_config config on config.id=v_2001.hsId
@@ -493,7 +493,7 @@ create view v_1045 as
 select
 v_1021.hsId,
 v_1021.orderId,
-ROUND(IFNULL(v_1021.contractRateProfile,0)-IFNULL(v_1012.outCapitalAmout,0)+IFNULL(v_1023.tiexianRateAmount ,0),2)as ccsProfile
+ROUND(IFNULL(v_1021.contractRateProfile,0.00)-IFNULL(v_1012.outCapitalAmout,0.00)+IFNULL(v_1023.tiexianRateAmount ,0.00),2)as ccsProfile
 from v_1021
 left join v_1012 on v_1021.hsId=v_1012.hsId
 left join v_1023 on v_1021.hsId=v_1023.hsId
@@ -505,7 +505,7 @@ create view v_1046_ying as
 select
 v_1041_ying.hsId,
 v_1041_ying.orderId,
-ROUND(IFNULL(v_1041_ying.saleCargoAmountofMoney,0)-IFNULL(v_1045.ccsProfile ,0),2)as purchaseCargoAmountOfMoney
+ROUND(IFNULL(v_1041_ying.saleCargoAmountofMoney,0.00)-IFNULL(v_1045.ccsProfile ,0.00),2)as purchaseCargoAmountOfMoney
 from v_1041_ying
      left join v_1045 on v_1041_ying.hsId=v_1045.hsId
 group by hsId, orderId;
@@ -515,7 +515,7 @@ create view v_1046_cang as
 select
 v_1041_cang.hsId,
 v_1041_cang.orderId,
-ROUND(IFNULL(v_1041_cang.saleCargoAmountofMoney,0)-IFNULL(v_1045.ccsProfile ,0),2)as purchaseCargoAmountofMoney
+ROUND(IFNULL(v_1041_cang.saleCargoAmountofMoney,0.00)-IFNULL(v_1045.ccsProfile ,0.00),2)as purchaseCargoAmountofMoney
 from v_1041_cang
      left join v_1045 on v_1041_cang.hsId=v_1045.hsId
 group by hsId, orderId;
@@ -525,7 +525,7 @@ create view v_1047 as
 select
 v_1004.hsId,
 v_1004.orderId,
-ROUND(IFNULL(v_1004.totalLoadMoney,0)-IFNULL(v_1007.totalRepaymentPrincipeAmount,0)+IFNULL(v_1009.totalUnpayPrincipal ,0),2)as externalCapitalPaymentAmount
+ROUND(IFNULL(v_1004.totalLoadMoney,0.00)-IFNULL(v_1007.totalRepaymentPrincipeAmount,0.00)+IFNULL(v_1009.totalUnpayPrincipal ,0.00),2)as externalCapitalPaymentAmount
 from v_1004
      left join v_1007 on v_1004.hsId=v_1007.hsId
      left join v_1009 on v_1009.hsId=v_1007.hsId
@@ -536,7 +536,7 @@ create view v_1048_ying as
 select
 v_1003.hsId,
 v_1003.orderId,
-ROUND(IFNULL(v_1003.totalPaymentAmount,0)-IFNULL(v_1047.externalCapitalPaymentAmount,0)+IFNULL(v_1007.totalRepaymentInterest,0)+IFNULL(v_1009.totalUnpayInterest,0)-IFNULL(v_2008.balanceUpstreamBail ,0) ,2)as ownerCapitalPaymentAmount
+ROUND(IFNULL(v_1003.totalPaymentAmount,0.00)-IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+IFNULL(v_1007.totalRepaymentInterest,0.00)+IFNULL(v_1009.totalUnpayInterest,0.00)-IFNULL(v_2008.balanceUpstreamBail ,0.00) ,2)as ownerCapitalPaymentAmount
 from v_1003
      left join v_1047 on v_1003.hsId=v_1047.hsId
      left join v_1007 on v_1003.hsId=v_1007.hsId
@@ -549,7 +549,7 @@ create view v_1048_cang as
 select
 v_1003.hsId,
 v_1003.orderId,
-ROUND(IFNULL(v_1003.totalPaymentAmount,0)-IFNULL(v_1047.externalCapitalPaymentAmount ,0),2)as ownerCapitalPaymentAmount
+ROUND(IFNULL(v_1003.totalPaymentAmount,0.00)-IFNULL(v_1047.externalCapitalPaymentAmount ,0.00),2)as ownerCapitalPaymentAmount
 from v_1003
      left join v_1047 on v_1003.hsId=v_1047.hsId
 group by hsId, orderId;
@@ -561,11 +561,11 @@ seller.hsId,
 seller.orderId,
 case  when seller.orderId is not null and seller.hsId is not null
 then
-ROUND(IFNULL(IFNULL(v_1047.externalCapitalPaymentAmount,0)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0)
-       - IFNULL(v_1002.totalTradeGapFee,0)-v_1001.totalPayTrafficFee,0),2)
+ROUND(IFNULL(IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)
+       - IFNULL(v_1002.totalTradeGapFee,0.00)-v_1001.totalPayTrafficFee,0.00),2)
 else
-ROUND(IFNULL(IFNULL(v_1047.externalCapitalPaymentAmount,0)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0)
-       - IFNULL(v_1002.totalTradeGapFee,0),0),2)
+ROUND(IFNULL(IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)
+       - IFNULL(v_1002.totalTradeGapFee,0.00),0.00),2)
 end
 as upstreamCapitalPressure
 from hs_same_settle_seller seller
@@ -581,7 +581,7 @@ create view v_1049_cang as
 select
 v_1047.hsId,
 v_1047.orderId,
-ROUND(IFNULL(v_1047.externalCapitalPaymentAmount,0)+IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0)-IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0),2)as upstreamCapitalPressure
+ROUND(IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0.00),2)as upstreamCapitalPressure
 from v_1047
      left join v_1048_cang on v_1048_cang.hsId=v_1047.hsId
      left join v_1046_cang on v_1046_cang.hsId=v_1047.hsId
@@ -592,7 +592,7 @@ create view v_1050_ying as
 select
 v_1041_ying.hsId,
 v_1041_ying.orderId,
-ROUND(IFNULL(v_1041_ying.saleCargoAmountofMoney,0)-IFNULL(v_1013.totalHuikuanPaymentMoney,0)+IFNULL(v_2008.balanceDownStreamBail ,0),2)as downstreamCapitalPressure
+ROUND(IFNULL(v_1041_ying.saleCargoAmountofMoney,0.00)-IFNULL(v_1013.totalHuikuanPaymentMoney,0.00)+IFNULL(v_2008.balanceDownStreamBail ,0.00),2)as downstreamCapitalPressure
 from v_1041_ying
      left join v_1013 on v_1041_ying.hsId=v_1013.hsId
      left join v_2008 on v_1041_ying.hsId=v_2008.hsId
@@ -603,7 +603,7 @@ create view v_1050_cang as
 select
 v_1041_cang.hsId,
 v_1041_cang.orderId,
-ROUND(IFNULL(v_1041_cang.saleCargoAmountofMoney,0)-IFNULL(v_1013.totalHuikuanPaymentMoney ,0),2)as downstreamCapitalPressure
+ROUND(IFNULL(v_1041_cang.saleCargoAmountofMoney,0.00)-IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00),2)as downstreamCapitalPressure
 from v_1041_cang
      left join v_1013 on v_1041_cang.hsId=v_1013.hsId
      left join v_2008 on v_1041_cang.hsId=v_2008.hsId
@@ -616,7 +616,7 @@ create view v_1051_ying as
 select
 v_1041_ying.hsId,
 v_1041_ying.orderId,
-ROUND(IFNULL(IFNULL(v_1041_ying.finalSettleAmount,0)-IFNULL(v_1037.totalCSSIntypeNumber ,0),0),2)as cssUninTypeNum
+ROUND(IFNULL(IFNULL(v_1041_ying.finalSettleAmount,0.00)-IFNULL(v_1037.totalCSSIntypeNumber ,0.00),0.00),2)as cssUninTypeNum
 from v_1041_ying
      left join v_1037 on v_1037.hsId=v_1041_ying.hsId
 group by hsId, orderId;
@@ -625,7 +625,7 @@ create view v_1051_cang as
 select
 v_1041_cang.hsId,
 v_1041_cang.orderId,
-ROUND(IFNULL(IFNULL(v_1041_cang.finalSettleAmount,0)-IFNULL(v_1037.totalCSSIntypeNumber ,0),0),2)as cssUninTypeNum
+ROUND(IFNULL(IFNULL(v_1041_cang.finalSettleAmount,0.00)-IFNULL(v_1037.totalCSSIntypeNumber ,0.00),0.00),2)as cssUninTypeNum
 from v_1041_cang
      left join v_1037 on v_1037.hsId=v_1041_cang.hsId
 group by hsId, orderId;
@@ -636,8 +636,8 @@ create view v_1052_ying  as
 select
 v_1046_ying.hsId,
 v_1046_ying.orderId,
-ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0)+IFNULL(v_1041_ying.tradingCompanyAddMoney,0)-IFNULL(v_1037.totalCCSIntypeMoney,0)-IFNULL(v_1027.dsddFee ,0),2)as cssUninTypeMoney,
-ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0)+IFNULL(v_1041_ying.tradingCompanyAddMoney,0)-IFNULL(v_1039.invoicedMoneyAmount,0)-IFNULL(v_1027.dsddFee ,0),2)as unInvoicedAmountofMoney
+ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1041_ying.tradingCompanyAddMoney,0.00)-IFNULL(v_1037.totalCCSIntypeMoney,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as cssUninTypeMoney,
+ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1041_ying.tradingCompanyAddMoney,0.00)-IFNULL(v_1039.invoicedMoneyAmount,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as unInvoicedAmountofMoney
 from v_1046_ying
      left join v_1041_ying on v_1046_ying.hsId=v_1041_ying.hsId
      left join v_1037 on v_1037.hsId=v_1046_ying.hsId
@@ -651,8 +651,8 @@ create view v_1052_cang  as
 select
 v_1046_cang.hsId,
 v_1046_cang.orderId,
-ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0)+IFNULL(v_1041_cang.tradingCompanyAddMoney,0)-IFNULL(v_1037.totalCCSIntypeMoney,0)-IFNULL(v_1027.dsddFee ,0),2)as cssUninTypeMoney,
-ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0)+IFNULL(v_1041_cang.tradingCompanyAddMoney,0)-IFNULL(v_1039.invoicedMoneyAmount,0)-IFNULL(v_1027.dsddFee ,0),2)as unInvoicedAmountofMoney
+ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1041_cang.tradingCompanyAddMoney,0.00)-IFNULL(v_1037.totalCCSIntypeMoney,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as cssUninTypeMoney,
+ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1041_cang.tradingCompanyAddMoney,0.00)-IFNULL(v_1039.invoicedMoneyAmount,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as unInvoicedAmountofMoney
 from v_1046_cang
      left join v_1041_cang on v_1046_cang.hsId=v_1041_cang.hsId
      left join v_1037 on v_1037.hsId=v_1046_cang.hsId
@@ -666,8 +666,8 @@ create view v_1054_ying  as
 select
 v_1013.hsId,
 v_1013.orderId,
-case when IFNULL(v_1013.totalHuikuanPaymentMoney ,0)>IFNULL(v_1024.totalBuyerMoney,0)
-then ROUND(IFNULL(v_1013.totalHuikuanPaymentMoney ,0)-IFNULL(v_1024.totalBuyerMoney,0)+ IFNULL(v_2008.balanceDownStreamBail,0),2) else ROUND(IFNULL(v_2008.balanceDownStreamBail,0),2) end as yingPrePayment
+case when IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)>IFNULL(v_1024.totalBuyerMoney,0.00)
+then ROUND(IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)-IFNULL(v_1024.totalBuyerMoney,0.00)+ IFNULL(v_2008.balanceDownStreamBail,0.00),2) else ROUND(IFNULL(v_2008.balanceDownStreamBail,0.00),2) end as yingPrePayment
 from v_1013
      left join v_1024 on v_1013.hsId=v_1024.hsId
      left join v_2008 on v_1013.hsId=v_2008.hsId
@@ -678,7 +678,7 @@ create view v_1054_cang  as
 select
 v_1013.hsId,
 v_1013.orderId,
-ROUND(IFNULL(v_1013.totalHuikuanPaymentMoney ,0)-IFNULL(v_3003.totalOutstorageMoney ,0),2)as cangPrePayment
+ROUND(IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)-IFNULL(v_3003.totalOutstorageMoney ,0.00),2)as cangPrePayment
 from v_1013
      left join v_3003 on v_1013.hsId=v_3003.hsId
 group by hsId, orderId;
@@ -692,7 +692,7 @@ create view v_1055 as
 select
 v_1041_ying.hsId,
 v_1041_ying.orderId,
-ROUND(IFNULL(v_1041_ying.finalSettleAmount ,0),2)as settleGrossProfileNum
+ROUND(IFNULL(v_1041_ying.finalSettleAmount ,0.00),2)as settleGrossProfileNum
 from v_1041_ying
 group by hsId, orderId;
 
@@ -702,7 +702,7 @@ create view v_1056_cang  as
 select
 v_3001.hsId,
 v_3001.orderId,
-ROUND(IFNULL(v_3001.instorageUnitPrice ,0)* IFNULL(v_3003.totalOutstorageNum  ,0),2)as purchaseIncludeTaxTotalAmount
+ROUND(IFNULL(v_3001.instorageUnitPrice ,0.00)* IFNULL(v_3003.totalOutstorageNum  ,0.00),2)as purchaseIncludeTaxTotalAmount
 from v_3001
 left join v_3003 on  v_3001.hsId=v_3003.hsId
 group by hsId, orderId;
@@ -713,7 +713,7 @@ create view v_1057_cang  as
 select
 v_1056_cang.hsId,
 v_1056_cang.orderId,
-ROUND(IFNULL(v_1056_cang.purchaseIncludeTaxTotalAmount ,0)* IFNULL(v_1045.ccsProfile ,0) ,2)as saleIncludeTaxTotalAmount
+ROUND(IFNULL(v_1056_cang.purchaseIncludeTaxTotalAmount ,0.00)* IFNULL(v_1045.ccsProfile ,0.00) ,2)as saleIncludeTaxTotalAmount
 from v_1056_cang
      left join v_1045 on  v_1056_cang.hsId=v_1045.hsId
 group by hsId, orderId;
@@ -723,7 +723,7 @@ create view v_1058_ying  as
 select
 v_1055.hsId,
 v_1055.orderId,
-ROUND(IFNULL(v_1055.settleGrossProfileNum ,0)* IFNULL(config.tradeAddPrice  ,0),2)as tradeCompanyAddMoney
+ROUND(IFNULL(v_1055.settleGrossProfileNum ,0.00)* IFNULL(config.tradeAddPrice  ,0.00),2)as tradeCompanyAddMoney
 from v_1055
      left join hs_same_order_config config on  v_1055.hsId=config.id
 group by hsId, orderId;
@@ -732,7 +732,7 @@ create view v_1058_cang  as
 select
 v_3003.hsId,
 v_3003.orderId,
-ROUND(IFNULL(v_3003.totalOutstorageNum ,0)* IFNULL(config.tradeAddPrice  ,0),2)as tradeCompanyAddMoney
+ROUND(IFNULL(v_3003.totalOutstorageNum ,0.00)* IFNULL(config.tradeAddPrice  ,0.00),2)as tradeCompanyAddMoney
 from v_3003
      left join hs_same_order_config config on  v_3003.hsId=config.id
 group by hsId, orderId;
@@ -741,7 +741,7 @@ create view v_1059_ying  as
 select
 v_1041_ying.hsId,
 v_1041_ying.orderId,
-ROUND((IFNULL(v_1041_ying.saleCargoAmountofMoney ,0)- IFNULL(v_1027.dsddFee,0))/1.17 ,2) as withoutTaxIncome
+ROUND((IFNULL(v_1041_ying.saleCargoAmountofMoney ,0.00)- IFNULL(v_1027.dsddFee,0.00))/1.17 ,2) as withoutTaxIncome
 from v_1041_ying
      left join v_1027  on  v_1027.hsId=v_1041_ying.hsId
 group by hsId, orderId;
@@ -750,7 +750,7 @@ create view v_1059_cang  as
 select
 v_1057_cang.hsId,
 v_1057_cang.orderId,
-ROUND((IFNULL(v_1057_cang.saleIncludeTaxTotalAmount ,0)- IFNULL(v_1027.dsddFee,0))/1.17 ,2) as withoutTaxIncome
+ROUND((IFNULL(v_1057_cang.saleIncludeTaxTotalAmount ,0.00)- IFNULL(v_1027.dsddFee,0.00))/1.17 ,2) as withoutTaxIncome
 from v_1057_cang
      left join v_1027  on  v_1027.hsId=v_1057_cang.hsId
 group by hsId, orderId;
@@ -760,7 +760,7 @@ create view v_1060_cang  as
 select
 v_1056_cang.hsId,
 v_1056_cang.orderId,
-ROUND((IFNULL(v_1056_cang.purchaseIncludeTaxTotalAmount ,0)- IFNULL(v_1027.dsddFee,0)+IFNULL(v_1058_cang.tradeCompanyAddMoney,0))/1.17  ,2)as withoutTaxCost
+ROUND((IFNULL(v_1056_cang.purchaseIncludeTaxTotalAmount ,0.00)- IFNULL(v_1027.dsddFee,0.00)+IFNULL(v_1058_cang.tradeCompanyAddMoney,0.00))/1.17  ,2)as withoutTaxCost
 from v_1056_cang
      left join v_1027  on  v_1027.hsId=v_1056_cang.hsId
      left join v_1058_cang  on  v_1056_cang.hsId=v_1058_cang.hsId
@@ -771,7 +771,7 @@ create view v_1060_ying  as
 select
 v_1046_ying.hsId,
 v_1046_ying.orderId,
-ROUND((IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0)-IFNULL( v_1027.dsddFee,0)+IFNULL(v_1058_ying.tradeCompanyAddMoney,0))/1.17  ,2)as withoutTaxCost
+ROUND((IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0.00)-IFNULL( v_1027.dsddFee,0.00)+IFNULL(v_1058_ying.tradeCompanyAddMoney,0.00))/1.17  ,2)as withoutTaxCost
 from v_1046_ying
      left join v_1027  on  v_1027.hsId=v_1046_ying.hsId
      left join v_1058_ying  on  v_1046_ying.hsId=v_1058_ying.hsId
@@ -784,11 +784,11 @@ select
 v_1059_cang.hsId,
 v_1059_cang.orderId,
 ROUND(IFNULL(
-case when IFNULL(v_1059_cang.withoutTaxIncome ,0)<= IFNULL(v_1060_cang.withoutTaxCost ,0)then 0 else (IFNULL(v_1059_cang.withoutTaxIncome ,0)-IFNULL(v_1060_cang.withoutTaxCost,0))*0.17 end,
-0) ,2)as vat,
+case when IFNULL(v_1059_cang.withoutTaxIncome ,0.00)<= IFNULL(v_1060_cang.withoutTaxCost ,0.00)then 0 else (IFNULL(v_1059_cang.withoutTaxIncome ,0.00)-IFNULL(v_1060_cang.withoutTaxCost,0.00))*0.17 end,
+0.00) ,2)as vat,
 ROUND(IFNULL(
-case when IFNULL(v_1059_cang.withoutTaxIncome ,0)<= IFNULL(v_1060_cang.withoutTaxCost ,0)then 0 else (IFNULL(v_1059_cang.withoutTaxIncome ,0)-IFNULL(v_1060_cang.withoutTaxCost,0))*0.17*0.12 end,
-0) ,2)as AdditionalTax
+case when IFNULL(v_1059_cang.withoutTaxIncome ,0.00)<= IFNULL(v_1060_cang.withoutTaxCost ,0.00)then 0 else (IFNULL(v_1059_cang.withoutTaxIncome ,0.00)-IFNULL(v_1060_cang.withoutTaxCost,0.00))*0.17*0.12 end,
+0.00) ,2)as AdditionalTax
 from v_1059_cang
      left join v_1060_cang  on  v_1060_cang.hsId = v_1059_cang.hsId
 group by hsId, orderId;
@@ -798,11 +798,11 @@ select
 v_1059_ying.hsId,
 v_1059_ying.orderId,
 ROUND(IFNULL(
-case when IFNULL(v_1059_ying.withoutTaxIncome ,0)<= IFNULL(v_1060_ying.withoutTaxCost ,0)then 0 else (IFNULL(v_1059_ying.withoutTaxIncome,0) -IFNULL(v_1060_ying.withoutTaxCost,0))*0.17 end,
-0),2) as vat,
+case when IFNULL(v_1059_ying.withoutTaxIncome ,0.00)<= IFNULL(v_1060_ying.withoutTaxCost ,0.00)then 0 else (IFNULL(v_1059_ying.withoutTaxIncome,0.00) -IFNULL(v_1060_ying.withoutTaxCost,0.00))*0.17 end,
+0.00),2) as vat,
 ROUND(IFNULL(
-case when IFNULL(v_1059_ying.withoutTaxIncome ,0)<= IFNULL(v_1060_ying.withoutTaxCost ,0)then 0 else (IFNULL(v_1059_ying.withoutTaxIncome ,0)-IFNULL(v_1060_ying.withoutTaxCost,0))*0.17*0.12 end,
-0),2)as additionalTax
+case when IFNULL(v_1059_ying.withoutTaxIncome ,0.00)<= IFNULL(v_1060_ying.withoutTaxCost ,0.00)then 0 else (IFNULL(v_1059_ying.withoutTaxIncome ,0.00)-IFNULL(v_1060_ying.withoutTaxCost,0.00))*0.17*0.12 end,
+0.00),2)as additionalTax
 from v_1059_ying
      left join v_1060_ying  on  v_1060_ying.hsId = v_1059_ying.hsId
 group by hsId, orderId;
@@ -813,7 +813,7 @@ create view v_1063_cang  as
 select
 v_1057_cang.hsId,
 v_1057_cang.orderId,
-ROUND((IFNULL(v_1057_cang.saleIncludeTaxTotalAmount ,0)+IFNULL(v_1056_cang.purchaseIncludeTaxTotalAmount,0)+IFNULL(v_1058_cang.tradeCompanyAddMoney,0)- IFNULL(v_1027.dsddFee,0)*2)*0.0003 ,2) as stampDuty
+ROUND((IFNULL(v_1057_cang.saleIncludeTaxTotalAmount ,0.00)+IFNULL(v_1056_cang.purchaseIncludeTaxTotalAmount,0.00)+IFNULL(v_1058_cang.tradeCompanyAddMoney,0.00)- IFNULL(v_1027.dsddFee,0.00)*2)*0.0003 ,2) as stampDuty
 from v_1057_cang
      left join v_1027  on  v_1027.hsId=v_1057_cang.hsId
      left join v_1056_cang on  v_1056_cang.hsId=v_1057_cang.hsId
@@ -825,7 +825,7 @@ create view v_1063_ying  as
 select
 v_1041_ying.hsId,
 v_1041_ying.orderId,
-ROUND((IFNULL(v_1041_ying.saleCargoAmountofMoney ,0)+IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0)+IFNULL(v_1058_ying.tradeCompanyAddMoney,0)- IFNULL(v_1027.dsddFee,0)*2)*0.0003 ,2) as stampDuty
+ROUND((IFNULL(v_1041_ying.saleCargoAmountofMoney ,0.00)+IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1058_ying.tradeCompanyAddMoney,0.00)- IFNULL(v_1027.dsddFee,0.00)*2)*0.0003 ,2) as stampDuty
 from v_1041_ying
      left join v_1027  on  v_1027.hsId=v_1041_ying.hsId
      left join v_1046_ying on  v_1046_ying.hsId=v_1041_ying.hsId
@@ -838,8 +838,8 @@ create view v_1064_cang as
 select
 v_1059_cang.hsId,
 v_1059_cang.orderId,
-ROUND(IFNULL(v_1059_cang.withoutTaxIncome,0)-IFNULL(v_1060_cang.withoutTaxCost,0)-IFNULL(v_1061_cang.AdditionalTax,0)-IFNULL(v_1063_cang.stampDuty
-,0)-(IFNULL(v_1027.hsqyFee,0)+IFNULL(v_1027.hssyFee,0)+IFNULL(v_1027.hshyFee,0))/1.11-IFNULL(v_1027.superviseFee,0)/1.06-IFNULL(v_1027.serviceFee,0)/1.06-IFNULL(v_1027.businessFee,0),2) as opreationCrossProfile
+ROUND(IFNULL(v_1059_cang.withoutTaxIncome,0.00)-IFNULL(v_1060_cang.withoutTaxCost,0.00)-IFNULL(v_1061_cang.AdditionalTax,0.00)-IFNULL(v_1063_cang.stampDuty
+,0.00)-(IFNULL(v_1027.hsqyFee,0.00)+IFNULL(v_1027.hssyFee,0.00)+IFNULL(v_1027.hshyFee,0.00))/1.11-IFNULL(v_1027.superviseFee,0.00)/1.06-IFNULL(v_1027.serviceFee,0.00)/1.06-IFNULL(v_1027.businessFee,0.00),2) as opreationCrossProfile
 from v_1059_cang
 left join v_1060_cang on v_1059_cang.hsId=v_1060_cang.hsId
 left join v_1061_cang  on v_1059_cang.hsId=v_1061_cang.hsId
@@ -852,8 +852,8 @@ create view v_1064_ying as
 select
 v_1059_ying.hsId,
 v_1059_ying.orderId,
-ROUND(IFNULL(v_1059_ying.withoutTaxIncome,0)-IFNULL(v_1060_ying.withoutTaxCost,0)-IFNULL(v_1061_ying.additionalTax,0)-IFNULL(v_1063_ying.stampDuty
-,0)-(IFNULL(v_1027.hsqyFee,0)+IFNULL(v_1027.hssyFee,0)+IFNULL(v_1027.hshyFee,0))/1.11-IFNULL(v_1027.superviseFee,0)/1.06-IFNULL(v_1027.serviceFee,0)/1.06-IFNULL(v_1027.businessFee ,0),2)as opreationCrossProfile
+ROUND(IFNULL(v_1059_ying.withoutTaxIncome,0.00)-IFNULL(v_1060_ying.withoutTaxCost,0.00)-IFNULL(v_1061_ying.additionalTax,0.00)-IFNULL(v_1063_ying.stampDuty
+,0.00)-(IFNULL(v_1027.hsqyFee,0.00)+IFNULL(v_1027.hssyFee,0.00)+IFNULL(v_1027.hshyFee,0.00))/1.11-IFNULL(v_1027.superviseFee,0.00)/1.06-IFNULL(v_1027.serviceFee,0.00)/1.06-IFNULL(v_1027.businessFee ,0.00),2)as opreationCrossProfile
 from v_1059_ying
      left join v_1060_ying on v_1059_ying.hsId=v_1060_ying.hsId
      left join v_1061_ying  on v_1059_ying.hsId=v_1061_ying.hsId
@@ -868,7 +868,7 @@ create view v_1065_ying as
 select
 v_1064_ying.hsId,
 v_1064_ying.orderId,
-ROUND(IFNULL(v_1064_ying.opreationCrossProfile ,0)/ IFNULL(v_1055.settleGrossProfileNum ,0),2)as crossProfileATon
+ROUND(IFNULL(v_1064_ying.opreationCrossProfile ,0.00)/ IFNULL(v_1055.settleGrossProfileNum ,0.00),2)as crossProfileATon
 from v_1064_ying
      left join v_1055  on v_1064_ying.hsId=v_1055.hsId
 group by hsId, orderId;
@@ -877,7 +877,7 @@ create view v_1065_cang as
 select
 v_1064_cang.hsId,
 v_1064_cang.orderId,
-ROUND(IFNULL(v_1064_cang.opreationCrossProfile,0) / IFNULL(v_3003.totalOutstorageNum ,0),2)as crossProfileATon
+ROUND(IFNULL(v_1064_cang.opreationCrossProfile,0.00) / IFNULL(v_3003.totalOutstorageNum ,0.00),2)as crossProfileATon
 from v_1064_cang
      left join v_3003  on v_1064_cang.hsId=v_3003.hsId
 group by hsId, orderId;
@@ -888,7 +888,7 @@ create view v_1066_cang as
 select
 v_1048_cang.hsId,
 v_1048_cang.orderId,
-ROUND(IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0)-IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0),2)as ownerCapitalPressure
+ROUND(IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0.00),2)as ownerCapitalPressure
 from v_1048_cang
      left join v_1046_cang on v_1048_cang.hsId=v_1046_cang.hsId
 group by hsId,orderId;
@@ -898,7 +898,7 @@ create view v_1066_ying as
 select
 v_1048_ying.hsId,
 v_1048_ying.orderId,
-ROUND(IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0)-IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0),2)as ownerCapitalPressure
+ROUND(IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0.00),2)as ownerCapitalPressure
 from v_1048_ying
      left join v_1046_ying on v_1048_ying.hsId=v_1046_ying.hsId
 group by hsId,orderId;
@@ -910,7 +910,7 @@ create view v_2010_cang as
 select
 v_1050_cang.hsId,
 v_1050_cang.orderId,
-ROUND(IFNULL(v_1050_cang.downstreamCapitalPressure ,0)-IFNULL(v_1041_cang.unsettlerBuyerMoneyAmount ,0)+IFNULL(v_1054_cang.cangPrePayment  ,0),2)as settledDownstreamHuikuanMoneny
+ROUND(IFNULL(v_1050_cang.downstreamCapitalPressure ,0.00)-IFNULL(v_1041_cang.unsettlerBuyerMoneyAmount ,0.00)+IFNULL(v_1054_cang.cangPrePayment  ,0.00),2)as settledDownstreamHuikuanMoneny
 from v_1050_cang
      left join v_1041_cang on v_1041_cang.hsId=v_1050_cang.hsId
      left join v_1054_cang on v_1054_cang.hsId=v_1050_cang.hsId
@@ -919,7 +919,7 @@ group by hsId, orderId;
 create view v_2010_ying as
 select v_1050_ying.hsId,
        v_1050_ying.orderId,
-      ROUND(IFNULL( v_1050_ying.downstreamCapitalPressure ,0)-IFNULL(v_1041_ying.unsettlerBuyerMoneyAmount ,0)+IFNULL(v_1054_ying.yingPrePayment  ,0),2)as settledDownstreamHuikuanMoneny
+      ROUND(IFNULL( v_1050_ying.downstreamCapitalPressure ,0.00)-IFNULL(v_1041_ying.unsettlerBuyerMoneyAmount ,0.00)+IFNULL(v_1054_ying.yingPrePayment  ,0.00),2)as settledDownstreamHuikuanMoneny
 from v_1050_ying
      left join v_1041_ying on v_1041_ying.hsId=v_1050_ying.hsId
      left join v_1054_ying on v_1054_ying.hsId=v_1050_ying.hsId
