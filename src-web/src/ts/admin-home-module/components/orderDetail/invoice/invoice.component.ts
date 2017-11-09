@@ -237,6 +237,8 @@ export class InvoiceComponent implements OnInit {
 
         postData.details = this.invoiceDetailList
 
+
+
         if (this.isAddNew) {
             this.hsOrderService.createNewInvoice(this.businessType, this.currentOrder.id, postData).subscribe(
                 data => {
@@ -252,6 +254,12 @@ export class InvoiceComponent implements OnInit {
         } else {
             postData.id = this.currentInvoiceId
             // delete postData.huikuanAmount
+
+            if (Array.isArray(postData.details)) {
+                postData.details.forEach( (detail) => {
+                    delete detail.tsc
+                })
+            }
 
             this.hsOrderService.modifyInvoice(this.businessType, this.currentOrder.id, this.currentInvoiceId, postData).subscribe(
                 data => {
