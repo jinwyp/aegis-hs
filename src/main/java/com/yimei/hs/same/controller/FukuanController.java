@@ -123,7 +123,7 @@ public class FukuanController {
 
         if (purchaseCargoAmountofMoney != null) {
             // 付款的限制条件：付款总金额 < 当前计算出的采购货款总额
-            if (purchaseCargoAmountofMoney.compareTo(totalPaymentMoney) == 1) {
+//            if (purchaseCargoAmountofMoney.compareTo(totalPaymentMoney) == 1) {
                 Order order = orderService.findOne(fukuan.getOrderId());
                 if (order == null) {
                     return Result.error(4001, "创建失败");
@@ -148,9 +148,9 @@ public class FukuanController {
                     }
                     return Result.ok(fukuan);
                 }
-            } else {
-                return Result.error(4001, "付款总金额不能大于采购货款总额");
-            }
+//            } else {
+//                return Result.error(4001, "付款总金额不能大于采购货款总额");
+//            }
         } else {
             return Result.error(4001, "创建失败,采购货款总额为空");
         }
