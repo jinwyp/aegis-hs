@@ -41,7 +41,7 @@
                     <tr *ngFor="let borrow of borrowList; trackBy: trackByFn">
                         <td> {{borrow.id}}</td>
                         <td> {{borrow.hsId | findKey : unitList : 'name'}}</td>
-                        <td> {{borrow.jiekuanDate }}</td>
+                        <td> {{borrow.jiekuanDate | slice : 0 : 10}}</td>
                         <td> {{borrow.amount  }}</td>
 
                         <td> {{borrow.capitalId | findKey : partyList : 'name'}}</td>

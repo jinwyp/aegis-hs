@@ -57,7 +57,7 @@
                     <td> {{warehouse.id}}</td>
                     <td> {{warehouse.hsId | findKey : unitList : 'name'}}</td>
 
-                    <td> {{warehouse.rukuDate }}</td>
+                    <td> {{warehouse.rukuDate | slice : 0 : 10 }}</td>
                     <td> {{warehouse.rukuStatus | findKey : warehouseStatusList : 'name'}}</td>
                     <td> {{warehouse.rukuAmount }}</td>
                     <td> {{warehouse.rukuPrice }}</td>
@@ -96,7 +96,7 @@
                     <td> {{warehouse.id}}</td>
                     <td> {{warehouse.hsId | findKey : unitList : 'name'}}</td>
 
-                    <td> {{warehouse.chukuDate }}</td>
+                    <td> {{warehouse.chukuDate | slice : 0 : 10 }}</td>
                     <td> {{warehouse.chukuAmount }}</td>
                     <td> {{warehouse.chukuPrice }}</td>
                     <td> {{warehouse.locality }}</td>

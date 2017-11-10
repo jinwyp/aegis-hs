@@ -54,7 +54,7 @@
                     <tr *ngFor="let payment of paymentList; trackBy: trackByFn">
                         <td> {{payment.id}}</td>
                         <td> {{payment.hsId | findKey : unitList : 'name'}}</td>
-                        <td> {{payment.payDate }}</td>
+                        <td> {{payment.payDate | slice : 0 : 10 }}</td>
 
                         <td> {{payment.receiveCompanyId | findKey : partyList : 'name' }}</td>
                         <td> {{payment.payUsage | findKey : purposeList : 'name' }}</td>

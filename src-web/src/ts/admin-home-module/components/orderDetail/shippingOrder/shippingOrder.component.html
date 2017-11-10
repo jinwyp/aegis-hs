@@ -55,7 +55,7 @@
                     <tr *ngFor="let shipping of shippingList; trackBy: trackByFn">
                         <td> {{shipping.id}}</td>
                         <td> {{shipping.hsId | findKey : unitList : 'name'}}</td>
-                        <td> {{shipping.fyDate }}</td>
+                        <td> {{shipping.fyDate | slice : 0 : 10  }}</td>
                         <td> {{shipping.fyAmount }}</td>
                         <td> {{shipping.arriveStatus | arriveStatus }}</td>
 

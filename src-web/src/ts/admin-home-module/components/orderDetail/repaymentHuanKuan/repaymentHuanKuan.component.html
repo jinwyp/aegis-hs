@@ -23,7 +23,7 @@
 
                                     <ul class="list-group" >
                                         <li class="list-group-item mb-2" *ngFor=" let borrow of borrowPostList">
-                                            ID:{{borrow.id}} 借款日期:{{borrow.jiekuanDate }} 资金方:{{borrow.capitalId | findKey:partyList:'name'}}
+                                            ID:{{borrow.id}} 借款日期:{{borrow.jiekuanDate | slice : 0 : 10 }} 资金方:{{borrow.capitalId | findKey:partyList:'name'}}
                                             金额:{{borrow.amount}}
                                             对应还款本金:{{borrow.principal}} 利息:{{borrow.interest}} 服务费:{{borrow.fee}}
                                             <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delBorrow(borrow)"> x </button>
@@ -93,7 +93,7 @@
                         <td> {{repaymentHK.hsId | findKey : unitList : 'name'}}</td>
                         <!--<td> {{repaymentHK.skCompanyId | findKey : partyList : 'name'}}</td>-->
 
-                        <td> {{repaymentHK.huankuankDate }}</td>
+                        <td> {{repaymentHK.huankuankDate | slice : 0 : 10 }}</td>
                         <td> {{repaymentHK.promise | findKey : promiseStatusList : 'name' }}</td>
 
                         <td>

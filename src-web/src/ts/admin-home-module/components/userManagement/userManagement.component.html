@@ -46,7 +46,7 @@
                     <td> {{user.id}}</td>
                     <td> {{user.phone}}</td>
                     <td> {{user.deptId | findKey : departmentList : 'name'}}</td>
-                    <td> {{user.createDate}}</td>
+                    <td> {{user.createDate | slice : 0 : 10}}</td>
                     <td> {{user.createBy}}</td>
                     <td> {{user.isAdmin === true ? '是' : '否'}} </td>
                     <td> {{user.isActive === true ? '是' : '否'}}</td>
