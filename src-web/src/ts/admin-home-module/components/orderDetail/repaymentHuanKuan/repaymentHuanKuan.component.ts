@@ -364,8 +364,24 @@ export class RepaymentHuanKuanComponent implements OnInit {
             return
         }
 
-        this.borrowPostList.push((<any>Object).assign( {}, this.borrowListObject[this.borrowForm.value.jiekuanId],
-            {jiekuanId : this.borrowForm.value.jiekuanId, principal : this.borrowForm.value.principal, interest : this.borrowForm.value.interest, fee : this.borrowForm.value.fee}) )
+        this.borrowPostList.push(
+            (<any>Object).assign(
+                {}, this.borrowListObject[this.borrowForm.value.jiekuanId],
+                {
+                    jiekuanId : this.borrowForm.value.jiekuanId,
+                    principal : this.borrowForm.value.principal,
+                    interest : this.borrowForm.value.interest,
+                    fee : this.borrowForm.value.fee
+                }
+            )
+        )
+
+        this.borrowForm.reset({
+            'jiekuanId'    : '',
+            'principal'    : '',
+            'interest'    : '',
+            'fee'    : ''
+        })
 
         this.ignoreDirtyBorrow = false
     }
