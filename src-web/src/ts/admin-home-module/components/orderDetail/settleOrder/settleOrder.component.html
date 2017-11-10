@@ -2,7 +2,7 @@
         <form [formGroup]="settleForm" (ngSubmit)="settleFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
             <bs-select formControlName="hsId" [fc]="settleForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="settleFormError.hsId"></bs-select>
-            <div class="form-group row">
+            <div class="form-group row" *ngIf="settleType==='settlesellerupstream' || settleType==='settlesellerdownstream' ">
                 <div class="col-10 ml-auto">
                     <p *ngIf="settleForm.get('hsId').value"> 结算金额: {{ unitListStatObject[settleForm.get('hsId').value]?.purchaseCargoAmountOfMoney ?  unitListStatObject[settleForm.get('hsId').value]?.purchaseCargoAmountOfMoney : '暂无' }}  -  结算数量: {{unitListStatObject[settleForm.get('hsId').value]?.finalSettleAmount || 0}}</p>
                 </div>

@@ -61,16 +61,16 @@
 
                         <td> {{shipping.upstreamTrafficMode | findKey : trafficModeList : 'name'}}</td>
                         <td>
-                            <span *ngIf="shipping.upstreamTrafficMode==='MOTOR'">上游汽运情况下的车数: {{shipping.upstreamCars}}</span>
-                            <span *ngIf="shipping.upstreamTrafficMode==='RAIL'">上游火运情况下的计划号: {{shipping.upstreamJHH}}</span>
-                            <span *ngIf="shipping.upstreamTrafficMode==='SHIP'">上游船运情况下的船号: {{shipping.upstreamShip}}</span>
+                            <span *ngIf="shipping.upstreamTrafficMode==='MOTOR'">车数: {{shipping.upstreamCars}}</span>
+                            <span *ngIf="shipping.upstreamTrafficMode==='RAIL'">计划号: {{shipping.upstreamJHH}}</span>
+                            <span *ngIf="shipping.upstreamTrafficMode==='SHIP'">船号: {{shipping.upstreamShip}}</span>
                         </td>
 
                         <td> {{shipping.downstreamTrafficMode | findKey : trafficModeList : 'name'}}</td>
                         <td>
-                            <span *ngIf="shipping.downstreamTrafficMode==='MOTOR'">下游汽运情况下的车数: {{shipping.downstreamCars}}</span>
-                            <span *ngIf="shipping.downstreamTrafficMode==='RAIL'">下游火运情况下的计划号: {{shipping.downstreamJHH}}</span>
-                            <span *ngIf="shipping.downstreamTrafficMode==='SHIP'">下游船运情况下的船号: {{shipping.downstreamShip}}</span>
+                            <span *ngIf="shipping.downstreamTrafficMode==='MOTOR'">车数: {{shipping.downstreamCars}}</span>
+                            <span *ngIf="shipping.downstreamTrafficMode==='RAIL'">计划号: {{shipping.downstreamJHH}}</span>
+                            <span *ngIf="shipping.downstreamTrafficMode==='SHIP'">船号: {{shipping.downstreamShip}}</span>
                         </td>
                         <td>
                             <button class="btn btn-link btn-sm" (click)="showForm(false, shipping)"> 修改 </button>
