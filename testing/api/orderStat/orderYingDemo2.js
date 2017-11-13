@@ -100,8 +100,8 @@ describe('应收订单 统计范例2', function () {
                     "upstreamSettleMode" : "ONE_PAPER_SETTLE",
                     "downstreamSettleMode" : "ONE_PAPER_SETTLE",
                     "mainAccounting" : 1,
-                    "upstreamId" : 30,
-                    "downstreamId" : 31,
+                    "upstreamId" : 23,
+                    "downstreamId" : 24,
                     "businessType" : "ying",
                     "orderPartyList" : []
                 }
@@ -236,7 +236,7 @@ describe('应收订单 统计范例2', function () {
                     "orderId" : orderId,
                     "hsId" : unitId,
                     "payDate" : "2017-07-06 00:00:00",
-                    "receiveCompanyId" : 30,
+                    "receiveCompanyId" : 23,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "510000",
                     "capitalId" : 17,
@@ -270,7 +270,7 @@ describe('应收订单 统计范例2', function () {
                 {
                     "hsId" : unitId,
                     "payDate" : "2017-08-10 00:00:00",
-                    "receiveCompanyId" : 30,
+                    "receiveCompanyId" : 23,
                     "payUsage" : "FIAL_PAYMENT",
                     "payAmount" : "54294.93",
                     "orderId" : orderId,
@@ -446,8 +446,8 @@ describe('应收订单 统计范例2', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-07-06 00:00:00",
-                    "openCompanyId" : 30,
-                    "receiverId" : 31,
+                    "openCompanyId" : 23,
+                    "receiverId" : 1,
                     "orderId" : orderId,
                     "details" : [
                         {
@@ -486,8 +486,8 @@ describe('应收订单 统计范例2', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-08-04 00:00:00",
-                    "openCompanyId" : 30,
-                    "receiverId" : 31,
+                    "openCompanyId" : 23,
+                    "receiverId" : 1,
                     "orderId" : orderId,
                     "details" : [{
                         "invoiceNumber" : "66661236",
