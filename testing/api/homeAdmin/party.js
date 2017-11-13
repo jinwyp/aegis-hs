@@ -20,8 +20,8 @@ describe('参与商公司', function () {
 
     let Authorization = ''
 
-    let partyId = 25
-    let delPartyId = 26
+    let partyId = 29
+    let delPartyId = 30
 
 
     before(function (done) {
