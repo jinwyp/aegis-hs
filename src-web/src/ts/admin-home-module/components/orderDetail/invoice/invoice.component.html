@@ -87,7 +87,7 @@
 
                     <td> {{invoice.invoiceDirection | findKey : invoiceDirectionList : 'name' }}</td>
                     <td> {{invoice.invoiceType | findKey : invoiceTypeList : 'name' }}</td>
-                    <td> {{invoice.openDate }}</td>
+                    <td> {{invoice.openDate | slice : 0 : 10 }}</td>
                     <td> {{invoice.openCompanyId | findKey : partyList : 'name' }}</td>
                     <td> {{invoice.receiverId | findKey : partyList : 'name' }}</td>
 

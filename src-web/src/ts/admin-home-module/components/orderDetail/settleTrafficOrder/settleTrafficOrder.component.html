@@ -37,7 +37,7 @@
                     <td> {{settle.id}}</td>
                     <td> {{settle.hsId | findKey : unitList : 'name'}}</td>
 
-                    <td> {{settle.settleDate }}</td>
+                    <td> {{settle.settleDate | slice : 0 : 10 }}</td>
                     <td> {{settle.amount }}</td>
                     <td> {{settle.money }}</td>
 

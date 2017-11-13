@@ -28,6 +28,7 @@ export class UnitStatisticsComponent implements OnInit {
 
 
     unitStatistics : any = {}
+    isShowDetail : boolean = false
 
     pagination: any = {
         pageSize : 20,

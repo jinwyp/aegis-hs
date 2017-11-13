@@ -35,7 +35,7 @@
                     <td> {{deposit.id}}</td>
                     <td> {{deposit.hsId | findKey : unitList : 'name'}}</td>
 
-                    <td> {{deposit.bailDate  }}</td>
+                    <td> {{deposit.bailDate | slice : 0 : 10  }}</td>
                     <td> {{deposit.bailType | findKey : depositTypeList : 'name' }}</td>
                     <td> {{deposit.bailAmount  }}</td>
 

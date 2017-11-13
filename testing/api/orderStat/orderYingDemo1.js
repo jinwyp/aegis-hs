@@ -42,89 +42,89 @@ describe('应收订单 统计范例1 ', function () {
 
 
 
-    it('新建参与商 POST: /api/parties', function (done) {
-        server.post('/api/parties')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({
-                name: "江西蒙晋能源贸易有限公司",
-                shortName : '江西蒙晋',
-                partyType : 3
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.name).to.include('江西蒙晋')
-                done()
-            })
-    })
+    // it('新建参与商 POST: /api/parties', function (done) {
+    //     server.post('/api/parties')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send({
+    //             name: "江西蒙晋能源贸易有限公司",
+    //             shortName : '江西蒙晋',
+    //             partyType : 3
+    //         })
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+    //             expect(res.body.data.name).to.include('江西蒙晋')
+    //             done()
+    //         })
+    // })
 
-    it('新建参与商 POST: /api/parties', function (done) {
-        server.post('/api/parties')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({
-                name: "江苏华电物流有限公司",
-                shortName : '江苏华电',
-                partyType : 3
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.name).to.include('江苏华电')
-                done()
-            })
-    })
-
-    it('新建参与商 POST: /api/parties', function (done) {
-        server.post('/api/parties')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({
-                name: "创硕",
-                shortName : '创硕',
-                partyType : 3
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.name).to.include('创硕')
-                done()
-            })
-    })
-
-    it('新建参与商 POST: /api/parties', function (done) {
-        server.post('/api/parties')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({
-                name: "泰州立翔",
-                shortName : '泰州立翔',
-                partyType : 3
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.name).to.include('泰州立翔')
-                done()
-            })
-    })
+    // it('新建参与商 POST: /api/parties', function (done) {
+    //     server.post('/api/parties')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send({
+    //             name: "江苏华电物流有限公司",
+    //             shortName : '江苏华电',
+    //             partyType : 3
+    //         })
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+    //             expect(res.body.data.name).to.include('江苏华电')
+    //             done()
+    //         })
+    // })
+    //
+    // it('新建参与商 POST: /api/parties', function (done) {
+    //     server.post('/api/parties')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send({
+    //             name: "创硕",
+    //             shortName : '创硕',
+    //             partyType : 3
+    //         })
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+    //             expect(res.body.data.name).to.include('创硕')
+    //             done()
+    //         })
+    // })
+    //
+    // it('新建参与商 POST: /api/parties', function (done) {
+    //     server.post('/api/parties')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send({
+    //             name: "泰州立翔",
+    //             shortName : '泰州立翔',
+    //             partyType : 3
+    //         })
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+    //             expect(res.body.data.name).to.include('泰州立翔')
+    //             done()
+    //         })
+    // })
 
 
 
@@ -140,16 +140,16 @@ describe('应收订单 统计范例1 ', function () {
                     "upstreamSettleMode" : "ONE_PAPER_SETTLE",
                     "downstreamSettleMode" : "ONE_PAPER_SETTLE",
                     "mainAccounting" : 2,
-                    "upstreamId" : 26,
-                    "downstreamId" : 27,
+                    "upstreamId" : 19,
+                    "downstreamId" : 20,
                     "businessType" : "ying",
                     "orderPartyList" : [
                         {
                             "custType" : "TRAFFICKCER",
-                            "customerId" : 28,
+                            "customerId" : 21,
                             "position" : 1
                         },
-                        {"custType" : "TRAFFICKCER", "customerId" : 29, "position" : 1}
+                        {"custType" : "TRAFFICKCER", "customerId" : 22, "position" : 1}
                     ]
                 }
             )
@@ -194,7 +194,7 @@ describe('应收订单 统计范例1 ', function () {
                     "unInvoicedRate" : 0.7,
                     "contractBaseInterest" : 0.15,
                     "expectHKDays" : 45,
-                    "tradeAddPrice" : "1",
+                    "tradeAddPrice" : "2",
                     "weightedPrice" : "612"
                 }
             )
@@ -506,7 +506,7 @@ describe('应收订单 统计范例1 ', function () {
                     "orderId" : orderId,
                     "hsId" : unitId,
                     "payDate" : "2017-04-28 00:00:00",
-                    "receiveCompanyId" : 26,
+                    "receiveCompanyId" : 19,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "9600000",
                     "capitalId" : 17,
@@ -540,7 +540,7 @@ describe('应收订单 统计范例1 ', function () {
                 {
                     "hsId" : unitId,
                     "payDate" : "2017-05-08 00:00:00",
-                    "receiveCompanyId" : 26,
+                    "receiveCompanyId" : 19,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "2000000",
                     "orderId" : orderId,
@@ -575,7 +575,7 @@ describe('应收订单 统计范例1 ', function () {
                 {
                     "hsId" : unitId,
                     "payDate" : "2017-05-09 00:00:00",
-                    "receiveCompanyId" : 26,
+                    "receiveCompanyId" : 19,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "2000000",
                     "orderId" : orderId,
@@ -610,7 +610,7 @@ describe('应收订单 统计范例1 ', function () {
                 {
                     "hsId" : unitId,
                     "payDate" : "2017-05-10 00:00:00",
-                    "receiveCompanyId" : 26,
+                    "receiveCompanyId" : 19,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "3090000",
                     "orderId" : orderId,
@@ -646,7 +646,7 @@ describe('应收订单 统计范例1 ', function () {
                 {
                     "hsId" : unitId,
                     "payDate" : "2017-04-28 00:00:00",
-                    "receiveCompanyId" : 26,
+                    "receiveCompanyId" : 19,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "4450000",
                     "orderId" : orderId,
@@ -681,7 +681,7 @@ describe('应收订单 统计范例1 ', function () {
                 {
                     "hsId" : unitId,
                     "payDate" : "2017-05-25 00:00:00",
-                    "receiveCompanyId" : 26,
+                    "receiveCompanyId" : 19,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "26968.08",
                     "orderId" : orderId,
@@ -716,7 +716,7 @@ describe('应收订单 统计范例1 ', function () {
                 {
                     "hsId" : unitId,
                     "payDate" : "2017-05-31 00:00:00",
-                    "receiveCompanyId" : 26,
+                    "receiveCompanyId" : 19,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "19832.88",
                     "orderId" : orderId,
@@ -751,7 +751,7 @@ describe('应收订单 统计范例1 ', function () {
                 {
                     "hsId" : unitId,
                     "payDate" : "2017-06-01 00:00:00",
-                    "receiveCompanyId" : 26,
+                    "receiveCompanyId" : 19,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "21232.86",
                     "orderId" : orderId,
@@ -786,7 +786,7 @@ describe('应收订单 统计范例1 ', function () {
                 {
                     "hsId" : unitId,
                     "payDate" : "2017-06-02 00:00:00",
-                    "receiveCompanyId" : 26,
+                    "receiveCompanyId" : 19,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "23223.08",
                     "orderId" : orderId,
@@ -821,7 +821,7 @@ describe('应收订单 统计范例1 ', function () {
                 {
                     "hsId" : unitId,
                     "payDate" : "2017-06-30 00:00:00",
-                    "receiveCompanyId" : 26,
+                    "receiveCompanyId" : 19,
                     "payUsage" : "FIAL_PAYMENT",
                     "payAmount" : "2585420.67",
                     "orderId" : orderId,
@@ -1029,7 +1029,7 @@ describe('应收订单 统计范例1 ', function () {
             .send(
                 {
                     "hsId" : unitId,
-                    "settleDate" : "2017-06-17 00:00:00",
+                    "settleDate" : "2017-06-09 00:00:00",
                     "amount" : "40530",
                     "money" : "24166823.1",
                     "settleGap" : "0",
@@ -1055,9 +1055,9 @@ describe('应收订单 统计范例1 ', function () {
             .send(
                 {
                     "hsId" : unitId,
-                    "settleDate" : "2017-09-02 00:00:00",
-                    "amount" : "99999",
-                    "money" : "99999",
+                    "settleDate" : "2017-06-28 00:00:00",
+                    "amount" : "999999",
+                    "money" : "999999",
                     "discountType" : "NO_DISCOUNT",
                     "orderId" : orderId
                 }
@@ -1089,8 +1089,8 @@ describe('应收订单 统计范例1 ', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-05-05 00:00:00",
-                    "openCompanyId" : 26,
-                    "receiverId" : 28,
+                    "openCompanyId" : 19,
+                    "receiverId" : 21,
                     "orderId" : orderId,
                     "details" : [{
                         "invoiceNumber" : "43211234",
@@ -1121,7 +1121,7 @@ describe('应收订单 统计范例1 ', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-05-23 00:00:00",
-                    "openCompanyId" : 29,
+                    "openCompanyId" : 22,
                     "receiverId" : 2,
                     "orderId" : orderId,
                     "details" : [{
@@ -1153,7 +1153,7 @@ describe('应收订单 统计范例1 ', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-05-24 00:00:00",
-                    "openCompanyId" : 29,
+                    "openCompanyId" : 22,
                     "receiverId" : 2,
                     "orderId" : orderId,
                     "details" : [{
@@ -1185,7 +1185,7 @@ describe('应收订单 统计范例1 ', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-05-27 00:00:00",
-                    "openCompanyId" : 29,
+                    "openCompanyId" : 22,
                     "receiverId" : 2,
                     "orderId" : orderId,
                     "details" : [{
@@ -1217,8 +1217,8 @@ describe('应收订单 统计范例1 ', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-06-28 00:00:00",
-                    "openCompanyId" : 26,
-                    "receiverId" : 28,
+                    "openCompanyId" : 19,
+                    "receiverId" : 21,
                     "orderId" : orderId,
                     "details" : [{
                         "invoiceNumber" : "43211238",

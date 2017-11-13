@@ -1,11 +1,231 @@
 
 
+
+
+
+
+
+
+
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }}统计信息
+                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 备查账
                         <button type="button" class="btn btn-outline-secondary btn-sm float-right" (click)="backTo()" >返回列表</button>
                     </h5>
 
+
+                    <div class="row mt-4">
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：回款金额">备查账 - 已回款金额合计: {{ unitStatistics?.totalHuikuanPaymentMoney | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：买方结算数量">备查账 - 买方已结算数量: {{ unitStatistics?.totalBuyerNums | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：买方结算金额">备查账 - 买方已结算金额: {{ unitStatistics?.totalBuyerMoney | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费 + 【1031】监管费 + 【1032】管理费 + 【1033】业务费 ">备查账 - 销售费用总额: {{ unitStatistics?.salesFeeAmount | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “上游供应商ID”且收票单位 = “贸易公司ID”的票面数量">备查账 - 贸易公司已收到进项数量: {{ unitStatistics?.tradingCompanyInTypeNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “上游供应商ID”且收票单位 = “贸易公司ID”的价税合计">备查账 - 贸易公司已收到进项金额: {{ unitStatistics?.tradingCompanyInTpeMoneyAmount | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “主账务公司ID”的票面数量">备查账 - CCS已收到进项数量: {{ unitStatistics?.totalCSSIntypeNumber | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “主账务公司ID”的价税合计">备查账 - CCS已收到进项金额: {{ unitStatistics?.totalCCSIntypeMoney | number }}</p>
+                        </div>
+
+
+
+                        <div class="col-3">
+                            <p class="card-text" title="【2003】发运总数量 - 【1026】结算扣吨合计">核算结算量: {{ unitStatistics?.finalSettleAmount | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1040】核算结算量 * 【核算月配置】贸易公司加价">贸易公司加价: {{ unitStatistics?.tradingCompanyAddMoney | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1040】核算计算量 - 【1024】买方已结算数量">买方未结算数量: {{ unitStatistics?.unsettlerBuyerNumber | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1042】买方未结算数量 * 【核算月配置】加权单价">买方未结算金额: {{ unitStatistics?.unsettlerBuyerMoneyAmount | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1043】买方未结算金额 + 【1025】买方已结算金额">销售货款总额: {{ unitStatistics?.saleCargoAmountofMoney | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1021】合同利息收益 - 【1012】外部资金使用成本 + 【1023】贴现息合计">瑞茂通总收益: {{ unitStatistics?.ccsProfile | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1044】销售货款总额 - 【1045】瑞茂通总收益">采购货款总额: {{ unitStatistics?.purchaseCargoAmountOfMoney | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1004】借款金额合计 - 【1007】还款本金合计  + 【1009】登记未还款本金">外部资金付款金额: {{ unitStatistics?.externalCapitalPaymentAmount | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1003】付款金额合计 - 【1047】外部资金付款金额 + 【1008】还款利息合计  -【1010】登记未还款利息 - 【2008】上游保证金余额">自有资金付款金额: {{ unitStatistics?.ownerCapitalPaymentAmount | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1047】外部资金付款金额 + 【1048】自有资金付款金额 - 【1046】采购货款总额 -【1002】付贸易差价金额">上游资金占压: {{ unitStatistics?.upstreamCapitalPressure | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额">下游资金占压: {{ unitStatistics?.downstreamCapitalPressure | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1040】核算结算量 - 【1037】CCS已收进项数量">CCS未收到进项数量: {{ unitStatistics?.cssUninTypeNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费">CCS未收到进项金额: {{ unitStatistics?.cssUninTypeMoney | number }}</p>
+                        </div>
+
+
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：到场状态 = “已到场”的发运数量">备查账 - 未到场数量: {{ unitStatistics?.totalUnarriveNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：到场状态 = “未到场”的发运数量">备查账 - 已到场数量: {{ unitStatistics?.totalArriveNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【2001】未到场数量 +【2002】已到场数量">备查账 - 发运总数量: {{ unitStatistics?.totalFayunNum | number }}</p>
+                        </div>
+
+
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：入库数量">备查账 - 入库总数量: {{ unitStatistics?.totalInstorageNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：出库数量">备查账 - 已出库数量: {{ unitStatistics?.totalOutstorageNum | number }}</p>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 占压表</h5>
+
+                    <div class="row mt-4">
+                        <div class="col-3">
+                            <p class="card-text" title="IF（【1014】付货款金额 > 【1013】已回款金额？（【1014】付货款金额 - 【1013】已回款金额）：0）">占压表 - 未回款金额合计: {{ unitStatistics?.unpaymentMoney | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “上游供应商ID”的价税合计">占压表 - 已开票金额: {{ unitStatistics?.invoicedMoneyAmount | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费">占压表 - 未开票金额: {{ unitStatistics?.unInvoicedAmountofMoney | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="IF（【1013】已回款金额>【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额">预收款: {{ unitStatistics?.yingPrePayment | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1048】自有资金付款金额-【1046】采购货款总额-【1002】付贸易差价金额">自有资金占压: {{ unitStatistics?.ownerCapitalPressure | number }}</p>
+                        </div>
+
+
+                        <div class="col-3">
+                            <p class="card-text" title="【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款">占压表 - 下游已结算未回款金额: {{ unitStatistics?.settledDownstreamHuikuanMoneny | number }}</p>
+                        </div>
+
+
+                        <div class="col-3">
+                            <p class="card-text" title="【3001】入库总数量 - 【3003】已出库数量">备查账/占压表 - 库存数量: {{ unitStatistics?.totalStockNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【3004】入库单价 * 【3005】库存数量">占压表 - 库存金额: {{ unitStatistics?.totalStockMoney | number }}</p>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 毛利表</h5>
+
+                    <div class="row mt-4">
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：费用科目 = “代收代垫运费”的费用金额">毛利表 - 代收代垫运费: {{ unitStatistics?.dsddFee | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：费用科目 = “含税汽运费”的费用金额">毛利表 - 含税汽运费: {{ unitStatistics?.hsqyFee | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：费用科目 = “含税水运费”的费用金额">毛利表 - 含税水运费: {{ unitStatistics?.hssyFee | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：费用科目 = “含税火运费”的费用金额">毛利表 - 含税火运费: {{ unitStatistics?.hshyFee | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：费用科目 = “监管费”的费用金额">毛利表 - 监管费: {{ unitStatistics?.serviceFee | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：费用科目 = “管理费”的费用金额">毛利表 - 管理费: {{ unitStatistics?.superviseFee | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：费用科目 = “业务费”的费用金额">毛利表 - 业务费: {{ unitStatistics?.businessFee | number }}</p>
+                        </div>
+
+
+                        <div class="col-3">
+                            <p class="card-text" title="【1040】核算用结算量">毛利结算量: {{ unitStatistics?.settleGrossProfileNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1046】采购货款总额">采购含税总额: {{ unitStatistics?.purchaseIncludeTaxTotalAmount | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1044】销售货款总额">销售含税总额: {{ unitStatistics?.saleIncludeTaxTotalAmount | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1055】毛利结算量 * 【核算月配置】贸易公司加价">毛利贸易公司加价: {{ unitStatistics?.tradeCompanyAddMoney | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="（【1057】销售含税总额 - 【1027】代收代垫运费 ）／ 1.17">不含税收入: {{ unitStatistics?.withoutTaxIncome | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="（【1056】采购含税总额 - 【1027】代收代垫运费 + 【1058】毛利贸易公司加价）／1.17">不含税成本: {{ unitStatistics?.withoutTaxCost | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="IF（【1059】不含税收入 <= 【1060】不含税成本？0 : （【1059】不含税收入 - 【1060】不含税成本）*0.17）">应交增值税: {{ unitStatistics?.vat | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1061】应交增值税 * 0.12">税金及附加: {{ unitStatistics?.additionalTax | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="（【1057】销售含税总额 + 【1056】采购含税总额 + 【1058】毛利贸易公司加价 - 【1027】代收代垫运费 * 2 ） * 0.0003">印花税: {{ unitStatistics?.stampDuty | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 - （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06 - 【1033】业务费">经营毛利: {{ unitStatistics?.opreationCrossProfile | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1064】经营毛利 / 【1055】毛利结算量">单吨毛利: {{ unitStatistics?.crossProfileATon | number }}</p>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 统计信息
+                        <button type="button" class="btn btn-outline-secondary btn-sm float-right" (click)="isShowDetail = true" >显示详细统计信息</button>
+                    </h5>
+                </div>
+
+                <div class="card-body" *ngIf="isShowDetail">
 
                     <div class="row mt-4">
                         <div class="col-3">
@@ -216,215 +436,3 @@
             </div>
 
 
-
-
-
-
-
-
-
-            <div class="card mt-4">
-                <div class="card-body">
-                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 备查账</h5>
-
-                    <div class="row mt-4">
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：回款金额">备查账 - 已回款金额合计: {{ unitStatistics?.totalHuikuanPaymentMoney | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：买方结算数量">备查账 - 买方已结算数量: {{ unitStatistics?.totalBuyerNums | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：买方结算金额">备查账 - 买方已结算金额: {{ unitStatistics?.totalBuyerMoney | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费 + 【1031】监管费 + 【1032】管理费 + 【1033】业务费 ">备查账 - 销售费用总额: {{ unitStatistics?.salesFeeAmount | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “上游供应商ID”且收票单位 = “贸易公司ID”的票面数量">备查账 - 贸易公司已收到进项数量: {{ unitStatistics?.tradingCompanyInTypeNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “上游供应商ID”且收票单位 = “贸易公司ID”的价税合计">备查账 - 贸易公司已收到进项金额: {{ unitStatistics?.tradingCompanyInTpeMoneyAmount | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “主账务公司ID”的票面数量">备查账 - CCS已收到进项数量: {{ unitStatistics?.totalCSSIntypeNumber | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “主账务公司ID”的价税合计">备查账 - CCS已收到进项金额: {{ unitStatistics?.totalCCSIntypeMoney | number }}</p>
-                        </div>
-
-
-
-                        <div class="col-3">
-                            <p class="card-text" title="【2003】发运总数量 - 【1026】结算扣吨合计">核算结算量: {{ unitStatistics?.finalSettleAmount | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1040】核算结算量 * 【核算月配置】贸易公司加价">贸易公司加价: {{ unitStatistics?.tradingCompanyAddMoney | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1040】核算计算量 - 【1024】买方已结算数量">买方未结算数量: {{ unitStatistics?.unsettlerBuyerNumber | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1042】买方未结算数量 * 【核算月配置】加权单价">买方未结算金额: {{ unitStatistics?.unsettlerBuyerMoneyAmount | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1043】买方未结算金额 + 【1025】买方已结算金额">销售货款总额: {{ unitStatistics?.saleCargoAmountofMoney | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1021】合同利息收益 - 【1012】外部资金使用成本 + 【1023】贴现息合计">瑞茂通总收益: {{ unitStatistics?.ccsProfile | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1044】销售货款总额 - 【1045】瑞茂通总收益">采购货款总额: {{ unitStatistics?.purchaseCargoAmountOfMoney | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1004】借款金额合计 - 【1007】还款本金合计  + 【1009】登记未还款本金">外部资金付款金额: {{ unitStatistics?.externalCapitalPaymentAmount | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1003】付款金额合计 - 【1047】外部资金付款金额 + 【1008】还款利息合计  -【1010】登记未还款利息 - 【2008】上游保证金余额">自有资金付款金额: {{ unitStatistics?.ownerCapitalPaymentAmount | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1047】外部资金付款金额 + 【1048】自有资金付款金额 - 【1046】采购货款总额">上游资金占压: {{ unitStatistics?.upstreamCapitalPressure | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额">下游资金占压: {{ unitStatistics?.downstreamCapitalPressure | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1040】核算结算量 - 【1037】CCS已收进项数量">CCS未收到进项数量: {{ unitStatistics?.cssUninTypeNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费">CCS未收到进项金额: {{ unitStatistics?.cssUninTypeMoney | number }}</p>
-                        </div>
-
-
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：到场状态 = “已到场”的发运数量">备查账 - 未到场数量: {{ unitStatistics?.totalUnarriveNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：到场状态 = “未到场”的发运数量">备查账 - 已到场数量: {{ unitStatistics?.totalArriveNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【2001】未到场数量 +【2002】已到场数量">备查账 - 发运总数量: {{ unitStatistics?.totalFayunNum | number }}</p>
-                        </div>
-
-
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：入库数量">备查账 - 入库总数量: {{ unitStatistics?.totalInstorageNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：出库数量">备查账 - 已出库数量: {{ unitStatistics?.totalOutstorageNum | number }}</p>
-                        </div>
-
-
-                    </div>
-
-                </div>
-            </div>
-
-
-            <div class="card mt-4">
-                <div class="card-body">
-                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 占压表</h5>
-
-                    <div class="row mt-4">
-                        <div class="col-3">
-                            <p class="card-text" title="IF（【1014】付货款金额 > 【1013】已回款金额？（【1014】付货款金额 - 【1013】已回款金额）：0）">占压表 - 未回款金额合计: {{ unitStatistics?.unpaymentMoney | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “上游供应商ID”的价税合计">占压表 - 已开票金额: {{ unitStatistics?.invoicedMoneyAmount | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费">占压表 - 未开票金额: {{ unitStatistics?.unInvoicedAmountofMoney | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="IF（【1014】付货款金额 <= 【1013】已回款金额）？【1014】付货款金额 - 【1013】已回款金额 + 【2009】下游保证金余额：0 +【2009】下游保证金余额">预收款: {{ unitStatistics?.yingPrePayment | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1048】自有资金付款金额-【1046】采购货款总额">自有资金占压: {{ unitStatistics?.ownerCapitalPressure | number }}</p>
-                        </div>
-
-
-                        <div class="col-3">
-                            <p class="card-text" title="【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款">占压表 - 下游已结算未回款金额: {{ unitStatistics?.settledDownstreamHuikuanMoneny | number }}</p>
-                        </div>
-
-
-                        <div class="col-3">
-                            <p class="card-text" title="【3001】入库总数量 - 【3003】已出库数量">备查账/占压表 - 库存数量: {{ unitStatistics?.totalStockNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【3004】入库单价 * 【3005】库存数量">占压表 - 库存金额: {{ unitStatistics?.totalStockMoney | number }}</p>
-                        </div>
-
-                    </div>
-
-
-                </div>
-            </div>
-
-
-            <div class="card mt-4">
-                <div class="card-body">
-                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 毛利表</h5>
-
-                    <div class="row mt-4">
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “代收代垫运费”的费用金额">毛利表 - 代收代垫运费: {{ unitStatistics?.dsddFee | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “含税汽运费”的费用金额">毛利表 - 含税汽运费: {{ unitStatistics?.hsqyFee | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “含税水运费”的费用金额">毛利表 - 含税水运费: {{ unitStatistics?.hssyFee | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “含税火运费”的费用金额">毛利表 - 含税火运费: {{ unitStatistics?.hshyFee | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “监管费”的费用金额">毛利表 - 监管费: {{ unitStatistics?.serviceFee | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “管理费”的费用金额">毛利表 - 管理费: {{ unitStatistics?.superviseFee | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “业务费”的费用金额">毛利表 - 业务费: {{ unitStatistics?.businessFee | number }}</p>
-                        </div>
-
-
-                        <div class="col-3">
-                            <p class="card-text" title="【1040】核算用结算量">毛利结算量: {{ unitStatistics?.settleGrossProfileNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1046】采购货款总额">采购含税总额: {{ unitStatistics?.purchaseIncludeTaxTotalAmount | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1044】销售货款总额">销售含税总额: {{ unitStatistics?.saleIncludeTaxTotalAmount | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1055】毛利结算量 * 【核算月配置】贸易公司加价">毛利贸易公司加价: {{ unitStatistics?.tradeCompanyAddMoney | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="（【1057】销售含税总额 - 【1027】代收代垫运费 ）／ 1.17">不含税收入: {{ unitStatistics?.withoutTaxIncome | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="（【1056】采购含税总额 - 【1027】代收代垫运费 + 【1058】毛利贸易公司加价）／1.17">不含税成本: {{ unitStatistics?.withoutTaxCost | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="IF（【1059】不含税收入 <= 【1060】不含税成本？0 : （【1059】不含税收入 - 【1060】不含税成本）*0.17）">应交增值税: {{ unitStatistics?.vat | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1061】应交增值税 * 0.12">税金及附加: {{ unitStatistics?.additionalTax | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="（【1057】销售含税总额 + 【1056】采购含税总额 + 【1058】毛利贸易公司加价 - 【1027】代收代垫运费 * 2 ） * 0.0003">印花税: {{ unitStatistics?.stampDuty | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 - （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06 - 【1033】业务费">经营毛利: {{ unitStatistics?.opreationCrossProfile | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1064】经营毛利 / 【1055】毛利结算量">单吨毛利: {{ unitStatistics?.crossProfileATon | number }}</p>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>

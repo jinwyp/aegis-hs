@@ -51,8 +51,8 @@
                     <th>回款方式</th>
 
                     <th>银行承兑/商业承兑详细</th>
-                    <th title="每条回款-付款记录：计息天数 = 回款日期 - 付款日期 - 【买方结算】折扣天数">统计:计息天数</th>
-                    <th title="每条回款记录：（票据到期日 - 收到票据日期） * 回款金额 * 贴现利率 * 1.17 ／ 360">统计:贴现息</th>
+                    <!--<th title="每条回款-付款记录：计息天数 = 回款日期 - 付款日期 - 【买方结算】折扣天数">统计:计息天数</th>-->
+                    <!--<th title="每条回款记录：（票据到期日 - 收到票据日期） * 回款金额 * 贴现利率 * 1.17 ／ 360">统计:贴现息</th>-->
 
                     <th></th>
                 </tr>
@@ -63,7 +63,7 @@
                     <td> {{repayment.hsId | findKey : unitList : 'name'}}</td>
 
                     <td> {{repayment.huikuanCompanyId | findKey : partyList : 'name' }}</td>
-                    <td> {{repayment.huikuanDate | findKey : purposeList : 'name' }}</td>
+                    <td> {{repayment.huikuanDate | slice : 0 : 10 }}</td>
                     <td> {{repayment.huikuanAmount  }}</td>
                     <td> {{repayment.huikuanUsage | findKey : purposeList : 'name' }}</td>
                     <td> {{repayment.huikuanMode | findKey : payModeList : 'name' }}</td>
@@ -71,17 +71,17 @@
                     <td>
                         <span *ngIf="repayment.huikuanMode === 'BANK_ACCEPTANCE'">
                             收到票据:{{repayment.huikuanBankPaper ? '是' : '否'}} <br>
-                            票据原件日期:{{repayment.huikuanBankPaperDate}} <br> 票据到期日:{{repayment.huikuanBankPaperExpire}} <br>
+                            票据原件日期:{{repayment.huikuanBankPaperDate | slice : 0 : 10}} <br> 票据到期日:{{repayment.huikuanBankPaperExpire}} <br>
                             贴息: {{repayment.huikuanBankDiscount ? '是' : '否'}} / 贴息率:{{repayment.huikuanBankDiscountRate ? (repayment.huikuanBankDiscountRate * 100 | percent:'1.0-2' ): ''}}
                         </span>
                         <span *ngIf="repayment.huikuanMode === 'BUSINESS_ACCEPTANCE'">
                             收到票据:{{repayment.huikuanBusinessPaper ? '是' : '否'}} <br>
-                            票据原件日期:{{repayment.huikuanBusinessPaperDate }} <br> 票据到期日:{{repayment.huikuanBusinessPaperExpire}} <br>
+                            票据原件日期:{{repayment.huikuanBusinessPaperDate | slice : 0 : 10 }} <br> 票据到期日:{{repayment.huikuanBusinessPaperExpire}} <br>
                             贴息:{{repayment.huikuanBusinessDiscount ? '是' : '否'}} / 贴息率:{{repayment.huikuanBusinessDiscountRate ? (repayment.huikuanBusinessDiscountRate * 100 || 0 | percent:'1.0-2') : ''}}
                         </span>
                     </td>
-                    <td> </td>
-                    <td> </td>
+                    <!--<td> </td>-->
+                    <!--<td> </td>-->
 
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, repayment)"> 修改 </button>

@@ -7,7 +7,7 @@
                 <bs-datepicker formControlName="rukuDate" [fc]="warehouseForm.get('rukuDate')" [label]="'入库日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="warehouseFormError.rukuDate" ></bs-datepicker>
                 <bs-select formControlName ="rukuStatus" [fc]="warehouseForm.get('rukuStatus')" [label]="'入库状态:'" [dirty]="ignoreDirty" [options]="warehouseStatusList" [error]="warehouseFormError.rukuStatus"></bs-select>
                 <bs-text-input formControlName="rukuAmount" [fc]="warehouseForm.get('rukuAmount')" [type]="'number'" [label]="'入库吨数(吨):'" [dirty]="ignoreDirty" [error]="warehouseFormError.rukuAmount"></bs-text-input>
-                <bs-text-input formControlName="rukuPrice" [fc]="warehouseForm.get('rukuPrice')" [type]="'number'" [label]="'入库单价(元/吨):'" [dirty]="ignoreDirty" [error]="warehouseFormError.rukuPrice"></bs-text-input>
+                <bs-text-input formControlName="rukuPrice" [fc]="warehouseForm.get('rukuPrice')" [type]="'number'" [label]="'入库金额(元):'" [dirty]="ignoreDirty" [error]="warehouseFormError.rukuPrice"></bs-text-input>
 
                 <bs-radio formControlName ="trafficMode" [fc]="warehouseForm.get('trafficMode')" [label]="'上游运输方式:'" [dirty]="ignoreDirty" [sourceList]="trafficModeList" [error]="warehouseFormError.trafficMode" ></bs-radio>
 
@@ -19,7 +19,7 @@
             <div [hidden]="warehouseType !== 'chuku'">
                 <bs-datepicker formControlName="chukuDate" [fc]="warehouseForm.get('chukuDate')" [label]="'出库日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="warehouseFormError.chukuDate" ></bs-datepicker>
                 <bs-text-input formControlName="chukuAmount" [fc]="warehouseForm.get('chukuAmount')" [type]="'number'" [label]="'出库吨数(吨):'" [dirty]="ignoreDirty" [error]="warehouseFormError.chukuAmount"></bs-text-input>
-                <bs-text-input formControlName="chukuPrice" [fc]="warehouseForm.get('chukuPrice')" [type]="'number'" [label]="'出库单价(元/吨):'" [dirty]="ignoreDirty" [error]="warehouseFormError.chukuPrice"></bs-text-input>
+                <bs-text-input formControlName="chukuPrice" [fc]="warehouseForm.get('chukuPrice')" [type]="'number'" [label]="'出库金额(元):'" [dirty]="ignoreDirty" [error]="warehouseFormError.chukuPrice"></bs-text-input>
             </div>
 
             <bs-text-input formControlName="locality" [fc]="warehouseForm.get('locality')" [type]="'text'" [label]="'库房场地:'" [dirty]="ignoreDirty" [error]="warehouseFormError.locality"></bs-text-input>
@@ -43,7 +43,7 @@
                     <th>入库日期</th>
                     <th>入库状态</th>
                     <th>入库吨数(吨)</th>
-                    <th>入库单价(元/吨)</th>
+                    <th>入库金额(元)</th>
                     <th>入库场地</th>
 
                     <th>上游运输方式</th>
@@ -57,7 +57,7 @@
                     <td> {{warehouse.id}}</td>
                     <td> {{warehouse.hsId | findKey : unitList : 'name'}}</td>
 
-                    <td> {{warehouse.rukuDate }}</td>
+                    <td> {{warehouse.rukuDate | slice : 0 : 10 }}</td>
                     <td> {{warehouse.rukuStatus | findKey : warehouseStatusList : 'name'}}</td>
                     <td> {{warehouse.rukuAmount }}</td>
                     <td> {{warehouse.rukuPrice }}</td>
@@ -85,7 +85,7 @@
                     <th>核算月</th>
                     <th>出库日期</th>
                     <th>出库吨数(吨)</th>
-                    <th>出库单价(元/吨)</th>
+                    <th>出库金额(元)</th>
                     <th>出库场地</th>
 
                     <th></th>
@@ -96,7 +96,7 @@
                     <td> {{warehouse.id}}</td>
                     <td> {{warehouse.hsId | findKey : unitList : 'name'}}</td>
 
-                    <td> {{warehouse.chukuDate }}</td>
+                    <td> {{warehouse.chukuDate | slice : 0 : 10 }}</td>
                     <td> {{warehouse.chukuAmount }}</td>
                     <td> {{warehouse.chukuPrice }}</td>
                     <td> {{warehouse.locality }}</td>
