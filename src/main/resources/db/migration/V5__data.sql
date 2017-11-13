@@ -55,3 +55,4 @@ insert into hs_party(partyType, name, shortName) values
   (3, '宇宙煤炭贸易公司-A', '宇宙A'),
   (3, '宇宙煤炭贸易公司-B', '宇宙B'),
   (3, '宇宙煤炭贸易公司-C', '宇宙C');
+
