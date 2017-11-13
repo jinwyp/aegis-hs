@@ -225,8 +225,8 @@ from hs_same_huikuan_map map
      left join hs_same_huikuan huikuan on huikuan.id=map.huikuanId
      left join hs_same_fukuan fukuan on fukuan.id=map.fukuanId
      left join v_1018 on v_1018.hsId=huikuan.hsId
-     left join hs_same_settle_seller seller on fukuan.hsId=seller.hsId;
-
+     left join hs_same_settle_seller seller on fukuan.hsId=seller.hsId
+where map.deleted=0;
 
 
 --1020 已回款应计利息合计
@@ -422,7 +422,7 @@ select
 chuku.orderId,
 chuku.hsId,
 ROUND(sum(IFNULL(chukuAmount,0.00)) ,2)as totalOutstorageNum,
-ROUND(sum(IFNULL(chukuPrice,0.00)*IFNULL(chukuAmount,0.00)) ,2)as totalOutstorageMoney
+ROUND(sum(IFNULL(chukuPrice,0.00)),2)as totalOutstorageMoney
 from hs_cang_chuku chuku
 where deleted =0
 group by hsId, orderId;
@@ -561,11 +561,10 @@ seller.hsId,
 seller.orderId,
 case  when seller.orderId is not null and seller.hsId is not null
 then
-ROUND(IFNULL(IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)
-       - IFNULL(v_1002.totalTradeGapFee,0.00)-v_1001.totalPayTrafficFee,0.00),2)
-else
-ROUND(IFNULL(IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)
-       - IFNULL(v_1002.totalTradeGapFee,0.00),0.00),2)
+IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)
+- IFNULL(v_1002.totalTradeGapFee,0.00)-IFNULL(v_1001.totalPayTrafficFee,0.00)
+else IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)
+       - IFNULL(v_1002.totalTradeGapFee,0.00)
 end
 as upstreamCapitalPressure
 from hs_same_settle_seller seller
@@ -631,13 +630,13 @@ from v_1041_cang
 group by hsId, orderId;
 
 --1052 CCS未收到进项金额	cssUninTypeMoney	     	【1046】采购货款总额 + 【1041】贸易公司加价 - 【1038】CCS已收进项金额 - 【1027】代收代垫运费
---1053	占压表未开票金额	unInvoicedAmountofMoney		【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费
+--1053	占压表未开票金额	unInvoicedAmountofMoney		【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费 change to 【1046】采购货款总额  - 【1039】占压表已开票金额
 create view v_1052_ying  as
 select
 v_1046_ying.hsId,
 v_1046_ying.orderId,
 ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1041_ying.tradingCompanyAddMoney,0.00)-IFNULL(v_1037.totalCCSIntypeMoney,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as cssUninTypeMoney,
-ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1041_ying.tradingCompanyAddMoney,0.00)-IFNULL(v_1039.invoicedMoneyAmount,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as unInvoicedAmountofMoney
+ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)-IFNULL(v_1039.invoicedMoneyAmount,0.00),2)as unInvoicedAmountofMoney
 from v_1046_ying
      left join v_1041_ying on v_1046_ying.hsId=v_1041_ying.hsId
      left join v_1037 on v_1037.hsId=v_1046_ying.hsId
@@ -652,7 +651,7 @@ select
 v_1046_cang.hsId,
 v_1046_cang.orderId,
 ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1041_cang.tradingCompanyAddMoney,0.00)-IFNULL(v_1037.totalCCSIntypeMoney,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as cssUninTypeMoney,
-ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1041_cang.tradingCompanyAddMoney,0.00)-IFNULL(v_1039.invoicedMoneyAmount,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as unInvoicedAmountofMoney
+ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)-IFNULL(v_1039.invoicedMoneyAmount,0.00),2)as unInvoicedAmountofMoney
 from v_1046_cang
      left join v_1041_cang on v_1046_cang.hsId=v_1041_cang.hsId
      left join v_1037 on v_1037.hsId=v_1046_cang.hsId
@@ -667,7 +666,7 @@ select
 v_1013.hsId,
 v_1013.orderId,
 case when IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)>IFNULL(v_1024.totalBuyerMoney,0.00)
-then ROUND(IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)-IFNULL(v_1024.totalBuyerMoney,0.00)+ IFNULL(v_2008.balanceDownStreamBail,0.00),2) else ROUND(IFNULL(v_2008.balanceDownStreamBail,0.00),2) end as yingPrePayment
+then ROUND(IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)-IFNULL(v_1024.totalBuyerMoney,0.00)+ IFNULL(v_2008.balanceDownStreamBail,0.00),2) else - ROUND(IFNULL(v_2008.balanceDownStreamBail,0.00),2) end as yingPrePayment
 from v_1013
      left join v_1024 on v_1013.hsId=v_1024.hsId
      left join v_2008 on v_1013.hsId=v_2008.hsId
@@ -713,7 +712,7 @@ create view v_1057_cang  as
 select
 v_1056_cang.hsId,
 v_1056_cang.orderId,
-ROUND(IFNULL(v_1056_cang.purchaseIncludeTaxTotalAmount ,0.00)* IFNULL(v_1045.ccsProfile ,0.00) ,2)as saleIncludeTaxTotalAmount
+ROUND(IFNULL(v_1056_cang.purchaseIncludeTaxTotalAmount ,0.00)+ IFNULL(v_1045.ccsProfile ,0.00) ,2)as saleIncludeTaxTotalAmount
 from v_1056_cang
      left join v_1045 on  v_1056_cang.hsId=v_1045.hsId
 group by hsId, orderId;
@@ -888,9 +887,10 @@ create view v_1066_cang as
 select
 v_1048_cang.hsId,
 v_1048_cang.orderId,
-ROUND(IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0.00),2)as ownerCapitalPressure
+ROUND(IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0.00)-IFNULL(v_1002.totalTradeGapFee,0.00),2)as ownerCapitalPressure
 from v_1048_cang
      left join v_1046_cang on v_1048_cang.hsId=v_1046_cang.hsId
+     left join v_1002 on v_1002.hsId=v_1046_cang.hsId
 group by hsId,orderId;
 
 
@@ -898,9 +898,10 @@ create view v_1066_ying as
 select
 v_1048_ying.hsId,
 v_1048_ying.orderId,
-ROUND(IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0.00),2)as ownerCapitalPressure
+ROUND(IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0.00)-IFNULL(v_1002.totalTradeGapFee,0.00),2)as ownerCapitalPressure
 from v_1048_ying
      left join v_1046_ying on v_1048_ying.hsId=v_1046_ying.hsId
+     left join v_1002 on v_1002.hsId=v_1048_ying.hsId
 group by hsId,orderId;
 
 

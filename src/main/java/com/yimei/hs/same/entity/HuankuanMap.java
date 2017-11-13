@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -33,6 +34,7 @@ public class HuankuanMap implements Serializable {
     private BigDecimal interest;
 
     @NotNull(groups = {CreateGroup.class}, message = "还款服务费不能为空")
+    @Size(max = 7,min = 0)
     private BigDecimal fee;
 
     private LocalDateTime tsc;
