@@ -751,10 +751,18 @@ describe('应收订单 统计范例3', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
 
+
+                expect(res.body.data.purchaseIncludeTaxTotalAmount, '采购含税总额数据不对').to.equal(1830899.52)
+                expect(res.body.data.saleIncludeTaxTotalAmount, '销售含税总额数据不对').to.equal(1849569.52)
+                expect(res.body.data.tradeCompanyAddMoney, '毛利贸易公司加价数据不对').to.equal(8910)
+                expect(res.body.data.withoutTaxIncome, '不含税收入数据不对').to.equal(1580828.65)
+                expect(res.body.data.withoutTaxCost, '不含税成本数据不对').to.equal(1572486.77)
+                expect(res.body.data.vat, '应交增值税数据不对').to.equal(1418.12)
+                expect(res.body.data.additionalTax, '税金及附加数据不对').to.equal(170.17)
+                expect(res.body.data.stampDuty, '印花税数据不对').to.equal(1106.81)
                 expect(res.body.data.opreationCrossProfile, '经营毛利数据不对').to.equal(7064.9)
                 expect(res.body.data.crossProfileATon, '单吨毛利数据不对').to.equal(1.59)
-                expect(res.body.data.purchaseIncludeTaxTotalAmount, '采购含税总额数据不对').to.equal(1830899.52)
-                expect(res.body.data.saleIncludeTaxTotalAmount, '销售含税总额数据不对').to.equal(1572486.77)
+
 
                 done()
             })
