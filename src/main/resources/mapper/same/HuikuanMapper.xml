@@ -120,6 +120,7 @@
             <if test="huikuanMode!=null">AND huikuanMode=#{huikuanMode}</if>
             <if test="huikuanDate!=null">AND huikuanDate=#{huikuanDate}</if>
         </where>
+        order by huikuanDate asc
     </select>
 
     <select id="loadAll" resultType="com.yimei.hs.same.entity.Huikuan">

@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -116,10 +118,13 @@ public class HuankuanController {
             }
 
         }
-//        NaturalSupplier personSupplier = new NaturalSupplier();
+        Iterator<HuankuanMap> it = huankuanMaps.iterator();
+//        Supplier<HuankuanMap> mapsSupplier =huankuanMaps.stream().;
+
 //        personSupplier.setHuikuanMaps((ArrayList)huankuanMaps);
 //
-//        Map<Long, List<HuikuanMap>> huiparts = Stream.generate(personSupplier).limit(huankuanMaps.size()-1).collect(Collectors.groupingBy(HuikuanMap::getId));
+//        Map<Long, List<HuikuanMap>> huiparts =
+//     Map<Long,List<HuikuanMap>> huikuanMaps=  huankuanMaps.stream().limit(huankuanMaps.size()-1).collect(Collectors.groupingBy(HuikuanMap::getId));
 //
 //
 //         logger.info("map;---->",huiparts);
