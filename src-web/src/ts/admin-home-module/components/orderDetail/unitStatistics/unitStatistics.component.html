@@ -123,7 +123,8 @@
                             <p class="card-text" title="【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费">占压表 - 未开票金额: {{ unitStatistics?.unInvoicedAmountofMoney | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="IF（【1013】已回款金额>【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额">预收款: {{ unitStatistics?.yingPrePayment | number }}</p>
+                            <p *ngIf="businessType==='ying'" class="card-text" title="IF（【1013】已回款金额>【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额">预收款: {{ unitStatistics?.yingPrePayment | number }}</p>
+                            <p *ngIf="businessType==='cang'" class="card-text" title="IF（【1013】已回款金额>【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额">预收款: {{ unitStatistics?.cangPrePayment | number }}</p>
                         </div>
                         <div class="col-3">
                             <p class="card-text" title="【1048】自有资金付款金额-【1046】采购货款总额-【1002】付贸易差价金额">自有资金占压: {{ unitStatistics?.ownerCapitalPressure | number }}</p>
