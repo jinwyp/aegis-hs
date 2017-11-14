@@ -143,6 +143,7 @@ describe('仓押订单 统计范例4', function () {
             .set(config.headers)
             .send(
                 {
+                    "orderId" : orderId,
                     "hsMonth" : "201706",
                     "maxPrepayRate" : 1,
                     "unInvoicedRate" : 0.8,
@@ -159,7 +160,7 @@ describe('仓押订单 统计范例4', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.hsMonth, '返回的数据data对象的hsMonth属性错误').to.include('201704')
+                expect(res.body.data.hsMonth, '返回的数据data对象的hsMonth属性错误').to.include('201706')
 
                 unitId = res.body.data.id
                 done()
@@ -187,43 +188,43 @@ describe('仓押订单 统计范例4', function () {
 
 
 
-    //
-    // it(`入库单 - 新建入库单1 POST: /api/business/cang/${orderId}/rukus`, function (done) {
-    //     server.post(`/api/business/cang/${orderId}/rukus`)
-    //         .set('Authorization', Authorization)
-    //         .set(config.headers)
-    //         .send(
-    //             {
-    //                 "hsId" : 3,
-    //                 "locality" : "库房场地",
-    //                 "rukuDate" : "2017-10-05 00:00:00",
-    //                 "rukuStatus" : "IN_STORAGE",
-    //                 "rukuAmount" : "20000",
-    //                 "rukuPrice" : "30",
-    //                 "trafficMode" : "MOTOR",
-    //                 "cars" : "10",
-    //                 "jhh" : "",
-    //                 "ship" : "",
-    //                 "chukuDate" : "2099-12-30 00:00:00",
-    //                 "chukuAmount" : 99999999,
-    //                 "chukuPrice" : 99999999,
-    //                 "orderId" : orderId
-    //             }
-    //         )
-    //         .expect('Content-Type', /json/)
-    //         .expect(200)
-    //         .end(function(err, res) {
-    //             if (err) return done(err)
-    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-    //             expect(res.body.data.rukuStatus).to.include('IN_STORAGE')
-    //
-    //             rukuId = res.body.data.id
-    //             done()
-    //         })
-    // })
-    //
+
+    it(`入库单 - 新建入库单1 POST: /api/business/cang/${orderId}/rukus`, function (done) {
+        server.post(`/api/business/cang/${orderId}/rukus`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : 3,
+                    "locality" : "库房场地",
+                    "rukuDate" : "2017-10-05 00:00:00",
+                    "rukuStatus" : "IN_STORAGE",
+                    "rukuAmount" : "20000",
+                    "rukuPrice" : "30",
+                    "trafficMode" : "MOTOR",
+                    "cars" : "10",
+                    "jhh" : "",
+                    "ship" : "",
+                    "chukuDate" : "2099-12-30 00:00:00",
+                    "chukuAmount" : 99999999,
+                    "chukuPrice" : 99999999,
+                    "orderId" : orderId
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.rukuStatus).to.include('IN_STORAGE')
+
+                rukuId = res.body.data.id
+                done()
+            })
+    })
+
     //
     //
     //

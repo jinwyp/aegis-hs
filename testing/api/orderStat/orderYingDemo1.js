@@ -21,6 +21,7 @@ describe('应收订单 统计范例1 ', function () {
     let orderId = 12
 
     let unitId = 6
+    let borrowId = 4
 
     before(function (done) {
 
@@ -153,6 +154,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
@@ -171,6 +173,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
@@ -199,6 +202,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
@@ -217,6 +221,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
@@ -256,6 +261,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
@@ -288,6 +294,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
@@ -320,6 +327,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
@@ -352,6 +360,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
@@ -384,6 +393,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
@@ -416,6 +426,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
@@ -448,6 +459,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
@@ -480,6 +492,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
@@ -522,6 +535,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -557,6 +571,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -592,6 +607,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -627,6 +643,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -663,6 +680,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -698,6 +716,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -733,6 +752,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -768,6 +788,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -803,6 +824,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -838,6 +860,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -863,7 +886,7 @@ describe('应收订单 统计范例1 ', function () {
                     "huankuankDate" : "2017-05-25 00:00:00",
                     "huankuanMapList" : [
                         {
-                            "jiekuanId":"5",
+                            "jiekuanId": borrowId,
                             "principal" : "9600000",
                             "interest" : "26968.08",
                             "fee" : "5176.66"
@@ -875,6 +898,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -894,7 +918,7 @@ describe('应收订单 统计范例1 ', function () {
                     "huankuankDate" : "2017-05-31 00:00:00",
                     "huankuanMapList" : [
                         {
-                            "jiekuanId":"6",
+                            "jiekuanId": borrowId + 1,
                             "principal" : "2000000",
                             "interest" : "19832.88",
                             "fee" : "3783.34"
@@ -906,6 +930,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -925,7 +950,7 @@ describe('应收订单 统计范例1 ', function () {
                     "huankuankDate" : "2017-06-01 00:00:00",
                     "huankuanMapList" : [
                         {
-                            "jiekuanId":"7",
+                            "jiekuanId": borrowId + 2,
                             "principal" : "2000000",
                             "interest" : "21232.86",
                             "fee" : "4710"
@@ -937,6 +962,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -956,7 +982,7 @@ describe('应收订单 统计范例1 ', function () {
                     "huankuankDate" : "2017-05-25 00:00:00",
                     "huankuanMapList" : [
                         {
-                            "jiekuanId":"8",
+                            "jiekuanId": borrowId + 3,
                             "principal" : "3090000",
                             "interest" : "23223.08",
                             "fee" : "6158"
@@ -968,6 +994,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -1008,6 +1035,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -1037,6 +1065,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -1063,6 +1092,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -1101,6 +1131,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -1133,6 +1164,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -1165,6 +1197,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -1197,6 +1230,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
@@ -1229,6 +1263,7 @@ describe('应收订单 统计范例1 ', function () {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err)
+                if (res.body.success === false) { console.log(res.body) }
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
