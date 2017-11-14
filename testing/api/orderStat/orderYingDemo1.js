@@ -189,6 +189,7 @@ describe('应收订单 统计范例1 ', function () {
             .set(config.headers)
             .send(
                 {
+                    "orderId" : orderId,
                     "hsMonth" : "201704",
                     "maxPrepayRate" : 0.9,
                     "unInvoicedRate" : 0.7,
