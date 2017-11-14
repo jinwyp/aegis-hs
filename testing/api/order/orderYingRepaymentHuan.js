@@ -68,7 +68,7 @@ describe('应收订单 还款:', function () {
                     "huankuankDate" : "2017-10-07 00:00:00",
                     "huankuanMapList" : [
                         {
-                            "jiekuanId":"2",
+                            "jiekuanId":"1",
                             "principal" : "100",
                             "interest" : "100",
                             "fee" : "100"
