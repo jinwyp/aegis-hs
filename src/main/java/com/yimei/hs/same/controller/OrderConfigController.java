@@ -1,5 +1,6 @@
 package com.yimei.hs.same.controller;
 
+import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.persistence.Page;
@@ -55,7 +56,7 @@ public class OrderConfigController {
     public ResponseEntity<Result<OrderConfig>> create(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
-            @RequestBody OrderConfig orderConfig) {
+            @RequestBody @Validated(CreateGroup.class) OrderConfig orderConfig) {
         if (!orderConfigService.findOneByIdAndOrderId(orderConfig.getHsMonth(), morderId)) {
 
 
