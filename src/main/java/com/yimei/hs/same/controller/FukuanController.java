@@ -116,7 +116,8 @@ public class FukuanController {
             totalPaymentMoney = totalPaymentMoney.add((yingAnalysisData.getTotalPaymentAmount() == null ? new BigDecimal("0") : yingAnalysisData.getTotalPaymentAmount()));
             purchaseCargoAmountofMoney = purchaseCargoAmountofMoney.add((yingAnalysisData.getPurchaseCargoAmountOfMoney() == null ? new BigDecimal("0") : yingAnalysisData.getPurchaseCargoAmountOfMoney()));
         } else if (businessType.equals(BusinessType.cang)) {
-            CangAnalysisData cangAnalysisData = dataAnalysisService.findOneCang(morderId, fukuan.getHsId());
+            CangAnalysisData cangAnalysisData = dataAnalysisService.findOneCang( fukuan.getHsId(),morderId);
+
             totalPaymentMoney = totalPaymentMoney.add((cangAnalysisData.getTotalPaymentAmount() == null ? new BigDecimal("0") : cangAnalysisData.getTotalPaymentAmount()));
             purchaseCargoAmountofMoney = purchaseCargoAmountofMoney.add((cangAnalysisData.getPurchaseCargoAmountOfMoney() == null ? new BigDecimal("0") : cangAnalysisData.getPurchaseCargoAmountOfMoney()));
         }
