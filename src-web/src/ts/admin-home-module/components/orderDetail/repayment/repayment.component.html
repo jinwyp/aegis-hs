@@ -72,12 +72,12 @@
                         <span *ngIf="repayment.huikuanMode === 'BANK_ACCEPTANCE'">
                             收到票据:{{repayment.huikuanBankPaper ? '是' : '否'}} <br>
                             票据原件日期:{{repayment.huikuanBankPaperDate | slice : 0 : 10}} <br> 票据到期日:{{repayment.huikuanBankPaperExpire}} <br>
-                            贴息: {{repayment.huikuanBankDiscount ? '是' : '否'}} / 贴息率:{{repayment.huikuanBankDiscountRate ? (repayment.huikuanBankDiscountRate * 100 | percent:'1.0-2' ): ''}}
+                            贴息: {{repayment.huikuanBankDiscount ? '是' : '否'}} / 贴息率:{{repayment.huikuanBankDiscountRate ? (repayment.huikuanBankDiscountRate | percent:'1.0-2' ): ''}}
                         </span>
                         <span *ngIf="repayment.huikuanMode === 'BUSINESS_ACCEPTANCE'">
                             收到票据:{{repayment.huikuanBusinessPaper ? '是' : '否'}} <br>
                             票据原件日期:{{repayment.huikuanBusinessPaperDate | slice : 0 : 10 }} <br> 票据到期日:{{repayment.huikuanBusinessPaperExpire}} <br>
-                            贴息:{{repayment.huikuanBusinessDiscount ? '是' : '否'}} / 贴息率:{{repayment.huikuanBusinessDiscountRate ? (repayment.huikuanBusinessDiscountRate * 100 || 0 | percent:'1.0-2') : ''}}
+                            贴息:{{repayment.huikuanBusinessDiscount ? '是' : '否'}} / 贴息率:{{repayment.huikuanBusinessDiscountRate ? (repayment.huikuanBusinessDiscountRate || 0 | percent:'1.0-2') : ''}}
                         </span>
                     </td>
                     <!--<td> </td>-->
