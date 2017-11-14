@@ -49,8 +49,8 @@ describe('仓押订单 入库/出库:', function () {
             .set(config.headers)
             .send(
                 {
-                    "hsId" : 3,
-                    "locality" : "库房场地",
+                    "hsId" : 4,
+                    "locality" : "库房场地1",
                     "rukuDate" : "2017-10-05 00:00:00",
                     "rukuStatus" : "IN_STORAGE",
                     "rukuAmount" : "20000",
@@ -85,8 +85,8 @@ describe('仓押订单 入库/出库:', function () {
             .set(config.headers)
             .send(
                 {
-                    "hsId" : 4,
-                    "locality" : "库房地点",
+                    "hsId" : 5,
+                    "locality" : "库房地点2",
                     "rukuDate" : "2017-12-08 00:00:00",
                     "rukuStatus" : "IN_STORAGE",
                     "rukuAmount" : "5000",
@@ -120,7 +120,7 @@ describe('仓押订单 入库/出库:', function () {
             .send(
                 {
                     "hsId" : 4,
-                    "locality" : "库房地点",
+                    "locality" : "库房地点3",
                     "rukuDate" : "2017-12-08 00:00:00",
                     "rukuStatus" : "IN_STORAGE",
                     "rukuAmount" : "98000",
@@ -188,8 +188,8 @@ describe('仓押订单 入库/出库:', function () {
             .set(config.headers)
             .send(
                 {
-                    "hsId" : 3,
-                    "locality" : "库房场地",
+                    "hsId" : 4,
+                    "locality" : "库房场地修改",
                     "rukuDate" : "2017-10-05 00:00:00",
                     "rukuStatus" : "IN_STORAGE",
                     "rukuAmount" : "50000",
@@ -238,8 +238,8 @@ describe('仓押订单 入库/出库:', function () {
             .set(config.headers)
             .send(
                 {
-                    "hsId" : 3,
-                    "locality" : "库房场地",
+                    "hsId" : 4,
+                    "locality" : "出库库房场地1",
                     "chukuDate" : "2017-10-01 00:00:00",
                     "chukuAmount" : "1000",
                     "chukuPrice" : "20",
@@ -266,8 +266,8 @@ describe('仓押订单 入库/出库:', function () {
             .set(config.headers)
             .send(
                 {
-                    "hsId" : 4,
-                    "locality" : "库房场地",
+                    "hsId" : 5,
+                    "locality" : "出库库房场地2",
                     "chukuDate" : "2017-10-01 00:00:00",
                     "chukuAmount" : "77000",
                     "chukuPrice" : "80",
@@ -293,7 +293,7 @@ describe('仓押订单 入库/出库:', function () {
             .send(
                 {
                     "hsId" : 4,
-                    "locality" : "库房场地",
+                    "locality" : "出库库房场地3",
                     "chukuDate" : "2017-10-01 00:00:00",
                     "chukuAmount" : "97000",
                     "chukuPrice" : "50",
@@ -353,8 +353,8 @@ describe('仓押订单 入库/出库:', function () {
             .set(config.headers)
             .send(
                 {
-                    "hsId" : 3,
-                    "locality" : "库房场地",
+                    "hsId" : 4,
+                    "locality" : "出库库房场地修改",
                     "rukuDate" : "2017-10-05 00:00:00",
                     "rukuStatus" : "IN_STORAGE",
                     "rukuAmount" : "50000",
@@ -394,3 +394,4 @@ describe('仓押订单 入库/出库:', function () {
             })
     })
 })
+
