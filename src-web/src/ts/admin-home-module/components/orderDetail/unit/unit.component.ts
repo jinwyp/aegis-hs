@@ -202,7 +202,7 @@ export class UnitComponent implements OnInit {
 
                 'expectHKDays'    : '',
                 'tradeAddPrice'    : '',
-                'weightedPrice'    : ''
+                'weightedPrice'    : 99
             })
 
         } else {
