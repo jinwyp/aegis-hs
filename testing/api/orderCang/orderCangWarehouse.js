@@ -1,12 +1,3 @@
-/**
- * Created by jin on 9/28/17.
- */
-
-
-/**
- * Created by jin on 9/26/17.
- */
-
 
 /**
  * Created by jin on 9/18/17.

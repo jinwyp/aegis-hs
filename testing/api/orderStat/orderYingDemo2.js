@@ -1,7 +1,3 @@
-/**
- * Created by jin on 9/26/17.
- */
-
 
 /**
  * Created by jin on 9/18/17.
@@ -25,6 +21,7 @@ describe('应收订单 统计范例2', function () {
     let orderId = 13
 
     let unitId = 7
+    let borrowId = 8
 
     before(function (done) {
 
@@ -316,7 +313,7 @@ describe('应收订单 统计范例2', function () {
                     "huankuankDate" : "2017-07-26 00:00:00",
                     "huankuanMapList" : [
                         {
-                            "jiekuanId":"9",
+                            "jiekuanId": borrowId,
                             "principal" : "510000",
                             "interest" : "1700.02",
                             "fee" : "560.00"
