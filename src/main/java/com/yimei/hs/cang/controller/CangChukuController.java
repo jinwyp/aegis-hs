@@ -37,7 +37,7 @@ public class CangChukuController {
             @PathVariable("businessType") BusinessType businessType,
             PageCangChukuDTO pageCangChukuDTO
     ) {
-        // pageChukuDTO.setOrderId(morderId);
+        pageCangChukuDTO.setOrderId(morderId);
         Page<CangChuku> page = cangChukuService.getPage(pageCangChukuDTO);
         return Result.ok(page);
     }
