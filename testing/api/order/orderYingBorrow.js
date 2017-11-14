@@ -92,7 +92,7 @@ describe('应收订单 借款单:', function () {
                     "hsId" : 1,
                     "jiekuanDate" : "2017-10-01 00:00:00",
                     "amount" : "5600",
-                    "capitalId" : 2,
+                    "capitalId" : 1,
                     "useInterest" : "0.1",
                     "useDays" : "30",
                     "orderId" : orderId
@@ -118,8 +118,8 @@ describe('应收订单 借款单:', function () {
                 {
                     "hsId" : 1,
                     "jiekuanDate" : "2017-10-01 00:00:00",
-                    "amount" : "5600",
-                    "capitalId" : 2,
+                    "amount" : "7800",
+                    "capitalId" : 1,
                     "useInterest" : "0.1",
                     "useDays" : "30",
                     "orderId" : orderId
@@ -179,8 +179,8 @@ describe('应收订单 借款单:', function () {
             .send(
                 {
                     "id" : 1,
-                    "hsId" : 2,
-                    "capitalId" : 5,
+                    "hsId" : 1,
+                    "capitalId" : 1,
                     "amount" : "6000",
                     "useInterest" : "0.4",
                     "jiekuanDate" : "2017-10-01 00:00:00",

@@ -64,7 +64,7 @@ describe('应收订单 付款:', function () {
                     "receiveCompanyId" : 2,
                     "payUsage" : "TRADE_DEFICIT",
                     "payAmount" : "122",
-                    "capitalId" : 2,
+                    "capitalId" : 1,
                     "useInterest" : "",
                     "useDays" : "",
                     "orderId" : orderId,
