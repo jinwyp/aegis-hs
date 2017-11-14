@@ -187,7 +187,7 @@ describe('仓押订单', function () {
             })
     })
 
-    it(`仓押订单 - 修改某个ID的仓押订单 PUT: /api/business/cangs/${orderId}`, function (done) {
+    it(`仓押订单 - 非法数据 修改某个ID的仓押订单 PUT: /api/business/cangs/${orderId}`, function (done) {
         console.log(`提示信息: 修改某个ID的仓押订单 PUT: /api/business/cangs/${orderId}`)
         server.put(`/api/business/cangs/${orderId}`)
             .set('Authorization', Authorization)
@@ -211,11 +211,11 @@ describe('仓押订单', function () {
                 ]
             })
             .expect('Content-Type', /json/)
-            .expect(200)
+            .expect(400)
             .end(function(err, res) {
                 if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data值应该是1 但实际不是1').to.equal(1)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
                 done()
             })
     })
