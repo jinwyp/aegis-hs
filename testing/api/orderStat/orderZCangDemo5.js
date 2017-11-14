@@ -658,31 +658,7 @@ describe('仓押订单 统计范例5', function () {
 
 
 
-    it(`卖方下游结算单 - 新建卖方下游结算单1 POST: /api/business/cang/${orderId}/settlesellerdownstream`, function (done) {
-        server.post(`/api/business/cang/${orderId}/settlesellerdownstream`)
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : unitId,
-                    "settleDate" : "2017-07-10 00:00:00",
-                    "amount" : "99999",
-                    "money" : "99999",
-                    "discountType" : "NO_DISCOUNT",
-                    "orderId" : orderId
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.settleDate).to.include('2017')
-                done()
-            })
-    })
+
 
     it(`买方上游结算单 - 新建买方上游结算单1 POST: /api/business/cang/${orderId}/settlebuyerupstream`, function (done) {
         server.post(`/api/business/cang/${orderId}/settlebuyerupstream`)
@@ -710,7 +686,32 @@ describe('仓押订单 统计范例5', function () {
             })
     })
 
-
+    it(`卖方下游结算单 - 新建卖方下游结算单1 POST: /api/business/cang/${orderId}/settlesellerdownstream`, function (done) {
+        server.post(`/api/business/cang/${orderId}/settlesellerdownstream`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "settleDate" : "2017-07-10 00:00:00",
+                    "amount" : "99999",
+                    "money" : "99999",
+                    "discountType" : "NO_DISCOUNT",
+                    "orderId" : orderId
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.settleDate).to.include('2017')
+                done()
+            })
+    })
+    
 
 
 
