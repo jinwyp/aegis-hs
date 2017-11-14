@@ -110,11 +110,11 @@ public class HuankuanController {
             }
             Jiekuan jiekuanDb= jiekuanService.findOne(huankuanMap.getJiekuanId());
             if (jiekuanDb != null) {
-                if (huankuanMap.getPrincipal().compareTo(jiekuanDb.getAmount()) ==1 ) {
+                if (huankuanMap.getPrincipal().compareTo(jiekuanDb.getAmount()) <0){
                     return Result.error(4001, "创建失败");
                 }
             } else {
-                return Result.error(4001, "创建失败");
+                return Result.error(4001, "还款本金大于借款本金");
             }
 
         }
