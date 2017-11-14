@@ -408,8 +408,8 @@ select
 hsId,
 orderId,
 sum(IFNULL(rukuAmount,0.00)) as totalInstorageNum,
-sum(IFNULL(rukuAmount,0.00) * IFNULL(rukuPrice,0.00)) as totalInstorageAmount,
-sum(IFNULL(rukuAmount,0.00) * IFNULL(rukuPrice,0.00))/sum(IFNULL(rukuAmount,0.00)) as instorageUnitPrice
+sum( IFNULL(rukuPrice,0.00)) as totalInstorageAmount,
+sum(IFNULL(rukuPrice,0.00))/sum(IFNULL(rukuAmount,0.00)) as instorageUnitPrice
 from hs_cang_ruku
 where deleted =0
 group by hsId, orderId;
