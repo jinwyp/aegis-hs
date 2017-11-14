@@ -114,7 +114,7 @@ public class SettleSellerController {
                         .subtract((yingAnalysisData.getTotalTradeGapFee() == null ? new BigDecimal("0") : yingAnalysisData.getTotalTradeGapFee())
                         ));
             } else if (businessType.equals(BusinessType.cang)) {
-                CangAnalysisData cangAnalysisData = dataAnalysisService.findOneCang(morderId, settleSeller.getHsId());
+                CangAnalysisData cangAnalysisData = dataAnalysisService.findOneCang(settleSeller.getHsId(),morderId);
                 totalHuikuanPaymentMoney = totalHuikuanPaymentMoney.add((cangAnalysisData.getTotalHuikuanPaymentMoney()==null?new BigDecimal("0"):cangAnalysisData.getTotalHuikuanPaymentMoney()));
                 totalPaymentAmount = totalPaymentAmount.add((cangAnalysisData.getPurchaseCargoAmountOfMoney() == null ? new BigDecimal("0") : cangAnalysisData.getPurchaseCargoAmountOfMoney())
                         .subtract((cangAnalysisData.getTotalTradeGapFee() == null ? new BigDecimal("0") : cangAnalysisData.getTotalTradeGapFee())
