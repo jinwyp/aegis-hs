@@ -211,7 +211,7 @@ describe('仓押订单', function () {
                 ]
             })
             .expect('Content-Type', /json/)
-            .expect(200)
+            .expect(400)
             .end(function(err, res) {
                 if (err) return done(err)
                 expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
