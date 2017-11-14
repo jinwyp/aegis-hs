@@ -13,7 +13,7 @@ const expect = require('chai').expect
 const should = require('chai').should()
 const supertest = require('supertest')
 
-const config = require('../testConfig')
+const config = require('../api/testConfig')
 const server = supertest(config.path.urlApi)
 
 
@@ -22,10 +22,10 @@ const server = supertest(config.path.urlApi)
 describe('仓押订单', function () {
 
     let Authorization = ''
-    let orderId = 12
+    let orderId = 1
     let delOrderId = config.order.delOrderCangId
 
-    let unitId = 6
+    let unitId = 1
     let delUnitId = 5
 
     before(function (done) {
@@ -43,148 +43,148 @@ describe('仓押订单', function () {
     })
 
 
-    it('新建参与商 POST: /api/parties', function (done) {
-        server.post('/api/parties')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({
-                name: '广州鑫丰润能源科技有限公司',
-                shortName : '广州鑫丰润能',
-                partyType : 3
+    // it('新建参与商 POST: /api/parties', function (done) {
+    //     server.post('/api/parties')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send({
+    //             name: '广州鑫丰润能源科技有限公司',
+    //             shortName : '广州鑫丰润能',
+    //             partyType : 3
+    //
+    //         })
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+    //             expect(res.body.data.name).to.include('广州鑫丰润能')
+    //
+    //             partyId = res.body.data.id
+    //             done()
+    //         })
+    // })
+    //
+    //
+    // it('新建参与商 POST: /api/parties', function (done) {
+    //     server.post('/api/parties')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send({
+    //             name: '泰州立翔电力燃料有限公司',
+    //             shortName : '泰州立翔电',
+    //             partyType : 3
+    //
+    //         })
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+    //             expect(res.body.data.name).to.include('泰州立翔电')
+    //
+    //             partyId = res.body.data.id
+    //             done()
+    //         })
+    // })
+    //
+    //
+    //
+    // it('新建参与商 POST: /api/parties', function (done) {
+    //     server.post('/api/parties')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send({
+    //             name: '广州莲荷能源科技有限责任公司',
+    //             shortName : '广州莲荷',
+    //             partyType : 3
+    //
+    //         })
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+    //             expect(res.body.data.name).to.include('广州莲荷能')
+    //
+    //             partyId = res.body.data.id
+    //             done()
+    //         })
+    // })
+    //
+    // it('新建参与商 POST: /api/parties', function (done) {
+    //     server.post('/api/parties')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send({
+    //             name: '北京领先创融网络科技有限公司',
+    //             shortName : '中瑞财富',
+    //             partyType : 2
+    //
+    //         })
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+    //             expect(res.body.data.name).to.include('北京领先创')
+    //
+    //             partyId = res.body.data.id
+    //             done()
+    //         })
+    // })
+    //
+    //
+    // it('仓押订单 - 新建仓押订单1 POST: /api/business/cangs', function (done) {
+    //     server.post('/api/business/cangs')
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send(
+    //             {
+    //                 "teamId":13,
+    //                 "line":"广州鑫丰润-泰州立翔-嘉瑞-广州莲荷",
+    //                 "cargoType":"COAL",
+    //                 "upstreamSettleMode":"ONE_PAPER_SETTLE",
+    //                 "downstreamSettleMode":"ONE_PAPER_SETTLE",
+    //                 "mainAccounting" : 3,
+    //                 "upstreamId" : 30,
+    //                 "downstreamId" : 32,
+    //                 "businessType" : "cang",
+    //                 "orderPartyList" : [
+    //                     {
+    //                         "custType" : "TRAFFICKCER",
+    //                         "customerId" : 31,
+    //                         "position" : 1
+    //                     },
+    //                     {"custType" : "FUNDER", "customerId" : 33, "position" : 1}
+    //                 ]
+    //             }
+    //         )
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
+    //
+    //             orderId = res.body.data.id
+    //             done()
+    //         })
+    // })
 
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.name).to.include('广州鑫丰润能')
-
-                partyId = res.body.data.id
-                done()
-            })
-    })
 
 
-    it('新建参与商 POST: /api/parties', function (done) {
-        server.post('/api/parties')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({
-                name: '泰州立翔电力燃料有限公司',
-                shortName : '泰州立翔电',
-                partyType : 3
-
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.name).to.include('泰州立翔电')
-
-                partyId = res.body.data.id
-                done()
-            })
-    })
-
-
-
-    it('新建参与商 POST: /api/parties', function (done) {
-        server.post('/api/parties')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({
-                name: '广州莲荷能源科技有限责任公司',
-                shortName : '广州莲荷',
-                partyType : 3
-
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.name).to.include('广州莲荷能')
-
-                partyId = res.body.data.id
-                done()
-            })
-    })
-
-    it('新建参与商 POST: /api/parties', function (done) {
-        server.post('/api/parties')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send({
-                name: '北京领先创融网络科技有限公司',
-                shortName : '中瑞财富',
-                partyType : 2
-
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.name).to.include('北京领先创')
-
-                partyId = res.body.data.id
-                done()
-            })
-    })
-
-
-    it('仓押订单 - 新建仓押订单1 POST: /api/business/cangs', function (done) {
-        server.post('/api/business/cangs')
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "teamId":13,
-                    "line":"广州鑫丰润-泰州立翔-嘉瑞-广州莲荷",
-                    "cargoType":"COAL",
-                    "upstreamSettleMode":"ONE_PAPER_SETTLE",
-                    "downstreamSettleMode":"ONE_PAPER_SETTLE",
-                    "mainAccounting" : 3,
-                    "upstreamId" : 30,
-                    "downstreamId" : 32,
-                    "businessType" : "cang",
-                    "orderPartyList" : [
-                        {
-                            "custType" : "TRAFFICKCER",
-                            "customerId" : 31,
-                            "position" : 1
-                        },
-                        {"custType" : "FUNDER", "customerId" : 33, "position" : 1}
-                    ]
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-
-                orderId = res.body.data.id
-                done()
-            })
-    })
-
-
-
-    it(`核算单元 - 新建核算单元1 POST: /api/business/cang/12/units`, function (done) {
-        server.post(`/api/business/cang/12/units`)
+    it(`核算单元 - 新建核算单元1 POST: /api/business/cang/${orderId}/units`, function (done) {
+        server.post(`/api/business/cang/${orderId}/units`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -214,8 +214,8 @@ describe('仓押订单', function () {
 
     // 入库
 
-    it(`入库单 - 新建入库单1 POST: /api/business/cang/12/rukus`, function (done) {
-        server.post(`/api/business/cang/12/rukus`)
+    it(`入库单 - 新建入库单1 POST: /api/business/cang/${orderId}/rukus`, function (done) {
+        server.post(`/api/business/cang/${orderId}//rukus`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
