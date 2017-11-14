@@ -100,13 +100,13 @@ describe('应收订单 统计范例3', function () {
                     "upstreamSettleMode" : "ONE_PAPER_SETTLE",
                     "downstreamSettleMode" : "ONE_PAPER_SETTLE",
                     "mainAccounting" : 3,
-                    "upstreamId" : 32,
-                    "downstreamId" : 31,
+                    "upstreamId" : 25,
+                    "downstreamId" : 24,
                     "businessType" : "ying",
                     "orderPartyList" : [
                         {
                             "custType" : "TRAFFICKCER",
-                            "customerId" : 33,
+                            "customerId" : 26,
                             "position" : 1
                         }
                     ]
@@ -246,7 +246,7 @@ describe('应收订单 统计范例3', function () {
                     "orderId" : orderId,
                     "hsId" : unitId,
                     "payDate" : "2017-04-14 00:00:00",
-                    "receiveCompanyId" : 32,
+                    "receiveCompanyId" : 25,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "540000",
                     "capitalId" : 3,
@@ -281,7 +281,7 @@ describe('应收订单 统计范例3', function () {
                     "orderId" : orderId,
                     "hsId" : unitId,
                     "payDate" : "2017-04-25 00:00:00",
-                    "receiveCompanyId" : 32,
+                    "receiveCompanyId" : 25,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "480000",
                     "capitalId" : 3,
@@ -316,7 +316,7 @@ describe('应收订单 统计范例3', function () {
                     "orderId" : orderId,
                     "hsId" : unitId,
                     "payDate" : "2017-05-03 00:00:00",
-                    "receiveCompanyId" : 32,
+                    "receiveCompanyId" : 25,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "640000",
                     "capitalId" : 3,
@@ -351,7 +351,7 @@ describe('应收订单 统计范例3', function () {
                     "orderId" : orderId,
                     "hsId" : unitId,
                     "payDate" : "2017-05-24 00:00:00",
-                    "receiveCompanyId" : 32,
+                    "receiveCompanyId" : 25,
                     "payUsage" : "FIAL_PAYMENT",
                     "payAmount" : "170899.52",
                     "capitalId" : 3,
@@ -369,7 +369,7 @@ describe('应收订单 统计范例3', function () {
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
-                console.log(res.body)
+                // console.log(res.body)
                 if (err) return done(err)
 
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
@@ -388,7 +388,7 @@ describe('应收订单 统计范例3', function () {
                     "orderId" : orderId,
                     "hsId" : unitId,
                     "payDate" : "2017-05-24 00:00:00",
-                    "receiveCompanyId" : 32,
+                    "receiveCompanyId" : 25,
                     "payUsage" : "TRADE_DEFICIT",
                     "payAmount" : "8910",
                     "capitalId" : 3,
@@ -534,8 +534,8 @@ describe('应收订单 统计范例3', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-04-14 00:00:00",
-                    "openCompanyId" : 32,
-                    "receiverId" : 33,
+                    "openCompanyId" : 25,
+                    "receiverId" : 26,
                     "orderId" : orderId,
                     "details" : [
                         {
@@ -574,8 +574,8 @@ describe('应收订单 统计范例3', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-05-02 00:00:00",
-                    "openCompanyId" : 32,
-                    "receiverId" : 33,
+                    "openCompanyId" : 25,
+                    "receiverId" : 26,
                     "orderId" : orderId,
                     "details" : [
                         {
@@ -608,8 +608,8 @@ describe('应收订单 统计范例3', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-05-23 00:00:00",
-                    "openCompanyId" : 32,
-                    "receiverId" : 33,
+                    "openCompanyId" : 25,
+                    "receiverId" : 26,
                     "orderId" : orderId,
                     "details" : [
                         {
@@ -642,8 +642,8 @@ describe('应收订单 统计范例3', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-04-21 00:00:00",
-                    "openCompanyId" : 32,
-                    "receiverId" : 33,
+                    "openCompanyId" : 26,
+                    "receiverId" : 3,
                     "orderId" : orderId,
                     "details" : [
                         {
@@ -676,8 +676,8 @@ describe('应收订单 统计范例3', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-05-18 00:00:00",
-                    "openCompanyId" : 32,
-                    "receiverId" : 33,
+                    "openCompanyId" : 26,
+                    "receiverId" : 3,
                     "orderId" : orderId,
                     "details" : [
                         {
@@ -710,8 +710,8 @@ describe('应收订单 统计范例3', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-05-26 00:00:00",
-                    "openCompanyId" : 32,
-                    "receiverId" : 33,
+                    "openCompanyId" : 26,
+                    "receiverId" : 3,
                     "orderId" : orderId,
                     "details" : [
                         {
@@ -734,6 +734,38 @@ describe('应收订单 统计范例3', function () {
                 done()
             })
     })
-})
 
+
+
+
+
+
+    it(`统计验证 - 获取核算月统计信息 GET: /api/business/ying/${orderId}/analysis/${unitId}`, function (done) {
+        server.get(`/api/business/ying/${orderId}/analysis/${unitId}`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+
+
+                expect(res.body.data.purchaseIncludeTaxTotalAmount, '采购含税总额数据不对').to.equal(1830899.52)
+                expect(res.body.data.saleIncludeTaxTotalAmount, '销售含税总额数据不对').to.equal(1849569.52)
+                expect(res.body.data.tradeCompanyAddMoney, '毛利贸易公司加价数据不对').to.equal(8910)
+                expect(res.body.data.withoutTaxIncome, '不含税收入数据不对').to.equal(1580828.65)
+                expect(res.body.data.withoutTaxCost, '不含税成本数据不对').to.equal(1572486.77)
+                expect(res.body.data.vat, '应交增值税数据不对').to.equal(1418.12)
+                expect(res.body.data.additionalTax, '税金及附加数据不对').to.equal(170.17)
+                expect(res.body.data.stampDuty, '印花税数据不对').to.equal(1106.81)
+                expect(res.body.data.opreationCrossProfile, '经营毛利数据不对').to.equal(7064.9)
+                expect(res.body.data.crossProfileATon, '单吨毛利数据不对').to.equal(1.59)
+
+
+                done()
+            })
+    })
+})
 
