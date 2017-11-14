@@ -155,6 +155,7 @@ public class LogAspect<T> {
         Object arg = (joinPoint.getArgs().length > 0 ? joinPoint.getArgs()[0] : null);
         if (arg instanceof Order) {
             Order order = (Order) arg;
+            order.setOwnerId(orderMapper.selectByPrimaryKey(order.getId()).getOwnerId());
             Logutil.createforOrder(om, orderMapper,
                     logService,
                     order,
