@@ -58,7 +58,7 @@ export class HSOrderService {
     }
 
     createNewOrder(businessType : string, order: any): Observable<any> {
-        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + 's/', order)
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + 's', order)
     }
     modifyOrder(businessType : string, orderId: number, user: any): Observable<any> {
         return this.http.put(apiPath.hsGetOrderList + '/' + businessType + 's/' + orderId, user)

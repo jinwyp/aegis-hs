@@ -112,17 +112,31 @@ export class UnitComponent implements OnInit {
 
     createOrderUnitForm(): void {
 
-        this.orderUnitForm = this.fb.group({
-            'hsMonth'    : ['', [Validators.required ] ],
-            'maxPrepayRate'    : ['', [Validators.required ] ],
-            'unInvoicedRate'    : ['', [Validators.required ] ],
-            'contractBaseInterest'    : ['', [Validators.required ] ],
 
-            'expectHKDays'    : ['', [Validators.required, isInt() ] ],
-            'tradeAddPrice'    : ['', [Validators.required ] ],
-            'weightedPrice'    : ['', [Validators.required ] ]
-        } )
+        if (this.businessType === 'ying') {
+            this.orderUnitForm = this.fb.group({
+                'hsMonth'    : ['', [Validators.required ] ],
+                'maxPrepayRate'    : ['', [Validators.required ] ],
+                'unInvoicedRate'    : ['', [Validators.required ] ],
+                'contractBaseInterest'    : ['', [Validators.required ] ],
 
+                'expectHKDays'    : ['', [Validators.required, isInt() ] ],
+                'tradeAddPrice'    : ['', [Validators.required ] ],
+                'weightedPrice'    : ['', [Validators.required ] ]
+            } )
+        }
+        if (this.businessType === 'cang') {
+            this.orderUnitForm = this.fb.group({
+                'hsMonth'    : ['', [Validators.required ] ],
+                'maxPrepayRate'    : ['', [Validators.required ] ],
+                'unInvoicedRate'    : ['', [Validators.required ] ],
+                'contractBaseInterest'    : ['', [Validators.required ] ],
+
+                'expectHKDays'    : ['', [Validators.required, isInt() ] ],
+                'tradeAddPrice'    : ['', [Validators.required ] ],
+                'weightedPrice'    : [0, [] ]
+            } )
+        }
 
         this.orderUnitForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
@@ -189,7 +203,6 @@ export class UnitComponent implements OnInit {
                 'expectHKDays'    : '',
                 'tradeAddPrice'    : '',
                 'weightedPrice'    : ''
-
             })
 
         } else {
