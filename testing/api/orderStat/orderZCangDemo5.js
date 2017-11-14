@@ -711,7 +711,7 @@ describe('仓押订单 统计范例5', function () {
                 done()
             })
     })
-    
+
 
 
 
@@ -811,7 +811,7 @@ describe('仓押订单 统计范例5', function () {
                 expect(res.body.data.purchaseIncludeTaxTotalAmount, '采购含税总额数据不对').to.equal(7508824.24)
                 expect(res.body.data.saleIncludeTaxTotalAmount, '销售含税总额数据不对').to.equal(7523503.64)
                 expect(res.body.data.tradeCompanyAddMoney, '毛利贸易公司加价数据不对').to.equal(28950.80)
-                expect(res.body.data.withoutTaxIncome, '不含税收入数据不对').to.equal(6430345.00)
+                expect(res.body.data.withoutTaxIncome, '不含税收入数据不对').to.equal(6430344.99)
                 expect(res.body.data.withoutTaxCost, '不含税成本数据不对').to.equal(6442542.77)
                 // expect(res.body.data.vat, '应交增值税数据不对').to.equal(1418.12)
                 expect(res.body.data.additionalTax, '税金及附加数据不对').to.equal(0)
