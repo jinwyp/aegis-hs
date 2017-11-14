@@ -141,8 +141,8 @@ describe('仓押订单 统计范例4', function () {
             })
     })
 
-    it(`核算单元 - 新建核算单元1 POST: /api/business/ying/${orderId}/units`, function (done) {
-        server.post(`/api/business/ying/${orderId}/units`)
+    it(`核算单元 - 新建核算单元1 POST: /api/business/cang/${orderId}/units`, function (done) {
+        server.post(`/api/business/cang/${orderId}/units`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -152,8 +152,8 @@ describe('仓押订单 统计范例4', function () {
                     "unInvoicedRate" : 0.8,
                     "contractBaseInterest" : 0.15,
                     "expectHKDays" : 60,
-                    "tradeAddPrice" : 2,
-                    "weightedPrice" : "415"
+                    "tradeAddPrice" : "2",
+                    "weightedPrice" : 0
                 }
             )
             .expect('Content-Type', /json/)
@@ -170,8 +170,8 @@ describe('仓押订单 统计范例4', function () {
             })
     })
 
-    it(`核算单元 - 获取某个ID的核算单元信息 GET: /api/business/ying/${orderId}/units/${unitId}`, function (done) {
-        server.get(`/api/business/ying/${orderId}/units/${unitId}`)
+    it(`核算单元 - 获取某个ID的核算单元信息 GET: /api/business/cang/${orderId}/units/${unitId}`, function (done) {
+        server.get(`/api/business/cang/${orderId}/units/${unitId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -181,7 +181,7 @@ describe('仓押订单 统计范例4', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.hsMonth, '返回的数据data对象的hsMonth属性错误').to.include('201704')
+                expect(res.body.data.hsMonth, '返回的数据data对象的hsMonth属性错误').to.include('201706')
                 done()
             })
     })
@@ -192,24 +192,25 @@ describe('仓押订单 统计范例4', function () {
 
 
 
-    it(`发运单 - 新建发运单1 POST: /api/business/ying/${orderId}/fayuns`, function (done) {
-        server.post(`/api/business/ying/${orderId}/fayuns`)
+    it(`入库单 - 新建入库单1 POST: /api/business/cang/${orderId}/rukus`, function (done) {
+        server.post(`/api/business/cang/${orderId}/rukus`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
                 {
-                    "hsId" : unitId,
-                    "fyDate" : "2017-04-10 00:00:00",
-                    "fyAmount" : "4455",
-                    "arriveStatus" : "ARRIVE",
-                    "upstreamTrafficMode" : "MOTOR",
-                    "upstreamCars" : "89",
-                    "upstreamJHH" : "",
-                    "upstreamShip" : "",
-                    "downstreamTrafficMode" : "MOTOR",
-                    "downstreamCars" : "89",
-                    "downstreamJHH" : "",
-                    "downstreamShip" : "",
+                    "hsId" : 3,
+                    "locality" : "库房场地",
+                    "rukuDate" : "2017-10-05 00:00:00",
+                    "rukuStatus" : "IN_STORAGE",
+                    "rukuAmount" : "20000",
+                    "rukuPrice" : "30",
+                    "trafficMode" : "MOTOR",
+                    "cars" : "10",
+                    "jhh" : "",
+                    "ship" : "",
+                    "chukuDate" : "2099-12-30 00:00:00",
+                    "chukuAmount" : 99999999,
+                    "chukuPrice" : 99999999,
                     "orderId" : orderId
                 }
             )
@@ -219,8 +220,10 @@ describe('仓押订单 统计范例4', function () {
                 if (err) return done(err)
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.fyDate).to.include('2017')
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.rukuStatus).to.include('IN_STORAGE')
+
+                rukuId = res.body.data.id
                 done()
             })
     })
@@ -236,8 +239,8 @@ describe('仓押订单 统计范例4', function () {
 
 
 
-    it(`付款单 - 新建付款单1 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
-        server.post(`/api/business/ying/${orderId}/fukuans`)
+    it(`付款单 - 新建付款单1 POST: /api/business/cang/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/cang/${orderId}/fukuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -271,8 +274,8 @@ describe('仓押订单 统计范例4', function () {
                 done()
             })
     })
-    it(`付款单 - 新建付款单2 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
-        server.post(`/api/business/ying/${orderId}/fukuans`)
+    it(`付款单 - 新建付款单2 POST: /api/business/cang/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/cang/${orderId}/fukuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -306,8 +309,8 @@ describe('仓押订单 统计范例4', function () {
                 done()
             })
     })
-    it(`付款单 - 新建付款单3 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
-        server.post(`/api/business/ying/${orderId}/fukuans`)
+    it(`付款单 - 新建付款单3 POST: /api/business/cang/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/cang/${orderId}/fukuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -341,8 +344,8 @@ describe('仓押订单 统计范例4', function () {
                 done()
             })
     })
-    it(`付款单 - 新建付款单4 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
-        server.post(`/api/business/ying/${orderId}/fukuans`)
+    it(`付款单 - 新建付款单4 POST: /api/business/cang/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/cang/${orderId}/fukuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -378,8 +381,8 @@ describe('仓押订单 统计范例4', function () {
                 done()
             })
     })
-    it(`付款单 - 新建付款单5 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
-        server.post(`/api/business/ying/${orderId}/fukuans`)
+    it(`付款单 - 新建付款单5 POST: /api/business/cang/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/cang/${orderId}/fukuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -419,8 +422,8 @@ describe('仓押订单 统计范例4', function () {
 
 
 
-    it(`回款单 - 新建回款单1 POST: /api/business/ying/${orderId}/huikuans`, function (done) {
-        server.post(`/api/business/ying/${orderId}/huikuans`)
+    it(`回款单 - 新建回款单1 POST: /api/business/cang/${orderId}/huikuans`, function (done) {
+        server.post(`/api/business/cang/${orderId}/huikuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -460,8 +463,8 @@ describe('仓押订单 统计范例4', function () {
 
 
 
-    it(`下游结算单 - 新建下游结算单1 POST: /api/business/ying/${orderId}/settlebuyerdownstream`, function (done) {
-        server.post(`/api/business/ying/${orderId}/settlebuyerdownstream`)
+    it(`下游结算单 - 新建下游结算单1 POST: /api/business/cang/${orderId}/settlebuyerdownstream`, function (done) {
+        server.post(`/api/business/cang/${orderId}/settlebuyerdownstream`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -492,8 +495,8 @@ describe('仓押订单 统计范例4', function () {
 
 
 
-    it(`上游结算单 - 新建上游结算单1 POST: /api/business/ying/${orderId}/settlesellerupstream`, function (done) {
-        server.post(`/api/business/ying/${orderId}/settlesellerupstream`)
+    it(`上游结算单 - 新建上游结算单1 POST: /api/business/cang/${orderId}/settlesellerupstream`, function (done) {
+        server.post(`/api/business/cang/${orderId}/settlesellerupstream`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -523,8 +526,8 @@ describe('仓押订单 统计范例4', function () {
 
 
 
-    it(`发票 - 新建发票1 POST: /api/business/ying/${orderId}/invoices`, function (done) {
-        server.post(`/api/business/ying/${orderId}/invoices`)
+    it(`发票 - 新建发票1 POST: /api/business/cang/${orderId}/invoices`, function (done) {
+        server.post(`/api/business/cang/${orderId}/invoices`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -563,8 +566,8 @@ describe('仓押订单 统计范例4', function () {
                 done()
             })
     })
-    it(`发票 - 新建发票2 POST: /api/business/ying/${orderId}/invoices`, function (done) {
-        server.post(`/api/business/ying/${orderId}/invoices`)
+    it(`发票 - 新建发票2 POST: /api/business/cang/${orderId}/invoices`, function (done) {
+        server.post(`/api/business/cang/${orderId}/invoices`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -597,8 +600,8 @@ describe('仓押订单 统计范例4', function () {
                 done()
             })
     })
-    it(`发票 - 新建发票3 POST: /api/business/ying/${orderId}/invoices`, function (done) {
-        server.post(`/api/business/ying/${orderId}/invoices`)
+    it(`发票 - 新建发票3 POST: /api/business/cang/${orderId}/invoices`, function (done) {
+        server.post(`/api/business/cang/${orderId}/invoices`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -631,8 +634,8 @@ describe('仓押订单 统计范例4', function () {
                 done()
             })
     })
-    it(`发票 - 新建发票4 POST: /api/business/ying/${orderId}/invoices`, function (done) {
-        server.post(`/api/business/ying/${orderId}/invoices`)
+    it(`发票 - 新建发票4 POST: /api/business/cang/${orderId}/invoices`, function (done) {
+        server.post(`/api/business/cang/${orderId}/invoices`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -665,8 +668,8 @@ describe('仓押订单 统计范例4', function () {
                 done()
             })
     })
-    it(`发票 - 新建发票5 POST: /api/business/ying/${orderId}/invoices`, function (done) {
-        server.post(`/api/business/ying/${orderId}/invoices`)
+    it(`发票 - 新建发票5 POST: /api/business/cang/${orderId}/invoices`, function (done) {
+        server.post(`/api/business/cang/${orderId}/invoices`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -699,8 +702,8 @@ describe('仓押订单 统计范例4', function () {
                 done()
             })
     })
-    it(`发票 - 新建发票6 POST: /api/business/ying/${orderId}/invoices`, function (done) {
-        server.post(`/api/business/ying/${orderId}/invoices`)
+    it(`发票 - 新建发票6 POST: /api/business/cang/${orderId}/invoices`, function (done) {
+        server.post(`/api/business/cang/${orderId}/invoices`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -739,8 +742,8 @@ describe('仓押订单 统计范例4', function () {
 
 
 
-    it(`统计验证 - 获取核算月统计信息 GET: /api/business/ying/${orderId}/analysis/${unitId}`, function (done) {
-        server.get(`/api/business/ying/${orderId}/analysis/${unitId}`)
+    it(`统计验证 - 获取核算月统计信息 GET: /api/business/cang/${orderId}/analysis/${unitId}`, function (done) {
+        server.get(`/api/business/cang/${orderId}/analysis/${unitId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
