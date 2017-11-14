@@ -156,6 +156,7 @@ export class UnitComponent implements OnInit {
         }
 
         const postData = this.orderUnitForm.value
+        postData.orderId = this.currentOrder.id
         postData.expectHKDays = Number(this.orderUnitForm.value.expectHKDays)
 
         if (this.isAddNew) {

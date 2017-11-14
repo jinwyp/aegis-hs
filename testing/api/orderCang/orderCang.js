@@ -264,6 +264,7 @@ describe('仓押订单', function () {
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
+                "orderId"           : orderId,
                 "hsMonth"           : "201709",
                 "maxPrepayRate"        : "0.9",
                 "unInvoicedRate"       : "0.7",
@@ -291,6 +292,7 @@ describe('仓押订单', function () {
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
+                "orderId"           : orderId,
                 "hsMonth"           : "201710",
                 "maxPrepayRate"        : 0.9,
                 "unInvoicedRate"       : 0.7,
