@@ -76,7 +76,7 @@ class HttpService {
 
                 if ( error.url.indexOf('api/login') === -1) {
                     // window.location.href = '/web/login'
-                }else {
+                } else {
                     this.notificationService.error( '登陆失败!',  '用户名或密码错误',
                         {
                             showProgressBar: false,
@@ -91,13 +91,13 @@ class HttpService {
                 if (error && error.status === 400) {
                     console.log('Http 400 请求发生错误!! ', error.error || error.message)
 
-                }else if (error && error.status === 404) {
+                } else if (error && error.status === 404) {
                     console.log('Http 404 请求发生错误!! ', error.error || error.message)
 
-                }else if (error && error.status === 500) {
+                } else if (error && error.status === 500) {
                     console.log('Http 500 请求发生错误!! ', error.error || error.message)
 
-                }else {
+                } else {
                     console.log('Http 请求发生错误!! ', error.error || error.message)
                 }
 
@@ -115,7 +115,7 @@ class HttpService {
                 } else {
                     if (error && error.error && error.error.message) {
                         messageError = error.error.message
-                    }else {
+                    } else {
                         messageError = error.message
                     }
                 }
