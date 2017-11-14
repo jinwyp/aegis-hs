@@ -39,47 +39,7 @@ describe('仓押订单 统计范例4', function () {
 
 
 
-    // it('新建参与商 POST: /api/parties', function (done) {
-    //     server.post('/api/parties')
-    //         .set('Authorization', Authorization)
-    //         .set(config.headers)
-    //         .send({
-    //             name: "资兴和顺",
-    //             shortName : '资兴和顺',
-    //             partyType : 3
-    //         })
-    //         .expect('Content-Type', /json/)
-    //         .expect(200)
-    //         .end(function(err, res) {
-    //             if (err) return done(err)
-    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-    //             expect(res.body.data.name).to.include('资兴和顺')
-    //             done()
-    //         })
-    // })
-    //
-    // it('新建参与商 POST: /api/parties', function (done) {
-    //     server.post('/api/parties')
-    //         .set('Authorization', Authorization)
-    //         .set(config.headers)
-    //         .send({
-    //             name: "漯河泰润",
-    //             shortName : '漯河泰润',
-    //             partyType : 3
-    //         })
-    //         .expect('Content-Type', /json/)
-    //         .expect(200)
-    //         .end(function(err, res) {
-    //             if (err) return done(err)
-    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-    //             expect(res.body.dat).to.include('漯河泰润')
-    //             done()a.id, '返回的数据里面没有id字段').to.be.a('number')
-    //             expect(res.body.data.name
-    //         })
-    // })
+
 
 
 
