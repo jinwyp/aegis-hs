@@ -59,6 +59,7 @@ public class OrderConfigController {
             @RequestBody @Validated(CreateGroup.class) OrderConfig orderConfig) {
         if (!orderConfigService.findOneByIdAndOrderId(orderConfig.getHsMonth(), morderId)) {
 
+            assert (morderId == orderConfig.getOrderId());
 
             orderConfig.setOrderId(morderId);
             int rtn = orderConfigService.create(orderConfig);
