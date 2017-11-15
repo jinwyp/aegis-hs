@@ -32,7 +32,7 @@
             <bs-text-input formControlName="line" [fc]="orderForm.get('line')" [type]="'text'" [label]="'业务线名称:'" [readOnly]="true" [dirty]="ignoreDirty" [error]="orderFormError.line"></bs-text-input>
             <bs-select formControlName ="cargoType" [fc]="orderForm.get('cargoType')" [label]="'货物种类:'" [dirty]="ignoreDirty" [options]="cargoTypeList" [error]="orderFormError.cargoType"></bs-select>
 
-            <bs-select formControlName ="upstreamId" [fc]="orderForm.get('upstreamId')" [label]="'上游供应商:'" [dirty]="ignoreDirty" [options]="partyListUpstreamAndDownstream" [error]="orderFormError.upstreamId" (change)="lineName()"></bs-select>
+            <bs-select formControlName ="upstreamId" [fc]="orderForm.get('upstreamId')" [label]="'上游供应商:'" [readOnly]="true" [dirty]="ignoreDirty" [options]="partyListUpstreamAndDownstream" [error]="orderFormError.upstreamId" (change)="lineName()"></bs-select>
 
             <div class="form-group row">
                 <label class="col-2 col-form-label" ></label>
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <bs-select formControlName ="mainAccounting" [fc]="orderForm.get('mainAccounting')" [label]="'主账务公司:'" [dirty]="ignoreDirty" [options]="partyListSearchZhangWu" [error]="orderFormError.mainAccounting" (change)="lineName()"></bs-select>
+            <bs-select formControlName ="mainAccounting" [fc]="orderForm.get('mainAccounting')" [label]="'主账务公司:'" [readOnly]="true" [dirty]="ignoreDirty" [options]="partyListSearchZhangWu" [error]="orderFormError.mainAccounting" (change)="lineName()"></bs-select>
 
             <div class="form-group row">
                 <label class="col-2 col-form-label" ></label>
@@ -62,12 +62,12 @@
                 </div>
             </div>
 
-            <bs-select formControlName ="downstreamId" [fc]="orderForm.get('downstreamId')" [label]="'下游客户:'" [dirty]="ignoreDirty" [options]="partyListUpstreamAndDownstream" [error]="orderFormError.downstreamId" (change)="lineName()"></bs-select>
+            <bs-select formControlName ="downstreamId" [fc]="orderForm.get('downstreamId')" [label]="'下游客户:'" [readOnly]="true" [dirty]="ignoreDirty" [options]="partyListUpstreamAndDownstream" [error]="orderFormError.downstreamId" (change)="lineName()"></bs-select>
 
             <div class="form-group row">
                 <label class="col-2 col-form-label" >其他参与方:</label>
 
-                <div class="col-8">
+                <div class="col-8" [hidden]="!isAddNew">
 
                     <form [formGroup]="orderOtherPartyForm"  (keydown.enter)="$event.preventDefault()">
 
@@ -88,6 +88,11 @@
 
                     </form>
                 </div>
+
+                <div class="col-8" [hidden]="isAddNew">
+                    <p *ngFor=" let company of otherPartyShowList"> {{company.custType | findKey:customerType:'name'}} :  {{company.customerId| findKey:partyList:'name'}} ({{company.customerId| findKey:partyList:'shortName'}})</p>
+                </div>
+
             </div>
 
 
@@ -167,7 +172,7 @@
                     <td>
                         <a class="btn btn-link btn-sm" *ngIf="businessType==='ying'" [routerLink]="['/yingorders', order.id]" role="button">查看</a>
                         <a class="btn btn-link btn-sm"  *ngIf="businessType==='cang'" [routerLink]="['/cangorders', order.id]" role="button">查看</a>
-                        <!--<button class="btn btn-link btn-sm" (click)="showForm(false, order)"> 修改 </button>-->
+                        <button class="btn btn-link btn-sm" (click)="showForm(false, order)"> 修改 </button>
                         <button class="btn btn-link btn-sm" (click)="deleteItem(order)"> 删除 </button>
                     </td>
                 </tr>

@@ -34,6 +34,7 @@ export class OrderListComponent implements OnInit {
 
     otherParty1List : any[] = []
     otherParty2List : any[] = []
+    otherPartyShowList : any[] = []
 
     isShowForm: boolean = false
     isAddNew: boolean = true
@@ -341,7 +342,7 @@ export class OrderListComponent implements OnInit {
 
 
     showForm(isAddNew : boolean = true, order?: any ) {
-
+        console.log('order:', order)
         if (isAddNew) {
             this.isAddNew = true
 
@@ -368,7 +369,7 @@ export class OrderListComponent implements OnInit {
 
             this.orderForm.patchValue(order)
 
-            this.otherParty1List = order.orderPartyList
+            this.otherPartyShowList = order.orderPartyList
         }
 
         this.isShowForm = !this.isShowForm

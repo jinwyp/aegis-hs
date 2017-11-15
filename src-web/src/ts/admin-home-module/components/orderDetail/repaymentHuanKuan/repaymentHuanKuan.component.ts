@@ -308,7 +308,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
         this.borrowPostList = []
 
         this.getBorrowList()
-        
+
         if (isAddNew) {
             this.isAddNew = true
             this.currentHuanKuanId = 0

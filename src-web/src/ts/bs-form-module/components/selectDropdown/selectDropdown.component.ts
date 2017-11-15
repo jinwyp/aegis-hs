@@ -32,6 +32,9 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
     @Input() error: string = ''
     @Input() dirty: boolean = false
 
+    @Input() readOnly: boolean = false
+
+
     @Input('labelclass') labelClass: string = 'col-2'
     @Input('inputclass') inputClass: string = 'col-6'
 
@@ -89,7 +92,10 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
 
     showOptions() {
-        this.isShowSelectOptionList = !this.isShowSelectOptionList
+        if (!this.readOnly) {
+            this.isShowSelectOptionList = !this.isShowSelectOptionList
+        }
+
     }
 
     filterOptions(event: KeyboardEvent) {
