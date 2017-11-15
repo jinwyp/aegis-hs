@@ -258,7 +258,7 @@ id,
 orderId,
 hsId,
 CASE WHEN huikuanMode ='BANK_ACCEPTANCE'
-THEN ROUND(TIMEDIFF(huikuanBankPaperExpire,huikuanBankPaperDate)/24 *IFNULL(huikuanAmount ,0.00)* IFNULL(huikuanBankDiscountRate,0.00)*1.17/360,2)
+THEN ROUND(DATEDIFF(huikuanBankPaperExpire,huikuanBankPaperDate) *IFNULL(huikuanAmount ,0.00)* IFNULL(huikuanBankDiscountRate,0.00)*1.17/360,2)
 ELSE 0 END as tiexianRate
 from hs_same_huikuan
 where deleted= 0;

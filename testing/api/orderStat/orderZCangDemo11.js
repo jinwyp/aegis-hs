@@ -325,7 +325,7 @@ describe('仓押订单 统计范例4', function () {
                 {
                     "orderId" : orderId,
                     "hsId" : unitId,
-                    "payDate" : "2017-05-03 00:00:00",
+                    "payDate" : "2017-07-05 00:00:00",
                     "receiveCompanyId" : 27,
                     "payUsage" : "TRADE_DEFICIT",
                     "payAmount" : "20205.4",
