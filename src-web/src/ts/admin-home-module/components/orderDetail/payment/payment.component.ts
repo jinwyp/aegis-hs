@@ -337,5 +337,23 @@ export class PaymentComponent implements OnInit {
         )
     }
 
+
+
+    selectPayDate (event : any) {
+        console.log('Pay Date change: ', event)
+
+        this.paymentForm.patchValue({
+            jiekuanDate : event
+        })
+    }
+
+    changePayAmount () {
+        console.log('Pay Amount change: ', this.paymentForm.value.payAmount)
+
+        this.paymentForm.patchValue({
+            amount : this.paymentForm.value.payAmount
+        })
+    }
+
 }
 

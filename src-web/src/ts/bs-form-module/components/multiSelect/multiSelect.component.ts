@@ -37,7 +37,7 @@ export class MultiSelectComponent implements OnInit, OnChanges, ControlValueAcce
 
     @Input() key: string = ''
 
-    @Output() change: any = new EventEmitter<any>()
+    @Output() outputChange: any = new EventEmitter<any>()
 
     @ViewChild('optionsListEl') optionsListEl: ElementRef
     @ViewChild('inputEl') inputEl: ElementRef
@@ -135,7 +135,7 @@ export class MultiSelectComponent implements OnInit, OnChanges, ControlValueAcce
             this.filterOptionList = this.optionList.slice()
         }
 
-        this.change.emit(currentOption)
+        this.outputChange.emit(this.interValueCurrentSelected)
 
     }
     deleteSelected(currentOption: any) {
@@ -167,19 +167,19 @@ export class MultiSelectComponent implements OnInit, OnChanges, ControlValueAcce
                 if ( this.currentSelectIndexByKeyboard < optionsLength - 1) {
                     this.currentSelectIndexByKeyboard ++
 
-                }else {
+                } else {
                     this.currentSelectIndexByKeyboard = 0
                 }
-            }else if (event.keyCode === 38) {
+            } else if (event.keyCode === 38) {
                 //上
 
                 if ( this.currentSelectIndexByKeyboard < 1) {
                     this.currentSelectIndexByKeyboard = optionsLength - 1
-                }else {
+                } else {
                     this.currentSelectIndexByKeyboard --
                 }
 
-            }else if (event.keyCode === 13) {
+            } else if (event.keyCode === 13) {
                 //enter
 
                 if (this.currentSelectIndexByKeyboard === -1 ) {
@@ -221,11 +221,12 @@ export class MultiSelectComponent implements OnInit, OnChanges, ControlValueAcce
 
         if (this.key) {
             const tempResult = this.interValueCurrentSelected.map( item => item[this.key])
-            this.onChange(tempResult)
 
+            this.onChange(tempResult)
         } else {
             this.onChange(val)
         }
+
         this.onTouched()
     }
 

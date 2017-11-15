@@ -365,6 +365,12 @@ export class OrderListComponent implements OnInit {
 
             })
 
+            this.orderOtherPartyForm.reset({
+                'custType'    : '',
+                'customerId'    : '',
+                'position'    : ''
+            })
+
         } else {
             this.isAddNew = false
             this.currentOrderId = order.id
