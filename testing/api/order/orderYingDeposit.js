@@ -53,7 +53,7 @@ describe('应收订单 保证金:', function () {
                 {
                     "hsId" : 1,
                     "bailDate" : "2017-10-05 00:00:00",
-                    "bailType" : 1,
+                    "bailType" : "RECV_UP",
                     "bailAmount" : "23000",
                     "orderId" : orderId
                 }
@@ -80,7 +80,7 @@ describe('应收订单 保证金:', function () {
                 {
                     "hsId" : 1,
                     "bailDate" : "2017-11-05 00:00:00",
-                    "bailType" : 1,
+                    "bailType" : "RECV_UP",
                     "bailAmount" : "25000",
                     "orderId" : orderId
                 }
@@ -120,6 +120,29 @@ describe('应收订单 保证金:', function () {
                 expect(res.body.data.bailDate , '返回的数据 res.body.data 里面日期字段错误').to.include('2017')
 
                 delDepositId = res.body.data.id
+                done()
+            })
+    })
+
+    it(`保证金 - 新建保证金 非法输入保证金类型 bailType = 1 POST: /api/business/ying/${orderId}/bails`, function (done) {
+        server.post(`/api/business/ying/${orderId}/bails`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : 1,
+                    "bailDate" : "2017-12-05 00:00:00",
+                    "bailType" : 1,
+                    "bailAmount" : "28000",
+                    "orderId" : orderId
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
+                expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
                 done()
             })
     })

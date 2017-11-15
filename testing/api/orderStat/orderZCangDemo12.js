@@ -21,7 +21,7 @@ describe('仓押订单 统计范例5', function () {
     let orderId = 17
 
     let unitId = 11
-    let borrowId = 11
+    let borrowId = 17
 
     before(function (done) {
 

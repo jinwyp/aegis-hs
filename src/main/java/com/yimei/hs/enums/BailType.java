@@ -13,7 +13,7 @@ public enum BailType {
 
     BACK_UP("退上游保证金"),
 
-    PAY_DOWN("付上游保证金"),
+    PAY_DOWN("付下游保证金"),
 
     BACK_DOWN("下游退保证金");
 
