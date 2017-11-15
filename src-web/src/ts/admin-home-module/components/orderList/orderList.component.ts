@@ -325,6 +325,8 @@ export class OrderListComponent implements OnInit {
             )
         } else {
             postData.id = this.currentOrderId
+            delete postData.orderPartyList
+
             this.hsOrderService.modifyOrder(this.businessType, this.currentOrderId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
