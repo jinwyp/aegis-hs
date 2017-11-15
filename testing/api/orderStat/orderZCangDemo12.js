@@ -18,10 +18,10 @@ const server = supertest(config.path.urlApi)
 describe('仓押订单 统计范例5', function () {
 
     let Authorization = ''
-    let orderId = 16
+    let orderId = 17
 
-    let unitId = 10
-    let borrowId = 10
+    let unitId = 11
+    let borrowId = 11
 
     before(function (done) {
 
