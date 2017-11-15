@@ -688,7 +688,7 @@ from v_1046_cang
      left join v_1039 on v_1039.hsId=v_1046_cang.hsId
 group by hsId, orderId;
 
---1054	预收款	yingPrePayment	计算	占压表	IF（【1014】付货款金额 <= 【1013】已回款金额）？【1014】付货款金额 - 【1013】已回款金额 + 【2009】下游保证金余额  ：0 +【2009】下游保证金余额
+--1054	预收款	yingPrePayment	计算	占压表	IF（【1013】已回款金额>=【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额
 --1054	预收款	cangPrePayment	计算	占压表	IF（【1014】付货款金额 <= 【1013】已回款金额？【1014】付货款金额 - 【1013】已回款金额 ：0 ）
 create view v_1054_ying  as
 select
@@ -701,12 +701,16 @@ from v_1013
      left join v_2008 on v_1013.hsId=v_2008.hsId
 group by hsId, orderId;
 
-
+-- IF（【1013】已回款金额>【3007】已出库金额？ 【1013】已回款金额 -【3007】已出库金额：0 ）
 create view v_1054_cang  as
 select
 v_1013.hsId,
 v_1013.orderId,
-ROUND(IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)-IFNULL(v_3003.totalOutstorageMoney ,0.00),2)as cangPrePayment
+case when IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)>IFNULL(v_3003.totalOutstorageMoney ,0.00)
+then
+ROUND(IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)-IFNULL(v_3003.totalOutstorageMoney ,0.00),2)
+else 0.00 end
+as cangPrePayment
 from v_1013
      left join v_3003 on v_1013.hsId=v_3003.hsId
 group by hsId, orderId;
@@ -916,7 +920,7 @@ create view v_1066_cang as
 select
 v_1048_cang.hsId,
 v_1048_cang.orderId,
-ROUND(IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0.00)-IFNULL(v_1002.totalTradeGapFee,0.00),2)as ownerCapitalPressure
+ROUND(IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0.00),2)as ownerCapitalPressure
 from v_1048_cang
      left join v_1046_cang on v_1048_cang.hsId=v_1046_cang.hsId
      left join v_1002 on v_1002.hsId=v_1046_cang.hsId
@@ -927,7 +931,7 @@ create view v_1066_ying as
 select
 v_1048_ying.hsId,
 v_1048_ying.orderId,
-ROUND(IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0.00)-IFNULL(v_1002.totalTradeGapFee,0.00),2)as ownerCapitalPressure
+ROUND(IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0.00),2)as ownerCapitalPressure
 from v_1048_ying
      left join v_1046_ying on v_1048_ying.hsId=v_1046_ying.hsId
      left join v_1002 on v_1002.hsId=v_1048_ying.hsId
