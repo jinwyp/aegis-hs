@@ -228,7 +228,7 @@ export class InvoiceComponent implements OnInit {
             this.invoiceFormInputChange(this.invoiceForm.value)
             this.ignoreDirty = true
 
-            console.log('当前信息: ', this.invoiceForm, this.invoiceFormError)
+            // console.log('当前信息: ', this.invoiceForm, this.invoiceFormError)
             return
         }
 
