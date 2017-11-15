@@ -307,6 +307,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
         this.ignoreDirty = false
         this.borrowPostList = []
 
+        this.getBorrowList()
+        
         if (isAddNew) {
             this.isAddNew = true
             this.currentHuanKuanId = 0
