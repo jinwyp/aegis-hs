@@ -1087,7 +1087,7 @@ describe('应收订单 统计范例4 赵征提供', function () {
                 {
                     "hsId" : unitId,
                     "bailDate" : "2017-08-02 00:00:00",
-                    "bailType" : "RECV_UP",
+                    "bailType" : "PAY_DOWN",
                     "bailAmount" : "100000",
                     "orderId" : orderId
                 }
