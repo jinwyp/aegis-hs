@@ -150,6 +150,25 @@ export class SettleOrderComponent implements OnInit {
 
     getOrderUnitList () {
 
+        this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
+            data => {
+                this.unitList = data.data.results
+
+                if (Array.isArray(data.data.results)) {
+
+                    const tempArray = []
+                    data.data.results.forEach( unit => {
+                        unit.name = unit.hsMonth
+                        tempArray.push(unit)
+                    })
+
+                    this.unitList = tempArray
+                }
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+
         this.hsOrderService.getOrderStatisticsByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
                 this.unitListStat = data.data
@@ -165,24 +184,6 @@ export class SettleOrderComponent implements OnInit {
                 // purchaseCargoAmountOfMoney 结算金额
 
                 // finalSettleAmount 结算数量
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-
-        this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
-            data => {
-                this.unitList = data.data.results
-
-                if (Array.isArray(data.data.results)) {
-
-                    const tempArray = []
-                    data.data.results.forEach( unit => {
-                        unit.name = unit.hsMonth
-                        tempArray.push(unit)
-                    })
-
-                    this.unitList = tempArray
-                }
             },
             error => {this.httpService.errorHandler(error) }
         )

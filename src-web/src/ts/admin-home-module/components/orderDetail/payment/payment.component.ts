@@ -38,6 +38,9 @@ export class PaymentComponent implements OnInit {
     partyListFilterZhiJin : any[] = []
 
     unitList : any[] = []
+    unitListStat : any[] = []
+    unitListStatObject : any = {}
+
 
     purposeList : any[] = getEnum('PaymentPurpose')
     payModeList : any[] = getEnum('PayMode')
@@ -148,6 +151,27 @@ export class PaymentComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+
+
+        this.hsOrderService.getOrderStatisticsByID(this.businessType, this.currentOrder.id).subscribe(
+            data => {
+                this.unitListStat = data.data
+
+                if (Array.isArray(data.data)) {
+
+                    data.data.forEach( unit => {
+                        unit.name = unit.hsMonth
+                        this.unitListStatObject[unit.hsId] = unit
+                    })
+                }
+
+                // purchaseCargoAmountOfMoney 结算金额
+
+                // finalSettleAmount 结算数量
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
     }
 
     paymentFormError : any = {}

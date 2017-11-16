@@ -3,6 +3,14 @@
             <form [formGroup]="paymentForm" (ngSubmit)="paymentFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
                 <bs-select formControlName="hsId" [fc]="paymentForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty" [options]="unitList" [error]="paymentFormError.hsId"></bs-select>
+
+                <div class="form-group row">
+                    <div class="col-10 ml-auto">
+                        <p *ngIf="paymentForm.get('hsId').value"> 本月累计付款金额(付款金额合计): {{ unitListStatObject[paymentForm.get('hsId').value]?.totalPaymentAmount ?  unitListStatObject[paymentForm.get('hsId').value]?.totalPaymentAmount : '暂无' }}  -  本月最高付款金额:   -  业务累计付款金额: </p>
+                    </div>
+                </div>
+
+
                 <bs-datepicker formControlName="payDate" [fc]="paymentForm.get('payDate')" [label]="'付款日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="paymentFormError.payDate" (outputChange)="selectPayDate($event)"></bs-datepicker>
 
                 <bs-select formControlName ="receiveCompanyId" [fc]="paymentForm.get('receiveCompanyId')" [label]="'收款单位:'" [dirty]="ignoreDirty" [options]="partyListFilter" [error]="paymentFormError.receiveCompanyId"></bs-select>
