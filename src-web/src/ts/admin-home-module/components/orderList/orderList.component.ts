@@ -34,7 +34,6 @@ export class OrderListComponent implements OnInit {
 
     otherParty1List : any[] = []
     otherParty2List : any[] = []
-    otherPartyShowList : any[] = []
 
     isShowForm: boolean = false
     isAddNew: boolean = true
@@ -343,7 +342,6 @@ export class OrderListComponent implements OnInit {
             )
         } else {
             postData.id = this.currentOrderId
-            delete postData.orderPartyList
 
             this.hsOrderService.modifyOrder(this.businessType, this.currentOrderId, postData).subscribe(
                 data => {
@@ -400,7 +398,18 @@ export class OrderListComponent implements OnInit {
 
             this.orderForm.patchValue(order)
 
-            this.otherPartyShowList = order.orderPartyList
+            if (Array.isArray(order.orderPartyList)) {
+                order.orderPartyList.forEach( (party) => {
+
+                    delete party.tsc
+                    if (party.customerPosition === 1) {
+                        this.otherParty1List.push(party)
+                    }
+                    if (party.customerPosition === 2) {
+                        this.otherParty2List.push(party)
+                    }
+                })
+            }
 
             this.getPaymentList()
         }
