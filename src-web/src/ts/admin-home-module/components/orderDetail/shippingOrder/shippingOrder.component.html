@@ -10,14 +10,14 @@
 
                 <bs-radio formControlName ="upstreamTrafficMode" [fc]="shippingForm.get('upstreamTrafficMode')" [label]="'上游运输方式:'" [dirty]="ignoreDirty" [sourceList]="trafficModeList" [error]="shippingFormError.upstreamTrafficMode" ></bs-radio>
 
-                <bs-text-input formControlName="upstreamCars" [fc]="shippingForm.get('upstreamCars')" [type]="'number'" [label]="'上游汽运情况下的车数:'" [dirty]="ignoreDirty" [error]="shippingFormError.upstreamCars" [hidden]="shippingForm.get('upstreamTrafficMode').value !=='MOTOR'"></bs-text-input>
+                <bs-text-input formControlName="upstreamCars" [fc]="shippingForm.get('upstreamCars')" [type]="'number'" [label]="'上游汽运情况下的车数:'" [dirty]="ignoreDirty" [error]="shippingFormError.upstreamCars" [hidden]="shippingForm.get('upstreamTrafficMode').value !=='MOTOR' || businessType ==='ying'"></bs-text-input>
                 <bs-text-input formControlName="upstreamJHH" [fc]="shippingForm.get('upstreamJHH')" [type]="'text'" [label]="'上游火运情况下的计划号:'" [dirty]="ignoreDirty" [error]="shippingFormError.upstreamJHH" [hidden]="shippingForm.get('upstreamTrafficMode').value !=='RAIL'"></bs-text-input>
                 <bs-text-input formControlName="upstreamShip" [fc]="shippingForm.get('upstreamShip')" [type]="'text'" [label]="'上游船运情况下的船号:'" [dirty]="ignoreDirty" [error]="shippingFormError.upstreamShip" [hidden]="shippingForm.get('upstreamTrafficMode').value !=='SHIP'"></bs-text-input>
 
 
                 <bs-radio formControlName ="downstreamTrafficMode" [fc]="shippingForm.get('downstreamTrafficMode')" [label]="'下游运输方式:'" [dirty]="ignoreDirty" [sourceList]="trafficModeList" [error]="shippingFormError.downstreamTrafficMode" ></bs-radio>
 
-                <bs-text-input formControlName="downstreamCars" [fc]="shippingForm.get('downstreamCars')" [type]="'number'" [label]="'下游汽运情况下的车数:'" [dirty]="ignoreDirty" [error]="shippingFormError.downstreamCars" [hidden]="shippingForm.get('downstreamTrafficMode').value !=='MOTOR'"></bs-text-input>
+                <bs-text-input formControlName="downstreamCars" [fc]="shippingForm.get('downstreamCars')" [type]="'number'" [label]="'下游汽运情况下的车数:'" [dirty]="ignoreDirty" [error]="shippingFormError.downstreamCars" [hidden]="shippingForm.get('downstreamTrafficMode').value !=='MOTOR' || businessType ==='ying'"></bs-text-input>
                 <bs-text-input formControlName="downstreamJHH" [fc]="shippingForm.get('downstreamJHH')" [type]="'text'" [label]="'下游火运情况下的计划号:'" [dirty]="ignoreDirty" [error]="shippingFormError.downstreamJHH" [hidden]="shippingForm.get('downstreamTrafficMode').value !=='RAIL'"></bs-text-input>
                 <bs-text-input formControlName="downstreamShip" [fc]="shippingForm.get('downstreamShip')" [type]="'text'" [label]="'下游船运情况下的船号:'" [dirty]="ignoreDirty" [error]="shippingFormError.downstreamShip" [hidden]="shippingForm.get('downstreamTrafficMode').value !=='SHIP'"></bs-text-input>
 
