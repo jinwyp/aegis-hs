@@ -1,4 +1,4 @@
-package com.yimei.hs.cang.dto;
+package com.yimei.hs.cang.entity;
 
 import lombok.Data;
 

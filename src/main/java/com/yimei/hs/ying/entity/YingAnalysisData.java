@@ -1,11 +1,15 @@
 package com.yimei.hs.ying.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class YingAnalysisData implements Serializable {
 
     private Long hsId;
@@ -169,5 +173,25 @@ public class YingAnalysisData implements Serializable {
     private BigDecimal ownerCapitalPressure;
 
     private static final long serialVersionUID = 1L;
+
+
+
+
+
+    private BigDecimal totalInstorageNum;
+
+    private BigDecimal totalInstorageAmount;
+
+    private BigDecimal instorageUnitPrice;
+
+    private BigDecimal totalStockNum;
+
+    private BigDecimal totalOutstorageNum;
+
+    private BigDecimal totalStockMoney;
+
+    private BigDecimal cangPrePayment;
+
+    private BigDecimal totalOutstorageMoney;
 
 }

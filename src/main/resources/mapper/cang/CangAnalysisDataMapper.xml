@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yimei.hs.cang.mapper.CangAnalysisDataMapper">
-  <resultMap id="BaseResultMap" type="com.yimei.hs.cang.dto.CangAnalysisData">
+  <resultMap id="BaseResultMap" type="com.yimei.hs.cang.entity.CangAnalysisData">
     <result column="hsId" jdbcType="BIGINT" property="hsId" />
     <result column="orderId" jdbcType="BIGINT" property="orderId" />
     <result column="totalPayTrafficFee" jdbcType="DECIMAL" property="totalPayTrafficFee" />
@@ -78,7 +78,7 @@
 
   </resultMap>
   
-  <select id="findOne" resultType="com.yimei.hs.cang.dto.CangAnalysisData">
+  <select id="findOne" resultType="com.yimei.hs.cang.entity.CangAnalysisData">
       SELECT
       hsId,
       orderId,
@@ -159,7 +159,7 @@
       FROM hs_cangDatabaseAnalysis
      WHERE hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
   </select>
-    <select id="findList" resultType="com.yimei.hs.cang.dto.CangAnalysisData">
+    <select id="findList" resultType="com.yimei.hs.cang.entity.CangAnalysisData">
               SELECT
       hsId,
       orderId,

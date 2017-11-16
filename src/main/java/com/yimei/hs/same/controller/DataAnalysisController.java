@@ -2,7 +2,7 @@ package com.yimei.hs.same.controller;
 
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.ext.annotation.Logined;
-import com.yimei.hs.cang.dto.CangAnalysisData;
+import com.yimei.hs.cang.entity.CangAnalysisData;
 import com.yimei.hs.ying.entity.YingAnalysisData;
 import com.yimei.hs.same.service.DataAnalysisService;
 import org.slf4j.Logger;
@@ -97,6 +97,24 @@ public class DataAnalysisController {
             return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
             return Result.ok(cangAnalysisData);
+        }
+    }
+
+
+    /**
+     *
+     * @param morderId
+     * @return
+     */
+    @GetMapping("/ying/analysis/{morderId}")
+    public ResponseEntity<Result<List<YingAnalysisData>>> readYingListPartsOne(
+            @PathVariable("morderId") Long morderId
+    ) {
+        List<YingAnalysisData> yingAnalysisData = dataAnalysisService.findYingPartsOneList(morderId);
+        if (yingAnalysisData == null) {
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
+        } else {
+            return Result.ok(yingAnalysisData);
         }
     }
 }

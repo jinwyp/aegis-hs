@@ -1,6 +1,6 @@
 package com.yimei.hs.cang.mapper;
 
-import com.yimei.hs.cang.dto.CangAnalysisData;
+import com.yimei.hs.cang.entity.CangAnalysisData;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
