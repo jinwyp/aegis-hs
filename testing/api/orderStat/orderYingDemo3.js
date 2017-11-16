@@ -100,11 +100,7 @@ describe('应收订单 统计范例3', function () {
                     "downstreamId" : 24,
                     "businessType" : "ying",
                     "orderPartyList" : [
-                        {
-                            "custType" : "TRAFFICKCER",
-                            "customerId" : 26,
-                            "position" : 1
-                        }
+                        { "custType" : "TRAFFICKCER",  "customerId" : 26,  "customerPosition" : 1}
                     ]
                 }
             )

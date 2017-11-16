@@ -30,6 +30,10 @@ public class OrderParty implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "客户id不能为空")
     private Long customerId;
 
+    @NotNull(groups = {CreateGroup.class}, message = "客户的位置不能为空")
+    private Long customerPosition;
+
+
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
 

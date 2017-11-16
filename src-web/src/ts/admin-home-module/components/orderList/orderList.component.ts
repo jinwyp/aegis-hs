@@ -37,6 +37,7 @@ export class OrderListComponent implements OnInit {
 
     isShowForm: boolean = false
     isAddNew: boolean = true
+    isShowEditOrderButton: boolean = true
 
     orderList : any[] = []
     departmentList : any[] = []
@@ -101,7 +102,7 @@ export class OrderListComponent implements OnInit {
 
         this.getPartyList()
         this.getDepartmentList()
-        this.getTeamList()
+
         this.getOrderList()
         this.getSessionUserInfo()
 
@@ -117,6 +118,8 @@ export class OrderListComponent implements OnInit {
                 if (data) {
                     this.sessionUser = data
                 }
+
+                this.getTeamList()
                 // console.log('当前登陆的用户信息: ', data)
             },
             error => {this.httpService.errorHandler(error) }
@@ -209,6 +212,23 @@ export class OrderListComponent implements OnInit {
     }
 
 
+    getPaymentList () {
+        this.hsOrderService.getPaymentListByID(this.businessType, this.currentOrderId).subscribe(
+            data => {
+
+                if (data.data && data.data.results) {
+
+                    if (data.data.results.length > 0) {
+                        this.isShowEditOrderButton = false
+                    }
+                }
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
+
+
+
     createOrderSearchForm(): void {
 
         this.orderSearchForm = this.fb.group({
@@ -259,7 +279,7 @@ export class OrderListComponent implements OnInit {
         'customerId'  : {
             'required'      : '请选择公司!'
         },
-        'position'  : {
+        'customerPosition'  : {
             'required'      : '请选择位置!'
         }
     }
@@ -324,6 +344,7 @@ export class OrderListComponent implements OnInit {
             )
         } else {
             postData.id = this.currentOrderId
+
             this.hsOrderService.modifyOrder(this.businessType, this.currentOrderId, postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
@@ -341,6 +362,11 @@ export class OrderListComponent implements OnInit {
 
 
     showForm(isAddNew : boolean = true, order?: any ) {
+        console.log('order:', order)
+
+        this.isShowEditOrderButton = true
+
+
 
         if (isAddNew) {
             this.isAddNew = true
@@ -362,13 +388,32 @@ export class OrderListComponent implements OnInit {
 
             })
 
+            this.orderOtherPartyForm.reset({
+                'custType'    : '',
+                'customerId'    : '',
+                'customerPosition'    : ''
+            })
+
         } else {
             this.isAddNew = false
             this.currentOrderId = order.id
 
             this.orderForm.patchValue(order)
 
-            this.otherParty1List = order.orderPartyList
+            if (Array.isArray(order.orderPartyList)) {
+                order.orderPartyList.forEach( (party) => {
+
+                    delete party.tsc
+                    if (party.customerPosition === 1) {
+                        this.otherParty1List.push(party)
+                    }
+                    if (party.customerPosition === 2) {
+                        this.otherParty2List.push(party)
+                    }
+                })
+            }
+
+            this.getPaymentList()
         }
 
         this.isShowForm = !this.isShowForm
@@ -393,7 +438,7 @@ export class OrderListComponent implements OnInit {
         this.orderOtherPartyForm = this.fb.group({
             'custType'    : ['', [Validators.required ] ],
             'customerId'    : ['', [Validators.required ] ],
-            'position'    : ['', [Validators.required ] ]
+            'customerPosition'    : ['', [Validators.required ] ]
         } )
 
         this.orderOtherPartyForm.valueChanges.subscribe(data => {
@@ -417,7 +462,7 @@ export class OrderListComponent implements OnInit {
             return
         }
 
-        if (this.orderOtherPartyForm.value.custType === -1 || this.orderOtherPartyForm.value.customerId === -1 || this.orderOtherPartyForm.value.position === -1) {
+        if (this.orderOtherPartyForm.value.custType === -1 || this.orderOtherPartyForm.value.customerId === -1 || this.orderOtherPartyForm.value.customerPosition === -1) {
 
             if (this.orderOtherPartyForm.value.custType === -1) {
                 this.orderOtherPartyFormError['custType'] = '请选择客户类型!'
@@ -427,8 +472,8 @@ export class OrderListComponent implements OnInit {
                 this.orderOtherPartyFormError['customerId'] = '请选择公司!'
             }
 
-            if (this.orderOtherPartyForm.value.position === -1) {
-                this.orderOtherPartyFormError['position'] = '请选择位置!'
+            if (this.orderOtherPartyForm.value.customerPosition === -1) {
+                this.orderOtherPartyFormError['customerPosition'] = '请选择位置!'
             }
             // console.log(this.orderOtherPartyFormError)
             this.ignoreDirty = true
@@ -436,7 +481,7 @@ export class OrderListComponent implements OnInit {
         }
 
 
-        if (this.orderOtherPartyForm.value.position === 1) {
+        if (this.orderOtherPartyForm.value.customerPosition === 1) {
             this.otherParty1List.push(this.orderOtherPartyForm.value)
         } else {
             this.otherParty2List.push(this.orderOtherPartyForm.value)
@@ -449,15 +494,15 @@ export class OrderListComponent implements OnInit {
         this.orderOtherPartyForm.reset({
             'custType'    : '',
             'customerId'    : '',
-            'position'    : ''
+            'customerPosition'    : ''
         })
 
         this.partyListFilterOther = []
     }
 
-    delOtherParty (company: any, position : number) {
+    delOtherParty (company: any, customerPosition : number) {
 
-        if (position === 1) {
+        if (customerPosition === 1) {
             const index = this.otherParty1List.indexOf(company)
             this.otherParty1List.splice(index, 1)
         } else {

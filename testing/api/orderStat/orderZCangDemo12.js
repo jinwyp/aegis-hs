@@ -60,7 +60,7 @@ describe('仓押订单 统计范例5', function () {
                         {
                             "custType" : "TRAFFICKCER",
                             "customerId" : 22,
-                            "position" : 1
+                            "customerPosition" : 1
                         }
                     ]
                 }

@@ -162,3 +162,4 @@ build.sh
 build-master.sh
 running
 
+!/src-web/src/ts/bs-form-module/components/selectDropdown/selectDropdown.component.ts

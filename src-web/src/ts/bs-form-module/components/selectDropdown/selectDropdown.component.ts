@@ -32,11 +32,14 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
     @Input() error: string = ''
     @Input() dirty: boolean = false
 
+    @Input() readOnly: boolean = false
+
+
     @Input('labelclass') labelClass: string = 'col-2'
     @Input('inputclass') inputClass: string = 'col-6'
 
 
-    @Output() change: any = new EventEmitter<any>()
+    @Output() outputChange: any = new EventEmitter<any>()
 
     @ViewChild('optionsListEl') optionsListEl: ElementRef
 
@@ -89,7 +92,10 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
 
     showOptions() {
-        this.isShowSelectOptionList = !this.isShowSelectOptionList
+        if (!this.readOnly) {
+            this.isShowSelectOptionList = !this.isShowSelectOptionList
+        }
+
     }
 
     filterOptions(event: KeyboardEvent) {
@@ -132,7 +138,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
             this.filterOptionList = this.optionList.slice()
         }
 
-        this.change.emit(currentOption)
+        this.outputChange.emit(currentOption)
 
         // console.log('clickCurrentOption', currentOption, this.currentSelectIndexByKeyboard)
     }
@@ -169,19 +175,19 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
                 if ( this.currentSelectIndexByKeyboard < optionsLength - 1) {
                     this.currentSelectIndexByKeyboard ++
 
-                }else {
+                } else {
                     this.currentSelectIndexByKeyboard = 0
                 }
-            }else if (event.keyCode === 38) {
+            } else if (event.keyCode === 38) {
                 //上
 
                 if ( this.currentSelectIndexByKeyboard < 1) {
                     this.currentSelectIndexByKeyboard = optionsLength - 1
-                }else {
+                } else {
                     this.currentSelectIndexByKeyboard --
                 }
 
-            }else if (event.keyCode === 13) {
+            } else if (event.keyCode === 13) {
                 //enter
 
                 if (this.currentSelectIndexByKeyboard === -1 ) {
@@ -212,7 +218,6 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
         }
 
         this.interValueCurrentSelected = val
-
 
         this.onTouched()
     }

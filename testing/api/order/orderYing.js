@@ -85,8 +85,8 @@ describe('应收订单', function () {
                 "upstreamId":2,
                 "downstreamId":3,
                 "orderPartyList":[
-                    {"custType":"TRAFFICKCER","customerId":7},
-                    {"custType":"ACCOUNTING_COMPANY","customerId":16}
+                    {"custType":"TRAFFICKCER","customerId":7, "customerPosition":1},
+                    {"custType":"ACCOUNTING_COMPANY","customerId":16, "customerPosition":1}
                 ]
             })
             .expect('Content-Type', /json/)
@@ -116,8 +116,8 @@ describe('应收订单', function () {
                 "upstreamId":2,
                 "downstreamId":3,
                 "orderPartyList" : [
-                    { "custType" : "UPSTREAM", "customerId" : 1},
-                    { "custType" : "DOWNSTREAM", "customerId" : 2}
+                    { "custType" : "UPSTREAM", "customerId" : 5, "customerPosition":1},
+                    { "custType" : "DOWNSTREAM", "customerId" : 4, "customerPosition":1}
                 ]
             })
             .expect('Content-Type', /json/)
@@ -150,8 +150,8 @@ describe('应收订单', function () {
                     "upstreamId" : 3,
                     "downstreamId" : 4,
                     "orderPartyList" : [
-                        { "custType" : "UPSTREAM", "customerId" : 1},
-                        { "custType" : "DOWNSTREAM", "customerId" : 2}
+                        { "custType" : "UPSTREAM", "customerId" : 5, "customerPosition":1},
+                        { "custType" : "DOWNSTREAM", "customerId" : 6, "customerPosition":1}
                     ]
                 }
             )

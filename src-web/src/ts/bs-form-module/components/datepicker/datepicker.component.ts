@@ -1,6 +1,5 @@
-import {Component, OnInit, Input, forwardRef, ElementRef, ViewChild} from '@angular/core'
+import {Component, OnInit, Input, Output, forwardRef, ElementRef, ViewChild, EventEmitter} from '@angular/core'
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
-import {isUndefined} from 'util'
 
 import { I18n, CustomDatepickerI18n } from './datepicker-i18n'
 import {NgbDatepickerI18n} from '../ngb-datepicker/datepicker-i18n'
@@ -41,6 +40,8 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
 
     @Input() format: any = ''
     @Input() displayFormat: any = 'yyyy-m-d'
+
+    @Output() outputChange: any = new EventEmitter<any>()
 
     @ViewChild('datepicker') datePickerEl: ElementRef
 
@@ -135,6 +136,8 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
         this.errorFormatInfo = ''
         this.value = event
         this.inputDisplayValue = this.dateFormatter(this.interValueDate, this.displayFormat)
+
+        this.outputChange.emit(this.dateFormatter(this.interValueDate, this.format))
     }
 
     onKeyChange(textValue : string) {
@@ -157,7 +160,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
 
             this.value = {year: tempDate.getFullYear(), month: tempDate.getMonth() + 1, day: tempDate.getDate()}
             // this.inputDisplayValue = this.interValueDate.year + '-' + this.interValueDate.month + '-' + this.interValueDate.day
-        }else {
+        } else {
             this.errorFormatInfo = '日期格式不正确!'
         }
     }
@@ -187,6 +190,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
 
         this.onChange(this.dateFormatter(val, this.format))
         this.onTouched()
+
     }
 
 
@@ -221,7 +225,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
                     this.value = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()}
                     this.inputDisplayValue =  this.dateFormatter(this.interValueDate, this.displayFormat)
 
-                }else if (value.length <= 9) {
+                } else if (value.length <= 9) {
 
                     // example : 2017-09-01
 

@@ -63,7 +63,7 @@ export class UiSwitchComponent implements ControlValueAccessor {
     }
 
     @Input() size: string           = 'medium'
-    @Output() change: any                = new EventEmitter<boolean>()
+    @Output() outputChange: any     = new EventEmitter<boolean>()
     @Input() color: string          = 'rgb(100, 189, 99)'
     @Input() switchOffColor: string = ''
     @Input() switchColor: string    = '#fff'
@@ -91,7 +91,7 @@ export class UiSwitchComponent implements ControlValueAccessor {
     onToggle () {
         if (this.disabled) { return }
         this.checked = !this.checked
-        this.change.emit(this.checked)
+        this.outputChange.emit(this.checked)
         this.onChangeCallback(this.checked)
         this.onTouchedCallback(this.checked)
     }

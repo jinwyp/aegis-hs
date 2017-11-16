@@ -10,7 +10,7 @@
         <result column="name" javaType="String" property="name"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, orderId, custType, customerId, tsc
+        id, orderId, custType, customerId, customerPosition, tsc
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -45,6 +45,7 @@
         orderparty.orderId,
         orderparty.custType,
         orderparty.customerId,
+        orderparty.customerPosition,
         orderparty.tsc,
 
         party.name
@@ -88,6 +89,7 @@
             orderId,
             custType,
             customerId,
+            customerPosition,
             tsc
         )
         VALUES (
@@ -95,6 +97,7 @@
             #{orderId,jdbcType=BIGINT},
             #{custType,jdbcType=VARCHAR},
             #{customerId,jdbcType=BIGINT},
+            #{customerPosition,jdbcType=BIGINT},
             #{tsc,jdbcType=TIMESTAMP}
         )
     </insert>
@@ -106,6 +109,7 @@
             <if test="orderId != null">orderId,</if>
             <if test="custType != null">custType,</if>
             <if test="customerId != null">customerId,</if>
+            <if test="customerPosition != null">customerPosition,</if>
             <if test="tsc != null">tsc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -113,6 +117,7 @@
             <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
             <if test="custType != null">#{custType,jdbcType=VARCHAR},</if>
             <if test="customerId != null">#{customerId,jdbcType=BIGINT},</if>
+            <if test="customerPosition != null">#{customerPosition,jdbcType=BIGINT},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
@@ -122,6 +127,7 @@
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="custType != null">custType = #{custType,jdbcType=VARCHAR},</if>
             <if test="customerId != null">customerId = #{customerId,jdbcType=BIGINT},</if>
+            <if test="customerPosition != null">customerPosition = #{customerPosition,jdbcType=BIGINT},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
             <if test="true">tsu = current_timestamp,</if>
         </set>
@@ -132,6 +138,7 @@
         SET orderId    = #{orderId,jdbcType=BIGINT},
             custType   = #{custType,jdbcType=VARCHAR},
             customerId = #{customerId,jdbcType=BIGINT},
+            customerPosition = #{customerPosition,jdbcType=BIGINT},
             tsc        = #{tsc,jdbcType=TIMESTAMP},
         tsu = CURRENT_TIMESTAMP
         WHERE id = #{id,jdbcType=BIGINT}

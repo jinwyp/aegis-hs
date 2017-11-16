@@ -68,8 +68,7 @@ public class Order implements Serializable {
     @Null(groups = {UpdateGroup.class}, message = "核算月不能更新")
     private List<OrderConfig> orderConfigList;   // 关联的核算月配置
 
-    @Valid()
-    @Null(groups = {UpdateGroup.class}, message = "参与方不能更新")
+
     private List<OrderParty> orderPartyList; // 关联的参与方
 
     private static final long serialVersionUID = 1L;

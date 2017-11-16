@@ -8,8 +8,8 @@
             <option *ngFor="let data of optionList" [value]="data.id" [selected]="data.id === interValueCurrentSelected.id ">{{data.name}}</option>
         </select>
 -->
-        <i class="fa fa-angle-down select_input_arrow" aria-hidden="true" [class.arrow_up]="isShowSelectOptionList"></i>
-        <input type="text" class="form-control select_input" placeholder="{{prompt}}" [readonly]="!editable" [class.is-invalid]="error && (currentFormControl.dirty || dirty)" [value]="interValueCurrentSelected.name" (click)="showOptions()" (keyup)="filterOptions($event)" >
+        <i class="fa fa-angle-down select_input_arrow" aria-hidden="true" [class.arrow_up]="isShowSelectOptionList" [hidden]="readOnly"></i>
+        <input type="text" class="form-control select_input" placeholder="{{prompt}}" [readonly]="!editable || readOnly" [class.is-invalid]="error && (currentFormControl.dirty || dirty)" [value]="interValueCurrentSelected.name" (click)="showOptions()" (keyup)="filterOptions($event)" >
 
 
         <ul class="list-group options_box"  [class.d-none]="!isShowSelectOptionList">

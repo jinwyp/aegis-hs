@@ -141,12 +141,8 @@ describe('应收订单 统计范例1 ', function () {
                     "downstreamId" : 20,
                     "businessType" : "ying",
                     "orderPartyList" : [
-                        {
-                            "custType" : "TRAFFICKCER",
-                            "customerId" : 21,
-                            "position" : 1
-                        },
-                        {"custType" : "TRAFFICKCER", "customerId" : 22, "position" : 1}
+                        { "custType" : "TRAFFICKCER",  "customerId" : 21,  "customerPosition" : 1},
+                        { "custType" : "TRAFFICKCER", "customerId" : 22, "customerPosition" : 1}
                     ]
                 }
             )

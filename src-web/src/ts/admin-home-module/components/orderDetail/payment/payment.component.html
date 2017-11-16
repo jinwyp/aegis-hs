@@ -3,11 +3,19 @@
             <form [formGroup]="paymentForm" (ngSubmit)="paymentFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
                 <bs-select formControlName="hsId" [fc]="paymentForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty" [options]="unitList" [error]="paymentFormError.hsId"></bs-select>
-                <bs-datepicker formControlName="payDate" [fc]="paymentForm.get('payDate')" [label]="'付款日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="paymentFormError.payDate"></bs-datepicker>
+
+                <div class="form-group row">
+                    <div class="col-10 ml-auto">
+                        <p *ngIf="paymentForm.get('hsId').value"> 本月累计付款金额(付款金额合计): {{ unitListStatObject[paymentForm.get('hsId').value]?.totalPaymentAmount ?  unitListStatObject[paymentForm.get('hsId').value]?.totalPaymentAmount : '暂无' }}  -  本月最高付款金额:   -  业务累计付款金额: </p>
+                    </div>
+                </div>
+
+
+                <bs-datepicker formControlName="payDate" [fc]="paymentForm.get('payDate')" [label]="'付款日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="paymentFormError.payDate" (outputChange)="selectPayDate($event)"></bs-datepicker>
 
                 <bs-select formControlName ="receiveCompanyId" [fc]="paymentForm.get('receiveCompanyId')" [label]="'收款单位:'" [dirty]="ignoreDirty" [options]="partyListFilter" [error]="paymentFormError.receiveCompanyId"></bs-select>
                 <bs-select formControlName="payUsage" [fc]="paymentForm.get('payUsage')" [label]="'付款用途:'" [dirty]="ignoreDirty"  [options]="purposeList" [error]="paymentFormError.payUsage"></bs-select>
-                <bs-text-input formControlName="payAmount" [fc]="paymentForm.get('payAmount')" [type]="'number'" [label]="'付款金额(元):'" [dirty]="ignoreDirty" [error]="paymentFormError.payAmount"></bs-text-input>
+                <bs-text-input formControlName="payAmount" [fc]="paymentForm.get('payAmount')" [type]="'number'" [label]="'付款金额(元):'" [dirty]="ignoreDirty" [error]="paymentFormError.payAmount" (change)="changePayAmount()"></bs-text-input>
                 <!--<bs-select formControlName="payMode" [fc]="paymentForm.get('payMode')" [label]="'付款方式:'" [dirty]="ignoreDirty"  [options]="payModeList" [error]="paymentFormError.payMode"></bs-select>-->
 
                 <bs-select formControlName ="capitalId" [fc]="paymentForm.get('capitalId')" [label]="'资金方:'" [dirty]="ignoreDirty"  [options]="partyListFilterZhiJin" [error]="paymentFormError.capitalId" [hidden]="!isAddNew"></bs-select>
