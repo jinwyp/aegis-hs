@@ -6,8 +6,8 @@
             <bs-select formControlName="invoiceType" [fc]="invoiceForm.get('invoiceType')" [label]="'发票类型:'" [dirty]="ignoreDirty"  [options]="invoiceTypeList" [error]="invoiceFormError.invoiceType"></bs-select>
             <bs-datepicker formControlName="openDate" [fc]="invoiceForm.get('openDate')" [label]="'开票日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty"  [error]="invoiceFormError.openDate" ></bs-datepicker>
 
-            <bs-select formControlName ="openCompanyId" [fc]="invoiceForm.get('openCompanyId')" [label]="'开票单位:'" [dirty]="ignoreDirty" [options]="partyList" [error]="invoiceFormError.openCompanyId"></bs-select>
-            <bs-select formControlName ="receiverId" [fc]="invoiceForm.get('receiverId')" [label]="'收票单位:'" [dirty]="ignoreDirty" [options]="partyList" [error]="invoiceFormError.receiverId"></bs-select>
+            <bs-select formControlName ="openCompanyId" [fc]="invoiceForm.get('openCompanyId')" [label]="'开票单位:'" [dirty]="ignoreDirty" [editable]="true" [options]="partyList" [error]="invoiceFormError.openCompanyId"></bs-select>
+            <bs-select formControlName ="receiverId" [fc]="invoiceForm.get('receiverId')" [label]="'收票单位:'" [dirty]="ignoreDirty" [options]="partyListFilter" [error]="invoiceFormError.receiverId"></bs-select>
 
 
             <div class="form-group row" >
