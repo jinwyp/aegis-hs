@@ -129,6 +129,34 @@ public class OrderService {
     @Transactional(readOnly = false)
     public int update(Order record) {
 
+        List<OrderParty> partyList = record.getOrderPartyList();
+
+        int failed = 0;
+
+        // 删除原有参与方
+        Order orderOld = orderMapper.selectByPrimaryKey(record.getId());
+        if (orderOld != null) {
+            for (OrderParty orderPartyOld : orderOld.getOrderPartyList()) {
+                orderPartyMapper.delete(orderPartyOld.getId());
+            }
+        }
+
+
+        // 插入参与方
+        if (partyList != null) {
+
+            for (OrderParty orderParty : partyList) {
+                orderParty.setOrderId(record.getId());
+                if (orderPartyMapper.insert(orderParty) != 1) {
+                    failed++;
+                }
+            }
+        }
+
+        if (failed > 0) {
+            return 0;
+        }
+
         return orderMapper.updateByPrimaryKeySelective(record);
     }
 

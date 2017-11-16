@@ -102,7 +102,7 @@ export class OrderListComponent implements OnInit {
 
         this.getPartyList()
         this.getDepartmentList()
-        this.getTeamList()
+
         this.getOrderList()
         this.getSessionUserInfo()
 
@@ -118,6 +118,8 @@ export class OrderListComponent implements OnInit {
                 if (data) {
                     this.sessionUser = data
                 }
+
+                this.getTeamList()
                 // console.log('当前登陆的用户信息: ', data)
             },
             error => {this.httpService.errorHandler(error) }
