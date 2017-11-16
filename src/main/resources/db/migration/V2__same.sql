@@ -33,6 +33,7 @@ create table hs_same_order_party (
   orderId bigint(20)    not null comment '订单id, 业务线id',
   custType varchar(32)           comment '客户类型: 上游, 贸易商, 下游, 资金方, 运输公司, 账务公司',
   customerId bigint(20) not null comment '业务线(订单)关联的其他账务公司',
+  customerPosition bigint(20) not null comment '业务线(订单)关联的其他账务公司的位置,  1 上游和主账户之间的位置，2 下游和主账户之间的位置',
   deleted tinyint(1)          not null default 0 comment '逻辑删除',
   tsc timestamp         not null default current_timestamp,
   tsu timestamp not null default current_timestamp,
