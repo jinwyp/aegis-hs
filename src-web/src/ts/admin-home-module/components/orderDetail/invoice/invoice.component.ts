@@ -35,16 +35,19 @@ export class InvoiceComponent implements OnInit {
 
 
     invoiceDetailList : any[] = []
-
-
     invoiceList : any[] = []
     partyList : any[] = []
     partyListFilter : any[] = []
 
     unitList : any[] = []
 
+    billingCompany : any
+    billToCompany : any
+    invoiceDetailFormType : number = 1
+
     invoiceDirectionList : any[] = getEnum('InvoiceDirection')
     invoiceTypeList : any[] = getEnum('InvoiceType')
+
 
 
     pagination: any = {
@@ -179,6 +182,20 @@ export class InvoiceComponent implements OnInit {
         },
         'priceAndTax'  : {
             'required'      : '请填写价税合计!'
+        },
+
+
+        'amount'  : {
+            'required'      : '请填写金额!'
+        },
+        'taxAmount'  : {
+            'required'      : '请填写税额!'
+        },
+        'sheetAmount'  : {
+            'required'      : '请填写张数!'
+        },
+        'cargoType'  : {
+            'required'      : '请填写货物种类!'
         }
     }
     invoiceDetailFormInputChange(formInputData : any) {
@@ -206,10 +223,16 @@ export class InvoiceComponent implements OnInit {
     createInvoiceDetailForm(): void {
 
         this.invoiceDetailForm = this.fb.group({
-            'invoiceNumber'    : ['', [Validators.required ] ],
+            'invoiceNumber'    : ['' ],
             'cargoAmount'    : ['', [Validators.required ] ],
             'taxRate'        : ['', [Validators.required ] ],
-            'priceAndTax'    : ['', [Validators.required ] ]
+            'priceAndTax'    : ['', [Validators.required ] ],
+
+            'amount'    : ['' ],
+            'taxAmount'    : ['' ],
+            'sheetAmount'    : ['' ],
+            'cargoType'    : ['' ]
+
         } )
 
 
@@ -326,20 +349,129 @@ export class InvoiceComponent implements OnInit {
 
 
     createInvoiceDetail () {
+
+        console.log('invoiceDetailForm Value : ', this.invoiceDetailForm.value)
+
+        let formValid : boolean = true
+
         if (this.invoiceDetailForm.invalid) {
             this.invoiceDetailFormInputChange(this.invoiceDetailForm.value)
-            this.ignoreDirty = true
 
+            formValid = false
+        }
+
+        if (this.invoiceDetailFormType === 2) {
+            if (!this.invoiceDetailForm.value.invoiceNumber) {
+                this.invoiceDetailFormError.invoiceNumber = this.invoiceDetailFormValidationMessages.invoiceNumber.required
+                formValid = false
+            }
+
+            if (!this.invoiceDetailForm.value.amount) {
+                this.invoiceDetailFormError.amount = this.invoiceDetailFormValidationMessages.amount.required
+                formValid = false
+            }
+
+            if (!this.invoiceDetailForm.value.taxAmount) {
+                this.invoiceDetailFormError.taxAmount = this.invoiceDetailFormValidationMessages.taxAmount.required
+                formValid = false
+            }
+
+            if (!this.invoiceDetailForm.value.sheetAmount) {
+                this.invoiceDetailFormError.sheetAmount = this.invoiceDetailFormValidationMessages.sheetAmount.required
+                formValid = false
+            }
+
+
+        }
+
+        if (this.invoiceDetailFormType === 3) {
+
+            if (!this.invoiceDetailForm.value.amount) {
+                this.invoiceDetailFormError.amount = this.invoiceDetailFormValidationMessages.amount.required
+                formValid = false
+            }
+
+            if (!this.invoiceDetailForm.value.taxAmount) {
+                this.invoiceDetailFormError.taxAmount = this.invoiceDetailFormValidationMessages.taxAmount.required
+                formValid = false
+            }
+
+            if (!this.invoiceDetailForm.value.sheetAmount) {
+                this.invoiceDetailFormError.sheetAmount = this.invoiceDetailFormValidationMessages.sheetAmount.required
+                formValid = false
+            }
+
+        }
+
+
+        if (!formValid) {
+            this.ignoreDirty = true
             return
         }
 
         this.invoiceDetailList.push(this.invoiceDetailForm.value)
+
+        this.invoiceDetailForm.reset({
+            'invoiceNumber'    : '',
+            'cargoAmount'    : '',
+            'taxRate'        : '',
+            'priceAndTax'    : '',
+
+            'amount'    : '',
+            'taxAmount'    : '',
+            'sheetAmount'    : '',
+            'cargoType'    : ''
+
+        } )
+
     }
+
     delInvoiceDetail (detailInvoice: any) {
 
         const index = this.invoiceDetailList.indexOf(detailInvoice)
         this.invoiceDetailList.splice(index, 1)
     }
+
+
+
+    getBillingCompany (event : any) {
+        console.log(event)
+        this.billingCompany = event
+        this.changInvoiceDetailForm()
+    }
+
+    getBillToCompany (event : any) {
+        console.log(event)
+        this.billToCompany = event
+        this.changInvoiceDetailForm()
+    }
+
+    changInvoiceDetailForm () {
+
+        if (this.billingCompany && this.billToCompany) {
+            console.log('11: ', this.invoiceDetailFormType, this.billingCompany)
+            if (this.billingCompany.partyType === 3 ) {
+                console.log('22: ', this.invoiceDetailFormType, this.billingCompany, this.billToCompany)
+                if (this.billToCompany.partyType === 3) {
+                    this.invoiceDetailFormType = 1 // 1 当开票单位是外部3，收票单位是外部3时：
+
+
+                } else if (this.billToCompany.partyType === 1) {
+                    this.invoiceDetailFormType = 2 // 2 当开票单位是外部3，收票单位是CCS账务公司1时：：
+                }
+
+
+            } else if (this.billingCompany.partyType === 1) {
+                this.invoiceDetailFormType = 3 // 3、当开票单位是ccs账务公司1时：
+
+            }
+
+        }
+
+        console.log('invoiceDetailFormType: ', this.invoiceDetailFormType)
+
+    }
+
 
 }
 
