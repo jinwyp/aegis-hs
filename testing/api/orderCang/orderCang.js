@@ -88,24 +88,12 @@ describe('仓押订单', function () {
                     "downstreamId" : 12,
                     "businessType" : "cang",
                     "orderPartyList" : [
-                        {
-                            "custType" : "UPSTREAM", "customerId" : 4
-                        },
-                        {
-                            "custType"   : "DOWNSTREAM", "customerId" : 7
-                        },
-                        {
-                            "custType" : "FUNDER", "customerId" : 17
-                        },
-                        {
-                            "custType"   : "TRAFFICKCER", "customerId" : 9
-                        },
-                        {
-                            "custType" : "TRANSPORT_COMPANY", "customerId" : 18
-                        },
-                        {
-                            "custType"   : "ACCOUNTING_COMPANY", "customerId" : 19
-                        }
+                        {"custType" : "UPSTREAM", "customerId" : 4 , "customerPosition":1},
+                        {"custType"   : "DOWNSTREAM", "customerId" : 7, "customerPosition":1},
+                        {"custType" : "FUNDER", "customerId" : 17, "customerPosition":1},
+                        {"custType"   : "TRAFFICKCER", "customerId" : 9, "customerPosition":1},
+                        {"custType" : "TRANSPORT_COMPANY", "customerId" : 18, "customerPosition":1},
+                        {"custType"   : "ACCOUNTING_COMPANY", "customerId" : 19, "customerPosition":1}
                     ]
                 }
             )
@@ -136,8 +124,8 @@ describe('仓押订单', function () {
                 "upstreamId":2,
                 "downstreamId":3,
                 "orderPartyList" : [
-                    { "custType" : "UPSTREAM", "customerId" : 1},
-                    { "custType" : "DOWNSTREAM", "customerId" : 2}
+                    { "custType" : "UPSTREAM", "customerId" : 1, "customerPosition":1},
+                    { "custType" : "DOWNSTREAM", "customerId" : 2, "customerPosition":1}
                 ]
             })
             .expect('Content-Type', /json/)
@@ -204,10 +192,10 @@ describe('仓押订单', function () {
                 "upstreamId":2,
                 "downstreamId":3,
                 "orderPartyList" : [
-                    { "custType" : "UPSTREAM", "customerId" : 9999},
-                    { "custType" : "DOWNSTREAM", "customerId" : 9999},
-                    { "custType" : "TRAFFICKCER", "customerId":9999},
-                    { "custType" : "ACCOUNTING_COMPANY", "customerId":9999}
+                    { "custType" : "UPSTREAM", "customerId" : 9999, "customerPosition":1},
+                    { "custType" : "DOWNSTREAM", "customerId" : 9999, "customerPosition":1},
+                    { "custType" : "TRAFFICKCER", "customerId":9999, "customerPosition":1},
+                    { "custType" : "ACCOUNTING_COMPANY", "customerId":9999, "customerPosition":1}
                 ]
             })
             .expect('Content-Type', /json/)

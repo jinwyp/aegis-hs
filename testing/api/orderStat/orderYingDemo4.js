@@ -64,7 +64,7 @@ describe('应收订单 统计范例4 赵征提供', function () {
                         {
                             "custType" : "TRAFFICKCER",
                             "customerId" : 30,
-                            "position" : 1
+                            "customerPosition" : 1
                         }
                     ]
                 }
