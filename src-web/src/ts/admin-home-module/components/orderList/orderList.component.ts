@@ -366,7 +366,7 @@ export class OrderListComponent implements OnInit {
     showForm(isAddNew : boolean = true, order?: any ) {
 
         this.isShowEditOrderButton = true
-        
+
 
         if (isAddNew) {
             this.isAddNew = true
