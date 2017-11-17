@@ -37,7 +37,8 @@ export class BorrowComponent implements OnInit {
 
     unitList : any[] = []
 
-
+    totalLoanMoney : number = 0
+    nonRepaymentLoanMoney : number = 0
 
     pagination: any = {
         pageSize : 20,
@@ -77,6 +78,17 @@ export class BorrowComponent implements OnInit {
         this.hsOrderService.getBorrowListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
                 this.borrowList = data.data.results
+
+                if ( Array.isArray(data.data.results)) {
+
+                    data.data.result.forEach( (borrow) => {
+                        this.totalLoanMoney = this.totalLoanMoney + borrow.amount
+
+                        if (!borrow.loanStatus) {
+                            this.nonRepaymentLoanMoney = this.nonRepaymentLoanMoney + borrow.amount
+                        }
+                    })
+                }
 
             },
             error => {this.httpService.errorHandler(error) }

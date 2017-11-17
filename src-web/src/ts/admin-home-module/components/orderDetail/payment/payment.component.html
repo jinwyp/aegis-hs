@@ -6,7 +6,12 @@
 
                 <div class="form-group row">
                     <div class="col-10 ml-auto">
-                        <p *ngIf="paymentForm.get('hsId').value"> 本月累计付款金额(付款金额合计): {{ unitListStatObject[paymentForm.get('hsId').value]?.totalPaymentAmount ?  unitListStatObject[paymentForm.get('hsId').value]?.totalPaymentAmount : '暂无' }}  -  本月最高付款金额:   -  业务累计付款金额: </p>
+                        <p *ngIf="paymentForm.get('hsId').value">
+                            本月最高付款金额 : {{ unitListStatObject[paymentForm.get('hsId').value]?.maximumPaymentAmount ?  unitListStatObject[paymentForm.get('hsId').value]?.maximumPaymentAmount : '暂无' }}
+                            -  本月累计付款金额: {{ unitListStatObject[paymentForm.get('hsId').value]?.unitTotalPaymentAmount ?  unitListStatObject[paymentForm.get('hsId').value]?.unitTotalPaymentAmount : '暂无' }}
+                            -  业务累计付款金额: {{ unitListStatObject[paymentForm.get('hsId').value]?.accumulativePaymentAmount ?  unitListStatObject[paymentForm.get('hsId').value]?.accumulativePaymentAmount : '暂无' }}
+                            -  本次应付货款金额: {{ unitListStatObject[paymentForm.get('hsId').value]?.amountCargoOfThisTime ?  unitListStatObject[paymentForm.get('hsId').value]?.amountCargoOfThisTime : '暂无' }}
+                        </p>
                     </div>
                 </div>
 
