@@ -6,6 +6,7 @@
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="custType" jdbcType="VARCHAR" property="custType"/>
         <result column="customerId" jdbcType="BIGINT" property="customerId"/>
+        <result column="customerPosition" jdbcType="BIGINT" property="customerPosition"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
         <result column="name" javaType="String" property="name"/>
     </resultMap>

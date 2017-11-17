@@ -60,6 +60,8 @@ public class Order implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "下游结算方式不能为空")
     private SettleMode downstreamSettleMode;
 
+    private Long terminalClientId;
+
     private OrderStatus status;
 
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")

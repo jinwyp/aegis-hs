@@ -16,6 +16,7 @@
         <result column="upstreamSettleMode" jdbcType="VARCHAR" property="upstreamSettleMode"/>
         <result column="downstreamId" jdbcType="BIGINT" property="downstreamId"/>
         <result column="downstreamSettleMode" jdbcType="VARCHAR" property="downstreamSettleMode"/>
+        <result column="terminalClientId" jdbcType="BIGINT" property="terminalClientId"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
@@ -43,7 +44,7 @@
 
     <sql id="Base_Column_List">
         id, businessType, deptId, teamId, creatorId, ownerId, mainAccounting, line, cargoType, upstreamId,
-        upstreamSettleMode, downstreamId, downstreamSettleMode, status, tsc, tsu
+        upstreamSettleMode, downstreamId, downstreamSettleMode, terminalClientId, status, tsc, tsu
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="OrderResultMap">
@@ -60,6 +61,7 @@
             t1.upstreamSettleMode,
             t1.downstreamId,
             t1.downstreamSettleMode,
+            t1.terminalClientId,
             t1.businessType,
             t1.status,
             t1.tsc,
@@ -164,6 +166,7 @@
             upstreamSettleMode,
             downstreamId,
             downstreamSettleMode,
+            terminalClientId,
             status,
             tsc
         )
@@ -181,6 +184,7 @@
             #{upstreamSettleMode,jdbcType=VARCHAR},
             #{downstreamId,jdbcType=BIGINT},
             #{downstreamSettleMode,jdbcType=VARCHAR},
+            #{terminalClientId,jdbcType=BIGINT},
             #{status,jdbcType=VARCHAR},
             #{tsc,jdbcType=TIMESTAMP}
         )
@@ -202,6 +206,7 @@
             <if test="upstreamSettleMode != null">upstreamSettleMode,</if>
             <if test="downstreamId != null">downstreamId,</if>
             <if test="downstreamSettleMode != null">downstreamSettleMode,</if>
+            <if test="terminalClientId != null">terminalClientId,</if>
             <if test="status != null">status,</if>
             <if test="tsc != null">tsc,</if>
             <if test="tsu != null">tsu,</if>
@@ -220,6 +225,7 @@
             <if test="upstreamSettleMode != null">#{upstreamSettleMode,jdbcType=VARCHAR},</if>
             <if test="downstreamId != null">#{downstreamId,jdbcType=BIGINT},</if>
             <if test="downstreamSettleMode != null">#{downstreamSettleMode,jdbcType=VARCHAR},</if>
+            <if test="terminalClientId != null">#{terminalClientId,jdbcType=BIGINT},</if>
             <if test="status != null">#{status,jdbcType=VARCHAR},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
             <if test="tsu != null">#{tsu,jdbcType=TIMESTAMP},</if>
@@ -240,6 +246,7 @@
             <if test="upstreamSettleMode != null">upstreamSettleMode = #{upstreamSettleMode,jdbcType=VARCHAR},</if>
             <if test="downstreamId != null">downstreamId = #{downstreamId,jdbcType=BIGINT},</if>
             <if test="downstreamSettleMode != null">downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR}, </if>
+            <if test="terminalClientId != null">terminalClientId = #{terminalClientId,jdbcType=BIGINT},</if>
             <if test="status != null">status = #{status,jdbcType=VARCHAR},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
             <if test="true">tsu = current_timestamp,</if>
@@ -261,6 +268,7 @@
             upstreamSettleMode   = #{upstreamSettleMode,jdbcType=VARCHAR},
             downstreamId         = #{downstreamId,jdbcType=BIGINT},
             downstreamSettleMode = #{downstreamSettleMode,jdbcType=VARCHAR},
+            terminalClientId         = #{terminalClientId,jdbcType=BIGINT},
             status               = #{status,jdbcType=VARCHAR},
             tsc                  = #{tsc,jdbcType=TIMESTAMP},
             tsu                  = current_timestamp

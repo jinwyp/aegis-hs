@@ -64,6 +64,8 @@
 
             <bs-select formControlName ="downstreamId" [fc]="orderForm.get('downstreamId')" [label]="'下游客户:'" [readOnly]="!isShowEditOrderButton" [editable]="true" [dirty]="ignoreDirty" [options]="partyListUpstreamAndDownstream" [error]="orderFormError.downstreamId" (outputChange)="lineName()"></bs-select>
 
+            <bs-select formControlName ="terminalClientId" [fc]="orderForm.get('terminalClientId')" [label]="'终端客户:'" [readOnly]="!isShowEditOrderButton" [editable]="true" [dirty]="ignoreDirty" [options]="partyListUpstreamAndDownstream" [error]="orderFormError.terminalClientId" (outputChange)="lineName()"></bs-select>
+
 
             <div class="form-group row" [hidden]="!isShowEditOrderButton">
                 <label class="col-2 col-form-label" >其他参与方:</label>
