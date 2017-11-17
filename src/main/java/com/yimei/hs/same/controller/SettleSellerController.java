@@ -11,7 +11,7 @@ import com.yimei.hs.same.dto.PageSettleSellerDTO;
 import com.yimei.hs.same.entity.SettleSeller;
 import com.yimei.hs.same.service.DataAnalysisService;
 import com.yimei.hs.same.service.SettleSellerService;
-import com.yimei.hs.ying.entity.YingAnalysisData;
+import com.yimei.hs.ying.entity.AnalysisData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,13 +108,13 @@ public class SettleSellerController {
             BigDecimal totalPaymentAmount = new BigDecimal("0");
 
             if (businessType.equals(BusinessType.ying)) {
-                YingAnalysisData yingAnalysisData = dataAnalysisService.findOneYing(morderId, settleSeller.getHsId());
+                AnalysisData yingAnalysisData = dataAnalysisService.findOneYing(morderId, settleSeller.getHsId());
                 totalHuikuanPaymentMoney = totalHuikuanPaymentMoney.add((yingAnalysisData.getTotalHuikuanPaymentMoney()==null?new BigDecimal("0"):yingAnalysisData.getTotalHuikuanPaymentMoney()));
                 totalPaymentAmount = totalPaymentAmount.add((yingAnalysisData.getTotalPaymentAmount() == null ? new BigDecimal("0") : yingAnalysisData.getTotalPaymentAmount())
                         .subtract((yingAnalysisData.getTotalTradeGapFee() == null ? new BigDecimal("0") : yingAnalysisData.getTotalTradeGapFee())
                         ));
             } else if (businessType.equals(BusinessType.cang)) {
-                CangAnalysisData cangAnalysisData = dataAnalysisService.findOneCang(settleSeller.getHsId(),morderId);
+                AnalysisData cangAnalysisData = dataAnalysisService.findOneCang(settleSeller.getHsId(),morderId);
                 totalHuikuanPaymentMoney = totalHuikuanPaymentMoney.add((cangAnalysisData.getTotalHuikuanPaymentMoney()==null?new BigDecimal("0"):cangAnalysisData.getTotalHuikuanPaymentMoney()));
                 totalPaymentAmount = totalPaymentAmount.add((cangAnalysisData.getPurchaseCargoAmountOfMoney() == null ? new BigDecimal("0") : cangAnalysisData.getPurchaseCargoAmountOfMoney())
                         .subtract((cangAnalysisData.getTotalTradeGapFee() == null ? new BigDecimal("0") : cangAnalysisData.getTotalTradeGapFee())

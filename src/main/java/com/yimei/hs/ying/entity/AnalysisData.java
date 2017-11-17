@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class YingAnalysisData implements Serializable {
+public class AnalysisData implements Serializable {
 
     private Long hsId;
 

@@ -3,7 +3,7 @@ package com.yimei.hs.same.controller;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.cang.entity.CangAnalysisData;
-import com.yimei.hs.ying.entity.YingAnalysisData;
+import com.yimei.hs.ying.entity.AnalysisData;
 import com.yimei.hs.same.service.DataAnalysisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,11 +34,11 @@ public class DataAnalysisController {
      * @return
      */
     @GetMapping("/ying/{morderId}/analysis/{hsId}")
-    public ResponseEntity<Result<YingAnalysisData>> read(
+    public ResponseEntity<Result<AnalysisData>> read(
             @PathVariable("morderId") Long morderId,
             @PathVariable("hsId") long hsId) {
         logger.debug("id {}",hsId);
-        YingAnalysisData bail = dataAnalysisService.findOneYing(morderId,hsId);
+        AnalysisData bail = dataAnalysisService.findOneYing(morderId,hsId);
         if (bail == null) {
             return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
@@ -53,10 +53,10 @@ public class DataAnalysisController {
      * @return
      */
     @GetMapping("/ying/{morderId}/analysis")
-    public ResponseEntity<Result<List<YingAnalysisData>>> readYingList(
+    public ResponseEntity<Result<List<AnalysisData>>> readYingList(
             @PathVariable("morderId") Long morderId
     ) {
-        List<YingAnalysisData> yingAnalysisData = dataAnalysisService.findYingList(morderId);
+        List<AnalysisData> yingAnalysisData = dataAnalysisService.findYingList(morderId);
         if (yingAnalysisData == null) {
             return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
@@ -70,15 +70,15 @@ public class DataAnalysisController {
      * @return
      */
     @GetMapping("/cang/{morderId}/analysis/{hsId}")
-    public ResponseEntity<Result<CangAnalysisData>> readcang(
+    public ResponseEntity<Result<AnalysisData>> readcang(
             @PathVariable("morderId") Long morderId,
             @PathVariable("hsId") long hsId
     ) {
-        CangAnalysisData cangAnalysisData = dataAnalysisService.findOneCang(hsId,morderId);
-        if (cangAnalysisData == null) {
+        AnalysisData yingAnalysisData= dataAnalysisService.findOneCang(hsId,morderId);
+        if (yingAnalysisData == null) {
             return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
-            return Result.ok(cangAnalysisData);
+            return Result.ok(yingAnalysisData);
         }
     }
 
@@ -89,10 +89,10 @@ public class DataAnalysisController {
      * @return
      */
     @GetMapping("/cang/{morderId}/analysis")
-    public ResponseEntity<Result<List<CangAnalysisData>>> readCangList(
+    public ResponseEntity<Result<List<AnalysisData>>> readCangList(
             @PathVariable("morderId") Long morderId
     ) {
-        List<CangAnalysisData> cangAnalysisData = dataAnalysisService.findCangList(morderId);
+        List<AnalysisData> cangAnalysisData = dataAnalysisService.findCangList(morderId);
         if (cangAnalysisData == null) {
             return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
@@ -107,10 +107,10 @@ public class DataAnalysisController {
      * @return
      */
     @GetMapping("/ying/analysis/{morderId}")
-    public ResponseEntity<Result<List<YingAnalysisData>>> readYingListPartsOne(
+    public ResponseEntity<Result<List<AnalysisData>>> readYingListPartsOne(
             @PathVariable("morderId") Long morderId
     ) {
-        List<YingAnalysisData> yingAnalysisData = dataAnalysisService.findYingPartsOneList(morderId);
+        List<AnalysisData> yingAnalysisData = dataAnalysisService.findYingPartsOneList(morderId);
         if (yingAnalysisData == null) {
             return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {

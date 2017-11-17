@@ -2,13 +2,15 @@ package com.yimei.hs.same.service;
 
 import com.yimei.hs.cang.entity.CangAnalysisData;
 import com.yimei.hs.cang.mapper.CangAnalysisDataMapper;
-import com.yimei.hs.ying.entity.YingAnalysisData;
+import com.yimei.hs.same.entity.OrderConfig;
+import com.yimei.hs.ying.entity.AnalysisData;
 import com.yimei.hs.ying.mapper.YingAnalysisDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,60 +24,73 @@ public class DataAnalysisService {
     @Autowired
     CangAnalysisDataMapper cangAnalysisDataMapper;
 
-
-    public YingAnalysisData findOneYing(Long morderId, long hsId) {
-        YingAnalysisData yingAnalysisDatav1001 = yingAnalysisDataMapper.findOneV1001(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1004 = yingAnalysisDataMapper.findOneV1004(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1006 = yingAnalysisDataMapper.findOneV1006(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1007 = yingAnalysisDataMapper.findOneV1007(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1009 = yingAnalysisDataMapper.findOneV1009(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1012 = yingAnalysisDataMapper.findOneV1012(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1013 = yingAnalysisDataMapper.findOneV1013(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1014 = yingAnalysisDataMapper.findOneV1014(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1015 = yingAnalysisDataMapper.findOneV1015(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1016 = yingAnalysisDataMapper.findOneV1016(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1017 = yingAnalysisDataMapper.findOneV1017(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1018 = yingAnalysisDataMapper.findOneV1018(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1019 = yingAnalysisDataMapper.findOneV1019(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1020 = yingAnalysisDataMapper.findOneV1020(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1021 = yingAnalysisDataMapper.findOneV1021(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1023 = yingAnalysisDataMapper.findOneV1023(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1024 = yingAnalysisDataMapper.findOneV1024(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1027 = yingAnalysisDataMapper.findOneV1027(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1035 = yingAnalysisDataMapper.findOneV1035(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1037 = yingAnalysisDataMapper.findOneV1037(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1039 = yingAnalysisDataMapper.findOneV1039(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav2001 = yingAnalysisDataMapper.findOneV2001(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav2004 = yingAnalysisDataMapper.findOneV2004(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav2008 = yingAnalysisDataMapper.findOneV2008(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1041 = yingAnalysisDataMapper.findOneV1040ying(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1045= yingAnalysisDataMapper.findOneV1045(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1046 = yingAnalysisDataMapper.findOneV1046ying(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1047 = yingAnalysisDataMapper.findOneV1047(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1048 = yingAnalysisDataMapper.findOneV1048ying(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1049 = yingAnalysisDataMapper.findOneV1049ying(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1051 = yingAnalysisDataMapper.findOneV1051ying(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1052 = yingAnalysisDataMapper.findOneV1052ying(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1054 = yingAnalysisDataMapper.findOneV1054ying(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1055 = yingAnalysisDataMapper.findOneV1055ying(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1058 = yingAnalysisDataMapper.findOneV1058ying(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1059 = yingAnalysisDataMapper.findOneV1059ying(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1060 = yingAnalysisDataMapper.findOneV1060ying(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1061 = yingAnalysisDataMapper.findOneV1061ying(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1063 = yingAnalysisDataMapper.findOneV1063ying(morderId, hsId);
-//        YingAnalysisData yingAnalysisDatav1064 = yingAnalysisDataMapper.findOneV1064ying(morderId, hsId);
-
-        YingAnalysisData yingAnalysisDatav1066 = yingAnalysisDataMapper.findOneV1066ying(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav2010 = yingAnalysisDataMapper.findOneV2010ying(morderId, hsId);
+    @Autowired
+    OrderConfigService orderConfigService;
 
 
-        YingAnalysisData yingAnalysisData = new YingAnalysisData() {{
+    public AnalysisData findOneYing(Long morderId, long hsId) {
+        AnalysisData yingAnalysisDatav1001 = yingAnalysisDataMapper.findOneV1001(morderId, hsId);
+        AnalysisData yingAnalysisDatav1004 = yingAnalysisDataMapper.findOneV1004(morderId, hsId);
+        AnalysisData yingAnalysisDatav1006 = yingAnalysisDataMapper.findOneV1006(morderId, hsId);
+        AnalysisData yingAnalysisDatav1007 = yingAnalysisDataMapper.findOneV1007(morderId, hsId);
+        AnalysisData yingAnalysisDatav1009 = yingAnalysisDataMapper.findOneV1009(morderId, hsId);
+        AnalysisData yingAnalysisDatav1012 = yingAnalysisDataMapper.findOneV1012(morderId, hsId);
+        AnalysisData yingAnalysisDatav1013 = yingAnalysisDataMapper.findOneV1013(morderId, hsId);
+        AnalysisData yingAnalysisDatav1014 = yingAnalysisDataMapper.findOneV1014(morderId, hsId);
+        AnalysisData yingAnalysisDatav1015 = yingAnalysisDataMapper.findOneV1015(morderId, hsId);
+        AnalysisData yingAnalysisDatav1016 = yingAnalysisDataMapper.findOneV1016(morderId, hsId);
+        AnalysisData yingAnalysisDatav1017 = yingAnalysisDataMapper.findOneV1017(morderId, hsId);
+        AnalysisData yingAnalysisDatav1018 = yingAnalysisDataMapper.findOneV1018(morderId, hsId);
+//        AnalysisData yingAnalysisDatav1019 = yingAnalysisDataMapper.findOneV1019(morderId, hsId);
+        AnalysisData yingAnalysisDatav1020 = yingAnalysisDataMapper.findOneV1020(morderId, hsId);
+        AnalysisData yingAnalysisDatav1021 = yingAnalysisDataMapper.findOneV1021(morderId, hsId);
+        AnalysisData yingAnalysisDatav1023 = yingAnalysisDataMapper.findOneV1023(morderId, hsId);
+        AnalysisData yingAnalysisDatav1024 = yingAnalysisDataMapper.findOneV1024(morderId, hsId);
+        AnalysisData yingAnalysisDatav1027 = yingAnalysisDataMapper.findOneV1027(morderId, hsId);
+        AnalysisData yingAnalysisDatav1035 = yingAnalysisDataMapper.findOneV1035(morderId, hsId);
+        AnalysisData yingAnalysisDatav1037 = yingAnalysisDataMapper.findOneV1037(morderId, hsId);
+        AnalysisData yingAnalysisDatav1039 = yingAnalysisDataMapper.findOneV1039(morderId, hsId);
+        AnalysisData yingAnalysisDatav2001 = yingAnalysisDataMapper.findOneV2001(morderId, hsId);
+        AnalysisData yingAnalysisDatav2004 = yingAnalysisDataMapper.findOneV2004(morderId, hsId);
+        AnalysisData yingAnalysisDatav2008 = yingAnalysisDataMapper.findOneV2008(morderId, hsId);
+        AnalysisData yingAnalysisDatav1041 = yingAnalysisDataMapper.findOneV1040ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1045= yingAnalysisDataMapper.findOneV1045(morderId, hsId);
+        AnalysisData yingAnalysisDatav1046 = yingAnalysisDataMapper.findOneV1046ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1047 = yingAnalysisDataMapper.findOneV1047(morderId, hsId);
+        AnalysisData yingAnalysisDatav1048 = yingAnalysisDataMapper.findOneV1048ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1049 = yingAnalysisDataMapper.findOneV1049ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1050 = yingAnalysisDataMapper.findOneV1050ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1051 = yingAnalysisDataMapper.findOneV1051ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1052 = yingAnalysisDataMapper.findOneV1052ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1054 = yingAnalysisDataMapper.findOneV1054ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1055 = yingAnalysisDataMapper.findOneV1055ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1058 = yingAnalysisDataMapper.findOneV1058ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1059 = yingAnalysisDataMapper.findOneV1059ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1060 = yingAnalysisDataMapper.findOneV1060ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1061 = yingAnalysisDataMapper.findOneV1061ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1063 = yingAnalysisDataMapper.findOneV1063ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1066 = yingAnalysisDataMapper.findOneV1066ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav2010 = yingAnalysisDataMapper.findOneV2010ying(morderId, hsId);
+
+//【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 - （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06 - 【1033】业务费
+        BigDecimal opreationCrocsProfile=yingAnalysisDatav1059.getWithoutTaxIncome().
+                subtract(yingAnalysisDatav1060.getWithoutTaxCost()).
+                subtract(yingAnalysisDatav1061.getAdditionalTax()).
+                subtract(yingAnalysisDatav1063.getStampDuty()).
+                subtract(yingAnalysisDatav1027.getSalesFeeAmount()).
+                subtract((yingAnalysisDatav1027.getHsqyFee().add(yingAnalysisDatav1027.getHssyFee().add(yingAnalysisDatav1027.getHshyFee()))).divide(new BigDecimal("1.11"))).
+                subtract(yingAnalysisDatav1027.getSuperviseFee().divide(new BigDecimal("1.06"))).
+                subtract(yingAnalysisDatav1027.getServiceFee().divide(new BigDecimal("1.06")));
+
+
+
+        AnalysisData yingAnalysisData = new AnalysisData() {{
             setTotalPayTrafficFee(yingAnalysisDatav1001.getTotalPayTrafficFee());
             setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
             setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
             setTotalPaymentAmount(yingAnalysisDatav1001.getTotalPaymentAmount());
             setTotalLoadMoney(yingAnalysisDatav1004.getTotalLoadMoney());
-            setTotalUnrepaymentEstimateCost(yingAnalysisDatav1006.getTotalUnrepaymentEstimateCost());
+            setTotalUnrepaymentEstimateCost((yingAnalysisDatav1006 == null ? new BigDecimal("0.00") : yingAnalysisDatav1006.getTotalUnrepaymentEstimateCost()));
             setTotalRepaymentPrincipeAmount(yingAnalysisDatav1007.getTotalRepaymentPrincipeAmount());
             setTotalRepaymentPrincipeAmount(yingAnalysisDatav1007.getTotalRepaymentPrincipeAmount());
             setTotalRepaymentInterest(yingAnalysisDatav1007.getTotalRepaymentInterest());
@@ -84,13 +99,13 @@ public class DataAnalysisService {
             setTotalUnpayInterest((yingAnalysisDatav1009 == null ? new BigDecimal("0.00") : yingAnalysisDatav1009.getTotalUnpayInterest()));
             setTotalUnpayFee((yingAnalysisDatav1009 == null ? new BigDecimal("0.00") : yingAnalysisDatav1009.getTotalUnpayFee()));
             setOutCapitalAmout(yingAnalysisDatav1012.getOutCapitalAmout());
-            setTotalHuikuanPaymentMoney(yingAnalysisDatav1013.getTotalHuikuanPaymentMoney());
+            setTotalHuikuanPaymentMoney((yingAnalysisDatav1013 == null ? new BigDecimal("0.00") : yingAnalysisDatav1013.getTotalHuikuanPaymentMoney()));
             setPayCargoAmount(yingAnalysisDatav1014.getPayCargoAmount());
             setUnpaymentMoney( yingAnalysisDatav1015.getUnpaymentMoney());
             setUnpaymentEstimateProfile(yingAnalysisDatav1016.getUnpaymentEstimateProfile());
             setInterestDays(yingAnalysisDatav1017.getInterestDays());
             setActualUtilizationRate(yingAnalysisDatav1018.getActualUtilizationRate());
-            setRate(yingAnalysisDatav1019.getRate());
+//            setRate(yingAnalysisDatav1019.getRate());
             setTotalPaymentedRateMoney(yingAnalysisDatav1020.getTotalPaymentedRateMoney());
             setContractRateProfile(yingAnalysisDatav1021.getContractRateProfile());
             setTiexianRateAmount(yingAnalysisDatav1023.getTiexianRateAmount());
@@ -130,11 +145,13 @@ public class DataAnalysisService {
             setExternalCapitalPaymentAmount(yingAnalysisDatav1047.getExternalCapitalPaymentAmount());
             setOwnerCapitalPaymentAmount(yingAnalysisDatav1048.getOwnerCapitalPaymentAmount());
             setUpstreamCapitalPressure(yingAnalysisDatav1049.getUpstreamCapitalPressure());
+            setPurchaseIncludeTaxTotalAmount(yingAnalysisDatav1046.getPurchaseCargoAmountOfMoney());
+            setDownstreamCapitalPressure(yingAnalysisDatav1050.getDownstreamCapitalPressure());
             setCssUninTypeNum(yingAnalysisDatav1051.getCssUninTypeNum());
             setCssUninTypeMoney(yingAnalysisDatav1052.getCssUninTypeMoney());
             setUnInvoicedAmountofMoney(yingAnalysisDatav1052.getUnInvoicedAmountofMoney());
             setYingPrePayment(yingAnalysisDatav1054.getYingPrePayment());
-            setSettleGrossProfileNum(yingAnalysisDatav1046.getPurchaseCargoAmountOfMoney());
+            setSettleGrossProfileNum(yingAnalysisDatav1041.getFinalSettleAmount());
             setSaleIncludeTaxTotalAmount(yingAnalysisDatav1041.getSaleCargoAmountofMoney());
             setTradeCompanyAddMoney(yingAnalysisDatav1058.getTradeCompanyAddMoney());
             setWithoutTaxIncome(yingAnalysisDatav1059.getWithoutTaxIncome());
@@ -146,8 +163,9 @@ public class DataAnalysisService {
             setCrossProfileATon(BigDecimal.ONE);
             setOwnerCapitalPressure(yingAnalysisDatav1066.getOwnerCapitalPressure());
             setSettledDownstreamHuikuanMoneny(yingAnalysisDatav2010.getSettledDownstreamHuikuanMoneny());
-//            setOpreationCrossProfile(yingAnalysisDatav1064.getOpreationCrossProfile());
-//            setCrossProfileATon(yingAnalysisDatav1064.getOpreationCrossProfile().subtract(yingAnalysisDatav1055.getSettleGrossProfileNum()));
+            setOpreationCrossProfile(opreationCrocsProfile);
+            setCrossProfileATon((yingAnalysisDatav1055.getSettleGrossProfileNum()).compareTo(BigDecimal.ZERO) == 0 ?
+                    new BigDecimal("0.00") : opreationCrocsProfile.divide(yingAnalysisDatav1055.getSettleGrossProfileNum(), 2));
 
         }};
 
@@ -157,71 +175,83 @@ public class DataAnalysisService {
     }
 
 
-    public List<YingAnalysisData> findYingList(Long morderId) {
-        List<YingAnalysisData> yingAnalysisDataList = yingAnalysisDataMapper.findList(morderId);
+    public List<AnalysisData> findYingList(Long morderId) {
+        List<OrderConfig> orderConfigs = orderConfigService.getList(morderId);
+        List<AnalysisData> yingAnalysisDataList = new ArrayList<AnalysisData>();
+        for (OrderConfig config : orderConfigs) {
+            yingAnalysisDataList.add(this.findOneYing(morderId, config.getId()));
+        }
         return yingAnalysisDataList;
     }
 
 
-    public CangAnalysisData findOneCang(Long hsId, Long morderId) {
+    public AnalysisData findOneCang(Long hsId, Long morderId) {
 
-        CangAnalysisData cangAnalysisData = cangAnalysisDataMapper.findOne(hsId, morderId);
-//
-//        return cangAnalysisData;
-        YingAnalysisData yingAnalysisDatav1001 = yingAnalysisDataMapper.findOneV1001(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1004 = yingAnalysisDataMapper.findOneV1004(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1006 = yingAnalysisDataMapper.findOneV1006(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1007 = yingAnalysisDataMapper.findOneV1007(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1009 = yingAnalysisDataMapper.findOneV1009(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1012 = yingAnalysisDataMapper.findOneV1012(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1013 = yingAnalysisDataMapper.findOneV1013(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1014 = yingAnalysisDataMapper.findOneV1014(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1015 = yingAnalysisDataMapper.findOneV1015(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1016 = yingAnalysisDataMapper.findOneV1016(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1017 = yingAnalysisDataMapper.findOneV1017(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1018 = yingAnalysisDataMapper.findOneV1018(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1019 = yingAnalysisDataMapper.findOneV1019(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1020 = yingAnalysisDataMapper.findOneV1020(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1021 = yingAnalysisDataMapper.findOneV1021(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1023 = yingAnalysisDataMapper.findOneV1023(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1024 = yingAnalysisDataMapper.findOneV1024(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1027 = yingAnalysisDataMapper.findOneV1027(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1035 = yingAnalysisDataMapper.findOneV1035(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1037 = yingAnalysisDataMapper.findOneV1037(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1039 = yingAnalysisDataMapper.findOneV1039(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav3001 = yingAnalysisDataMapper.findOneV3001(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav3003 = yingAnalysisDataMapper.findOneV3003(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav3005 = yingAnalysisDataMapper.findOneV3005(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav3006 = yingAnalysisDataMapper.findOneV3006(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1041 = yingAnalysisDataMapper.findOneV1040cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1045= yingAnalysisDataMapper.findOneV1045(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1046 = yingAnalysisDataMapper.findOneV1046cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1047 = yingAnalysisDataMapper.findOneV1047(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1048 = yingAnalysisDataMapper.findOneV1048cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1049 = yingAnalysisDataMapper.findOneV1049cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1051 = yingAnalysisDataMapper.findOneV1051cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1052 = yingAnalysisDataMapper.findOneV1052cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1054 = yingAnalysisDataMapper.findOneV1054cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1056 = yingAnalysisDataMapper.findOneV1056cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1057 = yingAnalysisDataMapper.findOneV1057cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1058 = yingAnalysisDataMapper.findOneV1058cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1059 = yingAnalysisDataMapper.findOneV1059cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1060 = yingAnalysisDataMapper.findOneV1060cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1061 = yingAnalysisDataMapper.findOneV1061cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1063 = yingAnalysisDataMapper.findOneV1063cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav1064 = yingAnalysisDataMapper.findOneV1064cang(morderId, hsId);
-
-        YingAnalysisData yingAnalysisDatav1066 = yingAnalysisDataMapper.findOneV1066cang(morderId, hsId);
-        YingAnalysisData yingAnalysisDatav2010 = yingAnalysisDataMapper.findOneV2010cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1001 = yingAnalysisDataMapper.findOneV1001(morderId, hsId);
+        AnalysisData yingAnalysisDatav1004 = yingAnalysisDataMapper.findOneV1004(morderId, hsId);
+        AnalysisData yingAnalysisDatav1006 = yingAnalysisDataMapper.findOneV1006(morderId, hsId);
+        AnalysisData yingAnalysisDatav1007 = yingAnalysisDataMapper.findOneV1007(morderId, hsId);
+        AnalysisData yingAnalysisDatav1009 = yingAnalysisDataMapper.findOneV1009(morderId, hsId);
+        AnalysisData yingAnalysisDatav1012 = yingAnalysisDataMapper.findOneV1012(morderId, hsId);
+        AnalysisData yingAnalysisDatav1013 = yingAnalysisDataMapper.findOneV1013(morderId, hsId);
+        AnalysisData yingAnalysisDatav1014 = yingAnalysisDataMapper.findOneV1014(morderId, hsId);
+        AnalysisData yingAnalysisDatav1015 = yingAnalysisDataMapper.findOneV1015(morderId, hsId);
+        AnalysisData yingAnalysisDatav1016 = yingAnalysisDataMapper.findOneV1016(morderId, hsId);
+        AnalysisData yingAnalysisDatav1017 = yingAnalysisDataMapper.findOneV1017(morderId, hsId);
+        AnalysisData yingAnalysisDatav1018 = yingAnalysisDataMapper.findOneV1018(morderId, hsId);
+//        AnalysisData yingAnalysisDatav1019 = yingAnalysisDataMapper.findOneV1019(morderId, hsId);
+        AnalysisData yingAnalysisDatav1020 = yingAnalysisDataMapper.findOneV1020(morderId, hsId);
+        AnalysisData yingAnalysisDatav1021 = yingAnalysisDataMapper.findOneV1021(morderId, hsId);
+        AnalysisData yingAnalysisDatav1023 = yingAnalysisDataMapper.findOneV1023(morderId, hsId);
+        AnalysisData yingAnalysisDatav1024 = yingAnalysisDataMapper.findOneV1024(morderId, hsId);
+        AnalysisData yingAnalysisDatav1027 = yingAnalysisDataMapper.findOneV1027(morderId, hsId);
+        AnalysisData yingAnalysisDatav1035 = yingAnalysisDataMapper.findOneV1035(morderId, hsId);
+        AnalysisData yingAnalysisDatav1037 = yingAnalysisDataMapper.findOneV1037(morderId, hsId);
+        AnalysisData yingAnalysisDatav1039 = yingAnalysisDataMapper.findOneV1039(morderId, hsId);
+        AnalysisData yingAnalysisDatav3001 = yingAnalysisDataMapper.findOneV3001(morderId, hsId);
+        AnalysisData yingAnalysisDatav3003 = yingAnalysisDataMapper.findOneV3003(morderId, hsId);
+        AnalysisData yingAnalysisDatav3005 = yingAnalysisDataMapper.findOneV3005(morderId, hsId);
+        AnalysisData yingAnalysisDatav3006 = yingAnalysisDataMapper.findOneV3006(morderId, hsId);
+        AnalysisData yingAnalysisDatav1041 = yingAnalysisDataMapper.findOneV1040cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1045= yingAnalysisDataMapper.findOneV1045(morderId, hsId);
+        AnalysisData yingAnalysisDatav1046 = yingAnalysisDataMapper.findOneV1046cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1047 = yingAnalysisDataMapper.findOneV1047(morderId, hsId);
+        AnalysisData yingAnalysisDatav1048 = yingAnalysisDataMapper.findOneV1048cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1049 = yingAnalysisDataMapper.findOneV1049cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1050 = yingAnalysisDataMapper.findOneV1050cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1051 = yingAnalysisDataMapper.findOneV1051cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1052 = yingAnalysisDataMapper.findOneV1052cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1054 = yingAnalysisDataMapper.findOneV1054cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1056 = yingAnalysisDataMapper.findOneV1056cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1057 = yingAnalysisDataMapper.findOneV1057cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1058 = yingAnalysisDataMapper.findOneV1058cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1059 = yingAnalysisDataMapper.findOneV1059cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1060 = yingAnalysisDataMapper.findOneV1060cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1061 = yingAnalysisDataMapper.findOneV1061cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav1063 = yingAnalysisDataMapper.findOneV1063cang(morderId, hsId);
 
 
-        YingAnalysisData yingAnalysisData = new YingAnalysisData() {{
+        AnalysisData yingAnalysisDatav1066 = yingAnalysisDataMapper.findOneV1066cang(morderId, hsId);
+        AnalysisData yingAnalysisDatav2010 = yingAnalysisDataMapper.findOneV2010cang(morderId, hsId);
+
+//        【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 - （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06 - 【1033】业务费
+        BigDecimal opreationCrocsProfile=yingAnalysisDatav1059.getWithoutTaxIncome().
+                subtract(yingAnalysisDatav1060.getWithoutTaxCost()).
+                subtract(yingAnalysisDatav1061.getAdditionalTax()).
+                subtract(yingAnalysisDatav1063.getStampDuty()).
+                subtract(yingAnalysisDatav1027.getSalesFeeAmount()).
+                subtract((yingAnalysisDatav1027.getHsqyFee().add(yingAnalysisDatav1027.getHssyFee().add(yingAnalysisDatav1027.getHshyFee()))).divide(new BigDecimal("1.11"))).
+                subtract(yingAnalysisDatav1027.getSuperviseFee().divide(new BigDecimal("1.06"))).
+                subtract(yingAnalysisDatav1027.getServiceFee().divide(new BigDecimal("1.06")));
+
+
+        AnalysisData yingAnalysisData = new AnalysisData() {{
             setTotalPayTrafficFee(yingAnalysisDatav1001.getTotalPayTrafficFee());
             setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
             setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
             setTotalPaymentAmount(yingAnalysisDatav1001.getTotalPaymentAmount());
             setTotalLoadMoney(yingAnalysisDatav1004.getTotalLoadMoney());
-            setTotalUnrepaymentEstimateCost(yingAnalysisDatav1006.getTotalUnrepaymentEstimateCost());
+            setTotalUnrepaymentEstimateCost((yingAnalysisDatav1006 == null ? new BigDecimal("0.00") : yingAnalysisDatav1006.getTotalUnrepaymentEstimateCost()));
             setTotalRepaymentPrincipeAmount(yingAnalysisDatav1007.getTotalRepaymentPrincipeAmount());
             setTotalRepaymentPrincipeAmount(yingAnalysisDatav1007.getTotalRepaymentPrincipeAmount());
             setTotalRepaymentInterest(yingAnalysisDatav1007.getTotalRepaymentInterest());
@@ -236,7 +266,7 @@ public class DataAnalysisService {
             setUnpaymentEstimateProfile(yingAnalysisDatav1016.getUnpaymentEstimateProfile());
             setInterestDays(yingAnalysisDatav1017.getInterestDays());
             setActualUtilizationRate(yingAnalysisDatav1018.getActualUtilizationRate());
-            setRate(yingAnalysisDatav1019.getRate());
+//            setRate(yingAnalysisDatav1019.getRate());
             setTotalPaymentedRateMoney(yingAnalysisDatav1020.getTotalPaymentedRateMoney());
             setContractRateProfile(yingAnalysisDatav1021.getContractRateProfile());
             setTiexianRateAmount(yingAnalysisDatav1023.getTiexianRateAmount());
@@ -274,12 +304,14 @@ public class DataAnalysisService {
             setExternalCapitalPaymentAmount(yingAnalysisDatav1047.getExternalCapitalPaymentAmount());
             setOwnerCapitalPaymentAmount(yingAnalysisDatav1048.getOwnerCapitalPaymentAmount());
             setUpstreamCapitalPressure(yingAnalysisDatav1049.getUpstreamCapitalPressure());
+            setDownstreamCapitalPressure(yingAnalysisDatav1050.getDownstreamCapitalPressure());
             setCssUninTypeNum(yingAnalysisDatav1051.getCssUninTypeNum());
             setCssUninTypeMoney(yingAnalysisDatav1052.getCssUninTypeMoney());
             setUnInvoicedAmountofMoney(yingAnalysisDatav1052.getUnInvoicedAmountofMoney());
             setCangPrePayment(yingAnalysisDatav1054.getCangPrePayment());
             setSettleGrossProfileNum(yingAnalysisDatav3003.getTotalOutstorageNum());
-            setPurchaseIncludeTaxTotalAmount(yingAnalysisDatav1056.getPurchaseIncludeTaxTotalAmount());
+            setPurchaseIncludeTaxTotalAmount(yingAnalysisDatav1046.getPurchaseCargoAmountOfMoney());
+
             setSaleIncludeTaxTotalAmount(yingAnalysisDatav1057.getSaleIncludeTaxTotalAmount());
             setTradeCompanyAddMoney(yingAnalysisDatav1058.getTradeCompanyAddMoney());
             setWithoutTaxIncome(yingAnalysisDatav1059.getWithoutTaxIncome());
@@ -287,9 +319,10 @@ public class DataAnalysisService {
             setVat(yingAnalysisDatav1061.getVat());
             setAdditionalTax(yingAnalysisDatav1061.getAdditionalTax());
             setStampDuty(yingAnalysisDatav1063.getStampDuty());
-            setOpreationCrossProfile(yingAnalysisDatav1064.getOpreationCrossProfile());
-            setCrossProfileATon(yingAnalysisDatav1064.getOpreationCrossProfile().subtract(yingAnalysisDatav3003.getTotalOutstorageNum()));
-            setOwnerCapitalPressure(yingAnalysisDatav1066.getOwnerCapitalPressure());
+            setOpreationCrossProfile(opreationCrocsProfile);
+            setCrossProfileATon(opreationCrocsProfile.divide(yingAnalysisDatav3003.getTotalOutstorageNum(),2));
+            setOwnerCapitalPressure((yingAnalysisDatav3003.getTotalOutstorageNum().compareTo(new BigDecimal("0.00")) == 0
+                    ? new BigDecimal("0.00") : yingAnalysisDatav1066.getOwnerCapitalPressure()));
             setSettledDownstreamHuikuanMoneny(yingAnalysisDatav2010.getSettledDownstreamHuikuanMoneny());
 
 
@@ -297,20 +330,23 @@ public class DataAnalysisService {
         }};
 
 
-        return cangAnalysisData;
+        return yingAnalysisData;
     }
 
 
-    public List<CangAnalysisData> findCangList(Long orderId) {
+    public List<AnalysisData> findCangList(Long morderId) {
 
-        List<CangAnalysisData> cangAnalysisDataList = cangAnalysisDataMapper.findList(orderId);
-
+        List<OrderConfig> orderConfigs = orderConfigService.getList(morderId);
+        List<AnalysisData> cangAnalysisDataList = new ArrayList<AnalysisData>();
+        for (OrderConfig config : orderConfigs) {
+            cangAnalysisDataList.add(this.findOneYing(morderId, config.getId()));
+        }
         return cangAnalysisDataList;
     }
 
-    public List<YingAnalysisData> findYingPartsOneList(Long morderId) {
-//        List<YingAnalysisData> yingAnalysisDataList = yingAnalysisDataMapper.findYingPartsOneList(morderId);
-        List<YingAnalysisData> yingAnalysisPartTwoList = yingAnalysisDataMapper.findYingPartsTwoList(morderId);
+    public List<AnalysisData> findYingPartsOneList(Long morderId) {
+//        List<AnalysisData> yingAnalysisDataList = yingAnalysisDataMapper.findYingPartsOneList(morderId);
+        List<AnalysisData> yingAnalysisPartTwoList = yingAnalysisDataMapper.findYingPartsTwoList(morderId);
         return yingAnalysisPartTwoList;
     }
 }

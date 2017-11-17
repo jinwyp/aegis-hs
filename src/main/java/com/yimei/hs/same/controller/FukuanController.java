@@ -13,7 +13,7 @@ import com.yimei.hs.same.entity.Order;
 import com.yimei.hs.same.service.DataAnalysisService;
 import com.yimei.hs.same.service.FukuanService;
 import com.yimei.hs.same.service.OrderService;
-import com.yimei.hs.ying.entity.YingAnalysisData;
+import com.yimei.hs.ying.entity.AnalysisData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,11 +111,11 @@ public class FukuanController {
         BigDecimal purchaseCargoAmountofMoney = new BigDecimal("0");
 
         if (businessType.equals(BusinessType.ying)) {
-            YingAnalysisData yingAnalysisData = dataAnalysisService.findOneYing(morderId, fukuan.getHsId());
+            AnalysisData yingAnalysisData = dataAnalysisService.findOneYing(morderId, fukuan.getHsId());
             totalPaymentMoney = totalPaymentMoney.add((yingAnalysisData.getTotalPaymentAmount() == null ? new BigDecimal("0") : yingAnalysisData.getTotalPaymentAmount()));
             purchaseCargoAmountofMoney = purchaseCargoAmountofMoney.add((yingAnalysisData.getPurchaseCargoAmountOfMoney() == null ? new BigDecimal("0") : yingAnalysisData.getPurchaseCargoAmountOfMoney()));
         } else if (businessType.equals(BusinessType.cang)) {
-            CangAnalysisData cangAnalysisData = dataAnalysisService.findOneCang( fukuan.getHsId(),morderId);
+            AnalysisData cangAnalysisData = dataAnalysisService.findOneCang( fukuan.getHsId(),morderId);
 
             totalPaymentMoney = totalPaymentMoney.add((cangAnalysisData.getTotalPaymentAmount() == null ? new BigDecimal("0") : cangAnalysisData.getTotalPaymentAmount()));
             purchaseCargoAmountofMoney = purchaseCargoAmountofMoney.add((cangAnalysisData.getPurchaseCargoAmountOfMoney() == null ? new BigDecimal("0") : cangAnalysisData.getPurchaseCargoAmountOfMoney()));
