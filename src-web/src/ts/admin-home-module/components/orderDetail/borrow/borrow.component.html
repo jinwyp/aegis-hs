@@ -29,6 +29,7 @@
                         <th>核算月</th>
                         <th>借款日期</th>
                         <th>借款金额</th>
+                        <th>借款状态</th>
 
                         <th>资金方</th>
                         <th>外部资金使用利率/天数</th>
@@ -43,6 +44,7 @@
                         <td> {{borrow.hsId | findKey : unitList : 'name'}}</td>
                         <td> {{borrow.jiekuanDate | slice : 0 : 10}}</td>
                         <td> {{borrow.amount  }}</td>
+                        <td> {{borrow.loanStatus  }}</td>
 
                         <td> {{borrow.capitalId | findKey : partyList : 'name'}}</td>
                         <td> {{borrow.useInterest | percent:'1.0-2' }} / {{borrow.useDays }} </td>
@@ -53,6 +55,8 @@
                             <button class="btn btn-link btn-sm" (click)="deleteItem(borrow)"> 删除 </button>
                         </td>
                     </tr>
+
+                    <tr> <td colspan="9">  累计借款金额: {{totalLoanMoney}} - 累计未还款金额数据: {{nonRepaymentLoanMoney}} </td> </tr>
                     </tbody>
                 </table>
 

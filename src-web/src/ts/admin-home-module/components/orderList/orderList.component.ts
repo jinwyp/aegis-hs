@@ -273,6 +273,7 @@ export class OrderListComponent implements OnInit {
             'required'      : '请选择公司!'
         },
 
+
         'custType'  : {
             'required'      : '请选择客户类型!'
         },
@@ -305,7 +306,8 @@ export class OrderListComponent implements OnInit {
 
             'mainAccounting'    : ['', [Validators.required ] ],
             'upstreamId'    : ['', [Validators.required ] ],
-            'downstreamId'    : ['', [Validators.required ] ]
+            'downstreamId'    : ['', [Validators.required ] ],
+            'terminalClientId'    : ['' ]
         } )
 
         this.orderForm.valueChanges.subscribe(data => {
@@ -362,10 +364,8 @@ export class OrderListComponent implements OnInit {
 
 
     showForm(isAddNew : boolean = true, order?: any ) {
-        console.log('order:', order)
 
         this.isShowEditOrderButton = true
-
 
 
         if (isAddNew) {
@@ -384,7 +384,8 @@ export class OrderListComponent implements OnInit {
 
                 'mainAccounting'    : '',
                 'upstreamId'    : '',
-                'downstreamId'    : ''
+                'downstreamId'    : '',
+                'terminalClientId'    : ''
 
             })
 
@@ -565,6 +566,11 @@ export class OrderListComponent implements OnInit {
             })
 
             lineName = lineName + this.partyListObject[this.orderForm.value.downstreamId].shortName
+
+            if (this.orderForm.value.terminalClientId) {
+                lineName = lineName + this.partyListObject[this.orderForm.value.terminalClientId].shortName
+            }
+
 
             this.orderForm.patchValue({line : lineName})
         }

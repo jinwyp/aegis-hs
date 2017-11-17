@@ -95,6 +95,9 @@
                         <div class="col-4">
                             <p class="card-text">下游客户: {{currentOrder?.downstreamId | findKey:partyList:'name' }}</p>
                         </div>
+                        <div class="col-4">
+                            <p class="card-text">终端客户: {{currentOrder?.terminalClientId | findKey:partyList:'name' }}</p>
+                        </div>
                     </div>
 
                     <div class="row mt-4" *ngFor="let company of currentOrder?.orderPartyList">
