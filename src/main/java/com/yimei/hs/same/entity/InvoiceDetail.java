@@ -21,7 +21,7 @@ public class InvoiceDetail implements Serializable {
 
     private Long invoiceId;
 
-    @NotNull(groups = {CreateGroup.class}, message = "发票号不能为空")
+//    @NotNull(groups = {CreateGroup.class}, message = "发票号不能为空")
     private String invoiceNumber;
 
     @NotNull(groups = {CreateGroup.class}, message = "货物数量不能为空")
@@ -32,6 +32,14 @@ public class InvoiceDetail implements Serializable {
 
     @NotNull(groups = {CreateGroup.class}, message = "含税价不能为空")
     private BigDecimal priceAndTax;
+
+    private BigDecimal amount;
+
+    private BigDecimal taxAmount;
+
+    private String cargoType;
+
+    private Integer sheetAmount;
 
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;

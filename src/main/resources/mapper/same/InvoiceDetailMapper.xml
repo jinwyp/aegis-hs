@@ -9,9 +9,13 @@
         <result column="taxRate" jdbcType="DECIMAL" property="taxRate"/>
         <result column="priceAndTax" jdbcType="DECIMAL" property="priceAndTax"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="taxAmount" jdbcType="DECIMAL" property="taxAmount"/>
+        <result column="sheetAmount" jdbcType="BIGINT" property="sheetAmount"/>
+        <result column="cargoType" jdbcType="VARCHAR" property="cargoType"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, invoiceId, invoiceNumber, cargoAmount, taxRate, priceAndTax, tsc
+        id, invoiceId, invoiceNumber, cargoAmount, taxRate, priceAndTax,amount,cargoType,sheetAmount, taxAmount,tsc
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -54,11 +58,30 @@
 
     <insert id="insert" parameterType="com.yimei.hs.same.entity.InvoiceDetail" keyProperty="id"
             useGeneratedKeys="true">
-        INSERT INTO hs_same_invoice_detail (id, invoiceId, invoiceNumber,
-                                            cargoAmount, taxRate, priceAndTax,
-                                            tsc)
-        VALUES (#{id,jdbcType=BIGINT}, #{invoiceId,jdbcType=BIGINT}, #{invoiceNumber,jdbcType=VARCHAR},
-                #{cargoAmount,jdbcType=DECIMAL}, #{taxRate,jdbcType=DECIMAL}, #{priceAndTax,jdbcType=DECIMAL},
+        INSERT INTO hs_same_invoice_detail (
+        id,
+        invoiceId,
+        invoiceNumber,
+        cargoAmount,
+        taxRate,
+        priceAndTax,
+        amount,
+        cargoType,
+        sheetAmount,
+        taxAmount,
+        tsc)
+        VALUES (#{id,jdbcType=BIGINT},
+               #{invoiceId,jdbcType=BIGINT},
+                #{invoiceNumber,jdbcType=VARCHAR},
+                #{cargoAmount,jdbcType=DECIMAL},
+                #{taxRate,jdbcType=DECIMAL},
+                #{priceAndTax,jdbcType=DECIMAL},
+
+                #{amount,jdbcType=DECIMAL},
+                #{cargoType,jdbcType=VARCHAR},
+                #{sheetAmount,jdbcType=BIGINT},
+                #{taxAmount,jdbcType=DECIMAL},
+
                 #{tsc,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.yimei.hs.same.entity.InvoiceDetail" keyProperty="id"
@@ -71,6 +94,11 @@
             <if test="cargoAmount != null">cargoAmount,</if>
             <if test="taxRate != null">taxRate,</if>
             <if test="priceAndTax != null">priceAndTax,</if>
+
+            <if test="amount != null">amount,</if>
+            <if test="cargoType != null">cargoType,</if>
+            <if test="sheetAmount != null">sheetAmount,</if>
+            <if test="taxAmount != null">taxAmount,</if>
             <if test="tsc != null">tsc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -80,6 +108,10 @@
             <if test="cargoAmount != null">#{cargoAmount,jdbcType=DECIMAL},</if>
             <if test="taxRate != null">#{taxRate,jdbcType=DECIMAL},</if>
             <if test="priceAndTax != null">#{priceAndTax,jdbcType=DECIMAL},</if>
+            <if test="priceAndTax != null">#{amount,jdbcType=DECIMAL},</if>
+            <if test="priceAndTax != null">#{cargoType,jdbcType=VARCHAR},</if>
+            <if test="priceAndTax != null">#{sheetAmount,jdbcType=BIGINT},</if>
+            <if test="priceAndTax != null">#{taxAmount,jdbcType=DECIMAL},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
@@ -92,6 +124,10 @@
             <if test="cargoAmount != null">cargoAmount = #{cargoAmount,jdbcType=DECIMAL},</if>
             <if test="taxRate != null">taxRate = #{taxRate,jdbcType=DECIMAL},</if>
             <if test="priceAndTax != null">priceAndTax = #{priceAndTax,jdbcType=DECIMAL},</if>
+            <if test="amount != null">amount= #{amount,jdbcType=DECIMAL},</if>
+            <if test="cargoType != null">cargoType= #{cargoType,jdbcType=VARCHAR},</if>
+            <if test="sheetAmount != null"> sheetAmount= #{sheetAmount,jdbcType=BIGINT},</if>
+            <if test="taxAmount != null">taxAmount= #{taxAmount,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
             <if test="true">tsu = current_timestamp,</if>
         </set>
@@ -105,6 +141,11 @@
             cargoAmount   = #{cargoAmount,jdbcType=DECIMAL},
             taxRate       = #{taxRate,jdbcType=DECIMAL},
             priceAndTax   = #{priceAndTax,jdbcType=DECIMAL},
+
+            amount = #{amount,jdbcType=DECIMAL},
+            cargoType = #{cargoType,jdbcType=VARCHAR},
+            sheetAmount = #{sheetAmount,jdbcType=BIGINT},
+            taxAmount = #{taxAmount,jdbcType=DECIMAL},
             tsc           = #{tsc,jdbcType=TIMESTAMP},
             tsu           = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}

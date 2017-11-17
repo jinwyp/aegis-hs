@@ -69,6 +69,13 @@
         WHERE
         id = #{id, jdbcType=BIGINT} and deleted =1
     </select>
+    <select id="getPartyInfoByOrderIdAndCustId" resultType="java.lang.Integer">
+        select
+        partyType
+        from hs_same_order_party party
+        left join hs_party partis on party.customerId =partis.id
+        where  orderId = #{orderId, jdbcType=BIGINT} and  customerId = #{customerId, jdbcType=BIGINT}  and deleted =0
+    </select>
 
     <!-- 物理删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

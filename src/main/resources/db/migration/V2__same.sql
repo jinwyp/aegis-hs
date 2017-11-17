@@ -104,6 +104,10 @@ create table hs_same_invoice_detail (
   taxRate decimal(10,2)      not null comment '税率',
   priceAndTax decimal(10,2)  not null comment '价税合计',
   deleted tinyint(1)         not null default 0 comment '逻辑删除',
+  amount decimal(10,2)   null comment  '金额',
+  taxAmount decimal(10,2)  null comment  '税额' ,
+  sheetAmount  bigint(6)  null comment '张数' , 
+  cargoType   varchar(128)  null comment  '货物种类',
   tsc timestamp              not null default current_timestamp,
   tsu timestamp              not null default current_timestamp,
   primary key (id)

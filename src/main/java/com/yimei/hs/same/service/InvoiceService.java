@@ -32,7 +32,6 @@ public class InvoiceService {
     private InvoiceDetailMapper invoiceDetailMapper;
 
     /**
-     *
      * @param pageInvoiceDTO
      * @return
      */
@@ -46,7 +45,6 @@ public class InvoiceService {
     }
 
     /**
-     *
      * @param id
      * @return
      */
@@ -55,13 +53,32 @@ public class InvoiceService {
     }
 
     /**
-     *
      * @param yingInvoice
      * @return
      */
     @Transactional(readOnly = false)
     public int create(Invoice yingInvoice) {
 
+        //录入判断
+//        Long openInvoiceId = yingInvoice.getOpenCompanyId();
+//        Long receiverId = yingInvoice.getReceiverId();
+//        int openCompanyType = orderPartyService.getPartyInfoByOrderIdAndCustId(openInvoiceId, yingInvoice.getOrderId());
+//        int receiverType = orderPartyService.getPartyInfoByOrderIdAndCustId(receiverId, yingInvoice.getOrderId());
+//
+//        //  1: ccs账务公司, 2: 资金方, 3: 外部'
+//
+//        if (openCompanyType == 1) {
+//            //发票号 货品种类可为空
+//            if (yingInvoice.) {
+//            }
+//        } else {
+//            if (openCompanyType==3 && receiverType==3) {
+//                //                货品种类可为空
+//            } else if (openCompanyType==3 && receiverType==1) {
+//                //         货品种类可为空
+//
+//            }
+//        }
         int rtn = 0;
 
         List<InvoiceDetail> detailsList = yingInvoice.getDetails();
@@ -81,7 +98,6 @@ public class InvoiceService {
     }
 
     /**
-     *
      * @param yingInvoice
      * @return
      */
@@ -111,6 +127,6 @@ public class InvoiceService {
     @Transactional(readOnly = false)
     public int delete(long id) {
         invoiceDetailMapper.deleteByInvoiceId(id);
-         return invoiceMapper.delete(id);
+        return invoiceMapper.delete(id);
     }
 }

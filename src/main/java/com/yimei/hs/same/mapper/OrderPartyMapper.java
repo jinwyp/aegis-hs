@@ -34,4 +34,5 @@ public interface OrderPartyMapper {
 
     List<OrderParty> findListByCustTypeAndOrderId( @Param("custType") String custType,  @Param("orderId")  Long orderId);
 
+    int getPartyInfoByOrderIdAndCustId( @Param("customerId") Long customerId, @Param("orderId")Long orderId);
 }

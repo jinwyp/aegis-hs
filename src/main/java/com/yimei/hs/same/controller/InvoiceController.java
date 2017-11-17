@@ -9,6 +9,7 @@ import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageInvoiceDTO;
 import com.yimei.hs.same.entity.Invoice;
 import com.yimei.hs.same.service.InvoiceService;
+import com.yimei.hs.same.service.OrderPartyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
 
+    @Autowired
+    private OrderPartyService orderPartyService;
     /**
      * 获取所有invoice
      *
@@ -79,9 +82,11 @@ public class InvoiceController {
             @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(CreateGroup.class) Invoice yingInvoice
     ) {
+
+
+
         int rtn = invoiceService.create(yingInvoice);
         if (rtn != 1) {
-            logger.error("创建失败: {}", yingInvoice);
             return Result.error(4001, "创建失败");
         }
         return Result.ok(yingInvoice);

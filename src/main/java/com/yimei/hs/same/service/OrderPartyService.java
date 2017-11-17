@@ -44,4 +44,7 @@ public class OrderPartyService {
     }
 
 
+    public  int  getPartyInfoByOrderIdAndCustId(Long id, Long orderId) {
+        return orderPartyMapper.getPartyInfoByOrderIdAndCustId(id,orderId);
+    }
 }

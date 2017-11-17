@@ -18,6 +18,9 @@ public class User implements Serializable {
     @NotEmpty(groups = {CreateGroup.class}, message="手机号不能为空")
     private String phone;
 
+    @NotEmpty(groups = {CreateGroup.class}, message="手机号不能为空")
+    private String username;
+
     @NotEmpty(groups = {ChangePassword.class, CreateGroup.class}, message = "密码不能为空")
     private String password;
 
