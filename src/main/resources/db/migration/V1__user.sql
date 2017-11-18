@@ -5,6 +5,7 @@ create table hs_user (
   id bigint(20)            not null auto_increment,
   deptId bigint(20)        not null comment '所属部门id',
   phone varchar(12)        not null comment '手机号',
+  username varchar(128)    not null comment '用户名',
   password varchar(40)     not null comment '密码',
   passwordSalt varchar(40) not null comment '密码盐',
   createDate datetime      not null comment '创建时间',

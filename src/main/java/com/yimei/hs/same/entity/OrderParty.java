@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderParty implements Serializable {
-
+    @NotNull(groups = {UpdateGroup.class}, message = "参与商id不能为空")
     private Long id;
 
     private Long orderId;

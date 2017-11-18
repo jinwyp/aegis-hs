@@ -2,11 +2,17 @@ use hsdb;
 
 create  view base as
 select
-
 orders.id as orderId,
-config.id as hsId
+config.id as hsId,
+config.contractBaseInterest,
+config.maxPrepayRate,
+config.tradeAddPrice,
+config.unInvoicedRate,
+config.weightedPrice,
+config.expectHKDays
 from hs_same_order orders
-     left join hs_same_order_config config on orders.id=config.orderId;
+     left join hs_same_order_config config on orders.id=config.orderId and config.deleted=0;
+
 
 --运费相关 付款运费金额
 create view v_1001 as
@@ -14,6 +20,7 @@ select
 base.orderId,
 base.hsId,
 ROUND(sum(case when  payUsage= 'FREIGNHT' then IFNULL(payAmount,0.00) else 0 end),2)as totalPayTrafficFee,
+ROUND(sum(case when  payUsage= 'PAYMENT_FOR_GOODS' then IFNULL(payAmount,0.00) else 0 end),2)as totalPayGoodsFee,
 ROUND(sum(case when  payUsage= 'TRADE_DEFICIT' then IFNULL(payAmount,0.00) else 0 end ),2)as totalTradeGapFee,
 ROUND(sum(IFNULL(payAmount,0.00)), 2)as totalPaymentAmount
 from base
@@ -68,7 +75,9 @@ left join  hs_same_jiekuan jiekuan on base.hsId=jiekuan.hsId and jiekuan.deleted
 --create view temp_jiekuan as
 
 
---未还款预估成本
+--
+--  累计未还款金额数据 nonRepaymentLoanMoney
+--  还款预估成本未 totalUnrepaymentEstimateCost
 create view v_1006 as
 select  
 base.orderId,
@@ -632,6 +641,8 @@ left join v_1048_cang on base.hsId=v_1048_cang.hsId
 left join v_1046_cang on base.hsId= v_1046_cang.hsId
 left join v_1047  on base.hsId=v_1047.hsId
 left join v_1001  on base.hsId=v_1001.hsId ;
+
+
 --1050 下游资金占压	downstreamCapitalPressure	计算	备查账／占压表	【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额
 
 create view v_1050_ying as

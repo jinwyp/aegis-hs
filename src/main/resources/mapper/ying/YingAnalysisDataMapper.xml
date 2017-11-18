@@ -396,6 +396,7 @@
          hsId,
          totalPayTrafficFee,
          totalTradeGapFee,
+         totalPayGoodsFee,
          totalPaymentAmount
         from v_1001
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
@@ -1195,7 +1196,71 @@ left join v_1001  on base.hsId=v_1001.hsId
         from v_2010_cang
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
+    <select id="findOneShowDos1ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
 
+      select
+      DISTINCT
+      base.orderId,
+      base.hsId,
+      ROUND(IFNULL(v_1046_ying.purchaseCargoAmountOfMoney*config.maxPrepayRate,0.00),2) as maximumPaymentAmount
+     from base
+     left join hs_same_order_config config on base.orderId=config.orderId
+     left join v_1046_ying on base.hsId=v_1046_ying.hsId
+     where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
+
+
+    </select>
+    <select id="findOneShowDos1cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
+      
+      select
+       base.orderId,
+       base.hsId,
+        ROUND(IFNULL(v_1046_ying.purchaseCargoAmountOfMoney*config.maxPrepayRate,0.00),2) as maximumPaymentAmount
+      from base
+       left join hs_same_order_config config on base.orderId=config.orderId
+       left join v_1046_cang on base.hsId=v_1046_cang.hsId
+      where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
+    </select>
+
+    <select id="findOneShowDos3" resultType="com.yimei.hs.ying.entity.AnalysisData">
+      select 
+       base.orderId,
+       IFNULL(sum(fukuan.payAmount),0.00)as accumulativePaymentAmount
+       from base 
+       left join hs_same_fukuan fukuan on base.orderId=fukuan.orderId
+      where base.orderId=#{orderId,jdbcType=BIGINT }
+       group by orderId
+    </select>
+
+    <!--1039】占压表已开票金额+（（【2002】已到场数量 - 【1026】结算扣吨合计 - 【1024】买方已结算数量） * 【核算月配置】加权单价+【1025】买方已结算金额-【1039】占压表已开票金额/【核算月配置】最高预付款比例）*【核算月配置】未开票款付款比例-汇总：付款用途 = “货款”的付款金额-->
+    <select id="findOneShowDos2" resultType="com.yimei.hs.ying.entity.AnalysisData">
+      select 
+      base.orderId,
+      base.hsId,
+      ROUND(IFNULL(IFNULL(v_1039.invoicedMoneyAmount,0.00)- IFNULL(v_1001.totalPayGoodsFee,0.00)+
+      IFNULL(base.unInvoicedRate,0.00)*
+      (
+      ( IFNULL(v_2001.totalArriveNum,0.00)- IFNULL(v_1024.totalBuyersettleGap,0.00)-IFNULL(v_1024.totalBuyerNums,0.00))*
+        IFNULL(base.weightedPrice,0.00)+ IFNULL(v_1024.totalBuyerMoney,0.00)-IFNULL(v_1039.invoicedMoneyAmount,0.00)/ IFNULL(base.maxPrepayRate,0.00)
+        ),0.00),2) as amountCargoOfThisTime
+     from base
+     left join v_1039 on base.hsId=v_1039.hsId
+     left join v_1001 on base.hsId=v_1001.hsId
+     left join v_2001 on base.hsId=v_2001.hsId
+     left join v_1024 on base.hsId=v_1024.hsId
+     where base.orderId=#{orderId,jdbcType=BIGINT } and  base.hsId= #{hsId,jdbcType=BIGINT}
+    </select>
+    <select id="findOneVBase" resultType="com.yimei.hs.same.entity.OrderConfig">
+        select
+        orderId,
+        maxPrepayRate,
+        tradeAddPrice,
+        unInvoicedRate,
+        weightedPrice,
+        expectHKDays
+        from base
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
+    </select>
 
 
 </mapper>

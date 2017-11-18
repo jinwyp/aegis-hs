@@ -59,4 +59,9 @@ public class Jiekuan implements Serializable {
     private BigDecimal huankuanTotal;
     //借款预估成本
     private BigDecimal loadEstimateCost;
+
+    //还款状态
+    private String loanStatus;
+    
+
 }

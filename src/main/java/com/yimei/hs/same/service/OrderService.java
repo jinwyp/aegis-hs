@@ -147,9 +147,16 @@ public class OrderService {
 
             for (OrderParty orderParty : partyList) {
                 orderParty.setOrderId(record.getId());
-                if (orderPartyMapper.insert(orderParty) != 1) {
-                    failed++;
+                if (orderParty.getId() == null) {
+                    if (orderPartyMapper.insert(orderParty) != 1) {
+                        failed++;
+                    }
+                } else {
+                    if (orderPartyMapper.updateByPrimaryKeySelective(orderParty) != 1) {
+                        failed++;
+                    }
                 }
+
             }
         }
 

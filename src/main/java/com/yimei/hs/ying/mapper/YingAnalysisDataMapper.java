@@ -2,6 +2,7 @@ package com.yimei.hs.ying.mapper;
 
 import com.yimei.hs.same.entity.InvoiceAnalysis;
 import com.yimei.hs.same.entity.Jiekuan;
+import com.yimei.hs.same.entity.OrderConfig;
 import com.yimei.hs.ying.entity.AnalysisData;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,7 +24,7 @@ public interface YingAnalysisDataMapper {
     List<AnalysisData> findYingPartsOneList(Long morderId);
 
     List<AnalysisData> findYingPartsTwoList(Long morderId);
-
+    OrderConfig findOneVBase(@Param("orderId") Long orderId, @Param("hsId")long hsId);
     AnalysisData findOneV1001(@Param("orderId") Long orderId, @Param("hsId")long hsId);
 
     AnalysisData findOneV1004(@Param("orderId") Long orderId, @Param("hsId")long hsId);
@@ -159,6 +160,12 @@ public interface YingAnalysisDataMapper {
 
 
     AnalysisData findOneV3006(@Param("orderId") Long orderId, @Param("hsId")long hsId);
+
+    AnalysisData findOneShowDos1ying(@Param("orderId") Long orderId, @Param("hsId")long hsId);
+    AnalysisData findOneShowDos1cang(@Param("orderId") Long orderId, @Param("hsId")long hsId);
+    AnalysisData findOneShowDos2(@Param("orderId") Long orderId, @Param("hsId")long hsId);
+    AnalysisData findOneShowDos3(@Param("orderId") Long orderId);
+
 
 
 }

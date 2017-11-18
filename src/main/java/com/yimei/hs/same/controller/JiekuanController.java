@@ -67,7 +67,7 @@ public class JiekuanController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId) {
         Long capitalId = orderService.findOne(morderId).getMainAccounting();
-        return Result.ok(jiekuanService.getListUnfinished(morderId, capitalId));
+        return Result.ok(jiekuanService.getListUnfinished(morderId, capitalId,0));
     }
 
     /**

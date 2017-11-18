@@ -47,6 +47,15 @@ public class JiekuanService {
             jiekuan.setHuankuanList(huankuanMapper.getListByJiekuanId(jiekuan.getId()));
             // 2. 关联借款对应的还款明细
             jiekuan.setHuankuanMapList(huankuanMapMapper.getListByJiekuanId(jiekuan.getId()));
+            if (jiekuan.getHuankuanMapList() != null) {
+                jiekuan.setLoanStatus(
+                        (jiekuan.getAmount().compareTo(jiekuan.getHuankuanMapList().stream()
+                                .map(HuankuanMap::getPrincipal)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add)) == 1 ? "部分已还" : " 已还"));
+            } else {
+                jiekuan.setLoanStatus("未还");
+            }
+
         }
 
         return page;
@@ -55,15 +64,20 @@ public class JiekuanService {
     /**
      * 找出当前订单的尚未被还款对应完的借款
       * @param orderId
+     *  @Param  mainAccoutId
+     *  @Param hsId 0 为不查询hsid
      * @return
      */
-    public List<Jiekuan> getListUnfinished(long orderId,long mainAccoutId) {
+    public List<Jiekuan> getListUnfinished(long orderId,long mainAccoutId,long hsId) {
         // 过滤该订单 非主账务公司的借款1
         PageJiekuanDTO dto = new PageJiekuanDTO();
         dto.setPageNo(1);
         dto.setPageSize(100000000);
         dto.setOrderId(orderId);
-//        List<Jiekuan> all = jiekuanMapper.getPage(dto).getResults();
+        if (hsId!=0) {
+            dto.setHsId(hsId);
+        }
+
         List<Jiekuan> all = jiekuanMapper.getlimitInnerCapital(orderId, mainAccoutId);
         List<Jiekuan> filter = new ArrayList<>();
 

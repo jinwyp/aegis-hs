@@ -8,8 +8,11 @@ import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.OrderStatus;
+import com.yimei.hs.same.dto.PageFukuanDTO;
 import com.yimei.hs.same.dto.PageOrderDTO;
+import com.yimei.hs.same.entity.Fukuan;
 import com.yimei.hs.same.entity.Order;
+import com.yimei.hs.same.service.FukuanService;
 import com.yimei.hs.same.service.OrderService;
 import com.yimei.hs.user.entity.User;
 import org.slf4j.Logger;
@@ -20,6 +23,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hary on 2017/9/15.
@@ -33,6 +39,8 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private FukuanService fukuanService;
 
     /**
      * 获取订单分页数据
@@ -118,14 +126,25 @@ public class OrderController {
             @PathVariable("id") long id,
             @RequestBody @Validated(UpdateGroup.class) Order order
     ) {
-        order.setId(id);
-        order.setBusinessType(businessType);
-        int rtn = orderService.update(order);
-        logger.error("order" + order);
-        if (rtn != 1) {
-            return Result.error(4001, "更新失败");
+
+        PageFukuanDTO pageFukuanDTO = new PageFukuanDTO();
+        pageFukuanDTO.setOrderId(order.getId());
+
+        List<Fukuan> fukuans=fukuanService.getPage(pageFukuanDTO).getResults();
+        if (fukuans == null || fukuans.size() == 0) {
+            order.setId(id);
+            order.setBusinessType(businessType);
+            int rtn = orderService.update(order);
+            logger.error("order" + order);
+            if (rtn != 1) {
+                return Result.error(4001, "更新失败");
+            }
+            return Result.ok(1);
+        } else {
+            return Result.error(4001, "订单已经生效，不能修改");
         }
-        return Result.ok(1);
+
+
     }
 
     /**

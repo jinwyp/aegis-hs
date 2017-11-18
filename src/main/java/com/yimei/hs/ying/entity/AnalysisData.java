@@ -175,9 +175,6 @@ public class AnalysisData implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-
-
-
     private BigDecimal totalInstorageNum;
 
     private BigDecimal totalInstorageAmount;
@@ -193,5 +190,19 @@ public class AnalysisData implements Serializable {
     private BigDecimal cangPrePayment;
 
     private BigDecimal totalOutstorageMoney;
+
+    // 本月最高付款金额(本次应付货款金额)
+    private BigDecimal maximumPaymentAmount;
+    // 本月累计付款金额
+    private BigDecimal unitTotalPaymentAmoun;
+    //业务累计付款金额
+    private BigDecimal accumulativePaymentAmount;
+    //    本次应付货款金额：amountCargoOfThisTime
+    private BigDecimal amountCargoOfThisTime;
+
+    //    累计未还款金额数据
+    private BigDecimal nonRepaymentLoanMoney;
+
+    private BigDecimal totalPayGoodsFee;
 
 }
