@@ -9,6 +9,7 @@ import com.yimei.hs.cang.entity.CangAnalysisData;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageSettleSellerDTO;
 import com.yimei.hs.same.entity.SettleSeller;
+import com.yimei.hs.same.entity.SettleSellerInfo;
 import com.yimei.hs.same.service.DataAnalysisService;
 import com.yimei.hs.same.service.SettleSellerService;
 import com.yimei.hs.ying.entity.AnalysisData;
@@ -21,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by hary on 2017/9/21.
@@ -191,5 +193,37 @@ public class SettleSellerController {
         }
         return Result.error(4001, "invalid request");
     }
+
+    @GetMapping("/{morderId}/settleseller/info{hsId}")
+    public ResponseEntity<Result<SettleSellerInfo>> findSettleInfo(
+            @PathVariable("businessType") BusinessType businessType,
+            @PathVariable("hsId") Long hsId,
+            @PathVariable("morderId") Long morderId
+
+    ) {
+            SettleSellerInfo settleSellerInfo = settleSellerService.findSettleInfo(morderId,hsId,businessType);
+            if (settleSellerInfo == null) {
+                return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
+            } else {
+                return Result.ok(settleSellerInfo);
+            }
+        }
+
+
+    @GetMapping("/{morderId}/settleseller/allinfo")
+    public ResponseEntity<Result<List<SettleSellerInfo>>> findAllSettleInfo(
+            @PathVariable("businessType") BusinessType businessType,
+            @PathVariable("morderId") Long morderId
+
+    ) {
+
+        List<SettleSellerInfo> settleSellerInfos = settleSellerService.findAllSettleInfo(morderId, businessType);
+        if (settleSellerInfos == null||settleSellerInfos.size()==0) {
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
+        } else {
+            return Result.ok(settleSellerInfos);
+        }
+    }
+
 
 }
