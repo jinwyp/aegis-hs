@@ -198,6 +198,7 @@ public class JiekuanService {
                 continue;
             }
 
+            jiekuan.setHuankuanTotal(total);
             // 借款的还款明细
             jiekuan.setHuankuanMapList(huankuanMaps);
 

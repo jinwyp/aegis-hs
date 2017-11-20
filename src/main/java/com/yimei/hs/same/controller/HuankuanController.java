@@ -25,10 +25,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 /**
  * Created by hary on 2017/9/22.
@@ -97,24 +101,42 @@ public class HuankuanController {
     ) {
         assert (morderId == huankuan.getOrderId());
         // 1. 找出当前订单借款记录 - 还款尚未对应完成的记录
-//        List<Jiekuan> jiekuans = jiekuanService.huankuanUnfinished(huankuan.getOrderId());
+        List<Jiekuan> jiekuans = jiekuanService.huankuanUnfinished(huankuan.getOrderId());
         List<HuankuanMap> huankuanMaps = huankuan.getHuankuanMapList();
 
-        if (huankuanMaps==null
-                ||huankuanMaps.size()==0) {
+
+        if (huankuanMaps == null
+                || huankuanMaps.size() == 0) {
             return Result.error(4001, "借款不能为空");
         }
         for (HuankuanMap huankuanMap : huankuanMaps) {
-            if (huankuanMap.getJiekuanId()==null) {
+
+            if (huankuanMap.getJiekuanId() == null) {
                 return Result.error(4001, "借款款id不能为空");
             }
-            Jiekuan jiekuanDb= jiekuanService.findOne(huankuanMap.getJiekuanId());
+
+            Predicate<Jiekuan> jiekuanFilter = (jiekuan) -> (jiekuan.getId() == huankuanMap.getJiekuanId());
+            //获取剩下的值
+
+
+            Jiekuan jiekuanDb = jiekuanService.findOne(huankuanMap.getJiekuanId());
+
+
             if (jiekuanDb != null) {
-                if (huankuanMap.getPrincipal().compareTo(jiekuanDb.getAmount()) ==1){
+
+                List<BigDecimal> jiekuanList = jiekuans.stream().filter(jiekuanFilter).map(Jiekuan::getHuankuanTotal).collect(toList());
+                if (jiekuanList!=null&&huankuanMap.getPrincipal().compareTo
+                        (
+                                jiekuanDb.getAmount().subtract((jiekuanList.get(0)==null?BigDecimal.ZERO:jiekuanList.get(0)))
+                        ) == 1) {
+
+                    return Result.error(4001, "还款本金大于借款本金");
+                }
+                if (huankuanMap.getPrincipal().compareTo(jiekuanDb.getAmount()) == 1) {
                     return Result.error(4001, "还款本金大于借款本金");
                 }
             } else {
-                return Result.error(4001, "改笔借款不存在");
+                return Result.error(4001, "该笔借款不存在");
             }
 
         }
@@ -188,17 +210,5 @@ public class HuankuanController {
         return Result.ok(1);
     }
 
-    class NaturalSupplier implements Supplier<HuikuanMap> {
 
-        List<HuikuanMap> huikuanMaps;
-
-        int i = 0;
-        public HuikuanMap get() {
-
-            return this.huikuanMaps.get(i++);
-        }
-
-        public void setHuikuanMaps(List<HuikuanMap> maps){
-            huikuanMaps.addAll(maps) ;
-        }
-    }}
+}
