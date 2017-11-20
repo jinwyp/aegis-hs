@@ -241,9 +241,9 @@ ELSE 0 END as rate
 
 from base 
      left join hs_same_huikuan_map map on base.orderId=map.orderId and  map.deleted=0
-     left join hs_same_huikuan huikuan on huikuan.id=map.huikuanId
-     left join hs_same_fukuan fukuan on fukuan.id=map.fukuanId
-     left join v_1018 on v_1018.hsId=huikuan.hsId
+     left join hs_same_huikuan huikuan on huikuan.id=map.huikuanId  and huikuan.hsId=base.hsId and base.orderId=huikuan.orderId
+     left join hs_same_fukuan fukuan on fukuan.id=map.fukuanId  and fukuan.hsId=base.hsId and base.orderId=fukuan.orderId
+     left join v_1018 on v_1018.hsId=huikuan.hsId  and   v_1018.orderId=base.orderId
      left join hs_same_settle_seller seller on fukuan.hsId=seller.hsId;
 
 
