@@ -1227,7 +1227,7 @@ left join v_1001  on base.hsId=v_1001.hsId
        base.orderId,
        IFNULL(sum(fukuan.payAmount),0.00)as accumulativePaymentAmount
        from base 
-       left join hs_same_fukuan fukuan on base.orderId=fukuan.orderIdgit
+       left join hs_same_fukuan fukuan on base.orderId=fukuan.orderId
       where base.orderId=#{orderId,jdbcType=BIGINT }
        group by orderId
     </select>
