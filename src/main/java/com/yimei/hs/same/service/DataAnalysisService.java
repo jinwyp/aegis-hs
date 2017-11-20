@@ -2,6 +2,7 @@ package com.yimei.hs.same.service;
 
 import com.yimei.hs.cang.entity.CangAnalysisData;
 import com.yimei.hs.cang.mapper.CangAnalysisDataMapper;
+import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.entity.Jiekuan;
 import com.yimei.hs.same.entity.Order;
 import com.yimei.hs.same.entity.OrderConfig;
@@ -89,8 +90,8 @@ public class DataAnalysisService {
         AnalysisData yingAnalysisDatav1063 = yingAnalysisDataMapper.findOneV1063ying(morderId, hsId);
         AnalysisData yingAnalysisDatav1066 = yingAnalysisDataMapper.findOneV1066ying(morderId, hsId);
         AnalysisData yingAnalysisDatav2010 = yingAnalysisDataMapper.findOneV2010ying(morderId, hsId);
-        AnalysisData yingAnalysisDos1 = yingAnalysisDataMapper.findOneShowDos1ying(morderId,hsId);
-        AnalysisData yingAnalysisDos2 = yingAnalysisDataMapper.findOneShowDos2(morderId,hsId);
+        AnalysisData yingAnalysisDos1 = yingAnalysisDataMapper.findOneShowDos1ying(morderId, hsId);
+        AnalysisData yingAnalysisDos2 = yingAnalysisDataMapper.findOneShowDos2(morderId, hsId);
         AnalysisData yingAnalysisDos3 = yingAnalysisDataMapper.findOneShowDos3(morderId);
 //【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 - （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06 - 【1033】业务费
         BigDecimal opreationCrocsProfile = yingAnalysisDatav1059.getWithoutTaxIncome().
@@ -121,7 +122,7 @@ public class DataAnalysisService {
             setHsMonth(orderConfigBase.getHsMonth());
             setTotalPayTrafficFee(yingAnalysisDatav1001.getTotalPayTrafficFee());
             setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
-            setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
+
             setTotalPaymentAmount(yingAnalysisDatav1001.getTotalPaymentAmount());
             setTotalLoadMoney(yingAnalysisDatav1004.getTotalLoadMoney());
             setTotalUnrepaymentEstimateCost((yingAnalysisDatav1006 == null ? new BigDecimal("0.00") : yingAnalysisDatav1006.getTotalUnrepaymentEstimateCost()));
@@ -200,7 +201,7 @@ public class DataAnalysisService {
             setOpreationCrossProfile(opreationCrocsProfile);
             setCrossProfileATon((yingAnalysisDatav1055.getSettleGrossProfileNum()).compareTo(BigDecimal.ZERO) == 0 ?
                     new BigDecimal("0.00") : opreationCrocsProfile.divide(yingAnalysisDatav1055.getSettleGrossProfileNum(), 2, BigDecimal.ROUND_HALF_UP));
-           //付款相关字段
+            //付款相关字段
 
 
             setMaximumPaymentAmount(yingAnalysisDos1.getMaximumPaymentAmount());
@@ -210,10 +211,8 @@ public class DataAnalysisService {
             setAmountCargoOfThisTime(yingAnalysisDos2.getAmountCargoOfThisTime());
 
 
-
             //借款需要字段
             setNonRepaymentLoanMoney(nonRepaymentLoanMoney);
-
 
 
         }};
@@ -296,7 +295,7 @@ public class DataAnalysisService {
         AnalysisData yingAnalysisDatav2010 = yingAnalysisDataMapper.findOneV2010cang(morderId, hsId);
 
 
-        AnalysisData yingAnalysisDos1 = yingAnalysisDataMapper.findOneShowDos1ying(morderId,hsId);
+        AnalysisData yingAnalysisDos1 = yingAnalysisDataMapper.findOneShowDos1ying(morderId, hsId);
         AnalysisData yingAnalysisDos3 = yingAnalysisDataMapper.findOneShowDos3(morderId);
 
 //        【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 - （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06 - 【1033】业务费
@@ -315,7 +314,6 @@ public class DataAnalysisService {
             setHsId(orderConfigBase.getHsId());
             setHsMonth(orderConfigBase.getHsMonth());
             setTotalPayTrafficFee(yingAnalysisDatav1001.getTotalPayTrafficFee());
-            setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
             setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
             setTotalPaymentAmount(yingAnalysisDatav1001.getTotalPaymentAmount());
             setTotalLoadMoney(yingAnalysisDatav1004.getTotalLoadMoney());
@@ -399,8 +397,6 @@ public class DataAnalysisService {
             setAccumulativePaymentAmount(yingAnalysisDos3.getAccumulativePaymentAmount());
 
 
-
-
             //借款需要字段
             setNonRepaymentLoanMoney(nonRepaymentLoanMoney);
 
@@ -428,5 +424,30 @@ public class DataAnalysisService {
         return yingAnalysisPartTwoList;
     }
 
-//    pre
+
+    public BigDecimal findPurchaseCargoAmountOfMoney(Long orderId, Long hsId, BusinessType businessType) {
+        if (businessType.equals(BusinessType.ying)) {
+            return yingAnalysisDataMapper.findOneV1046ying(orderId, hsId).getPurchaseCargoAmountOfMoney();
+        } else if (businessType.equals(BusinessType.cang)) {
+            return yingAnalysisDataMapper.findOneV1046ying(orderId, hsId).getPurchaseCargoAmountOfMoney();
+        }
+
+        return new BigDecimal("-1");
+    }
+
+    public BigDecimal findTotalPaymentAmount(Long orderId, Long hsId) {
+
+            return yingAnalysisDataMapper.findOneV1001(orderId, hsId).getTotalPaymentAmount();
+    }
+
+
+    public BigDecimal findTotalHuikuanPaymentMoney(Long orderId, Long hsId) {
+
+        return yingAnalysisDataMapper.findOneV1013(orderId, hsId).getTotalHuikuanPaymentMoney();
+    }
+
+    public BigDecimal findTotalTradeGapFee(Long orderId, Long hsId) {
+
+        return yingAnalysisDataMapper.findOneV1001(orderId, hsId).getTotalTradeGapFee();
+    }
 }

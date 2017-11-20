@@ -108,19 +108,14 @@ public class SettleSellerController {
 
             BigDecimal totalHuikuanPaymentMoney = new BigDecimal("0");
             BigDecimal totalPaymentAmount = new BigDecimal("0");
-
+            totalHuikuanPaymentMoney = totalHuikuanPaymentMoney.add((dataAnalysisService.findTotalHuikuanPaymentMoney(morderId, settleSeller.getHsId())));
             if (businessType.equals(BusinessType.ying)) {
-                AnalysisData yingAnalysisData = dataAnalysisService.findOneYing(morderId, settleSeller.getHsId());
-                totalHuikuanPaymentMoney = totalHuikuanPaymentMoney.add((yingAnalysisData.getTotalHuikuanPaymentMoney()==null?new BigDecimal("0"):yingAnalysisData.getTotalHuikuanPaymentMoney()));
-                totalPaymentAmount = totalPaymentAmount.add((yingAnalysisData.getTotalPaymentAmount() == null ? new BigDecimal("0") : yingAnalysisData.getTotalPaymentAmount())
-                        .subtract((yingAnalysisData.getTotalTradeGapFee() == null ? new BigDecimal("0") : yingAnalysisData.getTotalTradeGapFee())
-                        ));
+                totalPaymentAmount = totalPaymentAmount.add(dataAnalysisService.findPurchaseCargoAmountOfMoney(morderId, settleSeller.getHsId(),BusinessType.ying))
+                        .subtract(dataAnalysisService.findTotalTradeGapFee(morderId, settleSeller.getHsId()));
+
             } else if (businessType.equals(BusinessType.cang)) {
-                AnalysisData cangAnalysisData = dataAnalysisService.findOneCang(settleSeller.getHsId(),morderId);
-                totalHuikuanPaymentMoney = totalHuikuanPaymentMoney.add((cangAnalysisData.getTotalHuikuanPaymentMoney()==null?new BigDecimal("0"):cangAnalysisData.getTotalHuikuanPaymentMoney()));
-                totalPaymentAmount = totalPaymentAmount.add((cangAnalysisData.getPurchaseCargoAmountOfMoney() == null ? new BigDecimal("0") : cangAnalysisData.getPurchaseCargoAmountOfMoney())
-                        .subtract((cangAnalysisData.getTotalTradeGapFee() == null ? new BigDecimal("0") : cangAnalysisData.getTotalTradeGapFee())
-                        ));
+                totalPaymentAmount = totalPaymentAmount.add(dataAnalysisService.findPurchaseCargoAmountOfMoney(morderId, settleSeller.getHsId(),BusinessType.cang))
+                        .subtract(dataAnalysisService.findTotalTradeGapFee(morderId, settleSeller.getHsId()));
             }
 
             boolean exit = settleSellerService.selectHsAndOrderId(morderId, settleSeller.getHsId());
