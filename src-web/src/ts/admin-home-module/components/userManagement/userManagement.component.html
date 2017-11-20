@@ -9,6 +9,7 @@
         <form [formGroup]="userForm" (ngSubmit)="userFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
             <bs-text-input formControlName="phone" [fc]="userForm.get('phone')" [type]="'text'" [label]="'手机号:'" [readOnly]="!isAddNew" [dirty]="ignoreDirty" [error]="userFormError.phone"></bs-text-input>
+            <bs-text-input formControlName="username" [fc]="userForm.get('username')" [type]="'text'" [label]="'姓名:'" [readOnly]="!isAddNew" [dirty]="ignoreDirty" [error]="userFormError.username"></bs-text-input>
             <bs-text-input formControlName ="password" [fc]="userForm.get('password')" [type]="'text'" [label]="'密码:'" [dirty]="ignoreDirty" [error]="userFormError.password"></bs-text-input>
 
             <bs-select formControlName ="deptId" [options]="departmentList" [label]="'部门:'" [dirty]="ignoreDirty" [error]="userFormError.deptId"></bs-select>
@@ -33,6 +34,7 @@
                 <tr>
                     <th>ID</th>
                     <th>手机号</th>
+                    <th>姓名</th>
                     <th>部门</th>
                     <th>创建时间</th>
                     <th>创建人</th>
@@ -45,6 +47,7 @@
                 <tr *ngFor="let user of userList; trackBy: trackByFn">
                     <td> {{user.id}}</td>
                     <td> {{user.phone}}</td>
+                    <td> {{user.username}}</td>
                     <td> {{user.deptId | findKey : departmentList : 'name'}}</td>
                     <td> {{user.createDate | slice : 0 : 10}}</td>
                     <td> {{user.createBy}}</td>

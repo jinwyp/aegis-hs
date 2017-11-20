@@ -48,7 +48,7 @@ describe('管理用户', function () {
             .send({
                 phone : '13564568304',
                 password : '123456',
-                username:'001',
+                username : '13564568304',
                 deptId : 2,
                 isActive  :  true,
                 isAdmin  : false
@@ -73,7 +73,7 @@ describe('管理用户', function () {
             .send({
                 phone : '13564568301',
                 password : '123456',
-                username:'001',
+                username : '13564568301',
                 deptId : 2,
                 isActive  :  false,
                 isAdmin  : false
@@ -100,7 +100,7 @@ describe('管理用户', function () {
             .send({
                 phone : '13564568302',
                 password : '123456',
-                username:'001',
+                username : '13564568302',
                 deptId : 2,
                 isActive  :  true,
                 isAdmin  : false
@@ -125,7 +125,7 @@ describe('管理用户', function () {
             .send({
                 phone : '13564568303',
                 password : '123456',
-                username:'001',
+                username : '13564568303',
                 deptId : 2,
                 isActive  :  true,
                 isAdmin  : false
@@ -152,7 +152,7 @@ describe('管理用户', function () {
             .send({
                 phone : '13564568304',
                 password : '123456',
-                username:'001',
+                username : '13564568304',
                 deptId : 2,
                 isActive  :  2,
                 isAdmin  : 1
