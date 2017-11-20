@@ -43,6 +43,7 @@ export class SettleOrderComponent implements OnInit {
     unitList : any[] = []
     unitListStat : any[] = []
     unitListStatObject : any = {}
+    unitListStatAdditionalInfoObject : any = {}
 
     settleDiscountModeList : any[] = getEnum('DiscountMode')
 
@@ -136,6 +137,21 @@ export class SettleOrderComponent implements OnInit {
             }
         }
 
+    }
+
+    getAddtionalInfo () {
+        this.hsOrderService.getSettleUpstreamAdditionalInfo(this.businessType, this.currentOrder.id).subscribe(
+            data => {
+
+                if (Array.isArray(data.data)) {
+
+                    data.data.forEach( unit => {
+                        this.unitListStatAdditionalInfoObject[unit.hsId] = unit
+                    })
+                }
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
     }
 
     getPartyList () {
@@ -234,8 +250,6 @@ export class SettleOrderComponent implements OnInit {
         this.settleForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
             'settleDate'    : [null, [Validators.required ] ],
-
-
 
             'discountType'    : ['', [Validators.required ] ],
             'discountInterest'    : ['', [] ],
@@ -450,6 +464,7 @@ export class SettleOrderComponent implements OnInit {
             this.settleForm.patchValue(settle)
         }
 
+        this.getAddtionalInfo()
 
         this.isShowForm = !this.isShowForm
     }
@@ -508,5 +523,29 @@ export class SettleOrderComponent implements OnInit {
     }
 
 
+    changeUnit (event : any) {
+
+        if (this.unitListStatAdditionalInfoObject && this.unitListStatAdditionalInfoObject[event.id]) {
+
+            if (this.unitListStatAdditionalInfoObject[event.id].hasSettled) {
+                this.settleForm.patchValue({
+                    'settleDate'    : this.unitListStatAdditionalInfoObject[event.id].lastHuikuanDate
+                    // 'amount'    : '',
+                    // 'money'    : ''
+                })
+            }
+
+            // hasSettled:true
+            // hsId:6
+            // lastHuikuanDate:"2017-06-23 00:00:00"
+            // name:undefined
+            // orderId:12
+            // purchaseCargoAmountOfMoney:23816677.57
+            // totalBuyerNums:40530
+        }
+
+
+
+    }
 }
 
