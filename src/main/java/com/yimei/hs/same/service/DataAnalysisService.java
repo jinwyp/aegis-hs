@@ -116,6 +116,8 @@ public class DataAnalysisService {
 //                ).subtract(yingAnalysisDatav1001.getTotalPayGoodsFee());
 
         AnalysisData yingAnalysisData = new AnalysisData() {{
+            setHsId(orderConfigBase.getId());
+            setHsMonth(orderConfigBase.getHsMonth());
             setTotalPayTrafficFee(yingAnalysisDatav1001.getTotalPayTrafficFee());
             setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
             setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
@@ -233,6 +235,18 @@ public class DataAnalysisService {
 
     public AnalysisData findOneCang(Long hsId, Long morderId) {
 
+
+        Order order = orderService.findOne(morderId);
+//        获得未还款金额(借款)
+        List<Jiekuan> jiekuans = jiekuanService.getListUnfinished(morderId, order.getMainAccounting(), hsId);
+        BigDecimal nonRepaymentLoanMoney = jiekuans.stream().map(Jiekuan::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add).
+                subtract(
+                        jiekuans.stream().map(Jiekuan::getHuankuanTotal).reduce(BigDecimal.ZERO, BigDecimal::add));
+
+
+        OrderConfig orderConfigBase = yingAnalysisDataMapper.findOneVBase(morderId, hsId);
+
+
         AnalysisData yingAnalysisDatav1001 = yingAnalysisDataMapper.findOneV1001(morderId, hsId);
         AnalysisData yingAnalysisDatav1004 = yingAnalysisDataMapper.findOneV1004(morderId, hsId);
         AnalysisData yingAnalysisDatav1006 = yingAnalysisDataMapper.findOneV1006(morderId, hsId);
@@ -280,6 +294,10 @@ public class DataAnalysisService {
         AnalysisData yingAnalysisDatav1066 = yingAnalysisDataMapper.findOneV1066cang(morderId, hsId);
         AnalysisData yingAnalysisDatav2010 = yingAnalysisDataMapper.findOneV2010cang(morderId, hsId);
 
+
+        AnalysisData yingAnalysisDos1 = yingAnalysisDataMapper.findOneShowDos1ying(morderId,hsId);
+        AnalysisData yingAnalysisDos3 = yingAnalysisDataMapper.findOneShowDos3(morderId);
+
 //        【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 - （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06 - 【1033】业务费
         BigDecimal opreationCrocsProfile = yingAnalysisDatav1059.getWithoutTaxIncome().
                 subtract(yingAnalysisDatav1060.getWithoutTaxCost()).
@@ -292,6 +310,8 @@ public class DataAnalysisService {
 
 
         AnalysisData yingAnalysisData = new AnalysisData() {{
+            setHsId(orderConfigBase.getId());
+            setHsMonth(orderConfigBase.getHsMonth());
             setTotalPayTrafficFee(yingAnalysisDatav1001.getTotalPayTrafficFee());
             setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
             setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
@@ -370,6 +390,17 @@ public class DataAnalysisService {
             setOwnerCapitalPressure((yingAnalysisDatav3003.getTotalOutstorageNum().compareTo(new BigDecimal("0.00")) == 0
                     ? new BigDecimal("0.00") : yingAnalysisDatav1066.getOwnerCapitalPressure()));
             setSettledDownstreamHuikuanMoneny(yingAnalysisDatav2010.getSettledDownstreamHuikuanMoneny());
+
+            setMaximumPaymentAmount(yingAnalysisDos1.getMaximumPaymentAmount());
+            setUnitTotalPaymentAmoun(yingAnalysisDatav1001.getTotalPaymentAmount().add(yingAnalysisDatav1007.getTotalRepaymentInterest()));
+//            业务累计付款金额
+            setAccumulativePaymentAmount(yingAnalysisDos3.getAccumulativePaymentAmount());
+
+
+
+
+            //借款需要字段
+            setNonRepaymentLoanMoney(nonRepaymentLoanMoney);
 
 
         }};

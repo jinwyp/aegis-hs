@@ -4,6 +4,7 @@ create  view base as
 select
 orders.id as orderId,
 config.id as hsId,
+config.hsMonth,
 config.contractBaseInterest,
 config.maxPrepayRate,
 config.tradeAddPrice,

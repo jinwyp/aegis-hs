@@ -16,6 +16,8 @@ public class AnalysisData implements Serializable {
 
     private Long orderId;
 
+    private String hsMonth;
+
     private BigDecimal totalPayTrafficFee;
 
     private BigDecimal totalTradeGapFee;

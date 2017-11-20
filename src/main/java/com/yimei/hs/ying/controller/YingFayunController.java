@@ -84,13 +84,13 @@ public class YingFayunController {
             @RequestBody @Validated(CreateGroup.class) YingFayun yingFayun
     ) {
 
-        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.MOTOR)) {
-            if (yingFayun.getUpstreamCars() == null
-                    || yingFayun.getUpstreamCars() <= 0
-                    ) {
-                return Result.error(4001, "上游汽运数量不匹配", HttpStatus.BAD_REQUEST);
-            }
-        }
+//        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.MOTOR)) {
+//            if (yingFayun.getUpstreamCars() == null
+//                    || yingFayun.getUpstreamCars() <= 0
+//                    ) {
+//                return Result.error(4001, "上游汽运数量不匹配", HttpStatus.BAD_REQUEST);
+//            }
+//        }
 
         if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.SHIP)) {
             if (StringUtils.isEmpty(yingFayun.getUpstreamShip())) {
@@ -103,14 +103,14 @@ public class YingFayunController {
                 return Result.error(4001, "上游火运计划号不能为空", HttpStatus.BAD_REQUEST);
             }
         }
-
-        if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.MOTOR)) {
-            if (yingFayun.getDownstreamCars() == null
-                    || yingFayun.getDownstreamCars() <= 0
-                    ) {
-                return Result.error(4001, "下游汽运数量不匹配", HttpStatus.BAD_REQUEST);
-            }
-        }
+//
+//        if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.MOTOR)) {
+//            if (yingFayun.getDownstreamCars() == null
+//                    || yingFayun.getDownstreamCars() <= 0
+//                    ) {
+//                return Result.error(4001, "下游汽运数量不匹配", HttpStatus.BAD_REQUEST);
+//            }
+//        }
 
         if (yingFayun.getDownstreamTrafficMode().equals(TrafficMode.SHIP)) {
             if (StringUtils.isEmpty(yingFayun.getDownstreamShip())) {

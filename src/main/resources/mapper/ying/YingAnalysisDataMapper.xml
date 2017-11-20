@@ -1253,6 +1253,8 @@ left join v_1001  on base.hsId=v_1001.hsId
     <select id="findOneVBase" resultType="com.yimei.hs.same.entity.OrderConfig">
         select
         orderId,
+        hsId,
+        hsMonth,
         maxPrepayRate,
         tradeAddPrice,
         unInvoicedRate,
