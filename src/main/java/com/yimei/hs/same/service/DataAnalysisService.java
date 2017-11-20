@@ -427,4 +427,6 @@ public class DataAnalysisService {
         List<AnalysisData> yingAnalysisPartTwoList = yingAnalysisDataMapper.findYingPartsTwoList(morderId);
         return yingAnalysisPartTwoList;
     }
+
+//    pre
 }
