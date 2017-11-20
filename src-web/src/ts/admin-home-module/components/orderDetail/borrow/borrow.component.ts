@@ -26,6 +26,7 @@ export class BorrowComponent implements OnInit {
     currentBorrowId : number = 0
 
     borrowForm: FormGroup
+    borrowSearchForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
@@ -41,7 +42,7 @@ export class BorrowComponent implements OnInit {
     nonRepaymentLoanMoney : number = 0
 
     pagination: any = {
-        pageSize : 20,
+        pageSize : 10000,
         pageNo : 1,
         total : 1
     }
@@ -62,10 +63,12 @@ export class BorrowComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.createBorrowSearchForm()
+        this.createBorrowForm()
         this.getOrderUnitList()
         this.getPartyList()
         this.getBorrowList()
-        this.createBorrowForm()
+
     }
 
 
@@ -75,13 +78,23 @@ export class BorrowComponent implements OnInit {
 
 
     getBorrowList () {
-        this.hsOrderService.getBorrowListByID(this.businessType, this.currentOrder.id).subscribe(
+
+        let query : any = {
+            pageSize: this.pagination.pageSize,
+            pageNo: this.pagination.pageNo
+        }
+
+        query = (<any>Object).assign(query, this.borrowSearchForm.value)
+
+        console.log('Query: ', query)
+
+        this.hsOrderService.getBorrowListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.borrowList = data.data.results
 
                 if ( Array.isArray(data.data.results)) {
 
-                    data.data.result.forEach( (borrow) => {
+                    data.data.results.forEach( (borrow) => {
                         this.totalLoanMoney = this.totalLoanMoney + borrow.amount
 
                         if (!borrow.loanStatus) {
@@ -121,7 +134,7 @@ export class BorrowComponent implements OnInit {
     getOrderUnitList () {
         this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
-                this.unitList = data.data.results
+                // this.unitList = data.data.results
 
                 if (Array.isArray(data.data.results)) {
 
@@ -136,6 +149,13 @@ export class BorrowComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+    }
+
+    createBorrowSearchForm(): void {
+
+        this.borrowSearchForm = this.fb.group({
+            'hsId'    : ['' ]
+        } )
     }
 
 

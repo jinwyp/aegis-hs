@@ -135,7 +135,7 @@ export class OrderListComponent implements OnInit {
 
         query = (<any>Object).assign(query, this.orderSearchForm.value)
 
-        console.log('query: ', query)
+        console.log('Query: ', query)
         this.hsOrderService.getOrderList(this.businessType, query).subscribe(
             data => {
                 this.orderList = data.data.results
