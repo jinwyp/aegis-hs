@@ -117,6 +117,9 @@ export class UserManagementComponent implements OnInit {
         'password'  : {
             'required'      : '请填写密码!'
         },
+        'username'  : {
+            'required'      : '请填写姓名!'
+        },
         'deptId'  : {
             'required'      : '请填写事业部门!'
         },
@@ -137,6 +140,7 @@ export class UserManagementComponent implements OnInit {
         this.userForm = this.fb.group({
             'phone'    : ['', [Validators.required, isMobilePhone()] ],
             'password'    : ['', [Validators.required] ],
+            'username'    : ['', [Validators.required] ],
             'deptId'    : ['', [Validators.required ] ],
             'isAdmin'    : [1, [Validators.required] ],
             'isActive'    : [2, [Validators.required ]]
@@ -210,6 +214,7 @@ export class UserManagementComponent implements OnInit {
             this.userForm.patchValue({
                 'phone'    : '',
                 'password'    : '',
+                'username'    : '',
                 'deptId'    : '',
                 'isAdmin'    : 1,
                 'isActive'    : 2

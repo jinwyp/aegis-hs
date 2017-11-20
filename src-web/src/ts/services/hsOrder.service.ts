@@ -144,6 +144,7 @@ export class HSOrderService {
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fukuans', {params: params} )
     }
     getPaymentByID(businessType : string, orderId: number, paymentId: number): Observable<any> {

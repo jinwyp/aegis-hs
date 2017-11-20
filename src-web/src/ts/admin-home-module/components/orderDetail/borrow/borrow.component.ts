@@ -37,9 +37,16 @@ export class BorrowComponent implements OnInit {
     partyListFilter : any[] = []
 
     unitList : any[] = []
+    unitListStat : any[] = []
+    unitListStatObject : any = {}
+
 
     totalLoanMoney : number = 0
     nonRepaymentLoanMoney : number = 0
+
+    totalLoanMoneyAll : number = 0
+    nonRepaymentLoanMoneyAll : number = 0
+
 
     pagination: any = {
         pageSize : 10000,
@@ -88,21 +95,17 @@ export class BorrowComponent implements OnInit {
 
         console.log('Query: ', query)
 
+        if (this.borrowSearchForm.value.hsId) {
+            this.totalLoanMoney = this.unitListStatObject[this.borrowSearchForm.value.hsId].totalLoadMoney
+            this.nonRepaymentLoanMoney = this.unitListStatObject[this.borrowSearchForm.value.hsId].nonRepaymentLoanMoney
+        } else {
+            this.totalLoanMoney = this.totalLoanMoneyAll
+            this.nonRepaymentLoanMoney = this.nonRepaymentLoanMoneyAll
+        }
+
         this.hsOrderService.getBorrowListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.borrowList = data.data.results
-
-                if ( Array.isArray(data.data.results)) {
-
-                    data.data.results.forEach( (borrow) => {
-                        this.totalLoanMoney = this.totalLoanMoney + borrow.amount
-
-                        if (!borrow.loanStatus) {
-                            this.nonRepaymentLoanMoney = this.nonRepaymentLoanMoney + borrow.amount
-                        }
-                    })
-                }
-
             },
             error => {this.httpService.errorHandler(error) }
         )
@@ -146,6 +149,33 @@ export class BorrowComponent implements OnInit {
 
                     this.unitList = tempArray
                 }
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
+
+        this.hsOrderService.getOrderStatisticsByID(this.businessType, this.currentOrder.id).subscribe(
+            data => {
+                this.unitListStat = data.data
+
+                if (Array.isArray(data.data)) {
+
+                    data.data.forEach( unit => {
+                        unit.name = unit.hsMonth
+                        this.unitListStatObject[unit.hsId] = unit
+
+                        this.totalLoanMoneyAll = this.totalLoanMoneyAll + unit.totalLoadMoney
+                        this.nonRepaymentLoanMoneyAll = this.nonRepaymentLoanMoneyAll + unit.nonRepaymentLoanMoney
+                    })
+
+                    this.totalLoanMoney = this.totalLoanMoneyAll
+                    this.nonRepaymentLoanMoney = this.nonRepaymentLoanMoneyAll
+
+                }
+
+                // purchaseCargoAmountOfMoney 结算金额
+
+                // finalSettleAmount 结算数量
             },
             error => {this.httpService.errorHandler(error) }
         )

@@ -27,6 +27,7 @@ export class PaymentComponent implements OnInit {
     currentPaymentId : number = 0
 
     paymentForm: FormGroup
+    paymentSearchForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
@@ -41,13 +42,15 @@ export class PaymentComponent implements OnInit {
     unitListStat : any[] = []
     unitListStatObject : any = {}
 
+    totalPaymnetMoney : number = 0
+
 
     purposeList : any[] = getEnum('PaymentPurpose')
     payModeList : any[] = getEnum('PayMode')
 
 
     pagination: any = {
-        pageSize : 20,
+        pageSize : 10000,
         pageNo : 1,
         total : 1
     }
@@ -68,10 +71,12 @@ export class PaymentComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.createPaymentForm()
+        this.createPaymentSearchForm()
         this.getOrderUnitList()
         this.getPartyList()
         this.getPaymentList()
-        this.createPaymentForm()
+
     }
 
 
@@ -81,7 +86,31 @@ export class PaymentComponent implements OnInit {
 
 
     getPaymentList () {
-        this.hsOrderService.getPaymentListByID(this.businessType, this.currentOrder.id).subscribe(
+
+        let query : any = {
+            pageSize: this.pagination.pageSize,
+            pageNo: this.pagination.pageNo
+        }
+
+        query = (<any>Object).assign(query, this.paymentSearchForm.value)
+
+        console.log('Query: ', query)
+
+
+        this.totalPaymnetMoney = 0
+
+        if (this.paymentSearchForm.value.hsId) {
+            console.log(this.paymentSearchForm.value.hsId, this.unitListStatObject[this.paymentSearchForm.value.hsId])
+
+            this.totalPaymnetMoney = this.unitListStatObject[this.paymentSearchForm.value.hsId].unitTotalPaymentAmount
+        } else {
+            if (this.unitListStat[0]) {
+                this.totalPaymnetMoney = this.unitListStat[0].accumulativePaymentAmount
+            }
+        }
+
+
+        this.hsOrderService.getPaymentListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.paymentList = data.data.results
 
@@ -163,16 +192,25 @@ export class PaymentComponent implements OnInit {
                         unit.name = unit.hsMonth
                         this.unitListStatObject[unit.hsId] = unit
                     })
+                    this.totalPaymnetMoney = this.unitListStat[0].accumulativePaymentAmount
                 }
 
-                // purchaseCargoAmountOfMoney 结算金额
-
-                // finalSettleAmount 结算数量
             },
             error => {this.httpService.errorHandler(error) }
         )
 
     }
+
+
+    createPaymentSearchForm(): void {
+
+        this.paymentSearchForm = this.fb.group({
+            'hsId'    : ['' ]
+        } )
+    }
+
+
+
 
     paymentFormError : any = {}
     paymentFormValidationMessages: any = {

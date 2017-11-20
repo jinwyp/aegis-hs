@@ -7,7 +7,7 @@
                 <div class="form-group row">
                     <div class="col-10 ml-auto">
                         <p *ngIf="paymentForm.get('hsId').value">
-                            本月最高付款金额 : {{ unitListStatObject[paymentForm.get('hsId').value]?.maximumPaymentAmount ?  unitListStatObject[paymentForm.get('hsId').value]?.maximumPaymentAmount : '暂无' }}
+                            本月最高付款金额: {{ unitListStatObject[paymentForm.get('hsId').value]?.maximumPaymentAmount ?  unitListStatObject[paymentForm.get('hsId').value]?.maximumPaymentAmount : '暂无' }}
                             -  本月累计付款金额: {{ unitListStatObject[paymentForm.get('hsId').value]?.unitTotalPaymentAmount ?  unitListStatObject[paymentForm.get('hsId').value]?.unitTotalPaymentAmount : '暂无' }}
                             -  业务累计付款金额: {{ unitListStatObject[paymentForm.get('hsId').value]?.accumulativePaymentAmount ?  unitListStatObject[paymentForm.get('hsId').value]?.accumulativePaymentAmount : '暂无' }}
                             -  本次应付货款金额: {{ unitListStatObject[paymentForm.get('hsId').value]?.amountCargoOfThisTime ?  unitListStatObject[paymentForm.get('hsId').value]?.amountCargoOfThisTime : '暂无' }}
@@ -45,6 +45,23 @@
 
 
             <div *ngIf="!isShowForm">
+
+                <form [formGroup]="paymentSearchForm"  (keydown.enter)="$event.preventDefault()">
+
+                    <div class="form-row ">
+                        <div class="col-6">
+                            <bs-select formControlName="hsId" [fc]="paymentSearchForm.get('hsId')" [label]="'核算月:'" [addAllOptions]="true" [dirty]="ignoreDirty" [options]="unitList"></bs-select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-11 ml-auto">
+                            <button type="button" class="btn btn-info " (click)="getPaymentList()"  >查询</button>
+                        </div>
+                    </div>
+                </form>
+
+
                 <table class="table table-bordered table-hover table-responsive" >
                     <thead>
                     <tr>
@@ -82,6 +99,9 @@
                             <button class="btn btn-link btn-sm" (click)="deleteItem(payment)"> 删除 </button>
                         </td>
                     </tr>
+
+                    <tr> <td colspan="7">  本月累计付款金额: {{totalPaymnetMoney}} - 业务累计付款金额: {{this.unitListStat[0]?.accumulativePaymentAmount}} </tr>
+
                     </tbody>
                 </table>
 

@@ -27,7 +27,7 @@
 
                     <div class="form-row ">
                         <div class="col-6">
-                            <bs-select formControlName="hsId" [fc]="borrowSearchForm.get('hsId')" [label]="'核算月:'" [addAllOptions]="true" [dirty]="ignoreDirty" [options]="unitList" [error]="borrowFormError.hsId"></bs-select>
+                            <bs-select formControlName="hsId" [fc]="borrowSearchForm.get('hsId')" [label]="'核算月:'" [addAllOptions]="true" [dirty]="ignoreDirty" [options]="unitList"></bs-select>
                         </div>
                     </div>
 
@@ -73,7 +73,7 @@
                         </td>
                     </tr>
 
-                    <tr> <td colspan="9">  累计借款金额: {{totalLoanMoney}} - 累计未还款金额数据: {{nonRepaymentLoanMoney}} </td> </tr>
+                    <tr> <td colspan="9">  累计借款金额: {{totalLoanMoney}} - 累计未还款金额数据: {{nonRepaymentLoanMoney}} </tr>
                     </tbody>
                 </table>
 
