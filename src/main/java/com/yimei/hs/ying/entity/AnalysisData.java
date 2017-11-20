@@ -196,7 +196,7 @@ public class AnalysisData implements Serializable {
     // 本月最高付款金额(本次应付货款金额)
     private BigDecimal maximumPaymentAmount;
     // 本月累计付款金额
-    private BigDecimal unitTotalPaymentAmoun;
+    private BigDecimal unitTotalPaymentAmount;
     //业务累计付款金额
     private BigDecimal accumulativePaymentAmount;
     //    本次应付货款金额：amountCargoOfThisTime

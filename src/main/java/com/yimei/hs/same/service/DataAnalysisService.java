@@ -204,7 +204,7 @@ public class DataAnalysisService {
 
 
             setMaximumPaymentAmount(yingAnalysisDos1.getMaximumPaymentAmount());
-            setUnitTotalPaymentAmoun(yingAnalysisDatav1001.getTotalPaymentAmount().add(yingAnalysisDatav1007.getTotalRepaymentInterest()));
+            setUnitTotalPaymentAmount(yingAnalysisDatav1001.getTotalPaymentAmount().add(yingAnalysisDatav1007.getTotalRepaymentInterest()));
 //            业务累计付款金额
             setAccumulativePaymentAmount(yingAnalysisDos3.getAccumulativePaymentAmount());
             setAmountCargoOfThisTime(yingAnalysisDos2.getAmountCargoOfThisTime());
@@ -394,7 +394,7 @@ public class DataAnalysisService {
             setSettledDownstreamHuikuanMoneny(yingAnalysisDatav2010.getSettledDownstreamHuikuanMoneny());
 
             setMaximumPaymentAmount(yingAnalysisDos1.getMaximumPaymentAmount());
-            setUnitTotalPaymentAmoun(yingAnalysisDatav1001.getTotalPaymentAmount().add(yingAnalysisDatav1007.getTotalRepaymentInterest()));
+            setUnitTotalPaymentAmount(yingAnalysisDatav1001.getTotalPaymentAmount().add(yingAnalysisDatav1007.getTotalRepaymentInterest()));
 //            业务累计付款金额
             setAccumulativePaymentAmount(yingAnalysisDos3.getAccumulativePaymentAmount());
 
