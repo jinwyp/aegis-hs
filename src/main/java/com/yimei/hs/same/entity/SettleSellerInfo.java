@@ -8,8 +8,14 @@ import java.time.LocalDateTime;
 
 @Data
 public class SettleSellerInfo {
+    private Long orderId;
+
+    private Long hsId;
+
     private boolean hasSettled;
+
     private LocalDateTime lastHuikuanDate;
+
     private BigDecimal purchaseCargoAmountOfMoney;// 结算金额
 
     private BigDecimal totalBuyerNums;//    结算数量

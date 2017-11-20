@@ -114,6 +114,8 @@ public class SettleSellerService {
          BigDecimal totalHuikuanPaymentMoney =analysisHuikuanAmount.getTotalHuikuanPaymentMoney();
         if (totalHuikuanPaymentMoney.compareTo(payCargoAmount) != -1) {
             settleSellerInfo.setHasSettled(true);
+            settleSellerInfo.setHsId(hsId);
+            settleSellerInfo.setOrderId(orderId);
             if (businessType.equals(BusinessType.ying)) {
                 settleSellerInfo.setPurchaseCargoAmountOfMoney(yingAnalysisDataMapper.findOneV1046ying(orderId, hsId).getPurchaseCargoAmountOfMoney());
             } else if (businessType.equals(BusinessType.cang
