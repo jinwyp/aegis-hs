@@ -196,7 +196,7 @@ public class SettleSellerController {
             @PathVariable("morderId") Long morderId
 
     ) {
-            SettleSellerInfo settleSellerInfo = settleSellerService.findSettleInfo(morderId,hsId,businessType);
+            SettleSellerInfo settleSellerInfo = settleSellerService.findSettleInfo(morderId,hsId,businessType,null);
             if (settleSellerInfo == null) {
                 return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
             } else {

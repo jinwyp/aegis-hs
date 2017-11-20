@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
@@ -33,6 +35,8 @@ public class YingFayun implements Serializable {
     private LocalDateTime fyDate;
 
     @Null(groups = {UpdateGroup.class}, message = "发运吨数不能更新")
+    @DecimalMin(value = "0",message = "发运吨数不能小于0" )
+    @DecimalMax(value = "9999999.99")
     private BigDecimal fyAmount;
 
     @NotNull(groups = {CreateGroup.class}, message = "到场状态不能为空")

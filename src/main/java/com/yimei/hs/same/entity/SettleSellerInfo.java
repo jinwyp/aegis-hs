@@ -20,4 +20,5 @@ public class SettleSellerInfo {
 
     private BigDecimal totalBuyerNums;//    结算数量
 
+    public String hsMonth;
 }

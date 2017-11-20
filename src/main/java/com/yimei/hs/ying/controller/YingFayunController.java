@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * Created by hary on 2017/9/15.
  */
@@ -81,7 +83,7 @@ public class YingFayunController {
     public ResponseEntity<Result<YingFayun>> create(
             @PathVariable("morderId") Long morderId,
             @PathVariable("businessType") BusinessType businessType,
-            @RequestBody @Validated(CreateGroup.class) YingFayun yingFayun
+            @RequestBody @Validated(CreateGroup.class) @Valid YingFayun yingFayun
     ) {
 
 //        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.MOTOR)) {

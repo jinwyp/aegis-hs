@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.Null;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +102,7 @@ public class SettleSellerService {
         return settleSellerMapper.findByOrderIdAndHsId(orderId,hsId);
     }
 
-    public SettleSellerInfo findSettleInfo(long orderId, long hsId, BusinessType businessType){
+    public SettleSellerInfo findSettleInfo(long orderId, long hsId, BusinessType businessType, @Null  String hsMonth){
         SettleSellerInfo settleSellerInfo = new SettleSellerInfo();
 
          AnalysisData analysisDataPayCargoAmount = yingAnalysisDataMapper.findOneV1014(orderId, hsId);
@@ -116,6 +117,7 @@ public class SettleSellerService {
             settleSellerInfo.setHasSettled(true);
             settleSellerInfo.setHsId(hsId);
             settleSellerInfo.setOrderId(orderId);
+            settleSellerInfo.setHsMonth(hsMonth);
             if (businessType.equals(BusinessType.ying)) {
                 settleSellerInfo.setPurchaseCargoAmountOfMoney(yingAnalysisDataMapper.findOneV1046ying(orderId, hsId).getPurchaseCargoAmountOfMoney());
             } else if (businessType.equals(BusinessType.cang
@@ -143,7 +145,7 @@ public class SettleSellerService {
         List<OrderConfig> orderConfigs=configMapper.getList(orderId);
         List<SettleSellerInfo> settleSellerInfos = new ArrayList<SettleSellerInfo>();
         for (OrderConfig orderConfig : orderConfigs) {
-            settleSellerInfos.add(findSettleInfo(orderId, orderConfig.getId(), businessType));
+            settleSellerInfos.add(findSettleInfo(orderId, orderConfig.getId(), businessType,orderConfig.getHsMonth()));
         }
         return settleSellerInfos;
     }

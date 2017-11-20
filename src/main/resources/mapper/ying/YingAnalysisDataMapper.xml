@@ -1204,7 +1204,7 @@ left join v_1001  on base.hsId=v_1001.hsId
       base.hsId,
       ROUND(IFNULL(v_1046_ying.purchaseCargoAmountOfMoney*config.maxPrepayRate,0.00),2) as maximumPaymentAmount
      from base
-     left join hs_same_order_config config on base.orderId=config.orderId
+     left join hs_same_order_config config on base.orderId=config.orderId  and base.hsId=config.id
      left join v_1046_ying on base.hsId=v_1046_ying.hsId
      where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
 
@@ -1217,7 +1217,7 @@ left join v_1001  on base.hsId=v_1001.hsId
        base.hsId,
         ROUND(IFNULL(v_1046_ying.purchaseCargoAmountOfMoney*config.maxPrepayRate,0.00),2) as maximumPaymentAmount
       from base
-       left join hs_same_order_config config on base.orderId=config.orderId
+       left join hs_same_order_config config on base.orderId=config.orderId  and base.hsId=config.id
        left join v_1046_cang on base.hsId=v_1046_cang.hsId
       where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
     </select>
@@ -1227,7 +1227,7 @@ left join v_1001  on base.hsId=v_1001.hsId
        base.orderId,
        IFNULL(sum(fukuan.payAmount),0.00)as accumulativePaymentAmount
        from base 
-       left join hs_same_fukuan fukuan on base.orderId=fukuan.orderId
+       left join hs_same_fukuan fukuan on base.orderId=fukuan.orderIdgit
       where base.orderId=#{orderId,jdbcType=BIGINT }
        group by orderId
     </select>
