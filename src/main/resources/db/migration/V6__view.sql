@@ -220,6 +220,7 @@ from base
 --1019 应计利息
 create view v_1019 as
 select
+DISTINCT
 base.orderId,
 base.hsId,
 case when DATEDIFF(huikuan.huikuanDate,fukuan.payDate) >0 then DATEDIFF(huikuan.huikuanDate,fukuan.payDate)-IFNULL(seller.discountDays,0.00)else 0 end as time,
