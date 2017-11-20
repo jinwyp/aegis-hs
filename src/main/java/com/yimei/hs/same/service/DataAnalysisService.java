@@ -116,7 +116,8 @@ public class DataAnalysisService {
 //                ).subtract(yingAnalysisDatav1001.getTotalPayGoodsFee());
 
         AnalysisData yingAnalysisData = new AnalysisData() {{
-            setHsId(orderConfigBase.getId());
+            setOrderId(orderConfigBase.getOrderId());
+            setHsId(orderConfigBase.getHsId());
             setHsMonth(orderConfigBase.getHsMonth());
             setTotalPayTrafficFee(yingAnalysisDatav1001.getTotalPayTrafficFee());
             setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
@@ -310,7 +311,8 @@ public class DataAnalysisService {
 
 
         AnalysisData yingAnalysisData = new AnalysisData() {{
-            setHsId(orderConfigBase.getId());
+            setOrderId(orderConfigBase.getOrderId());
+            setHsId(orderConfigBase.getHsId());
             setHsMonth(orderConfigBase.getHsMonth());
             setTotalPayTrafficFee(yingAnalysisDatav1001.getTotalPayTrafficFee());
             setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
