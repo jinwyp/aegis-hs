@@ -134,6 +134,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             data => {
 
                 if (Array.isArray(data.data)) {
+                    this.borrowDropDownList = []
                     data.data.forEach( (borrow) => {
                         if (borrow) {
                             this.borrowDropDownList.push ({
