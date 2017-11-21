@@ -181,7 +181,8 @@ export class InvoiceComponent implements OnInit {
             'required'      : '请填写税率!'
         },
         'priceAndTax'  : {
-            'required'      : '请填写价税合计!'
+            'required'      : '请填写价税合计!',
+            'wrong'      : '金额与税额相加不等于价税合计!'
         },
 
 
@@ -382,6 +383,10 @@ export class InvoiceComponent implements OnInit {
             }
 
 
+            if (Number(this.invoiceDetailForm.value.amount) + Number(this.invoiceDetailForm.value.taxAmount) !== Number(this.invoiceDetailForm.value.priceAndTax)) {
+                this.invoiceDetailFormError.priceAndTax = this.invoiceDetailFormValidationMessages.priceAndTax.wrong
+                formValid = false
+            }
         }
 
         if (this.invoiceDetailFormType === 3) {
@@ -401,7 +406,15 @@ export class InvoiceComponent implements OnInit {
                 formValid = false
             }
 
+            if (Number(this.invoiceDetailForm.value.amount) + Number(this.invoiceDetailForm.value.taxAmount) !== Number(this.invoiceDetailForm.value.priceAndTax)) {
+                this.invoiceDetailFormError.priceAndTax = this.invoiceDetailFormValidationMessages.priceAndTax.wrong
+                formValid = false
+            }
+
         }
+
+
+
 
 
         if (!formValid) {

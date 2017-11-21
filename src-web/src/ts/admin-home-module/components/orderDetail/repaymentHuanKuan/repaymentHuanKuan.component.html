@@ -24,7 +24,7 @@
                                     <ul class="list-group" >
                                         <li class="list-group-item mb-2" *ngFor=" let borrow of borrowPostList">
                                             ID:{{borrow.id}}  借款日期:{{borrow.jiekuanDate | slice : 0 : 10 }}  资金方:{{borrow.capitalId | findKey:partyList:'name'}} <br>
-                                            借款金额:{{borrow.amount}} | 对应还款本金:{{borrow.principal}}  利息:{{borrow.interest}}  服务费:{{borrow.fee}}
+                                            借款金额:{{borrow.amount}} | 对应还款本金:{{borrow.principal}}  利息:{{borrow.interest}}  服务费:{{borrow.fee}} 类型:{{borrow.ccsPay ? 'CCS还服务费' : '客户还服务费'}}
                                             <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delBorrow(borrow)"> x </button>
                                         </li>
                                     </ul>
@@ -33,7 +33,7 @@
 
 
                             <div class="form-row ">
-                                <div class="col-5">
+                                <div class="col-3">
                                     <bs-select formControlName ="jiekuanId" [fc]="borrowForm.get('jiekuanId')" [labelclass]="'d-none'" [inputclass]="'col-12'" [prompt]="'请选择借款:'" [dirty]="ignoreDirtyBorrow" [options]="borrowDropDownList" [error]="borrowFormError.jiekuanId"></bs-select>
                                 </div>
 
@@ -46,7 +46,9 @@
                                 <div class="col-2">
                                     <bs-text-input formControlName="fee" [fc]="borrowForm.get('fee')" [type]="'number'" [prompt]="'服务费:'" [labelclass]="'d-none'" [inputclass]="'col-12'" [dirty]="ignoreDirtyBorrow" [error]="borrowFormError.fee"></bs-text-input>
                                 </div>
-
+                                <div class="col-2">
+                                    <bs-select formControlName ="ccsPay" [fc]="borrowForm.get('ccsPay')" [labelclass]="'d-none'" [inputclass]="'col-12'" [prompt]="'请选择类型:'" [dirty]="ignoreDirtyBorrow" [options]="repaymentTypeList" [error]="borrowFormError.ccsPay"></bs-select>
+                                </div>
                                 <div class="col-1">
                                     <button type="button" class="btn btn-info" (click)="createNewBorrow()">添加</button>
                                 </div>
@@ -93,7 +95,7 @@
                         <!--<td> {{repaymentHK.skCompanyId | findKey : partyList : 'name'}}</td>-->
 
                         <td> {{repaymentHK.huankuankDate | slice : 0 : 10 }}</td>
-                        <td> {{repaymentHK.promise | findKey : promiseStatusList : 'name' }}</td>
+                        <td> {{repaymentHK.promise ? '已还款' : '未还款' }} </td>
 
                         <td>
                             <span *ngFor="let item of repaymentHK.huankuanMapList" >对应付款ID:{{item.huankuanId }} 本金:{{item.principal }} 利息:{{item.interest }} 服务费:{{item.fee }}</span>

@@ -142,6 +142,10 @@
                         <div class="col-3">
                             <p class="card-text" title="汇总：费用科目 = “代收代垫运费”的费用金额">代收代垫运费: {{ unitStatistics?.dsddFee | number }}</p>
                         </div>
+                    </div>
+
+                    <div class="row mt-4">
+
                         <div class="col-3">
                             <p class="card-text" title="汇总：费用科目 = “含税汽运费”的费用金额">含税汽运费: {{ unitStatistics?.hsqyFee | number }}</p>
                         </div>
@@ -173,7 +177,47 @@
             </div>
 
 
+
+
+
+
             <div class="card mt-4">
+                <div class="card-body" >
+
+                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 占压表</h5>
+
+                    <div class="row mt-4">
+                        <div class="col-3">
+                            <p class="card-text" title="【1047】外部资金付款金额 + 【1048】自有资金付款金额 - 【1046】采购货款总额 -【1002】付贸易差价金额">上游资金占压: {{ unitStatistics?.upstreamCapitalPressure | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1004】借款金额合计 - 【1007】还款本金合计  + 【1009】登记未还款本金">外部融资余额(外部资金付款金额): {{ unitStatistics?.externalCapitalPaymentAmount | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1048】自有资金付款金额-【1046】采购货款总额-【1002】付贸易差价金额">自有资金占压: {{ unitStatistics?.ownerCapitalPressure | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费">未开票金额: {{ unitStatistics?.unInvoicedAmountofMoney | number }}</p>
+                        </div>
+
+
+                        <div class="col-3">
+                            <p class="card-text" title="【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额">下游资金占压: {{ unitStatistics?.downstreamCapitalPressure | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款">已结算未回款金额: {{ unitStatistics?.settledDownstreamHuikuanMoneny | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1042】买方未结算数量 * 【核算月配置】加权单价">下游未结算金额: {{ unitStatistics?.unsettlerBuyerMoneyAmount | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p *ngIf="businessType==='ying'" class="card-text" title="IF（【1013】已回款金额>【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额">预收款: {{ unitStatistics?.yingPrePayment | number }}</p>
+                            <p *ngIf="businessType==='cang'" class="card-text" title="IF（【1013】已回款金额>【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额">预收款: {{ unitStatistics?.cangPrePayment | number }}</p>
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 

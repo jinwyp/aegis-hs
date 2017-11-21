@@ -46,6 +46,11 @@ export class RepaymentHuanKuanComponent implements OnInit {
     borrowListObject : any = {}
 
 
+    repaymentTypeList : any[] = [
+        {id: false , name : '客户还服务费'},
+        {id: true , name : 'CCS还服务费'}
+    ]
+
     promiseStatusList : any[] = [
         {id: false , name : '未还款'},
         {id: true , name : '已还款'}
@@ -206,6 +211,9 @@ export class RepaymentHuanKuanComponent implements OnInit {
         },
         'fee'  : {
             'required'      : '请填写服务费!'
+        },
+        'ccsPay'  : {
+            'required'      : '请选择类型!'
         }
     }
 
@@ -243,7 +251,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
             'jiekuanId'    : ['', [Validators.required ] ],
             'principal'    : ['', [Validators.required ] ],
             'interest'    : ['', [Validators.required ] ],
-            'fee'    : ['', [Validators.required ] ]
+            'fee'    : ['', [Validators.required ] ],
+            'ccsPay'    : ['', [Validators.required ] ]
         } )
 
         this.borrowForm.valueChanges.subscribe(data => {
@@ -268,7 +277,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
         const postData = this.repaymentHKForm.value
         postData.orderId = this.currentOrder.id
         postData.huankuanMapList = this.borrowPostList.map( borrow => {
-            return { jiekuanId : borrow.jiekuanId, principal : Number(borrow.principal), interest : Number(borrow.interest), fee : Number(borrow.fee) }
+            return { jiekuanId : borrow.jiekuanId, principal : Number(borrow.principal), interest : Number(borrow.interest), fee : Number(borrow.fee), ccsPay : borrow.ccsPay }
         })
 
         if (this.isAddNew) {
@@ -330,7 +339,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             if (Array.isArray(repaymentHKOrder.huankuanMapList)) {
                 repaymentHKOrder.huankuanMapList.forEach( item => {
                     tempArray.push((<any>Object).assign( {}, this.borrowListObject[item.jiekuanId],
-                        {jiekuanId : item.jiekuanId, principal : item.principal, interest : item.interest, fee : item.fee}) )
+                        {jiekuanId : item.jiekuanId, principal : item.principal, interest : item.interest, fee : item.fee, ccsPay : item.ccsPay}) )
                 })
             }
             this.borrowPostList = tempArray
@@ -374,7 +383,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
                     jiekuanId : this.borrowForm.value.jiekuanId,
                     principal : this.borrowForm.value.principal,
                     interest : this.borrowForm.value.interest,
-                    fee : this.borrowForm.value.fee
+                    fee : this.borrowForm.value.fee,
+                    ccsPay : this.borrowForm.value.ccsPay
                 }
             )
         )
@@ -383,7 +393,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
             'jiekuanId'    : '',
             'principal'    : '',
             'interest'    : '',
-            'fee'    : ''
+            'fee'    : '',
+            'ccsPay'    : ''
         })
 
         this.ignoreDirtyBorrow = false
