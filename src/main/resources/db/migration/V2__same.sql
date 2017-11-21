@@ -187,6 +187,7 @@ create table hs_same_huankuan_map (
   principal decimal(10, 2)  not null comment '本金',
   interest decimal(10, 2)   not null comment '利息',
   fee      decimal(10,2)    not null comment '服务费',
+  ccsPay     tinyint(1)    not null  default 0 comment '是否是ccs支付 1 ccs支付|2 客户支付  ',
 
   deleted tinyint(1)        not null default 0 comment '是否删除',
   tsc timestamp             not null default current_timestamp,

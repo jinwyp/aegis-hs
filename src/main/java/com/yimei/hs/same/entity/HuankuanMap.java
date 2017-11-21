@@ -37,6 +37,9 @@ public class HuankuanMap implements Serializable {
     @Size(max = 7,min = 0)
     private BigDecimal fee;
 
+    @NotNull(groups = {CreateGroup.class}, message = "支付方不能为空")
+    private boolean ccsPay;
+
     private LocalDateTime tsc;
 
     private static final long serialVersionUID = 1L;
