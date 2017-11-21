@@ -97,17 +97,6 @@ export class PaymentComponent implements OnInit {
         console.log('Query: ', query)
 
 
-        this.totalPaymnetMoney = 0
-
-        if (this.paymentSearchForm.value.hsId) {
-            console.log(this.paymentSearchForm.value.hsId, this.unitListStatObject[this.paymentSearchForm.value.hsId])
-
-            this.totalPaymnetMoney = this.unitListStatObject[this.paymentSearchForm.value.hsId].unitTotalPaymentAmount
-        } else {
-            if (this.unitListStat[0]) {
-                this.totalPaymnetMoney = this.unitListStat[0].accumulativePaymentAmount
-            }
-        }
 
 
         this.hsOrderService.getPaymentListByID(this.businessType, this.currentOrder.id, query).subscribe(
@@ -118,13 +107,35 @@ export class PaymentComponent implements OnInit {
             error => {this.httpService.errorHandler(error) }
         )
 
-        // this.hsOrderService.getPaymentByID(this.businessType, this.currentOrder.id, 1).subscribe(
-        //     data => {
-        //         this.paymentList = data.data.results
-        //
-        //     },
-        //     error => {this.httpService.errorHandler(error) }
-        // )
+
+        this.hsOrderService.getOrderStatisticsByID(this.businessType, this.currentOrder.id).subscribe(
+            data => {
+                this.unitListStat = data.data
+
+                if (Array.isArray(data.data)) {
+
+                    data.data.forEach( unit => {
+                        unit.name = unit.hsMonth
+                        this.unitListStatObject[unit.hsId] = unit
+                    })
+
+                    this.totalPaymnetMoney = 0
+                    
+                    if (this.paymentSearchForm.value.hsId) {
+                        console.log(this.paymentSearchForm.value.hsId, this.unitListStatObject[this.paymentSearchForm.value.hsId])
+
+                        this.totalPaymnetMoney = this.unitListStatObject[this.paymentSearchForm.value.hsId].unitTotalPaymentAmount
+                    } else {
+                        if (this.unitListStat[0]) {
+                            this.totalPaymnetMoney = this.unitListStat[0].accumulativePaymentAmount
+                        }
+                    }
+
+                }
+
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
     }
 
     getPartyList () {
@@ -182,22 +193,7 @@ export class PaymentComponent implements OnInit {
         )
 
 
-        this.hsOrderService.getOrderStatisticsByID(this.businessType, this.currentOrder.id).subscribe(
-            data => {
-                this.unitListStat = data.data
 
-                if (Array.isArray(data.data)) {
-
-                    data.data.forEach( unit => {
-                        unit.name = unit.hsMonth
-                        this.unitListStatObject[unit.hsId] = unit
-                    })
-                    this.totalPaymnetMoney = this.unitListStat[0].accumulativePaymentAmount
-                }
-
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
 
     }
 
