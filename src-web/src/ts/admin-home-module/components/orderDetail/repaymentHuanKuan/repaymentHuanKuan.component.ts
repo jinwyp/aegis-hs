@@ -139,7 +139,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
                         if (borrow) {
                             this.borrowDropDownList.push ({
                                 id : borrow.id,
-                                name : 'ID:' + borrow.id + ' 借款日期:' + borrow.jiekuanDate + ' 资金方:' + this.partyListObject[borrow.capitalId].name + ' 金额:' + borrow.amount
+                                name : 'ID:' + borrow.id + ' 借款日期:' + borrow.jiekuanDate.slice(0, 10) + ' 资金方:' + this.partyListObject[borrow.capitalId].name + ' | 借款金额:' + borrow.amount + ' 已还金额:' + borrow.huankuanTotal
                             })
                         }
 
