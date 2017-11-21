@@ -1198,9 +1198,7 @@ describe('应收订单 统计范例4 赵征提供', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
 
 
-                expect(res.body.data.upstreamCapitalPressure, '上游资金占压数据不对').to.equal(-100000.00)
-                expect(res.body.data.downstreamCapitalPressure, '下游资金占压数据不对').to.equal(100000.00)
-                expect(res.body.data.yingPrePayment, '预收款数据不对').to.equal(-100000.00)
+                expect(res.body.data.ccsProfile, '瑞茂通总收益数据不对').to.equal(24675.67)
 
 
                 expect(res.body.data.settleGrossProfileNum, '结算量数据不对').to.equal(10273.00)
@@ -1216,6 +1214,9 @@ describe('应收订单 统计范例4 赵征提供', function () {
                 expect(res.body.data.opreationCrossProfile, '经营毛利数据不对').to.equal(2595.94)
                 expect(res.body.data.crossProfileATon, '单吨毛利数据不对').to.equal(0.25)
 
+                expect(res.body.data.upstreamCapitalPressure, '上游资金占压数据不对').to.equal(-120546.00)
+                expect(res.body.data.downstreamCapitalPressure, '下游资金占压数据不对').to.equal(100000.00)
+                expect(res.body.data.yingPrePayment, '预收款数据不对').to.equal(-100000.00)
 
                 done()
             })
