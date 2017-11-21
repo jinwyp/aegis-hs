@@ -96,13 +96,16 @@ group by  orderId, hsId;
 --1007	还款本金合计	totalRepaymentPrincipeAmount	【还款】		汇总：还款本金
 --1008	还款利息合计	totalrepaymentInterest	【还款】		汇总：还款利息
 --1011	还款服务费合计	totalServiceCharge	【还款】		汇总：还款服务费
+--10  还款瑞茂通服务费合计 totalccsPayServiceCharge  【还款】    汇总：还款服务费
+
 create view v_1007 as
 select
 base.orderId,
 base.hsId,
 ROUND(sum(IFNULL(map.principal,0.00)),2) as totalRepaymentPrincipeAmount,
 ROUND(sum(IFNULL(map.interest,0.00)),2) as  totalRepaymentInterest,
-ROUND(sum(IFNULL(map.fee,0.00)),2) as  totalServiceCharge
+ROUND(sum(IFNULL(map.fee,0.00)),2) as  totalServiceCharge,
+ROUND(sum(case when map.ccsPay=1 then map.fee else 0 end) ,2)  as  totalccsPayServiceCharge
 from base
      left join hs_same_huankuan huankuan on base.hsId=huankuan.hsId and huankuan.deleted=0
      left join hs_same_huankuan_map map on huankuan.id= map.huankuanId
@@ -574,12 +577,12 @@ from base
 
 
 
---1048 ownerCapitalPaymentAmount 自由资金付款金额【1003】付款金额合计 - 【1047】外部资金付款金额 + 【1008】还款利息合计  -【1010】登记未还款利息 - 【2008】上游保证金余额
+--1048 ownerCapitalPaymentAmount 自由资金付款金额【1003】付款金额合计 - 【1047】外部资金付款金额 + 【1008】还款利息合计（——ccs支付服务费）  -【1010】登记未还款利息 - 【2008】上游保证金余额
 create view v_1048_ying as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)-IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+IFNULL(v_1007.totalRepaymentInterest,0.00)+IFNULL(v_1009.totalUnpayInterest,0.00)-IFNULL(v_2008.balanceUpstreamBail ,0.00) ,2)as ownerCapitalPaymentAmount
+ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)-IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+IFNULL(v_1007.totalRepaymentInterest,0.00)+IFNULL(v_1007.totalccsPayServiceCharge,0.00)+IFNULL(v_1009.totalUnpayInterest,0.00)-IFNULL(v_2008.balanceUpstreamBail ,0.00) ,2)as ownerCapitalPaymentAmount
 from base 
      left join v_1001 on base.hsId=v_1001.hsId
      left join v_1047 on base.hsId=v_1047.hsId
