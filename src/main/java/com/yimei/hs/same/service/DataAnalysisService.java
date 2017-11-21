@@ -207,7 +207,7 @@ public class DataAnalysisService {
             setMaximumPaymentAmount(yingAnalysisDos1.getMaximumPaymentAmount());
             setUnitTotalPaymentAmount(yingAnalysisDatav1001.getTotalPaymentAmount().add(yingAnalysisDatav1007.getTotalRepaymentInterest()));
 //            业务累计付款金额
-            setAccumulativePaymentAmount(yingAnalysisDos3.getAccumulativePaymentAmount());
+            setAccumulativePaymentAmount((yingAnalysisDos3 == null ? BigDecimal.ZERO : yingAnalysisDos3.getAccumulativePaymentAmount()));
             setAmountCargoOfThisTime(yingAnalysisDos2.getAmountCargoOfThisTime());
 
 
@@ -437,7 +437,7 @@ public class DataAnalysisService {
 
     public BigDecimal findTotalPaymentAmount(Long orderId, Long hsId) {
 
-            return yingAnalysisDataMapper.findOneV1001(orderId, hsId).getTotalPaymentAmount();
+        return yingAnalysisDataMapper.findOneV1001(orderId, hsId).getTotalPaymentAmount();
     }
 
 

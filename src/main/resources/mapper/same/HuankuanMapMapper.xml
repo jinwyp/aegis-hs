@@ -8,12 +8,13 @@
         <result column="jiekuanId" jdbcType="BIGINT" property="jiekuanId"/>
         <result column="principal" jdbcType="DECIMAL" property="principal"/>
         <result column="interest" jdbcType="DECIMAL" property="interest"/>
+        <result column="ccsPay" jdbcType="TINYINT" property="ccsPay"/>
         <result column="fee" jdbcType="DECIMAL" property="fee"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, huankuanId, jiekuanId, principal, interest, fee, tsc
+        id, orderId, huankuanId, jiekuanId, principal, interest,ccsPay, fee, tsc
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -37,7 +38,8 @@
             huankuanId,
             principal,
             interest,
-            fee
+            fee,
+            ccsPay
         FROM
             hs_same_huankuan_map
         WHERE
@@ -51,7 +53,8 @@
         huankuanId,
         principal,
         interest,
-        fee
+        fee,
+        ccsPay
         FROM
         hs_same_huankuan_map
         WHERE
@@ -95,6 +98,7 @@
             principal,
             fee,
             interest,
+            ccsPay,
             tsc
         )
         VALUES (
@@ -105,6 +109,7 @@
             #{principal,jdbcType=DECIMAL},
             #{fee,jdbcType=DECIMAL},
             #{interest,jdbcType=DECIMAL},
+            #{ccsPay,jdbcType=TINYINT},
             #{tsc,jdbcType=TIMESTAMP}
         )
     </insert>
@@ -119,6 +124,7 @@
             <if test="principal != null">principal,</if>
             <if test="fee != null">fee,</if>
             <if test="interest != null">interest,</if>
+            <if test="ccsPay != null">ccsPay,</if>
             <if test="tsc != null">tsc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -129,6 +135,7 @@
             <if test="principal != null">#{principal,jdbcType=DECIMAL},</if>
             <if test="fee != null">#{fee,jdbcType=DECIMAL},</if>
             <if test="interest != null">#{interest,jdbcType=DECIMAL},</if>
+            <if test="ccsPay != null">#{ccsPay,jdbcType=TINYINT},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
@@ -142,6 +149,7 @@
             <if test="fee != null">interest = #{fee,jdbcType=DECIMAL},</if>
             <if test="interest != null">interest = #{interest,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="ccsPay != null">tsc = #{ccsPay,jdbcType=TINYINT},</if>
             <if test="true">tsu = current_timestamp</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
@@ -154,6 +162,7 @@
             principal  = #{principal,jdbcType=DECIMAL},
             interest   = #{interest,jdbcType=DECIMAL},
             fee        = #{fee,jdbcType=DECIMAL},
+            ccsPay        = #{ccsPay,jdbcType=TINYINT},
             tsc        = #{tsc,jdbcType=TIMESTAMP},
             tsu        = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
