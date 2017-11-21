@@ -215,18 +215,6 @@
                             <p *ngIf="businessType==='cang'" class="card-text" title="IF（【1013】已回款金额>【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额">预收款: {{ unitStatistics?.cangPrePayment | number }}</p>
                         </div>
 
-
-
-
-
-
-                        <div class="col-3">
-                            <p class="card-text" title="【3001】入库总数量 - 【3003】已出库数量">备查账/占压表 - 库存数量: {{ unitStatistics?.totalStockNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【3004】入库单价 * 【3005】库存数量">占压表 - 库存金额: {{ unitStatistics?.totalStockMoney | number }}</p>
-                        </div>
-
                     </div>
 
                 </div>
