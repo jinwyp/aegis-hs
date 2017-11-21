@@ -24,7 +24,7 @@
                                     <ul class="list-group" >
                                         <li class="list-group-item mb-2" *ngFor=" let borrow of borrowPostList">
                                             ID:{{borrow.id}}  借款日期:{{borrow.jiekuanDate | slice : 0 : 10 }}  资金方:{{borrow.capitalId | findKey:partyList:'name'}} <br>
-                                            借款金额:{{borrow.amount}} | 对应还款本金:{{borrow.principal}}  利息:{{borrow.interest}}  服务费:{{borrow.fee}}
+                                            借款金额:{{borrow.amount}} | 对应还款本金:{{borrow.principal}}  利息:{{borrow.interest}}  服务费:{{borrow.fee}} 类型:{{borrow.ccsPay ? 'CCS还服务费' : '客户还服务费'}}
                                             <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delBorrow(borrow)"> x </button>
                                         </li>
                                     </ul>
