@@ -693,16 +693,26 @@ describe('仓押订单 统计范例11', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
 
 
+                expect(res.body.data.saleIncludeTaxTotalAmount, '销售含税总额数据不对').to.equal(5997196.93)
                 expect(res.body.data.purchaseIncludeTaxTotalAmount, '采购含税总额数据不对').to.equal(6011106.50)
-                expect(res.body.data.saleIncludeTaxTotalAmount, '销售含税总额数据不对').to.equal(6029076.57)
+
                 expect(res.body.data.tradeCompanyAddMoney, '毛利贸易公司加价数据不对').to.equal(20205.40)
-                expect(res.body.data.withoutTaxIncome, '不含税收入数据不对').to.equal(5153056.90)
+                expect(res.body.data.withoutTaxIncome, '不含税收入数据不对').to.equal(5125809.34)
                 expect(res.body.data.withoutTaxCost, '不含税成本数据不对').to.equal(5154967.44)
-                // expect(res.body.data.vat, '应交增值税数据不对').to.equal(1418.12)
+                expect(res.body.data.vat, '应交增值税数据不对').to.equal(0)
                 expect(res.body.data.additionalTax, '税金及附加数据不对').to.equal(0)
-                expect(res.body.data.stampDuty, '印花税数据不对').to.equal(3618.12)
-                expect(res.body.data.opreationCrossProfile, '经营毛利数据不对').to.equal(-5528.65)
-                expect(res.body.data.crossProfileATon, '单吨毛利数据不对').to.equal(-0.55)
+                // expect(res.body.data.stampDuty, '印花税数据不对').to.equal(3618.12)
+                expect(res.body.data.stampDuty, '印花税数据不对').to.equal(3608.55)
+                // expect(res.body.data.opreationCrossProfile, '经营毛利数据不对').to.equal(-5528.65)
+                expect(res.body.data.opreationCrossProfile, '经营毛利数据不对').to.equal(-32766.65)
+                // expect(res.body.data.crossProfileATon, '单吨毛利数据不对').to.equal(-0.55)
+                expect(res.body.data.crossProfileATon, '单吨毛利数据不对').to.equal(-3.24)
+
+
+                expect(res.body.data.upstreamCapitalPressure, '上游资金占压数据不对').to.equal(0)
+                expect(res.body.data.downstreamCapitalPressure, '下游资金占压数据不对').to.equal(-31879.64)
+                expect(res.body.data.ownerCapitalPressure, '自有资金占压数据不对').to.equal(20205.4)
+                expect(res.body.data.cangPrePayment, '预收款数据不对').to.equal(0)
 
 
                 done()
