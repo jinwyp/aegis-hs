@@ -1218,7 +1218,7 @@ left join v_1001  on base.hsId=v_1001.hsId
         ROUND(IFNULL(v_1046_ying.purchaseCargoAmountOfMoney*config.maxPrepayRate,0.00),2) as maximumPaymentAmount
       from base
        left join hs_same_order_config config on base.orderId=config.orderId  and base.hsId=config.id
-       left join v_1046_cang on base.hsId=v_1046_cang.hsId
+       left join v_1..046_cang on base.hsId=v_1046_cang.hsId
       where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
@@ -1228,7 +1228,7 @@ left join v_1001  on base.hsId=v_1001.hsId
        IFNULL(sum(fukuan.payAmount),0.00)as accumulativePaymentAmount
        from base 
        left join hs_same_fukuan fukuan on base.orderId=fukuan.orderId
-      where base.orderId=#{orderId,jdbcType=BIGINT }
+      where base.orderId=#{orderId,jdbcType=BIGINT } and fukuan.deleted=0
        group by orderId
     </select>
 

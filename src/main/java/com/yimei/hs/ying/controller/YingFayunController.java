@@ -83,7 +83,7 @@ public class YingFayunController {
     public ResponseEntity<Result<YingFayun>> create(
             @PathVariable("morderId") Long morderId,
             @PathVariable("businessType") BusinessType businessType,
-            @RequestBody @Validated(CreateGroup.class) @Valid YingFayun yingFayun
+            @RequestBody @Valid @Validated(CreateGroup.class) YingFayun yingFayun
     ) {
 
 //        if (yingFayun.getUpstreamTrafficMode().equals(TrafficMode.MOTOR)) {

@@ -47,7 +47,7 @@ public class JiekuanService {
             jiekuan.setHuankuanList(huankuanMapper.getListByJiekuanId(jiekuan.getId()));
             // 2. 关联借款对应的还款明细
             jiekuan.setHuankuanMapList(huankuanMapMapper.getListByJiekuanId(jiekuan.getId()));
-            if (jiekuan.getHuankuanMapList() != null) {
+            if (jiekuan.getHuankuanMapList() != null&&jiekuan.getHuankuanMapList().size()>0){
                 jiekuan.setLoanStatus(
                         (jiekuan.getAmount().compareTo(jiekuan.getHuankuanMapList().stream()
                                 .map(HuankuanMap::getPrincipal)
