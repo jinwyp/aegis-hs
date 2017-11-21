@@ -64,7 +64,7 @@
         huankuan.tsu
 
         from hs_same_jiekuan jiekuan
-        LEFT JOIN hs_same_huankuan_map huankuanmap ON  jiekuan.id=huankuanmap.jiekuanId
+        LEFT JOIN hs_same_huankuan_map huankuanmap ON  jiekuan.id=huankuanmap.jiekuanId  and  huankuanmap.deleted=0
         LEFT JOIN hs_same_huankuan  huankuan     ON  huankuanmap.huankuanId=huankuan.id
         where jiekuan.id = #{id,jdbcType=BIGINT} and jiekuan.deleted=0
     </select>

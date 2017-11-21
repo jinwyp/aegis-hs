@@ -20,10 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -31,6 +28,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
@@ -104,10 +102,19 @@ public class HuankuanController {
         List<Jiekuan> jiekuans = jiekuanService.huankuanUnfinished(huankuan.getOrderId());
         List<HuankuanMap> huankuanMaps = huankuan.getHuankuanMapList();
 
+       // 还款总额
+        Map<Long, BigDecimal> huankanedAmount = new HashMap<Long, BigDecimal>();
+
 
         if (huankuanMaps == null
                 || huankuanMaps.size() == 0) {
             return Result.error(4001, "借款不能为空");
+        } else if (huankuanMaps!=null) {
+            Map<Long, List<HuankuanMap>> huankuanmaps = huankuanMaps.stream().collect(groupingBy(HuankuanMap::getJiekuanId));
+
+            for (Long id:huankuanmaps.keySet()) {
+                huankanedAmount.put(id, huankuanmaps.get(id).stream().map(HuankuanMap::getPrincipal).reduce(BigDecimal.ZERO, BigDecimal::add));
+            }
         }
         for (HuankuanMap huankuanMap : huankuanMaps) {
 
@@ -115,44 +122,29 @@ public class HuankuanController {
                 return Result.error(4001, "借款款id不能为空");
             }
 
-            Predicate<Jiekuan> jiekuanFilter = (jiekuan) -> (jiekuan.getId() == huankuanMap.getJiekuanId());
-            //获取剩下的值
-
 
             Jiekuan jiekuanDb = jiekuanService.findOne(huankuanMap.getJiekuanId());
 
 
             if (jiekuanDb != null) {
 
-                List<BigDecimal> jiekuanList = jiekuans.stream().filter(jiekuanFilter).map(Jiekuan::getHuankuanTotal).collect(toList());
-                if (jiekuanList!=null&&huankuanMap.getPrincipal().compareTo
-                        (
-                                jiekuanDb.getAmount().subtract((jiekuanList.get(0)==null?BigDecimal.ZERO:jiekuanList.get(0)))
-                        ) == 1) {
+                BigDecimal totalHuankuaned =jiekuanDb.getHuankuanMapList().stream().map(HuankuanMap::getPrincipal).reduce(BigDecimal.ZERO, BigDecimal::add);
 
-                    return Result.error(4001, "还款本金大于借款本金");
+                if (huankanedAmount.get(jiekuanDb.getId()).compareTo(
+
+                        jiekuanDb.getAmount().subtract(totalHuankuaned)
+
+                ) == 1) {
+                    return Result.error(4001, "还款本金总和大于借款本金");
                 }
-                if (huankuanMap.getPrincipal().compareTo(jiekuanDb.getAmount()) == 1) {
-                    return Result.error(4001, "还款本金大于借款本金");
-                }
+
             } else {
                 return Result.error(4001, "该笔借款不存在");
             }
 
         }
-        Iterator<HuankuanMap> it = huankuanMaps.iterator();
-//        Supplier<HuankuanMap> mapsSupplier =huankuanMaps.stream().;
 
-//        personSupplier.setHuikuanMaps((ArrayList)huankuanMaps);
-//
-//        Map<Long, List<HuikuanMap>> huiparts =
-//     Map<Long,List<HuikuanMap>> huikuanMaps=  huankuanMaps.stream().limit(huankuanMaps.size()-1).collect(Collectors.groupingBy(HuikuanMap::getId));
-//
-//
-//         logger.info("map;---->",huiparts);
-        //        Map<Boolean, List<HuikuanMap>> children = Stream.generate(new PersonSupplier()).
-//                limit(100).
-//                collect(Collectors.partitioningBy(p -> p.getAge() < 18));
+
 
         // 2. 创建还款
         int rtn = huankuanService.create(huankuan);
