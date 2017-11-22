@@ -107,11 +107,11 @@ describe('仓押订单 统计范例11', function () {
                     "orderId" : orderId,
                     "hsMonth" : "201706",
                     "maxPrepayRate" : 1,
-                    "unInvoicedRate" : 0.8,
+                    "unInvoicedRate" : 1,
                     "contractBaseInterest" : 0.15,
-                    "expectHKDays" : 60,
+                    "expectHKDays" : 45,
                     "tradeAddPrice" : "2",
-                    "weightedPrice" : 0
+                    "weightedPrice" : 595
                 }
             )
             .expect('Content-Type', /json/)
@@ -158,15 +158,49 @@ describe('仓押订单 统计范例11', function () {
                 {
                     "hsId" : unitId,
                     "orderId" : orderId,
-                    "rukuDate" : "2017-06-20 00:00:00",
+                    "rukuDate" : "2017-06-29 00:00:00",
                     "rukuStatus" : "IN_STORAGE",
-                    "rukuAmount" : "10102.70",
-                    "rukuPrice" : "6011106.50",
+                    "rukuAmount" : "5000",
+                    "rukuPrice" : "2975000",
                     "trafficMode" : "MOTOR",
-                    "cars" : "366",
+                    "cars" : "",
                     "jhh" : "",
                     "ship" : "",
-                    "locality" : "立翔",
+                    "locality" : "新沙港",
+                    "chukuDate" : "2099-12-30 00:00:00",
+                    "chukuAmount" : 99999999,
+                    "chukuPrice" : 99999999
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.rukuStatus).to.include('IN_STORAGE')
+
+                done()
+            })
+    })
+    it(`入库单 - 新建入库单2 POST: /api/business/cang/${orderId}/rukus`, function (done) {
+        server.post(`/api/business/cang/${orderId}/rukus`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "orderId" : orderId,
+                    "rukuDate" : "2017-07-05 00:00:00",
+                    "rukuStatus" : "IN_STORAGE",
+                    "rukuAmount" : "5102.7",
+                    "rukuPrice" : "3036106.5",
+                    "trafficMode" : "MOTOR",
+                    "cars" : "",
+                    "jhh" : "",
+                    "ship" : "",
+                    "locality" : "新沙港",
                     "chukuDate" : "2099-12-30 00:00:00",
                     "chukuAmount" : 99999999,
                     "chukuPrice" : 99999999
@@ -187,7 +221,6 @@ describe('仓押订单 统计范例11', function () {
 
 
 
-
     it(`出库单 - 新建出库单1 POST: /api/business/cang/${orderId}/chukus`, function (done) {
         server.post(`/api/business/cang/${orderId}/chukus`)
             .set('Authorization', Authorization)
@@ -196,9 +229,9 @@ describe('仓押订单 统计范例11', function () {
                 {
                     "orderId" : orderId,
                     "hsId" : unitId,
-                    "locality" : "立翔",
+                    "locality" : "新沙港",
                     "chukuDate" : "2017-07-25 00:00:00",
-                    "chukuAmount" : "7000",
+                    "chukuAmount" : "8000",
                     "chukuPrice" : "4626496.36",
                 }
             )
@@ -221,9 +254,9 @@ describe('仓押订单 统计范例11', function () {
                 {
                     "orderId" : orderId,
                     "hsId" : unitId,
-                    "locality" : "立翔",
+                    "locality" : "新沙港",
                     "chukuDate" : "2017-07-27 00:00:00",
-                    "chukuAmount" : "3102.7",
+                    "chukuAmount" : "2102.7",
                     "chukuPrice" : "1402580.21",
                 }
             )
@@ -370,11 +403,11 @@ describe('仓押订单 统计范例11', function () {
                 {
                     "orderId" : orderId,
                     "hsId" : unitId,
-                    "jiekuanDate" : "2017-04-06 00:00:00",
+                    "jiekuanDate" : "2017-07-06 00:00:00",
                     "amount" : "5000000",
                     "capitalId" : 17,
-                    "useInterest" : "0.075",
-                    "useDays" : "36"
+                    "useInterest" : "0.098",
+                    "useDays" : "45"
                 }
             )
             .expect('Content-Type', /json/)
@@ -399,7 +432,7 @@ describe('仓押订单 统计范例11', function () {
                     "hsId" : unitId,
                     "orderId" : orderId,
                     "promise" : true,
-                    "huankuankDate" : "2017-07-26 00:00:00",
+                    "huankuankDate" : "2017-07-31 00:00:00",
                     "huankuanMapList" : [
                         {
                             "jiekuanId": borrowId,
@@ -437,7 +470,7 @@ describe('仓押订单 统计范例11', function () {
                 {
                     "hsId" : unitId,
                     "orderId" : orderId,
-                    "huikuanDate" : "2017-07-28 00:00:00",
+                    "huikuanDate" : "2017-06-29 00:00:00",
                     "huikuanAmount" : "1190000",
                     "huikuanUsage" : "DEPOSITECASH",
                     "huikuanMode" : "ELEC_REMITTANCE",
@@ -473,7 +506,7 @@ describe('仓押订单 统计范例11', function () {
                 {
                     "hsId" : unitId,
                     "orderId" : orderId,
-                    "huikuanDate" : "2017-06-29 00:00:00",
+                    "huikuanDate" : "2017-07-25 00:00:00",
                     "huikuanAmount" : "4626496.36",
                     "huikuanUsage" : "PAYMENT_FOR_GOODS",
                     "huikuanMode" : "ELEC_REMITTANCE",
@@ -509,7 +542,7 @@ describe('仓押订单 统计范例11', function () {
                 {
                     "hsId" : unitId,
                     "orderId" : orderId,
-                    "huikuanDate" : "2017-07-25 00:00:00",
+                    "huikuanDate" : "2017-07-27 00:00:00",
                     "huikuanAmount" : "212580.21",
                     "huikuanUsage" : "PAYMENT_FOR_GOODS",
                     "huikuanMode" : "ELEC_REMITTANCE",
@@ -621,7 +654,7 @@ describe('仓押订单 统计范例11', function () {
                     "receiverId" : 22,
                     "details" : [
                         {
-                            "invoiceNumber" : "12346123",
+                            "invoiceNumber" : "43211236",
                             "cargoAmount" : "10102.7",
                             "taxRate" : "0.17",
                             "priceAndTax" : "6011106.5"
@@ -655,7 +688,7 @@ describe('仓押订单 统计范例11', function () {
                     "receiverId" : 3,
                     "details" : [
                         {
-                            "invoiceNumber" : "12346124",
+                            "invoiceNumber" : "43211237",
                             "cargoAmount" : "10102.7",
                             "taxRate" : "0.17",
                             "priceAndTax" : "6031311.9"
@@ -693,25 +726,23 @@ describe('仓押订单 统计范例11', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
 
 
-                expect(res.body.data.saleIncludeTaxTotalAmount, '销售含税总额数据不对').to.equal(5997196.93)
-                expect(res.body.data.purchaseIncludeTaxTotalAmount, '采购含税总额数据不对').to.equal(6011106.50)
+                expect(res.body.data.saleIncludeTaxTotalAmount, '毛利 - 销售含税总额数据不对').to.equal(6029076.57)
+                expect(res.body.data.purchaseIncludeTaxTotalAmount, '毛利 - 采购含税总额数据不对').to.equal(6011106.50)
 
-                expect(res.body.data.tradeCompanyAddMoney, '毛利贸易公司加价数据不对').to.equal(20205.40)
-                expect(res.body.data.withoutTaxIncome, '不含税收入数据不对').to.equal(5125809.34)
-                expect(res.body.data.withoutTaxCost, '不含税成本数据不对').to.equal(5154967.44)
-                expect(res.body.data.vat, '应交增值税数据不对').to.equal(0)
-                expect(res.body.data.additionalTax, '税金及附加数据不对').to.equal(0)
-                // expect(res.body.data.stampDuty, '印花税数据不对').to.equal(3618.12)
-                expect(res.body.data.stampDuty, '印花税数据不对').to.equal(3608.55)
-                // expect(res.body.data.opreationCrossProfile, '经营毛利数据不对').to.equal(-5528.65)
-                expect(res.body.data.opreationCrossProfile, '经营毛利数据不对').to.equal(-32766.65)
-                // expect(res.body.data.crossProfileATon, '单吨毛利数据不对').to.equal(-0.55)
-                expect(res.body.data.crossProfileATon, '单吨毛利数据不对').to.equal(-3.24)
+                expect(res.body.data.tradeCompanyAddMoney, '毛利 - 贸易公司加价数据不对').to.equal(20205.40)
+                expect(res.body.data.vat, '毛利 - 应交增值税数据不对').to.equal(0)
+                expect(res.body.data.withoutTaxIncome, '毛利 - 不含税收入数据不对').to.equal(5153056.90)
+                expect(res.body.data.withoutTaxCost, '毛利 - 不含税成本数据不对').to.equal(5154967.44)
+
+                expect(res.body.data.additionalTax, '毛利 - 税金及附加数据不对').to.equal(0)
+                expect(res.body.data.stampDuty, '毛利 - 印花税数据不对').to.equal(3608.12)
+                expect(res.body.data.opreationCrossProfile, '毛利 - 经营毛利数据不对').to.equal(-5528.65)
+                expect(res.body.data.crossProfileATon, '毛利 - 单吨毛利数据不对').to.equal(-0.55)
 
 
                 expect(res.body.data.upstreamCapitalPressure, '上游资金占压数据不对').to.equal(0)
-                expect(res.body.data.downstreamCapitalPressure, '下游资金占压数据不对').to.equal(-31879.64)
-                expect(res.body.data.ownerCapitalPressure, '自有资金占压数据不对').to.equal(20205.4)
+                expect(res.body.data.downstreamCapitalPressure, '下游资金占压数据不对').to.equal(0)
+                expect(res.body.data.ownerCapitalPressure, '自有资金占压数据不对').to.equal(0)
                 expect(res.body.data.cangPrePayment, '预收款数据不对').to.equal(0)
 
 
