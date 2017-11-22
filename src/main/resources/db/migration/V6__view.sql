@@ -434,7 +434,9 @@ base.orderId,
 base.hsId,
 sum(IFNULL(rukuAmount,0.00)) as totalInstorageNum,
 sum( IFNULL(rukuPrice,0.00)) as totalInstorageAmount,
-IFNULL(sum(IFNULL(rukuPrice,0.00))/sum(IFNULL(rukuAmount,0.00)),0.00) as instorageUnitPrice
+IFNULL(sum(IFNULL(rukuPrice,0.00))/sum(IFNULL(rukuAmount,0.00)),0.00) as instorageUnitPrice,
+sum(IFNULL(case when rukuStatus='IN_TRANIT' then rukuAmount else 0 end,0.00))  totalInstorageTranitNum,
+sum(IFNULL(case when rukuStatus='IN_TRANIT' then rukuPrice else 0 end ,0.00))  totalInstorageTranitPrice
 from base
 left join hs_cang_ruku ruku on base.hsId=ruku.hsId and  deleted =0
 group by orderId,hsId;
@@ -572,7 +574,7 @@ base.hsId,
 ROUND(IFNULL(v_1004.totalLoadMoney,0.00)-IFNULL(v_1007.totalRepaymentPrincipeAmount,0.00)+IFNULL(v_1009.totalUnpayPrincipal ,0.00),2)as externalCapitalPaymentAmount
 from base
      left join v_1004 on base.hsId=v_1004.hsId
-     left join v_1007 on base.hsId=v_1007.hsI![4781511259405_.pic](/uploads/40237b41ec4af2e47e090d8f22811af2/4781511259405_.pic.jpg)!![4781511259405_.pic](/uploads/40237b41ec4af2e47e090d8f22811af2/4781511259405_.pic.jpg)!d
+     left join v_1007 on base.hsId=v_1007.hsId
      left join v_1009 on base.hsId=v_1009.hsId;
 
 
