@@ -15,7 +15,7 @@ const server = supertest(config.path.urlApi)
 
 
 
-describe('应收订单 统计范例4 赵征提供', function () {
+describe('应收订单 统计范例4 赵征提供 11.14', function () {
 
     let Authorization = ''
     let orderId = 15
@@ -1203,10 +1203,10 @@ describe('应收订单 统计范例4 赵征提供', function () {
 
 
                 expect(res.body.data.ccsProfile, '发运信息 - 瑞茂通总收益数据不对').to.equal(24675.67)
-                expect(res.body.data.ccsProfile, '进项票信息 - CCS已收到进项数量数据不对').to.equal(9450)
-                expect(res.body.data.ccsProfile, '进项票信息 - CCS已收到进项金额数据不对').to.equal(1308900)
-                expect(res.body.data.ccsProfile, '进项票信息 - CCS未收到进项数量数据不对').to.equal(823)
-                expect(res.body.data.ccsProfile, '进项票信息 - CCS未收到进项金额数据不对').to.equal(125190.33)
+                expect(res.body.data.totalCSSIntypeNumber, '进项票信息 - CCS已收到进项数量数据不对').to.equal(9450)
+                expect(res.body.data.totalCCSIntypeMoney, '进项票信息 - CCS已收到进项金额数据不对').to.equal(1308900)
+                expect(res.body.data.cssUninTypeNum, '进项票信息 - CCS未收到进项数量数据不对').to.equal(823)
+                expect(res.body.data.cssUninTypeMoney, '进项票信息 - CCS未收到进项金额数据不对').to.equal(125190.33)
 
 
                 expect(res.body.data.settleGrossProfileNum, '毛利 - 结算量数据不对').to.equal(10273.00)

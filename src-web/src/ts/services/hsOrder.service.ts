@@ -126,6 +126,14 @@ export class HSOrderService {
             .set('pageNo', query.pageNo)
 
         if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.loanStatus) { params = params.append('loanStatus', query.loanStatus)}
+        if (query.jiekuanDateStart) { params = params.append('jiekuanDateStart', query.jiekuanDateStart)}
+        if (query.jiekuanDateEnd) { params = params.append('jiekuanDateEnd', query.jiekuanDateEnd)}
+        if (query.amount) { params = params.append('amount', query.amount)}
+        if (query.capitalId) { params = params.append('capitalId', query.capitalId)}
+        if (query.useInterest) { params = params.append('useInterest', query.useInterest)}
+        if (query.useDays) { params = params.append('useDays', query.useDays)}
+
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/jiekuans', {params: params} )
     }
     createNewBorrow(businessType : string, orderId: number, borrow: any): Observable<any> {
@@ -145,6 +153,12 @@ export class HSOrderService {
             .set('pageNo', query.pageNo)
 
         if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.payDateStart) { params = params.append('payDateStart', query.payDateStart)}
+        if (query.payDateEnd) { params = params.append('payDateEnd', query.payDateEnd)}
+        if (query.receiveCompanyId) { params = params.append('receiveCompanyId', query.receiveCompanyId)}
+        if (query.payUsage) { params = params.append('payUsage', query.payUsage)}
+        if (query.payAmount) { params = params.append('payAmount', query.payAmount)}
+
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fukuans', {params: params} )
     }
     getPaymentByID(businessType : string, orderId: number, paymentId: number): Observable<any> {
@@ -183,6 +197,11 @@ export class HSOrderService {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.huankuankDateStart) { params = params.append('huankuankDateStart', query.huankuankDateStart)}
+        if (query.huankuankDateEnd) { params = params.append('huankuankDateEnd', query.huankuankDateEnd)}
+        if (query.promise || query.promise === false) { params = params.append('promise', query.promise)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/huankuans', {params: params} )
     }
@@ -299,6 +318,14 @@ export class HSOrderService {
         const params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.invoiceDirection) { params = params.append('invoiceDirection', query.invoiceDirection)}
+        if (query.invoiceType) { params = params.append('invoiceType', query.invoiceType)}
+        if (query.openDateStart) { params = params.append('openDateStart', query.openDateStart)}
+        if (query.openDateEnd) { params = params.append('openDateEnd', query.openDateEnd)}
+        if (query.openCompanyId) { params = params.append('openCompanyId', query.openCompanyId)}
+        if (query.receiverId) { params = params.append('receiverId', query.receiverId)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/invoices', {params: params} )
     }

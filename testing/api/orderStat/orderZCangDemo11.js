@@ -735,8 +735,8 @@ describe('仓押订单 统计范例11 赵征提供 11.21日', function () {
                 expect(res.body.data.withoutTaxCost, '毛利 - 不含税成本数据不对').to.equal(5154967.44)
 
                 expect(res.body.data.additionalTax, '毛利 - 税金及附加数据不对').to.equal(0)
-                expect(res.body.data.stampDuty, '毛利 - 印花税数据不对').to.equal(3608.12)
-                expect(res.body.data.opreationCrossProfile, '毛利 - 经营毛利数据不对').to.equal(-5528.65)
+                expect(res.body.data.stampDuty, '毛利 - 印花税数据不对').to.equal(3618.12)
+                expect(res.body.data.opreationCrossProfile, '毛利 - 经营毛利数据不对').to.equal(-5528.66)
                 expect(res.body.data.crossProfileATon, '毛利 - 单吨毛利数据不对').to.equal(-0.55)
 
 

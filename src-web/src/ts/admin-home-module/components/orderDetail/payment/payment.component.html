@@ -50,9 +50,31 @@
 
                     <div class="form-row ">
                         <div class="col-6">
-                            <bs-select formControlName="hsId" [fc]="paymentSearchForm.get('hsId')" [label]="'核算月:'" [addAllOptions]="true" [dirty]="ignoreDirty" [options]="unitList"></bs-select>
+                            <bs-select formControlName="hsId" [fc]="paymentSearchForm.get('hsId')" [label]="'核算月:'" [addAllOptions]="true" [options]="unitList"></bs-select>
+                        </div>
+                        <div class="col-6">
+                            <bs-select formControlName="payUsage" [fc]="paymentSearchForm.get('payUsage')" [label]="'付款用途:'" [addAllOptions]="true" [options]="purposeList"></bs-select>
                         </div>
                     </div>
+
+                    <div class="form-row ">
+                        <div class="col-3">
+                            <bs-datepicker formControlName="payDateStart" [fc]="paymentSearchForm.get('payDateStart')" [label]="'付款日期:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                        </div>
+                        <div class="col-3">
+                            <bs-datepicker formControlName="payDateEnd" [fc]="paymentSearchForm.get('payDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                        </div>
+                        <div class="col-6">
+                            <bs-select formControlName="receiveCompanyId" [fc]="paymentSearchForm.get('receiveCompanyId')" [label]="'收款单位:'" [addAllOptions]="true" [options]="partyListFilter"></bs-select>
+                        </div>
+                    </div>
+
+                    <div class="form-row ">
+                        <div class="col-6">
+                            <bs-text-input formControlName="payAmount" [fc]="paymentSearchForm.get('payAmount')" [type]="'number'" [label]="'付款金额(元):'" ></bs-text-input>
+                        </div>
+                    </div>
+
 
                     <div class="form-group row">
                         <div class="col-11 ml-auto">
@@ -100,7 +122,7 @@
                         </td>
                     </tr>
 
-                    <tr> <td colspan="7">  本月累计付款金额: {{totalPaymnetMoney}} - 业务累计付款金额: {{this.unitListStat[0]?.accumulativePaymentAmount}} </tr>
+                    <tr> <td colspan="7"> 业务累计付款金额: {{this.unitListStat[0]?.accumulativePaymentAmount}} </tr>
 
                     </tbody>
                 </table>

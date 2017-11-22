@@ -72,6 +72,35 @@
 
 
             <div *ngIf="!isShowForm">
+
+                <form [formGroup]="repaymentHKSearchForm"  (keydown.enter)="$event.preventDefault()">
+
+                    <div class="form-row ">
+                        <div class="col-6">
+                            <bs-select formControlName="hsId" [fc]="repaymentHKSearchForm.get('hsId')" [label]="'核算月:'" [addAllOptions]="true" [options]="unitList"></bs-select>
+                        </div>
+                        <div class="col-6">
+                            <bs-select formControlName="promise" [fc]="repaymentHKSearchForm.get('promise')" [label]="'还款状态:'" [addAllOptions]="true" [options]="promiseStatusList"></bs-select>
+                        </div>
+                    </div>
+
+                    <div class="form-row ">
+                        <div class="col-3">
+                            <bs-datepicker formControlName="huankuankDateStart" [fc]="repaymentHKSearchForm.get('huankuankDateStart')" [label]="'还款日期:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                        </div>
+                        <div class="col-3">
+                            <bs-datepicker formControlName="huankuankDateEnd" [fc]="repaymentHKSearchForm.get('huankuankDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-11 ml-auto">
+                            <button type="button" class="btn btn-info " (click)="getRepaymentHKList()"  >查询</button>
+                        </div>
+                    </div>
+                </form>
+
+
                 <table class="table table-bordered table-hover table-responsive" >
                     <thead>
                     <tr>

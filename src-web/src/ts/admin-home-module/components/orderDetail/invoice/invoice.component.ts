@@ -55,7 +55,7 @@ export class InvoiceComponent implements OnInit {
 
 
     pagination: any = {
-        pageSize : 20,
+        pageSize : 10000,
         pageNo : 1,
         total : 1
     }
@@ -99,7 +99,7 @@ export class InvoiceComponent implements OnInit {
 
         console.log('Query: ', query)
 
-        this.hsOrderService.getInvoiceListByID(this.businessType, this.currentOrder.id).subscribe(
+        this.hsOrderService.getInvoiceListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.invoiceList = data.data.results
 

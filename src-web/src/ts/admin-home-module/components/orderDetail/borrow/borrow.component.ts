@@ -41,11 +41,19 @@ export class BorrowComponent implements OnInit {
     unitListStatObject : any = {}
 
 
-    totalLoanMoney : number = 0
-    nonRepaymentLoanMoney : number = 0
+    totalLoanAmountDisplay : number = 0
+    totalLoanMoneyDisplay : number = 0
+    totalNonRepaymentLoanMoneyDisplay : number = 0
 
     totalLoanMoneyAll : number = 0
-    nonRepaymentLoanMoneyAll : number = 0
+    totalNonRepaymentLoanMoneyAll : number = 0
+
+
+    borrowStatusList : any[] = [
+        { id : 1, name : '已还款'},
+        { id : 2, name : '未还款'},
+        { id : 3, name : '部分已还款'}
+    ]
 
 
     pagination: any = {
@@ -96,16 +104,25 @@ export class BorrowComponent implements OnInit {
         console.log('Query: ', query)
 
         if (this.borrowSearchForm.value.hsId) {
-            this.totalLoanMoney = this.unitListStatObject[this.borrowSearchForm.value.hsId].totalLoadMoney
-            this.nonRepaymentLoanMoney = this.unitListStatObject[this.borrowSearchForm.value.hsId].nonRepaymentLoanMoney
+            this.totalLoanMoneyDisplay = this.unitListStatObject[this.borrowSearchForm.value.hsId].totalLoadMoney
+            this.totalNonRepaymentLoanMoneyDisplay = this.unitListStatObject[this.borrowSearchForm.value.hsId].nonRepaymentLoanMoney
         } else {
-            this.totalLoanMoney = this.totalLoanMoneyAll
-            this.nonRepaymentLoanMoney = this.nonRepaymentLoanMoneyAll
+            this.totalLoanMoneyDisplay = this.totalLoanMoneyAll
+            this.totalNonRepaymentLoanMoneyDisplay = this.totalNonRepaymentLoanMoneyAll
         }
 
         this.hsOrderService.getBorrowListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.borrowList = data.data.results
+
+                if (Array.isArray(data.data.results)) {
+                    this.totalLoanAmountDisplay = 0
+
+                    data.data.results.forEach( borrow => {
+
+                        this.totalLoanAmountDisplay = this.totalLoanAmountDisplay + borrow.amount
+                    })
+                }
             },
             error => {this.httpService.errorHandler(error) }
         )
@@ -165,11 +182,11 @@ export class BorrowComponent implements OnInit {
                         this.unitListStatObject[unit.hsId] = unit
 
                         this.totalLoanMoneyAll = this.totalLoanMoneyAll + unit.totalLoadMoney
-                        this.nonRepaymentLoanMoneyAll = this.nonRepaymentLoanMoneyAll + unit.nonRepaymentLoanMoney
+                        this.totalNonRepaymentLoanMoneyAll = this.totalNonRepaymentLoanMoneyAll + unit.nonRepaymentLoanMoney
                     })
 
-                    this.totalLoanMoney = this.totalLoanMoneyAll
-                    this.nonRepaymentLoanMoney = this.nonRepaymentLoanMoneyAll
+                    this.totalLoanMoneyDisplay = this.totalLoanMoneyAll
+                    this.totalNonRepaymentLoanMoneyDisplay = this.totalNonRepaymentLoanMoneyAll
 
                 }
 
@@ -184,7 +201,14 @@ export class BorrowComponent implements OnInit {
     createBorrowSearchForm(): void {
 
         this.borrowSearchForm = this.fb.group({
-            'hsId'    : ['' ]
+            'hsId'    : ['' ],
+            'loanStatus'    : ['' ],
+            'jiekuanDateStart'    : [null ],
+            'jiekuanDateEnd'    : [null ],
+            'amount'    : ['' ],
+            'capitalId'    : ['' ],
+            'useInterest'    : ['' ],
+            'useDays'    : ['' ]
         } )
     }
 

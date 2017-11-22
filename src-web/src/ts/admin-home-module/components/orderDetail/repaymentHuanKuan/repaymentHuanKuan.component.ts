@@ -29,6 +29,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
     repaymentHKForm: FormGroup
     borrowForm: FormGroup
+    repaymentHKSearchForm: FormGroup
+
 
     ignoreDirty: boolean = false
     ignoreDirtyBorrow: boolean = false
@@ -57,7 +59,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
     ]
 
     pagination: any = {
-        pageSize : 20,
+        pageSize : 10000,
         pageNo : 1,
         total : 1
     }
@@ -78,12 +80,17 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.createRepaymentHKSearchForm()
+        this.createHKForm()
+        this.createBorrowForm()
+
+
         this.getOrderUnitList()
         this.getPartyList()
         this.getRepaymentHKList()
 
-        this.createHKForm()
-        this.createBorrowForm()
+
+
 
         if (this.currentOrder) {
             if (Array.isArray(this.currentOrder.orderConfigList)) {
@@ -106,7 +113,16 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
 
     getRepaymentHKList () {
-        this.hsOrderService.getRepaymentHKListByID(this.businessType, this.currentOrder.id).subscribe(
+        let query : any = {
+            pageSize: this.pagination.pageSize,
+            pageNo: this.pagination.pageNo
+        }
+
+        query = (<any>Object).assign(query, this.repaymentHKSearchForm.value)
+
+        console.log('Query: ', query)
+
+        this.hsOrderService.getRepaymentHKListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.repaymentHKList = data.data.results
 
@@ -176,6 +192,18 @@ export class RepaymentHuanKuanComponent implements OnInit {
             error => {this.httpService.errorHandler(error) }
         )
     }
+
+
+    createRepaymentHKSearchForm(): void {
+
+        this.repaymentHKSearchForm = this.fb.group({
+            'hsId'    : ['' ],
+            'huankuankDateStart'    : [null ],
+            'huankuankDateEnd'    : [null ],
+            'promise'    : ['' ]
+        } )
+    }
+
 
     repaymentHKFormError : any = {}
     borrowFormError : any = {}
