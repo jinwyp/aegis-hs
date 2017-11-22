@@ -123,6 +123,12 @@ export class DepositComponent implements OnInit {
         },
         'bailAmount'  : {
             'required'      : '请填写金额!'
+        },
+        'openCompanyId'  : {
+            'required'      : '请填写付款单位!'
+        },
+        'receiverId'  : {
+            'required'      : '请填写收款单位!'
         }
     }
 
@@ -136,7 +142,9 @@ export class DepositComponent implements OnInit {
             'hsId'    : ['', [Validators.required ] ],
             'bailDate'    : [null, [Validators.required ] ],
             'bailType'    : ['', [Validators.required ] ],
-            'bailAmount'    : ['', [Validators.required ] ]
+            'bailAmount'    : ['', [Validators.required ] ],
+            'openCompanyId'    : ['', [Validators.required ] ],
+            'receiverId'    : ['', [Validators.required ] ]
         } )
 
 

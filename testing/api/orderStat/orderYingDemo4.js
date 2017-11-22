@@ -1064,7 +1064,9 @@ describe('应收订单 统计范例4 赵征提供', function () {
                     "bailDate" : "2017-08-01 00:00:00",
                     "bailType" : "RECV_UP",
                     "bailAmount" : "100000",
-                    "orderId" : orderId
+                    "orderId" : orderId,
+                    "openCompanyId" : 28,
+                    "receiverId" : 1
                 }
             )
             .expect('Content-Type', /json/)
@@ -1089,7 +1091,9 @@ describe('应收订单 统计范例4 赵征提供', function () {
                     "bailDate" : "2017-08-02 00:00:00",
                     "bailType" : "PAY_DOWN",
                     "bailAmount" : "100000",
-                    "orderId" : orderId
+                    "orderId" : orderId,
+                    "openCompanyId" : 1,
+                    "receiverId" : 31
                 }
             )
             .expect('Content-Type', /json/)

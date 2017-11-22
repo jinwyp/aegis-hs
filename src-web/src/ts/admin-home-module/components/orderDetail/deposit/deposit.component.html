@@ -7,6 +7,9 @@
             <bs-select formControlName ="bailType" [fc]="depositForm.get('bailType')" [label]="'保证金类型:'" [dirty]="ignoreDirty" [options]="depositTypeList" [error]="depositFormError.bailType"></bs-select>
             <bs-text-input formControlName="bailAmount" [fc]="depositForm.get('bailAmount')" [type]="'number'" [label]="'保证金金额(元):'" [dirty]="ignoreDirty" [error]="depositFormError.bailAmount" [hidden]="!isAddNew"></bs-text-input>
 
+            <bs-select formControlName ="openCompanyId" [fc]="depositForm.get('openCompanyId')" [label]="'付款单位:'" [dirty]="ignoreDirty" [editable]="true" [options]="partyList" [error]="depositFormError.openCompanyId" (outputChange)="getBillingCompany($event)"></bs-select>
+            <bs-select formControlName ="receiverId" [fc]="depositForm.get('receiverId')" [label]="'收款单位:'" [dirty]="ignoreDirty" [options]="partyListFilter" [error]="depositFormError.receiverId"  (outputChange)="getBillToCompany($event)"></bs-select>
+
 
             <div class="form-group row">
                 <div class="col-10 ml-auto">

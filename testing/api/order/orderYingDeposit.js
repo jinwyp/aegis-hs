@@ -55,7 +55,9 @@ describe('应收订单 保证金:', function () {
                     "bailDate" : "2017-10-05 00:00:00",
                     "bailType" : "RECV_UP",
                     "bailAmount" : "23000",
-                    "orderId" : orderId
+                    "orderId" : orderId,
+                    "openCompanyId" : 2,
+                    "receiverId" : 1
                 }
             )
             .expect('Content-Type', /json/)
@@ -82,7 +84,9 @@ describe('应收订单 保证金:', function () {
                     "bailDate" : "2017-11-05 00:00:00",
                     "bailType" : "RECV_UP",
                     "bailAmount" : "25000",
-                    "orderId" : orderId
+                    "orderId" : orderId,
+                    "openCompanyId" : 2,
+                    "receiverId" : 1
                 }
             )
             .expect('Content-Type', /json/)
@@ -107,7 +111,9 @@ describe('应收订单 保证金:', function () {
                     "bailDate" : "2017-12-05 00:00:00",
                     "bailType" : 1,
                     "bailAmount" : "28000",
-                    "orderId" : orderId
+                    "orderId" : orderId,
+                    "openCompanyId" : 2,
+                    "receiverId" : 1
                 }
             )
             .expect('Content-Type', /json/)
@@ -134,7 +140,9 @@ describe('应收订单 保证金:', function () {
                     "bailDate" : "2017-12-05 00:00:00",
                     "bailType" : 1,
                     "bailAmount" : "28000",
-                    "orderId" : orderId
+                    "orderId" : orderId,
+                    "openCompanyId" : 2,
+                    "receiverId" : 1
                 }
             )
             .expect('Content-Type', /json/)
