@@ -47,6 +47,11 @@ export class RepaymentHuanKuanComponent implements OnInit {
     borrowPostList : any[] = []
     borrowListObject : any = {}
 
+    totalPrincipal : number = 0
+    totalInterest : number = 0
+    totalFee : number = 0
+
+
 
     repaymentTypeList : any[] = [
         {id: false , name : '客户还服务费'},
@@ -125,6 +130,26 @@ export class RepaymentHuanKuanComponent implements OnInit {
         this.hsOrderService.getRepaymentHKListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.repaymentHKList = data.data.results
+
+                if (Array.isArray(data.data.results)) {
+                    this.totalPrincipal = 0
+                    this.totalInterest = 0
+                    this.totalFee = 0
+
+                    data.data.results.forEach( (repayment) => {
+                        console.log(repayment)
+                        if (Array.isArray(repayment.huankuanMapList)) {
+
+                            repayment.huankuanMapList.forEach( (borrow) => {
+                                this.totalPrincipal =  this.totalPrincipal + borrow.principal
+                                this.totalInterest =  this.totalInterest + borrow.interest
+                                this.totalFee =  this.totalFee + borrow.fee
+
+                                console.log(borrow)
+                            })
+                        }
+                    })
+                }
 
             },
             error => {this.httpService.errorHandler(error) }
