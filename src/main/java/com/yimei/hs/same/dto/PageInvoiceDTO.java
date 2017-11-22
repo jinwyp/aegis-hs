@@ -25,6 +25,7 @@ public class PageInvoiceDTO extends BaseFilter<PageInvoiceDTO> {
     private InvoiceType invoiceType;
 
     private LocalDateTime openDateStart;
+    private LocalDateTime openDate;
 
     private LocalDateTime openDateEnd;
 
