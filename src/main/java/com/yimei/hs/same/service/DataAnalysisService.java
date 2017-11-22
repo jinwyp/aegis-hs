@@ -357,6 +357,8 @@ public class DataAnalysisService {
             setTotalInstorageNum(yingAnalysisDatav3001.getTotalInstorageNum());
             setInstorageUnitPrice(yingAnalysisDatav3001.getInstorageUnitPrice());
             setTotalOutstorageNum(yingAnalysisDatav3003.getTotalOutstorageNum());
+            setTotalInstorageTranitNum(yingAnalysisDatav3001.getTotalInstorageTranitNum());
+            setTotalInstorageTranitPrice(yingAnalysisDatav3001.getTotalInstorageTranitPrice());
             setTotalOutstorageMoney(yingAnalysisDatav3003.getTotalOutstorageMoney());
             setTotalStockNum(yingAnalysisDatav3005.getTotalStockNum());
             setTotalStockMoney(yingAnalysisDatav3006.getTotalStockMoney());

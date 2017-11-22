@@ -572,7 +572,7 @@ base.hsId,
 ROUND(IFNULL(v_1004.totalLoadMoney,0.00)-IFNULL(v_1007.totalRepaymentPrincipeAmount,0.00)+IFNULL(v_1009.totalUnpayPrincipal ,0.00),2)as externalCapitalPaymentAmount
 from base
      left join v_1004 on base.hsId=v_1004.hsId
-     left join v_1007 on base.hsId=v_1007.hsId
+     left join v_1007 on base.hsId=v_1007.hsI![4781511259405_.pic](/uploads/40237b41ec4af2e47e090d8f22811af2/4781511259405_.pic.jpg)!![4781511259405_.pic](/uploads/40237b41ec4af2e47e090d8f22811af2/4781511259405_.pic.jpg)!d
      left join v_1009 on base.hsId=v_1009.hsId;
 
 
@@ -591,12 +591,12 @@ from base
      left join v_2008 on base.hsId=v_2008.hsId;
 
 
---1048【1003】付款金额合计 - 【1047】外部资金付款金额
+--1048【1003】付款金额合计 - 【1047】外部资金付款金额-1002付贸易逆差
 create view v_1048_cang as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)-IFNULL(v_1047.externalCapitalPaymentAmount ,0.00),2)as ownerCapitalPaymentAmount
+ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)-IFNULL(v_1047.externalCapitalPaymentAmount ,0.00)-IFNULL(v_1001.totalTradeGapFee,0.00),2)as ownerCapitalPaymentAmount
 from base
      left join v_1001 on base.hsId=v_1001.hsId
      left join v_1047 on v_1001.hsId=v_1047.hsId; 

@@ -192,6 +192,10 @@ public class AnalysisData implements Serializable {
     private BigDecimal cangPrePayment;
 
     private BigDecimal totalOutstorageMoney;
+    //入库在途中数量
+    private BigDecimal totalInstorageTranitNum;
+    //入库在途中金额
+    private BigDecimal totalInstorageTranitPrice;
 
     // 本月最高付款金额(本次应付货款金额)
     private BigDecimal maximumPaymentAmount;
