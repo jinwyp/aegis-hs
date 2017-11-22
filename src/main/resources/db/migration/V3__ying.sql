@@ -33,6 +33,8 @@ create table hs_ying_bail (
   bailDate date               not null comment '日期',
   bailType varchar(32)        not null comment '保证金类型',
   bailAmount decimal(10,2)    not null comment '保证金金额',
+  openCompanyId  bigint(20)     not null comment '开票单位',
+  receiverId  bigint(20)        not null comment '收票单位',
 
   deleted tinyint(1)          not null default 0 comment '是否删除',
   tsc timestamp               not null default current_timestamp,
