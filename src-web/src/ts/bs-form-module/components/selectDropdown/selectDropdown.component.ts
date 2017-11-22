@@ -63,7 +63,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
 
     ngOnChanges (changes: {[propKey: string]: SimpleChange}) {
-        console.log('ngOnChanges')
+        // console.log('ngOnChanges')
 
         for (const propertyName in changes) {
 
@@ -249,7 +249,11 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
             })
 
             this.value = tempValue
-            this.currentSelectIndexByKeyboard = this.optionList.indexOf(this.value)
+
+            if (Array.isArray(this.optionList)) {
+                this.currentSelectIndexByKeyboard = this.optionList.indexOf(this.value)
+            }
+
         }
     }
 
