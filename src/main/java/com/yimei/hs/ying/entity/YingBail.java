@@ -38,13 +38,18 @@ public class YingBail implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "到场状态不能为空")
     private BailType bailType;
 
+    @NotNull(groups = {CreateGroup.class}, message = "开票单位不能为空")
+    private Long openCompanyId;
+    @NotNull(groups = {CreateGroup.class}, message = "收票单位不能为空")
+    private Long receiverId;
+
+
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
 
     private LocalDateTime tsu;
 
     private static final long serialVersionUID = 1L;
-
 
 
 }

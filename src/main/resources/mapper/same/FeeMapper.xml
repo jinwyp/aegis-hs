@@ -31,6 +31,7 @@
             <if test="orderId!=null">AND orderId = #{orderId, jdbcType=BIGINT}</if>
             <if test="hsId!=null">AND hsId = #{hsId, jdbcType=BIGINT}</if>
             <if test="name!=null">AND name = #{name, jdbcType=VARCHAR}</if>
+            <if test="amount!=null">AND amount= #{amount, jdbcType=VARCHAR}</if>
         </where>
     </select>
     <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.Fee">

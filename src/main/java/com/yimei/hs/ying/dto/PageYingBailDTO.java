@@ -21,4 +21,6 @@ public class PageYingBailDTO extends BaseFilter<PageYingBailDTO>{
     private LocalDateTime bailDate;
     private BigDecimal bailAmount;
     private BailType bailType;
+    private Long openCompanyId;
+    private Long receiverId;
 }
