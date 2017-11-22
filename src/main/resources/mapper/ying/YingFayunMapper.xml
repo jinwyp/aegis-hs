@@ -57,7 +57,16 @@
             <if test="true">and deleted = 0</if>
             <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
             <if test="fyDate!=null">and fyDate = #{fyDate, jdbcType=TIMESTAMP}</if>
+            <if test="fyAmount!=null">and fyAmount = #{fyAmount, jdbcType=DECIMAL}</if>
+            <if test="arriveStatus!=null">and arriveStatus = #{arriveStatus, jdbcType=VARCHAR}</if>
             <if test="hsId!=null">and hsId = #{hsId, jdbcType=VARCHAR}</if>
+            <if test="upstreamTrafficMode!=null">and upstreamTrafficMode = #{upstreamTrafficMode, jdbcType=VARCHAR}</if>
+            <if test="downstreamTrafficMode!=null">and downstreamTrafficMode = #{downstreamTrafficMode, jdbcType=VARCHAR}</if>
+            <if test="upstreamCars!=null">and upstreamCars = #{upstreamCars, jdbcType=INTEGER}</if>
+            <if test="upstreamJHH!=null">and upstreamJHH = #{upstreamJHH, jdbcType=VARCHAR}</if>
+            <if test="downstreamCars!=null">and downstreamCars = #{downstreamCars, jdbcType=INTEGER}</if>
+            <if test="downstreamJHH!=null">and downstreamJHH = #{downstreamJHH, jdbcType=VARCHAR}</if>
+            <if test="downstreamShip!=null">and downstreamShip = #{downstreamShip, jdbcType=VARCHAR}</if>
         </where>
     </select>
 

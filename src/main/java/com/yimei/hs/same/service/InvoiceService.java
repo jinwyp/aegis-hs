@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -39,6 +41,8 @@ public class InvoiceService {
         Page<Invoice> yingInvoicePage = invoiceMapper.getPage(pageInvoiceDTO);
         for (Invoice invoice : yingInvoicePage.getResults()) {
             List<InvoiceDetail> details = invoiceDetailMapper.getList(invoice.getId());
+            BigDecimal totalPriceAndTax= details.stream().map(InvoiceDetail::getPriceAndTax).reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal totalCargoAmount= details.stream().map(InvoiceDetail::getCargoAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
             invoice.setDetails(details);
         }
         return yingInvoicePage;

@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -54,5 +55,6 @@ public class Invoice implements Serializable {
     @Size(groups = {CreateGroup.class}, min = 1, message = "缺少发票明细")
     @Valid
     List<InvoiceDetail> details;
-
+    private BigDecimal totalPriceAndTax;
+    private BigDecimal totalCargoAmount;
 }
