@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * Created by hary on 2017/9/21.
@@ -28,4 +29,11 @@ public class PageJiekuanDTO extends BaseFilter<PageJiekuanDTO> {
     private BigDecimal useInterest;
 
     private Integer useDays;
+
+    private LocalDateTime jiekuanDate;
+
+
+
+
 }
+
