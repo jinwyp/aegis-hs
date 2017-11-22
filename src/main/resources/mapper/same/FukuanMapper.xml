@@ -107,6 +107,8 @@
             <if test="hsId!=null">and t1.hsId = #{hsId, jdbcType=BIGINT}</if>
             <if test="payDate!=null">and t1.payDate = #{payDate, jdbcType=TIMESTAMP}</if>
             <if test="receiveCompanyId!=null">and t1.receiveCompanyId = #{receiveCompanyId, jdbcType=BIGINT}</if>
+            <if test="paymentPurpose!=null">and t1.paymentPurpose = #{paymentPurpose, jdbcType=BIGINT}</if>
+            <if test="payAmount!=null">and t1.payAmount = #{payAmount, jdbcType=BIGINT}</if>
         </where>
         order by t1.payDate asc
     </select>

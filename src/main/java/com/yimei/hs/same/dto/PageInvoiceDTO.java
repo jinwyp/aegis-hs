@@ -1,6 +1,7 @@
 package com.yimei.hs.same.dto;
 
 import com.yimei.hs.boot.persistence.BaseFilter;
+import com.yimei.hs.enums.InvoiceDirection;
 import com.yimei.hs.enums.InvoiceType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,6 +30,7 @@ public class PageInvoiceDTO extends BaseFilter<PageInvoiceDTO> {
 
     private Long receiverId;
 
+    InvoiceDirection invoiceDirection;
 
 
 
