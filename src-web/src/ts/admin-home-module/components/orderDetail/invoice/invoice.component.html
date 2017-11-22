@@ -77,6 +77,49 @@
 
 
         <div *ngIf="!isShowForm">
+
+            <form [formGroup]="invoiceSearchForm"  (keydown.enter)="$event.preventDefault()">
+
+                <div class="form-row ">
+                    <div class="col-6">
+                        <bs-select formControlName="hsId" [fc]="invoiceSearchForm.get('hsId')" [label]="'核算月:'" [addAllOptions]="true" [options]="unitList"></bs-select>
+                    </div>
+                    <div class="col-6">
+                        <bs-select formControlName="invoiceDirection" [fc]="invoiceSearchForm.get('invoiceDirection')" [label]="'进销项:'" [addAllOptions]="true" [options]="invoiceDirectionList"></bs-select>
+                    </div>
+                </div>
+
+                <div class="form-row ">
+                    <div class="col-3">
+                        <bs-datepicker formControlName="openDateStart" [fc]="invoiceSearchForm.get('openDateStart')" [label]="'开票日期:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                    </div>
+                    <div class="col-3">
+                        <bs-datepicker formControlName="openDateEnd" [fc]="invoiceSearchForm.get('openDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                    </div>
+                    <div class="col-6">
+                        <bs-select formControlName="invoiceType" [fc]="invoiceSearchForm.get('invoiceType')" [label]="'发票类型:'" [addAllOptions]="true" [options]="invoiceTypeList"></bs-select>
+                    </div>
+                </div>
+
+                <div class="form-row ">
+                    <div class="col-6">
+                        <bs-select formControlName="openCompanyId" [fc]="invoiceSearchForm.get('openCompanyId')" [label]="'开票单位:'" [editable]="true" [addAllOptions]="true" [options]="partyList"></bs-select>
+                    </div>
+                    <div class="col-6">
+                        <bs-select formControlName="receiverId" [fc]="invoiceSearchForm.get('receiverId')" [label]="'收票单位:'" [addAllOptions]="true" [options]="partyListFilter"></bs-select>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <div class="col-11 ml-auto">
+                        <button type="button" class="btn btn-info " (click)="getInvoiceList()"  >查询</button>
+                    </div>
+                </div>
+            </form>
+
+
+
             <table class="table table-bordered table-hover table-responsive" >
                 <thead>
                 <tr>
@@ -112,6 +155,7 @@
                         <button class="btn btn-link btn-sm" (click)="deleteItem(invoice)"> 删除 </button>
                     </td>
                 </tr>
+                <tr> <td colspan="10">  累积价税合计: {{totalAllPriceAndTax}} - 累计已开票吨位: {{totalAllCargoAmount}} </tr>
                 </tbody>
             </table>
 

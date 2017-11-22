@@ -49,9 +49,9 @@ export class SwitchComponent implements ControlValueAccessor, OnInit, OnChanges 
             if (changes.hasOwnProperty(propertyName)) {
                 const currentChangeObject = changes[propertyName]
 
-                if (currentChangeObject.currentValue && currentChangeObject.isFirstChange) {
+                if (currentChangeObject.currentValue && currentChangeObject.isFirstChange()) {
                     // console.log('currentChangeObject firstChange: ', propertyName, currentChangeObject)
-                }else {
+                } else {
                     // console.log('currentChangeObject secondChange: ', propertyName, currentChangeObject)
                 }
             }

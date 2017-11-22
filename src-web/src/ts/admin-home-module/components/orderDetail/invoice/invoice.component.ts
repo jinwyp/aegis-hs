@@ -28,6 +28,7 @@ export class InvoiceComponent implements OnInit {
 
     invoiceForm: FormGroup
     invoiceDetailForm: FormGroup
+    invoiceSearchForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
@@ -44,6 +45,9 @@ export class InvoiceComponent implements OnInit {
     billingCompany : any
     billToCompany : any
     invoiceDetailFormType : number = 1
+
+    totalAllPriceAndTax : number = 0
+    totalAllCargoAmount : number = 0
 
     invoiceDirectionList : any[] = getEnum('InvoiceDirection')
     invoiceTypeList : any[] = getEnum('InvoiceType')
@@ -70,7 +74,7 @@ export class InvoiceComponent implements OnInit {
 
 
     ngOnInit(): void {
-
+        this.createInvoiceSearchForm()
         this.getOrderUnitList()
         this.getPartyList()
         this.getInvoiceList()
@@ -85,9 +89,33 @@ export class InvoiceComponent implements OnInit {
 
 
     getInvoiceList () {
+
+        let query : any = {
+            pageSize: this.pagination.pageSize,
+            pageNo: this.pagination.pageNo
+        }
+
+        query = (<any>Object).assign(query, this.invoiceSearchForm.value)
+
+        console.log('Query: ', query)
+
         this.hsOrderService.getInvoiceListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
                 this.invoiceList = data.data.results
+
+                if (Array.isArray(data.data.results)) {
+
+                    this.totalAllPriceAndTax  = 0
+                    this.totalAllCargoAmount  = 0
+
+                    data.data.results.forEach( invoice => {
+                        this.totalAllPriceAndTax  = this.totalAllPriceAndTax + invoice.totalPriceAndTax
+                        this.totalAllCargoAmount  = this.totalAllCargoAmount + invoice.totalCargoAmount
+
+                    })
+
+                }
+
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -102,19 +130,22 @@ export class InvoiceComponent implements OnInit {
 
                 if (Array.isArray(data.data.results)) {
 
+                    const tempArray2 = []
                     data.data.results.forEach( company => {
 
                         if ( company.id === this.currentOrder.upstreamId || company.id === this.currentOrder.mainAccounting || company.id === this.currentOrder.downstreamId) {
-                            this.partyListFilter.push(company)
+                            tempArray2.push(company)
                         }
 
                         this.currentOrder.orderPartyList.forEach( company2 => {
                             if (company.id === company2.customerId) {
-                                this.partyListFilter.push(company)
+                                tempArray2.push(company)
                             }
                         })
                     })
 
+                    this.partyListFilter = tempArray2
+                    console.log(this.partyListFilter)
                 }
             },
             error => {this.httpService.errorHandler(error) }
@@ -139,6 +170,20 @@ export class InvoiceComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+    }
+
+
+    createInvoiceSearchForm(): void {
+
+        this.invoiceSearchForm = this.fb.group({
+            'hsId'    : ['' ],
+            'invoiceDirection'    : ['' ],
+            'invoiceType'    : ['' ],
+            'openDateStart'    : [null ],
+            'openDateEnd'    : [null ],
+            'openCompanyId'    : ['' ],
+            'receiverId'    : ['' ]
+        } )
     }
 
 
@@ -462,9 +507,9 @@ export class InvoiceComponent implements OnInit {
     changInvoiceDetailForm () {
 
         if (this.billingCompany && this.billToCompany) {
-            console.log('11: ', this.invoiceDetailFormType, this.billingCompany)
+            // console.log('11: ', this.invoiceDetailFormType, this.billingCompany)
             if (this.billingCompany.partyType === 3 ) {
-                console.log('22: ', this.invoiceDetailFormType, this.billingCompany, this.billToCompany)
+                // console.log('22: ', this.invoiceDetailFormType, this.billingCompany, this.billToCompany)
                 if (this.billToCompany.partyType === 3) {
                     this.invoiceDetailFormType = 1 // 1 当开票单位是外部3，收票单位是外部3时：
 
@@ -481,7 +526,7 @@ export class InvoiceComponent implements OnInit {
 
         }
 
-        console.log('invoiceDetailFormType: ', this.invoiceDetailFormType)
+        // console.log('invoiceDetailFormType: ', this.invoiceDetailFormType)
 
     }
 

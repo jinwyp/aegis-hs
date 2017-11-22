@@ -63,23 +63,25 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
 
     ngOnChanges (changes: {[propKey: string]: SimpleChange}) {
-        // console.log('ngOnChanges')
+        console.log('ngOnChanges')
 
         for (const propertyName in changes) {
 
             if (changes.hasOwnProperty(propertyName)) {
                 const currentChangeObject = changes[propertyName]
 
-                // if (currentChangeObject.currentValue && currentChangeObject.isFirstChange) {
-                //     console.log('currentChangeObject firstChange: ', propertyName, currentChangeObject)
-                // }else {
-                //     console.log('currentChangeObject secondChange: ', propertyName, currentChangeObject)
-                // }
+                if (currentChangeObject.currentValue && currentChangeObject.isFirstChange() ) {
+                    // console.log('currentChangeObject firstChange: ', propertyName, currentChangeObject.currentValue, currentChangeObject)
+                } else {
+                    // console.log('currentChangeObject secondChange: ', propertyName, currentChangeObject.currentValue, currentChangeObject)
+                }
 
                 if (propertyName === 'optionList' && currentChangeObject.currentValue && Array.isArray(currentChangeObject.currentValue)) {
 
-                    this.filterOptionList = this.optionList.slice()
                     // console.log('optionList', currentChangeObject.currentValue)
+
+                    this.filterOptionList = this.optionList.slice()
+
                     if (this.addAllOptions === true) {
                         this.filterOptionList.unshift({ id : '' , name : '全部' })
                     }
@@ -234,7 +236,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
     }
 
     writeValue(value: any): void {
-        // console.log('WriteValue: ', value)
+        // console.log('WriteValue: ', value, this.filterOptionList)
 
         if (Array.isArray(this.filterOptionList)) {
 
