@@ -83,6 +83,7 @@
             <if test="capitalId!=null">AND capitalId = #{capitalId,jdbcType=BIGINT}</if>
             <if test="useInterest!=null">AND useInterest = #{useInterest,jdbcType=DECIMAL}</if>
             <if test="useDays!=null">AND useDays = #{useDays,jdbcType=BIGINT}</if>
+            <if test="jiekuanDate!=null">AND jiekuanDate= #{jiekuanDate,jdbcType=BIGINT}</if>
         </where>
     </select>
 
