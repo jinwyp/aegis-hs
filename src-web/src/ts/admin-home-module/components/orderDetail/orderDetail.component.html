@@ -129,6 +129,210 @@
                 </div>
             </div>
 
+
+<!--
+
+            <div class="card mt-3">
+                <div class="card-body">
+
+                    <table class="table table-bordered table-hover table-responsive" >
+                        <thead>
+                        <tr>
+                            <th>核算月</th>
+
+                            <th colspan="9">发运信息</th>
+                            <th colspan="4">结算信息</th>
+                            <th colspan="2">资金占压信息</th>
+                        </tr>
+                        <tr>
+                            <th>核算月</th>
+
+                            <th>发运总数量</th>
+                            <th>已到场数量</th>
+                            <th>未到场数量</th>
+                            <th>采购含税总额</th>
+                            <th>销售含税总额</th>
+
+                            <th>贸易公司加价</th>
+                            <th>销售费用总额</th>
+                            <th>代收代垫运费</th>
+                            <th>瑞茂通总收益</th>
+
+
+                            <th>{{businessType==='ying' ? '下游':'上游'}}已结算数量</th>
+                            <th>{{businessType==='ying' ? '下游':'上游'}}已结算金额</th>
+                            <th>{{businessType==='ying' ? '下游':'上游'}}未结算数量</th>
+                            <th>{{businessType==='ying' ? '下游':'上游'}}未结算金额</th>
+
+
+                            <th>上游资金占压</th>
+                            <th>下游资金占压</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let unit of unitListStat; trackBy: trackByFn">
+                            <td> {{unit.hsMonth}}</td>
+
+                            <td> {{unit.totalFayunNum }}</td>
+                            <td> {{unit.totalArriveNum }}</td>
+                            <td> {{unit.totalUnarriveNum }}</td>
+                            <td> {{unit.purchaseIncludeTaxTotalAmount }}</td>
+                            <td> {{unit.saleIncludeTaxTotalAmount }}</td>
+
+                            <td> {{unit.tradingCompanyAddMoney }}</td>
+                            <td> {{unit.salesFeeAmount }}</td>
+                            <td> {{unit.dsddFee }}</td>
+                            <td> {{unit.ccsProfile }}</td>
+
+
+                            <td> {{unit.totalBuyerNums }}</td>
+                            <td> {{unit.totalBuyerMoney }}</td>
+                            <td> {{unit.unsettlerBuyerNumber }}</td>
+                            <td> {{unit.unsettlerBuyerMoneyAmount }}</td>
+
+
+                            <td> {{unit.upstreamCapitalPressure }}</td>
+                            <td> {{unit.downstreamCapitalPressure }}</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+-->
+
+
+            <div class="card mt-3">
+                <div class="card-body">
+
+                    <table class="table table-bordered table-hover table-responsive" >
+                        <tbody>
+                        <tr >
+                            <td colspan="2"> 核算月</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.hsMonth}}</td>
+                        </tr>
+
+                        <tr >
+                            <td rowspan="9">发运信息</td>
+                            <td>发运总数量</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalFayunNum | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>已到场数量</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalArriveNum | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>未到场数量</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalUnarriveNum | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>采购含税总额</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.purchaseIncludeTaxTotalAmount | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>销售含税总额</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.saleIncludeTaxTotalAmount | number }}</td>
+                        </tr>
+
+                        <tr >
+                            <td>贸易公司加价</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.tradingCompanyAddMoney | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>销售费用总额</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.salesFeeAmount | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>代收代垫运费</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.dsddFee | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>瑞茂通总收益</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.ccsProfile | number }}</td>
+                        </tr>
+
+
+                        <tr >
+                            <td rowspan="4">结算信息</td>
+                            <td>结算信息 {{businessType==='ying' ? '下游':'上游'}}已结算数量</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalBuyerNums | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>结算信息 {{businessType==='ying' ? '下游':'上游'}}已结算金额</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalBuyerMoney | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>结算信息 {{businessType==='ying' ? '下游':'上游'}}未结算数量</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.unsettlerBuyerNumber | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>结算信息 {{businessType==='ying' ? '下游':'上游'}}未结算金额</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.unsettlerBuyerMoneyAmount | number }}</td>
+                        </tr>
+
+
+                        <tr >
+                            <td rowspan="2">资金占压信息</td>
+                            <td>上游资金占压</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.upstreamCapitalPressure | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>下游资金占压</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.downstreamCapitalPressure | number }}</td>
+                        </tr>
+
+
+                        <tr >
+                            <td rowspan="6">进项票信息</td>
+                            <td>贸易公司已收到进项数量</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.tradingCompanyInTypeNum | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>贸易公司已收到进项金额</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.tradingCompanyInTpeMoneyAmount | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>CCS已收到进项数量</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalCSSIntypeNumber | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>CCS已收到进项金额</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalCCSIntypeMoney | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>CCS未收到进项数量</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.cssUninTypeNum | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>CCS未收到进项金额</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.cssUninTypeMoney | number }}</td>
+                        </tr>
+
+
+                        <tr >
+                            <td rowspan="3">收付款信息</td>
+                            <td>外部资金付款金额</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.externalCapitalPaymentAmount | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>自有资金付款金额</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.ownerCapitalPaymentAmount | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>已回款金额合计</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalHuikuanPaymentMoney | number }}</td>
+                        </tr>
+                        
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
         </div>
 
 
@@ -154,4 +358,7 @@
 
         <app-warehouse  *ngIf="currentTabIndex === 32 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'ruku'"></app-warehouse>
         <app-warehouse  *ngIf="currentTabIndex === 33 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'chuku'"></app-warehouse>
+
+
+
 

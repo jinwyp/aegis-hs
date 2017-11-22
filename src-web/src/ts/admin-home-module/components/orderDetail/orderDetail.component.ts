@@ -40,6 +40,7 @@ export class OrderDetailComponent implements OnInit {
     teamList : any[] = []
     partyList : any[] = []
     userList : any[] = []
+    unitListStat : any[] = []
 
 
     pagination: any = {
@@ -74,7 +75,7 @@ export class OrderDetailComponent implements OnInit {
                 if (data) {
                     this.currentOrder = data.data
                 }
-
+                this.getOrderUnitStatisticsList()
                 // console.log('Order信息: ', data)
             },
             error => {this.httpService.errorHandler(error) }
@@ -85,6 +86,7 @@ export class OrderDetailComponent implements OnInit {
         this.getDepartmentList()
         this.getTeamList()
         this.getUserList()
+
         this.createTransferForm()
     }
 
@@ -96,6 +98,17 @@ export class OrderDetailComponent implements OnInit {
         this.hsOrderService.getOrderByID(this.businessType, this.currentOrderId).subscribe(
             data => {
                 this.currentOrder = data.data
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
+
+    getOrderUnitStatisticsList () {
+
+        this.hsOrderService.getOrderStatisticsByID(this.businessType, this.currentOrderId).subscribe(
+            data => {
+                this.unitListStat = data.data
+                console.log(data.data[0])
             },
             error => {this.httpService.errorHandler(error) }
         )
