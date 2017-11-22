@@ -60,11 +60,11 @@ export class TextInputComponent implements ControlValueAccessor, OnInit, OnChang
             if (changes.hasOwnProperty(propertyName)) {
                 const currentChangeObject = changes[propertyName]
 
-                // if (currentChangeObject.currentValue && currentChangeObject.isFirstChange) {
-                //     console.log('currentChangeObject firstChange: ', propertyName, currentChangeObject)
-                // }else {
-                //     console.log('currentChangeObject secondChange: ', propertyName, currentChangeObject)
-                // }
+                if (currentChangeObject.currentValue && currentChangeObject.isFirstChange()) {
+                    // console.log('currentChangeObject firstChange: ', propertyName, currentChangeObject)
+                } else {
+                    // console.log('currentChangeObject secondChange: ', propertyName, currentChangeObject)
+                }
 
             }
         }
