@@ -88,6 +88,8 @@
                     <th>开票日期</th>
                     <th>开票单位</th>
                     <th>收票单位</th>
+                    <th>明细价税合计</th>
+                    <th>明细数量合计</th>
 
                     <th></th>
                 </tr>
@@ -102,6 +104,8 @@
                     <td> {{invoice.openDate | slice : 0 : 10 }}</td>
                     <td> {{invoice.openCompanyId | findKey : partyList : 'name' }}</td>
                     <td> {{invoice.receiverId | findKey : partyList : 'name' }}</td>
+                    <td> {{invoice.totalPriceAndTax  }}</td>
+                    <td> {{invoice.totalCargoAmount }}</td>
 
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, invoice)"> 修改 </button>
