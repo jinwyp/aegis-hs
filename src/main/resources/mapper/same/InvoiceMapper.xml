@@ -75,6 +75,8 @@
             <if test="receiverId!=null">AND receiverId=#{receiverId, jdbcType=BIGINT}</if>
             <if test="invoiceDirection!=null">AND invoiceDirection=#{invoiceDirection, jdbcType=BIGINT}</if>
             <if test="openDate!=null">AND openDate=#{openDate, jdbcType=TIMESTAMP}</if>
+            <if test="openDateStart!=null">  <![CDATA[   AND DATE_FORMAT(tsc, '%Y-%m-%d')>=  DATE_FORMAT(#{openDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="endDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(tsc, '%Y-%m-%d') <= DATE_FORMAT(#{endDateEnd}, '%Y-%m-%d')]]></if>
 
 
         </where>
