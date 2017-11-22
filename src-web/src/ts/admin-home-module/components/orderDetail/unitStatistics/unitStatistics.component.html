@@ -233,13 +233,12 @@
 
 
             <div class="card mt-4">
-                <div class="card-body">
-                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 统计信息
-                        <button type="button" class="btn btn-outline-secondary btn-sm float-right" (click)="isShowDetail = true" >显示详细统计信息</button>
-                    </h5>
-                </div>
+                <div class="card-header"><button type="button" class="btn btn-outline-secondary btn-sm float-right" (click)="isShowDetail = true" >显示详细统计信息</button></div>
+
 
                 <div class="card-body" *ngIf="isShowDetail">
+
+                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 统计信息</h5>
 
                     <div class="row mt-4">
                         <div class="col-3">
