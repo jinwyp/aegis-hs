@@ -43,6 +43,8 @@ public class InvoiceService {
             List<InvoiceDetail> details = invoiceDetailMapper.getList(invoice.getId());
             BigDecimal totalPriceAndTax= details.stream().map(InvoiceDetail::getPriceAndTax).reduce(BigDecimal.ZERO, BigDecimal::add);
             BigDecimal totalCargoAmount= details.stream().map(InvoiceDetail::getCargoAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+            invoice.setTotalPriceAndTax(totalPriceAndTax);
+            invoice.setTotalCargoAmount(totalCargoAmount);
             invoice.setDetails(details);
         }
         return yingInvoicePage;
