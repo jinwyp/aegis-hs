@@ -30,6 +30,8 @@
                     <th>交纳时间</th>
                     <th>类型</th>
                     <th>保证金金额(元)</th>
+                    <th>付款单位</th>
+                    <th>收款单位</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -41,6 +43,8 @@
                     <td> {{deposit.bailDate | slice : 0 : 10  }}</td>
                     <td> {{deposit.bailType | findKey : depositTypeList : 'name' }}</td>
                     <td> {{deposit.bailAmount  }}</td>
+                    <td> {{deposit.openCompanyId | findKey : partyList : 'name' }}</td>
+                    <td> {{deposit.receiverId | findKey : partyList : 'name' }}</td>
 
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, deposit)"> 修改 </button>
