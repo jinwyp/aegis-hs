@@ -434,7 +434,9 @@ base.orderId,
 base.hsId,
 sum(IFNULL(rukuAmount,0.00)) as totalInstorageNum,
 sum( IFNULL(rukuPrice,0.00)) as totalInstorageAmount,
-IFNULL(sum(IFNULL(rukuPrice,0.00))/sum(IFNULL(rukuAmount,0.00)),0.00) as instorageUnitPrice
+IFNULL(sum(IFNULL(rukuPrice,0.00))/sum(IFNULL(rukuAmount,0.00)),0.00) as instorageUnitPrice,
+sum(IFNULL(case when rukuStatus='IN_TRANIT' then rukuAmount else 0 end,0.00))  totalInstorageTranitNum,
+sum(IFNULL(case when rukuStatus='IN_TRANIT' then rukuPrice else 0 end ,0.00))  totalInstorageTranitPrice
 from base
 left join hs_cang_ruku ruku on base.hsId=ruku.hsId and  deleted =0
 group by orderId,hsId;
@@ -591,12 +593,12 @@ from base
      left join v_2008 on base.hsId=v_2008.hsId;
 
 
---1048【1003】付款金额合计 - 【1047】外部资金付款金额
+--1048【1003】付款金额合计 - 【1047】外部资金付款金额-1002付贸易逆差
 create view v_1048_cang as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)-IFNULL(v_1047.externalCapitalPaymentAmount ,0.00),2)as ownerCapitalPaymentAmount
+ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)-IFNULL(v_1047.externalCapitalPaymentAmount ,0.00)-IFNULL(v_1001.totalTradeGapFee,0.00),2)as ownerCapitalPaymentAmount
 from base
      left join v_1001 on base.hsId=v_1001.hsId
      left join v_1047 on v_1001.hsId=v_1047.hsId; 
