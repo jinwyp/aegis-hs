@@ -30,6 +30,9 @@
             <if test="true">deleted = 0</if>
             <if test="orderId != null">AND orderId=#{orderId,jdbcType=BIGINT}</if>
             <if test="hsId != null">AND hsId=#{hsId,jdbcType=BIGINT}</if>
+            <if test="trafficCompanyId != null">AND trafficCompanyId=#{trafficCompanyId,jdbcType=BIGINT}</if>
+            <if test="amount != null">AND amount=#{amount,jdbcType=DECIMAL}</if>
+            <if test="money != null">AND money=#{money,jdbcType=DECIMAL}</if>
             <if test="settleDate != null">AND settleDate= #{settleDate,jdbcType=DATE}</if>
         </where>
     </select>

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -18,4 +19,7 @@ public class PageSettleTrafficDTO extends BaseFilter<PageSettleTrafficDTO> {
     private Long orderId;
     private Long hsId;
     private LocalDateTime settleDate;
+    private Long trafficCompanyId;
+    private BigDecimal money;
+    private BigDecimal amount;
 }
