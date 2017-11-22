@@ -72,7 +72,9 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
                     BusinessType type = BusinessType.valueOf(business);
 
                     long orderId = Long.parseLong(m.group(2));
-                    if (!orderService.hasOrder(user.getId(), type, orderId)) {
+
+                    // 不是admin的情况下, 才判断业务线主人的问题
+                    if (!user.getIsAdmin() && !orderService.hasOrder(user.getId(), type, orderId)) {
                         response.setStatus(400);
                         response.setContentType("application/json;charset=UTF-8");
                         om.writeValue(response.getOutputStream(), new Result(4001, "你不是这条业务线的主人"));
