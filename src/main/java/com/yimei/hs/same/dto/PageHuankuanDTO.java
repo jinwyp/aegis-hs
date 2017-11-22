@@ -20,4 +20,5 @@ public class PageHuankuanDTO extends BaseFilter<PageHuankuanDTO> {
     private Long hsId;
     private LocalDateTime huankuanDate;
     private BigDecimal huankuanPrincipal;
+    private Boolean promise;
 }

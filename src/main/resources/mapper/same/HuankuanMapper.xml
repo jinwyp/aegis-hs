@@ -70,6 +70,7 @@
             <if test="orderId!=null">AND t1.orderId=#{orderId}</if>
             <if test="hsId!=null">AND t1.hsId=#{hsId}</if>
             <if test="huankuanDate!=null">AND t1.huankuanDate=#{huankuanDate}</if>
+            <if test="promise!=null">AND t1.promise=#{promise}</if>
         </where>
     </select>
 
