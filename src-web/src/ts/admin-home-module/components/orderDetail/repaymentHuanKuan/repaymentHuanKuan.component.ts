@@ -204,8 +204,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
         this.repaymentHKSearchForm = this.fb.group({
             'hsId'    : ['' ],
-            'huankuankDateStart'    : [null ],
-            'huankuankDateEnd'    : [null ],
+            'huankuanDateStart'    : [null ],
+            'huankuanDateEnd'    : [null ],
             'promise'    : ['' ]
         } )
     }
@@ -220,7 +220,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
         'promise'  : {
             'required'      : '请填写状态!'
         },
-        'huankuankDate'  : {
+        'huankuanDate'  : {
             'required'      : '请填写还款日期!'
         },
         'huankuanPrincipal'  : {
@@ -265,7 +265,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             'hsId'    : ['', [Validators.required ] ],
             'promise'    : ['', [Validators.required ] ],
             // 'skCompanyId'    : ['', [Validators.required ] ],
-            'huankuankDate'    : [null, [Validators.required ] ]
+            'huankuanDate'    : [null, [Validators.required ] ]
             // 'huankuanPrincipal'    : ['', [Validators.required ] ],
             // 'huankuanInterest'    : ['', [Validators.required ] ],
             // 'huankuanFee'    : ['', [Validators.required ] ]
@@ -360,7 +360,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             this.repaymentHKForm.patchValue({
                 'hsId'    : '',
                 'promise'    : '',
-                'huankuankDate'    : null
+                'huankuanDate'    : null
             })
 
 

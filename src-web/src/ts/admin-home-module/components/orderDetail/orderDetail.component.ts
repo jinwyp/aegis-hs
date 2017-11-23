@@ -117,6 +117,83 @@ export class OrderDetailComponent implements OnInit {
         this.hsOrderService.getOrderStatisticsByID(this.businessType, this.currentOrderId).subscribe(
             data => {
                 this.unitListStat = data.data
+
+                let tempTotal : any = {
+                    hsMonth : '汇总',
+                    totalFayunNum : 0,
+                    totalArriveNum : 0,
+                    totalUnarriveNum : 0,
+                    purchaseIncludeTaxTotalAmount : 0,
+                    saleIncludeTaxTotalAmount : 0,
+
+                    tradingCompanyAddMoney : 0,
+                    salesFeeAmount : 0,
+                    dsddFee : 0,
+                    ccsProfile : 0,
+
+
+                    totalBuyerNums : 0,
+                    totalBuyerMoney : 0,
+                    unsettlerBuyerNumber : 0,
+                    unsettlerBuyerMoneyAmount : 0,
+
+                    upstreamCapitalPressure : 0,
+                    downstreamCapitalPressure : 0,
+
+
+                    tradingCompanyInTypeNum : 0,
+                    tradingCompanyInTpeMoneyAmount : 0,
+                    totalCSSIntypeNumber : 0,
+                    totalCCSIntypeMoney : 0,
+                    cssUninTypeNum : 0,
+                    cssUninTypeMoney : 0,
+
+
+                    externalCapitalPaymentAmount : 0,
+                    ownerCapitalPaymentAmount : 0,
+                    totalHuikuanPaymentMoney : 0
+                }
+
+                if (Array.isArray(data.data.results)) {
+
+                    data.data.results.forEach( unit => {
+                            tempTotal.totalFayunNum = tempTotal.totalFayunNum + unit.totalFayunNum
+                            tempTotal.totalArriveNum = tempTotal.totalArriveNum + unit.totalArriveNum
+                            tempTotal.totalUnarriveNum = tempTotal.totalUnarriveNum + unit.totalUnarriveNum
+                            tempTotal.purchaseIncludeTaxTotalAmount = tempTotal.purchaseIncludeTaxTotalAmount + unit.purchaseIncludeTaxTotalAmount
+                            tempTotal.saleIncludeTaxTotalAmount = tempTotal.saleIncludeTaxTotalAmount + unit
+
+                            tempTotal.tradingCompanyAddMoney = tempTotal + unit
+                            tempTotal.salesFeeAmount = tempTotal + unit
+                            tempTotal.dsddFee = tempTotal + unit
+                            tempTotal.ccsProfile = tempTotal + unit
+
+
+                            tempTotal.totalBuyerNums = tempTotal + unit
+                            tempTotal.totalBuyerMoney = tempTotal + unit
+                            tempTotal.unsettlerBuyerNumber = tempTotal + unit
+                            tempTotal.unsettlerBuyerMoneyAmount = tempTotal + unit
+
+                            tempTotal.upstreamCapitalPressure = tempTotal + unit
+                            tempTotal.downstreamCapitalPressure = tempTotal + unit
+
+
+                            tempTotal.tradingCompanyInTypeNum = tempTotal + unit
+                            tempTotal.tradingCompanyInTpeMoneyAmount = tempTotal + unit
+                            tempTotal.totalCSSIntypeNumber = tempTotal + unit
+                            tempTotal.totalCCSIntypeMoney = tempTotal + unit
+                            tempTotal.cssUninTypeNum = tempTotal + unit
+                            tempTotal.cssUninTypeMoney = tempTotal + unit
+
+
+                            tempTotal.externalCapitalPaymentAmount = tempTotal + unit
+                            tempTotal.ownerCapitalPaymentAmount = tempTotal + unit
+                            tempTotal.totalHuikuanPaymentMoney = tempTotal + unit
+
+
+                    })
+
+                }
             },
             error => {this.httpService.errorHandler(error) }
         )
