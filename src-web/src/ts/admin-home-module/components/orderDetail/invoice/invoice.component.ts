@@ -75,11 +75,13 @@ export class InvoiceComponent implements OnInit {
 
     ngOnInit(): void {
         this.createInvoiceSearchForm()
+        this.createInvoiceForm()
+        this.createInvoiceDetailForm()
+
         this.getOrderUnitList()
         this.getPartyList()
         this.getInvoiceList()
-        this.createInvoiceForm()
-        this.createInvoiceDetailForm()
+
     }
 
 

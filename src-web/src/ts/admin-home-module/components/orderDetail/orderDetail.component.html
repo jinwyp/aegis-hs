@@ -325,7 +325,7 @@
                             <td>已回款金额合计</td>
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalHuikuanPaymentMoney | number }}</td>
                         </tr>
-                        
+
                         </tbody>
                     </table>
 
@@ -353,7 +353,7 @@
         <app-settle  *ngIf="currentTabIndex === 21 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerupstream'"></app-settle>
         <app-settle  *ngIf="currentTabIndex === 22 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerdownstream'"></app-settle>
 
-        <app-deposit  *ngIf="currentTabIndex === 25" [currentOrder]="currentOrder" [businessType]="businessType" ></app-deposit>
+        <app-deposit  *ngIf="currentTabIndex === 25" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-deposit>
         <app-expense  *ngIf="currentTabIndex === 31" [currentOrder]="currentOrder" [businessType]="businessType" ></app-expense>
 
         <app-warehouse  *ngIf="currentTabIndex === 32 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'ruku'"></app-warehouse>

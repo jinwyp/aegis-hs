@@ -38,7 +38,11 @@ export class OrderDetailComponent implements OnInit {
 
     departmentList : any[] = []
     teamList : any[] = []
-    partyList : any[] = []
+    partyObject : any = {
+        normal : [],
+        orderIncluded : []
+    }
+
     userList : any[] = []
     unitListStat : any[] = []
 
@@ -75,6 +79,7 @@ export class OrderDetailComponent implements OnInit {
                 if (data) {
                     this.currentOrder = data.data
                 }
+                this.getPartyList()
                 this.getOrderUnitStatisticsList()
                 // console.log('Order信息: ', data)
             },
@@ -82,7 +87,6 @@ export class OrderDetailComponent implements OnInit {
         )
 
 
-        this.getPartyList()
         this.getDepartmentList()
         this.getTeamList()
         this.getUserList()
@@ -140,8 +144,26 @@ export class OrderDetailComponent implements OnInit {
 
         this.hsUserService.getPartyList().subscribe(
             data => {
-                this.partyList = data.data.results
+                this.partyObject.normal = data.data.results
 
+                if (Array.isArray(data.data.results)) {
+
+                    const tempArray = []
+                    data.data.results.forEach( company => {
+
+                        if ( company.id === this.currentOrder.upstreamId || company.id === this.currentOrder.mainAccounting || company.id === this.currentOrder.downstreamId) {
+                            tempArray.push(company)
+                        }
+
+                        this.currentOrder.orderPartyList.forEach( company2 => {
+                            if (company.id === company2.customerId) {
+                                tempArray.push(company)
+                            }
+                        })
+                    })
+
+                    this.partyObject.orderIncluded = tempArray
+                }
             },
             error => {this.httpService.errorHandler(error) }
         )

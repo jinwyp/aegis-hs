@@ -194,7 +194,7 @@ export class HSOrderService {
 
     // 还款
     getRepaymentHKListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
@@ -315,7 +315,7 @@ export class HSOrderService {
 
 
     getInvoiceListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 

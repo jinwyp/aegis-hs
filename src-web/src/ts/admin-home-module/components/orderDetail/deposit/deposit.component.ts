@@ -23,6 +23,10 @@ export class DepositComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
+    @Input() party : any = {
+        normal : [],
+        orderIncluded : []
+    }
 
     currentDepositId : number = 1
 
@@ -33,7 +37,6 @@ export class DepositComponent implements OnInit {
     isAddNew: boolean = true
 
     depositList : any[] = []
-    partyList : any[] = []
 
     unitList : any[] = []
 
@@ -67,7 +70,6 @@ export class DepositComponent implements OnInit {
 
 
     ngOnInit(): void {
-
         this.getOrderUnitList()
         this.getDepositList()
         this.createDepositForm()
@@ -88,6 +90,7 @@ export class DepositComponent implements OnInit {
             error => {this.httpService.errorHandler(error) }
         )
     }
+
 
     getOrderUnitList () {
         this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
