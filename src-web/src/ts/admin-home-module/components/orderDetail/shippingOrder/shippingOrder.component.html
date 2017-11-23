@@ -33,13 +33,55 @@
 
 
             <div *ngIf="!isShowForm">
+
+                <form [formGroup]="shippingSearchForm"  (keydown.enter)="$event.preventDefault()">
+
+                    <div class="form-row ">
+                        <div class="col-6">
+                            <bs-select formControlName="hsId" [fc]="shippingSearchForm.get('hsId')" [label]="'核算月:'" [addAllOptions]="true" [options]="unitList"></bs-select>
+                        </div>
+                        <div class="col-6">
+                            <bs-select formControlName="arriveStatus" [fc]="shippingSearchForm.get('arriveStatus')" [label]="'到场状态:'" [addAllOptions]="true" [options]="arriveStatusList"></bs-select>
+                        </div>
+                    </div>
+
+                    <div class="form-row ">
+                        <div class="col-3">
+                            <bs-datepicker formControlName="fyDateStart" [fc]="shippingSearchForm.get('fyDateStart')" [label]="'发运日期:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                        </div>
+                        <div class="col-3">
+                            <bs-datepicker formControlName="fyDateEnd" [fc]="shippingSearchForm.get('fyDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                        </div>
+                        <div class="col-6">
+                            <bs-text-input formControlName="fyAmount" [fc]="shippingSearchForm.get('fyAmount')" [type]="'number'" [label]="'发运吨数(吨):'" ></bs-text-input>
+                        </div>
+                    </div>
+
+                    <div class="form-row ">
+                        <div class="col-6">
+                            <bs-select formControlName="upstreamTrafficMode" [fc]="shippingSearchForm.get('upstreamTrafficMode')" [label]="'上游运输方式:'"  [addAllOptions]="true" [options]="trafficModeList"></bs-select>
+                        </div>
+                        <div class="col-6">
+                            <bs-select formControlName="downstreamTrafficMode" [fc]="shippingSearchForm.get('downstreamTrafficMode')" [label]="'下游运输方式:'" [addAllOptions]="true" [options]="trafficModeList"></bs-select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-11 ml-auto">
+                            <button type="button" class="btn btn-info " (click)="getShippingList()"  >查询</button>
+                        </div>
+                    </div>
+                </form>
+
+
                 <table class="table table-bordered table-hover table-responsive" >
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>核算月</th>
                         <th>发运日期</th>
-                        <th>发运吨数</th>
+                        <th>发运吨数(吨)</th>
                         <th>到场状态</th>
 
                         <th>上游运输方式</th>
@@ -77,6 +119,7 @@
                             <button class="btn btn-link btn-sm" (click)="deleteItem(shipping)"> 删除 </button>
                         </td>
                     </tr>
+                    <tr> <td colspan="10">  累计发运吨数: {{totalAmount}}  </tr>
                     </tbody>
                 </table>
 

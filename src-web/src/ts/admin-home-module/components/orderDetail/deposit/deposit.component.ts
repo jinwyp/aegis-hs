@@ -23,10 +23,7 @@ export class DepositComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
-    @Input() party : any = {
-        normal : [],
-        orderIncluded : []
-    }
+    @Input() party : any = {}
 
     currentDepositId : number = 1
 

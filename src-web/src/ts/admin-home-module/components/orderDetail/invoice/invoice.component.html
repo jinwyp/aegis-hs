@@ -6,8 +6,8 @@
             <bs-select formControlName="invoiceType" [fc]="invoiceForm.get('invoiceType')" [label]="'发票类型:'" [dirty]="ignoreDirty"  [options]="invoiceTypeList" [error]="invoiceFormError.invoiceType"></bs-select>
             <bs-datepicker formControlName="openDate" [fc]="invoiceForm.get('openDate')" [label]="'开票日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty"  [error]="invoiceFormError.openDate" ></bs-datepicker>
 
-            <bs-select formControlName ="openCompanyId" [fc]="invoiceForm.get('openCompanyId')" [label]="'开票单位:'" [dirty]="ignoreDirty" [editable]="true" [options]="partyList" [error]="invoiceFormError.openCompanyId" (outputChange)="getBillingCompany($event)"></bs-select>
-            <bs-select formControlName ="receiverId" [fc]="invoiceForm.get('receiverId')" [label]="'收票单位:'" [dirty]="ignoreDirty" [options]="partyListFilter" [error]="invoiceFormError.receiverId"  (outputChange)="getBillToCompany($event)"></bs-select>
+            <bs-select formControlName ="openCompanyId" [fc]="invoiceForm.get('openCompanyId')" [label]="'开票单位:'" [dirty]="ignoreDirty" [editable]="true" [options]="party.normal" [error]="invoiceFormError.openCompanyId" (outputChange)="getBillingCompany($event)"></bs-select>
+            <bs-select formControlName ="receiverId" [fc]="invoiceForm.get('receiverId')" [label]="'收票单位:'" [dirty]="ignoreDirty" [options]="party.orderIncluded" [error]="invoiceFormError.receiverId"  (outputChange)="getBillToCompany($event)"></bs-select>
 
 
             <div class="form-group row" >
@@ -103,10 +103,10 @@
 
                 <div class="form-row ">
                     <div class="col-6">
-                        <bs-select formControlName="openCompanyId" [fc]="invoiceSearchForm.get('openCompanyId')" [label]="'开票单位:'" [editable]="true" [addAllOptions]="true" [options]="partyList"></bs-select>
+                        <bs-select formControlName="openCompanyId" [fc]="invoiceSearchForm.get('openCompanyId')" [label]="'开票单位:'" [editable]="true" [addAllOptions]="true" [options]="party.normal"></bs-select>
                     </div>
                     <div class="col-6">
-                        <bs-select formControlName="receiverId" [fc]="invoiceSearchForm.get('receiverId')" [label]="'收票单位:'" [addAllOptions]="true" [options]="partyListFilter"></bs-select>
+                        <bs-select formControlName="receiverId" [fc]="invoiceSearchForm.get('receiverId')" [label]="'收票单位:'" [addAllOptions]="true" [options]="party.orderIncluded"></bs-select>
                     </div>
                 </div>
 
@@ -145,8 +145,8 @@
                     <td> {{invoice.invoiceDirection | findKey : invoiceDirectionList : 'name' }}</td>
                     <td> {{invoice.invoiceType | findKey : invoiceTypeList : 'name' }}</td>
                     <td> {{invoice.openDate | slice : 0 : 10 }}</td>
-                    <td> {{invoice.openCompanyId | findKey : partyList : 'name' }}</td>
-                    <td> {{invoice.receiverId | findKey : partyList : 'name' }}</td>
+                    <td> {{invoice.openCompanyId | findKey : party.normal : 'name' }}</td>
+                    <td> {{invoice.receiverId | findKey : party.normal : 'name' }}</td>
                     <td> {{invoice.totalPriceAndTax  }}</td>
                     <td> {{invoice.totalCargoAmount }}</td>
 
@@ -155,7 +155,7 @@
                         <button class="btn btn-link btn-sm" (click)="deleteItem(invoice)"> 删除 </button>
                     </td>
                 </tr>
-                <tr> <td colspan="10">  累积价税合计: {{totalAllPriceAndTax}} - 累计已开票吨位: {{totalAllCargoAmount}} </tr>
+                <tr> <td colspan="10">  累计价税合计: {{totalAllPriceAndTax}} - 累计已开票吨位: {{totalAllCargoAmount}} </tr>
                 </tbody>
             </table>
 

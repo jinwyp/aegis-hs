@@ -339,7 +339,7 @@
 
         <app-unit  *ngIf="currentTabIndex === 2" [currentOrder]="currentOrder" [businessType]="businessType"></app-unit>
         <app-shipping  *ngIf="currentTabIndex === 3 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType"></app-shipping>
-        <app-invoice  *ngIf="currentTabIndex === 4" [currentOrder]="currentOrder" [businessType]="businessType" ></app-invoice>
+        <app-invoice  *ngIf="currentTabIndex === 4" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-invoice>
 
         <app-borrow  *ngIf="currentTabIndex === 11" [currentOrder]="currentOrder" [businessType]="businessType" ></app-borrow>
         <app-payment  *ngIf="currentTabIndex === 12" [currentOrder]="currentOrder" [businessType]="businessType" ></app-payment>

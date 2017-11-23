@@ -96,9 +96,17 @@ export class HSOrderService {
     }
 
     getShippingListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.arriveStatus) { params = params.append('arriveStatus', query.arriveStatus)}
+        if (query.fyDateStart) { params = params.append('fyDateStart', query.fyDateStart)}
+        if (query.fyDateEnd) { params = params.append('fyDateEnd', query.fyDateEnd)}
+        if (query.fyAmount) { params = params.append('fyAmount', query.fyAmount)}
+        if (query.upstreamTrafficMode) { params = params.append('upstreamTrafficMode', query.upstreamTrafficMode)}
+        if (query.downstreamTrafficMode) { params = params.append('downstreamTrafficMode', query.downstreamTrafficMode)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fayuns', {params: params} )
     }

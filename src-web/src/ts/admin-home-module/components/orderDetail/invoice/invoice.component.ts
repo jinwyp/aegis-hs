@@ -23,6 +23,7 @@ export class InvoiceComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
+    @Input() party : any = {}
 
     currentInvoiceId : number = 1
 
@@ -34,11 +35,9 @@ export class InvoiceComponent implements OnInit {
     isShowForm: boolean = false
     isAddNew: boolean = true
 
-
-    invoiceDetailList : any[] = []
     invoiceList : any[] = []
-    partyList : any[] = []
-    partyListFilter : any[] = []
+    invoiceDetailList : any[] = []
+
 
     unitList : any[] = []
 
@@ -79,7 +78,6 @@ export class InvoiceComponent implements OnInit {
         this.createInvoiceDetailForm()
 
         this.getOrderUnitList()
-        this.getPartyList()
         this.getInvoiceList()
 
     }
@@ -115,44 +113,12 @@ export class InvoiceComponent implements OnInit {
                         this.totalAllCargoAmount  = this.totalAllCargoAmount + invoice.totalCargoAmount
 
                     })
-
-                }
-
-
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-    }
-
-    getPartyList () {
-
-        this.hsUserService.getPartyList().subscribe(
-            data => {
-                this.partyList = data.data.results
-
-                if (Array.isArray(data.data.results)) {
-
-                    const tempArray2 = []
-                    data.data.results.forEach( company => {
-
-                        if ( company.id === this.currentOrder.upstreamId || company.id === this.currentOrder.mainAccounting || company.id === this.currentOrder.downstreamId) {
-                            tempArray2.push(company)
-                        }
-
-                        this.currentOrder.orderPartyList.forEach( company2 => {
-                            if (company.id === company2.customerId) {
-                                tempArray2.push(company)
-                            }
-                        })
-                    })
-
-                    this.partyListFilter = tempArray2
-                    console.log(this.partyListFilter)
                 }
             },
             error => {this.httpService.errorHandler(error) }
         )
     }
+
 
     getOrderUnitList () {
         this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
