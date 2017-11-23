@@ -38,6 +38,10 @@ export class ExpenseComponent implements OnInit {
 
     unitList : any[] = []
 
+
+    totalAmount : number = 0
+
+
     expensePurposeList : any[] = getEnum('FeeClass')
 
 
@@ -88,6 +92,14 @@ export class ExpenseComponent implements OnInit {
             data => {
                 this.expenseList = data.data.results
 
+                if (Array.isArray(data.data.results)) {
+
+                    this.totalAmount = 0
+
+                    data.data.results.forEach( expense => {
+                        this.totalAmount = this.totalAmount + expense.amount
+                    })
+                }
             },
             error => {this.httpService.errorHandler(error) }
         )

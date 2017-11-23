@@ -39,6 +39,10 @@ export class RepaymentComponent implements OnInit {
 
     unitList : any[] = []
 
+
+    totalHuikuanAmount : number = 0
+
+
     purposeList : any[] = getEnum('ReceivePaymentPurpose')
     payModeList : any[] = getEnum('PayMode')
 
@@ -95,6 +99,15 @@ export class RepaymentComponent implements OnInit {
         this.hsOrderService.getRepaymentListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.repaymentList = data.data.results
+
+                if (Array.isArray(data.data.results)) {
+
+                    this.totalHuikuanAmount = 0
+
+                    data.data.results.forEach( repayment => {
+                        this.totalHuikuanAmount = this.totalHuikuanAmount + repayment.huikuanAmount
+                    })
+                }
 
             },
             error => {this.httpService.errorHandler(error) }

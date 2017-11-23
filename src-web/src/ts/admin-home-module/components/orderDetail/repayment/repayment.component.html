@@ -5,7 +5,7 @@
 
             <!--<bs-select formControlName ="huikuanCompanyId" [fc]="repaymentForm.get('huikuanCompanyId')" [label]="'回款公司:'" [dirty]="ignoreDirty" [options]="partyList" [error]="repaymentFormError.huikuanCompanyId"></bs-select>-->
             <bs-datepicker formControlName="huikuanDate" [fc]="repaymentForm.get('huikuanDate')" [label]="'回款日期:'" [error]="repaymentFormError.huikuanDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
-            <bs-text-input formControlName="huikuanAmount" [fc]="repaymentForm.get('huikuanAmount')" [type]="'number'" [label]="'回款总额(元):'" [readOnly]="!isAddNew" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanAmount"></bs-text-input>
+            <bs-text-input formControlName="huikuanAmount" [fc]="repaymentForm.get('huikuanAmount')" [type]="'number'" [label]="'回款金额(元):'" [readOnly]="!isAddNew" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanAmount"></bs-text-input>
             <bs-select formControlName="huikuanUsage" [fc]="repaymentForm.get('huikuanUsage')" [label]="'回款用途:'" [dirty]="ignoreDirty"  [options]="purposeList" [error]="repaymentFormError.huikuanUsage"></bs-select>
             <bs-select formControlName="huikuanMode" [fc]="repaymentForm.get('huikuanMode')" [label]="'回款方式:'" [dirty]="ignoreDirty"  [options]="payModeList" [error]="repaymentFormError.huikuanMode"></bs-select>
 
@@ -64,7 +64,7 @@
 
                 <div class="form-row ">
                     <div class="col-6">
-                        <bs-text-input formControlName="huikuanAmount" [fc]="repaymentSearchForm.get('huikuanAmount')" [type]="'number'" [label]="'回款总额(元):'" ></bs-text-input>
+                        <bs-text-input formControlName="huikuanAmount" [fc]="repaymentSearchForm.get('huikuanAmount')" [type]="'number'" [label]="'回款金额(元):'" ></bs-text-input>
                     </div>
                 </div>
 
@@ -85,7 +85,7 @@
 
                     <th>回款公司</th>
                     <th>回款日期</th>
-                    <th>回款总额</th>
+                    <th>回款金额</th>
                     <th>回款用途</th>
                     <th>回款方式</th>
 
@@ -127,6 +127,9 @@
                         <button class="btn btn-link btn-sm" (click)="deleteItem(repayment)"> 删除 </button>
                     </td>
                 </tr>
+
+                <tr> <td colspan="7"> 累计回款金额: {{totalHuikuanAmount}}</tr>
+
                 </tbody>
             </table>
 
