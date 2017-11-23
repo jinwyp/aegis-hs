@@ -1217,10 +1217,11 @@ left join v_1001  on base.hsId=v_1001.hsId
       select
        base.orderId,
        base.hsId,
-        ROUND(IFNULL(v_1046_ying.purchaseCargoAmountOfMoney*config.maxPrepayRate,0.00),2) as maximumPaymentAmount
+        ROUND(IFNULL(v_1046_cang.purchaseCargoAmountOfMoney*config.maxPrepayRate,0.00),2) as maximumPaymentAmount
+
       from base
        left join hs_same_order_config config on base.orderId=config.orderId  and base.hsId=config.id
-       left join v_1..046_cang on base.hsId=v_1046_cang.hsId
+       left join v_1046_cang on base.hsId=v_1046_cang.hsId
       where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
     </select>
 

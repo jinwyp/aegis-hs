@@ -428,6 +428,8 @@ left join  v_2004 on base.hsId=v_2004.hsId;
 --3001	入库总数量	totalInstorageNum	【入库】	备查账	汇总：入库数量
 --3002	入库总金额	totalInstorageAmount	【入库】		汇总：入库金额
 --3004	入库单价	instorageUnitPrice	计算		【3002】入库总金额 ／ 【3001】入库总数量
+-- totalInstorageTranitNum
+-- totalInstorageTranitPrice
 create view v_3001  as
 select
 base.orderId,
@@ -436,7 +438,10 @@ sum(IFNULL(rukuAmount,0.00)) as totalInstorageNum,
 sum( IFNULL(rukuPrice,0.00)) as totalInstorageAmount,
 IFNULL(sum(IFNULL(rukuPrice,0.00))/sum(IFNULL(rukuAmount,0.00)),0.00) as instorageUnitPrice,
 sum(IFNULL(case when rukuStatus='IN_TRANIT' then rukuAmount else 0 end,0.00))  totalInstorageTranitNum,
-sum(IFNULL(case when rukuStatus='IN_TRANIT' then rukuPrice else 0 end ,0.00))  totalInstorageTranitPrice
+sum(IFNULL(case when rukuStatus='IN_TRANIT' then rukuPrice else 0 end ,0.00))  totalInstorageTranitPrice,
+sum(IFNULL(case when rukuStatus='IN_STORAGE' then rukuAmount else 0 end,0.00))  totalInstoragedNum,
+sum(IFNULL(case when rukuStatus='IN_STORAGE' then rukuPrice else 0 end,0.00))  totalInstoragedNumMoney
+
 from base
 left join hs_cang_ruku ruku on base.hsId=ruku.hsId and  deleted =0
 group by orderId,hsId;
@@ -731,7 +736,7 @@ create view v_1054_ying  as
 select
 base.orderId,
 base.hsId,
-case when IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)>IFNULL(v_1024.totalBuyerMoney,0.00)
+case when IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)>=IFNULL(v_1024.totalBuyerMoney,0.00)
 then ROUND(IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)-IFNULL(v_1024.totalBuyerMoney,0.00)+ IFNULL(v_2008.balanceDownStreamBail,0.00),2) else - ROUND(IFNULL(v_2008.balanceDownStreamBail,0.00),2) end as yingPrePayment
 from base 
      left join v_1013 on base.hsId=v_1013.hsId
@@ -745,7 +750,7 @@ create view v_1054_cang  as
 select
 base.orderId,
 base.hsId,
-case when IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)>IFNULL(v_3003.totalOutstorageMoney ,0.00)
+case when IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)>=IFNULL(v_3003.totalOutstorageMoney ,0.00)
 then
 ROUND(IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)-IFNULL(v_3003.totalOutstorageMoney ,0.00),2)
 else 0.00 end

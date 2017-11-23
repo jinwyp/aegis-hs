@@ -247,157 +247,169 @@ public class DataAnalysisService {
         OrderConfig orderConfigBase = yingAnalysisDataMapper.findOneVBase(morderId, hsId);
 
 
-        AnalysisData yingAnalysisDatav1001 = yingAnalysisDataMapper.findOneV1001(morderId, hsId);
-        AnalysisData yingAnalysisDatav1004 = yingAnalysisDataMapper.findOneV1004(morderId, hsId);
-        AnalysisData yingAnalysisDatav1006 = yingAnalysisDataMapper.findOneV1006(morderId, hsId);
-        AnalysisData yingAnalysisDatav1007 = yingAnalysisDataMapper.findOneV1007(morderId, hsId);
-        AnalysisData yingAnalysisDatav1009 = yingAnalysisDataMapper.findOneV1009(morderId, hsId);
-        AnalysisData yingAnalysisDatav1012 = yingAnalysisDataMapper.findOneV1012(morderId, hsId);
-        AnalysisData yingAnalysisDatav1013 = yingAnalysisDataMapper.findOneV1013(morderId, hsId);
-        AnalysisData yingAnalysisDatav1014 = yingAnalysisDataMapper.findOneV1014(morderId, hsId);
-        AnalysisData yingAnalysisDatav1015 = yingAnalysisDataMapper.findOneV1015(morderId, hsId);
-        AnalysisData yingAnalysisDatav1016 = yingAnalysisDataMapper.findOneV1016(morderId, hsId);
-        AnalysisData yingAnalysisDatav1017 = yingAnalysisDataMapper.findOneV1017(morderId, hsId);
-        AnalysisData yingAnalysisDatav1018 = yingAnalysisDataMapper.findOneV1018(morderId, hsId);
+        AnalysisData cangAnalysisDatav1001 = yingAnalysisDataMapper.findOneV1001(morderId, hsId);
+        AnalysisData cangAnalysisDatav1004 = yingAnalysisDataMapper.findOneV1004(morderId, hsId);
+        AnalysisData cangAnalysisDatav1006 = yingAnalysisDataMapper.findOneV1006(morderId, hsId);
+        AnalysisData cangAnalysisDatav1007 = yingAnalysisDataMapper.findOneV1007(morderId, hsId);
+        AnalysisData cangAnalysisDatav1009 = yingAnalysisDataMapper.findOneV1009(morderId, hsId);
+        AnalysisData cangAnalysisDatav1012 = yingAnalysisDataMapper.findOneV1012(morderId, hsId);
+        AnalysisData cangAnalysisDatav1013 = yingAnalysisDataMapper.findOneV1013(morderId, hsId);
+        AnalysisData cangAnalysisDatav1014 = yingAnalysisDataMapper.findOneV1014(morderId, hsId);
+        AnalysisData cangAnalysisDatav1015 = yingAnalysisDataMapper.findOneV1015(morderId, hsId);
+        AnalysisData cangAnalysisDatav1016 = yingAnalysisDataMapper.findOneV1016(morderId, hsId);
+        AnalysisData cangAnalysisDatav1017 = yingAnalysisDataMapper.findOneV1017(morderId, hsId);
+        AnalysisData cangAnalysisDatav1018 = yingAnalysisDataMapper.findOneV1018(morderId, hsId);
 //        AnalysisData yingAnalysisDatav1019 = yingAnalysisDataMapper.findOneV1019(morderId, hsId);
-        AnalysisData yingAnalysisDatav1020 = yingAnalysisDataMapper.findOneV1020(morderId, hsId);
-        AnalysisData yingAnalysisDatav1021 = yingAnalysisDataMapper.findOneV1021(morderId, hsId);
-        AnalysisData yingAnalysisDatav1023 = yingAnalysisDataMapper.findOneV1023(morderId, hsId);
-        AnalysisData yingAnalysisDatav1024 = yingAnalysisDataMapper.findOneV1024(morderId, hsId);
-        AnalysisData yingAnalysisDatav1027 = yingAnalysisDataMapper.findOneV1027(morderId, hsId);
-        AnalysisData yingAnalysisDatav1035 = yingAnalysisDataMapper.findOneV1035(morderId, hsId);
-        AnalysisData yingAnalysisDatav1037 = yingAnalysisDataMapper.findOneV1037(morderId, hsId);
-        AnalysisData yingAnalysisDatav1039 = yingAnalysisDataMapper.findOneV1039(morderId, hsId);
-        AnalysisData yingAnalysisDatav3001 = yingAnalysisDataMapper.findOneV3001(morderId, hsId);
-        AnalysisData yingAnalysisDatav3003 = yingAnalysisDataMapper.findOneV3003(morderId, hsId);
-        AnalysisData yingAnalysisDatav3005 = yingAnalysisDataMapper.findOneV3005(morderId, hsId);
-        AnalysisData yingAnalysisDatav3006 = yingAnalysisDataMapper.findOneV3006(morderId, hsId);
-        AnalysisData yingAnalysisDatav1041 = yingAnalysisDataMapper.findOneV1040cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1045 = yingAnalysisDataMapper.findOneV1045(morderId, hsId);
-        AnalysisData yingAnalysisDatav1046 = yingAnalysisDataMapper.findOneV1046cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1047 = yingAnalysisDataMapper.findOneV1047(morderId, hsId);
-        AnalysisData yingAnalysisDatav1048 = yingAnalysisDataMapper.findOneV1048cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1049 = yingAnalysisDataMapper.findOneV1049cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1050 = yingAnalysisDataMapper.findOneV1050cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1051 = yingAnalysisDataMapper.findOneV1051cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1052 = yingAnalysisDataMapper.findOneV1052cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1054 = yingAnalysisDataMapper.findOneV1054cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1056 = yingAnalysisDataMapper.findOneV1056cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1057 = yingAnalysisDataMapper.findOneV1057cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1058 = yingAnalysisDataMapper.findOneV1058cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1059 = yingAnalysisDataMapper.findOneV1059cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1060 = yingAnalysisDataMapper.findOneV1060cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1061 = yingAnalysisDataMapper.findOneV1061cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav1063 = yingAnalysisDataMapper.findOneV1063cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1020 = yingAnalysisDataMapper.findOneV1020(morderId, hsId);
+        AnalysisData cangAnalysisDatav1021 = yingAnalysisDataMapper.findOneV1021(morderId, hsId);
+        AnalysisData cangAnalysisDatav1023 = yingAnalysisDataMapper.findOneV1023(morderId, hsId);
+        AnalysisData cangAnalysisDatav1024 = yingAnalysisDataMapper.findOneV1024(morderId, hsId);
+        AnalysisData cangAnalysisDatav1027 = yingAnalysisDataMapper.findOneV1027(morderId, hsId);
+        AnalysisData cangAnalysisDatav1035 = yingAnalysisDataMapper.findOneV1035(morderId, hsId);
+        AnalysisData cangAnalysisDatav1037 = yingAnalysisDataMapper.findOneV1037(morderId, hsId);
+        AnalysisData cangAnalysisDatav1039 = yingAnalysisDataMapper.findOneV1039(morderId, hsId);
+        AnalysisData cangAnalysisDatav3001 = yingAnalysisDataMapper.findOneV3001(morderId, hsId);
+        AnalysisData cangAnalysisDatav3003 = yingAnalysisDataMapper.findOneV3003(morderId, hsId);
+        AnalysisData cangAnalysisDatav3005 = yingAnalysisDataMapper.findOneV3005(morderId, hsId);
+        AnalysisData cangAnalysisDatav3006 = yingAnalysisDataMapper.findOneV3006(morderId, hsId);
+        AnalysisData cangAnalysisDatav1041 = yingAnalysisDataMapper.findOneV1040cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1045 = yingAnalysisDataMapper.findOneV1045(morderId, hsId);
+        AnalysisData cangAnalysisDatav1046 = yingAnalysisDataMapper.findOneV1046cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1047 = yingAnalysisDataMapper.findOneV1047(morderId, hsId);
+        AnalysisData cangAnalysisDatav1048 = yingAnalysisDataMapper.findOneV1048cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1049 = yingAnalysisDataMapper.findOneV1049cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1050 = yingAnalysisDataMapper.findOneV1050cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1051 = yingAnalysisDataMapper.findOneV1051cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1052 = yingAnalysisDataMapper.findOneV1052cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1054 = yingAnalysisDataMapper.findOneV1054cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1056 = yingAnalysisDataMapper.findOneV1056cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1057 = yingAnalysisDataMapper.findOneV1057cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1058 = yingAnalysisDataMapper.findOneV1058cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1059 = yingAnalysisDataMapper.findOneV1059cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1060 = yingAnalysisDataMapper.findOneV1060cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1061 = yingAnalysisDataMapper.findOneV1061cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1063 = yingAnalysisDataMapper.findOneV1063cang(morderId, hsId);
 
 
-        AnalysisData yingAnalysisDatav1066 = yingAnalysisDataMapper.findOneV1066cang(morderId, hsId);
-        AnalysisData yingAnalysisDatav2010 = yingAnalysisDataMapper.findOneV2010cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1066 = yingAnalysisDataMapper.findOneV1066cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav2010 = yingAnalysisDataMapper.findOneV2010cang(morderId, hsId);
 
 
-        AnalysisData yingAnalysisDos1 = yingAnalysisDataMapper.findOneShowDos1ying(morderId, hsId);
-        AnalysisData yingAnalysisDos3 = yingAnalysisDataMapper.findOneShowDos3(morderId);
+        AnalysisData cangAnalysisDos1 = yingAnalysisDataMapper.findOneShowDos1cang(morderId, hsId);
+        AnalysisData cangAnalysisDos3 = yingAnalysisDataMapper.findOneShowDos3(morderId);
 
 //        【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 - （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06 - 【1033】业务费
-        BigDecimal opreationCrocsProfile = yingAnalysisDatav1059.getWithoutTaxIncome().
-                subtract(yingAnalysisDatav1060.getWithoutTaxCost()).
-                subtract(yingAnalysisDatav1061.getAdditionalTax()).
-                subtract(yingAnalysisDatav1063.getStampDuty()).
-                subtract(yingAnalysisDatav1027.getSalesFeeAmount()).
-                subtract((yingAnalysisDatav1027.getHsqyFee().add(yingAnalysisDatav1027.getHssyFee().add(yingAnalysisDatav1027.getHshyFee()))).divide(new BigDecimal("1.11"))).
-                subtract(yingAnalysisDatav1027.getSuperviseFee().divide(new BigDecimal("1.06"))).
-                subtract(yingAnalysisDatav1027.getServiceFee().divide(new BigDecimal("1.06")));
+        BigDecimal opreationCrocsProfile = cangAnalysisDatav1059.getWithoutTaxIncome().
+                subtract(cangAnalysisDatav1060.getWithoutTaxCost()).
+                subtract(cangAnalysisDatav1061.getAdditionalTax()).
+                subtract(cangAnalysisDatav1063.getStampDuty()).
+                subtract(cangAnalysisDatav1027.getSalesFeeAmount()).
+                subtract((cangAnalysisDatav1027.getHsqyFee().add(cangAnalysisDatav1027.getHssyFee().add(cangAnalysisDatav1027.getHshyFee()))).divide(new BigDecimal("1.11"))).
+                subtract(cangAnalysisDatav1027.getSuperviseFee().divide(new BigDecimal("1.06"))).
+                subtract(cangAnalysisDatav1027.getServiceFee().divide(new BigDecimal("1.06")));
 
 
-        AnalysisData yingAnalysisData = new AnalysisData() {{
+        AnalysisData cangAnalysisData = new AnalysisData() {{
             setOrderId(orderConfigBase.getOrderId());
             setHsId(orderConfigBase.getHsId());
             setHsMonth(orderConfigBase.getHsMonth());
-            setTotalPayTrafficFee(yingAnalysisDatav1001.getTotalPayTrafficFee());
-            setTotalTradeGapFee(yingAnalysisDatav1001.getTotalTradeGapFee());
-            setTotalPaymentAmount(yingAnalysisDatav1001.getTotalPaymentAmount());
-            setTotalLoadMoney(yingAnalysisDatav1004.getTotalLoadMoney());
-            setTotalUnrepaymentEstimateCost((yingAnalysisDatav1006 == null ? new BigDecimal("0.00") : yingAnalysisDatav1006.getTotalUnrepaymentEstimateCost()));
-            setTotalRepaymentPrincipeAmount(yingAnalysisDatav1007.getTotalRepaymentPrincipeAmount());
-            setTotalRepaymentPrincipeAmount(yingAnalysisDatav1007.getTotalRepaymentPrincipeAmount());
-            setTotalRepaymentInterest(yingAnalysisDatav1007.getTotalRepaymentInterest());
-            setTotalServiceCharge(yingAnalysisDatav1007.getTotalServiceCharge());
-            setTotalUnpayPrincipal((yingAnalysisDatav1009 == null ? new BigDecimal("0.00") : yingAnalysisDatav1009.getTotalUnpayPrincipal()));
-            setTotalUnpayInterest((yingAnalysisDatav1009 == null ? new BigDecimal("0.00") : yingAnalysisDatav1009.getTotalUnpayInterest()));
-            setTotalUnpayFee((yingAnalysisDatav1009 == null ? new BigDecimal("0.00") : yingAnalysisDatav1009.getTotalUnpayFee()));
-            setOutCapitalAmout(yingAnalysisDatav1012.getOutCapitalAmout());
-            setTotalHuikuanPaymentMoney(yingAnalysisDatav1013.getTotalHuikuanPaymentMoney());
-            setPayCargoAmount(yingAnalysisDatav1014.getPayCargoAmount());
-            setUnpaymentMoney(yingAnalysisDatav1015.getUnpaymentMoney());
-            setUnpaymentEstimateProfile(yingAnalysisDatav1016.getUnpaymentEstimateProfile());
-            setInterestDays(yingAnalysisDatav1017.getInterestDays());
-            setActualUtilizationRate(yingAnalysisDatav1018.getActualUtilizationRate());
-//            setRate(yingAnalysisDatav1019.getRate());
-            setTotalPaymentedRateMoney(yingAnalysisDatav1020.getTotalPaymentedRateMoney());
-            setContractRateProfile(yingAnalysisDatav1021.getContractRateProfile());
-            setTiexianRateAmount(yingAnalysisDatav1023.getTiexianRateAmount());
-            setTotalBuyerMoney(yingAnalysisDatav1024.getTotalBuyerMoney());
-            setTotalBuyerNums(yingAnalysisDatav1024.getTotalBuyerNums());
-            setTotalBuyersettleGap(yingAnalysisDatav1024.getTotalBuyersettleGap());
-            setDsddFee(yingAnalysisDatav1027.getDsddFee());
-            setHshyFee(yingAnalysisDatav1027.getHshyFee());
-            setHsqyFee(yingAnalysisDatav1027.getHsqyFee());
-            setHssyFee(yingAnalysisDatav1027.getHssyFee());
-            setBusinessFee(yingAnalysisDatav1027.getBusinessFee());
-            setServiceFee(yingAnalysisDatav1027.getServiceFee());
-            setSuperviseFee(yingAnalysisDatav1027.getSuperviseFee());
-            setSalesFeeAmount(yingAnalysisDatav1027.getSalesFeeAmount());
-            setTradingCompanyInTpeMoneyAmount((yingAnalysisDatav1035 == null ? new BigDecimal("0.00") : yingAnalysisDatav1035.getTradingCompanyInTpeMoneyAmount()));
-            setTradingCompanyInTypeNum((yingAnalysisDatav1035 == null ? new BigDecimal("0.00") : yingAnalysisDatav1035.getTradingCompanyInTypeNum()));
-            setTotalCCSIntypeMoney((yingAnalysisDatav1037 == null ? new BigDecimal("0.00") : yingAnalysisDatav1037.getTotalCCSIntypeMoney()));
-            setTotalCSSIntypeNumber((yingAnalysisDatav1037 == null ? new BigDecimal("0.00") : yingAnalysisDatav1037.getTotalCSSIntypeNumber()));
-            setInvoicedMoneyAmount((yingAnalysisDatav1039 == null ? new BigDecimal("0.00") : yingAnalysisDatav1039.getInvoicedMoneyAmount()));
-            setInvoicedMoneyNum((yingAnalysisDatav1039 == null ? new BigDecimal("0.00") : yingAnalysisDatav1039.getInvoicedMoneyNum()));
-            setTotalInstorageAmount(yingAnalysisDatav3001.getTotalInstorageAmount());
-            setTotalInstorageNum(yingAnalysisDatav3001.getTotalInstorageNum());
-            setInstorageUnitPrice(yingAnalysisDatav3001.getInstorageUnitPrice());
-            setTotalOutstorageNum(yingAnalysisDatav3003.getTotalOutstorageNum());
-            setTotalInstorageTranitNum(yingAnalysisDatav3001.getTotalInstorageTranitNum());
-            setTotalInstorageTranitPrice(yingAnalysisDatav3001.getTotalInstorageTranitPrice());
-            setTotalOutstorageMoney(yingAnalysisDatav3003.getTotalOutstorageMoney());
-            setTotalStockNum(yingAnalysisDatav3005.getTotalStockNum());
-            setTotalStockMoney(yingAnalysisDatav3006.getTotalStockMoney());
-            setFinalSettleAmount(yingAnalysisDatav1041.getFinalSettleAmount());
-            setUnsettlerBuyerMoneyAmount(yingAnalysisDatav1041.getUnsettlerBuyerMoneyAmount());
-            setUnsettlerBuyerNumber(yingAnalysisDatav1041.getUnsettlerBuyerNumber());
-            setTradingCompanyAddMoney(yingAnalysisDatav1041.getTradingCompanyAddMoney());
-            setSaleCargoAmountofMoney(yingAnalysisDatav1041.getSaleCargoAmountofMoney());
-            setCcsProfile(yingAnalysisDatav1045.getCcsProfile());
-            setPurchaseCargoAmountOfMoney(yingAnalysisDatav1046.getPurchaseCargoAmountOfMoney());
-            setExternalCapitalPaymentAmount(yingAnalysisDatav1047.getExternalCapitalPaymentAmount());
-            setOwnerCapitalPaymentAmount(yingAnalysisDatav1048.getOwnerCapitalPaymentAmount());
-            setUpstreamCapitalPressure(yingAnalysisDatav1049.getUpstreamCapitalPressure());
-            setDownstreamCapitalPressure(yingAnalysisDatav1050.getDownstreamCapitalPressure());
-            setCssUninTypeNum(yingAnalysisDatav1051.getCssUninTypeNum());
-            setCssUninTypeMoney(yingAnalysisDatav1052.getCssUninTypeMoney());
-            setUnInvoicedAmountofMoney(yingAnalysisDatav1052.getUnInvoicedAmountofMoney());
-            setCangPrePayment(yingAnalysisDatav1054.getCangPrePayment());
-            setSettleGrossProfileNum(yingAnalysisDatav3003.getTotalOutstorageNum());
-            setPurchaseIncludeTaxTotalAmount(yingAnalysisDatav1046.getPurchaseCargoAmountOfMoney());
+            setTotalPayTrafficFee(cangAnalysisDatav1001.getTotalPayTrafficFee());
+            setTotalTradeGapFee(cangAnalysisDatav1001.getTotalTradeGapFee());
+            setTotalPaymentAmount(cangAnalysisDatav1001.getTotalPaymentAmount());
+            setTotalLoadMoney(cangAnalysisDatav1004.getTotalLoadMoney());
+            setTotalUnrepaymentEstimateCost((cangAnalysisDatav1006 == null ? new BigDecimal("0.00") : cangAnalysisDatav1006.getTotalUnrepaymentEstimateCost()));
+            setTotalRepaymentPrincipeAmount(cangAnalysisDatav1007.getTotalRepaymentPrincipeAmount());
+            setTotalRepaymentPrincipeAmount(cangAnalysisDatav1007.getTotalRepaymentPrincipeAmount());
+            setTotalRepaymentInterest(cangAnalysisDatav1007.getTotalRepaymentInterest());
+            setTotalServiceCharge(cangAnalysisDatav1007.getTotalServiceCharge());
+            setTotalUnpayPrincipal((cangAnalysisDatav1009 == null ? new BigDecimal("0.00") : cangAnalysisDatav1009.getTotalUnpayPrincipal()));
+            setTotalUnpayInterest((cangAnalysisDatav1009 == null ? new BigDecimal("0.00") : cangAnalysisDatav1009.getTotalUnpayInterest()));
+            setTotalUnpayFee((cangAnalysisDatav1009 == null ? new BigDecimal("0.00") : cangAnalysisDatav1009.getTotalUnpayFee()));
+            setOutCapitalAmout(cangAnalysisDatav1012.getOutCapitalAmout());
+            setTotalHuikuanPaymentMoney(cangAnalysisDatav1013.getTotalHuikuanPaymentMoney());
+            setPayCargoAmount(cangAnalysisDatav1014.getPayCargoAmount());
+            setUnpaymentMoney(cangAnalysisDatav1015.getUnpaymentMoney());
+            setUnpaymentEstimateProfile(cangAnalysisDatav1016.getUnpaymentEstimateProfile());
+            setInterestDays(cangAnalysisDatav1017.getInterestDays());
+            setActualUtilizationRate(cangAnalysisDatav1018.getActualUtilizationRate());
+//            setRate(cangAnalysisDatav1019.getRate());
+            setTotalPaymentedRateMoney(cangAnalysisDatav1020.getTotalPaymentedRateMoney());
+            setContractRateProfile(cangAnalysisDatav1021.getContractRateProfile());
+            setTiexianRateAmount(cangAnalysisDatav1023.getTiexianRateAmount());
+            setTotalBuyerMoney(cangAnalysisDatav1024.getTotalBuyerMoney());
+            setTotalBuyerNums(cangAnalysisDatav1024.getTotalBuyerNums());
+            setTotalBuyersettleGap(cangAnalysisDatav1024.getTotalBuyersettleGap());
+            setDsddFee(cangAnalysisDatav1027.getDsddFee());
+            setHshyFee(cangAnalysisDatav1027.getHshyFee());
+            setHsqyFee(cangAnalysisDatav1027.getHsqyFee());
+            setHssyFee(cangAnalysisDatav1027.getHssyFee());
+            setBusinessFee(cangAnalysisDatav1027.getBusinessFee());
+            setServiceFee(cangAnalysisDatav1027.getServiceFee());
+            setSuperviseFee(cangAnalysisDatav1027.getSuperviseFee());
+            setSalesFeeAmount(cangAnalysisDatav1027.getSalesFeeAmount());
+            setTradingCompanyInTpeMoneyAmount((cangAnalysisDatav1035 == null ? new BigDecimal("0.00") : cangAnalysisDatav1035.getTradingCompanyInTpeMoneyAmount()));
+            setTradingCompanyInTypeNum((cangAnalysisDatav1035 == null ? new BigDecimal("0.00") : cangAnalysisDatav1035.getTradingCompanyInTypeNum()));
+            setTotalCCSIntypeMoney((cangAnalysisDatav1037 == null ? new BigDecimal("0.00") : cangAnalysisDatav1037.getTotalCCSIntypeMoney()));
+            setTotalCSSIntypeNumber((cangAnalysisDatav1037 == null ? new BigDecimal("0.00") : cangAnalysisDatav1037.getTotalCSSIntypeNumber()));
+            setInvoicedMoneyAmount((cangAnalysisDatav1039 == null ? new BigDecimal("0.00") : cangAnalysisDatav1039.getInvoicedMoneyAmount()));
+            setInvoicedMoneyNum((cangAnalysisDatav1039 == null ? new BigDecimal("0.00") : cangAnalysisDatav1039.getInvoicedMoneyNum()));
+            setTotalInstorageAmount(cangAnalysisDatav3001.getTotalInstorageAmount());
+            setTotalInstorageNum(cangAnalysisDatav3001.getTotalInstorageNum());
+            setInstorageUnitPrice(cangAnalysisDatav3001.getInstorageUnitPrice());
+            setTotalOutstorageNum(cangAnalysisDatav3003.getTotalOutstorageNum());
+            setTotalInstorageTranitNum(cangAnalysisDatav3001.getTotalInstorageTranitNum());
+            setTotalInstorageTranitPrice(cangAnalysisDatav3001.getTotalInstorageTranitPrice());
+            setTotalOutstorageMoney(cangAnalysisDatav3003.getTotalOutstorageMoney());
+            setTotalStockNum(cangAnalysisDatav3005.getTotalStockNum());
+            setTotalStockMoney(cangAnalysisDatav3006.getTotalStockMoney());
+            setFinalSettleAmount(cangAnalysisDatav1041.getFinalSettleAmount());
+            setUnsettlerBuyerMoneyAmount(cangAnalysisDatav1041.getUnsettlerBuyerMoneyAmount());
+            setUnsettlerBuyerNumber(cangAnalysisDatav1041.getUnsettlerBuyerNumber());
+            setTradingCompanyAddMoney(cangAnalysisDatav1041.getTradingCompanyAddMoney());
+            setSaleCargoAmountofMoney(cangAnalysisDatav1041.getSaleCargoAmountofMoney());
+            setCcsProfile(cangAnalysisDatav1045.getCcsProfile());
+            setPurchaseCargoAmountOfMoney(cangAnalysisDatav1046.getPurchaseCargoAmountOfMoney());
+            setExternalCapitalPaymentAmount(cangAnalysisDatav1047.getExternalCapitalPaymentAmount());
+            setOwnerCapitalPaymentAmount(cangAnalysisDatav1048.getOwnerCapitalPaymentAmount());
+            setUpstreamCapitalPressure(cangAnalysisDatav1049.getUpstreamCapitalPressure());
+            setDownstreamCapitalPressure(cangAnalysisDatav1050.getDownstreamCapitalPressure());
+            setCssUninTypeNum(cangAnalysisDatav1051.getCssUninTypeNum());
+            setCssUninTypeMoney(cangAnalysisDatav1052.getCssUninTypeMoney());
+            setUnInvoicedAmountofMoney(cangAnalysisDatav1052.getUnInvoicedAmountofMoney());
+            setCangPrePayment(cangAnalysisDatav1054.getCangPrePayment());
+            setSettleGrossProfileNum(cangAnalysisDatav3003.getTotalOutstorageNum());
+            setPurchaseIncludeTaxTotalAmount(cangAnalysisDatav1046.getPurchaseCargoAmountOfMoney());
 
-            setSaleIncludeTaxTotalAmount(yingAnalysisDatav1057.getSaleIncludeTaxTotalAmount());
-            setTradeCompanyAddMoney(yingAnalysisDatav1058.getTradeCompanyAddMoney());
-            setWithoutTaxIncome(yingAnalysisDatav1059.getWithoutTaxIncome());
-            setWithoutTaxCost(yingAnalysisDatav1060.getWithoutTaxCost());
-            setVat(yingAnalysisDatav1061.getVat());
-            setAdditionalTax(yingAnalysisDatav1061.getAdditionalTax());
-            setStampDuty(yingAnalysisDatav1063.getStampDuty());
+            setSaleIncludeTaxTotalAmount(cangAnalysisDatav1057.getSaleIncludeTaxTotalAmount());
+            setTradeCompanyAddMoney(cangAnalysisDatav1058.getTradeCompanyAddMoney());
+            setWithoutTaxIncome(cangAnalysisDatav1059.getWithoutTaxIncome());
+            setWithoutTaxCost(cangAnalysisDatav1060.getWithoutTaxCost());
+            setVat(cangAnalysisDatav1061.getVat());
+            setAdditionalTax(cangAnalysisDatav1061.getAdditionalTax());
+            setStampDuty(cangAnalysisDatav1063.getStampDuty());
             setOpreationCrossProfile(opreationCrocsProfile);
-            setCrossProfileATon((yingAnalysisDatav3003.getTotalOutstorageNum().compareTo(BigDecimal.ZERO) == 0 ? new BigDecimal("0.00") : opreationCrocsProfile.divide(yingAnalysisDatav3003.getTotalOutstorageNum(), 2, BigDecimal.ROUND_HALF_UP)));
-            setOwnerCapitalPressure((yingAnalysisDatav3003.getTotalOutstorageNum().compareTo(new BigDecimal("0.00")) == 0
-                    ? new BigDecimal("0.00") : yingAnalysisDatav1066.getOwnerCapitalPressure()));
-            setSettledDownstreamHuikuanMoneny(yingAnalysisDatav2010.getSettledDownstreamHuikuanMoneny());
+            setCrossProfileATon((cangAnalysisDatav3003.getTotalOutstorageNum().compareTo(BigDecimal.ZERO) == 0 ? new BigDecimal("0.00") : opreationCrocsProfile.divide(cangAnalysisDatav3003.getTotalOutstorageNum(), 2, BigDecimal.ROUND_HALF_UP)));
+            setOwnerCapitalPressure((cangAnalysisDatav3003.getTotalOutstorageNum().compareTo(new BigDecimal("0.00")) == 0
+                    ? new BigDecimal("0.00") : cangAnalysisDatav1066.getOwnerCapitalPressure()));
+            setSettledDownstreamHuikuanMoneny(cangAnalysisDatav2010.getSettledDownstreamHuikuanMoneny());
 
-            setMaximumPaymentAmount(yingAnalysisDos1.getMaximumPaymentAmount());
-            setUnitTotalPaymentAmount(yingAnalysisDatav1001.getTotalPaymentAmount().add(yingAnalysisDatav1007.getTotalRepaymentInterest()));
+            setMaximumPaymentAmount(cangAnalysisDos1.getMaximumPaymentAmount());
+            setUnitTotalPaymentAmount(cangAnalysisDatav1001.getTotalPaymentAmount().add(cangAnalysisDatav1007.getTotalRepaymentInterest()));
 //            业务累计付款金额
-            setAccumulativePaymentAmount(yingAnalysisDos3.getAccumulativePaymentAmount());
+            setAccumulativePaymentAmount(cangAnalysisDos3.getAccumulativePaymentAmount());
 
+            //剩余库存数量
+            BigDecimal remaindInstorageNumber = cangAnalysisDatav3001.getTotalInstoragedNum().subtract(cangAnalysisDatav3001.getTotalInstorageTranitNum());
+
+            setTotalInstorageRemainNum(remaindInstorageNumber);
+            //剩余库存金额=剩余库存数量*单价
+            BigDecimal totalInstorageRemainPrice = remaindInstorageNumber.multiply(cangAnalysisDatav3001.getInstorageUnitPrice());
+
+            setTotalInstorageRemainPrice(totalInstorageRemainPrice);
+            //合计数量
+            setTotalSumInstorageNum(remaindInstorageNumber.add(cangAnalysisDatav3001.getTotalInstorageTranitNum()));
+            //合计金额
+            setTotalSumInstoragePrice(totalInstorageRemainPrice.add(cangAnalysisDatav3001.getTotalInstorageTranitPrice()));
 
             //借款需要字段
             setNonRepaymentLoanMoney(nonRepaymentLoanMoney);
@@ -406,7 +418,7 @@ public class DataAnalysisService {
         }};
 
 
-        return yingAnalysisData;
+        return cangAnalysisData;
     }
 
 
