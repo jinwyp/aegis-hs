@@ -118,7 +118,7 @@ export class OrderDetailComponent implements OnInit {
             data => {
                 this.unitListStat = data.data
 
-                let tempTotal : any = {
+                const tempTotal : any = {
                     hsMonth : '汇总',
                     totalFayunNum : 0,
                     totalArriveNum : 0,
@@ -154,46 +154,48 @@ export class OrderDetailComponent implements OnInit {
                     totalHuikuanPaymentMoney : 0
                 }
 
-                if (Array.isArray(data.data.results)) {
+                if (Array.isArray(data.data)) {
 
-                    data.data.results.forEach( unit => {
-                            tempTotal.totalFayunNum = tempTotal.totalFayunNum + unit.totalFayunNum
-                            tempTotal.totalArriveNum = tempTotal.totalArriveNum + unit.totalArriveNum
-                            tempTotal.totalUnarriveNum = tempTotal.totalUnarriveNum + unit.totalUnarriveNum
-                            tempTotal.purchaseIncludeTaxTotalAmount = tempTotal.purchaseIncludeTaxTotalAmount + unit.purchaseIncludeTaxTotalAmount
-                            tempTotal.saleIncludeTaxTotalAmount = tempTotal.saleIncludeTaxTotalAmount + unit
+                    data.data.forEach( unit => {
+                        console.log(unit)
+                        tempTotal.totalFayunNum = tempTotal.totalFayunNum + unit.totalFayunNum
+                        tempTotal.totalArriveNum = tempTotal.totalArriveNum + unit.totalArriveNum
+                        tempTotal.totalUnarriveNum = tempTotal.totalUnarriveNum + unit.totalUnarriveNum
+                        tempTotal.purchaseIncludeTaxTotalAmount = tempTotal.purchaseIncludeTaxTotalAmount + unit.purchaseIncludeTaxTotalAmount
+                        tempTotal.saleIncludeTaxTotalAmount = tempTotal.saleIncludeTaxTotalAmount + unit.saleIncludeTaxTotalAmount
 
-                            tempTotal.tradingCompanyAddMoney = tempTotal + unit
-                            tempTotal.salesFeeAmount = tempTotal + unit
-                            tempTotal.dsddFee = tempTotal + unit
-                            tempTotal.ccsProfile = tempTotal + unit
-
-
-                            tempTotal.totalBuyerNums = tempTotal + unit
-                            tempTotal.totalBuyerMoney = tempTotal + unit
-                            tempTotal.unsettlerBuyerNumber = tempTotal + unit
-                            tempTotal.unsettlerBuyerMoneyAmount = tempTotal + unit
-
-                            tempTotal.upstreamCapitalPressure = tempTotal + unit
-                            tempTotal.downstreamCapitalPressure = tempTotal + unit
+                        tempTotal.tradingCompanyAddMoney = tempTotal.tradingCompanyAddMoney + unit.tradingCompanyAddMoney
+                        tempTotal.salesFeeAmount = tempTotal.salesFeeAmount + unit.salesFeeAmount
+                        tempTotal.dsddFee = tempTotal.dsddFee + unit.dsddFee
+                        tempTotal.ccsProfile = tempTotal.ccsProfile + unit.ccsProfile
 
 
-                            tempTotal.tradingCompanyInTypeNum = tempTotal + unit
-                            tempTotal.tradingCompanyInTpeMoneyAmount = tempTotal + unit
-                            tempTotal.totalCSSIntypeNumber = tempTotal + unit
-                            tempTotal.totalCCSIntypeMoney = tempTotal + unit
-                            tempTotal.cssUninTypeNum = tempTotal + unit
-                            tempTotal.cssUninTypeMoney = tempTotal + unit
+                        tempTotal.totalBuyerNums = tempTotal.totalBuyerNums + unit.totalBuyerNums
+                        tempTotal.totalBuyerMoney = tempTotal.totalBuyerMoney + unit.totalBuyerMoney
+                        tempTotal.unsettlerBuyerNumber = tempTotal.unsettlerBuyerNumber + unit.unsettlerBuyerNumber
+                        tempTotal.unsettlerBuyerMoneyAmount = tempTotal.unsettlerBuyerMoneyAmount + unit.unsettlerBuyerMoneyAmount
+
+                        tempTotal.upstreamCapitalPressure = tempTotal.upstreamCapitalPressure + unit.upstreamCapitalPressure
+                        tempTotal.downstreamCapitalPressure = tempTotal.downstreamCapitalPressure + unit.downstreamCapitalPressure
 
 
-                            tempTotal.externalCapitalPaymentAmount = tempTotal + unit
-                            tempTotal.ownerCapitalPaymentAmount = tempTotal + unit
-                            tempTotal.totalHuikuanPaymentMoney = tempTotal + unit
+                        tempTotal.tradingCompanyInTypeNum = tempTotal.tradingCompanyInTypeNum + unit.tradingCompanyInTypeNum
+                        tempTotal.tradingCompanyInTpeMoneyAmount = tempTotal.tradingCompanyInTpeMoneyAmount + unit.tradingCompanyInTpeMoneyAmount
+                        tempTotal.totalCSSIntypeNumber = tempTotal.totalCSSIntypeNumber + unit.totalCSSIntypeNumber
+                        tempTotal.totalCCSIntypeMoney = tempTotal.totalCCSIntypeMoney + unit.totalCCSIntypeMoney
+                        tempTotal.cssUninTypeNum = tempTotal.cssUninTypeNum + unit.cssUninTypeNum
+                        tempTotal.cssUninTypeMoney = tempTotal.cssUninTypeMoney + unit.cssUninTypeMoney
 
+
+                        tempTotal.externalCapitalPaymentAmount = tempTotal.externalCapitalPaymentAmount + unit.externalCapitalPaymentAmount
+                        tempTotal.ownerCapitalPaymentAmount = tempTotal.ownerCapitalPaymentAmount + unit.ownerCapitalPaymentAmount
+                        tempTotal.totalHuikuanPaymentMoney = tempTotal.totalHuikuanPaymentMoney + unit.totalHuikuanPaymentMoney
 
                     })
 
                 }
+
+                this.unitListStat.push(tempTotal)
             },
             error => {this.httpService.errorHandler(error) }
         )

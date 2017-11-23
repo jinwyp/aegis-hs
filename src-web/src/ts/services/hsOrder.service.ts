@@ -246,6 +246,7 @@ export class HSOrderService {
         if (query.amount) { params = params.append('amount', query.amount)}
         if (query.money) { params = params.append('money', query.money)}
         if (query.settleGap) { params = params.append('settleGap', query.settleGap)}
+        if (query.discountType) { params = params.append('discountType', query.discountType)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + settleType, {params: params} )
     }
@@ -267,6 +268,9 @@ export class HSOrderService {
         if (query.hsId) { params = params.append('hsId', query.hsId)}
         if (query.settleDateStart) { params = params.append('settleDateStart', query.settleDateStart)}
         if (query.settleDateEnd) { params = params.append('settleDateEnd', query.settleDateEnd)}
+        if (query.amount) { params = params.append('amount', query.amount)}
+        if (query.money) { params = params.append('money', query.money)}
+        if (query.settleGap) { params = params.append('settleGap', query.settleGap)}
         if (query.discountType) { params = params.append('discountType', query.discountType)}
 
 
