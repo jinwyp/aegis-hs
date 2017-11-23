@@ -5,7 +5,7 @@
                 <bs-select formControlName="hsId" [fc]="repaymentHKForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty" [options]="unitList" [error]="repaymentHKFormError.hsId"></bs-select>
                 <bs-radio formControlName="promise" [fc]="repaymentHKForm.get('promise')" [label]="'还款状态:'" [dirty]="ignoreDirty" [sourceList]="promiseStatusList" [error]="repaymentHKFormError.promise"></bs-radio>
                 <!--<bs-select formControlName="skCompanyId" [fc]="repaymentHKForm.get('skCompanyId')" [label]="'资金方:'" [dirty]="ignoreDirty" [options]="party.normal" [error]="repaymentHKFormError.skCompanyId"></bs-select>-->
-                <bs-datepicker formControlName="huankuankDate" [fc]="repaymentHKForm.get('huankuankDate')" [label]="'还款日期:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuankDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
+                <bs-datepicker formControlName="huankuanDate" [fc]="repaymentHKForm.get('huankuanDate')" [label]="'还款日期:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanDate" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>
 
                 <!--<bs-text-input formControlName="huankuanPrincipal" [fc]="repaymentHKForm.get('huankuanPrincipal')" [type]="'number'" [label]="'还款本金:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanPrincipal"></bs-text-input>-->
                 <!--<bs-text-input formControlName="huankuanInterest" [fc]="repaymentHKForm.get('huankuanInterest')" [type]="'number'" [label]="'还款利息:'" [dirty]="ignoreDirty" [error]="repaymentHKFormError.huankuanInterest" ></bs-text-input>-->
@@ -86,10 +86,10 @@
 
                     <div class="form-row ">
                         <div class="col-3">
-                            <bs-datepicker formControlName="huankuankDateStart" [fc]="repaymentHKSearchForm.get('huankuankDateStart')" [label]="'还款日期:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                            <bs-datepicker formControlName="huankuanDateStart" [fc]="repaymentHKSearchForm.get('huankuanDateStart')" [label]="'还款日期:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
                         </div>
                         <div class="col-3">
-                            <bs-datepicker formControlName="huankuankDateEnd" [fc]="repaymentHKSearchForm.get('huankuankDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                            <bs-datepicker formControlName="huankuanDateEnd" [fc]="repaymentHKSearchForm.get('huankuanDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
                         </div>
                     </div>
 
@@ -123,7 +123,7 @@
                         <td> {{repaymentHK.hsId | findKey : unitList : 'name'}}</td>
                         <!--<td> {{repaymentHK.skCompanyId | findKey : party.normal : 'name'}}</td>-->
 
-                        <td> {{repaymentHK.huankuankDate | slice : 0 : 10 }}</td>
+                        <td> {{repaymentHK.huankuanDate | slice : 0 : 10 }}</td>
                         <td> {{repaymentHK.promise ? '已还款' : '未还款' }} </td>
 
                         <td>

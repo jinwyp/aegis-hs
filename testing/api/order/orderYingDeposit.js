@@ -130,7 +130,7 @@ describe('应收订单 保证金:', function () {
             })
     })
 
-    it(`保证金 - 新建保证金 非法输入保证金类型 bailType = 1 POST: /api/business/ying/${orderId}/bails`, function (done) {
+    it(`保证金 - 新建保证金 非法输入保证金类型 bailType = 99 POST: /api/business/ying/${orderId}/bails`, function (done) {
         server.post(`/api/business/ying/${orderId}/bails`)
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -138,7 +138,7 @@ describe('应收订单 保证金:', function () {
                 {
                     "hsId" : 1,
                     "bailDate" : "2017-12-05 00:00:00",
-                    "bailType" : 1,
+                    "bailType" : 99,
                     "bailAmount" : "28000",
                     "orderId" : orderId,
                     "openCompanyId" : 2,
@@ -149,6 +149,7 @@ describe('应收订单 保证金:', function () {
             .expect(400)
             .end(function(err, res) {
                 if (err) return done(err)
+                console.log(res.body)
                 expect(res.body.success, 'success属性值应该是false 但实际不是false').to.equal(false)
                 expect(res.body.data, '返回的数据data对象应该是undefined 但实际不是undefined').to.equal(undefined)
                 done()

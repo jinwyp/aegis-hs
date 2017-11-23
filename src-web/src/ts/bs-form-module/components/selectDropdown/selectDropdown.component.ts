@@ -63,7 +63,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
 
     ngOnChanges (changes: {[propKey: string]: SimpleChange}) {
-        // console.log('ngOnChanges')
+        console.log('ngOnChanges')
 
         for (const propertyName in changes) {
 
@@ -78,7 +78,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
                 if (propertyName === 'optionList' && currentChangeObject.currentValue && Array.isArray(currentChangeObject.currentValue)) {
 
-                    // console.log('optionList', currentChangeObject.currentValue)
+                    console.log('optionList', currentChangeObject.currentValue)
 
                     this.filterOptionList = this.optionList.slice()
 
@@ -236,7 +236,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
     }
 
     writeValue(value: any): void {
-        // console.log('WriteValue: ', value, this.filterOptionList)
+        console.log('WriteValue: ', value, this.filterOptionList)
 
         if (Array.isArray(this.filterOptionList)) {
 

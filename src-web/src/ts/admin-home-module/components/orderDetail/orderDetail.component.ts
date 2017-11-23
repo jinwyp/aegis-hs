@@ -38,6 +38,8 @@ export class OrderDetailComponent implements OnInit {
 
     departmentList : any[] = []
     teamList : any[] = []
+
+
     partyObject : any = {
         normal : [],
         object : {},
@@ -115,6 +117,85 @@ export class OrderDetailComponent implements OnInit {
         this.hsOrderService.getOrderStatisticsByID(this.businessType, this.currentOrderId).subscribe(
             data => {
                 this.unitListStat = data.data
+
+                const tempTotal : any = {
+                    hsMonth : '汇总',
+                    totalFayunNum : 0,
+                    totalArriveNum : 0,
+                    totalUnarriveNum : 0,
+                    purchaseIncludeTaxTotalAmount : 0,
+                    saleIncludeTaxTotalAmount : 0,
+
+                    tradingCompanyAddMoney : 0,
+                    salesFeeAmount : 0,
+                    dsddFee : 0,
+                    ccsProfile : 0,
+
+
+                    totalBuyerNums : 0,
+                    totalBuyerMoney : 0,
+                    unsettlerBuyerNumber : 0,
+                    unsettlerBuyerMoneyAmount : 0,
+
+                    upstreamCapitalPressure : 0,
+                    downstreamCapitalPressure : 0,
+
+
+                    tradingCompanyInTypeNum : 0,
+                    tradingCompanyInTpeMoneyAmount : 0,
+                    totalCSSIntypeNumber : 0,
+                    totalCCSIntypeMoney : 0,
+                    cssUninTypeNum : 0,
+                    cssUninTypeMoney : 0,
+
+
+                    externalCapitalPaymentAmount : 0,
+                    ownerCapitalPaymentAmount : 0,
+                    totalHuikuanPaymentMoney : 0
+                }
+
+                if (Array.isArray(data.data)) {
+
+                    data.data.forEach( unit => {
+                        console.log(unit)
+                        tempTotal.totalFayunNum = tempTotal.totalFayunNum + unit.totalFayunNum
+                        tempTotal.totalArriveNum = tempTotal.totalArriveNum + unit.totalArriveNum
+                        tempTotal.totalUnarriveNum = tempTotal.totalUnarriveNum + unit.totalUnarriveNum
+                        tempTotal.purchaseIncludeTaxTotalAmount = tempTotal.purchaseIncludeTaxTotalAmount + unit.purchaseIncludeTaxTotalAmount
+                        tempTotal.saleIncludeTaxTotalAmount = tempTotal.saleIncludeTaxTotalAmount + unit.saleIncludeTaxTotalAmount
+
+                        tempTotal.tradingCompanyAddMoney = tempTotal.tradingCompanyAddMoney + unit.tradingCompanyAddMoney
+                        tempTotal.salesFeeAmount = tempTotal.salesFeeAmount + unit.salesFeeAmount
+                        tempTotal.dsddFee = tempTotal.dsddFee + unit.dsddFee
+                        tempTotal.ccsProfile = tempTotal.ccsProfile + unit.ccsProfile
+
+
+                        tempTotal.totalBuyerNums = tempTotal.totalBuyerNums + unit.totalBuyerNums
+                        tempTotal.totalBuyerMoney = tempTotal.totalBuyerMoney + unit.totalBuyerMoney
+                        tempTotal.unsettlerBuyerNumber = tempTotal.unsettlerBuyerNumber + unit.unsettlerBuyerNumber
+                        tempTotal.unsettlerBuyerMoneyAmount = tempTotal.unsettlerBuyerMoneyAmount + unit.unsettlerBuyerMoneyAmount
+
+                        tempTotal.upstreamCapitalPressure = tempTotal.upstreamCapitalPressure + unit.upstreamCapitalPressure
+                        tempTotal.downstreamCapitalPressure = tempTotal.downstreamCapitalPressure + unit.downstreamCapitalPressure
+
+
+                        tempTotal.tradingCompanyInTypeNum = tempTotal.tradingCompanyInTypeNum + unit.tradingCompanyInTypeNum
+                        tempTotal.tradingCompanyInTpeMoneyAmount = tempTotal.tradingCompanyInTpeMoneyAmount + unit.tradingCompanyInTpeMoneyAmount
+                        tempTotal.totalCSSIntypeNumber = tempTotal.totalCSSIntypeNumber + unit.totalCSSIntypeNumber
+                        tempTotal.totalCCSIntypeMoney = tempTotal.totalCCSIntypeMoney + unit.totalCCSIntypeMoney
+                        tempTotal.cssUninTypeNum = tempTotal.cssUninTypeNum + unit.cssUninTypeNum
+                        tempTotal.cssUninTypeMoney = tempTotal.cssUninTypeMoney + unit.cssUninTypeMoney
+
+
+                        tempTotal.externalCapitalPaymentAmount = tempTotal.externalCapitalPaymentAmount + unit.externalCapitalPaymentAmount
+                        tempTotal.ownerCapitalPaymentAmount = tempTotal.ownerCapitalPaymentAmount + unit.ownerCapitalPaymentAmount
+                        tempTotal.totalHuikuanPaymentMoney = tempTotal.totalHuikuanPaymentMoney + unit.totalHuikuanPaymentMoney
+
+                    })
+
+                }
+
+                this.unitListStat.push(tempTotal)
             },
             error => {this.httpService.errorHandler(error) }
         )
@@ -197,7 +278,7 @@ export class OrderDetailComponent implements OnInit {
                     data.data.forEach( user => {
                         tempResult.push ({
                             id : user.id,
-                            name : user.phone
+                            name : user.phone + ' ' + user.username
                         })
                     })
                 }
