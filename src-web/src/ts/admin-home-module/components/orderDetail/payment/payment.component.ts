@@ -41,7 +41,8 @@ export class PaymentComponent implements OnInit {
     unitListStat : any[] = []
     unitListStatObject : any = {}
 
-    totalPaymnetMoney : number = 0
+    totalPaymentMoney : number = 0
+    totalPayAmount : number = 0
 
 
     purposeList : any[] = getEnum('PaymentPurpose')
@@ -98,6 +99,16 @@ export class PaymentComponent implements OnInit {
             data => {
                 this.paymentList = data.data.results
 
+                if (Array.isArray(data.data.results)) {
+                    this.totalPayAmount = 0
+
+                    data.data.results.forEach( payment => {
+
+                        this.totalPayAmount = this.totalPayAmount + payment.payAmount
+                    })
+                }
+
+
             },
             error => {this.httpService.errorHandler(error) }
         )
@@ -114,15 +125,15 @@ export class PaymentComponent implements OnInit {
                         this.unitListStatObject[unit.hsId] = unit
                     })
 
-                    this.totalPaymnetMoney = 0
+                    this.totalPaymentMoney = 0
 
                     if (this.paymentSearchForm.value.hsId) {
                         console.log(this.paymentSearchForm.value.hsId, this.unitListStatObject[this.paymentSearchForm.value.hsId])
 
-                        this.totalPaymnetMoney = this.unitListStatObject[this.paymentSearchForm.value.hsId].unitTotalPaymentAmount
+                        this.totalPaymentMoney = this.unitListStatObject[this.paymentSearchForm.value.hsId].unitTotalPaymentAmount
                     } else {
                         if (this.unitListStat[0]) {
-                            this.totalPaymnetMoney = this.unitListStat[0].accumulativePaymentAmount
+                            this.totalPaymentMoney = this.unitListStat[0].accumulativePaymentAmount
                         }
                     }
 
