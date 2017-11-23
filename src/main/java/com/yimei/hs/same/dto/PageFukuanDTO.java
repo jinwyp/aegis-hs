@@ -5,8 +5,10 @@ import com.yimei.hs.enums.PaymentPurpose;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -21,9 +23,14 @@ public class PageFukuanDTO extends BaseFilter<PageFukuanDTO> {
 
     private LocalDateTime payDate;
     private Long receiveCompanyId;
-    private PaymentPurpose paymentPurpose;
+    private PaymentPurpose payUsage;
     private BigDecimal payAmount;
 
     // 回款是否完成
     private Boolean huikuanUnfinished = false;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate payDateStart;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate payDateEnd;
 }

@@ -32,8 +32,8 @@
             <if test="chukuDate!=null">and chukuDate = #{chukuDate, jdbcType=TIMESTAMP}</if>
             <if test="chukuPrice!=null">and chukuPrice = #{chukuPrice, jdbcType=DECIMAL}</if>
             <if test="chukuAmount!=null">and chukuAmount= #{chukuAmount, jdbcType=DECIMAL}</if>
-            <!--          <if test="locality!=null">and  locality= #{locality, jdbcType=VARCHAR}</if>-->
-
+            <if test="chukuDateStart!=null">  <![CDATA[   AND DATE_FORMAT(chukuDate, '%Y-%m-%d')>=  DATE_FORMAT(#{chukuDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="chukuDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(chukuDate, '%Y-%m-%d') <= DATE_FORMAT(#{chukuDateEnd}, '%Y-%m-%d')]]></if>
 
         </where>
     </select>

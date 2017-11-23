@@ -84,6 +84,8 @@
             <if test="useInterest!=null">AND useInterest = #{useInterest,jdbcType=DECIMAL}</if>
             <if test="useDays!=null">AND useDays = #{useDays,jdbcType=BIGINT}</if>
             <if test="jiekuanDate!=null">AND jiekuanDate= #{jiekuanDate,jdbcType=BIGINT}</if>
+            <if test="jiekuanDateStart!=null">  <![CDATA[   AND DATE_FORMAT(jiekuanDate, '%Y-%m-%d')>=  DATE_FORMAT(#{jiekuanDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="jiekuanDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(jiekuanDate, '%Y-%m-%d') <= DATE_FORMAT(#{jiekuanDateEnd}, '%Y-%m-%d')]]></if>
         </where>
     </select>
 

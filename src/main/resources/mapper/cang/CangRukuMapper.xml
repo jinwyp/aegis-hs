@@ -40,7 +40,8 @@
             <if test="rukuAmount!=null">and  rukuAmount= #{rukuAmount, jdbcType=DECIMAL}</if>
             <if test="locality!=null">and  locality= #{locality, jdbcType=VARCHAR}</if>
             <if test="trafficMode!=null">and  trafficMode= #{trafficMode, jdbcType=VARCHAR}</if>
-
+            <if test="rukuDateStart!=null">  <![CDATA[   AND DATE_FORMAT(rukuDate, '%Y-%m-%d')>=  DATE_FORMAT(#{rukuDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="rukuDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(rukuDate, '%Y-%m-%d') <= DATE_FORMAT(#{rukuDateEnd}, '%Y-%m-%d')]]></if>
         </where>
 
     </select>

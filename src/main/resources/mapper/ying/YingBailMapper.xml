@@ -53,12 +53,14 @@
         <where>
             <if test="true">and deleted = 0</if>
             <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
-            <if test="bailDate!=null">and fyDate = #{fyDate, jdbcType=TIMESTAMP}</if>
+            <if test="bailDate!=null">and bailDate = #{bailDate, jdbcType=TIMESTAMP}</if>
             <if test="bailType!=null">and bailType= #{bailType, jdbcType=VARCHAR}</if>
             <if test="bailAmount!=null">and bailAmount= #{bailAmount, jdbcType=DECIMAL}</if>
             <if test="hsId!=null">and hsId = #{hsId, jdbcType=VARCHAR}</if>
             <if test="receiverId!=null">and receiverId= #{receiverId, jdbcType=BIGINT}</if>
             <if test="openCompanyId!=null">and openCompanyId = #{openCompanyId, jdbcType=BIGINT}</if>
+            <if test="bailDateStart!=null">  <![CDATA[   AND DATE_FORMAT(bailDate, '%Y-%m-%d')>=  DATE_FORMAT(#{bailDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="bailDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(bailDate, '%Y-%m-%d') <= DATE_FORMAT(#{bailDateEnd}, '%Y-%m-%d')]]></if>
         </where>
     </select>
 

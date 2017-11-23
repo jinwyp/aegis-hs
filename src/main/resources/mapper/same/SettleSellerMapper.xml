@@ -89,6 +89,9 @@
             <if test="orderId != null">AND seller.orderId=#{orderId,jdbcType=BIGINT}</if>
             <if test="hsId != null">AND seller.hsId= #{hsId,jdbcType=BIGINT}</if>
             <if test="settleDate != null">AND seller.settleDate=#{settleDate,jdbcType=DATE}</if>
+            <if test="discountMode != null">AND seller.discountMode=#{discountMode,jdbcType=DATE}</if>
+            <if test="settleDateStart!=null">  <![CDATA[   AND DATE_FORMAT(seller.settleDate, '%Y-%m-%d')>=  DATE_FORMAT(#{settleDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="settleDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(seller.settleDate, '%Y-%m-%d') <= DATE_FORMAT(#{settleDateEnd}, '%Y-%m-%d')]]></if>
             <if test="true">AND seller.deleted = 0</if>
         </where>
         group by seller.orderId, seller.hsId

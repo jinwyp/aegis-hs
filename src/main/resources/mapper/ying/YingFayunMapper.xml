@@ -67,6 +67,8 @@
             <if test="downstreamCars!=null">and downstreamCars = #{downstreamCars, jdbcType=INTEGER}</if>
             <if test="downstreamJHH!=null">and downstreamJHH = #{downstreamJHH, jdbcType=VARCHAR}</if>
             <if test="downstreamShip!=null">and downstreamShip = #{downstreamShip, jdbcType=VARCHAR}</if>
+            <if test="fyDateStart!=null">  <![CDATA[   AND DATE_FORMAT(fyDate, '%Y-%m-%d')>=  DATE_FORMAT(#{fyDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="fyDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(fyDate, '%Y-%m-%d') <= DATE_FORMAT(#{fyDateEnd}, '%Y-%m-%d')]]></if>
         </where>
     </select>
 
