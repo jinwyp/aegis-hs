@@ -23,6 +23,7 @@ export class RepaymentComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
+    @Input() party : any = {}
 
     currentRepaymentId : number = 1
 

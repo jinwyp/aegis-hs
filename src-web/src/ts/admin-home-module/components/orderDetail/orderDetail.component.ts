@@ -40,7 +40,9 @@ export class OrderDetailComponent implements OnInit {
     teamList : any[] = []
     partyObject : any = {
         normal : [],
-        orderIncluded : []
+        object : {},
+        orderIncluded : [],
+        capital : []
     }
 
     userList : any[] = []
@@ -112,7 +114,6 @@ export class OrderDetailComponent implements OnInit {
         this.hsOrderService.getOrderStatisticsByID(this.businessType, this.currentOrderId).subscribe(
             data => {
                 this.unitListStat = data.data
-                console.log(data.data[0])
             },
             error => {this.httpService.errorHandler(error) }
         )
@@ -149,7 +150,10 @@ export class OrderDetailComponent implements OnInit {
                 if (Array.isArray(data.data.results)) {
 
                     const tempArray = []
+                    const tempArrayCapital = []
                     data.data.results.forEach( company => {
+
+                        this.partyObject.object[company.id] = company
 
                         if ( company.id === this.currentOrder.upstreamId || company.id === this.currentOrder.mainAccounting || company.id === this.currentOrder.downstreamId) {
                             tempArray.push(company)
@@ -160,9 +164,14 @@ export class OrderDetailComponent implements OnInit {
                                 tempArray.push(company)
                             }
                         })
+
+                        if (company.partyType === 2 || company.id === this.currentOrder.mainAccounting) {
+                            tempArrayCapital.push(company)
+                        }
                     })
 
                     this.partyObject.orderIncluded = tempArray
+                    this.partyObject.capital = tempArrayCapital
                 }
             },
             error => {this.httpService.errorHandler(error) }

@@ -6,7 +6,7 @@
                 <bs-datepicker formControlName="jiekuanDate" [fc]="borrowForm.get('jiekuanDate')" [label]="'借款日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="borrowFormError.jiekuanDate"></bs-datepicker>
                 <bs-text-input formControlName="amount" [fc]="borrowForm.get('amount')" [type]="'number'" [label]="'借款金额(元):'" [dirty]="ignoreDirty" [error]="borrowFormError.amount"></bs-text-input>
 
-                <bs-select formControlName ="capitalId" [fc]="borrowForm.get('capitalId')" [label]="'资金方:'" [dirty]="ignoreDirty"  [options]="partyListFilter" [error]="borrowFormError.capitalId"></bs-select>
+                <bs-select formControlName ="capitalId" [fc]="borrowForm.get('capitalId')" [label]="'资金方:'" [dirty]="ignoreDirty"  [options]="party.capital" [error]="borrowFormError.capitalId"></bs-select>
                 <bs-text-input formControlName="useInterest" [fc]="borrowForm.get('useInterest')" [type]="'number'" [label]="'外部资金使用利率(%):'" [prompt]="'百分比 例如88.88'" [dirty]="ignoreDirty" [percent]="true" [error]="borrowFormError.useInterest"></bs-text-input>
                 <bs-text-input formControlName="useDays" [fc]="borrowForm.get('useDays')" [type]="'number'" [label]="'外部资金使用天数:'" [dirty]="ignoreDirty" [error]="borrowFormError.useDays"></bs-text-input>
 
@@ -29,9 +29,9 @@
                         <div class="col-6">
                             <bs-select formControlName="hsId" [fc]="borrowSearchForm.get('hsId')" [label]="'核算月:'" [addAllOptions]="true" [options]="unitList"></bs-select>
                         </div>
-                        <div class="col-6">
-                            <bs-select formControlName="loanStatus" [fc]="borrowSearchForm.get('loanStatus')" [label]="'借款状态:'" [addAllOptions]="true" [options]="borrowStatusList"></bs-select>
-                        </div>
+                        <!--<div class="col-6">-->
+                            <!--<bs-select formControlName="loanStatus" [fc]="borrowSearchForm.get('loanStatus')" [label]="'借款状态:'" [addAllOptions]="true" [options]="borrowStatusList"></bs-select>-->
+                        <!--</div>-->
                     </div>
 
                     <div class="form-row ">
@@ -42,7 +42,7 @@
                             <bs-datepicker formControlName="jiekuanDateEnd" [fc]="borrowSearchForm.get('jiekuanDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
                         </div>
                         <div class="col-6">
-                            <bs-select formControlName="capitalId" [fc]="borrowSearchForm.get('capitalId')" [label]="'资金方:'" [addAllOptions]="true" [options]="partyListFilter"></bs-select>
+                            <bs-select formControlName="capitalId" [fc]="borrowSearchForm.get('capitalId')" [label]="'资金方:'" [addAllOptions]="true" [options]="party.capital"></bs-select>
                         </div>
                     </div>
 
@@ -90,7 +90,7 @@
                         <td> {{borrow.amount  }}</td>
                         <td> {{borrow.loanStatus  }}</td>
 
-                        <td> {{borrow.capitalId | findKey : partyList : 'name'}}</td>
+                        <td> {{borrow.capitalId | findKey : party.normal : 'name'}}</td>
                         <td> {{borrow.useInterest | percent:'1.0-2' }} / {{borrow.useDays }} </td>
                         <td> {{ ((borrow.amount * borrow.useInterest * borrow.useDays || 0) / 360).toFixed(2)  }}  </td>
 

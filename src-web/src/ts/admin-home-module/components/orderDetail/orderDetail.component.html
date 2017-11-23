@@ -338,13 +338,13 @@
 
 
         <app-unit  *ngIf="currentTabIndex === 2" [currentOrder]="currentOrder" [businessType]="businessType"></app-unit>
-        <app-shipping  *ngIf="currentTabIndex === 3 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType"></app-shipping>
+        <app-shipping  *ngIf="currentTabIndex === 3 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-shipping>
         <app-invoice  *ngIf="currentTabIndex === 4" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-invoice>
 
-        <app-borrow  *ngIf="currentTabIndex === 11" [currentOrder]="currentOrder" [businessType]="businessType" ></app-borrow>
-        <app-payment  *ngIf="currentTabIndex === 12" [currentOrder]="currentOrder" [businessType]="businessType" ></app-payment>
-        <app-repayment  *ngIf="currentTabIndex === 13" [currentOrder]="currentOrder" [businessType]="businessType" ></app-repayment>
-        <app-huankuan  *ngIf="currentTabIndex === 14" [currentOrder]="currentOrder" [businessType]="businessType" ></app-huankuan>
+        <app-borrow  *ngIf="currentTabIndex === 11" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-borrow>
+        <app-payment  *ngIf="currentTabIndex === 12" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-payment>
+        <app-repayment  *ngIf="currentTabIndex === 13" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-repayment>
+        <app-huankuan  *ngIf="currentTabIndex === 14" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-huankuan>
 
         <app-settle  *ngIf="currentTabIndex === 21 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerupstream'"></app-settle>
         <app-settle  *ngIf="currentTabIndex === 22 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerdownstream'"></app-settle>
