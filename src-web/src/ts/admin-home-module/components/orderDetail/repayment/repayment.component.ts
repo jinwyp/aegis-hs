@@ -92,7 +92,6 @@ export class RepaymentComponent implements OnInit {
 
         console.log('Query: ', query)
 
-
         this.hsOrderService.getRepaymentListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.repaymentList = data.data.results

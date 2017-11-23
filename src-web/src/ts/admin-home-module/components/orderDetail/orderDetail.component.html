@@ -354,10 +354,10 @@
         <app-settle  *ngIf="currentTabIndex === 22 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerdownstream'"></app-settle>
 
         <app-deposit  *ngIf="currentTabIndex === 25" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-deposit>
-        <app-expense  *ngIf="currentTabIndex === 31" [currentOrder]="currentOrder" [businessType]="businessType" ></app-expense>
+        <app-expense  *ngIf="currentTabIndex === 31" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-expense>
 
-        <app-warehouse  *ngIf="currentTabIndex === 32 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'ruku'"></app-warehouse>
-        <app-warehouse  *ngIf="currentTabIndex === 33 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'chuku'"></app-warehouse>
+        <app-warehouse  *ngIf="currentTabIndex === 32 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'ruku'" [party]="partyObject"></app-warehouse>
+        <app-warehouse  *ngIf="currentTabIndex === 33 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'chuku'" [party]="partyObject"></app-warehouse>
 
 
 
