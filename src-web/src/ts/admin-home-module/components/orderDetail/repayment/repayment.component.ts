@@ -28,6 +28,7 @@ export class RepaymentComponent implements OnInit {
     currentRepaymentId : number = 1
 
     repaymentForm: FormGroup
+    repaymentSearchForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
@@ -43,7 +44,7 @@ export class RepaymentComponent implements OnInit {
 
 
     pagination: any = {
-        pageSize : 20,
+        pageSize : 10000,
         pageNo : 1,
         total : 1
     }
@@ -68,6 +69,7 @@ export class RepaymentComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.createRepaymentSearchForm()
         this.getOrderUnitList()
         this.getPartyList()
         this.getRepaymentList()
@@ -81,7 +83,17 @@ export class RepaymentComponent implements OnInit {
 
 
     getRepaymentList () {
-        this.hsOrderService.getRepaymentListByID(this.businessType, this.currentOrder.id).subscribe(
+        let query : any = {
+            pageSize: this.pagination.pageSize,
+            pageNo: this.pagination.pageNo
+        }
+
+        query = (<any>Object).assign(query, this.repaymentSearchForm.value)
+
+        console.log('Query: ', query)
+
+
+        this.hsOrderService.getRepaymentListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.repaymentList = data.data.results
 
@@ -119,6 +131,18 @@ export class RepaymentComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+    }
+
+    createRepaymentSearchForm(): void {
+
+        this.repaymentSearchForm = this.fb.group({
+            'hsId'    : ['' ],
+            'huikuanUsage'    : ['' ],
+            'huikuanMode'    : ['' ],
+            'huikuanDateStart'    : [null ],
+            'huikuanDateEnd'    : [null ],
+            'huikuanAmount'    : ['' ]
+        } )
     }
 
     repaymentFormError : any = {}
