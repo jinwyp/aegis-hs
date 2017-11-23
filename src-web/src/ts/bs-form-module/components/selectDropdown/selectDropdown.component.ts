@@ -49,6 +49,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
     currentSelectIndexByKeyboard: number =  -1
 
     filterOptionList: any = []
+    optionListTemp: any = []
 
 
     constructor(
@@ -63,7 +64,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
 
     ngOnChanges (changes: {[propKey: string]: SimpleChange}) {
-        console.log('ngOnChanges')
+        // console.log('ngOnChanges')
 
         for (const propertyName in changes) {
 
@@ -78,13 +79,14 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
                 if (propertyName === 'optionList' && currentChangeObject.currentValue && Array.isArray(currentChangeObject.currentValue)) {
 
-                    console.log('optionList', currentChangeObject.currentValue)
+                    // console.log('optionList', currentChangeObject.currentValue)
 
-                    this.filterOptionList = this.optionList.slice()
-
+                    this.optionListTemp = this.optionList.slice()
                     if (this.addAllOptions === true) {
-                        this.filterOptionList.unshift({ id : '' , name : '全部' })
+                        this.optionListTemp.unshift({ id : '' , name : '全部' })
                     }
+
+                    this.filterOptionList = this.optionListTemp.slice()
 
                     this.writeValue(this.interValueCurrentSelected.id)
                 }
@@ -106,19 +108,21 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
             this.isShowSelectOptionList = true
 
             const inputText: string = (<HTMLInputElement>event.target).value
-            const tempOptions: any[] = this.optionList.slice()
+            const tempOptions: any[] = this.optionListTemp.slice()
+
 
             if (inputText.trim()) {
 
-                for (let i = this.optionList.length - 1; i >= 0; i --) {
+                for (let i = this.optionListTemp.length - 1; i >= 0; i --) {
 
-                    if ( this.optionList[i].name.indexOf(inputText) === -1 ) {
+                    if ( this.optionListTemp[i].name.indexOf(inputText) === -1 ) {
                         tempOptions.splice(i, 1)
                     }
                 }
             }
 
             this.filterOptionList = tempOptions
+
 
             if (tempOptions.length === 0) {
                 this.currentSelectIndexByKeyboard = -1
@@ -137,7 +141,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
         this.currentSelectIndexByKeyboard = this.filterOptionList.indexOf(currentOption)
 
         if (this.currentSelectIndexByKeyboard === -1) {
-            this.filterOptionList = this.optionList.slice()
+            this.filterOptionList = this.optionListTemp.slice()
         }
 
         this.outputChange.emit(currentOption)
@@ -250,8 +254,8 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
             this.value = tempValue
 
-            if (Array.isArray(this.optionList)) {
-                this.currentSelectIndexByKeyboard = this.optionList.indexOf(this.value)
+            if (Array.isArray(this.filterOptionList)) {
+                this.currentSelectIndexByKeyboard = this.filterOptionList.indexOf(this.value)
             }
 
         }
