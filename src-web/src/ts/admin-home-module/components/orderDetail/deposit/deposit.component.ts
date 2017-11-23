@@ -28,6 +28,7 @@ export class DepositComponent implements OnInit {
     currentDepositId : number = 1
 
     depositForm: FormGroup
+    depositSearchForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
@@ -36,6 +37,8 @@ export class DepositComponent implements OnInit {
     depositList : any[] = []
 
     unitList : any[] = []
+
+    totalBailAmount : number = 0
 
 
     depositTypeList : any[] = getEnum('BailType')
@@ -67,6 +70,7 @@ export class DepositComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.createDepositSearchForm()
         this.getOrderUnitList()
         this.getDepositList()
         this.createDepositForm()
@@ -79,10 +83,27 @@ export class DepositComponent implements OnInit {
 
 
     getDepositList () {
-        this.hsOrderService.getDepositListByID(this.businessType, this.currentOrder.id).subscribe(
+        let query : any = {
+            pageSize: this.pagination.pageSize,
+            pageNo: this.pagination.pageNo
+        }
+
+        query = (<any>Object).assign(query, this.depositSearchForm.value)
+
+        console.log('Query: ', query)
+
+        this.hsOrderService.getDepositListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.depositList = data.data.results
 
+                if (Array.isArray(data.data.results)) {
+
+                    this.totalBailAmount = 0
+
+                    data.data.results.forEach( deposit => {
+                        this.totalBailAmount = this.totalBailAmount + deposit.bailAmount
+                    })
+                }
             },
             error => {this.httpService.errorHandler(error) }
         )
@@ -107,6 +128,20 @@ export class DepositComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+    }
+
+
+    createDepositSearchForm(): void {
+
+        this.depositSearchForm = this.fb.group({
+            'hsId'    : ['' ],
+            'bailDateStart'    : [null ],
+            'bailDateEnd'    : [null ],
+            'bailType'    : ['' ],
+            'bailAmount'    : ['' ],
+            'openCompanyId'    : ['' ],
+            'receiverId'    : ['' ]
+        } )
     }
 
 

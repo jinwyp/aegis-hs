@@ -35,7 +35,6 @@ export class RepaymentComponent implements OnInit {
     isAddNew: boolean = true
 
     repaymentList : any[] = []
-    partyList : any[] = []
 
     unitList : any[] = []
 
@@ -75,7 +74,6 @@ export class RepaymentComponent implements OnInit {
 
         this.createRepaymentSearchForm()
         this.getOrderUnitList()
-        this.getPartyList()
         this.getRepaymentList()
         this.createRepaymentForm()
     }
@@ -114,16 +112,7 @@ export class RepaymentComponent implements OnInit {
         )
     }
 
-    getPartyList () {
 
-        this.hsUserService.getPartyList().subscribe(
-            data => {
-                this.partyList = data.data.results
-
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-    }
 
     getOrderUnitList () {
         this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
