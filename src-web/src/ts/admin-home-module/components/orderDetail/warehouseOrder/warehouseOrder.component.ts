@@ -24,10 +24,12 @@ export class WarehouseOrderComponent implements OnInit {
     @Input() currentOrder : any
     @Input() businessType : string
     @Input() warehouseType : string = '' // 入库 ruku 出库 chuku
+    @Input() party : any = {}
 
     currentWarehouseId : number = 1
 
     warehouseForm: FormGroup
+    warehouseSearchForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
@@ -37,6 +39,13 @@ export class WarehouseOrderComponent implements OnInit {
     warehouseOutList : any[] = []
 
     unitList : any[] = []
+
+
+    totalRukuAmount : number = 0
+    totalRukuPrice : number = 0
+    totalChukuAmount : number = 0
+    totalChukuPrice : number = 0
+
 
     warehouseStatusList : any[] = getEnum('InStorageStatus')
     trafficModeList : any[] = getEnum('TrafficMode')
@@ -60,8 +69,9 @@ export class WarehouseOrderComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.createWarehouseSearchForm()
         this.getOrderUnitList()
-        this.getSettleList()
+        this.getWarehouseList()
         this.createWarehouseForm()
     }
 
@@ -71,21 +81,52 @@ export class WarehouseOrderComponent implements OnInit {
     }
 
 
-    getSettleList () {
+    getWarehouseList () {
+
+        let query : any = {
+            pageSize: this.pagination.pageSize,
+            pageNo: this.pagination.pageNo
+        }
+
+        query = (<any>Object).assign(query, this.warehouseSearchForm.value)
+
+        console.log('Query: ', query)
 
         if (this.warehouseType === 'ruku') {
-            this.hsOrderService.getWarehouseInListByID(this.businessType, this.currentOrder.id).subscribe(
+            this.hsOrderService.getWarehouseInListByID(this.businessType, this.currentOrder.id, query).subscribe(
                 data => {
                     this.warehouseInList = data.data.results
+
+                    if (Array.isArray(data.data.results)) {
+
+                        this.totalRukuAmount = 0
+                        this.totalRukuPrice = 0
+
+                        data.data.results.forEach( warehouse => {
+                            this.totalRukuAmount = this.totalRukuAmount + warehouse.rukuAmount
+                            this.totalRukuPrice = this.totalRukuPrice + warehouse.rukuPrice
+                        })
+                    }
                 },
                 error => {this.httpService.errorHandler(error) }
             )
         }
 
         if (this.warehouseType === 'chuku') {
-            this.hsOrderService.getWarehouseOutListByID(this.businessType, this.currentOrder.id).subscribe(
+            this.hsOrderService.getWarehouseOutListByID(this.businessType, this.currentOrder.id, query).subscribe(
                 data => {
                     this.warehouseOutList = data.data.results
+
+                    if (Array.isArray(data.data.results)) {
+
+                        this.totalChukuAmount = 0
+                        this.totalChukuPrice = 0
+
+                        data.data.results.forEach( warehouse => {
+                            this.totalChukuAmount = this.totalChukuAmount + warehouse.chukuAmount
+                            this.totalChukuPrice = this.totalChukuPrice + warehouse.chukuPrice
+                        })
+                    }
                 },
                 error => {this.httpService.errorHandler(error) }
             )
@@ -112,6 +153,27 @@ export class WarehouseOrderComponent implements OnInit {
         )
     }
 
+    createWarehouseSearchForm(): void {
+
+        this.warehouseSearchForm = this.fb.group({
+            'hsId'    : ['' ],
+            'rukuDateStart'    : [null ],
+            'rukuDateEnd'    : [null ],
+
+            'rukuStatus'    : ['' ],
+            'rukuAmount'    : ['' ],
+            'rukuPrice'    : ['' ],
+            'locality'    : ['' ],
+            'trafficMode'    : ['' ],
+
+            'chukuDateStart'    : [null ],
+            'chukuDateEnd'    : [null ],
+            'chukuAmount'    : ['' ],
+            'chukuPrice'    : ['' ]
+
+        } )
+    }
+
 
     warehouseFormError : any = {}
     warehouseFormValidationMessages: any = {
@@ -129,7 +191,7 @@ export class WarehouseOrderComponent implements OnInit {
             'required'      : '请填写入库吨数!'
         },
         'rukuPrice'  : {
-            'required'      : '请填写入库单价: 元/吨!'
+            'required'      : '请填写入库金额!'
         },
         'locality'  : {
             'required'      : '请填写库房场地!'
@@ -146,7 +208,7 @@ export class WarehouseOrderComponent implements OnInit {
             'required'      : '请填写出库吨数!'
         },
         'chukuPrice'  : {
-            'required'      : '请填写出库单价: 元/吨!'
+            'required'      : '请填写出库金额!'
         }
 
     }
@@ -241,7 +303,7 @@ export class WarehouseOrderComponent implements OnInit {
                         console.log('保存成功: ', data)
                         this.httpService.successHandler(data)
 
-                        this.getSettleList()
+                        this.getWarehouseList()
                         this.showForm()
 
                     },
@@ -255,7 +317,7 @@ export class WarehouseOrderComponent implements OnInit {
                         console.log('保存成功: ', data)
                         this.httpService.successHandler(data)
 
-                        this.getSettleList()
+                        this.getWarehouseList()
                         this.showForm()
 
                     },
@@ -273,7 +335,7 @@ export class WarehouseOrderComponent implements OnInit {
                         console.log('修改成功: ', data)
                         this.httpService.successHandler(data)
 
-                        this.getSettleList()
+                        this.getWarehouseList()
                         this.showForm()
 
                     },
@@ -288,7 +350,7 @@ export class WarehouseOrderComponent implements OnInit {
                         console.log('修改成功: ', data)
                         this.httpService.successHandler(data)
 
-                        this.getSettleList()
+                        this.getWarehouseList()
                         this.showForm()
 
                     },
@@ -300,7 +362,7 @@ export class WarehouseOrderComponent implements OnInit {
     }
 
 
-    showForm(isAddNew : boolean = true, settle?: any) {
+    showForm(isAddNew : boolean = true, warehouse?: any) {
 
         this.ignoreDirty = false
 
@@ -330,9 +392,9 @@ export class WarehouseOrderComponent implements OnInit {
 
         } else {
             this.isAddNew = false
-            this.currentWarehouseId = settle.id
+            this.currentWarehouseId = warehouse.id
 
-            this.warehouseForm.patchValue(settle)
+            this.warehouseForm.patchValue(warehouse)
         }
 
 
@@ -340,27 +402,27 @@ export class WarehouseOrderComponent implements OnInit {
     }
 
 
-    deleteItem (settle : any) {
+    deleteItem (warehouse : any) {
 
         if (this.warehouseType === 'ruku') {
-            this.hsOrderService.delWarehouseIn(this.businessType, this.currentOrder.id, settle.id).subscribe(
+            this.hsOrderService.delWarehouseIn(this.businessType, this.currentOrder.id, warehouse.id).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getSettleList()
+                    this.getWarehouseList()
                 },
                 error => {this.httpService.errorHandler(error) }
             )
         }
 
         if (this.warehouseType === 'chuku') {
-            this.hsOrderService.delWarehouseOut(this.businessType, this.currentOrder.id, settle.id).subscribe(
+            this.hsOrderService.delWarehouseOut(this.businessType, this.currentOrder.id, warehouse.id).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getSettleList()
+                    this.getWarehouseList()
                 },
                 error => {this.httpService.errorHandler(error) }
             )

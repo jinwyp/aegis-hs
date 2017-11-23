@@ -325,7 +325,7 @@
                             <td>已回款金额合计</td>
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalHuikuanPaymentMoney | number }}</td>
                         </tr>
-                        
+
                         </tbody>
                     </table>
 
@@ -338,26 +338,26 @@
 
 
         <app-unit  *ngIf="currentTabIndex === 2" [currentOrder]="currentOrder" [businessType]="businessType"></app-unit>
-        <app-shipping  *ngIf="currentTabIndex === 3 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType"></app-shipping>
-        <app-invoice  *ngIf="currentTabIndex === 4" [currentOrder]="currentOrder" [businessType]="businessType" ></app-invoice>
+        <app-shipping  *ngIf="currentTabIndex === 3 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-shipping>
+        <app-invoice  *ngIf="currentTabIndex === 4" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-invoice>
 
-        <app-borrow  *ngIf="currentTabIndex === 11" [currentOrder]="currentOrder" [businessType]="businessType" ></app-borrow>
-        <app-payment  *ngIf="currentTabIndex === 12" [currentOrder]="currentOrder" [businessType]="businessType" ></app-payment>
-        <app-repayment  *ngIf="currentTabIndex === 13" [currentOrder]="currentOrder" [businessType]="businessType" ></app-repayment>
-        <app-huankuan  *ngIf="currentTabIndex === 14" [currentOrder]="currentOrder" [businessType]="businessType" ></app-huankuan>
+        <app-borrow  *ngIf="currentTabIndex === 11" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-borrow>
+        <app-payment  *ngIf="currentTabIndex === 12" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-payment>
+        <app-repayment  *ngIf="currentTabIndex === 13" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-repayment>
+        <app-huankuan  *ngIf="currentTabIndex === 14" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-huankuan>
 
-        <app-settle  *ngIf="currentTabIndex === 21 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerupstream'"></app-settle>
-        <app-settle  *ngIf="currentTabIndex === 22 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerdownstream'"></app-settle>
-        <app-settletraffic  *ngIf="currentTabIndex === 23 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" ></app-settletraffic>
+        <app-settle  *ngIf="currentTabIndex === 21 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerupstream'" [party]="partyObject"></app-settle>
+        <app-settle  *ngIf="currentTabIndex === 22 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerdownstream'" [party]="partyObject"></app-settle>
+        <app-settletraffic  *ngIf="currentTabIndex === 23 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-settletraffic>
 
-        <app-settle  *ngIf="currentTabIndex === 21 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerupstream'"></app-settle>
-        <app-settle  *ngIf="currentTabIndex === 22 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerdownstream'"></app-settle>
+        <app-settle  *ngIf="currentTabIndex === 21 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerupstream'" [party]="partyObject"></app-settle>
+        <app-settle  *ngIf="currentTabIndex === 22 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerdownstream'" [party]="partyObject"></app-settle>
 
-        <app-deposit  *ngIf="currentTabIndex === 25" [currentOrder]="currentOrder" [businessType]="businessType" ></app-deposit>
-        <app-expense  *ngIf="currentTabIndex === 31" [currentOrder]="currentOrder" [businessType]="businessType" ></app-expense>
+        <app-deposit  *ngIf="currentTabIndex === 25" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-deposit>
+        <app-expense  *ngIf="currentTabIndex === 31" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-expense>
 
-        <app-warehouse  *ngIf="currentTabIndex === 32 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'ruku'"></app-warehouse>
-        <app-warehouse  *ngIf="currentTabIndex === 33 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'chuku'"></app-warehouse>
+        <app-warehouse  *ngIf="currentTabIndex === 32 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'ruku'" [party]="partyObject"></app-warehouse>
+        <app-warehouse  *ngIf="currentTabIndex === 33 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [warehouseType]="'chuku'" [party]="partyObject"></app-warehouse>
 
 
 

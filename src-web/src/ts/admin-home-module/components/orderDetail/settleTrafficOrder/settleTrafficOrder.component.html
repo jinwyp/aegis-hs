@@ -5,7 +5,7 @@
             <bs-datepicker formControlName="settleDate" [fc]="settleTrafficForm.get('settleDate')" [label]="'结算日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="settleTrafficFormError.settleDate" ></bs-datepicker>
             <bs-text-input formControlName="amount" [fc]="settleTrafficForm.get('amount')" [type]="'number'" [label]="'结算数量(吨):'" [dirty]="ignoreDirty" [error]="settleTrafficFormError.amount"></bs-text-input>
             <bs-text-input formControlName="money" [fc]="settleTrafficForm.get('money')" [type]="'number'" [label]="'结算金额(元):'" [dirty]="ignoreDirty" [error]="settleTrafficFormError.money"></bs-text-input>
-            <bs-select formControlName ="trafficCompanyId" [fc]="settleTrafficForm.get('trafficCompanyId')" [label]="'与哪个运输方结算:'" [dirty]="ignoreDirty" [options]="partyListOther" [error]="settleTrafficFormError.trafficCompanyId"></bs-select>
+            <bs-select formControlName ="trafficCompanyId" [fc]="settleTrafficForm.get('trafficCompanyId')" [label]="'与哪个运输方结算:'" [dirty]="ignoreDirty" [options]="party.other" [error]="settleTrafficFormError.trafficCompanyId"></bs-select>
 
             <div class="form-group row">
                 <div class="col-10 ml-auto">
@@ -18,6 +18,44 @@
 
         <div *ngIf="!isShowForm">
 
+
+            <form [formGroup]="settleTrafficSearchForm"  (keydown.enter)="$event.preventDefault()">
+
+                <div class="form-row ">
+                    <div class="col-6">
+                        <bs-select formControlName="hsId" [fc]="settleTrafficSearchForm.get('hsId')" [label]="'核算月:'" [addAllOptions]="true" [options]="unitList"></bs-select>
+                    </div>
+                    <div class="col-6">
+                        <bs-select formControlName="trafficCompanyId" [fc]="settleTrafficSearchForm.get('trafficCompanyId')" [label]="'与哪个运输方结算:'" [editable]="true" [addAllOptions]="true" [options]="party.other"></bs-select>
+                    </div>
+                </div>
+
+                <div class="form-row ">
+                    <div class="col-3">
+                        <bs-datepicker formControlName="settleDateStart" [fc]="settleTrafficSearchForm.get('settleDateStart')" [label]="'结算日期:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                    </div>
+                    <div class="col-3">
+                        <bs-datepicker formControlName="settleDateEnd" [fc]="settleTrafficSearchForm.get('settleDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                    </div>
+                </div>
+
+                <div class="form-row ">
+                    <div class="col-6">
+                        <bs-text-input formControlName="amount" [fc]="settleTrafficSearchForm.get('amount')" [type]="'number'" [label]="'结算数量(吨):'" ></bs-text-input>
+                    </div>
+                    <div class="col-6">
+                        <bs-text-input formControlName="money" [fc]="settleTrafficSearchForm.get('money')" [type]="'number'" [label]="'结算金额(元):'" ></bs-text-input>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <div class="col-11 ml-auto">
+                        <button type="button" class="btn btn-info " (click)="getSettleList()"  >查询</button>
+                    </div>
+                </div>
+            </form>
+
             <table class="table table-bordered table-hover table-responsive" >
                 <thead>
                 <tr>
@@ -25,7 +63,7 @@
                     <th>核算月</th>
                     <th>结算日期</th>
                     <th>结算数量(吨)</th>
-                    <th>结算金额</th>
+                    <th>结算金额(元)</th>
 
                     <th>与哪个运输方结算</th>
 
@@ -41,13 +79,16 @@
                     <td> {{settle.amount }}</td>
                     <td> {{settle.money }}</td>
 
-                    <td> {{settle.trafficCompanyId | findKey : partyList : 'name'}}</td>
+                    <td> {{settle.trafficCompanyId | findKey : party.normal : 'name'}}</td>
 
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, settle)"> 修改 </button>
                         <button class="btn btn-link btn-sm" (click)="deleteItem(settle)"> 删除 </button>
                     </td>
                 </tr>
+
+                <tr> <td colspan="6"> 累计结算数量: {{totalAmount}} - 累计结算金额: {{totalMoney}}</tr>
+
                 </tbody>
             </table>
 

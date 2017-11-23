@@ -23,25 +23,30 @@ export class ExpenseComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
+    @Input() party : any = {}
 
     currentExpenseId : number = 1
 
     expenseForm: FormGroup
+    expenseSearchForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
 
     expenseList : any[] = []
-    partyList : any[] = []
 
     unitList : any[] = []
+
+
+    totalAmount : number = 0
+
 
     expensePurposeList : any[] = getEnum('FeeClass')
 
 
     pagination: any = {
-        pageSize : 20,
+        pageSize : 10000,
         pageNo : 1,
         total : 1
     }
@@ -60,6 +65,7 @@ export class ExpenseComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.createExpenseSearchForm()
         this.getOrderUnitList()
         this.getExpenseList()
         this.createExpenseForm()
@@ -73,10 +79,27 @@ export class ExpenseComponent implements OnInit {
 
 
     getExpenseList () {
-        this.hsOrderService.getExpenseListByID(this.businessType, this.currentOrder.id).subscribe(
+        let query : any = {
+            pageSize: this.pagination.pageSize,
+            pageNo: this.pagination.pageNo
+        }
+
+        query = (<any>Object).assign(query, this.expenseSearchForm.value)
+
+        console.log('Query: ', query)
+
+        this.hsOrderService.getExpenseListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.expenseList = data.data.results
 
+                if (Array.isArray(data.data.results)) {
+
+                    this.totalAmount = 0
+
+                    data.data.results.forEach( expense => {
+                        this.totalAmount = this.totalAmount + expense.amount
+                    })
+                }
             },
             error => {this.httpService.errorHandler(error) }
         )
@@ -102,6 +125,14 @@ export class ExpenseComponent implements OnInit {
         )
     }
 
+    createExpenseSearchForm(): void {
+
+        this.expenseSearchForm = this.fb.group({
+            'hsId'    : ['' ],
+            'amount'    : ['' ],
+            'name'    : ['' ]
+        } )
+    }
 
     expenseFormError : any = {}
     expenseFormValidationMessages: any = {

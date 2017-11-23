@@ -23,26 +23,31 @@ export class RepaymentComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
+    @Input() party : any = {}
 
     currentRepaymentId : number = 1
 
     repaymentForm: FormGroup
+    repaymentSearchForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
 
     repaymentList : any[] = []
-    partyList : any[] = []
 
     unitList : any[] = []
+
+
+    totalHuikuanAmount : number = 0
+
 
     purposeList : any[] = getEnum('ReceivePaymentPurpose')
     payModeList : any[] = getEnum('PayMode')
 
 
     pagination: any = {
-        pageSize : 20,
+        pageSize : 10000,
         pageNo : 1,
         total : 1
     }
@@ -67,8 +72,8 @@ export class RepaymentComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.createRepaymentSearchForm()
         this.getOrderUnitList()
-        this.getPartyList()
         this.getRepaymentList()
         this.createRepaymentForm()
     }
@@ -80,25 +85,34 @@ export class RepaymentComponent implements OnInit {
 
 
     getRepaymentList () {
-        this.hsOrderService.getRepaymentListByID(this.businessType, this.currentOrder.id).subscribe(
+        let query : any = {
+            pageSize: this.pagination.pageSize,
+            pageNo: this.pagination.pageNo
+        }
+
+        query = (<any>Object).assign(query, this.repaymentSearchForm.value)
+
+        console.log('Query: ', query)
+
+        this.hsOrderService.getRepaymentListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.repaymentList = data.data.results
 
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-    }
+                if (Array.isArray(data.data.results)) {
 
-    getPartyList () {
+                    this.totalHuikuanAmount = 0
 
-        this.hsUserService.getPartyList().subscribe(
-            data => {
-                this.partyList = data.data.results
+                    data.data.results.forEach( repayment => {
+                        this.totalHuikuanAmount = this.totalHuikuanAmount + repayment.huikuanAmount
+                    })
+                }
 
             },
             error => {this.httpService.errorHandler(error) }
         )
     }
+
+
 
     getOrderUnitList () {
         this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
@@ -118,6 +132,18 @@ export class RepaymentComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+    }
+
+    createRepaymentSearchForm(): void {
+
+        this.repaymentSearchForm = this.fb.group({
+            'hsId'    : ['' ],
+            'huikuanUsage'    : ['' ],
+            'huikuanMode'    : ['' ],
+            'huikuanDateStart'    : [null ],
+            'huikuanDateEnd'    : [null ],
+            'huikuanAmount'    : ['' ]
+        } )
     }
 
     repaymentFormError : any = {}

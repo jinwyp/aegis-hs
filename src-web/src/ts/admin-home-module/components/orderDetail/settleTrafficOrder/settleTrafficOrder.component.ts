@@ -23,10 +23,12 @@ export class SettleTrafficOrderComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
+    @Input() party : any = {}
 
     currentSettleId : number = 1
 
     settleTrafficForm: FormGroup
+    settleTrafficSearchForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
@@ -34,16 +36,17 @@ export class SettleTrafficOrderComponent implements OnInit {
 
     settleTrafficList : any[] = []
 
-    partyList : any[] = []
-    partyListOther : any[] = []
 
     unitList : any[] = []
+
+    totalAmount : number = 0
+    totalMoney : number = 0
 
     settleDiscountModeList : any[] = getEnum('DiscountMode')
 
 
     pagination: any = {
-        pageSize : 20,
+        pageSize : 10000,
         pageNo : 1,
         total : 1
     }
@@ -73,8 +76,8 @@ export class SettleTrafficOrderComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.createSettleTrafficSearchForm()
         this.getOrderUnitList()
-        this.getPartyList()
         this.getSettleList()
         this.createSettleForm()
 
@@ -87,39 +90,36 @@ export class SettleTrafficOrderComponent implements OnInit {
 
 
     getSettleList () {
+        let query : any = {
+            pageSize: this.pagination.pageSize,
+            pageNo: this.pagination.pageNo
+        }
 
-        this.hsOrderService.getSettleTrafficListByID(this.businessType, this.currentOrder.id).subscribe(
+        query = (<any>Object).assign(query, this.settleTrafficSearchForm.value)
+
+        console.log('Query: ', query)
+
+        this.hsOrderService.getSettleTrafficListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.settleTrafficList = data.data.results
 
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-
-    }
-
-    getPartyList () {
-
-        this.hsUserService.getPartyList().subscribe(
-            data => {
-                this.partyList = data.data.results
-
                 if (Array.isArray(data.data.results)) {
-                    const tempArray : any[] = []
 
-                    data.data.results.forEach( company => {
+                    this.totalAmount = 0
+                    this.totalMoney = 0
 
-                        if (company.partyType === 3) {
-                            tempArray.push(company)
-                        }
-                        this.partyListOther = tempArray
+                    data.data.results.forEach( settle => {
+                        this.totalAmount = this.totalAmount + settle.amount
+                        this.totalMoney = this.totalMoney + settle.money
                     })
                 }
-
             },
             error => {this.httpService.errorHandler(error) }
         )
+
     }
+
+
 
     getOrderUnitList () {
         this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
@@ -140,6 +140,20 @@ export class SettleTrafficOrderComponent implements OnInit {
             error => {this.httpService.errorHandler(error) }
         )
     }
+
+
+    createSettleTrafficSearchForm(): void {
+
+        this.settleTrafficSearchForm = this.fb.group({
+            'hsId'    : ['' ],
+            'settleDateStart'    : [null ],
+            'settleDateEnd'    : [null ],
+            'amount'    : ['' ],
+            'money'    : ['' ],
+            'trafficCompanyId'    : ['' ]
+        } )
+    }
+
 
     settleTrafficFormError : any = {}
     settleTrafficFormValidationMessages: any = {

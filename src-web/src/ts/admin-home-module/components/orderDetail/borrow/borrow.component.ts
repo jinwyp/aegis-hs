@@ -5,13 +5,10 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms'
 
 import { HttpService } from '../../../../bs-form-module/services/http.service'
 
-import { formErrorHandler, isMobilePhone, isMatched, checkFieldIsExist } from '../../../../bs-form-module/validators/validator'
+import { formErrorHandler} from '../../../../bs-form-module/validators/validator'
 
-import { HSUserService } from '../../../../services/hsUser.service'
 import { HSOrderService } from '../../../../services/hsOrder.service'
 
-
-import {getEnum} from '../../../../services/localStorage'
 
 
 @Component({
@@ -23,6 +20,7 @@ export class BorrowComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
+    @Input() party : any = {}
     currentBorrowId : number = 0
 
     borrowForm: FormGroup
@@ -33,8 +31,6 @@ export class BorrowComponent implements OnInit {
     isAddNew: boolean = true
 
     borrowList : any[] = []
-    partyList : any[] = []
-    partyListFilter : any[] = []
 
     unitList : any[] = []
     unitListStat : any[] = []
@@ -67,7 +63,6 @@ export class BorrowComponent implements OnInit {
     constructor(
         private httpService: HttpService,
         private fb: FormBuilder,
-        private hsUserService: HSUserService,
         private hsOrderService: HSOrderService
 
     ) {
@@ -81,7 +76,6 @@ export class BorrowComponent implements OnInit {
         this.createBorrowSearchForm()
         this.createBorrowForm()
         this.getOrderUnitList()
-        this.getPartyList()
         this.getBorrowList()
 
     }
@@ -128,28 +122,6 @@ export class BorrowComponent implements OnInit {
         )
     }
 
-    getPartyList () {
-
-        this.hsUserService.getPartyList().subscribe(
-            data => {
-                this.partyList = data.data.results
-
-                if (Array.isArray(data.data.results)) {
-                    const tempArray : any[] = []
-
-                    data.data.results.forEach( company => {
-
-                        if (company.partyType === 2) {
-                            tempArray.push(company)
-                        }
-                    })
-
-                    this.partyListFilter = tempArray
-                }
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-    }
 
     getOrderUnitList () {
         this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(

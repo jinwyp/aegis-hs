@@ -37,6 +37,51 @@
 
         <div *ngIf="!isShowForm">
 
+            <form [formGroup]="settleSearchForm"  (keydown.enter)="$event.preventDefault()">
+
+                <div class="form-row ">
+                    <div class="col-6">
+                        <bs-select formControlName="hsId" [fc]="settleSearchForm.get('hsId')" [label]="'核算月:'" [addAllOptions]="true" [options]="unitList"></bs-select>
+                    </div>
+                    <div class="col-3">
+                        <bs-datepicker formControlName="settleDateStart" [fc]="settleSearchForm.get('settleDateStart')" [label]="'结算日期:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                    </div>
+                    <div class="col-3">
+                        <bs-datepicker formControlName="settleDateEnd" [fc]="settleSearchForm.get('settleDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                    </div>
+                </div>
+
+                <div class="form-row " [hidden]="settleType !== 'settlebuyerdownstream' && settleType !== 'settlebuyerupstream'">
+                    <div class="col-6">
+                        <bs-text-input formControlName="amount" [fc]="settleSearchForm.get('amount')" [type]="'number'" [label]="'结算数量(吨):'" ></bs-text-input>
+                    </div>
+                    <div class="col-6">
+                        <bs-text-input formControlName="money" [fc]="settleSearchForm.get('money')" [type]="'number'" [label]="'结算金额(元):'" ></bs-text-input>
+                    </div>
+                </div>
+                <div class="form-row " [hidden]="settleType !== 'settlebuyerdownstream' && settleType !== 'settlebuyerupstream'">
+                    <div class="col-6">
+                        <bs-text-input formControlName="settleGap" [fc]="settleSearchForm.get('settleGap')" [type]="'number'" [label]="'结算扣吨(吨):'" ></bs-text-input>
+                    </div>
+                </div>
+
+
+                <div class="form-row " [hidden]="settleType !== 'settlesellerupstream' && settleType !== 'settlesellerdownstream'">
+                    <div class="col-6">
+                        <bs-select formControlName="discountType" [fc]="settleSearchForm.get('discountType')" [label]="'折扣类型:'" [addAllOptions]="true" [options]="settleDiscountModeList"></bs-select>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group row">
+                    <div class="col-11 ml-auto">
+                        <button type="button" class="btn btn-info " (click)="getSettleList()"  >查询</button>
+                    </div>
+                </div>
+            </form>
+
+
             <table class="table table-bordered table-hover table-responsive" *ngIf="settleType==='settlesellerupstream' || settleType==='settlesellerdownstream' ">
                 <thead>
                 <tr>
@@ -105,8 +150,8 @@
                     <th>核算月</th>
                     <th>结算日期</th>
                     <th>结算数量(吨)</th>
-                    <th>结算金额</th>
-                    <th>结算扣吨</th>
+                    <th>结算金额(元)</th>
+                    <th>结算扣吨(吨)</th>
 
                     <th></th>
                 </tr>
@@ -141,6 +186,8 @@
                         <button class="btn btn-link btn-sm" (click)="deleteItem(settle)"> 删除 </button>
                     </td>
                 </tr>
+
+                <tr> <td colspan="7"> 累计结算数量: {{totalAmount}} - 累计结算金额: {{totalMoney}}</tr>
 
                 </tbody>
             </table>

@@ -96,9 +96,17 @@ export class HSOrderService {
     }
 
     getShippingListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.arriveStatus) { params = params.append('arriveStatus', query.arriveStatus)}
+        if (query.fyDateStart) { params = params.append('fyDateStart', query.fyDateStart)}
+        if (query.fyDateEnd) { params = params.append('fyDateEnd', query.fyDateEnd)}
+        if (query.fyAmount) { params = params.append('fyAmount', query.fyAmount)}
+        if (query.upstreamTrafficMode) { params = params.append('upstreamTrafficMode', query.upstreamTrafficMode)}
+        if (query.downstreamTrafficMode) { params = params.append('downstreamTrafficMode', query.downstreamTrafficMode)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fayuns', {params: params} )
     }
@@ -176,9 +184,16 @@ export class HSOrderService {
 
     // 回款
     getRepaymentListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.huikuanDateStart) { params = params.append('huikuanDateStart', query.huikuanDateStart)}
+        if (query.huikuanDateEnd) { params = params.append('huikuanDateEnd', query.huikuanDateEnd)}
+        if (query.huikuanUsage ) { params = params.append('huikuanUsage', query.huikuanUsage)}
+        if (query.huikuanMode) { params = params.append('huikuanMode', query.huikuanMode)}
+        if (query.huikuanAmount ) { params = params.append('huikuanAmount', query.huikuanAmount)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/huikuans', {params: params} )
     }
@@ -194,7 +209,7 @@ export class HSOrderService {
 
     // 还款
     getRepaymentHKListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
@@ -221,9 +236,16 @@ export class HSOrderService {
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/settleseller/allinfo')
     }
     getSettleUpstreamListByID(businessType : string, settleType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.settleDateStart) { params = params.append('settleDateStart', query.settleDateStart)}
+        if (query.settleDateEnd) { params = params.append('settleDateEnd', query.settleDateEnd)}
+        if (query.amount) { params = params.append('amount', query.amount)}
+        if (query.money) { params = params.append('money', query.money)}
+        if (query.settleGap) { params = params.append('settleGap', query.settleGap)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + settleType, {params: params} )
     }
@@ -238,9 +260,15 @@ export class HSOrderService {
     }
 
     getSettleDownstreamListByID(businessType : string, settleType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.settleDateStart) { params = params.append('settleDateStart', query.settleDateStart)}
+        if (query.settleDateEnd) { params = params.append('settleDateEnd', query.settleDateEnd)}
+        if (query.discountType) { params = params.append('discountType', query.discountType)}
+
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + settleType, {params: params} )
     }
@@ -255,9 +283,16 @@ export class HSOrderService {
     }
 
     getSettleTrafficListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.settleDateStart) { params = params.append('settleDateStart', query.settleDateStart)}
+        if (query.settleDateEnd) { params = params.append('settleDateEnd', query.settleDateEnd)}
+        if (query.amount) { params = params.append('amount', query.amount)}
+        if (query.money) { params = params.append('money', query.money)}
+        if (query.trafficCompanyId) { params = params.append('trafficCompanyId', query.trafficCompanyId)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/settletraffic', {params: params} )
     }
@@ -275,9 +310,17 @@ export class HSOrderService {
 
 
     getDepositListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.bailType) { params = params.append('bailType', query.bailType)}
+        if (query.bailAmount) { params = params.append('bailAmount', query.bailAmount)}
+        if (query.bailDateStart) { params = params.append('bailDateStart', query.bailDateStart)}
+        if (query.bailDateEnd) { params = params.append('bailDateEnd', query.bailDateEnd)}
+        if (query.openCompanyId) { params = params.append('openCompanyId', query.openCompanyId)}
+        if (query.receiverId) { params = params.append('receiverId', query.receiverId)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/bails', {params: params} )
     }
@@ -296,9 +339,13 @@ export class HSOrderService {
 
 
     getExpenseListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.amount) { params = params.append('amount', query.amount)}
+        if (query.name) { params = params.append('name', query.name)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fees', {params: params} )
     }
@@ -315,7 +362,7 @@ export class HSOrderService {
 
 
     getInvoiceListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
 
@@ -342,9 +389,18 @@ export class HSOrderService {
 
 
     getWarehouseInListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.rukuDateStart) { params = params.append('rukuDateStart', query.rukuDateStart)}
+        if (query.rukuDateEnd) { params = params.append('rukuDateEnd', query.rukuDateEnd)}
+        if (query.rukuStatus) { params = params.append('rukuStatus', query.rukuStatus)}
+        if (query.rukuAmount) { params = params.append('rukuAmount', query.rukuAmount)}
+        if (query.rukuPrice) { params = params.append('rukuPrice', query.rukuPrice)}
+        if (query.locality) { params = params.append('locality', query.locality)}
+        if (query.trafficMode) { params = params.append('trafficMode', query.trafficMode)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/rukus', {params: params} )
     }
@@ -360,9 +416,16 @@ export class HSOrderService {
 
 
     getWarehouseOutListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.chukuDateStart) { params = params.append('chukuDateStart', query.chukuDateStart)}
+        if (query.chukuDateEnd) { params = params.append('chukuDateEnd', query.chukuDateEnd)}
+        if (query.chukuAmount) { params = params.append('chukuAmount', query.chukuAmount)}
+        if (query.chukuPrice) { params = params.append('chukuPrice', query.chukuPrice)}
+        if (query.locality) { params = params.append('locality', query.locality)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/chukus', {params: params} )
     }

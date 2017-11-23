@@ -11,9 +11,9 @@
 
                 <bs-radio formControlName ="trafficMode" [fc]="warehouseForm.get('trafficMode')" [label]="'上游运输方式:'" [dirty]="ignoreDirty" [sourceList]="trafficModeList" [error]="warehouseFormError.trafficMode" ></bs-radio>
 
-                <bs-text-input formControlName="cars" [fc]="warehouseForm.get('cars')" [type]="'number'" [label]="'上游汽运情况下的车数:'" [dirty]="ignoreDirty" [error]="warehouseFormError.cars" [hidden]="warehouseForm.get('trafficMode').value !=='MOTOR'"></bs-text-input>
-                <bs-text-input formControlName="jhh" [fc]="warehouseForm.get('jhh')" [type]="'text'" [label]="'上游火运情况下的计划号:'" [dirty]="ignoreDirty" [error]="warehouseFormError.jhh" [hidden]="warehouseForm.get('trafficMode').value !=='RAIL'"></bs-text-input>
-                <bs-text-input formControlName="ship" [fc]="warehouseForm.get('ship')" [type]="'text'" [label]="'上游船运情况下的船号:'" [dirty]="ignoreDirty" [error]="warehouseFormError.ship" [hidden]="warehouseForm.get('trafficMode').value !=='SHIP'"></bs-text-input>
+                <bs-text-input formControlName="cars" [fc]="warehouseForm.get('cars')" [type]="'number'" [label]="'汽运车数:'" [dirty]="ignoreDirty" [error]="warehouseFormError.cars" [hidden]="warehouseForm.get('trafficMode').value !=='MOTOR'"></bs-text-input>
+                <bs-text-input formControlName="jhh" [fc]="warehouseForm.get('jhh')" [type]="'text'" [label]="'火运计划号:'" [dirty]="ignoreDirty" [error]="warehouseFormError.jhh" [hidden]="warehouseForm.get('trafficMode').value !=='RAIL'"></bs-text-input>
+                <bs-text-input formControlName="ship" [fc]="warehouseForm.get('ship')" [type]="'text'" [label]="'船运船号:'" [dirty]="ignoreDirty" [error]="warehouseFormError.ship" [hidden]="warehouseForm.get('trafficMode').value !=='SHIP'"></bs-text-input>
             </div>
 
             <div [hidden]="warehouseType !== 'chuku'">
@@ -34,6 +34,70 @@
 
 
         <div *ngIf="!isShowForm">
+
+            <form [formGroup]="warehouseSearchForm"  (keydown.enter)="$event.preventDefault()">
+
+                <div class="form-row ">
+                    <div class="col-6">
+                        <bs-select formControlName="hsId" [fc]="warehouseSearchForm.get('hsId')" [label]="'核算月:'" [addAllOptions]="true" [options]="unitList"></bs-select>
+                    </div>
+                    <div class="col-6">
+                        <bs-text-input formControlName="locality" [fc]="warehouseSearchForm.get('locality')" [type]="'text'" [label]="'库房场地:'" ></bs-text-input>
+                    </div>
+                </div>
+
+                <div class="form-row " [hidden]="warehouseType !== 'ruku'">
+                    <div class="col-3">
+                        <bs-datepicker formControlName="rukuDateStart" [fc]="warehouseSearchForm.get('rukuDateStart')" [label]="'入库日期:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                    </div>
+                    <div class="col-3">
+                        <bs-datepicker formControlName="rukuDateEnd" [fc]="warehouseSearchForm.get('rukuDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                    </div>
+                    <div class="col-6">
+                        <bs-select formControlName="rukuStatus" [fc]="warehouseSearchForm.get('rukuStatus')" [label]="'入库状态:'" [addAllOptions]="true" [options]="warehouseStatusList"></bs-select>
+                    </div>
+                </div>
+                <div class="form-row " [hidden]="warehouseType !== 'ruku'">
+                    <div class="col-6">
+                        <bs-text-input formControlName="rukuAmount" [fc]="warehouseSearchForm.get('rukuAmount')" [type]="'number'" [label]="'入库吨数(吨)'" ></bs-text-input>
+                    </div>
+                    <div class="col-6">
+                        <bs-text-input formControlName="rukuPrice" [fc]="warehouseSearchForm.get('rukuPrice')" [type]="'number'" [label]="'入库金额(元):'" ></bs-text-input>
+                    </div>
+                </div>
+                <div class="form-row " [hidden]="warehouseType !== 'ruku'">
+                    <div class="col-6">
+                        <bs-select formControlName="trafficMode" [fc]="warehouseSearchForm.get('trafficMode')" [label]="'上游运输方式:'" [addAllOptions]="true" [options]="trafficModeList"></bs-select>
+                    </div>
+                </div>
+
+
+
+                <div class="form-row " [hidden]="warehouseType !== 'chuku'">
+                    <div class="col-3">
+                        <bs-datepicker formControlName="chukuDateStart" [fc]="warehouseSearchForm.get('chukuDateStart')" [label]="'出库日期:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                    </div>
+                    <div class="col-3">
+                        <bs-datepicker formControlName="chukuDateEnd" [fc]="warehouseSearchForm.get('chukuDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                    </div>
+                </div>
+                <div class="form-row " [hidden]="warehouseType !== 'chuku'">
+                    <div class="col-6">
+                        <bs-text-input formControlName="chukuAmount" [fc]="warehouseSearchForm.get('chukuAmount')" [type]="'number'" [label]="'出库吨数(吨)'" ></bs-text-input>
+                    </div>
+                    <div class="col-6">
+                        <bs-text-input formControlName="chukuPrice" [fc]="warehouseSearchForm.get('chukuPrice')" [type]="'number'" [label]="'出库金额(元):'" ></bs-text-input>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <div class="col-11 ml-auto">
+                        <button type="button" class="btn btn-info " (click)="getWarehouseList()"  >查询</button>
+                    </div>
+                </div>
+            </form>
+
 
             <table class="table table-bordered table-hover table-responsive" *ngIf="warehouseType==='ruku'">
                 <thead>
@@ -65,15 +129,18 @@
 
                     <td> {{warehouse.trafficMode | findKey : trafficModeList : 'name'}}</td>
                     <td>
-                        <span *ngIf="warehouse.trafficMode==='MOTOR'">上游汽运情况下的车数: {{warehouse.cars}}</span>
-                        <span *ngIf="warehouse.trafficMode==='RAIL'">上游火运情况下的计划号: {{warehouse.jhh}}</span>
-                        <span *ngIf="warehouse.trafficMode==='SHIP'">上游船运情况下的船号: {{warehouse.ship}}</span>
+                        <span *ngIf="warehouse.trafficMode==='MOTOR'">汽运车数: {{warehouse.cars}}</span>
+                        <span *ngIf="warehouse.trafficMode==='RAIL'">火运计划号: {{warehouse.jhh}}</span>
+                        <span *ngIf="warehouse.trafficMode==='SHIP'">船运船号: {{warehouse.ship}}</span>
                     </td>
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, warehouse)"> 修改 </button>
                         <button class="btn btn-link btn-sm" (click)="deleteItem(warehouse)"> 删除 </button>
                     </td>
                 </tr>
+
+                <tr> <td colspan="10"> 累计入库吨数: {{totalRukuAmount}} - 累计入库金额: {{totalRukuPrice}}</tr>
+
                 </tbody>
             </table>
 
@@ -106,6 +173,7 @@
                         <button class="btn btn-link btn-sm" (click)="deleteItem(warehouse)"> 删除 </button>
                     </td>
                 </tr>
+                <tr> <td colspan="7"> 累计出库吨数: {{totalChukuAmount}} - 累计出库金额: {{totalChukuPrice}}</tr>
                 </tbody>
             </table>
 

@@ -22,9 +22,12 @@ export class ShippingOrderComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
+    @Input() party : any = {}
+
     currentShippingOrderId : number = 1
 
     shippingForm: FormGroup
+    shippingSearchForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
@@ -34,12 +37,15 @@ export class ShippingOrderComponent implements OnInit {
 
     unitList : any[] = []
 
+    totalAmount : number = 0
+
+
     arriveStatusList : any[] = getEnum('CargoArriveStatus')
     trafficModeList : any[] = getEnum('TrafficMode')
 
 
     pagination: any = {
-        pageSize : 20,
+        pageSize : 10000,
         pageNo : 1,
         total : 1
     }
@@ -59,6 +65,7 @@ export class ShippingOrderComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.createShippingSearchForm()
         this.getOrderUnitList()
         this.getShippingList()
         this.createShippingForm()
@@ -72,9 +79,25 @@ export class ShippingOrderComponent implements OnInit {
 
 
     getShippingList () {
-        this.hsOrderService.getShippingListByID(this.businessType, this.currentOrder.id).subscribe(
+        let query : any = {
+            pageSize: this.pagination.pageSize,
+            pageNo: this.pagination.pageNo
+        }
+
+        query = (<any>Object).assign(query, this.shippingSearchForm.value)
+
+        console.log('Query: ', query)
+
+        this.hsOrderService.getShippingListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.shippingList = data.data.results
+
+                if (Array.isArray(data.data.results)) {
+
+                    this.totalAmount = data.data.results.reduce( (accumulator, shipping) => {
+                        return accumulator + shipping.fyAmount
+                    }, 0)
+                }
             },
             error => {this.httpService.errorHandler(error) }
         )
@@ -99,6 +122,22 @@ export class ShippingOrderComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+    }
+
+
+    createShippingSearchForm(): void {
+
+        this.shippingSearchForm = this.fb.group({
+            'hsId'    : ['' ],
+
+            'fyDateStart'    : [null ],
+            'fyDateEnd'    : [null ],
+
+            'fyAmount'    : ['' ],
+            'arriveStatus'    : ['' ],
+            'upstreamTrafficMode'    : ['' ],
+            'downstreamTrafficMode'    : ['' ]
+        } )
     }
 
     shippingFormError : any = {}

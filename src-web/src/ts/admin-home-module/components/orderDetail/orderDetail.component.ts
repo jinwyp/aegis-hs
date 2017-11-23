@@ -38,7 +38,14 @@ export class OrderDetailComponent implements OnInit {
 
     departmentList : any[] = []
     teamList : any[] = []
-    partyList : any[] = []
+    partyObject : any = {
+        normal : [],
+        object : {},
+        orderIncluded : [],
+        capital : [],
+        other : []
+    }
+
     userList : any[] = []
     unitListStat : any[] = []
 
@@ -75,6 +82,7 @@ export class OrderDetailComponent implements OnInit {
                 if (data) {
                     this.currentOrder = data.data
                 }
+                this.getPartyList()
                 this.getOrderUnitStatisticsList()
                 // console.log('Order信息: ', data)
             },
@@ -82,7 +90,6 @@ export class OrderDetailComponent implements OnInit {
         )
 
 
-        this.getPartyList()
         this.getDepartmentList()
         this.getTeamList()
         this.getUserList()
@@ -108,7 +115,6 @@ export class OrderDetailComponent implements OnInit {
         this.hsOrderService.getOrderStatisticsByID(this.businessType, this.currentOrderId).subscribe(
             data => {
                 this.unitListStat = data.data
-                console.log(data.data[0])
             },
             error => {this.httpService.errorHandler(error) }
         )
@@ -140,8 +146,41 @@ export class OrderDetailComponent implements OnInit {
 
         this.hsUserService.getPartyList().subscribe(
             data => {
-                this.partyList = data.data.results
+                this.partyObject.normal = data.data.results
 
+                if (Array.isArray(data.data.results)) {
+
+                    const tempArray = []
+                    const tempArrayCapital = []
+                    const tempArrayOther = []
+                    data.data.results.forEach( company => {
+
+                        this.partyObject.object[company.id] = company
+
+                        if ( company.id === this.currentOrder.upstreamId || company.id === this.currentOrder.mainAccounting || company.id === this.currentOrder.downstreamId) {
+                            tempArray.push(company)
+                        }
+
+                        this.currentOrder.orderPartyList.forEach( company2 => {
+                            if (company.id === company2.customerId) {
+                                tempArray.push(company)
+                            }
+                        })
+
+                        if (company.partyType === 2 || company.id === this.currentOrder.mainAccounting) {
+                            tempArrayCapital.push(company)
+                        }
+
+                        if (company.partyType === 3) {
+                            tempArrayOther.push(company)
+                        }
+
+                    })
+
+                    this.partyObject.orderIncluded = tempArray
+                    this.partyObject.capital = tempArrayCapital
+                    this.partyObject.other = tempArrayOther
+                }
             },
             error => {this.httpService.errorHandler(error) }
         )

@@ -23,19 +23,22 @@ export class DepositComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
+    @Input() party : any = {}
 
     currentDepositId : number = 1
 
     depositForm: FormGroup
+    depositSearchForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
     isAddNew: boolean = true
 
     depositList : any[] = []
-    partyList : any[] = []
 
     unitList : any[] = []
+
+    totalBailAmount : number = 0
 
 
     depositTypeList : any[] = getEnum('BailType')
@@ -49,7 +52,7 @@ export class DepositComponent implements OnInit {
 
 
     pagination: any = {
-        pageSize : 20,
+        pageSize : 10000,
         pageNo : 1,
         total : 1
     }
@@ -67,7 +70,7 @@ export class DepositComponent implements OnInit {
 
 
     ngOnInit(): void {
-
+        this.createDepositSearchForm()
         this.getOrderUnitList()
         this.getDepositList()
         this.createDepositForm()
@@ -80,14 +83,32 @@ export class DepositComponent implements OnInit {
 
 
     getDepositList () {
-        this.hsOrderService.getDepositListByID(this.businessType, this.currentOrder.id).subscribe(
+        let query : any = {
+            pageSize: this.pagination.pageSize,
+            pageNo: this.pagination.pageNo
+        }
+
+        query = (<any>Object).assign(query, this.depositSearchForm.value)
+
+        console.log('Query: ', query)
+
+        this.hsOrderService.getDepositListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
                 this.depositList = data.data.results
 
+                if (Array.isArray(data.data.results)) {
+
+                    this.totalBailAmount = 0
+
+                    data.data.results.forEach( deposit => {
+                        this.totalBailAmount = this.totalBailAmount + deposit.bailAmount
+                    })
+                }
             },
             error => {this.httpService.errorHandler(error) }
         )
     }
+
 
     getOrderUnitList () {
         this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
@@ -107,6 +128,20 @@ export class DepositComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+    }
+
+
+    createDepositSearchForm(): void {
+
+        this.depositSearchForm = this.fb.group({
+            'hsId'    : ['' ],
+            'bailDateStart'    : [null ],
+            'bailDateEnd'    : [null ],
+            'bailType'    : ['' ],
+            'bailAmount'    : ['' ],
+            'openCompanyId'    : ['' ],
+            'receiverId'    : ['' ]
+        } )
     }
 
 

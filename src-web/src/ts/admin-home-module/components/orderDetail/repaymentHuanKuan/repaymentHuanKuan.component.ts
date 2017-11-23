@@ -24,6 +24,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
+    @Input() party : any = {}
 
     currentHuanKuanId : number = 1
 
@@ -39,8 +40,6 @@ export class RepaymentHuanKuanComponent implements OnInit {
     isAddNew: boolean = true
 
     repaymentHKList : any[] = []
-    partyList : any[] = []
-    partyListObject : any = {}
 
     unitList : any[] = []
     borrowDropDownList : any[] = []
@@ -91,9 +90,8 @@ export class RepaymentHuanKuanComponent implements OnInit {
 
 
         this.getOrderUnitList()
-        this.getPartyList()
         this.getRepaymentHKList()
-
+        this.getBorrowList()
 
 
 
@@ -156,24 +154,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
         )
     }
 
-    getPartyList () {
 
-        this.hsUserService.getPartyList().subscribe(
-            data => {
-                this.partyList = data.data.results
-
-                if (Array.isArray(data.data.results)) {
-                    data.data.results.forEach( (company) => {
-                        this.partyListObject[company.id] = company
-                    })
-                }
-
-                this.getBorrowList()
-
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-    }
 
     getBorrowList () {
         this.hsOrderService.getBorrowListUnfinishedByID(this.businessType, this.currentOrder.id).subscribe(
@@ -185,7 +166,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
                         if (borrow) {
                             this.borrowDropDownList.push ({
                                 id : borrow.id,
-                                name : 'ID:' + borrow.id + ' 借款日期:' + borrow.jiekuanDate.slice(0, 10) + ' 资金方:' + this.partyListObject[borrow.capitalId].name + ' | 借款金额:' + borrow.amount + ' 已还金额:' + borrow.huankuanTotal
+                                name : 'ID:' + borrow.id + ' 借款日期:' + borrow.jiekuanDate.slice(0, 10) + ' 资金方:' + this.party.object[borrow.capitalId].name + ' | 借款金额:' + borrow.amount + ' 已还金额:' + borrow.huankuanTotal
                             })
                         }
 
