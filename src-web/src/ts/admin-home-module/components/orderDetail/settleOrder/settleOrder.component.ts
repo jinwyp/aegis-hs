@@ -24,10 +24,12 @@ export class SettleOrderComponent implements OnInit {
     @Input() currentOrder : any
     @Input() businessType : string
     @Input() settleType : string = '' // ying : 1 settlesellerupstream 2 settlebuyerdownstream 3 settletraffic . // cang : 1 settlesellerdownstream 2 settlebuyerupstream
+    @Input() party : any = {}
 
     currentSettleId : number = 1
 
     settleForm: FormGroup
+    settleSearchForm: FormGroup
     ignoreDirty: boolean = false
 
     isShowForm: boolean = false
@@ -38,7 +40,6 @@ export class SettleOrderComponent implements OnInit {
     settleYingDownstreamList : any[] = []
     settleCangDownstreamList : any[] = []
 
-    partyList : any[] = []
 
     unitList : any[] = []
     unitListStat : any[] = []
@@ -49,7 +50,7 @@ export class SettleOrderComponent implements OnInit {
 
 
     pagination: any = {
-        pageSize : 20,
+        pageSize : 10000,
         pageNo : 1,
         total : 1
     }
@@ -79,8 +80,8 @@ export class SettleOrderComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.createSettleSearchForm()
         this.getOrderUnitList()
-        this.getPartyList()
         this.getSettleList()
         this.createSettleForm()
 
@@ -93,10 +94,18 @@ export class SettleOrderComponent implements OnInit {
 
 
     getSettleList () {
+        let query : any = {
+            pageSize: this.pagination.pageSize,
+            pageNo: this.pagination.pageNo
+        }
+
+        query = (<any>Object).assign(query, this.settleSearchForm.value)
+
+        console.log('Query: ', query)
 
         if (this.businessType === 'ying') {
             if (this.settleType === 'settlesellerupstream') {
-                this.hsOrderService.getSettleUpstreamListByID(this.businessType, this.settleType, this.currentOrder.id).subscribe(
+                this.hsOrderService.getSettleUpstreamListByID(this.businessType, this.settleType, this.currentOrder.id, query).subscribe(
                     data => {
                         this.settleYingUpstreamList = data.data.results
 
@@ -106,7 +115,7 @@ export class SettleOrderComponent implements OnInit {
             }
 
             if (this.settleType === 'settlebuyerdownstream') {
-                this.hsOrderService.getSettleDownstreamListByID(this.businessType, this.settleType, this.currentOrder.id).subscribe(
+                this.hsOrderService.getSettleDownstreamListByID(this.businessType, this.settleType, this.currentOrder.id, query).subscribe(
                     data => {
                         this.settleYingDownstreamList = data.data.results
 
@@ -117,7 +126,7 @@ export class SettleOrderComponent implements OnInit {
 
         } else {
             if (this.settleType === 'settlebuyerupstream') {
-                this.hsOrderService.getSettleUpstreamListByID(this.businessType, this.settleType, this.currentOrder.id).subscribe(
+                this.hsOrderService.getSettleUpstreamListByID(this.businessType, this.settleType, this.currentOrder.id, query).subscribe(
                     data => {
                         this.settleCangUpstreamList = data.data.results
 
@@ -127,7 +136,7 @@ export class SettleOrderComponent implements OnInit {
             }
 
             if (this.settleType === 'settlesellerdownstream') {
-                this.hsOrderService.getSettleDownstreamListByID(this.businessType, this.settleType, this.currentOrder.id).subscribe(
+                this.hsOrderService.getSettleDownstreamListByID(this.businessType, this.settleType, this.currentOrder.id, query).subscribe(
                     data => {
                         this.settleCangDownstreamList = data.data.results
 
@@ -139,7 +148,7 @@ export class SettleOrderComponent implements OnInit {
 
     }
 
-    getAddtionalInfo () {
+    getAdditionalInfo () {
         this.hsOrderService.getSettleUpstreamAdditionalInfo(this.businessType, this.currentOrder.id).subscribe(
             data => {
 
@@ -154,15 +163,6 @@ export class SettleOrderComponent implements OnInit {
         )
     }
 
-    getPartyList () {
-
-        this.hsUserService.getPartyList().subscribe(
-            data => {
-                this.partyList = data.data.results
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
-    }
 
     getOrderUnitList () {
 
@@ -205,6 +205,22 @@ export class SettleOrderComponent implements OnInit {
         )
     }
 
+
+    createSettleSearchForm(): void {
+
+        this.settleSearchForm = this.fb.group({
+            'hsId'    : ['' ],
+            'settleDateStart'    : [null ],
+            'settleDateEnd'    : [null ],
+            'amount'    : ['' ],
+            'money'    : ['' ],
+            'settleGap'    : ['' ],
+
+            'discountType'    : ['' ]
+        } )
+    }
+
+
     settleFormError : any = {}
     settleFormValidationMessages: any = {
         'hsId'  : {
@@ -215,11 +231,15 @@ export class SettleOrderComponent implements OnInit {
             'required'      : '请填写结算日期!'
         },
         'amount'  : {
-            'required'      : '请填写结算数量(吨)!'
+            'required'      : '请填写结算数量!'
         },
         'money'  : {
             'required'      : '请填写结算金额!'
         },
+        'settleGap'  : {
+            'required'      : '结算扣吨!'
+        },
+
 
         'discountType'  : {
             'required'      : '请填写折扣类型!'
@@ -232,10 +252,6 @@ export class SettleOrderComponent implements OnInit {
         },
         'discountAmount'  : {
             'required'      : '请填写折扣金额!'
-        },
-
-        'settleGap'  : {
-            'required'      : '结算扣吨!'
         }
 
     }
@@ -464,7 +480,7 @@ export class SettleOrderComponent implements OnInit {
             this.settleForm.patchValue(settle)
         }
 
-        this.getAddtionalInfo()
+        this.getAdditionalInfo()
 
         this.isShowForm = !this.isShowForm
     }

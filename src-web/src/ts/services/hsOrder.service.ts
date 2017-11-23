@@ -236,9 +236,16 @@ export class HSOrderService {
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/settleseller/allinfo')
     }
     getSettleUpstreamListByID(businessType : string, settleType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.settleDateStart) { params = params.append('settleDateStart', query.settleDateStart)}
+        if (query.settleDateEnd) { params = params.append('settleDateEnd', query.settleDateEnd)}
+        if (query.amount) { params = params.append('amount', query.amount)}
+        if (query.money) { params = params.append('money', query.money)}
+        if (query.settleGap) { params = params.append('settleGap', query.settleGap)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + settleType, {params: params} )
     }
@@ -253,9 +260,15 @@ export class HSOrderService {
     }
 
     getSettleDownstreamListByID(businessType : string, settleType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.settleDateStart) { params = params.append('settleDateStart', query.settleDateStart)}
+        if (query.settleDateEnd) { params = params.append('settleDateEnd', query.settleDateEnd)}
+        if (query.discountType) { params = params.append('discountType', query.discountType)}
+
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + settleType, {params: params} )
     }
