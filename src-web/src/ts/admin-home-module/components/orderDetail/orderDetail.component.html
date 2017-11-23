@@ -87,22 +87,22 @@
                     </div>
                     <div class="row mt-4">
                         <div class="col-4">
-                            <p class="card-text">主账务公司: {{currentOrder?.mainAccounting | findKey:partyList:'name' }}</p>
+                            <p class="card-text">主账务公司: {{currentOrder?.mainAccounting | findKey:partyObject.normal:'name' }}</p>
                         </div>
                         <div class="col-4">
-                            <p class="card-text">上游供应商: {{currentOrder?.upstreamId | findKey:partyList:'name' }}</p>
+                            <p class="card-text">上游供应商: {{currentOrder?.upstreamId | findKey:partyObject.normal:'name' }}</p>
                         </div>
                         <div class="col-4">
-                            <p class="card-text">下游客户: {{currentOrder?.downstreamId | findKey:partyList:'name' }}</p>
+                            <p class="card-text">下游客户: {{currentOrder?.downstreamId | findKey:partyObject.normal:'name' }}</p>
                         </div>
                         <div class="col-4">
-                            <p class="card-text">终端客户: {{currentOrder?.terminalClientId | findKey:partyList:'name' }}</p>
+                            <p class="card-text">终端客户: {{currentOrder?.terminalClientId | findKey:partyObject.normal:'name' }}</p>
                         </div>
                     </div>
 
                     <div class="row mt-4" *ngFor="let company of currentOrder?.orderPartyList">
                         <div class="col-12" >
-                            <p class="card-text">参与方公司: {{company.custType | customerType}} - {{company.customerId | findKey : partyList : 'name'}}</p>
+                            <p class="card-text">参与方公司: {{company.custType | customerType}} - {{company.customerId | findKey : partyObject.normal : 'name'}}</p>
                         </div>
                     </div>
 

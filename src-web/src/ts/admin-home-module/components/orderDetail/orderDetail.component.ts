@@ -38,6 +38,8 @@ export class OrderDetailComponent implements OnInit {
 
     departmentList : any[] = []
     teamList : any[] = []
+
+
     partyObject : any = {
         normal : [],
         object : {},
@@ -197,7 +199,7 @@ export class OrderDetailComponent implements OnInit {
                     data.data.forEach( user => {
                         tempResult.push ({
                             id : user.id,
-                            name : user.phone
+                            name : user.phone + ' ' + user.username
                         })
                     })
                 }
