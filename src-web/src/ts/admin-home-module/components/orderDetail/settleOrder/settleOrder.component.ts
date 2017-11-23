@@ -155,7 +155,7 @@ export class SettleOrderComponent implements OnInit {
                                 this.totalMoney = this.totalMoney + settle.money
                             })
                         }
-                        
+
                     },
                     error => {this.httpService.errorHandler(error) }
                 )

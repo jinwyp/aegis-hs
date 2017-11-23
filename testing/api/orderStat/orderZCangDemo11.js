@@ -726,6 +726,14 @@ describe('仓押订单 统计范例11 赵征提供 11.21日', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
 
 
+                expect(res.body.data.ccsProfile, '发运信息 - 瑞茂通总收益数据不对').to.equal(17970.07)
+
+                expect(res.body.data.totalCSSIntypeNumber, '进项票信息 - CCS已收到进项数量数据不对').to.equal(10102.70)
+                expect(res.body.data.totalCCSIntypeMoney, '进项票信息 - CCS已收到进项金额数据不对').to.equal(6031311.9)
+                expect(res.body.data.cssUninTypeNum, '进项票信息 - CCS未收到进项数量数据不对').to.equal(0)
+                // expect(res.body.data.cssUninTypeMoney, '进项票信息 - CCS未收到进项金额数据不对').to.equal(0)
+
+
                 expect(res.body.data.saleIncludeTaxTotalAmount, '毛利 - 销售含税总额数据不对').to.equal(6029076.57)
                 expect(res.body.data.purchaseIncludeTaxTotalAmount, '毛利 - 采购含税总额数据不对').to.equal(6011106.50)
 
@@ -740,10 +748,19 @@ describe('仓押订单 统计范例11 赵征提供 11.21日', function () {
                 expect(res.body.data.crossProfileATon, '毛利 - 单吨毛利数据不对').to.equal(-0.55)
 
 
-                expect(res.body.data.upstreamCapitalPressure, '上游资金占压数据不对').to.equal(0)
-                expect(res.body.data.downstreamCapitalPressure, '下游资金占压数据不对').to.equal(0)
-                expect(res.body.data.ownerCapitalPressure, '自有资金占压数据不对').to.equal(0)
-                expect(res.body.data.cangPrePayment, '预收款数据不对').to.equal(0)
+                expect(res.body.data.upstreamCapitalPressure, '占压 - 上游资金占压数据不对').to.equal(0)
+                expect(res.body.data.ownerCapitalPressure, '占压 - 自有资金占压数据不对').to.equal(0)
+
+                expect(res.body.data.downstreamCapitalPressure, '占压 - 下游资金占压数据不对').to.equal(0)
+                expect(res.body.data.cangPrePayment, '占压 - 预收款数据不对').to.equal(0)
+
+
+                expect(res.body.data.totalInstorageNum, '出入库 - 入库总数量数据不对').to.equal(10102.7)
+                expect(res.body.data.totalInstorageAmount, '出入库 - 入库总金额数据不对').to.equal(6011106.5)
+
+                expect(res.body.data.totalOutstorageNum, '出入库 - 已出库数量数据不对').to.equal(10102.7)
+                expect(res.body.data.instorageUnitPrice, '出入库 - 入库单价数据不对').to.equal(595)
+                expect(res.body.data.totalOutstorageMoney, '出入库 - 已出库金额数据不对').to.equal(6029076.57)
 
 
                 done()

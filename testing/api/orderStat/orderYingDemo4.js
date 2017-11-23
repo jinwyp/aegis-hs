@@ -1222,7 +1222,9 @@ describe('应收订单 统计范例4 赵征提供 11.14', function () {
                 expect(res.body.data.opreationCrossProfile, '毛利 - 经营毛利数据不对').to.equal(2595.94)
                 expect(res.body.data.crossProfileATon, '毛利 - 单吨毛利数据不对').to.equal(0.25)
 
-                expect(res.body.data.upstreamCapitalPressure, '占压 - 上游资金占压数据不对').to.equal(-120546.00)
+                expect(res.body.data.upstreamCapitalPressure, '占压 - 上游资金占压数据不对').to.equal(-100000)
+                expect(res.body.data.ownerCapitalPressure, '占压 - 自有资金占压数据不对').to.equal(-100000)
+
                 expect(res.body.data.downstreamCapitalPressure, '占压 - 下游资金占压数据不对').to.equal(100000.00)
                 expect(res.body.data.yingPrePayment, '占压 - 预收款数据不对').to.equal(-100000.00)
 
