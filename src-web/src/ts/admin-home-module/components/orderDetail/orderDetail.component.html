@@ -348,7 +348,7 @@
 
         <app-settle  *ngIf="currentTabIndex === 21 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerupstream'"></app-settle>
         <app-settle  *ngIf="currentTabIndex === 22 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerdownstream'"></app-settle>
-        <app-settletraffic  *ngIf="currentTabIndex === 23 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" ></app-settletraffic>
+        <app-settletraffic  *ngIf="currentTabIndex === 23 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-settletraffic>
 
         <app-settle  *ngIf="currentTabIndex === 21 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerupstream'"></app-settle>
         <app-settle  *ngIf="currentTabIndex === 22 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerdownstream'"></app-settle>

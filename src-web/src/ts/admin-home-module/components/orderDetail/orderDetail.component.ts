@@ -42,7 +42,8 @@ export class OrderDetailComponent implements OnInit {
         normal : [],
         object : {},
         orderIncluded : [],
-        capital : []
+        capital : [],
+        other : []
     }
 
     userList : any[] = []
@@ -151,6 +152,7 @@ export class OrderDetailComponent implements OnInit {
 
                     const tempArray = []
                     const tempArrayCapital = []
+                    const tempArrayOther = []
                     data.data.results.forEach( company => {
 
                         this.partyObject.object[company.id] = company
@@ -168,10 +170,16 @@ export class OrderDetailComponent implements OnInit {
                         if (company.partyType === 2 || company.id === this.currentOrder.mainAccounting) {
                             tempArrayCapital.push(company)
                         }
+
+                        if (company.partyType === 3) {
+                            tempArrayOther.push(company)
+                        }
+
                     })
 
                     this.partyObject.orderIncluded = tempArray
                     this.partyObject.capital = tempArrayCapital
+                    this.partyObject.other = tempArrayOther
                 }
             },
             error => {this.httpService.errorHandler(error) }

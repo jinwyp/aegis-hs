@@ -52,7 +52,7 @@ export class DepositComponent implements OnInit {
 
 
     pagination: any = {
-        pageSize : 20,
+        pageSize : 10000,
         pageNo : 1,
         total : 1
     }

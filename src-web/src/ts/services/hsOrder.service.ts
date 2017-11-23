@@ -270,9 +270,16 @@ export class HSOrderService {
     }
 
     getSettleTrafficListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
-        const params = new HttpParams()
+        let params = new HttpParams()
             .set('pageSize', query.pageSize)
             .set('pageNo', query.pageNo)
+
+        if (query.hsId) { params = params.append('hsId', query.hsId)}
+        if (query.settleDateStart) { params = params.append('settleDateStart', query.settleDateStart)}
+        if (query.settleDateEnd) { params = params.append('settleDateEnd', query.settleDateEnd)}
+        if (query.amount) { params = params.append('amount', query.amount)}
+        if (query.money) { params = params.append('money', query.money)}
+        if (query.trafficCompanyId) { params = params.append('trafficCompanyId', query.trafficCompanyId)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/settletraffic', {params: params} )
     }
