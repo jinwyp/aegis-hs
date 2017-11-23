@@ -46,6 +46,10 @@ export class SettleOrderComponent implements OnInit {
     unitListStatObject : any = {}
     unitListStatAdditionalInfoObject : any = {}
 
+    totalAmount : number = 0
+    totalMoney : number = 0
+
+
     settleDiscountModeList : any[] = getEnum('DiscountMode')
 
 
@@ -119,6 +123,17 @@ export class SettleOrderComponent implements OnInit {
                     data => {
                         this.settleYingDownstreamList = data.data.results
 
+                        if (Array.isArray(data.data.results)) {
+
+                            this.totalAmount = 0
+                            this.totalMoney = 0
+
+                            data.data.results.forEach( settle => {
+                                this.totalAmount = this.totalAmount + settle.amount
+                                this.totalMoney = this.totalMoney + settle.money
+                            })
+                        }
+
                     },
                     error => {this.httpService.errorHandler(error) }
                 )
@@ -130,6 +145,17 @@ export class SettleOrderComponent implements OnInit {
                     data => {
                         this.settleCangUpstreamList = data.data.results
 
+                        if (Array.isArray(data.data.results)) {
+
+                            this.totalAmount = 0
+                            this.totalMoney = 0
+
+                            data.data.results.forEach( settle => {
+                                this.totalAmount = this.totalAmount + settle.amount
+                                this.totalMoney = this.totalMoney + settle.money
+                            })
+                        }
+                        
                     },
                     error => {this.httpService.errorHandler(error) }
                 )

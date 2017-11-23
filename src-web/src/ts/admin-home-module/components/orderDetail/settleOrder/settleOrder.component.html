@@ -150,8 +150,8 @@
                     <th>核算月</th>
                     <th>结算日期</th>
                     <th>结算数量(吨)</th>
-                    <th>结算金额</th>
-                    <th>结算扣吨</th>
+                    <th>结算金额(元)</th>
+                    <th>结算扣吨(吨)</th>
 
                     <th></th>
                 </tr>
@@ -186,6 +186,8 @@
                         <button class="btn btn-link btn-sm" (click)="deleteItem(settle)"> 删除 </button>
                     </td>
                 </tr>
+
+                <tr> <td colspan="7"> 累计结算数量: {{totalAmount}} - 累计结算金额: {{totalMoney}}</tr>
 
                 </tbody>
             </table>
