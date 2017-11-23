@@ -3,6 +3,7 @@ package com.yimei.hs.same.mapper;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.same.dto.PageFukuanDTO;
 import com.yimei.hs.same.entity.Fukuan;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface FukuanMapper {
     Page<Fukuan> getPage(PageFukuanDTO pageFukuanDTO);
 
     List<Fukuan> getunTradeDeficittlist(Long orderId);
+
+    List<Fukuan> getListByOrderIdAndHsId(@Param("orderId") Long orderId, @Param("hsId") Long hsId);
 }

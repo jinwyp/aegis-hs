@@ -34,4 +34,6 @@ public interface HuikuanMapper {
     List<Huikuan> getUnfinshedByOrderId(Long orderId);
 
     List<Fukuan> getFukuanListByHuikuanId(Long huikuanId);
+
+    List<Huikuan> gelistByhsIdAndOrderId(@Param("orderId") Long orderId, @Param("hsId") Long hsId);
 }

@@ -71,6 +71,8 @@
             <if test="hsId!=null">AND t1.hsId=#{hsId}</if>
             <if test="huankuanDate!=null">AND t1.huankuanDate=#{huankuanDate}</if>
             <if test="promise!=null">AND t1.promise=#{promise}</if>
+            <if test="huankuankDateStart!=null">  <![CDATA[   AND DATE_FORMAT(tsc, '%Y-%m-%d')>=  DATE_FORMAT(#{huankuankDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="huankuankDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(tsc, '%Y-%m-%d') <= DATE_FORMAT(#{huankuankDateEnd}, '%Y-%m-%d')]]></if>
         </where>
     </select>
 

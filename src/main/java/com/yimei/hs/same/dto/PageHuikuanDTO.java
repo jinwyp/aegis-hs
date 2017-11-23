@@ -25,6 +25,9 @@ public class PageHuikuanDTO extends BaseFilter<PageHuikuanDTO> {
     private PayMode huikuanMode;
     private BigDecimal huikuanAmount;
     private ReceivePaymentPurpose huikuanUsage;
+     private LocalDateTime huikuanDateStart;    // 回款起始日期,
+    private LocalDateTime  huikuanDateEnd; //    回款终止日期,
+
 
 
 

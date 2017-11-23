@@ -15,8 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.Null;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Created by hary on 2017/9/15.
@@ -90,14 +94,27 @@ public class HuikuanService {
      */
     @Transactional(readOnly = false)
     public int create(Huikuan huikuan) {
+        int rtn = 0;
 
         Long huikuanCompanyId=orderMapper.selectByPrimaryKey(huikuan.getOrderId()).getDownstreamId();
         huikuan.setHuikuanCompanyId(huikuanCompanyId);
-        // 1. 插入回款记录
-        int rtn = huikuanMapper.insert(huikuan);
 
-        // 2. 触发建立 回款-还款映射
-        this.createMapping(huikuan.getOrderId());
+        LocalDateTime currentTime = huikuan.getHuikuanDate();
+        List<Huikuan> huikuanList=huikuanMapper.gelistByhsIdAndOrderId(huikuan.getOrderId(),huikuan.getHsId());
+
+        List<Huikuan> isNull = (huikuanList == null ? null : huikuanList.stream().filter(h -> currentTime.isBefore(h.getHuikuanDate())).collect(toList()));
+
+        if (isNull != null  && isNull.size() > 0) {
+
+            // 1. 删除回款明细
+            huikuanMapMapper.deleteByOrderId(huikuan.getOrderId());
+
+        }
+            // 1. 插入回款记录
+            rtn = huikuanMapper.insert(huikuan);
+            // 2. 触发建立 回款-还款映射
+            this.createMapping(huikuan.getOrderId());
+
 
         return rtn;
     }

@@ -113,7 +113,7 @@
         FROM
             hs_same_huikuan_map
         WHERE
-            fukuanId = #{fukuanId, jdbcType=BIGINT} and deleted=0;
+            fukuanId = #{fukuanId, jdbcType=BIGINT} and deleted=0
     </select>
     <select id="getListByHuikuanId" resultType="com.yimei.hs.same.entity.HuikuanMap">
         SELECT

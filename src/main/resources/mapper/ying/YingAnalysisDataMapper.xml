@@ -842,9 +842,9 @@ base.hsId,
 case  when seller.orderId is not null and seller.hsId is not null
 then
 IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)
-- IFNULL(v_1001.totalTradeGapFee,0.00)-IFNULL(v_1001.totalPayTrafficFee,0.00)
+-IFNULL(v_1001.totalPayTrafficFee,0.00)
 else IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)
-       - IFNULL(v_1001.totalTradeGapFee,0.00)
+
 end
 as upstreamCapitalPressure
 from base
@@ -864,9 +864,9 @@ base.hsId,
 case  when seller.orderId is not null and seller.hsId is not null
 then
 IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)
-- IFNULL(v_1001.totalTradeGapFee,0.00)-IFNULL(v_1001.totalPayTrafficFee,0.00)
+- IFNULL(v_1001.totalPayTrafficFee,0.00)
 else IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)
-       - IFNULL(v_1001.totalTradeGapFee,0.00)
+
 end
 as upstreamCapitalPressure
 from base

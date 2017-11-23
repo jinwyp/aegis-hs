@@ -34,6 +34,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,8 +98,14 @@ public class YingIntegrationA extends HsTestBase {
     @Test
     public void yingIntegration() throws Exception {
         System.out.println("开始应收集成测试");
+        LocalDateTime  startTime = LocalDateTime.now();
+        LocalDateTime  endTime = LocalDateTime.of(2017, 11, 22, 21, 00);
+//        Duration duration = java.time.Duration.between(startTime,  endTime );
+//        Duration duration2 = java.time.Duration.between(endTime,  startTime );
 
-
+        System.out.println("day：" + endTime.compareTo(startTime)+"  isbefore "+endTime.isBefore(startTime));
+        System.out.println("day：" + startTime.compareTo(endTime)+"  isbefore "+startTime.isBefore(endTime));
+//        java.time.Duration.
 //        defaultUser();
 //        order();
 //        config();
@@ -1237,5 +1244,14 @@ public class YingIntegrationA extends HsTestBase {
 //            System.exit(-1);
 //        }
 
+    }
+
+
+
+    public  static  boolean timeCompare(LocalDateTime startTime,LocalDateTime endTime){
+        Duration duration = java.time.Duration.between(startTime,  endTime );
+//        if (duration.toMillis()>1) {
+//        }
+        return false;
     }
 }

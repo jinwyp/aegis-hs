@@ -35,7 +35,7 @@ public class YingBail implements Serializable {
     @Null(groups = {UpdateGroup.class}, message = "发运吨数不能更新")
     private BigDecimal bailAmount;
 
-    @NotNull(groups = {CreateGroup.class}, message = "到场状态不能为空")
+    @NotNull(groups = {CreateGroup.class}, message = "保证金类型不能为空")
     private BailType bailType;
 
     @NotNull(groups = {CreateGroup.class}, message = "开票单位不能为空")

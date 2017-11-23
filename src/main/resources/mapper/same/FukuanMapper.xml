@@ -124,9 +124,14 @@
     <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.Fukuan">
 
         SELECT  <include refid="Base_Column_List"/>
-         FROM hs_same_fukuan fukuan
-        WHERE fukuan.id = #{id,jdbcType=BIGINT} and fukuan.deleted =1
+         FROM hs_same_fukuan
+        WHERE id = #{id,jdbcType=BIGINT} and deleted =1
 
+    </select>
+    <select id="getListByOrderIdAndHsId" resultType="com.yimei.hs.same.entity.Fukuan">
+        SELECT  <include refid="Base_Column_List"/>
+        FROM hs_same_fukuan
+        WHERE orderId = #{orderId,jdbcType=BIGINT} and hsId =   #{hsId,jdbcType=BIGINT} and deleted =0
     </select>
 
     <!-- 物理删除 -->

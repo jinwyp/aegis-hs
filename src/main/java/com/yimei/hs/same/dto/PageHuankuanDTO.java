@@ -20,5 +20,8 @@ public class PageHuankuanDTO extends BaseFilter<PageHuankuanDTO> {
     private Long hsId;
     private LocalDateTime huankuanDate;
     private BigDecimal huankuanPrincipal;
+    private LocalDateTime huankuankDateStart ;  //还款起始日期
+    private LocalDateTime huankuankDateEnd   ; // 还款结束日期
+
     private Boolean promise;
 }

@@ -121,6 +121,8 @@
             <if test="huikuanDate!=null">AND huikuanDate=#{huikuanDate}</if>
             <if test="huikuanAmount!=null">AND huikuanAmount=#{huikuanAmount}</if>
             <if test="huikuanUsage!=null">AND huikuanUsage=#{huikuanUsage}</if>
+            <if test="huikuanDateStart!=null">  <![CDATA[   AND DATE_FORMAT(tsc, '%Y-%m-%d')>=  DATE_FORMAT(#{huikuanDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="huikuanDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(tsc, '%Y-%m-%d') <= DATE_FORMAT(#{huikuanDateEnd}, '%Y-%m-%d')]]></if>
         </where>
         order by huikuanDate asc
     </select>
@@ -218,6 +220,12 @@
         FROM hs_same_huikuan
         WHERE id = #{id,jdbcType=BIGINT} and deleted=1
     </select>
+    <select id="gelistByhsIdAndOrderId" resultType="com.yimei.hs.same.entity.Huikuan">
+        SELECT  <include refid="Base_Column_List"/>
+        FROM hs_same_huikuan
+        WHERE orderId = #{orderId,jdbcType=BIGINT} and hsId = #{hsId,jdbcType=BIGINT} and deleted=0
+    </select>
+
 
     <!-- 物理删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

@@ -11,8 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Created by hary on 2017/9/15.
@@ -155,8 +158,16 @@ public class FukuanService {
     @Transactional(readOnly = false)
     public int create(Fukuan fukuan) {
 
+        List<Fukuan> fukuanList = fukuanMapper.getListByOrderIdAndHsId(fukuan.getOrderId(),fukuan.getHsId());
+        LocalDateTime createDateTime = fukuan.getPayDate();
+        List<Fukuan> isNull = (fukuanList == null ? null : fukuanList.stream().filter(fukuans -> createDateTime.isBefore(fukuans.getPayDate())).collect(toList()));
         // 1. 插入付款记录
         int rtn = fukuanMapper.insert(fukuan);
+        if (isNull != null && isNull.size() > 0) {
+            // 1. 删除订单的所有 回款-付款 映射
+            huikuanMapMapper.deleteByOrderId(fukuan.getOrderId());
+        }
+
 
         // 2. 触发回款对应
         fukuan.setHuikuanTotal(BigDecimal.ZERO);

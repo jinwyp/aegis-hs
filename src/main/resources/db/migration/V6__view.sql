@@ -667,11 +667,11 @@ create view v_1050_cang as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1044_cang.saleCargoAmountofMoney,0.00)-IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00),2)as downstreamCapitalPressure
+ROUND(IFNULL(v_3003.totalOutstorageMoney,0.00)-IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00),2)as downstreamCapitalPressure
 from base
-     left join v_1044_cang on base.hsId =v_1044_cang.hsId
-     left join v_1013 on v_1044_cang.hsId=v_1013.hsId
-     left join v_2008 on v_1044_cang.hsId=v_2008.hsId;
+     left join v_3003 on base.hsId =v_3003.hsId
+     left join v_1013 on base.hsId= v_1013.hsId;
+ 
 
 
 --1051 CCS未收到进项数量	cssUninTypeNum	计算	备查账	【1040】核算结算量 - 【1037】CCS已收进项数量

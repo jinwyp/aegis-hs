@@ -110,6 +110,13 @@ public class HuankuanController {
                 || huankuanMaps.size() == 0) {
             return Result.error(4001, "借款不能为空");
         } else if (huankuanMaps!=null) {
+
+            for (HuankuanMap huankuanMap : huankuanMaps) {
+                if (huankuanMap.getJiekuanId() == null) {
+                    return Result.error(4001, "借款款id不能为空");
+                }
+            }
+
             Map<Long, List<HuankuanMap>> huankuanmaps = huankuanMaps.stream().collect(groupingBy(HuankuanMap::getJiekuanId));
 
             for (Long id:huankuanmaps.keySet()) {
