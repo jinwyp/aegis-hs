@@ -215,12 +215,30 @@
                             <p *ngIf="businessType==='cang'" class="card-text" title="IF（【1013】已回款金额>【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额">预收款: {{ unitStatistics?.cangPrePayment | number }}</p>
                         </div>
 
+
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位">库存占压 - 在途库存数量: {{ unitStatistics?.totalInstorageTranitNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库金额">库存占压 - 在途库存金额: {{ unitStatistics?.totalInstorageTranitPrice | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位">库存占压 - 剩余库存数量: {{ unitStatistics?.totalInstorageRemainNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库金额">库存占压 - 剩余库存金额: {{ unitStatistics?.totalInstorageRemainPrice | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位">库存占压 - 合计数量: {{ unitStatistics?.totalSumInstorageNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库金额">库存占压 - 合计金额: {{ unitStatistics?.totalSumInstoragePrice | number }}</p>
+                        </div>
                     </div>
 
                 </div>
 
             </div>
-
 
 
 

@@ -740,10 +740,12 @@ describe('仓押订单 统计范例11 赵征提供 11.21日', function () {
                 expect(res.body.data.crossProfileATon, '毛利 - 单吨毛利数据不对').to.equal(-0.55)
 
 
-                expect(res.body.data.upstreamCapitalPressure, '上游资金占压数据不对').to.equal(0)
-                expect(res.body.data.downstreamCapitalPressure, '下游资金占压数据不对').to.equal(0)
-                expect(res.body.data.ownerCapitalPressure, '自有资金占压数据不对').to.equal(0)
-                expect(res.body.data.cangPrePayment, '预收款数据不对').to.equal(0)
+                expect(res.body.data.upstreamCapitalPressure, '占压 - 上游资金占压数据不对').to.equal(0)
+                expect(res.body.data.ownerCapitalPressure, '占压 - 自有资金占压数据不对').to.equal(0)
+
+                expect(res.body.data.downstreamCapitalPressure, '占压 - 下游资金占压数据不对').to.equal(0)
+                expect(res.body.data.cangPrePayment, '占压 - 预收款数据不对').to.equal(0)
+
 
 
                 done()
