@@ -4,8 +4,10 @@ import com.yimei.hs.boot.persistence.BaseFilter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -24,6 +26,12 @@ public class PageSettleBuyerDTO extends BaseFilter<PageSettleBuyerDTO> {
     private BigDecimal amount;
     private BigDecimal money;
     private BigDecimal settleGap;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate settleDateStart;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate settleDateEnd;
 
 
 }

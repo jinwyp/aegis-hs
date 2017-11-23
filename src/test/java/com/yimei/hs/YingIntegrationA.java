@@ -775,7 +775,7 @@ public class YingIntegrationA extends HsTestBase {
             hukuanMapList.add(map);
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
-            setHuankuankDate(stringToTime("2017-7-26"));
+            setHuankuanDate(stringToTime("2017-7-26"));
             setHuankuanMapList(hukuanMapList);
 
         }};
@@ -890,7 +890,7 @@ public class YingIntegrationA extends HsTestBase {
 
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
-            setHuankuankDate(stringToTime("2017-7-26"));
+            setHuankuanDate(stringToTime("2017-7-26"));
 
 
         }};
@@ -924,7 +924,7 @@ public class YingIntegrationA extends HsTestBase {
         map.setJiekuanId(jiekuan2.getId());
         hukuanMapList2.add(map);
         huankuan.setHuankuanMapList(hukuanMapList2);
-        huankuan.setHuankuankDate(stringToTime("20170809"));
+        huankuan.setHuankuanDate(stringToTime("20170809"));
         huankuanCreateResult = client.exchange(huankuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huankuan), typeReferenceHuankuan).getBody();
 
     }

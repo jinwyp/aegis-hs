@@ -5,8 +5,10 @@ import com.yimei.hs.enums.BailType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -23,4 +25,8 @@ public class PageYingBailDTO extends BaseFilter<PageYingBailDTO>{
     private BailType bailType;
     private Long openCompanyId;
     private Long receiverId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate bailDateStart;
+     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate bailDateEnd;
 }

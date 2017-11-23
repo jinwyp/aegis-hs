@@ -33,7 +33,7 @@ public class Huankuan implements Serializable {
     private Long hsId;
 
     @NotNull(groups = {CreateGroup.class}, message = "还款日期不能为空")
-    private LocalDateTime huankuankDate;
+    private LocalDateTime huankuanDate;
 
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;

@@ -5,7 +5,7 @@
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="orderId" jdbcType="BIGINT" property="orderId"/>
         <result column="hsId" jdbcType="BIGINT" property="hsId"/>
-        <result column="huankuankDate" jdbcType="TIMESTAMP" property="huankuankDate"/>
+        <result column="huankuanDate" jdbcType="TIMESTAMP" property="huankuanDate"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
         <result column="promise" jdbcType="TINYINT" property="promise"/>
     </resultMap>
@@ -23,7 +23,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, huankuankDate, deleted, tsc, tsu
+        id, orderId, hsId, huankuanDate, deleted, tsc, tsu
     </sql>
 
     <!-- 获取还款记录, 以及还款记录对应的还款明细集合， 以及对应的借款集合-->
@@ -33,7 +33,7 @@
             t1.orderId,
             t1.hsId,
             t1.promise,
-            t1.huankuankDate,
+            t1.huankuanDate,
             t1.tsc,
 
             map.principal ,
@@ -58,21 +58,21 @@
     <!--获取一页数据, 需要手动关联还款记录对应的还款明细集合， 以及对应的借款集合-->
     <select id="getPage" resultType="com.yimei.hs.same.entity.Huankuan">
         select
-        t1.id,
-        t1.orderId,
-        t1.hsId,
-        t1.promise,
-        t1.huankuankDate,
-        t1.tsc
-        from hs_same_huankuan t1
+        id,
+        orderId,
+        hsId,
+        promise,
+        huankuanDate,
+        tsc
+        from hs_same_huankuan
         <where>
-            <if test="true">AND t1.deleted = 0</if>
-            <if test="orderId!=null">AND t1.orderId=#{orderId}</if>
-            <if test="hsId!=null">AND t1.hsId=#{hsId}</if>
-            <if test="huankuanDate!=null">AND t1.huankuanDate=#{huankuanDate}</if>
-            <if test="promise!=null">AND t1.promise=#{promise}</if>
-            <if test="huankuankDateStart!=null">  <![CDATA[   AND DATE_FORMAT(tsc, '%Y-%m-%d')>=  DATE_FORMAT(#{huankuankDateStart}, '%Y-%m-%d')   ]]></if>
-            <if test="huankuankDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(tsc, '%Y-%m-%d') <= DATE_FORMAT(#{huankuankDateEnd}, '%Y-%m-%d')]]></if>
+            <if test="true">AND deleted = 0</if>
+            <if test="orderId!=null">AND orderId=#{orderId}</if>
+            <if test="hsId!=null">AND hsId=#{hsId}</if>
+            <if test="huankuanDate!=null">AND huankuanDate=#{huankuanDate}</if>
+            <if test="promise!=null">AND promise=#{promise}</if>
+            <if test="huankuanDateStart!=null">  <![CDATA[   AND DATE_FORMAT(huankuanDate, '%Y-%m-%d')>=  DATE_FORMAT(#{huankuanDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="huankuanDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(huankuanDate, '%Y-%m-%d') <= DATE_FORMAT(#{huankuanDateEnd}, '%Y-%m-%d')]]></if>
         </where>
     </select>
 
@@ -82,7 +82,7 @@
             huankuan.id,
             huankuan.orderId,
             huankuan.hsId,
-            huankuan.huankuankDate,
+            huankuan.huankuanDate,
             huankuan.tsc,
             huankuan.tsu,
             huankuan.promise
@@ -116,7 +116,7 @@
             id,
             orderId,
             hsId,
-            huankuankDate,
+            huankuanDate,
             promise,
             tsc
         )
@@ -124,7 +124,7 @@
             #{id,jdbcType=BIGINT},
             #{orderId,jdbcType=BIGINT},
             #{hsId,jdbcType=BIGINT},
-            #{huankuankDate,jdbcType=TIMESTAMP},
+            #{huankuanDate,jdbcType=TIMESTAMP},
             #{promise,jdbcType=TINYINT},
             current_timestamp
         )
@@ -137,14 +137,14 @@
             <if test="id != null">id,</if>
             <if test="orderId != null">orderId,</if>
             <if test="hsId != null">hsId,</if>
-            <if test="huankuankDate != null">huankuankDate,</if>
+            <if test="huankuanDate != null">huankuanDate,</if>
             <if test="promise != null">promise</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id,jdbcType=BIGINT},</if>
             <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
-            <if test="huankuankDate != null">#{huankuankDate,jdbcType=TIMESTAMP},</if>
+            <if test="huankuanDate != null">#{huankuanDate,jdbcType=TIMESTAMP},</if>
             <if test="promise != null">#{tsc,jdbcType=TINYINT}</if>
         </trim>
     </insert>
@@ -154,7 +154,7 @@
         <set>
             <if test="orderId != null">orderId = #{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
-            <if test="huankuankDate != null">huankuankDate = #{huankuankDate,jdbcType=TIMESTAMP},</if>
+            <if test="huankuanDate != null">huankuanDate = #{huankuanDate,jdbcType=TIMESTAMP},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
             <if test="promise != null">promise=#{promise,jdbcType=TINYINT},</if>
             <if test="true">tsu = current_timestamp</if>
@@ -167,7 +167,7 @@
         UPDATE hs_same_huankuan
         SET orderId       = #{orderId,jdbcType=BIGINT},
             hsId          = #{hsId,jdbcType=BIGINT},
-            huankuankDate = #{huankuankDate,jdbcType=TIMESTAMP},
+            huankuanDate = #{huankuanDate,jdbcType=TIMESTAMP},
             promise=#{tsc,jdbcType=TINYINT},
             tsu           = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}

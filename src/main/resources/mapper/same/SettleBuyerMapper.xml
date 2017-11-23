@@ -33,10 +33,12 @@
             <if test="true">AND deleted = 0</if>
             <if test="orderId!=null">AND orderId = #{orderId, jdbcType=BIGINT}</if>
             <if test="hsId!=null">AND hsId = #{hsId, jdbcType=BIGINT}</if>
-            <if test="settleDate!=null">AND settleDate = #{settleDate, jdcbType=TIMESTAMP}</if>
-            <if test="amount!=null">AND amount = #{amount, jdcbType=DECIMAL}</if>
-            <if test="money!=null">AND money = #{money, jdcbType=DECIMAL}</if>
-            <if test="settleGap!=null">AND settleGap = #{settleGap, jdcbType=DECIMAL}</if>
+            <if test="settleDate!=null">AND settleDate = #{settleDate, jdbcType=TIMESTAMP}</if>
+            <if test="amount!=null">AND amount = #{amount, jdbcType=DECIMAL}</if>
+            <if test="money!=null">AND money = #{money, jdbcType=DECIMAL}</if>
+            <if test="settleGap!=null">AND settleGap = #{settleGap, jdbcType=DECIMAL}</if>
+            <if test="settleDateStart!=null">  <![CDATA[   AND DATE_FORMAT(settleDate, '%Y-%m-%d')>=  DATE_FORMAT(#{settleDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="settleDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(settleDate, '%Y-%m-%d') <= DATE_FORMAT(#{settleDateEnd}, '%Y-%m-%d')]]></if>
         </where>
     </select>
     <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.SettleBuyer">

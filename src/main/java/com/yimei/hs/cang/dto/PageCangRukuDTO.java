@@ -16,10 +16,17 @@ public class PageCangRukuDTO extends BaseFilter<PageCangRukuDTO> {
 
     private Long orderId;
     private Long hsId;
+
     private LocalDateTime rukuDate;
     private InStorageStatus rukuStatus;
     private BigDecimal rukuPrice;
     private String locality;
     private TrafficMode trafficMode;
     private BigDecimal rukuAmount;
+
+    private LocalDateTime rukuDateStart;//    : 入库起始日期
+    private LocalDateTime rukuDateEnd;//  : 入库结束日期,'
+
+
+
 }

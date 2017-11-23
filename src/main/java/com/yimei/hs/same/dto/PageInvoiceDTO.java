@@ -6,7 +6,9 @@ import com.yimei.hs.enums.InvoiceType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -24,16 +26,19 @@ public class PageInvoiceDTO extends BaseFilter<PageInvoiceDTO> {
 
     private InvoiceType invoiceType;
 
-    private LocalDateTime openDateStart;
-    private LocalDateTime openDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate openDateStart;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate  openDate;
 
-    private LocalDateTime openDateEnd;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate  openDateEnd;
 
     private Long openCompanyId;
 
     private Long receiverId;
 
-    InvoiceDirection invoiceDirection;
+    private InvoiceDirection invoiceDirection;
 
 
 

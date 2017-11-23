@@ -5,8 +5,10 @@ import com.yimei.hs.enums.FeeClass;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -31,6 +33,12 @@ public class PageJiekuanDTO extends BaseFilter<PageJiekuanDTO> {
     private Integer useDays;
 
     private LocalDateTime jiekuanDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate jiekuanDateStart;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate jiekuanDateEnd;
 
 
 

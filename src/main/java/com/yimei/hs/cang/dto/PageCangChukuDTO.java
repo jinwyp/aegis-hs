@@ -19,5 +19,7 @@ public class PageCangChukuDTO extends BaseFilter<PageCangChukuDTO> {
     private BigDecimal chukuPrice;
 //    private String locality;
     private BigDecimal chukuAmount;
+    private LocalDateTime chukuDateStart;//  出库起始日期,
+    private LocalDateTime chukuDateEnd;//    出库结束日期,
 
 }

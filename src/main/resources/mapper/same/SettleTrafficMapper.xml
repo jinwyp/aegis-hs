@@ -34,6 +34,8 @@
             <if test="amount != null">AND amount=#{amount,jdbcType=DECIMAL}</if>
             <if test="money != null">AND money=#{money,jdbcType=DECIMAL}</if>
             <if test="settleDate != null">AND settleDate= #{settleDate,jdbcType=DATE}</if>
+            <if test="settleDateStart!=null">  <![CDATA[   AND DATE_FORMAT(settleDate, '%Y-%m-%d')>=  DATE_FORMAT(#{settleDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="settleDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(settleDate, '%Y-%m-%d') <= DATE_FORMAT(#{settleDateEnd}, '%Y-%m-%d')]]></if>
         </where>
     </select>
     <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.SettleTraffic">

@@ -4,8 +4,10 @@ import com.yimei.hs.boot.persistence.BaseFilter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -20,8 +22,11 @@ public class PageHuankuanDTO extends BaseFilter<PageHuankuanDTO> {
     private Long hsId;
     private LocalDateTime huankuanDate;
     private BigDecimal huankuanPrincipal;
-    private LocalDateTime huankuankDateStart ;  //还款起始日期
-    private LocalDateTime huankuankDateEnd   ; // 还款结束日期
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate huankuanDateStart ;  //还款起始日期
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate huankuanDateEnd   ; // 还款结束日期
 
     private Boolean promise;
 }
