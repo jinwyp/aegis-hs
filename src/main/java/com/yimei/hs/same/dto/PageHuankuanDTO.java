@@ -23,10 +23,10 @@ public class PageHuankuanDTO extends BaseFilter<PageHuankuanDTO> {
     private LocalDateTime huankuanDate;
     private BigDecimal huankuanPrincipal;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate huankuankDateStart ;  //还款起始日期
+    private LocalDate huankuanDateStart ;  //还款起始日期
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate huankuankDateEnd   ; // 还款结束日期
+    private LocalDate huankuanDateEnd   ; // 还款结束日期
 
     private Boolean promise;
 }
