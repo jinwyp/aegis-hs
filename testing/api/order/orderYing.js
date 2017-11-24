@@ -21,7 +21,7 @@ describe('应收订单', function () {
     let orderId = config.order.getOrderYingId
     let delOrderId = config.order.delOrderYingId
 
-    let unitId = 1
+    let unitId = config.order.getOrderYingUnitId
     let delUnitId = 3
 
     before(function (done) {
@@ -353,6 +353,7 @@ describe('应收订单', function () {
                 expect(res.body.data.hsMonth, '返回的数据data对象的hsMonth属性错误').to.include('201709')
 
                 unitId = res.body.data.id
+                config.order.getOrderYingUnitId = res.body.data.id
                 done()
             })
     })

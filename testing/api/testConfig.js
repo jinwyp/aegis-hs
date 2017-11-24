@@ -47,6 +47,7 @@ exports.user = {
 
 exports.order = {
     getOrderYingId : 1,
+    getOrderYingUnitId : 1,
     delOrderYingId : 3,
     getOrderCangId : 9,
     delOrderCangId : 11

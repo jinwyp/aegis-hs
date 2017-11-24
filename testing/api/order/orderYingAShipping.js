@@ -21,6 +21,12 @@ describe('应收订单 发运单:', function () {
 
     let Authorization = ''
 
+    let orderId = config.order.getOrderYingId
+
+    let shippingId = 1
+    let delShippingId = 3
+
+
     before(function (done) {
 
         server.post('/api/login')
@@ -40,8 +46,8 @@ describe('应收订单 发运单:', function () {
 
 
 
-    it('发运单 - 新建发运单1 POST: /api/business/ying/1/fayuns', function (done) {
-        server.post('/api/business/ying/1/fayuns')
+    it(`发运单 - 新建发运单1 POST: /api/business/ying/${orderId}/fayuns`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fayuns`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -57,7 +63,7 @@ describe('应收订单 发运单:', function () {
                 "downstreamCars"        : "",
                 "downstreamJHH"         : "",
                 "downstreamShip"        : "x1000",
-                "orderId"               : 1
+                "orderId"               : orderId
             })
             .expect('Content-Type', /json/)
             .expect(200)
@@ -67,12 +73,14 @@ describe('应收订单 发运单:', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.fyDate).to.include('2017')
+
+                shippingId = res.body.data.id
                 done()
             })
     })
 
-    it('发运单 - 新建发运单2 POST: /api/business/ying/1/fayuns', function (done) {
-        server.post('/api/business/ying/1/fayuns')
+    it(`发运单 - 新建发运单2 POST: /api/business/ying/${orderId}/fayuns`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fayuns`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -88,7 +96,7 @@ describe('应收订单 发运单:', function () {
                 "downstreamCars"        : "",
                 "downstreamJHH"         : "",
                 "downstreamShip"        : "x1003",
-                "orderId"               : 1
+                "orderId"               : orderId
             })
             .expect('Content-Type', /json/)
             .expect(200)
@@ -98,12 +106,14 @@ describe('应收订单 发运单:', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
                 expect(res.body.data.fyDate).to.include('2017')
+
+                delShippingId = res.body.data.id
                 done()
             })
     })
 
-    it('发运单 - 新建发运单 非法输入不存在的核算单元ID hsId:99999, POST: /api/business/ying/1/fayuns', function (done) {
-        server.post('/api/business/ying/1/fayuns')
+    it(`发运单 - 新建发运单 非法输入不存在的核算单元ID hsId:99999, POST: /api/business/ying/${orderId}/fayuns`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fayuns`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
@@ -119,7 +129,7 @@ describe('应收订单 发运单:', function () {
                 "downstreamCars"        : "",
                 "downstreamJHH"         : "",
                 "downstreamShip"        : "x1003",
-                "orderId"               : 1
+                "orderId"               : orderId
             })
             .expect('Content-Type', /json/)
             .expect(400)
@@ -131,8 +141,8 @@ describe('应收订单 发运单:', function () {
             })
     })
 
-    it('发运单 - 获取应收订单发运单列表 GET: /api/business/ying/1/fayuns?pageNo=1&pageSize=2', function (done) {
-        server.get('/api/business/ying/1/fayuns?pageNo=1&pageSize=2')
+    it(`发运单 - 获取应收订单发运单列表 GET: /api/business/ying/${orderId}/fayuns?pageNo=1&pageSize=2`, function (done) {
+        server.get(`/api/business/ying/${orderId}/fayuns?pageNo=1&pageSize=2`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -148,8 +158,8 @@ describe('应收订单 发运单:', function () {
             })
     })
 
-    it('发运单 - 获取某个ID的发运单信息 GET: /api/business/ying/1/fayuns/1', function (done) {
-        server.get('/api/business/ying/1/fayuns/1')
+    it(`发运单 - 获取某个ID的发运单信息 GET: /api/business/ying/${orderId}/fayuns/${shippingId}`, function (done) {
+        server.get(`/api/business/ying/${orderId}/fayuns/${shippingId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .expect('Content-Type', /json/)
@@ -164,8 +174,8 @@ describe('应收订单 发运单:', function () {
             })
     })
 
-    it('发运单 - 修改某个ID的发运单 PUT: /api/business/ying/1/fayuns/1', function (done) {
-        server.put('/api/business/ying/1/fayuns/1')
+    it(`发运单 - 修改某个ID的发运单 PUT: /api/business/ying/${orderId}/fayuns/${shippingId}`, function (done) {
+        server.put(`/api/business/ying/${orderId}/fayuns/${shippingId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send(
@@ -182,7 +192,7 @@ describe('应收订单 发运单:', function () {
                     "downstreamCars"        : "",
                     "downstreamJHH"         : "",
                     "downstreamShip"        : "x3000",
-                    "orderId"               : 1
+                    "orderId"               : orderId
                 }
             )
             .expect('Content-Type', /json/)
@@ -195,8 +205,8 @@ describe('应收订单 发运单:', function () {
             })
     })
 
-    it('发运单 - 删除某个ID的发运单 DELETE: /api/business/ying/1/fayuns/2', function (done) {
-        server.delete('/api/business/ying/1/fayuns/2')
+    it(`发运单 - 删除某个ID的发运单 DELETE: /api/business/ying/${orderId}/fayuns/${delShippingId}`, function (done) {
+        server.delete(`/api/business/ying/${orderId}/fayuns/${delShippingId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({})
