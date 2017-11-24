@@ -223,16 +223,16 @@
                             <p class="card-text" title="汇总：入库状态 = “运输中”的入库金额">库存占压 - 在途库存金额: {{ unitStatistics?.totalInstorageTranitPrice | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="">库存占压 - 剩余库存数量: {{ unitStatistics?.totalInstorageRemainNum | number }}</p>
+                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位">在途库存数量: {{ unitStatistics?.totalInstorageTranitNum | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="">库存占压 - 剩余库存金额: {{ unitStatistics?.totalInstorageRemainPrice | number }}</p>
+                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位 【3009】*【3004】入库单价" >在途库存金额: {{ unitStatistics?.totalInstorageTranitPrice | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="">库存占压 - 合计数量: {{ unitStatistics?.totalSumInstorageNum | number }}</p>
+                            <p class="card-text" title="【3011】已入库库存数量-【3003】已出库数量">剩余库存数量: {{ unitStatistics?.totalInstorageRemainNum | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="">库存占压 - 合计金额: {{ unitStatistics?.totalSumInstoragePrice | number }}</p>
+                            <p class="card-text" title="【3012】剩余库存数量*【3004】入库单价">剩余库存金额: {{ unitStatistics?.totalInstorageRemainPrice | number }}</p>
                         </div>
                     </div>
 
@@ -488,6 +488,28 @@
                         <div class="col-3">
                             <p class="card-text" title="汇总出库金额">已出库金额: {{ unitStatistics?.totalOutstorageMoney | number }}</p>
                         </div>
+
+
+                        <div class="col-3">
+                            <p class="card-text" title="IF【3001】=0 ？0:【3003】已出库数量/【3001】入库总数量">出库入库比: {{ unitStatistics?.inOutKuRate | percent }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位">在途库存数量: {{ unitStatistics?.totalInstorageTranitNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位 【3009】*【3004】入库单价" >在途库存金额: {{ unitStatistics?.totalInstorageTranitPrice | number }}</p>
+                        </div>
+
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：入库状态 = “已入库”的入库数量" >已入库库存数量: {{ unitStatistics?.totalInstoragedNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【3011】已入库库存数量-【3003】已出库数量">剩余库存数量: {{ unitStatistics?.totalInstorageRemainNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【3012】剩余库存数量*【3004】入库单价">剩余库存金额: {{ unitStatistics?.totalInstorageRemainPrice | number }}</p>
+                        </div>
+
                     </div>
 
                 </div>
