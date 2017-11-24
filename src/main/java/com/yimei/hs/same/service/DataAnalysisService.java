@@ -99,9 +99,8 @@ public class DataAnalysisService {
                 subtract(yingAnalysisDatav1061.getAdditionalTax()).
                 subtract(yingAnalysisDatav1063.getStampDuty()).
                 subtract(yingAnalysisDatav1027.getSalesFeeAmount()).
-                subtract((yingAnalysisDatav1027.getHsqyFee().add(yingAnalysisDatav1027.getHssyFee().add(yingAnalysisDatav1027.getHshyFee()))).divide(new BigDecimal("1.11"))).
-                subtract(yingAnalysisDatav1027.getSuperviseFee().divide(new BigDecimal("1.06"))).
-                subtract(yingAnalysisDatav1027.getServiceFee().divide(new BigDecimal("1.06")));
+                subtract((yingAnalysisDatav1027.getHsqyFee().add(yingAnalysisDatav1027.getHssyFee()).add(yingAnalysisDatav1027.getHshyFee())).divide(new BigDecimal("1.11"), 2, BigDecimal.ROUND_HALF_UP)).
+                subtract((yingAnalysisDatav1027.getSuperviseFee().add(yingAnalysisDatav1027.getServiceFee())).divide(new BigDecimal("1.06"),2,BigDecimal.ROUND_HALF_UP));
 
         // 1039】占压表已开票金额+（（【2002】已到场数量 - 【1026】结算扣吨合计 - 【1024】买方已结算数量） * 【核算月配置】加权单价+【1025】买方已结算金额-【1039】占压表已开票金额/【核算月配置】最高预付款比例）*【核算月配置】未开票款付款比例-汇总：付款用途 = “货款”的付款金额-->
 
@@ -312,9 +311,9 @@ public class DataAnalysisService {
                 subtract(cangAnalysisDatav1061.getAdditionalTax()).
                 subtract(cangAnalysisDatav1063.getStampDuty()).
                 subtract(cangAnalysisDatav1027.getSalesFeeAmount()).
-                subtract((cangAnalysisDatav1027.getHsqyFee().add(cangAnalysisDatav1027.getHssyFee().add(cangAnalysisDatav1027.getHshyFee()))).divide(new BigDecimal("1.11"))).
-                subtract(cangAnalysisDatav1027.getSuperviseFee().divide(new BigDecimal("1.06"))).
-                subtract(cangAnalysisDatav1027.getServiceFee().divide(new BigDecimal("1.06")));
+                subtract((cangAnalysisDatav1027.getHsqyFee().add(cangAnalysisDatav1027.getHssyFee()).add(cangAnalysisDatav1027.getHshyFee())).divide(new BigDecimal("1.11"),2, BigDecimal.ROUND_HALF_UP)).
+                subtract(cangAnalysisDatav1027.getSuperviseFee().divide(new BigDecimal("1.06"),2,BigDecimal.ROUND_HALF_UP)).
+                subtract(cangAnalysisDatav1027.getServiceFee().divide(new BigDecimal("1.06"),2,BigDecimal.ROUND_HALF_UP));
 
 
         AnalysisData cangAnalysisData = new AnalysisData() {{
@@ -457,7 +456,8 @@ public class DataAnalysisService {
         List<OrderConfig> orderConfigs = orderConfigService.getList(morderId);
         List<AnalysisData> cangAnalysisDataList = new ArrayList<AnalysisData>();
         for (OrderConfig config : orderConfigs) {
-            cangAnalysisDataList.add(this.findOneYing(morderId, config.getId()));
+            cangAnalysisDataList.add(this.findOneCang( config.getId(),morderId ));
+
         }
         return cangAnalysisDataList;
     }
