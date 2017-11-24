@@ -768,7 +768,7 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.name).to.include('SERVICE_FEE')
+                expect(res.body.data.name).to.include('TAX_MOTRO_FREIGHT')
                 done()
             })
     })
