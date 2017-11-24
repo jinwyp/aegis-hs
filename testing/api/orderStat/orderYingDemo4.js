@@ -1226,7 +1226,7 @@ describe('应收订单 统计范例4 赵征提供 11.14', function () {
                 expect(res.body.data.ownerCapitalPressure, '占压 - 自有资金占压数据不对').to.equal(-100000)
 
                 expect(res.body.data.downstreamCapitalPressure, '占压 - 下游资金占压数据不对').to.equal(100000.00)
-                expect(res.body.data.yingPrePayment, '占压 - 预收款数据不对').to.equal(-100000.00)
+                expect(res.body.data.yingPrePayment, '占压 - 预收款数据不对').to.equal(100000.00)
 
                 done()
             })
