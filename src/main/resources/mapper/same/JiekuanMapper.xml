@@ -59,7 +59,7 @@
         huankuanmap.fee,
 
         huankuan.id AS huankuanId,
-        huankuan.huankuankDate,
+        huankuan.huankuanDate,
         huankuan.tsc,
         huankuan.tsu
 
