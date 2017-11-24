@@ -15,13 +15,13 @@ const server = supertest(config.path.urlApi)
 
 
 
-describe('应收订单 统计范例4 赵征提供 11.14', function () {
+describe('应收订单 统计范例5 赵征提供 11.24', function () {
 
     let Authorization = ''
-    let orderId = 15
+    let orderId = 16
 
-    let unitId = 9
-    let borrowId = 9
+    let unitId = 10
+    let borrowId = 16
 
 
     before(function (done) {
@@ -618,7 +618,7 @@ describe('应收订单 统计范例4 赵征提供 11.14', function () {
                     "payDate" : "2017-11-01 00:00:00",
                     "receiveCompanyId" : 28,
                     "payUsage" : "FIAL_PAYMENT",
-                    "payAmount" : "16039.78",
+                    "payAmount" : "24440",
                     "capitalId" : 1,
                     "jiekuan" : {
                         "orderId" : orderId,
@@ -659,6 +659,41 @@ describe('应收订单 统计范例4 赵征提供 11.14', function () {
                         "orderId" : orderId,
                         "hsId" : unitId,
                         "jiekuanDate" : "2017-11-01 00:00:00",
+                        "amount" : "999999999",
+                        "capitalId" : 1,
+                        "useInterest" : 1,
+                        "useDays" : "99999999"
+                    }
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.payDate).to.include('2017')
+                done()
+            })
+    })
+    it(`付款单 - 新建付款单13 POST: /api/business/ying/${orderId}/fukuans`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fukuans`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "orderId" : orderId,
+                    "hsId" : unitId,
+                    "payDate" : "2017-09-04 00:00:00",
+                    "receiveCompanyId" : 28,
+                    "payUsage" : "FREIGNHT",
+                    "payAmount" : "10000",
+                    "capitalId" : 1,
+                    "jiekuan" : {
+                        "orderId" : orderId,
+                        "hsId" : unitId,
+                        "jiekuanDate" : "2017-09-04 00:00:00",
                         "amount" : "999999999",
                         "capitalId" : 1,
                         "useInterest" : 1,
@@ -1053,6 +1088,30 @@ describe('应收订单 统计范例4 赵征提供 11.14', function () {
 
 
 
+    it(`费用单 - 新建费用单1 POST: /api/business/ying/${orderId}/fees`, function (done) {
+        server.post(`/api/business/ying/${orderId}/fees`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "name" : "SERVICE_FEE",
+                    "amount" : "10000",
+                    "orderId" : orderId
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.name).to.include('SERVICE_FEE')
+                done()
+            })
+    })
+
 
     it(`保证金 - 新建保证金1 POST: /api/business/ying/${orderId}/bails`, function (done) {
         server.post(`/api/business/ying/${orderId}/bails`)
@@ -1202,31 +1261,51 @@ describe('应收订单 统计范例4 赵征提供 11.14', function () {
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
 
 
-                expect(res.body.data.ccsProfile, '发运信息 - 瑞茂通总收益数据不对').to.equal(24675.67)
-                expect(res.body.data.totalCSSIntypeNumber, '进项票信息 - CCS已收到进项数量数据不对').to.equal(9450)
-                expect(res.body.data.totalCCSIntypeMoney, '进项票信息 - CCS已收到进项金额数据不对').to.equal(1308900)
-                expect(res.body.data.cssUninTypeNum, '进项票信息 - CCS未收到进项数量数据不对').to.equal(823)
-                expect(res.body.data.cssUninTypeMoney, '进项票信息 - CCS未收到进项金额数据不对').to.equal(125190.33)
+                expect(res.body.data.totalFayunNum, '发运信息 - 发运总数量 数据不对').to.equal(10273.00)
+                expect(res.body.data.totalArriveNum, '发运信息 - 已到场数量 数据不对').to.equal(10273.00)
+                expect(res.body.data.totalUnarriveNum, '发运信息 - 未到场数量 数据不对').to.equal(0)
+
+                expect(res.body.data.purchaseIncludeTaxTotalAmount, '发运信息 - 采购含税总额 数据不对').to.equal(1402116.55)
+                expect(res.body.data.saleIncludeTaxTotalAmount, '发运信息 - 销售含税总额 数据不对').to.equal(1438220.00)
+                expect(res.body.data.tradingCompanyAddMoney, '发运信息 - 贸易公司加价 数据不对').to.equal(20546.00)
+                expect(res.body.data.salesFeeAmount, '发运信息 - 销售费用总额 数据不对').to.equal(10000.00)
+                expect(res.body.data.dsddFee, '发运信息 - 代收代垫运费 数据不对').to.equal(0)
+                expect(res.body.data.ccsProfile, '发运信息 - 瑞茂通总收益 数据不对').to.equal(24903.45)
 
 
-                expect(res.body.data.settleGrossProfileNum, '毛利 - 结算量数据不对').to.equal(10273.00)
-                expect(res.body.data.saleIncludeTaxTotalAmount, '毛利 - 销售含税总额数据不对').to.equal(1438220.00)
-                expect(res.body.data.purchaseIncludeTaxTotalAmount, '毛利 - 采购含税总额数据不对').to.equal(1413544.33)
+                expect(res.body.data.tradingCompanyInTypeNum, '进项票信息 -贸易公司已收到进项数量 数据不对').to.equal(9450)
+                expect(res.body.data.tradingCompanyInTpeMoneyAmount, '进项票信息 - 贸易公司已收到进项金额 数据不对').to.equal(1290000.00)
+                expect(res.body.data.totalCSSIntypeNumber, '进项票信息 - CCS已收到进项数量 数据不对').to.equal(9450)
+                expect(res.body.data.totalCCSIntypeMoney, '进项票信息 - CCS已收到进项金额 数据不对').to.equal(1308900)
+                expect(res.body.data.cssUninTypeNum, '进项票信息 - CCS未收到进项数量 数据不对').to.equal(823)
+                expect(res.body.data.cssUninTypeMoney, '进项票信息 - CCS未收到进项金额 数据不对').to.equal(113762.55)
 
-                expect(res.body.data.tradeCompanyAddMoney, '毛利 - 贸易公司加价数据不对').to.equal(20546.00)
-                expect(res.body.data.vat, '毛利 - 应交增值税数据不对').to.equal(600.04)
-                expect(res.body.data.withoutTaxIncome, '毛利 - 不含税收入数据不对').to.equal(1229247.86)
-                expect(res.body.data.withoutTaxCost, '毛利 - 不含税成本数据不对').to.equal(1225718.23)
-                expect(res.body.data.additionalTax, '毛利 - 税金及附加数据不对').to.equal(72.00)
-                expect(res.body.data.stampDuty, '毛利 - 印花税数据不对').to.equal(861.69)
-                expect(res.body.data.opreationCrossProfile, '毛利 - 经营毛利数据不对').to.equal(2595.94)
-                expect(res.body.data.crossProfileATon, '毛利 - 单吨毛利数据不对').to.equal(0.25)
+                expect(res.body.data.externalCapitalPaymentAmount, '收付款信息 - 外部资金付款金额 数据不对').to.equal(0)
+                expect(res.body.data.ownerCapitalPaymentAmount, '收付款信息 - 自有资金付款金额 数据不对').to.equal(1312116.55)
+                expect(res.body.data.totalHuikuanPaymentMoney, '收付款信息 - 已回款金额合计 数据不对').to.equal(1438220.00)
 
-                expect(res.body.data.upstreamCapitalPressure, '占压 - 上游资金占压数据不对').to.equal(-100000)
-                expect(res.body.data.ownerCapitalPressure, '占压 - 自有资金占压数据不对').to.equal(-100000)
 
-                expect(res.body.data.downstreamCapitalPressure, '占压 - 下游资金占压数据不对').to.equal(100000.00)
-                expect(res.body.data.yingPrePayment, '占压 - 预收款数据不对').to.equal(100000.00)
+                expect(res.body.data.settleGrossProfileNum, '毛利 - 结算量 数据不对').to.equal(10273.00)
+                expect(res.body.data.saleIncludeTaxTotalAmount, '毛利 - 销售含税总额 数据不对').to.equal(1438220.00)
+                expect(res.body.data.purchaseIncludeTaxTotalAmount, '毛利 - 采购含税总额 数据不对').to.equal(1402116.55)
+
+                expect(res.body.data.tradeCompanyAddMoney, '毛利 - 贸易公司加价 数据不对').to.equal(20546.00)
+                expect(res.body.data.vat, '毛利 - 应交增值税 数据不对').to.equal(2260.48)
+                expect(res.body.data.withoutTaxIncome, '毛利 - 不含税收入 数据不对').to.equal(1229247.86)
+                expect(res.body.data.withoutTaxCost, '毛利 - 不含税成本 数据不对').to.equal(1215950.90)
+                expect(res.body.data.additionalTax, '毛利 - 税金及附加 数据不对').to.equal(271.26)
+                expect(res.body.data.stampDuty, '毛利 - 印花税 数据不对').to.equal(858.26)
+
+                expect(res.body.data.opreationCrossProfile, '毛利 - 经营毛利 数据不对').to.equal(2733.48)
+                expect(res.body.data.crossProfileATon, '毛利 - 单吨毛利 数据不对').to.equal(0.27)
+
+                expect(res.body.data.upstreamCapitalPressure, '占压 - 上游资金占压 数据不对').to.equal(-100000)
+                expect(res.body.data.ownerCapitalPressure, '占压 - 自有资金占压 数据不对').to.equal(-100000)
+                expect(res.body.data.unInvoicedAmountofMoney, '占压 - 未开票金额 数据不对').to.equal(112116.55)
+
+                expect(res.body.data.downstreamCapitalPressure, '占压 - 下游资金占压 数据不对').to.equal(100000.00)
+                expect(res.body.data.settledDownstreamHuikuanMoneny, '占压 - 已结算未回款金额 数据不对').to.equal(0)
+                expect(res.body.data.yingPrePayment, '占压 - 预收款 数据不对').to.equal(100000.00)
 
                 done()
             })

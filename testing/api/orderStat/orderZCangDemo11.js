@@ -18,10 +18,10 @@ const server = supertest(config.path.urlApi)
 describe('仓押订单 统计范例11 赵征提供 11.21日', function () {
 
     let Authorization = ''
-    let orderId = 16
+    let orderId = 17
 
-    let unitId = 10
-    let borrowId = 16
+    let unitId = 11
+    let borrowId = 23
 
     before(function (done) {
 
@@ -731,7 +731,7 @@ describe('仓押订单 统计范例11 赵征提供 11.21日', function () {
                 expect(res.body.data.totalCSSIntypeNumber, '进项票信息 - CCS已收到进项数量数据不对').to.equal(10102.70)
                 expect(res.body.data.totalCCSIntypeMoney, '进项票信息 - CCS已收到进项金额数据不对').to.equal(6031311.9)
                 expect(res.body.data.cssUninTypeNum, '进项票信息 - CCS未收到进项数量数据不对').to.equal(0)
-                // expect(res.body.data.cssUninTypeMoney, '进项票信息 - CCS未收到进项金额数据不对').to.equal(0)
+                expect(res.body.data.cssUninTypeMoney, '进项票信息 - CCS未收到进项金额数据不对').to.equal(undefined)
 
 
                 expect(res.body.data.saleIncludeTaxTotalAmount, '毛利 - 销售含税总额数据不对').to.equal(6029076.57)

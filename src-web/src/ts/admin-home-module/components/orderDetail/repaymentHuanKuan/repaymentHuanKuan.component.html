@@ -127,7 +127,7 @@
                         <td> {{repaymentHK.promise ? '已还款' : '未还款' }} </td>
 
                         <td>
-                            <span *ngFor="let item of repaymentHK.huankuanMapList" >对应付款ID:{{item.huankuanId }} 本金:{{item.principal }} 利息:{{item.interest }} 服务费:{{item.fee }}</span>
+                            <span *ngFor="let item of repaymentHK.huankuanMapList" >对应付款ID:{{item.huankuanId }} 本金:{{item.principal }} 利息:{{item.interest }} 服务费:{{item.fee }} {{item.ccsPay ? 'CCS还服务费' : '客户还服务费' }}</span>
                         </td>
                         <!--<td> {{repaymentHK.huankuanPrincipal }}</td>-->
                         <!--<td> {{repaymentHK.huankuanInterest }}</td>-->
