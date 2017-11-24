@@ -135,7 +135,6 @@ export class RepaymentHuanKuanComponent implements OnInit {
                     this.totalFee = 0
 
                     data.data.results.forEach( (repayment) => {
-                        console.log(repayment)
                         if (Array.isArray(repayment.huankuanMapList)) {
 
                             repayment.huankuanMapList.forEach( (borrow) => {
@@ -143,7 +142,6 @@ export class RepaymentHuanKuanComponent implements OnInit {
                                 this.totalInterest =  this.totalInterest + borrow.interest
                                 this.totalFee =  this.totalFee + borrow.fee
 
-                                console.log(borrow)
                             })
                         }
                     })

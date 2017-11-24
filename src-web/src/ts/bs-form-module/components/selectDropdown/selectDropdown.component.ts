@@ -240,7 +240,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
     }
 
     writeValue(value: any): void {
-        console.log('WriteValue: ', value, this.filterOptionList)
+        // console.log('WriteValue: ', value, this.filterOptionList)
 
         if (Array.isArray(this.filterOptionList)) {
 
