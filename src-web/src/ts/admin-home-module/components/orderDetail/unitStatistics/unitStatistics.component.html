@@ -408,10 +408,10 @@
                             <p class="card-text" title="汇总：费用科目 = “含税火运费”的费用金额">毛利表 - 含税火运费: {{ unitStatistics?.hshyFee | number }}</p>
                         </div>
                         <div class="col-3" *ngIf="businessType==='ying'">
-                            <p class="card-text" title="汇总：费用科目 = “监管费”的费用金额">毛利表 - 监管费: {{ unitStatistics?.serviceFee | number }}</p>
+                            <p class="card-text" title="汇总：费用科目 = “监管费”的费用金额">毛利表 - 监管费: {{ unitStatistics?.superviseFee | number }}</p>
                         </div>
                         <div class="col-3" *ngIf="businessType==='ying'">
-                            <p class="card-text" title="汇总：费用科目 = “管理费”的费用金额">毛利表 - 管理费: {{ unitStatistics?.superviseFee | number }}</p>
+                            <p class="card-text" title="汇总：费用科目 = “管理费”的费用金额">毛利表 - 服务费: {{ unitStatistics?.serviceFee | number }}</p>
                         </div>
 
                         <div class="col-3" *ngIf="businessType==='cang'">
@@ -670,10 +670,10 @@
                             <p class="card-text" title="汇总：费用科目 = “含税火运费”的费用金额">毛利表 - 含税火运费: {{ unitStatistics?.hshyFee | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “监管费”的费用金额">毛利表 - 监管费: {{ unitStatistics?.serviceFee | number }}</p>
+                            <p class="card-text" title="汇总：费用科目 = “监管费”的费用金额">毛利表 - 监管费: {{ unitStatistics?.superviseFee | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “管理费”的费用金额">毛利表 - 管理费: {{ unitStatistics?.superviseFee | number }}</p>
+                            <p class="card-text" title="汇总：费用科目 = “管理费”的费用金额">毛利表 - 服务费: {{ unitStatistics?.serviceFee | number }}</p>
                         </div>
                         <div class="col-3">
                             <p class="card-text" title="汇总：费用科目 = “业务费”的费用金额">毛利表 - 业务费: {{ unitStatistics?.businessFee | number }}</p>
