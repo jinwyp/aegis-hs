@@ -98,7 +98,7 @@ public class DataAnalysisService {
                 subtract(yingAnalysisDatav1060.getWithoutTaxCost()).
                 subtract(yingAnalysisDatav1061.getAdditionalTax()).
                 subtract(yingAnalysisDatav1063.getStampDuty()).
-                subtract(yingAnalysisDatav1027.getSalesFeeAmount()).
+                subtract(yingAnalysisDatav1027.getBusinessFee()).
                 subtract((yingAnalysisDatav1027.getHsqyFee().add(yingAnalysisDatav1027.getHssyFee()).add(yingAnalysisDatav1027.getHshyFee())).divide(new BigDecimal("1.11"), 2, BigDecimal.ROUND_HALF_UP)).
                 subtract((yingAnalysisDatav1027.getSuperviseFee().add(yingAnalysisDatav1027.getServiceFee())).divide(new BigDecimal("1.06"),2,BigDecimal.ROUND_HALF_UP));
 
@@ -280,6 +280,7 @@ public class DataAnalysisService {
         AnalysisData cangAnalysisDatav3005 = yingAnalysisDataMapper.findOneV3005(morderId, hsId);
         AnalysisData cangAnalysisDatav3006 = yingAnalysisDataMapper.findOneV3006(morderId, hsId);
         AnalysisData cangAnalysisDatav1041 = yingAnalysisDataMapper.findOneV1040cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1044 = yingAnalysisDataMapper.findOneV1044cang(morderId, hsId);
         AnalysisData cangAnalysisDatav1045 = yingAnalysisDataMapper.findOneV1045(morderId, hsId);
         AnalysisData cangAnalysisDatav1046 = yingAnalysisDataMapper.findOneV1046cang(morderId, hsId);
         AnalysisData cangAnalysisDatav1047 = yingAnalysisDataMapper.findOneV1047(morderId, hsId);
@@ -305,13 +306,22 @@ public class DataAnalysisService {
         AnalysisData cangAnalysisDos1 = yingAnalysisDataMapper.findOneShowDos1cang(morderId, hsId);
         AnalysisData cangAnalysisDos3 = yingAnalysisDataMapper.findOneShowDos3(morderId);
 
-//        【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 - （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06 - 【1033】业务费
+//        【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 -
+                         // （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06
+// - 【1033】业务费
         BigDecimal opreationCrocsProfile = cangAnalysisDatav1059.getWithoutTaxIncome().
                 subtract(cangAnalysisDatav1060.getWithoutTaxCost()).
                 subtract(cangAnalysisDatav1061.getAdditionalTax()).
                 subtract(cangAnalysisDatav1063.getStampDuty()).
-                subtract(cangAnalysisDatav1027.getSalesFeeAmount()).
-                subtract((cangAnalysisDatav1027.getHsqyFee().add(cangAnalysisDatav1027.getHssyFee()).add(cangAnalysisDatav1027.getHshyFee())).divide(new BigDecimal("1.11"),2, BigDecimal.ROUND_HALF_UP)).
+                subtract(cangAnalysisDatav1027.getBusinessFee()).
+
+                subtract(
+                        (
+                                cangAnalysisDatav1027.getHsqyFee().
+                                        add(cangAnalysisDatav1027.getHssyFee()).
+                                        add(cangAnalysisDatav1027.getHshyFee())
+                        ).divide(new BigDecimal("1.11"),2, BigDecimal.ROUND_HALF_UP)
+                      ).
                 subtract(cangAnalysisDatav1027.getSuperviseFee().divide(new BigDecimal("1.06"),2,BigDecimal.ROUND_HALF_UP)).
                 subtract(cangAnalysisDatav1027.getServiceFee().divide(new BigDecimal("1.06"),2,BigDecimal.ROUND_HALF_UP));
 
@@ -373,7 +383,7 @@ public class DataAnalysisService {
             setUnsettlerBuyerMoneyAmount(cangAnalysisDatav1041.getUnsettlerBuyerMoneyAmount());
             setUnsettlerBuyerNumber(cangAnalysisDatav1041.getUnsettlerBuyerNumber());
             setTradingCompanyAddMoney(cangAnalysisDatav1041.getTradingCompanyAddMoney());
-            setSaleCargoAmountofMoney(cangAnalysisDatav1041.getSaleCargoAmountofMoney());
+            setSaleCargoAmountofMoney(cangAnalysisDatav1044.getSaleCargoAmountofMoney());
             setCcsProfile(cangAnalysisDatav1045.getCcsProfile());
             setPurchaseCargoAmountOfMoney(cangAnalysisDatav1046.getPurchaseCargoAmountOfMoney());
             setExternalCapitalPaymentAmount(cangAnalysisDatav1047.getExternalCapitalPaymentAmount());

@@ -180,7 +180,8 @@ public class JiekuanService {
      */
     public List<Jiekuan> huankuanUnfinished(Long orderId) {
         PageJiekuanDTO dto = new PageJiekuanDTO();
-        dto.setHsId(orderId);
+
+        dto.setOrderId(orderId);
         dto.setPageSize(1000000);
         dto.setPageNo(1);
 
