@@ -428,8 +428,9 @@ left join  v_2004 on base.hsId=v_2004.hsId;
 --3001	入库总数量	totalInstorageNum	【入库】	备查账	汇总：入库数量
 --3002	入库总金额	totalInstorageAmount	【入库】		汇总：入库金额
 --3004	入库单价	instorageUnitPrice	计算		【3002】入库总金额 ／ 【3001】入库总数量
--- totalInstorageTranitNum
--- totalInstorageTranitPrice
+--3009   在途库存数量 totalInstorageTranitNum
+-- 3011  已入库库存数量 totalInstoragedNum  占压表 汇总：入库状态 = “已入库”的入库数量
+
 create view v_3001  as
 select
 base.orderId,
@@ -449,6 +450,7 @@ group by orderId,hsId;
 --3003	已出库数量	totalOutstorageNum	【出库】	备查账	汇总：出库数量
 --3007  已出库金额	totalOutstorageMoney	【出库】		汇总:出库金额
 
+
 create view v_3003 as
 select
 base.orderId,
@@ -461,14 +463,18 @@ group by orderId,hsId;
 
 
 --3005	库存数量	totalStockNum	计算	备查账/占压	【3001】入库总数量 - 【3003】已出库数量
+--3011  inOutRate  已入库库存数量-【3003】已出库数量
 create view v_3005  as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_3001.totalInstorageNum,0.00)-IFNULL(v_3003.totalOutstorageNum ,0.00),2)as totalStockNum
+ROUND(IFNULL(v_3001.totalInstorageNum,0.00)-IFNULL(v_3003.totalOutstorageNum ,0.00),2)as totalStockNum,
+case when IFNULL(v_3001.totalInstorageNum,0.00)=0.00
+then  0.00 else IFNULL(v_3003.totalOutstorageNum ,0.00)/IFNULL(v_3001.totalInstorageNum,0.00) end  as inOutRate
 from  base 
 left  join v_3001 on base.hsId=v_3001.hsId
 left join v_3003 on base.hsId=v_3003.hsId;
+
 
 
 --3006	库存金额	totalStockMoney	计算	占压	【3004】入库单价 * 【3005】库存数量
@@ -495,13 +501,19 @@ select
 base.orderId,
 base.hsId,
 ROUND(IFNULL(v_3001.totalInstorageNum ,0.00),2)as finalSettleAmount,
-ROUND(IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums ,0.00),2)as  unsettlerBuyerNumber,
+case when 
+        IFNULL(v_3001.totalInstorageNum ,0.00)>IFNULL(v_1024.totalBuyerNums ,0.00)
+then ROUND(IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums ,0.00),2)
+else 0.00  end  as  unsettlerBuyerNumber,
 ROUND(IFNULL(v_3001.totalInstorageNum ,0.00) * IFNULL(config.tradeAddPrice ,0.00),2)as tradingCompanyAddMoney,
 ROUND((IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums,0.00)) * IFNULL(config.weightedPrice,0.00) ,2)as unsettlerBuyerMoneyAmount
 from base
 left join  v_3001 on base.hsId =v_3001.hsId
+left join v_3003 on base.hsId=v_3003.hsId
+left join v_1013 on base.hsId=v_1013.hsId
      left join v_1024 on base.hsId=v_1024.hsId
      left join hs_same_order_config config on config.id=base.hsId;
+
 
 
 --应收
@@ -535,15 +547,29 @@ left join v_1023 on v_1021.hsId=v_1023.hsId;
 
 
 
---1046 采购货款总额 【1044】销售货款总额 - 【1045】瑞茂通总收益
+
+
+create view v_1068 as
+select 
+base.orderId,
+base.hsId,
+ROUND(IFNULL((v_1027.hsqyFee+v_1027.hssyFee+v_1027.hshyFee)*1.06+(v_1027.superviseFee+v_1027.serviceFee)*1.12 ,0.00) ,2)as feeAndAddTax
+from base 
+left join  v_1027 on base.hsId=v_1027.hsId;
+
+
+
+
+--1046 采购货款总额 【1044】销售货款总额 - 【1045】瑞茂通总收益 -【1068】费用及补税
 create view v_1046_ying as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1041_ying.saleCargoAmountofMoney,0.00)-IFNULL(v_1045.ccsProfile ,0.00),2)as purchaseCargoAmountOfMoney
+ROUND(IFNULL(v_1041_ying.saleCargoAmountofMoney,0.00)-IFNULL(v_1045.ccsProfile ,0.00),2)- IFNULL(v_1068.feeAndAddTax,0.00) as purchaseCargoAmountOfMoney
 from base
 left join v_1041_ying on  base.hsId=v_1041_ying.hsId
-left join v_1045 on base.hsId=v_1045.hsId;
+left join v_1045 on base.hsId=v_1045.hsId
+left join v_1068 on base.hsId=v_1068.hsId;
 
 
 create view v_1046_cang as
@@ -559,12 +585,11 @@ create view v_1044_cang as
 select
 base.orderId,
 base.hsId,
-v_1046_cang.purchaseCargoAmountOfMoney+v_1045.ccsProfile as saleCargoAmountofMoney
+v_1046_cang.purchaseCargoAmountOfMoney+v_1045.ccsProfile +v_1068.feeAndAddTax as saleCargoAmountofMoney
 from base
      left join v_1045      on base.hsId=v_1045.hsId
-     left join v_1046_cang on base.hsId=v_1046_cang.hsId;
-
-
+     left join v_1046_cang on base.hsId=v_1046_cang.hsId
+     left join v_1068 on base.hsId=v_1068.hsId;
 
 
 
@@ -584,12 +609,19 @@ from base
 
 
 
---1048 ownerCapitalPaymentAmount 自由资金付款金额【1003】付款金额合计 - 【1047】外部资金付款金额 + 【1008】还款利息合计（——ccs支付服务费）  -【1010】登记未还款利息 - 【2008】上游保证金余额
+--1048 ownerCapitalPaymentAmount 自由资金付款金额【1003】付款金额合计 - 【1047】外部资金付款金额 + 【1008】还款利息合计（——ccs支付服务费）  -【1010】登记未还款利息 - 【2008】上游保证金余额-【1002】付贸易差价金额
 create view v_1048_ying as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)-IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+IFNULL(v_1007.totalRepaymentInterest,0.00)+IFNULL(v_1007.totalccsPayServiceCharge,0.00)+IFNULL(v_1009.totalUnpayInterest,0.00)-IFNULL(v_2008.balanceUpstreamBail ,0.00) ,2)as ownerCapitalPaymentAmount
+ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)-
+IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+
+IFNULL(v_1007.totalRepaymentInterest,0.00)+
+IFNULL(v_1007.totalccsPayServiceCharge,0.00)+
+IFNULL(v_1009.totalUnpayInterest,0.00)-
+IFNULL(v_2008.balanceUpstreamBail ,0.00)-
+IFNULL(v_1001.totalTradeGapFee ,0.00)
+ ,2)as ownerCapitalPaymentAmount
 from base 
      left join v_1001 on base.hsId=v_1001.hsId
      left join v_1047 on base.hsId=v_1047.hsId
@@ -700,13 +732,13 @@ from base
      left join v_1037 on v_1037.hsId=v_1041_cang.hsId;
 
 --1052 CCS未收到进项金额	cssUninTypeMoney	     	【1046】采购货款总额 + 【1041】贸易公司加价 - 【1038】CCS已收进项金额 - 【1027】代收代垫运费
---1053	占压表未开票金额	unInvoicedAmountofMoney		【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费 change to 【1046】采购货款总额  - 【1039】占压表已开票金额
+--1053	占压表未开票金额	unInvoicedAmountofMoney		【1046】采购货款总额 - 【1039】占压表已开票金额 - 【1027】代收代垫运费 
 create view v_1052_ying  as
 select
 base.orderId,
 base.hsId,
 ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1041_ying.tradingCompanyAddMoney,0.00)-IFNULL(v_1037.totalCCSIntypeMoney,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as cssUninTypeMoney,
-ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)-IFNULL(v_1039.invoicedMoneyAmount,0.00),2)as unInvoicedAmountofMoney
+ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)-IFNULL(v_1039.invoicedMoneyAmount,0.00)- IFNULL(v_1027.dsddFee ,0.00),2) as unInvoicedAmountofMoney
 from base
      left join v_1046_ying on base.hsId =v_1046_ying.hsId
      left join v_1041_ying on v_1046_ying.hsId=v_1041_ying.hsId
@@ -721,7 +753,7 @@ select
 base.orderId,
 base.hsId,
 ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1041_cang.tradingCompanyAddMoney,0.00)-IFNULL(v_1037.totalCCSIntypeMoney,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as cssUninTypeMoney,
-ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)-IFNULL(v_1039.invoicedMoneyAmount,0.00),2)as unInvoicedAmountofMoney
+ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)-IFNULL(v_1039.invoicedMoneyAmount,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as unInvoicedAmountofMoney
 from base
      left join v_1046_cang on base.hsId=v_1046_cang.hsId
      left join v_1041_cang on v_1046_cang.hsId=v_1041_cang.hsId
@@ -786,16 +818,21 @@ left join v_3001 on base.hsId=v_3001.hsId
 left join v_3003 on  v_3001.hsId=v_3003.hsId;
 
 
---1057	仓押销售含税总额	saleIncludeTaxTotalAmount	【1056】采购含税总额 + 【1045】瑞茂通总收益
+--1057	仓押销售含税总额	saleIncludeTaxTotalAmount	【1056】采购含税总额 + 【1045】瑞茂通总收益*【3008】出库入库比+【1068】费用及补税*【3008】出库入库比
 --1057  应收 【1044】销售货款总额
 create view v_1057_cang  as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1056_cang.purchaseIncludeTaxTotalAmount ,0.00)+ IFNULL(v_1045.ccsProfile ,0.00) ,2)as saleIncludeTaxTotalAmount
+ROUND(IFNULL(v_1056_cang.purchaseIncludeTaxTotalAmount ,0.00)+ 
+  IFNULL(v_1045.ccsProfile ,0.00)*v_3005.inOutRate +
+  IFNULL(v_1068.feeAndAddTax,0.00)*v_3005.inOutRate,2)
+as saleIncludeTaxTotalAmount
 from base
      left join v_1056_cang on base.hsId=v_1056_cang.hsId
-     left join v_1045 on  v_1056_cang.hsId=v_1045.hsId;
+      left join v_1045 on  v_1056_cang.hsId=v_1045.hsId
+      left join v_3005 on  v_3005.hsId=base.hsId
+      left join v_1068 on  base.hsId=v_1068.hsId;
 
 --1058	毛利贸易公司加价	tradeCompanyAddMoney	计算	毛利表	【1055】毛利结算量 * 【核算月配置】贸易公司加价
 create view v_1058_ying  as
@@ -972,39 +1009,71 @@ from base
      left join v_3003  on v_1064_cang.hsId=v_3003.hsId;
 
 
---1066	自有资金占压	ownerCapitalPressure	计算	占压表	【1048】自有资金付款金额-【1046】采购货款总额
+--1066	自有资金占压	ownerCapitalPressure	IF（本核算月卖方=null？【1048】自有资金付款金额-【1046】采购货款总额：（【1048】自有资金付款金额-【1046】采购货款总额-【1001】付运费金额）
 create view v_1066_cang as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0.00),2)as ownerCapitalPressure
+
+case when seller.orderId is  null and seller.hsId is  null
+then
+ROUND(IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0.00),2)
+else 
+ROUND(IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)
+-IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0.00)
+-IFNULL(v_1001.totalPayTrafficFee ,0.00)
+,2)
+end 
+as ownerCapitalPressure
 from  base
      left join v_1046_cang on base.hsId=v_1046_cang.hsId
-     left join v_1048_cang on v_1048_cang.hsId=v_1046_cang.hsId;
+     left join hs_same_settle_seller seller on base.hsId=seller.hsId
+     left join v_1001 on base.hsId=v_1001.hsId
+     left join v_1048_cang on base.hsId=v_1048_cang.hsId;
+
 
 
 create view v_1066_ying as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0.00),2)as ownerCapitalPressure
-from base
+
+case when seller.orderId is  null and seller.hsId is  null
+then
+ROUND(IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0.00),2)
+else 
+ROUND(IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)
+-IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0.00)
+-IFNULL(v_1001.totalPayTrafficFee ,0.00)
+,2)
+end 
+as ownerCapitalPressure
+from  base
      left join v_1046_ying on base.hsId=v_1046_ying.hsId
-     left join v_1048_ying on v_1048_ying.hsId=v_1046_ying.hsId;
+     left join hs_same_settle_seller seller on base.hsId=seller.hsId
+     left join v_1001 on base.hsId=v_1001.hsId
+     left join v_1048_ying on base.hsId=v_1048_ying.hsId;
 
 
 
---2010	下游已结算未回款金额	settledDownstreamHuikuanMoneny	计算	占压表	【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款
+--1067	下游已结算未回款金额	settledDownstreamHuikuanMoneny	计算	占压表	【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款
 create view v_2010_cang as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1050_cang.downstreamCapitalPressure ,0.00)-IFNULL(v_1041_cang.unsettlerBuyerMoneyAmount ,0.00)+IFNULL(v_1054_cang.cangPrePayment  ,0.00),2)as settledDownstreamHuikuanMoneny
+case when
+v_1024.totalBuyerMoney>v_1013.totalHuikuanPaymentMoney 
+THEN
+ROUND(IFNULL(v_1024.totalBuyerMoney ,0.00)-IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00),2)
+else
+0.00
+end
+as settledDownstreamHuikuanMoneny
 from base 
-     left join v_1050_cang on base.hsId=v_1050_cang.hsId
-     left join v_1041_cang on v_1041_cang.hsId=v_1050_cang.hsId
-     left join v_1054_cang on v_1054_cang.hsId=v_1050_cang.hsId;
+     left join v_1024 on base.hsId=v_1024.hsId
+     left join v_1013 on base.hsId=v_1013.hsId;
 
+-- 【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款
 create view v_2010_ying as
 select 
        base.orderId,
@@ -1016,398 +1085,6 @@ from  base
      left join v_1054_ying on v_1054_ying.hsId=v_1050_ying.hsId;
 
 
-
-
---仓押数据
-create view hs_cangDatabaseAnalysis as
-select
-temp.hsId,
-temp.orderId,
-v_1001.totalPayTrafficFee,
-v_1001.totalTradeGapFee,
-v_1001.totalPaymentAmount,
-v_1004.totalLoadMoney,
-v_1006.totalUnrepaymentEstimateCost,
-v_1007.totalRepaymentPrincipeAmount,
-v_1007.totalServiceCharge,
-v_1007.totalRepaymentInterest,
-v_1009.totalUnpayFee,
-v_1009.totalUnpayInterest,
-v_1009.totalUnpayPrincipal,
-v_1012.outCapitalAmout,
-v_1013.totalHuikuanPaymentMoney,
-v_1014.payCargoAmount,
-v_1015.unpaymentMoney,
-v_1016.unpaymentEstimateProfile,
-v_1018.actualUtilizationRate,
-v_1020.totalPaymentedRateMoney,
-v_1021.contractRateProfile,
-v_1023.tiexianRateAmount,
-v_1024.totalBuyerMoney,
-v_1024.totalBuyerNums,
-v_1024.totalBuyersettleGap,
-v_1027.dsddFee,
-v_1027.hshyFee,
-v_1027.hsqyFee,
-v_1027.hssyFee,
-v_1027.businessFee,
-v_1027.superviseFee,
-v_1027.serviceFee,
-v_1027.salesFeeAmount,
-v_1037.totalCCSIntypeMoney,
-v_1037.totalCSSIntypeNumber,
-v_1035.tradingCompanyInTypeNum,
-v_1035.tradingCompanyInTpeMoneyAmount,
-v_1039.invoicedMoneyNum,
-v_1039.invoicedMoneyAmount,
-v_1041_cang.finalSettleAmount,
-v_1044_cang.saleCargoAmountofMoney,
-v_1041_cang.tradingCompanyAddMoney,
-v_1041_cang.unsettlerBuyerMoneyAmount,
-v_1041_cang.unsettlerBuyerNumber,
-v_1045.ccsProfile,
-v_1046_cang.purchaseCargoAmountofMoney,
-v_1047.externalCapitalPaymentAmount,
-v_1048_cang.ownerCapitalPaymentAmount,
-v_1049_cang.upstreamCapitalPressure,
-v_1050_cang.downstreamCapitalPressure,
-v_1051_cang.cssUninTypeNum,
-v_1052_cang.cssUninTypeMoney,
-v_1052_cang.unInvoicedAmountofMoney,
-v_1054_cang.cangPrePayment,
-v_3003.totalOutstorageNum as settleGrossProfileNum,
-v_1056_cang.purchaseIncludeTaxTotalAmount,
-v_1057_cang.saleIncludeTaxTotalAmount,
-v_1058_cang.tradeCompanyAddMoney,
-v_1059_cang.withoutTaxIncome,
-v_1060_cang.withoutTaxCost,
-v_1061_cang.additionalTax,
-v_1061_cang.vat,
-v_1063_cang.stampDuty,
-v_1064_cang.opreationCrossProfile,
-v_1065_cang.crossProfileATon,
-v_1066_cang.ownerCapitalPressure,
-v_3001.totalInstorageNum,
-v_3001.totalInstorageAmount,
-v_3001.instorageUnitPrice,
-v_3005.totalStockNum,
-v_3003.totalOutstorageNum,
-v_3003.totalOutstorageMoney,
-v_3006.totalStockMoney
-from base as temp
-
-     left join v_1001   on v_1001.hsId=temp.hsId and  v_1001.orderId=temp.orderId
-     left join v_1004   on v_1004.hsId=temp.hsId and  v_1004.orderId=temp.orderId
-     left join v_1006   on v_1006.hsId=temp.hsId and  v_1006.orderId=temp.orderId
-     left join v_1007   on v_1007.hsId=temp.hsId and  v_1007.orderId=temp.orderId
-     left join v_1009   on v_1009.hsId=temp.hsId and  v_1009.orderId=temp.orderId
-     left join v_1012   on v_1012.hsId=temp.hsId and  v_1012.orderId=temp.orderId
-     left join v_1013   on v_1013.hsId=temp.hsId and  v_1013.orderId=temp.orderId
-     left join v_1014   on v_1014.hsId=temp.hsId and  v_1014.orderId=temp.orderId
-     left join v_1015   on v_1015.hsId=temp.hsId and  v_1015.orderId=temp.orderId
-     left join v_1016   on v_1016.hsId=temp.hsId and  v_1016.orderId=temp.orderId
-     left join v_1018   on v_1018.hsId=temp.hsId and  v_1018.orderId=temp.orderId
-     left join v_1020   on v_1020.hsId=temp.hsId and  v_1020.orderId=temp.orderId
-     left join v_1021   on v_1021.hsId=temp.hsId and  v_1021.orderId=temp.orderId
-     left join v_1022   on v_1022.hsId=temp.hsId and  v_1022.orderId=temp.orderId
-     left join v_1023   on v_1023.hsId=temp.hsId and  v_1023.orderId=temp.orderId
-     left join v_1024   on v_1024.hsId=temp.hsId and  v_1024.orderId=temp.orderId
-     left join v_1027   on v_1027.hsId=temp.hsId and  v_1027.orderId=temp.orderId
-     left join v_1035   on v_1035.hsId=temp.hsId and  v_1035.orderId=temp.orderId
-     left join v_1037   on v_1037.hsId=temp.hsId and  v_1037.orderId=temp.orderId
-     left join v_1039  on  v_1039.hsId=temp.hsId and  v_1039.orderId=temp.orderId
-     left join v_1041_cang  on  v_1041_cang.hsId=temp.hsId   and   v_1041_cang.orderId=temp.orderId
-     left join v_1044_cang  on  v_1044_cang.hsId=temp.hsId   and   v_1044_cang.orderId=temp.orderId
-     left join v_1045       on  v_1045.hsId=temp.hsId        and        v_1045.orderId=temp.orderId
-     left join v_1046_cang  on  v_1046_cang.hsId=temp.hsId   and   v_1046_cang.orderId=temp.orderId
-     left join v_1047       on  v_1047.hsId=temp.hsId        and        v_1047.orderId=temp.orderId
-     left join v_1048_cang  on  v_1048_cang.hsId=temp.hsId   and   v_1048_cang.orderId= temp.orderId
-     left join v_1049_cang  on  v_1049_cang.hsId=temp.hsId   and   v_1049_cang.orderId= temp.orderId
-     left join v_1050_cang  on  v_1050_cang.hsId=temp.hsId   and   v_1050_cang.orderId= temp.orderId
-     left join v_1051_cang  on  v_1051_cang.hsId=temp.hsId   and   v_1051_cang.orderId= temp.orderId
-     left join v_1052_cang  on  v_1052_cang.hsId=temp.hsId   and   v_1052_cang.orderId= temp.orderId
-     left join v_1054_cang  on  v_1054_cang.hsId=temp.hsId   and   v_1054_cang.orderId= temp.orderId
-     left join v_3003       on  v_3003.hsId=temp.hsId        and        v_3003.orderId= temp.orderId
-     left join v_1056_cang  on  v_1056_cang.hsId=temp.hsId   and   v_1056_cang.orderId= temp.orderId
-     left join v_1057_cang  on  v_1057_cang.hsId=temp.hsId   and   v_1057_cang.orderId= temp.orderId
-     left join v_1058_cang  on  v_1058_cang.hsId=temp.hsId   and   v_1058_cang.orderId= temp.orderId
-     left join v_1059_cang  on  v_1059_cang.hsId=temp.hsId   and   v_1059_cang.orderId= temp.orderId
-     left join v_1060_cang  on  v_1060_cang.hsId=temp.hsId   and   v_1060_cang.orderId= temp.orderId
-     left join v_1061_cang  on  v_1061_cang.hsId=temp.hsId   and   v_1061_cang.orderId= temp.orderId
-     left join v_1063_cang  on  v_1063_cang.hsId=temp.hsId   and   v_1063_cang.orderId= temp.orderId
-     left join v_1064_cang  on  v_1064_cang.hsId=temp.hsId   and   v_1064_cang.orderId= temp.orderId
-     left join v_1065_cang  on  v_1065_cang.hsId=temp.hsId   and   v_1065_cang.orderId= temp.orderId
-     left join v_1066_cang  on  v_1066_cang.hsId=temp.hsId   and   v_1066_cang.orderId= temp.orderId
-     left join v_3001       on  v_3001.hsId=temp.hsId        and        v_3001.orderId= temp.orderId
-     left join v_3005       on  v_3005.hsId=temp.hsId        and        v_3005.orderId= temp.orderId
-     left join v_3006       on  v_3006.hsId=temp.hsId        and        v_3006.orderId= temp.orderId
-group by orderId,hsId;
-
-
-
-create view hs_yingDatabaseAnalysis as
-select
-temp.hsId,
-temp.orderId,
-v_1001.totalPayTrafficFee,
-v_1001.totalTradeGapFee,
-v_1001.totalPaymentAmount,
-v_1004.totalLoadMoney,
-v_1006.totalUnrepaymentEstimateCost,
-v_1007.totalRepaymentPrincipeAmount,
-v_1007.totalServiceCharge,
-v_1007.totalRepaymentInterest,
-v_1009.totalUnpayFee,
-v_1009.totalUnpayInterest,
-v_1009.totalUnpayPrincipal,
-v_1012.outCapitalAmout,
-v_1013.totalHuikuanPaymentMoney,
-v_1014.payCargoAmount,
-v_1015.unpaymentMoney,
-v_1016.unpaymentEstimateProfile,
-v_1017.interestDays,
-v_1018.actualUtilizationRate,
-v_1020.totalPaymentedRateMoney,
-v_1021.contractRateProfile,
-v_1023.tiexianRateAmount,
-v_1024.totalBuyerMoney,
-v_1024.totalBuyerNums,
-v_1024.totalBuyersettleGap,
-v_1027.dsddFee,
-v_1027.hshyFee,
-v_1027.hsqyFee,
-v_1027.hssyFee,
-v_1027.businessFee,
-v_1027.superviseFee,
-v_1027.serviceFee,
-v_1027.salesFeeAmount,
-v_1035.tradingCompanyInTypeNum,
-v_1035.tradingCompanyInTpeMoneyAmount,
-v_1037.totalCCSIntypeMoney,
-v_1037.totalCSSIntypeNumber,
-v_1039.invoicedMoneyNum,
-v_1039.invoicedMoneyAmount,
-v_1041_ying.finalSettleAmount,
-v_1041_ying.saleCargoAmountofMoney,
-v_1041_ying.tradingCompanyAddMoney,
-v_1041_ying.unsettlerBuyerMoneyAmount,
-v_1041_ying.unsettlerBuyerNumber,
-v_1045.ccsProfile,
-v_1046_ying.purchaseCargoAmountofMoney,
-v_1047.externalCapitalPaymentAmount,
-v_1048_ying.ownerCapitalPaymentAmount,
-v_1049_ying.upstreamCapitalPressure,
-v_1050_ying.downstreamCapitalPressure,
-v_1051_ying.cssUninTypeNum,
-v_1052_ying.cssUninTypeMoney,
-v_1052_ying.unInvoicedAmountofMoney,
-v_1054_ying.yingPrePayment,
-v_1055.settleGrossProfileNum,
-v_1046_ying.purchaseCargoAmountofMoney as purchaseIncludeTaxTotalAmount,
-v_1041_ying.saleCargoAmountofMoney as saleIncludeTaxTotalAmount,
-v_1058_ying.tradeCompanyAddMoney,
-v_1059_ying.withoutTaxIncome,
-v_1060_ying.withoutTaxCost,
-v_1061_ying.vat,
-v_1061_ying.additionalTax,
-v_1063_ying.stampDuty,
-v_1064_ying.opreationCrossProfile,
-v_1065_ying.crossProfileATon,
-v_1066_ying.ownerCapitalPressure,
-v_2001.totalFayunNum,
-v_2001.totalUnarriveNum,
-v_2001.totalArriveNum,
-v_2004.totalPayDownBail,
-v_2004.totalRefundDownBail,
-v_2004.totalRefundUpBail,
-v_2004.totalUpstreamBail,
-v_2008.balanceUpstreamBail,
-v_2008.balanceDownStreamBail,
-v_2010_ying.settledDownstreamHuikuanMoneny
-from base as temp
-     left join v_1001   on v_1001.hsId=temp.hsId  and  v_1001.orderId    =temp.orderId
-     left join v_1004   on v_1004.hsId=temp.hsId  and  v_1004.orderId    =temp.orderId
-     left join v_1006   on v_1006.hsId=temp.hsId  and  v_1006.orderId    =temp.orderId
-     left join v_1007   on v_1007.hsId=temp.hsId  and  v_1007.orderId    =temp.orderId
-     left join v_1009   on v_1009.hsId=temp.hsId  and  v_1009.orderId    =temp.orderId
-     left join v_1012   on v_1012.hsId=temp.hsId  and  v_1012.orderId    =temp.orderId
-     left join v_1013   on v_1013.hsId=temp.hsId  and  v_1013.orderId    =temp.orderId
-     left join v_1014   on v_1014.hsId=temp.hsId  and  v_1014.orderId    =temp.orderId
-     left join v_1015   on v_1015.hsId=temp.hsId  and  v_1015.orderId    =temp.orderId
-     left join v_1016   on v_1016.hsId=temp.hsId  and  v_1016.orderId    =temp.orderId
-     left join v_1017   on v_1017.hsId=temp.hsId  and  v_1017.orderId    =temp.orderId
-     left join v_1018   on v_1018.hsId=temp.hsId  and  v_1018.orderId    =temp.orderId
-     left join v_1020   on v_1020.hsId=temp.hsId  and  v_1020.orderId    =temp.orderId
-     left join v_1021   on v_1021.hsId=temp.hsId  and  v_1021.orderId    =temp.orderId
-     left join v_1022   on v_1022.hsId=temp.hsId  and  v_1022.orderId    =temp.orderId
-     left join v_1023   on v_1023.hsId=temp.hsId  and  v_1023.orderId    =temp.orderId
-     left join v_1024   on v_1024.hsId=temp.hsId  and  v_1024.orderId    =temp.orderId
-     left join v_1027   on v_1027.hsId=temp.hsId  and  v_1027.orderId    =temp.orderId
-     left join v_1035   on v_1035.hsId=temp.hsId  and  v_1035.orderId    =temp.orderId
-     left join v_1037   on v_1037.hsId=temp.hsId  and  v_1037.orderId    =temp.orderId
-     left join v_1039   on  v_1039.hsId=temp.hsId and  v_1039.orderId    =temp.orderId
-     left join v_1041_ying on  v_1041_ying.hsId=temp.hsId and     v_1041_ying.orderId=temp.orderId
-     left join v_1045 on            v_1045.hsId=temp.hsId and          v_1045.orderId    =temp.orderId
-     left join  v_1046_ying on v_1046_ying.hsId=temp.hsId and     v_1046_ying.orderId    =temp.orderId
-     left join v_1047  on           v_1047.hsId=temp.hsId and          v_1047.orderId    =temp.orderId
-     left join  v_1048_ying on v_1048_ying.hsId=temp.hsId and     v_1048_ying.orderId    =temp.orderId
-     left join  v_1049_ying on v_1049_ying.hsId=temp.hsId and     v_1049_ying.orderId    =temp.orderId
-     left join  v_1050_ying on v_1050_ying.hsId=temp.hsId and     v_1050_ying.orderId    =temp.orderId
-     left join  v_1051_ying on v_1051_ying.hsId=temp.hsId and     v_1051_ying.orderId    =temp.orderId
-     left join  v_1052_ying on v_1052_ying.hsId=temp.hsId and     v_1052_ying.orderId    =temp.orderId
-     left join  v_1054_ying on v_1054_ying.hsId=temp.hsId and     v_1054_ying.orderId    =temp.orderId
-     left join v_1055 on            v_1055.hsId=temp.hsId and          v_1055.orderId    =temp.orderId
-     left join v_1058_ying on  v_1058_ying.hsId=temp.hsId and     v_1058_ying.orderId    =temp.orderId
-     left join v_1059_ying on  v_1059_ying.hsId=temp.hsId and     v_1059_ying.orderId    =temp.orderId
-     left join v_1060_ying on  v_1060_ying.hsId=temp.hsId and     v_1060_ying.orderId    =temp.orderId
-     left join v_1061_ying on  v_1061_ying.hsId=temp.hsId and     v_1061_ying.orderId    =temp.orderId
-     left join  v_1063_ying on v_1063_ying.hsId=temp.hsId and     v_1063_ying.orderId    =temp.orderId
-     left join  v_1064_ying on v_1064_ying.hsId=temp.hsId and     v_1064_ying.orderId    =temp.orderId
-     left join  v_1065_ying on v_1065_ying.hsId=temp.hsId and     v_1065_ying.orderId    =temp.orderId
-     left join  v_1066_ying on v_1066_ying.hsId=temp.hsId and     v_1066_ying.orderId    =temp.orderId
-     left join v_2001 on            v_2001.hsId=temp.hsId and          v_2001.orderId    =temp.orderId
-     left join  v_2004 on           v_2004.hsId=temp.hsId and          v_2004.orderId    =temp.orderId
-     left join  v_2008 on           v_2008.hsId=temp.hsId and          v_2008.orderId    =temp.orderId
-     left join v_2010_ying on  v_2010_ying.hsId=temp.hsId and     v_2010_ying.orderId    =temp.orderId;
-
-
-create view hs_yingDatabasePartOneAnalysis as
-select
-temp.hsId,
-temp.orderId,
-v_1001.totalPayTrafficFee,
-v_1001.totalTradeGapFee,
-v_1001.totalPaymentAmount,
-v_1004.totalLoadMoney,
-v_1006.totalUnrepaymentEstimateCost,
-v_1007.totalRepaymentPrincipeAmount,
-v_1007.totalServiceCharge,
-v_1007.totalRepaymentInterest,
-v_1009.totalUnpayFee,
-v_1009.totalUnpayInterest,
-v_1009.totalUnpayPrincipal,
-v_1012.outCapitalAmout,
-v_1013.totalHuikuanPaymentMoney,
-v_1014.payCargoAmount,
-v_1015.unpaymentMoney,
-v_1016.unpaymentEstimateProfile,
-v_1017.interestDays,
-v_1018.actualUtilizationRate,
-v_1020.totalPaymentedRateMoney,
-v_1021.contractRateProfile,
-v_1023.tiexianRateAmount,
-v_1024.totalBuyerMoney,
-v_1024.totalBuyerNums,
-v_1024.totalBuyersettleGap,
-v_1027.dsddFee,
-v_1027.hshyFee,
-v_1027.hsqyFee,
-v_1027.hssyFee,
-v_1027.businessFee,
-v_1027.superviseFee,
-v_1027.serviceFee,
-v_1027.salesFeeAmount,
-v_1035.tradingCompanyInTypeNum,
-v_1035.tradingCompanyInTpeMoneyAmount,
-v_1037.totalCCSIntypeMoney,
-v_1037.totalCSSIntypeNumber,
-v_1039.invoicedMoneyNum,
-v_1039.invoicedMoneyAmount,
-v_1041_ying.finalSettleAmount,
-v_1041_ying.saleCargoAmountofMoney,
-v_1041_ying.tradingCompanyAddMoney,
-v_1041_ying.unsettlerBuyerMoneyAmount,
-v_1041_ying.unsettlerBuyerNumber,
-v_1045.ccsProfile,
-v_1046_ying.purchaseCargoAmountofMoney,
-v_1047.externalCapitalPaymentAmount,
-v_1048_ying.ownerCapitalPaymentAmount,
-v_1049_ying.upstreamCapitalPressure,
-v_2001.totalFayunNum,
-v_2001.totalUnarriveNum,
-v_2001.totalArriveNum,
-v_2004.totalPayDownBail,
-v_2004.totalRefundDownBail,
-v_2004.totalRefundUpBail,
-v_2004.totalUpstreamBail,
-v_2008.balanceUpstreamBail,
-v_2008.balanceDownStreamBail,
-v_2010_ying.settledDownstreamHuikuanMoneny
-from base as temp
-     left join v_1001   on v_1001.hsId=temp.hsId  and  v_1001.orderId    =temp.orderId
-     left join v_1004   on v_1004.hsId=temp.hsId  and  v_1004.orderId    =temp.orderId
-     left join v_1006   on v_1006.hsId=temp.hsId  and  v_1006.orderId    =temp.orderId
-     left join v_1007   on v_1007.hsId=temp.hsId  and  v_1007.orderId    =temp.orderId
-     left join v_1009   on v_1009.hsId=temp.hsId  and  v_1009.orderId    =temp.orderId
-     left join v_1012   on v_1012.hsId=temp.hsId  and  v_1012.orderId    =temp.orderId
-     left join v_1013   on v_1013.hsId=temp.hsId  and  v_1013.orderId    =temp.orderId
-     left join v_1014   on v_1014.hsId=temp.hsId  and  v_1014.orderId    =temp.orderId
-     left join v_1015   on v_1015.hsId=temp.hsId  and  v_1015.orderId    =temp.orderId
-     left join v_1016   on v_1016.hsId=temp.hsId  and  v_1016.orderId    =temp.orderId
-     left join v_1017   on v_1017.hsId=temp.hsId  and  v_1017.orderId    =temp.orderId
-     left join v_1018   on v_1018.hsId=temp.hsId  and  v_1018.orderId    =temp.orderId
-     left join v_1020   on v_1020.hsId=temp.hsId  and  v_1020.orderId    =temp.orderId
-     left join v_1021   on v_1021.hsId=temp.hsId  and  v_1021.orderId    =temp.orderId
-     left join v_1022   on v_1022.hsId=temp.hsId  and  v_1022.orderId    =temp.orderId
-     left join v_1023   on v_1023.hsId=temp.hsId  and  v_1023.orderId    =temp.orderId
-     left join v_1024   on v_1024.hsId=temp.hsId  and  v_1024.orderId    =temp.orderId
-     left join v_1027   on v_1027.hsId=temp.hsId  and  v_1027.orderId    =temp.orderId
-     left join v_1035   on v_1035.hsId=temp.hsId  and  v_1035.orderId    =temp.orderId
-     left join v_1037   on v_1037.hsId=temp.hsId  and  v_1037.orderId    =temp.orderId
-     left join v_1039   on  v_1039.hsId=temp.hsId and  v_1039.orderId    =temp.orderId
-     left join v_1041_ying on  v_1041_ying.hsId=temp.hsId and     v_1041_ying.orderId=temp.orderId
-     left join v_1045 on            v_1045.hsId=temp.hsId and          v_1045.orderId    =temp.orderId
-     left join  v_1046_ying on v_1046_ying.hsId=temp.hsId and     v_1046_ying.orderId    =temp.orderId
-     left join v_1047  on           v_1047.hsId=temp.hsId and          v_1047.orderId    =temp.orderId
-     left join  v_1048_ying on v_1048_ying.hsId=temp.hsId and     v_1048_ying.orderId    =temp.orderId
-     left join  v_1049_ying on v_1049_ying.hsId=temp.hsId and     v_1049_ying.orderId    =temp.orderId
-     left join v_2001 on            v_2001.hsId=temp.hsId and          v_2001.orderId    =temp.orderId
-     left join  v_2004 on           v_2004.hsId=temp.hsId and          v_2004.orderId    =temp.orderId
-     left join  v_2008 on           v_2008.hsId=temp.hsId and          v_2008.orderId    =temp.orderId
-     left join v_2010_ying on  v_2010_ying.hsId=temp.hsId and     v_2010_ying.orderId    =temp.orderId;
-
-
-
-
-create view hs_yingDatabasePartTwoAnalysis as
-select
-temp.hsId,
-temp.orderId,
-
-v_1050_ying.downstreamCapitalPressure,
-v_1051_ying.cssUninTypeNum,
-v_1052_ying.cssUninTypeMoney,
-v_1052_ying.unInvoicedAmountofMoney,
-v_1054_ying.yingPrePayment,
-v_1055.settleGrossProfileNum,
-v_1046_ying.purchaseCargoAmountofMoney as purchaseIncludeTaxTotalAmount,
-v_1041_ying.saleCargoAmountofMoney as saleIncludeTaxTotalAmount,
-v_1058_ying.tradeCompanyAddMoney,
-v_1059_ying.withoutTaxIncome,
-v_1060_ying.withoutTaxCost,
-v_1061_ying.vat,
-v_1061_ying.additionalTax,
-v_1063_ying.stampDuty,
-v_1064_ying.opreationCrossProfile,
-v_1065_ying.crossProfileATon,
-v_1066_ying.ownerCapitalPressure
-
-from base as temp
-     left join v_1041_ying on  v_1041_ying.hsId=temp.hsId and     v_1041_ying.orderId=temp.orderId
-     left join  v_1046_ying on v_1046_ying.hsId=temp.hsId and     v_1046_ying.orderId    =temp.orderId
-     left join  v_1050_ying on v_1050_ying.hsId=temp.hsId and     v_1050_ying.orderId    =temp.orderId
-     left join  v_1051_ying on v_1051_ying.hsId=temp.hsId and     v_1051_ying.orderId    =temp.orderId
-     left join  v_1052_ying on v_1052_ying.hsId=temp.hsId and     v_1052_ying.orderId    =temp.orderId
-     left join  v_1054_ying on v_1054_ying.hsId=temp.hsId and     v_1054_ying.orderId    =temp.orderId
-     left join v_1055 on            v_1055.hsId=temp.hsId and          v_1055.orderId    =temp.orderId
-     left join v_1058_ying on  v_1058_ying.hsId=temp.hsId and     v_1058_ying.orderId    =temp.orderId
-     left join v_1059_ying on  v_1059_ying.hsId=temp.hsId and     v_1059_ying.orderId    =temp.orderId
-     left join v_1060_ying on  v_1060_ying.hsId=temp.hsId and     v_1060_ying.orderId    =temp.orderId
-     left join v_1061_ying on  v_1061_ying.hsId=temp.hsId and     v_1061_ying.orderId    =temp.orderId
-     left join  v_1063_ying on v_1063_ying.hsId=temp.hsId and     v_1063_ying.orderId    =temp.orderId
-     left join  v_1064_ying on v_1064_ying.hsId=temp.hsId and     v_1064_ying.orderId    =temp.orderId
-     left join  v_1065_ying on v_1065_ying.hsId=temp.hsId and     v_1065_ying.orderId    =temp.orderId
-     left join  v_1066_ying on v_1066_ying.hsId=temp.hsId and     v_1066_ying.orderId    =temp.orderId;
 
 
 

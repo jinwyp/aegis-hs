@@ -712,7 +712,8 @@
         select
         orderId,
         hsId,
-        totalStockNum
+        totalStockNum,
+        inOutRate
         from v_3005
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>

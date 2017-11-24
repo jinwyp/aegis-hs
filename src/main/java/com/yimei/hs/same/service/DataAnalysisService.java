@@ -213,6 +213,13 @@ public class DataAnalysisService {
 
             //借款需要字段
             setNonRepaymentLoanMoney(nonRepaymentLoanMoney);
+//            setFeeAndAddTax(yingAnalysisDatav1027);
+
+            setHsqyCrossProfile(yingAnalysisDatav1027.getHsqyFee());
+            setHssyCrossProfile(yingAnalysisDatav1027.getHssyFee());
+            setHshyCrossProfile(yingAnalysisDatav1027.getHshyFee());
+            setSuperviseCrossProfile(yingAnalysisDatav1027.getSuperviseFee());
+            setServiceCrossProfile(yingAnalysisDatav1027.getServiceFee());
 
 
         }};
@@ -357,8 +364,8 @@ public class DataAnalysisService {
             setTotalInstorageNum(cangAnalysisDatav3001.getTotalInstorageNum());
             setInstorageUnitPrice(cangAnalysisDatav3001.getInstorageUnitPrice());
             setTotalOutstorageNum(cangAnalysisDatav3003.getTotalOutstorageNum());
-            setTotalInstorageTranitNum(cangAnalysisDatav3001.getTotalInstorageTranitNum());
-            setTotalInstorageTranitPrice(cangAnalysisDatav3001.getTotalInstorageTranitPrice());
+
+
             setTotalOutstorageMoney(cangAnalysisDatav3003.getTotalOutstorageMoney());
             setTotalStockNum(cangAnalysisDatav3005.getTotalStockNum());
             setTotalStockMoney(cangAnalysisDatav3006.getTotalStockMoney());
@@ -398,18 +405,40 @@ public class DataAnalysisService {
 //            业务累计付款金额
             setAccumulativePaymentAmount(cangAnalysisDos3.getAccumulativePaymentAmount());
 
-            //剩余库存数量
-            BigDecimal remaindInstorageNumber = cangAnalysisDatav3001.getTotalInstoragedNum().subtract(cangAnalysisDatav3001.getTotalInstorageTranitNum());
+
+
+            //3009
+            setTotalInstorageTranitNum(cangAnalysisDatav3001.getTotalInstorageTranitNum());
+            //在途中剩余金额  3010
+            setTotalInstorageTranitPrice(cangAnalysisDatav3001.getTotalInstorageTranitNum().multiply(cangAnalysisDatav3001.getInstorageUnitPrice()));
+            //3011
+            setTotalInstoragedNum(cangAnalysisDatav3001.getTotalInstoragedNum());
+
+            // 12剩余库存数量   【3011】已入库库存数量-【3003】已出库数量 2012
+            BigDecimal remaindInstorageNumber = cangAnalysisDatav3001.getTotalInstoragedNum().subtract(cangAnalysisDatav3003.getTotalOutstorageNum());
 
             setTotalInstorageRemainNum(remaindInstorageNumber);
-            //剩余库存金额=剩余库存数量*单价
+            //13 剩余库存金额=剩余库存数量*单价 2013
             BigDecimal totalInstorageRemainPrice = remaindInstorageNumber.multiply(cangAnalysisDatav3001.getInstorageUnitPrice());
 
             setTotalInstorageRemainPrice(totalInstorageRemainPrice);
-            //合计数量
-            setTotalSumInstorageNum(remaindInstorageNumber.add(cangAnalysisDatav3001.getTotalInstorageTranitNum()));
-            //合计金额
-            setTotalSumInstoragePrice(totalInstorageRemainPrice.add(cangAnalysisDatav3001.getTotalInstorageTranitPrice()));
+
+
+            BigDecimal inOutRate = cangAnalysisDatav3005.getInOutRate();
+            setHsqyCrossProfile(cangAnalysisDatav1027.getHsqyFee().multiply(inOutRate));
+            setHssyCrossProfile(cangAnalysisDatav1027.getHssyFee().multiply(inOutRate));
+            setHshyCrossProfile(cangAnalysisDatav1027.getHshyFee().multiply(inOutRate));
+            setSuperviseCrossProfile(cangAnalysisDatav1027.getSuperviseFee().multiply(inOutRate));
+            setServiceCrossProfile(cangAnalysisDatav1027.getServiceFee().multiply(inOutRate));
+            setInOutRate(inOutRate);
+//
+//            //合计数量
+//            setTotalSumInstorageNum(remaindInstorageNumber.add(cangAnalysisDatav3001.getTotalInstorageTranitNum()));
+//            //合计金额
+//            setTotalSumInstoragePrice(totalInstorageRemainPrice.add(cangAnalysisDatav3001.getTotalInstorageTranitPrice()));
+//
+
+
 
             //借款需要字段
             setNonRepaymentLoanMoney(nonRepaymentLoanMoney);

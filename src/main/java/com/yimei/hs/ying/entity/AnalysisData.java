@@ -208,7 +208,6 @@ public class AnalysisData implements Serializable {
     private BigDecimal totalPayGoodsFee;
 
 
-
     //入库在途中数量
     private BigDecimal totalInstorageTranitNum;
     //入库在途中金额
@@ -222,10 +221,30 @@ public class AnalysisData implements Serializable {
 
     private BigDecimal totalInstorageRemainNum;//剩余库存数量
 
-    private BigDecimal totalInstorageRemainPrice ; //剩余库存金额
+    private BigDecimal totalInstorageRemainPrice; //剩余库存金额
 
     private BigDecimal totalSumInstorageNum; //合计数量
 
     private BigDecimal totalSumInstoragePrice; //合计金额
+
+    private BigDecimal inOutRate;
+
+
+    //     费用及补税
+    private BigDecimal feeAndAddTax;
+    //    毛利含税汽运费
+    private BigDecimal hsqyCrossProfile;
+    //    毛利含税水运费
+    private BigDecimal hssyCrossProfile;
+    //    毛利含税火运费
+    private BigDecimal hshyCrossProfile;
+
+    //    毛利监管费
+    private BigDecimal superviseCrossProfile;
+    /**
+     * 服务管理费
+     */
+    private BigDecimal serviceCrossProfile;
+
 
 }
