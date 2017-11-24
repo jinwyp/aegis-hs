@@ -395,24 +395,42 @@
 
 
                     <div class="row mt-4">
-                        <div class="col-3">
+                        <div class="col-3" *ngIf="businessType==='ying'">
                             <p class="card-text" title="汇总：费用科目 = “代收代垫运费”的费用金额">毛利表 - 代收代垫运费: {{ unitStatistics?.dsddFee | number }}</p>
                         </div>
-                        <div class="col-3">
+                        <div class="col-3" *ngIf="businessType==='ying'">
                             <p class="card-text" title="汇总：费用科目 = “含税汽运费”的费用金额">毛利表 - 含税汽运费: {{ unitStatistics?.hsqyFee | number }}</p>
                         </div>
-                        <div class="col-3">
+                        <div class="col-3" *ngIf="businessType==='ying'">
                             <p class="card-text" title="汇总：费用科目 = “含税水运费”的费用金额">毛利表 - 含税水运费: {{ unitStatistics?.hssyFee | number }}</p>
                         </div>
-                        <div class="col-3">
+                        <div class="col-3" *ngIf="businessType==='ying'">
                             <p class="card-text" title="汇总：费用科目 = “含税火运费”的费用金额">毛利表 - 含税火运费: {{ unitStatistics?.hshyFee | number }}</p>
                         </div>
-                        <div class="col-3">
+                        <div class="col-3" *ngIf="businessType==='ying'">
                             <p class="card-text" title="汇总：费用科目 = “监管费”的费用金额">毛利表 - 监管费: {{ unitStatistics?.serviceFee | number }}</p>
                         </div>
-                        <div class="col-3">
+                        <div class="col-3" *ngIf="businessType==='ying'">
                             <p class="card-text" title="汇总：费用科目 = “管理费”的费用金额">毛利表 - 管理费: {{ unitStatistics?.superviseFee | number }}</p>
                         </div>
+
+                        <div class="col-3" *ngIf="businessType==='cang'">
+                            <p class="card-text" title="汇总：费用科目 = “含税汽运费”的费用金额">毛利表 - 含税汽运费: {{ unitStatistics?.hsqyCrossProfile | number }}</p>
+                        </div>
+                        <div class="col-3" *ngIf="businessType==='cang'">
+                            <p class="card-text" title="汇总：费用科目 = “含税水运费”的费用金额">毛利表 - 含税水运费: {{ unitStatistics?.hssyCrossProfile | number }}</p>
+                        </div>
+                        <div class="col-3" *ngIf="businessType==='cang'">
+                            <p class="card-text" title="汇总：费用科目 = “含税火运费”的费用金额">毛利表 - 含税火运费: {{ unitStatistics?.hshyCrossProfile | number }}</p>
+                        </div>
+                        <div class="col-3" *ngIf="businessType==='cang'">
+                            <p class="card-text" title="汇总：费用科目 = “监管费”的费用金额">毛利表 - 监管费: {{ unitStatistics?.superviseCrossProfile | number }}</p>
+                        </div>
+                        <div class="col-3" *ngIf="businessType==='cang'">
+                            <p class="card-text" title="汇总：费用科目 = “服务费”的费用金额">毛利表 - 服务费: {{ unitStatistics?.serviceCrossProfile | number }}</p>
+                        </div>
+
+
                         <div class="col-3">
                             <p class="card-text" title="汇总：费用科目 = “业务费”的费用金额">毛利表 - 业务费: {{ unitStatistics?.businessFee | number }}</p>
                         </div>
@@ -726,6 +744,9 @@
 
                         <div class="col-3">
                             <p class="card-text" title="【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款">占压表 - 下游已结算未回款金额: {{ unitStatistics?.settledDownstreamHuikuanMoneny | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1028】含税汽运费*1.06+【1029】含税水运费*1.06+【1030】含税火运费*1.06+【1031】监管费*1.12+【1032】服务费*1.12">费用及补税: {{ unitStatistics?.费用及补税 | number }}</p>
                         </div>
 
 
