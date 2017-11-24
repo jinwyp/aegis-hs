@@ -146,24 +146,43 @@
 
                     <div class="row mt-4">
 
+                        <!--<div class="col-3">-->
+                            <!--<p class="card-text" title="汇总：费用科目 = “含税汽运费”的费用金额">含税汽运费: {{ unitStatistics?.hsqyFee | number }}</p>-->
+                        <!--</div>-->
+                        <!--<div class="col-3">-->
+                            <!--<p class="card-text" title="汇总：费用科目 = “含税水运费”的费用金额">含税水运费: {{ unitStatistics?.hssyFee | number }}</p>-->
+                        <!--</div>-->
+                        <!--<div class="col-3">-->
+                            <!--<p class="card-text" title="汇总：费用科目 = “含税火运费”的费用金额">含税火运费: {{ unitStatistics?.hshyFee | number }}</p>-->
+                        <!--</div>-->
+                        <!--<div class="col-3">-->
+                            <!--<p class="card-text" title="汇总：费用科目 = “监管费”的费用金额">监管费: {{ unitStatistics?.superviseFee | number }}</p>-->
+                        <!--</div>-->
+                        <!--<div class="col-3">-->
+                            <!--<p class="card-text" title="汇总：费用科目 = “服务费”的费用金额">服务费: {{ unitStatistics?.serviceFee | number }}</p>-->
+                        <!--</div>-->
+
+
                         <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “含税汽运费”的费用金额">含税汽运费: {{ unitStatistics?.hsqyFee | number }}</p>
+                            <p class="card-text" title="汇总：费用科目 = “含税汽运费”的费用金额">含税汽运费: {{ unitStatistics?.hsqyCrossProfile | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “含税水运费”的费用金额">含税水运费: {{ unitStatistics?.hssyFee | number }}</p>
+                            <p class="card-text" title="汇总：费用科目 = “含税水运费”的费用金额">含税水运费: {{ unitStatistics?.hssyCrossProfile | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “含税火运费”的费用金额">含税火运费: {{ unitStatistics?.hshyFee | number }}</p>
+                            <p class="card-text" title="汇总：费用科目 = “含税火运费”的费用金额">含税火运费: {{ unitStatistics?.hshyCrossProfile | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “监管费”的费用金额">监管费: {{ unitStatistics?.superviseFee | number }}</p>
+                            <p class="card-text" title="汇总：费用科目 = “监管费”的费用金额">监管费: {{ unitStatistics?.superviseCrossProfile | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：费用科目 = “服务费”的费用金额">服务费: {{ unitStatistics?.serviceFee | number }}</p>
+                            <p class="card-text" title="汇总：费用科目 = “服务费”的费用金额">服务费: {{ unitStatistics?.serviceCrossProfile | number }}</p>
                         </div>
+
                         <div class="col-3">
                             <p class="card-text" title="汇总：费用科目 = “业务费”的费用金额">业务费: {{ unitStatistics?.businessFee | number }}</p>
                         </div>
+
 
 
                         <div class="col-3">
