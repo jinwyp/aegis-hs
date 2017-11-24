@@ -689,7 +689,9 @@
         totalInstorageAmount,
         instorageUnitPrice,
         totalInstorageTranitNum,
-        totalInstorageTranitPrice
+        totalInstorageTranitPrice,
+        totalInstoragedNum,
+        totalInstoragedNumMoney
         from v_3001
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
