@@ -19,7 +19,7 @@ public class PageCangChukuDTO extends BaseFilter<PageCangChukuDTO> {
     private Long hsId;
     private LocalDateTime chukuDate;
     private BigDecimal chukuPrice;
-//    private String locality;
+    private String locality;
     private BigDecimal chukuAmount;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
