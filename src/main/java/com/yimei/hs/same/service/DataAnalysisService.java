@@ -218,6 +218,7 @@ public class DataAnalysisService {
             setHsqyCrossProfile(yingAnalysisDatav1027.getHsqyFee());
             setHssyCrossProfile(yingAnalysisDatav1027.getHssyFee());
             setHshyCrossProfile(yingAnalysisDatav1027.getHshyFee());
+
             setSuperviseCrossProfile(yingAnalysisDatav1027.getSuperviseFee());
             setServiceCrossProfile(yingAnalysisDatav1027.getServiceFee());
 
