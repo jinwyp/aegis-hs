@@ -432,7 +432,7 @@ describe('仓押订单 统计范例11 赵征提供 11.21日', function () {
                     "hsId" : unitId,
                     "orderId" : orderId,
                     "promise" : true,
-                    "huankuankDate" : "2017-07-31 00:00:00",
+                    "huankuanDate" : "2017-07-31 00:00:00",
                     "huankuanMapList" : [
                         {
                             "jiekuanId": borrowId,
@@ -451,7 +451,7 @@ describe('仓押订单 统计范例11 赵征提供 11.21日', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.huankuankDate).to.include('2017')
+                expect(res.body.data.huankuanDate).to.include('2017')
                 done()
             })
     })
