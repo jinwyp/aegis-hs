@@ -107,6 +107,36 @@
             <div class="card mt-4">
                 <div class="card-body" >
 
+                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 出入库</h5>
+
+                    <div class="row mt-4">
+
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：入库数量">入库总数量: {{ unitStatistics?.totalInstorageNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：入库金额">入库总金额: {{ unitStatistics?.totalInstorageAmount | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：出库数量">已出库数量: {{ unitStatistics?.totalOutstorageNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【3002】入库总金额 ／ 【3001】入库总数量">入库单价: {{ unitStatistics?.instorageUnitPrice | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总出库金额">已出库金额: {{ unitStatistics?.totalOutstorageMoney | number }}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+            <div class="card mt-4">
+                <div class="card-body" >
+
                     <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 毛利表</h5>
 
                     <div class="row mt-4">
@@ -260,32 +290,7 @@
             </div>
 
 
-            <div class="card mt-4">
-                <div class="card-body" >
 
-                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 出入库</h5>
-
-                    <div class="row mt-4">
-
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：入库数量">入库总数量: {{ unitStatistics?.totalInstorageNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：入库金额">入库总金额: {{ unitStatistics?.totalInstorageAmount | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：出库数量">已出库数量: {{ unitStatistics?.totalOutstorageNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【3002】入库总金额 ／ 【3001】入库总数量">入库单价: {{ unitStatistics?.instorageUnitPrice | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总出库金额">已出库金额: {{ unitStatistics?.totalOutstorageMoney | number }}</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
 
 
 

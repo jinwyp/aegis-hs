@@ -158,9 +158,9 @@ export class OrderDetailComponent implements OnInit {
 
                     data.data.forEach( unit => {
                         console.log(unit)
-                        tempTotal.totalFayunNum = tempTotal.totalFayunNum + unit.totalFayunNum
-                        tempTotal.totalArriveNum = tempTotal.totalArriveNum + unit.totalArriveNum
-                        tempTotal.totalUnarriveNum = tempTotal.totalUnarriveNum + unit.totalUnarriveNum
+                        tempTotal.totalFayunNum = tempTotal.totalFayunNum + unit.totalFayunNum || 0
+                        tempTotal.totalArriveNum = tempTotal.totalArriveNum + unit.totalArriveNum || 0
+                        tempTotal.totalUnarriveNum = tempTotal.totalUnarriveNum + unit.totalUnarriveNum || 0
                         tempTotal.purchaseIncludeTaxTotalAmount = tempTotal.purchaseIncludeTaxTotalAmount + unit.purchaseIncludeTaxTotalAmount
                         tempTotal.saleIncludeTaxTotalAmount = tempTotal.saleIncludeTaxTotalAmount + unit.saleIncludeTaxTotalAmount
 
@@ -181,10 +181,10 @@ export class OrderDetailComponent implements OnInit {
 
                         tempTotal.tradingCompanyInTypeNum = tempTotal.tradingCompanyInTypeNum + unit.tradingCompanyInTypeNum
                         tempTotal.tradingCompanyInTpeMoneyAmount = tempTotal.tradingCompanyInTpeMoneyAmount + unit.tradingCompanyInTpeMoneyAmount
-                        tempTotal.totalCSSIntypeNumber = tempTotal.totalCSSIntypeNumber + unit.totalCSSIntypeNumber
-                        tempTotal.totalCCSIntypeMoney = tempTotal.totalCCSIntypeMoney + unit.totalCCSIntypeMoney
-                        tempTotal.cssUninTypeNum = tempTotal.cssUninTypeNum + unit.cssUninTypeNum
-                        tempTotal.cssUninTypeMoney = tempTotal.cssUninTypeMoney + unit.cssUninTypeMoney
+                        tempTotal.totalCSSIntypeNumber = tempTotal.totalCSSIntypeNumber + unit.totalCSSIntypeNumber || 0
+                        tempTotal.totalCCSIntypeMoney = tempTotal.totalCCSIntypeMoney + unit.totalCCSIntypeMoney || 0
+                        tempTotal.cssUninTypeNum = tempTotal.cssUninTypeNum + unit.cssUninTypeNum || 0
+                        tempTotal.cssUninTypeMoney = tempTotal.cssUninTypeMoney + unit.cssUninTypeMoney || 0
 
 
                         tempTotal.externalCapitalPaymentAmount = tempTotal.externalCapitalPaymentAmount + unit.externalCapitalPaymentAmount
