@@ -173,7 +173,7 @@
                         <button class="btn btn-link btn-sm" (click)="deleteItem(warehouse)"> 删除 </button>
                     </td>
                 </tr>
-                <tr> <td colspan="7"> 累计出库吨数: {{totalChukuAmount}} - 累计出库金额: {{totalChukuPrice}}</tr>
+                <tr> <td colspan="7"> 累计出库吨数: {{totalChukuAmount.toFixed(2)}} - 累计出库金额: {{totalChukuPrice.toFixed(2)}}</tr>
                 </tbody>
             </table>
 

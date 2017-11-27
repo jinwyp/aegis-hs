@@ -38,11 +38,8 @@ export class BorrowComponent implements OnInit {
 
 
     totalLoanAmountDisplay : number = 0
-    totalLoanMoneyDisplay : number = 0
     totalNonRepaymentLoanMoneyDisplay : number = 0
 
-    totalLoanMoneyAll : number = 0
-    totalNonRepaymentLoanMoneyAll : number = 0
 
 
     borrowStatusList : any[] = [
@@ -97,13 +94,6 @@ export class BorrowComponent implements OnInit {
 
         console.log('Query: ', query)
 
-        if (this.borrowSearchForm.value.hsId) {
-            this.totalLoanMoneyDisplay = this.unitListStatObject[this.borrowSearchForm.value.hsId].totalLoadMoney
-            this.totalNonRepaymentLoanMoneyDisplay = this.unitListStatObject[this.borrowSearchForm.value.hsId].nonRepaymentLoanMoney
-        } else {
-            this.totalLoanMoneyDisplay = this.totalLoanMoneyAll
-            this.totalNonRepaymentLoanMoneyDisplay = this.totalNonRepaymentLoanMoneyAll
-        }
 
         this.hsOrderService.getBorrowListByID(this.businessType, this.currentOrder.id, query).subscribe(
             data => {
@@ -111,10 +101,15 @@ export class BorrowComponent implements OnInit {
 
                 if (Array.isArray(data.data.results)) {
                     this.totalLoanAmountDisplay = 0
+                    this.totalNonRepaymentLoanMoneyDisplay = 0
 
-                    data.data.results.forEach( borrow => {
+                        data.data.results.forEach( borrow => {
 
                         this.totalLoanAmountDisplay = this.totalLoanAmountDisplay + borrow.amount
+
+                        if (borrow.loanStatus === '未还') {
+                            this.totalNonRepaymentLoanMoneyDisplay = this.totalNonRepaymentLoanMoneyDisplay + borrow.amount
+                        }
                     })
                 }
             },
@@ -153,12 +148,7 @@ export class BorrowComponent implements OnInit {
                         unit.name = unit.hsMonth
                         this.unitListStatObject[unit.hsId] = unit
 
-                        this.totalLoanMoneyAll = this.totalLoanMoneyAll + unit.totalLoadMoney
-                        this.totalNonRepaymentLoanMoneyAll = this.totalNonRepaymentLoanMoneyAll + unit.nonRepaymentLoanMoney
                     })
-
-                    this.totalLoanMoneyDisplay = this.totalLoanMoneyAll
-                    this.totalNonRepaymentLoanMoneyDisplay = this.totalNonRepaymentLoanMoneyAll
 
                 }
 
