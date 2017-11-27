@@ -95,8 +95,8 @@
                         <td> {{ ((borrow.amount * borrow.useInterest * borrow.useDays || 0) / 360).toFixed(2)  }}  </td>
 
                         <td>
-                            <button class="btn btn-link btn-sm" (click)="showForm(false, borrow)"> 修改 </button>
-                            <button class="btn btn-link btn-sm" (click)="deleteItem(borrow)"> 删除 </button>
+                            <button class="btn btn-link btn-sm" (click)="showForm(false, borrow)" [hidden]="borrow.fukuanId"> 修改 </button>
+                            <button class="btn btn-link btn-sm" (click)="deleteItem(borrow)" [hidden]="borrow.fukuanId"> 删除 </button>
                         </td>
                     </tr>
 
