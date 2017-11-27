@@ -155,7 +155,7 @@
                         <button class="btn btn-link btn-sm" (click)="deleteItem(invoice)"> 删除 </button>
                     </td>
                 </tr>
-                <tr> <td colspan="10">  累计价税合计: {{totalAllPriceAndTax}} - 累计已开票吨位: {{totalAllCargoAmount}} </tr>
+                <tr> <td colspan="10">  累计价税合计: {{totalAllPriceAndTax.toFixed(2)}} - 累计已开票吨位: {{totalAllCargoAmount.toFixed(2)}} </tr>
                 </tbody>
             </table>
 

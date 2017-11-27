@@ -138,6 +138,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
                         if (Array.isArray(repayment.huankuanMapList)) {
 
                             repayment.huankuanMapList.forEach( (borrow) => {
+
                                 this.totalPrincipal =  this.totalPrincipal + borrow.principal
                                 this.totalInterest =  this.totalInterest + borrow.interest
                                 this.totalFee =  this.totalFee + borrow.fee
