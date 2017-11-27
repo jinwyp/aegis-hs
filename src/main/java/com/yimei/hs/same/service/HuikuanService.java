@@ -96,24 +96,24 @@ public class HuikuanService {
     public int create(Huikuan huikuan) {
         int rtn = 0;
 
-        Long huikuanCompanyId=orderMapper.selectByPrimaryKey(huikuan.getOrderId()).getDownstreamId();
+        Long huikuanCompanyId = orderMapper.selectByPrimaryKey(huikuan.getOrderId()).getDownstreamId();
         huikuan.setHuikuanCompanyId(huikuanCompanyId);
 
         LocalDateTime currentTime = huikuan.getHuikuanDate();
-        List<Huikuan> huikuanList=huikuanMapper.gelistByhsIdAndOrderId(huikuan.getOrderId(),huikuan.getHsId());
+        List<Huikuan> huikuanList = huikuanMapper.gelistByhsIdAndOrderId(huikuan.getOrderId(), huikuan.getHsId());
 
         List<Huikuan> isNull = (huikuanList == null ? null : huikuanList.stream().filter(h -> currentTime.isBefore(h.getHuikuanDate())).collect(toList()));
 
-        if (isNull != null  && isNull.size() > 0) {
+        if (isNull != null && isNull.size() > 0) {
 
             // 1. 删除回款明细
             huikuanMapMapper.deleteByOrderId(huikuan.getOrderId());
 
         }
-            // 1. 插入回款记录
-            rtn = huikuanMapper.insert(huikuan);
-            // 2. 触发建立 回款-还款映射
-            this.createMapping(huikuan.getOrderId());
+        // 1. 插入回款记录
+        rtn = huikuanMapper.insert(huikuan);
+        // 2. 触发建立 回款-还款映射
+        this.createMapping(huikuan.getOrderId());
 
 
         return rtn;
@@ -126,7 +126,7 @@ public class HuikuanService {
      * @return
      */
     @Transactional(readOnly = false)
-    public int delete(long id,long orderId) {
+    public int delete(long id, long orderId) {
 
         // 1. 删除所有的回款对应明细
         huikuanMapMapper.deleteByOrderId(orderId);
@@ -178,7 +178,7 @@ public class HuikuanService {
                 record.setFukuanId(cur.getId());
 
                 BigDecimal toFinished = cur.getPayAmount().subtract(cur.getHuikuanTotal());
-
+//
                 if (total.compareTo(toFinished) == 1) {
                     total = total.subtract(toFinished);
                     record.setAmount(toFinished);

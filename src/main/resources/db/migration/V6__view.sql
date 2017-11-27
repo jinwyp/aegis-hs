@@ -769,7 +769,7 @@ select
 base.orderId,
 base.hsId,
 case when IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)>=IFNULL(v_1024.totalBuyerMoney,0.00)
-then ROUND(IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)-IFNULL(v_1024.totalBuyerMoney,0.00)+ IFNULL(v_2008.balanceDownStreamBail,0.00),2) else - ROUND(IFNULL(v_2008.balanceDownStreamBail,0.00),2) end as yingPrePayment
+then ROUND(IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)-IFNULL(v_1024.totalBuyerMoney,0.00)- IFNULL(v_2008.balanceDownStreamBail,0.00),2) else - ROUND(IFNULL(v_2008.balanceDownStreamBail,0.00),2) end as yingPrePayment
 from base 
      left join v_1013 on base.hsId=v_1013.hsId
      left join v_1024 on v_1013.hsId=v_1024.hsId
