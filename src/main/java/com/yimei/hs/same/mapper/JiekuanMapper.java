@@ -29,4 +29,6 @@ public interface JiekuanMapper {
     List<Jiekuan> getJiekuanListByHuankuanId(@Param("huankuanId") Long huankuanId);
 
     List<Jiekuan> getlimitInnerCapital(@Param("orderId") Long orderId,@Param("mainAccountId") Long mainAccountId);
+
+    int deleteByFukuanId( @Param("fukuanId")  Long fukuanId);
 }

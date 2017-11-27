@@ -134,6 +134,12 @@
             tsu     = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
+    <delete id="deleteByFukuanId">
+        UPDATE hs_same_jiekuan
+        SET deleted = 1,
+            tsu     = current_timestamp
+        WHERE fukuanId = #{fukuanId,jdbcType=BIGINT}
+    </delete>
 
     <insert id="insert" parameterType="com.yimei.hs.same.entity.Jiekuan" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO hs_same_jiekuan (

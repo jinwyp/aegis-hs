@@ -71,6 +71,7 @@ public class FukuanService {
 
     /**
      * 获取当前订单尚未完成回款的付款
+     *
      * @param orderId
      * @return
      */
@@ -158,7 +159,7 @@ public class FukuanService {
     @Transactional(readOnly = false)
     public int create(Fukuan fukuan) {
 
-        List<Fukuan> fukuanList = fukuanMapper.getListByOrderIdAndHsId(fukuan.getOrderId(),fukuan.getHsId());
+        List<Fukuan> fukuanList = fukuanMapper.getListByOrderIdAndHsId(fukuan.getOrderId(), fukuan.getHsId());
         LocalDateTime createDateTime = fukuan.getPayDate();
         List<Fukuan> isNull = (fukuanList == null ? null : fukuanList.stream().filter(fukuans -> createDateTime.isBefore(fukuans.getPayDate())).collect(toList()));
         // 1. 插入付款记录
@@ -202,10 +203,12 @@ public class FukuanService {
      * @return
      */
     @Transactional(readOnly = false)
-    public int delete( long id,Long orderId) {
+    public int delete(long id, Long orderId) {
 
         // 1. 删除订单的所有 回款-付款 映射
         huikuanMapMapper.deleteByOrderId(orderId);
+
+        jiekuanMapper.deleteByFukuanId(id);
 
         // 2. 删除付款
         int rtn = fukuanMapper.delete(id);

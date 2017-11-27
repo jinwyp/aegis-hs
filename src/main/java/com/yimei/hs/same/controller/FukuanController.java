@@ -181,7 +181,7 @@ public class FukuanController {
      * @return
      */
     @DeleteMapping("/{morderId}/fukuans/{id}")
-    public ResponseEntity<Result<Integer>> update(
+    public ResponseEntity<Result<Integer>> deleted(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @PathVariable("id") long id
