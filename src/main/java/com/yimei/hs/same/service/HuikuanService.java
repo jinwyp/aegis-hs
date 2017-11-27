@@ -179,10 +179,14 @@ public class HuikuanService {
 
                 BigDecimal toFinished = cur.getPayAmount().subtract(cur.getHuikuanTotal());
 
-                if (total.compareTo(toFinished) != -1) {
+                if (total.compareTo(toFinished) == 1) {
                     total = total.subtract(toFinished);
                     record.setAmount(toFinished);
                     toAdd.add(record);
+                } else if(total.compareTo(toFinished) == 0){
+                    record.setAmount(toFinished);
+                    toAdd.add(record);
+                    break;
                 } else {
                     record.setAmount(total);
                     toAdd.add(record);
