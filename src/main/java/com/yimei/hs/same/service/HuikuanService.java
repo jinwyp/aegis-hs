@@ -163,10 +163,38 @@ public class HuikuanService {
 //        huikuanMapper.getUnfinshedByOrderId(orderId);
 
         Iterator<Fukuan> it = unfinishedFukuan.iterator();
+        Fukuan last = null;
+        BigDecimal lastValue = null;
         for (Huikuan huikuan : unfinished) {
 
             // 尚未对应完的余额
             BigDecimal total = huikuan.getHuikuanAmount().subtract(huikuan.getFukuanTotal());
+
+            if (last != null) {
+                HuikuanMap record = new HuikuanMap();
+                record.setOrderId(huikuan.getOrderId());
+                record.setHuikuanId(huikuan.getId());
+                record.setFukuanId(last.getId());
+
+                BigDecimal toFinished = last.getPayAmount().subtract(last.getHuikuanTotal());
+//
+                if (total.compareTo(toFinished) == 1) {
+                    total = total.subtract(toFinished);
+                    record.setAmount(toFinished);
+                    last = null;
+                    toAdd.add(record);
+                } else if(total.compareTo(toFinished) == 0){
+                    record.setAmount(toFinished);
+                    toAdd.add(record);
+                    last = null;
+                    continue;
+                } else {
+                    record.setAmount(total);
+                    toAdd.add(record);
+                    lastValue = toFinished.subtract(total);
+                    continue;
+                }
+            }
 
             while (it.hasNext()) {
 
@@ -190,6 +218,8 @@ public class HuikuanService {
                 } else {
                     record.setAmount(total);
                     toAdd.add(record);
+                    last = cur;
+                    lastValue = toFinished.subtract(total);
                     break;
                 }
             }
