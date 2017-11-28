@@ -395,7 +395,6 @@ export class InvoiceComponent implements OnInit {
                 formValid = false
             }
 
-
             if (Number(this.invoiceDetailForm.value.amount) + Number(this.invoiceDetailForm.value.taxAmount) !== Number(this.invoiceDetailForm.value.priceAndTax)) {
                 this.invoiceDetailFormError.priceAndTax = this.invoiceDetailFormValidationMessages.priceAndTax.wrong
                 formValid = false
@@ -419,7 +418,7 @@ export class InvoiceComponent implements OnInit {
                 formValid = false
             }
 
-            if (Number(this.invoiceDetailForm.value.amount) + Number(this.invoiceDetailForm.value.taxAmount) !== Number(this.invoiceDetailForm.value.priceAndTax)) {
+            if (this.accAdd(Number(this.invoiceDetailForm.value.amount), Number(this.invoiceDetailForm.value.taxAmount)) !== Number(this.invoiceDetailForm.value.priceAndTax)) {
                 this.invoiceDetailFormError.priceAndTax = this.invoiceDetailFormValidationMessages.priceAndTax.wrong
                 formValid = false
             }
@@ -499,5 +498,24 @@ export class InvoiceComponent implements OnInit {
     }
 
 
+
+    // 加法函数，用来得到精确的加法结果 在运算前我们把参加运算的数先升级(10的X的次方)到整数，等运算完后再降级(0.1的X的次方)。
+
+    accAdd (arg1 : number, arg2 : number) {
+        let r1
+        let r2
+        let m
+
+        try {
+            r1 = arg1.toString().split('.')[1].length
+        } catch (e) { r1 = 0 }
+
+        try {
+            r2 = arg2.toString().split('.')[1].length
+        } catch ( e ) { r2 = 0 }
+
+        m = Math.pow(10, Math.max(r1, r2))
+        return (arg1 * m + arg2 * m) / m
+    }
 }
 
