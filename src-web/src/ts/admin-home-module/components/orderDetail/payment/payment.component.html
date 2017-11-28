@@ -18,7 +18,7 @@
 
                 <bs-datepicker formControlName="payDate" [fc]="paymentForm.get('payDate')" [label]="'付款日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="paymentFormError.payDate" (outputChange)="selectPayDate($event)"></bs-datepicker>
 
-                <bs-select formControlName ="receiveCompanyId" [fc]="paymentForm.get('receiveCompanyId')" [label]="'收款单位:'" [dirty]="ignoreDirty" [options]="party.orderIncluded" [error]="paymentFormError.receiveCompanyId"></bs-select>
+                <bs-select formControlName ="receiveCompanyId" [fc]="paymentForm.get('receiveCompanyId')" [label]="'收款单位:'" [editable]="true" [dirty]="ignoreDirty" [options]="party.normal" [error]="paymentFormError.receiveCompanyId"></bs-select>
                 <bs-select formControlName="payUsage" [fc]="paymentForm.get('payUsage')" [label]="'付款用途:'" [dirty]="ignoreDirty"  [options]="purposeList" [error]="paymentFormError.payUsage"></bs-select>
                 <bs-text-input formControlName="payAmount" [fc]="paymentForm.get('payAmount')" [type]="'number'" [label]="'付款金额(元):'" [dirty]="ignoreDirty" [error]="paymentFormError.payAmount" (change)="changePayAmount()"></bs-text-input>
                 <!--<bs-select formControlName="payMode" [fc]="paymentForm.get('payMode')" [label]="'付款方式:'" [dirty]="ignoreDirty"  [options]="payModeList" [error]="paymentFormError.payMode"></bs-select>-->
