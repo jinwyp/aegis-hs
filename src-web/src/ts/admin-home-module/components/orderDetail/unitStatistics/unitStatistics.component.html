@@ -141,13 +141,16 @@
 
                     <div class="row mt-4">
                         <div class="col-3">
-                            <p class="card-text" title="【1040】核算用结算量">结算量: {{ unitStatistics?.settleGrossProfileNum | number }}</p>
+                            <p class="card-text" title="【1040】核算用结算量" *ngIf="businessType==='ying'">结算量: {{ unitStatistics?.settleGrossProfileNum | number }}</p>
+                            <p class="card-text" title="【1055】" *ngIf="businessType==='cang'">结算量: {{ unitStatistics?.totalOutstorageNum | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="【1044】销售货款总额">销售含税总额: {{ unitStatistics?.saleIncludeTaxTotalAmount | number }}</p>
+                            <p class="card-text" title="【1044】销售货款总额" *ngIf="businessType==='ying'">销售含税总额: {{ unitStatistics?.saleIncludeTaxTotalAmount | number }}</p>
+                            <p class="card-text" title="【1044】销售货款总额" *ngIf="businessType==='cang'" >销售含税总额: {{ unitStatistics?.saleIncludeTaxTotalAmount | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="【1046】采购货款总额">采购含税总额: {{ unitStatistics?.purchaseIncludeTaxTotalAmount | number }}</p>
+                            <p class="card-text" title="【1046】采购货款总额" *ngIf="businessType==='ying'">采购含税总额: {{ unitStatistics?.purchaseIncludeTaxTotalAmount | number }}</p>
+                            <p class="card-text" title="【1046】采购货款总额" *ngIf="businessType==='cang'">采购含税总额: {{ unitStatistics?.purchaseIncludeTaxTotalAmount | number }}</p>
                         </div>
 
                         <div class="col-3">
