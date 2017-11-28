@@ -1,11 +1,7 @@
 package com.yimei.hs.ying.aop;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yimei.hs.boot.api.Logutil;
-import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.EntityType;
-import com.yimei.hs.same.entity.Log;
-import com.yimei.hs.same.entity.Order;
 import com.yimei.hs.same.mapper.OrderMapper;
 import com.yimei.hs.same.service.LogService;
 import com.yimei.hs.ying.entity.*;
@@ -20,9 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.context.request.RequestContextHolder;
-
-import java.util.Arrays;
 
 @Aspect
 @Configuration
@@ -55,10 +48,10 @@ public class YingLogAspect<T> {
         Object arg = (joinPoint.getArgs().length > 0 ? joinPoint.getArgs()[0] : null);
         if (arg instanceof YingFayun) {
             YingFayun yingFayun = (YingFayun) arg;
-            Logutil.create(om, orderMapper, logService, yingFayun, EntityType.yingFayunInsert);
+            logService.create( yingFayun, EntityType.yingFayunInsert);
         } else if (arg instanceof YingBail) {
             YingBail yingBail = (YingBail) arg;
-            Logutil.create(om, orderMapper, logService,yingBail, EntityType.yingBailInsert);
+            logService.create(yingBail, EntityType.yingBailInsert);
         }
         return;
 
@@ -72,10 +65,10 @@ public class YingLogAspect<T> {
         Object arg = (joinPoint.getArgs().length > 0 ? joinPoint.getArgs()[0] : null);
         if (arg instanceof YingFayun) {
             YingFayun yingFayun = (YingFayun) arg;
-            Logutil.create(om, orderMapper, logService, yingFayun, EntityType.yingFayunUpdate);
+            logService.create(yingFayun, EntityType.yingFayunUpdate);
         } else if (arg instanceof YingBail) {
             YingBail yingFayun = (YingBail) arg;
-            Logutil.create(om, orderMapper, logService, yingFayun, EntityType.yingBailUpdate);
+            logService.create(yingFayun, EntityType.yingBailUpdate);
         }
         return;
     }
@@ -90,11 +83,11 @@ public class YingLogAspect<T> {
         String fileName = joinPoint.getSignature().getDeclaringTypeName();
         if (fileName.equals(YingFayunService.class.getName())) {
             YingFayun yingFayun = yingFayunMapper.selectByPrimaryKeyDeleted(id);
-            Logutil.create(om, orderMapper, logService, yingFayun, EntityType.yingFayunDel);
+            logService.create(yingFayun, EntityType.yingFayunDel);
 
         } else if (fileName.equals(YingBailService.class.getName())) {
             YingBail yingBail = yingBailMapper.selectByPrimaryKeyDeleted(id);
-            Logutil.create(om, orderMapper, logService, yingBail, EntityType.yingFayunDel);
+            logService.create(yingBail, EntityType.yingFayunDel);
         }
 
     }

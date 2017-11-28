@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.Consumer;
@@ -95,7 +96,7 @@ public class HuankuanController {
     public ResponseEntity<Result<Huankuan>> create(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
-            @RequestBody @Validated(CreateGroup.class) Huankuan huankuan
+            @RequestBody @Validated(CreateGroup.class)  Huankuan huankuan
     ) {
         assert (morderId == huankuan.getOrderId());
         // 1. 找出当前订单借款记录 - 还款尚未对应完成的记录

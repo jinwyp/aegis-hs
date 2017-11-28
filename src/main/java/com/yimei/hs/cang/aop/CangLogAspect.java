@@ -1,7 +1,6 @@
 package com.yimei.hs.cang.aop;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yimei.hs.boot.api.Logutil;
 import com.yimei.hs.cang.entity.CangChuku;
 import com.yimei.hs.cang.entity.CangRuku;
 import com.yimei.hs.cang.mapper.CangChukuMapper;
@@ -11,12 +10,6 @@ import com.yimei.hs.cang.service.CangRukuService;
 import com.yimei.hs.enums.EntityType;
 import com.yimei.hs.same.mapper.OrderMapper;
 import com.yimei.hs.same.service.LogService;
-import com.yimei.hs.ying.entity.YingBail;
-import com.yimei.hs.ying.entity.YingFayun;
-import com.yimei.hs.ying.mapper.YingBailMapper;
-import com.yimei.hs.ying.mapper.YingFayunMapper;
-import com.yimei.hs.ying.service.YingBailService;
-import com.yimei.hs.ying.service.YingFayunService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -54,12 +47,12 @@ public class CangLogAspect<T> {
 
         // 1.  找出切点的参数,
         Object arg = (joinPoint.getArgs().length > 0 ? joinPoint.getArgs()[0] : null);
-        if (arg instanceof CangRuku){
+        if (arg instanceof CangRuku) {
             CangRuku cangRuku = (CangRuku) arg;
-            Logutil.create(om, orderMapper, logService, cangRuku, EntityType.cangRuKuInsert);
+            logService.create(cangRuku, EntityType.cangRuKuInsert);
         } else if (arg instanceof CangChuku) {
             CangChuku cangChuku = (CangChuku) arg;
-            Logutil.create(om, orderMapper, logService, cangChuku, EntityType.cangChuKuInsert);
+            logService.create(cangChuku, EntityType.cangChuKuInsert);
         }
 
 
@@ -71,12 +64,12 @@ public class CangLogAspect<T> {
     @After("execution(* com.yimei.hs.cang.service..*.update*(..))")
     public void updateYing(JoinPoint joinPoint) throws Exception {
         Object arg = (joinPoint.getArgs().length > 0 ? joinPoint.getArgs()[0] : null);
-        if (arg instanceof CangRuku){
+        if (arg instanceof CangRuku) {
             CangRuku cangRuku = (CangRuku) arg;
-            Logutil.create(om, orderMapper, logService, cangRuku, EntityType.cangRuKuUpdate);
+            logService.create(cangRuku, EntityType.cangRuKuUpdate);
         } else if (arg instanceof CangChuku) {
             CangChuku cangChuku = (CangChuku) arg;
-            Logutil.create(om, orderMapper, logService, cangChuku, EntityType.cangChuKuUpdate);
+            logService.create(cangChuku, EntityType.cangChuKuUpdate);
         }
 
     }
@@ -87,17 +80,17 @@ public class CangLogAspect<T> {
     @After("execution(* com.yimei.hs.cang.service..*.delete(..))")
     public void deleteYing(JoinPoint joinPoint) throws Exception {
 
-        Long id  =(Long) joinPoint.getArgs()[0];
+        Long id = (Long) joinPoint.getArgs()[0];
 
         String fileName = joinPoint.getSignature().getDeclaringTypeName();
 
         if (fileName.equals(CangRukuService.class.getName())) {
-           CangRuku  cangRuku = cangRukuMapper.selectByPrimaryKeyDeleted(id);
-            Logutil.create(om, orderMapper, logService, cangRuku, EntityType.cangRuKuDel);
+            CangRuku cangRuku = cangRukuMapper.selectByPrimaryKeyDeleted(id);
+            logService.create(cangRuku, EntityType.cangRuKuDel);
 
         } else if (fileName.equals(CangChukuService.class.getName())) {
             CangChuku cangChuku = cangChukuMapper.selectByPrimaryKeyDeleted(id);
-            Logutil.create(om, orderMapper, logService, cangChuku, EntityType.cangChuKuDel);
+            logService.create(cangChuku, EntityType.cangChuKuDel);
         }
 
     }

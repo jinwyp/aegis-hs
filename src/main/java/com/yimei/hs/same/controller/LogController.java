@@ -72,7 +72,7 @@ public class LogController {
     public ResponseEntity<Result<Log>> create(
             @RequestBody Log log
     ) {
-        int rtn = logService.create(log);
+        int rtn = logService.create(log,EntityType.cangHuankuanDel);
         return Result.ok(log);
     }
 

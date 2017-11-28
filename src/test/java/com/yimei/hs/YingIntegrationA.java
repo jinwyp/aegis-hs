@@ -2,7 +2,6 @@ package com.yimei.hs;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yimei.hs.boot.api.Logutil;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.cang.dto.PageCangChukuDTO;
@@ -13,15 +12,10 @@ import com.yimei.hs.enums.*;
 import com.yimei.hs.same.dto.*;
 import com.yimei.hs.same.entity.*;
 import com.yimei.hs.test.HsTestBase;
-import com.yimei.hs.user.entity.Dept;
-import com.yimei.hs.user.entity.Party;
-import com.yimei.hs.user.entity.Team;
-import com.yimei.hs.user.entity.User;
 import com.yimei.hs.util.WebUtils;
 import com.yimei.hs.ying.dto.*;
 import com.yimei.hs.ying.entity.YingFayun;
 import org.assertj.core.util.Lists;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -39,11 +33,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * Created by hary on 2017/9/26.

@@ -406,8 +406,8 @@ public class DataAnalysisService {
             setStampDuty(cangAnalysisDatav1063.getStampDuty());
             setOpreationCrossProfile(opreationCrocsProfile);
             setCrossProfileATon((cangAnalysisDatav3003.getTotalOutstorageNum().compareTo(BigDecimal.ZERO) == 0 ? new BigDecimal("0.00") : opreationCrocsProfile.divide(cangAnalysisDatav3003.getTotalOutstorageNum(), 2, BigDecimal.ROUND_HALF_UP)));
-            setOwnerCapitalPressure((cangAnalysisDatav3003.getTotalOutstorageNum().compareTo(new BigDecimal("0.00")) == 0
-                    ? new BigDecimal("0.00") : cangAnalysisDatav1066.getOwnerCapitalPressure()));
+            setOwnerCapitalPressure(
+                    cangAnalysisDatav1066.getOwnerCapitalPressure());
             setSettledDownstreamHuikuanMoneny(cangAnalysisDatav2010.getSettledDownstreamHuikuanMoneny());
 
             setMaximumPaymentAmount(cangAnalysisDos1.getMaximumPaymentAmount());
