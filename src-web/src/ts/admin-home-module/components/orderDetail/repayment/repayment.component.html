@@ -24,7 +24,7 @@
                 <bs-datepicker formControlName="huikuanBusinessPaperDate" [fc]="repaymentForm.get('huikuanBusinessPaperDate')" [label]="'收到票据原件日期:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBusinessPaperDate" [format]="'yyyy-mm-dd hh:MM:ss'" [hidden]="repaymentForm.get('huikuanBusinessPaper').value === false"></bs-datepicker>
                 <bs-datepicker formControlName="huikuanBusinessPaperExpire" [fc]="repaymentForm.get('huikuanBusinessPaperExpire')" [label]="'票据到期日:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBusinessPaperExpire" [format]="'yyyy-mm-dd hh:MM:ss'" [hidden]="repaymentForm.get('huikuanBusinessPaper').value === false"></bs-datepicker>
                 <bs-radio formControlName ="huikuanBusinessDiscount" [sourceList]="dataIsGot" [label]="'是否贴息:'" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBusinessDiscount"></bs-radio>
-                <bs-text-input formControlName="huikuanBusinessPaperExpire" [fc]="repaymentForm.get('huikuanBusinessPaperExpire')" [type]="'number'" [label]="'贴息率(%):'" [prompt]="'百分比 例如88.88'" [percent]="true" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBusinessPaperExpire" [hidden]="repaymentForm.get('huikuanBusinessPaperExpire').value === false"></bs-text-input>
+                <bs-text-input formControlName="huikuanBusinessPaperExpire" [fc]="repaymentForm.get('huikuanBusinessPaperExpire')" [type]="'number'" [label]="'贴息率(%):'" [prompt]="'百分比 例如88.88'" [percent]="true" [dirty]="ignoreDirty" [error]="repaymentFormError.huikuanBusinessPaperExpire" [hidden]="repaymentForm.get('huikuanBusinessDiscount').value === false"></bs-text-input>
             </div>
 
 
