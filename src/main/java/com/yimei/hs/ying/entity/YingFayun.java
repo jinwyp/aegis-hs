@@ -34,7 +34,6 @@ public class YingFayun implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "发运日期不能为空")
     private LocalDateTime fyDate;
 
-    @Null(groups = {UpdateGroup.class}, message = "发运吨数不能更新")
     @DecimalMin(value = "0",message = "发运吨数不能小于0" )
     @DecimalMax(value = "9999999.99")
     private BigDecimal fyAmount;

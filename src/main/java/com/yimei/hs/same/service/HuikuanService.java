@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.Null;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -163,6 +164,8 @@ public class HuikuanService {
 //        huikuanMapper.getUnfinshedByOrderId(orderId);
 
         Iterator<Fukuan> it = unfinishedFukuan.iterator();
+
+        toCompare(toAdd, unfinishedFukuan, unfinished);
         Fukuan last = null;
         BigDecimal lastValue = null;
         for (Huikuan huikuan : unfinished) {
@@ -228,6 +231,22 @@ public class HuikuanService {
         for (HuikuanMap record : toAdd) {
             huikuanMapMapper.insert(record);
         }
+    }
+
+    /**
+     * 数组自动匹配
+     * @param toAdd
+     * @param unfinishedFukuan
+     * @param unfinishedHuikuan
+     * @return
+     */
+    private List<HuikuanMap> toCompare(List<HuikuanMap> toAdd, List<Fukuan> unfinishedFukuan, List<Huikuan> unfinishedHuikuan) {
+        Fukuan[] fikuanArray= (Fukuan[]) unfinishedFukuan.toArray();
+        Huikuan[] huikuans = (Huikuan[]) unfinishedHuikuan.toArray();
+
+
+
+        return toAdd;
     }
 
 //    找出订单的回款记录 - 尚有未对应完的余额,  也就是回款还有余额

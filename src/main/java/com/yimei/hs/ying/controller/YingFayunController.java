@@ -7,6 +7,8 @@ import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.TrafficMode;
+import com.yimei.hs.same.entity.SettleBuyer;
+import com.yimei.hs.same.service.SettleBuyerService;
 import com.yimei.hs.same.service.SettleSellerService;
 import com.yimei.hs.ying.dto.PageYingFayunDTO;
 import com.yimei.hs.ying.entity.YingFayun;
@@ -23,6 +25,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hary on 2017/9/15.
@@ -39,6 +43,9 @@ public class YingFayunController {
 
     @Autowired
     SettleSellerService settleSellerService;
+
+    @Autowired
+    SettleBuyerService settleBuyerService;
     /**
      * 获取所有fayun
      *
@@ -154,12 +161,20 @@ public class YingFayunController {
             @PathVariable("id") Long id,
             @PathVariable("businessType") BusinessType businessType,
             @RequestBody @Validated(UpdateGroup.class) YingFayun yingFayun) {
-        yingFayun.setId(id);
-        int cnt = yingFayunService.update(yingFayun);
-        if (cnt != 1) {
-            return Result.error(4001, "更新失败", HttpStatus.BAD_REQUEST);
+
+        List<SettleBuyer> settleBuyers= settleBuyerService.selectByOrderIdAndHsId(morderId,yingFayun.getHsId());
+
+        if (settleBuyers == null || settleBuyers.size() == 0) {
+            yingFayun.setId(id);
+            int cnt = yingFayunService.update(yingFayun);
+            if (cnt != 1) {
+                return Result.error(4001, "更新失败", HttpStatus.BAD_REQUEST);
+            }
+            return Result.ok(1);
+        } else {
+            return Result.error(4001, "下游已有结算记录，不能修改", HttpStatus.BAD_REQUEST);
         }
-        return Result.ok(1);
+
     }
 
     /**

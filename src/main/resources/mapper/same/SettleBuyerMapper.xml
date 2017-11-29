@@ -47,6 +47,13 @@
         from hs_same_settle_buyer
         where id = #{id,jdbcType=BIGINT} and deleted = 1
     </select>
+    <select id="selectByOrderIdAndHsId" resultType="com.yimei.hs.same.entity.SettleBuyer">
+
+        select
+        <include refid="Base_Column_List"/>
+        from hs_same_settle_buyer
+        WHERE orderId = #{orderId,jdbcType=BIGINT} and hsId=#{hsId,jdbcType=BIGINT}  and deleted=0
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM hs_same_settle_buyer

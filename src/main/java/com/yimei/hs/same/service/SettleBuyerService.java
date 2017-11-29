@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by hary on 2017/9/15.
  */
@@ -71,5 +74,9 @@ public class SettleBuyerService {
     @Transactional(readOnly = false)
     public int delete(long id) {
         return settleBuyerMapper.delete(id);
+    }
+
+    public List<SettleBuyer> selectByOrderIdAndHsId(Long morderId, Long hsId) {
+        return settleBuyerMapper.selectByOrderIdAndHsId(morderId,hsId);
     }
 }
