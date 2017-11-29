@@ -165,85 +165,134 @@ public class HuikuanService {
 
         Iterator<Fukuan> it = unfinishedFukuan.iterator();
 
-//        toCompare(toAdd, unfinishedFukuan, unfinished);
-        Fukuan last = null;
-        BigDecimal lastValue = null;
-        for (Huikuan huikuan : unfinished) {
-
-            // 尚未对应完的余额
-            BigDecimal total = huikuan.getHuikuanAmount().subtract(huikuan.getFukuanTotal());
-
-            if (last != null) {
-                HuikuanMap record = new HuikuanMap();
-                record.setOrderId(huikuan.getOrderId());
-                record.setHuikuanId(huikuan.getId());
-                record.setFukuanId(last.getId());
-
-                BigDecimal toFinished = last.getPayAmount().subtract(last.getHuikuanTotal());
+        toAdd= toCompare(toAdd, unfinishedFukuan, unfinished);
+//        Fukuan last = null;
+//        BigDecimal lastValue = null;
+//        for (Huikuan huikuan : unfinished) {
 //
-                if (total.compareTo(toFinished) == 1) {
-                    total = total.subtract(toFinished);
-                    record.setAmount(toFinished);
-                    last = null;
-                    toAdd.add(record);
-                } else if(total.compareTo(toFinished) == 0){
-                    record.setAmount(toFinished);
-                    toAdd.add(record);
-                    last = null;
-                    continue;
-                } else {
-                    record.setAmount(total);
-                    toAdd.add(record);
-                    lastValue = toFinished.subtract(total);
-                    continue;
-                }
-            }
-
-            while (it.hasNext()) {
-
-                Fukuan cur = it.next();
-
-                HuikuanMap record = new HuikuanMap();
-                record.setOrderId(huikuan.getOrderId());
-                record.setHuikuanId(huikuan.getId());
-                record.setFukuanId(cur.getId());
-
-                BigDecimal toFinished = cur.getPayAmount().subtract(cur.getHuikuanTotal());
+//            // 尚未对应完的余额
+//            BigDecimal total = huikuan.getHuikuanAmount().subtract(huikuan.getFukuanTotal());
 //
-                if (total.compareTo(toFinished) == 1) {
-                    total = total.subtract(toFinished);
-                    record.setAmount(toFinished);
-                    toAdd.add(record);
-                } else if(total.compareTo(toFinished) == 0){
-                    record.setAmount(toFinished);
-                    toAdd.add(record);
-                    break;
-                } else {
-                    record.setAmount(total);
-                    toAdd.add(record);
-                    last = cur;
-                    lastValue = toFinished.subtract(total);
-                    break;
-                }
-            }
-        }
+//            if (last != null) {
+//                HuikuanMap record = new HuikuanMap();
+//                record.setOrderId(huikuan.getOrderId());
+//                record.setHuikuanId(huikuan.getId());
+//                record.setFukuanId(last.getId());
+//
+//                BigDecimal toFinished = last.getPayAmount().subtract(last.getHuikuanTotal());
+////
+//                if (total.compareTo(toFinished) == 1) {
+//                    total = total.subtract(toFinished);
+//                    record.setAmount(toFinished);
+//                    last = null;
+//                    toAdd.add(record);
+//                } else if(total.compareTo(toFinished) == 0){
+//                    record.setAmount(toFinished);
+//                    toAdd.add(record);
+//                    last = null;
+//                    continue;
+//                } else {
+//                    record.setAmount(total);
+//                    toAdd.add(record);
+//                    lastValue = toFinished.subtract(total);
+//                    continue;
+//                }
+//            }
+//
+//            while (it.hasNext()) {
+//
+//                Fukuan cur = it.next();
+//
+//                HuikuanMap record = new HuikuanMap();
+//                record.setOrderId(huikuan.getOrderId());
+//                record.setHuikuanId(huikuan.getId());
+//                record.setFukuanId(cur.getId());
+//
+//                BigDecimal toFinished = cur.getPayAmount().subtract(cur.getHuikuanTotal());
+////
+//                if (total.compareTo(toFinished) == 1) {
+//                    total = total.subtract(toFinished);
+//                    record.setAmount(toFinished);
+//                    toAdd.add(record);
+//                } else if(total.compareTo(toFinished) == 0){
+//                    record.setAmount(toFinished);
+//                    toAdd.add(record);
+//                    break;
+//                } else {
+//                    record.setAmount(total);
+//                    toAdd.add(record);
+//                    last = cur;
+//                    lastValue = toFinished.subtract(total);
+//                    break;
+//                }
+//            }
+//        }
 
         for (HuikuanMap record : toAdd) {
             huikuanMapMapper.insert(record);
         }
     }
 
-    /**
-     * 数组自动匹配
-     * @param toAdd
-     * @param unfinishedFukuan
-     * @param unfinishedHuikuan
-     * @return
-     */
     private List<HuikuanMap> toCompare(List<HuikuanMap> toAdd, List<Fukuan> unfinishedFukuan, List<Huikuan> unfinishedHuikuan) {
-        Fukuan[] fikuanArray= (Fukuan[]) unfinishedFukuan.toArray();
-        Huikuan[] huikuans = (Huikuan[]) unfinishedHuikuan.toArray();
+        Fukuan[] fukuans =  unfinishedFukuan.toArray(new Fukuan[0]);
+        Huikuan[] huikuans = unfinishedHuikuan.toArray(new Huikuan[0]);
 
+        int fpos = -1;
+        int hpos = -1;
+
+        BigDecimal lastFukuan = new BigDecimal("0");
+        BigDecimal lastHuikuan = new BigDecimal("0");
+        while (hpos < huikuans.length && fpos < fukuans.length) {
+
+            if (lastFukuan.compareTo(BigDecimal.ZERO) == 0) {
+                fpos++;
+                if (fpos == fukuans.length) {
+                    break;
+                }
+                Fukuan tempFukuan = fukuans[fpos];
+                lastFukuan  = tempFukuan.getPayAmount().subtract(tempFukuan.getHuikuanTotal());
+
+            }
+
+            if (lastHuikuan.compareTo(BigDecimal.ZERO) == 0) {
+                hpos++;
+                if (hpos == huikuans.length) {
+                    break;
+                }
+                Huikuan tempHuikuan = huikuans[hpos];
+                lastHuikuan  = tempHuikuan.getHuikuanAmount().subtract(tempHuikuan.getFukuanTotal());
+            }
+
+            HuikuanMap record = new HuikuanMap();
+            record.setOrderId(huikuans[hpos].getOrderId());
+            record.setHuikuanId(huikuans[hpos].getId());
+            record.setFukuanId(fukuans[fpos].getId());
+
+
+            if (lastHuikuan.compareTo(lastFukuan) == -1) {
+
+                record.setAmount(lastHuikuan);
+                toAdd.add(record);
+                lastFukuan = lastFukuan.subtract(lastHuikuan);
+                lastHuikuan = BigDecimal.ZERO;
+
+
+            } else if (lastHuikuan.compareTo(lastFukuan) == 0) {
+                record.setAmount(huikuans[hpos].getHuikuanAmount());
+                toAdd.add(record);
+
+                lastFukuan = BigDecimal.ZERO;
+                lastHuikuan = BigDecimal.ZERO;
+            } else {
+
+                toAdd.add(record);
+                lastHuikuan = lastHuikuan.subtract(lastFukuan);
+                record.setAmount(lastFukuan);
+                lastFukuan = BigDecimal.ZERO;
+            }
+
+
+        }
 
 
         return toAdd;

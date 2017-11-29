@@ -87,14 +87,105 @@ public class YingIntegrationA extends HsTestBase {
     @Test
     public void yingIntegration() throws Exception {
         System.out.println("开始应收集成测试");
-        LocalDateTime  startTime = LocalDateTime.now();
-        LocalDateTime  endTime = LocalDateTime.of(2017, 11, 22, 21, 00);
-//        Duration duration = java.time.Duration.between(startTime,  endTime );
-//        Duration duration2 = java.time.Duration.between(endTime,  startTime );
+//        (20,  20,  80,  200, 180, 40, 60);
 
-        System.out.println("day：" + endTime.compareTo(startTime)+"  isbefore "+endTime.isBefore(startTime));
-        System.out.println("day：" + startTime.compareTo(endTime)+"  isbefore "+startTime.isBefore(endTime));
-//        java.time.Duration.
+        List<HuikuanMap> huikuanMaps = new ArrayList<HuikuanMap>();
+        List<Fukuan> fukuanList = Lists.newArrayList(
+                new Fukuan() {{
+                    setId(0l);
+                    setOrderId(1L);
+                    setHsId(2l);
+                    setPayAmount(new BigDecimal("100"));
+                }},
+                new Fukuan() {{
+                    setId(1l);
+                    setOrderId(1L);
+                    setHsId(2l);
+                    setPayAmount(new BigDecimal("100"));
+                }},
+
+                new Fukuan() {{
+                    setId(2l);
+                    setOrderId(1L);
+                    setHsId(2l);
+                    setPayAmount(new BigDecimal("100"));
+                }},
+
+                new Fukuan() {{
+                    setId(3l);
+                    setOrderId(1L);
+                    setHsId(2l);
+                    setPayAmount(new BigDecimal("100"));
+                }},
+
+
+                new Fukuan() {{
+                    setId(4l);
+                    setOrderId(1L);
+                    setHsId(2l);
+                    setPayAmount(new BigDecimal("100"));
+                }},
+                new Fukuan() {{
+                    setId(5l);
+                    setOrderId(1L);
+                    setHsId(2l);
+                    setPayAmount(new BigDecimal("100"));
+                }}
+        );
+
+
+        List<Huikuan> huikuanList = Lists.newArrayList(
+                new Huikuan() {{
+                    setId(0l);
+                    setOrderId(1l);
+                    setHsId(2l);
+                    setHuikuanAmount(new BigDecimal("20"));
+                }},
+                new Huikuan() {{
+                    setId(1l);
+                    setOrderId(1l);
+                    setHsId(2l);
+                    setHuikuanAmount(new BigDecimal("20"));
+                }},
+                new Huikuan() {{
+                    setId(2l);
+                    setOrderId(1l);
+                    setHsId(2l);
+                    setHuikuanAmount(new BigDecimal("80"));
+                }},
+                new Huikuan() {{
+                    setId(3l);
+                    setOrderId(1l);
+                    setHsId(2l);
+                    setHuikuanAmount(new BigDecimal("200"));
+                }},
+                new Huikuan() {{
+                    setId(4l);
+                    setOrderId(1l);
+                    setHsId(2l);
+                    setHuikuanAmount(new BigDecimal("180"));
+                }},
+                new Huikuan() {{
+                    setId(5l);
+                    setOrderId(1l);
+                    setHsId(2l);
+                    setHuikuanAmount(new BigDecimal("40"));
+                }},
+                new Huikuan() {{
+                    setId(6l);
+                    setOrderId(1l);
+                    setHsId(2l);
+                    setHuikuanAmount(new BigDecimal("60"));
+                }}
+        );
+
+
+        List<HuikuanMap> toAdd = toCompare(huikuanMaps, fukuanList, huikuanList);
+
+        for (HuikuanMap huikuanMap : toAdd) {
+            System.out.println("huikuanId  " + huikuanMap.getHuikuanId() + "   fukuanId   :" + huikuanMap.getFukuanId() + "  amount :" + huikuanMap.getAmount());
+        }
+
 //        defaultUser();
 //        order();
 //        config();
@@ -115,6 +206,78 @@ public class YingIntegrationA extends HsTestBase {
 
 //        buyerCang();
 //        sellerCang();
+
+
+    }
+
+    /**
+     * 数组自动匹配
+     *
+     * @param toAdd
+     * @param unfinishedFukuan
+     * @param unfinishedHuikuan
+     * @return
+     */
+    private List<HuikuanMap> toCompare(List<HuikuanMap> toAdd, List<Fukuan> unfinishedFukuan, List<Huikuan> unfinishedHuikuan) {
+        Fukuan[] fukuans =  unfinishedFukuan.toArray(new Fukuan[0]);
+        Huikuan[] huikuans = unfinishedHuikuan.toArray(new Huikuan[0]);
+
+        int fpos = -1;
+        int hpos = -1;
+
+        BigDecimal lastFukuan = new BigDecimal("0");
+        BigDecimal lastHuikuan = new BigDecimal("0");
+        while (hpos < huikuans.length && fpos < fukuans.length) {
+
+            if (lastFukuan.compareTo(BigDecimal.ZERO) == 0) {
+                fpos++;
+                if (fpos == fukuans.length) {
+                    break;
+                }
+                lastFukuan = fukuans[fpos].getPayAmount();
+            }
+
+            if (lastHuikuan.compareTo(BigDecimal.ZERO) == 0) {
+                hpos++;
+                if (hpos == huikuans.length) {
+                    break;
+                }
+                lastHuikuan = huikuans[hpos].getHuikuanAmount();
+            }
+
+            HuikuanMap record = new HuikuanMap();
+            record.setOrderId(huikuans[hpos].getOrderId());
+            record.setHuikuanId(huikuans[hpos].getId());
+            record.setFukuanId(fukuans[fpos].getId());
+
+
+            if (lastHuikuan.compareTo(lastFukuan) == -1) {
+
+                record.setAmount(lastHuikuan);
+                toAdd.add(record);
+                lastFukuan = lastFukuan.subtract(lastHuikuan);
+                lastHuikuan = BigDecimal.ZERO;
+
+
+            } else if (lastHuikuan.compareTo(lastFukuan) == 0) {
+                record.setAmount(huikuans[hpos].getHuikuanAmount());
+                toAdd.add(record);
+
+                lastFukuan = BigDecimal.ZERO;
+                lastHuikuan = BigDecimal.ZERO;
+            } else {
+
+                toAdd.add(record);
+                lastHuikuan = lastHuikuan.subtract(lastFukuan);
+                record.setAmount(lastFukuan);
+                lastFukuan = BigDecimal.ZERO;
+            }
+
+
+        }
+
+
+        return toAdd;
     }
 
     public void order() throws JsonProcessingException {
@@ -359,8 +522,6 @@ public class YingIntegrationA extends HsTestBase {
         }
 
 
-
-
         // 4. 更新
         String buyerUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/settlebuyerdownstream/" + settleBuyerCreateResult.getData().getId();
         downstream.setAmount(new BigDecimal("9999"));
@@ -423,8 +584,6 @@ public class YingIntegrationA extends HsTestBase {
         }
 
 
-
-
         // 4. 更新
         String buyerUpdateUrl = "/api/business/cang/" + yingOrderResult.getData().getId() + "/settlebuyerupstream/" + settleBuyerCreateResult.getData().getId();
         downstream.setAmount(new BigDecimal("9999"));
@@ -437,6 +596,7 @@ public class YingIntegrationA extends HsTestBase {
             System.exit(-2);
         }
     }
+
     private void seller() throws JsonProcessingException {
         // 1. 添加上游结算
 
@@ -561,6 +721,7 @@ public class YingIntegrationA extends HsTestBase {
             System.exit(-2);
         }
     }
+
     private void traffic() throws JsonProcessingException {
 
         // 1. 添加运输方结算
@@ -732,7 +893,7 @@ public class YingIntegrationA extends HsTestBase {
             System.exit(-1);
         }
 
-        jiekuan=jiekuanFindResult.getData();
+        jiekuan = jiekuanFindResult.getData();
         jiekuan.setAmount(new BigDecimal("6666666"));
         // 4.更新
         String jiekuanUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans/" + jiekuanCreateResult.getData().getId();
@@ -759,7 +920,7 @@ public class YingIntegrationA extends HsTestBase {
             map.setInterest(new BigDecimal("1700.02"));
             map.setFee(new BigDecimal("570.0"));
             map.setJiekuanId(jiekuanCreateResult.getData()
-            .getId());
+                    .getId());
 
             hukuanMapList.add(map);
             setOrderId(yingOrderResult.getData().getId());
@@ -816,7 +977,7 @@ public class YingIntegrationA extends HsTestBase {
         }
     }
 
-    private void huankuanAuto()throws JsonProcessingException {
+    private void huankuanAuto() throws JsonProcessingException {
         //创建多笔借款
 
         String jiekuanCreateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans";
@@ -859,7 +1020,7 @@ public class YingIntegrationA extends HsTestBase {
         client.exchange(jiekuanCreateUrl, HttpMethod.POST, new HttpEntity<>(jiekuanThree), typeReferenceJiekuan).getBody();
 
         //查询还款尚未匹配完成借款
-        String jiekuanListUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuansUnfinished" ;
+        String jiekuanListUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuansUnfinished";
         Result<List<Jiekuan>> jiekuanListResult = client.exchange(jiekuanListUrl, HttpMethod.GET, HttpEntity.EMPTY, typeReferenceJiekuanList).getBody();
 
         if (jiekuanListResult.getSuccess()) {
@@ -876,7 +1037,6 @@ public class YingIntegrationA extends HsTestBase {
         Huankuan huankuan = new Huankuan() {{
 
 
-
             setOrderId(yingOrderResult.getData().getId());
             setHsId(yingOrderConfigResult.getData().getId());
             setHuankuanDate(stringToTime("2017-7-26"));
@@ -887,12 +1047,12 @@ public class YingIntegrationA extends HsTestBase {
 
         Jiekuan jiekuan = jiekuanListResult.getData().get(0);
 
-            HuankuanMap map = new HuankuanMap();
-            map.setPrincipal(jiekuan.getAmount().subtract(new BigDecimal("50")));
-            map.setInterest(new BigDecimal("1700.02"));
-            map.setFee(new BigDecimal("570.0"));
-            map.setJiekuanId(jiekuan.getId());
-            hukuanMapList.add(map);
+        HuankuanMap map = new HuankuanMap();
+        map.setPrincipal(jiekuan.getAmount().subtract(new BigDecimal("50")));
+        map.setInterest(new BigDecimal("1700.02"));
+        map.setFee(new BigDecimal("570.0"));
+        map.setJiekuanId(jiekuan.getId());
+        hukuanMapList.add(map);
 
         huankuan.setHuankuanMapList(hukuanMapList);
         huankuanCreateResult = client.exchange(huankuanCreateUrl, HttpMethod.POST, new HttpEntity<>(huankuan), typeReferenceHuankuan).getBody();
@@ -1190,7 +1350,7 @@ public class YingIntegrationA extends HsTestBase {
         }
     }
 
-    public void jiekuan_huankuan() throws JsonProcessingException{
+    public void jiekuan_huankuan() throws JsonProcessingException {
 
         // 借款 - 分页
 
@@ -1221,7 +1381,7 @@ public class YingIntegrationA extends HsTestBase {
             System.exit(-1);
         }
 
-        Jiekuan jiekuan=jiekuanFindResult.getData();
+        Jiekuan jiekuan = jiekuanFindResult.getData();
         jiekuan.setAmount(new BigDecimal("6666666"));
 //        // 4.更新
 //        String jiekuanUpdateUrl = "/api/business/ying/" + yingOrderResult.getData().getId() + "/jiekuans/" + jiekuanCreateResult.getData().getId();
@@ -1236,9 +1396,8 @@ public class YingIntegrationA extends HsTestBase {
     }
 
 
-
-    public  static  boolean timeCompare(LocalDateTime startTime,LocalDateTime endTime){
-        Duration duration = java.time.Duration.between(startTime,  endTime );
+    public static boolean timeCompare(LocalDateTime startTime, LocalDateTime endTime) {
+        Duration duration = java.time.Duration.between(startTime, endTime);
 //        if (duration.toMillis()>1) {
 //        }
         return false;
