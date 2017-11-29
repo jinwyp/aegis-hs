@@ -111,12 +111,18 @@ class HttpService {
                 let messageError = ''
 
                 if (error && error.error && (error.error.success === false || error.error.success === true)) {
+
+
                     messageError = error.error.error.code + ': ' + error.error.error.message
+
+                    console.log('111', messageError)
                 } else {
                     if (error && error.error && error.error.message) {
                         messageError = error.error.message
+                        console.log('2222', messageError)
                     } else {
                         messageError = error.message
+                        console.log('3333333', messageError)
                     }
                 }
 
