@@ -100,7 +100,7 @@
          SELECT
             count(id)
         FROM hs_same_settle_seller
-        WHERE hsId=#{hsId ,jdbcType=BIGINT} and orderId=#{orderId ,jdbcType=BIGINT}
+        WHERE hsId=#{hsId ,jdbcType=BIGINT} and orderId=#{orderId ,jdbcType=BIGINT} and deleted=0
     </select>
     <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.SettleSeller">
                  SELECT

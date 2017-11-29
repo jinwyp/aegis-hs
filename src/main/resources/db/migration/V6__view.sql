@@ -57,7 +57,7 @@ base.orderId,
 base.hsId,
 ROUND(sum(IFNULL(amount,0.00)) ,2)as totalLoadMoney
 from   base 
-left join  hs_same_jiekuan jiekuan on base.hsId=jiekuan.hsId and  deleted=0
+left join  hs_same_jiekuan jiekuan on base.hsId=jiekuan.hsId and  jiekuan.deleted=0
 group by  orderId, hsId;
 
 
@@ -85,8 +85,8 @@ base.orderId,
 base.hsId,
 ROUND(IFNULL(sum(IFNULL(amount,0.00)*IFNULL(useInterest,0.00) * IFNULL(useDays,0.00)/360),0.00),2)  as totalUnrepaymentEstimateCost
 from base 
-left join hs_same_jiekuan jiekuan on base.hsId=jiekuan.hsId and base.orderId=jiekuan.orderId
-LEFT OUTER JOIN  hs_same_huankuan_map map  on  jiekuan.orderId=map.orderId
+left join hs_same_jiekuan jiekuan on base.hsId=jiekuan.hsId and base.orderId=jiekuan.orderId and  deleted=0
+LEFT OUTER JOIN  hs_same_huankuan_map map  on  jiekuan.orderId=map.orderId and map.deleted=0
 where map.jiekuanId IS null
 group by  orderId, hsId;
 
@@ -108,7 +108,7 @@ ROUND(sum(IFNULL(map.fee,0.00)),2) as  totalServiceCharge,
 ROUND(sum(case when map.ccsPay=1 then map.fee else 0 end) ,2)  as  totalccsPayServiceCharge
 from base
      left join hs_same_huankuan huankuan on base.hsId=huankuan.hsId and huankuan.deleted=0
-     left join hs_same_huankuan_map map on huankuan.id= map.huankuanId
+     left join hs_same_huankuan_map map on huankuan.id= map.huankuanId and  map.deleted=0
 group by  orderId, hsId;
 
 --还款状态  1009  1010
@@ -146,7 +146,7 @@ base.orderId,
 base.hsId,
 ROUND(sum(IFNULL(huikuanAmount,0.00)) ,2)as totalHuikuanPaymentMoney
 from base
-left join hs_same_huikuan huikuan on base.hsId= huikuan.hsId and deleted =0
+left join hs_same_huikuan huikuan on base.hsId= huikuan.hsId and huikuan.deleted =0
 group by  orderId, hsId;
 
 --付货款金额
@@ -177,7 +177,7 @@ v_1015.orderId,
 v_1015.hsId,
 ROUND(IFNULL(v_1015.unpaymentMoney,0.00) * IFNULL(config.contractBaseInterest,0.00) * IFNULL(config.expectHKDays,0.00) / 360 ,2)as unpaymentEstimateProfile
 from v_1015
-     left JOIN hs_same_order_config config  on config.id = v_1015.hsId;
+     left JOIN hs_same_order_config config  on config.id = v_1015.hsId and  config.deleted=0;
 
 
 --1017 计息天数  每条回款-付款记录：计息天数 = 回款日期 - 付款日期 - 【买方结算】折扣天数
@@ -208,7 +208,7 @@ from base
      left join hs_same_huikuan huikuan on  base.hsId=huikuan.hsId
      left join hs_same_huikuan_map map on map.huikuanId =huikuan.id
      left join hs_same_fukuan  fukuan on fukuan.id=map.fukuanId
-     left join hs_same_settle_seller seller on huikuan.orderId=seller.orderId;
+     left join hs_same_settle_seller seller on huikuan.orderId=seller.orderId and  deleted=0;
 
 --1018 实际使用率
 create view v_1018 as
@@ -217,8 +217,8 @@ base.orderId,
 base.hsId,
 ROUND(IFNULL(config.contractBaseInterest,0.00)- IFNULL(seller.discountInterest,0.00) ,2)as actualUtilizationRate
 from base 
-     left join  hs_same_order_config config on  base.hsId=config.id
-     left join hs_same_settle_seller seller on config.id=seller.hsId;
+     left join  hs_same_order_config config on  base.hsId=config.id and config.deleted=0
+     left join hs_same_settle_seller seller on config.id=seller.hsId and  seller.deleted=0;
 
 --1019 应计利息
 create view v_1019 as
@@ -246,9 +246,9 @@ ELSE 0 END as rate
 from base 
      left join hs_same_huikuan_map map on base.orderId=map.orderId and  map.deleted=0
      left join hs_same_huikuan huikuan on huikuan.id=map.huikuanId  and huikuan.hsId=base.hsId and base.orderId=huikuan.orderId
-     left join hs_same_fukuan fukuan on fukuan.id=map.fukuanId  and fukuan.hsId=base.hsId and base.orderId=fukuan.orderId
+     left join hs_same_fukuan fukuan on fukuan.id=map.fukuanId  and fukuan.hsId=base.hsId and base.orderId=fukuan.orderId and fukuan.deleted=0
      left join v_1018 on v_1018.hsId=huikuan.hsId  and   v_1018.orderId=base.orderId
-     left join hs_same_settle_seller seller on fukuan.hsId=seller.hsId;
+     left join hs_same_settle_seller seller on fukuan.hsId=seller.hsId  and  seller.deleted=0;
 
 
 
@@ -272,7 +272,7 @@ ROUND(IFNULL(v_1016.unpaymentEstimateProfile,0.00)+IFNULL(v_1020.totalPaymentedR
 from base 
      left join v_1016 on  base.hsId=v_1016.hsId
      left join v_1020 on v_1016.hsId=v_1020.hsId
-     left join hs_same_settle_seller seller on v_1016.hsId=seller.hsId and seller.orderId=v_1016.orderId;
+     left join hs_same_settle_seller seller on v_1016.hsId=seller.hsId and seller.orderId=v_1016.orderId  and seller.deleted=0;
 
 --1022 贴现息
 
@@ -286,7 +286,7 @@ WHEN huikuanMode ='BUSINESS_ACCEPTANCE'  and huikuan.huikuanBusinessDiscount=1
 THEN ROUND(IFNULL(DATEDIFF(huikuanBusinessPaperExpire,huikuanBusinessPaperDate),0) *IFNULL(huikuanAmount ,0.00)* IFNULL(huikuanBusinessDiscountRate,0.00)*1.17/360,2)
 ELSE 0.00 END as tiexianRate
 from base 
-left join hs_same_huikuan huikuan on  base.hsId=huikuan.hsId and deleted= 0;
+left join hs_same_huikuan huikuan on  base.hsId=huikuan.hsId and huikuan.deleted= 0;
 
 
 --1023 贴现息合计
