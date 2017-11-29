@@ -165,7 +165,7 @@ public class HuikuanService {
 
         Iterator<Fukuan> it = unfinishedFukuan.iterator();
 
-        toCompare(toAdd, unfinishedFukuan, unfinished);
+//        toCompare(toAdd, unfinishedFukuan, unfinished);
         Fukuan last = null;
         BigDecimal lastValue = null;
         for (Huikuan huikuan : unfinished) {
