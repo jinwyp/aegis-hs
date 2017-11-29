@@ -208,7 +208,7 @@ from base
      left join hs_same_huikuan huikuan on  base.hsId=huikuan.hsId
      left join hs_same_huikuan_map map on map.huikuanId =huikuan.id
      left join hs_same_fukuan  fukuan on fukuan.id=map.fukuanId
-     left join hs_same_settle_seller seller on huikuan.orderId=seller.orderId and  deleted=0;
+     left join hs_same_settle_seller seller on huikuan.orderId=seller.orderId and  seller.deleted=0;
 
 --1018 实际使用率
 create view v_1018 as

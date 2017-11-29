@@ -190,11 +190,23 @@ public class YingFayunController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("id") Long id
     ) {
-        int cnt = yingFayunService.delete(id,morderId);
-        if (cnt != 1) {
+
+
+        YingFayun yingFayun = yingFayunService.findOne(id);
+        if (yingFayun==null) {
             return Result.error(4001, "删除失败", HttpStatus.BAD_REQUEST);
         }
-        return Result.ok(1);
+        List<SettleBuyer> settleBuyers= settleBuyerService.selectByOrderIdAndHsId(morderId,yingFayun.getHsId());
+
+        if (settleBuyers == null || settleBuyers.size() == 0) {
+            int cnt = yingFayunService.delete(id,morderId);
+            if (cnt != 1) {
+                return Result.error(4001, "删除失败", HttpStatus.BAD_REQUEST);
+            }
+            return Result.ok(1);
+        } else {
+            return Result.error(4001, "下游已有结算记录，不能删除", HttpStatus.BAD_REQUEST);
+        }
     }
 
 
