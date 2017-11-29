@@ -109,7 +109,13 @@ public class HuikuanController {
                     return Result.error(4001, "商业承兑贴息率不能为负数", HttpStatus.BAD_REQUEST);
                 }
 
+            } else if(huikuan.getHuikuanMode().equals(PayMode.BANK_ACCEPTANCE) && huikuan.getHuikuanBankPaper() == false){
+                return Result.error(4001, "银行承兑", HttpStatus.BAD_REQUEST);
+
+            }else if(huikuan.getHuikuanMode().equals(PayMode.BANK_ACCEPTANCE) && huikuan.getHuikuanBankPaper() == false){
+
             }
+
 
             huikuan.setOrderId(morderId);
             int cnt = huikuanService.create(huikuan);

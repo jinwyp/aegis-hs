@@ -278,11 +278,11 @@ from base
 
 create view v_1022 as
 select
-base.orderId,
-base.hsId,
-CASE WHEN huikuanMode ='BANK_ACCEPTANCE'
-THEN ROUND(DATEDIFF(huikuanBankPaperExpire,huikuanBankPaperDate) *IFNULL(huikuanAmount ,0.00)* IFNULL(huikuanBankDiscountRate,0.00)*1.17/360,2)
-ELSE 0 END as tiexianRate
+CASE WHEN huikuanMode ='BANK_ACCEPTANCE'  and huikuan.huikuanBankDiscount=1
+THEN ROUND( IFNULL(DATEDIFF(huikuanBankPaperExpire,huikuanBankPaperDate),0.00) *IFNULL(huikuanAmount ,0.00)* IFNULL(huikuanBankDiscountRate,0.00)*1.17/360,2)
+WHEN huikuanMode ='BUSINESS_ACCEPTANCE'  and huikuan.huikuanBusinessDiscount=1
+THEN ROUND(IFNULL(DATEDIFF(huikuanBusinessPaperExpire,huikuanBusinessPaperDate),0) *IFNULL(huikuanAmount ,0.00)* IFNULL(huikuanBusinessDiscountRate,0.00)*1.17/360,2)
+ELSE 0.00 END as tiexianRate
 from base 
 left join hs_same_huikuan huikuan on  base.hsId=huikuan.hsId and deleted= 0;
 
