@@ -278,6 +278,8 @@ from base
 
 create view v_1022 as
 select
+base.orderId,
+base.hsId,
 CASE WHEN huikuanMode ='BANK_ACCEPTANCE'  and huikuan.huikuanBankDiscount=1
 THEN ROUND( IFNULL(DATEDIFF(huikuanBankPaperExpire,huikuanBankPaperDate),0.00) *IFNULL(huikuanAmount ,0.00)* IFNULL(huikuanBankDiscountRate,0.00)*1.17/360,2)
 WHEN huikuanMode ='BUSINESS_ACCEPTANCE'  and huikuan.huikuanBusinessDiscount=1
