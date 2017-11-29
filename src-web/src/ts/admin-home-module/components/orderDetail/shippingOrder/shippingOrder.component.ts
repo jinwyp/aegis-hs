@@ -224,7 +224,7 @@ export class ShippingOrderComponent implements OnInit {
             )
         } else {
             postData.id = this.currentShippingOrderId
-            delete postData.fyAmount
+            // delete postData.fyAmount
 
             this.hsOrderService.modifyShipping(this.businessType, this.currentOrder.id, this.currentShippingOrderId, postData).subscribe(
                 data => {
