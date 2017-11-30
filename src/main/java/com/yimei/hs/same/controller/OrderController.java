@@ -191,7 +191,7 @@ public class OrderController {
             }
             return Result.ok(1);
         } else {
-            return Result.error(4001, "订单已经生效，不能修改");
+            return Result.error(4001, "有核算月未完全结算");
         }
 
 

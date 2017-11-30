@@ -5,9 +5,11 @@ import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
+import com.yimei.hs.enums.OrderStatus;
 import com.yimei.hs.same.dto.PageOrderConfigDTO;
 import com.yimei.hs.same.entity.OrderConfig;
 import com.yimei.hs.same.service.OrderConfigService;
+import com.yimei.hs.same.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class OrderConfigController {
 
     @Autowired
     OrderConfigService orderConfigService;
+    @Autowired
+    OrderService orderService;
 
 
     /**
@@ -57,10 +61,14 @@ public class OrderConfigController {
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) OrderConfig orderConfig) {
+
+        assert (morderId == orderConfig.getOrderId());
         if (!orderConfigService.findOneByIdAndOrderId(orderConfig.getHsMonth(), morderId)) {
 
-            assert (morderId == orderConfig.getOrderId());
 
+            if (orderService.findOne(morderId).getStatus().equals(OrderStatus.COMPLETED)) {
+                return Result.error(4001, "该订单已经完成");
+            }
             orderConfig.setOrderId(morderId);
             int rtn = orderConfigService.create(orderConfig);
             if (rtn != 1) {
