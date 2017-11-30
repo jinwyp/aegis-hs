@@ -12,8 +12,11 @@ import com.yimei.hs.same.dto.PageFukuanDTO;
 import com.yimei.hs.same.dto.PageOrderDTO;
 import com.yimei.hs.same.entity.Fukuan;
 import com.yimei.hs.same.entity.Order;
+import com.yimei.hs.same.entity.OrderConfig;
 import com.yimei.hs.same.service.FukuanService;
+import com.yimei.hs.same.service.OrderConfigService;
 import com.yimei.hs.same.service.OrderService;
+import com.yimei.hs.same.service.SettleSellerService;
 import com.yimei.hs.user.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +44,11 @@ public class OrderController {
     private OrderService orderService;
     @Autowired
     private FukuanService fukuanService;
+    @Autowired
+    private OrderConfigService orderConfigService;
+
+    @Autowired
+    private SettleSellerService settleSellerService;
 
     /**
      * 获取订单分页数据
@@ -134,8 +142,8 @@ public class OrderController {
         if (fukuans == null || fukuans.size() == 0) {
             order.setId(id);
             order.setBusinessType(businessType);
-            int rtn = orderService.update(order);
-            logger.error("order" + order);
+            int rtn = orderService.update(order,OrderStatus.UNCOMPLETED);
+
             if (rtn != 1) {
                 return Result.error(4001, "更新失败");
             }
@@ -147,6 +155,47 @@ public class OrderController {
 
     }
 
+
+    /**
+     * 更新order
+     *
+     * @return
+     */
+    @PutMapping("/status/{id}")
+    public ResponseEntity<Result<Integer>> update(
+            @PathVariable("businessType") BusinessType businessType,
+            @PathVariable("id") long id
+    ) {
+
+
+        boolean setAble = true;
+        List<OrderConfig> orderConfigs = orderConfigService.getList(id);
+
+        for (OrderConfig orderConfig :orderConfigs) {
+            setAble = settleSellerService.selectHsAndOrderId(id, orderConfig.getId());
+            if (setAble==false) {
+                break;
+            }
+        }
+        if (setAble) {
+
+            Order order = new Order();
+            order.setId(id);
+            order.setBusinessType(businessType);
+            order.setStatus(OrderStatus.COMPLETED);
+
+            int rtn = orderService.update(order,OrderStatus.COMPLETED);
+
+            if (rtn != 1) {
+                return Result.error(4001, "更新失败");
+            }
+            return Result.ok(1);
+        } else {
+            return Result.error(4001, "订单已经生效，不能修改");
+        }
+
+
+    }
     /**
      * 将order转移
      *

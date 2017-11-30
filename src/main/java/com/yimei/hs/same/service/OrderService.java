@@ -3,6 +3,7 @@ package com.yimei.hs.same.service;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.EntityType;
+import com.yimei.hs.enums.OrderStatus;
 import com.yimei.hs.same.dto.PageOrderDTO;
 import com.yimei.hs.same.entity.Log;
 import com.yimei.hs.same.entity.Order;
@@ -46,12 +47,13 @@ public class OrderService {
 
     /**
      * 获取一页订单
+     *
      * @param pageOrderDTO
      * @return
      */
     public Page<Order> getPage(PageOrderDTO pageOrderDTO) {
         Page<Order> orderPage = orderMapper.getPage(pageOrderDTO);
-        if (orderPage!=null) {
+        if (orderPage != null) {
             for (Order order : orderPage.getResults()) {
                 order.setOrderPartyList(orderPartyMapper.getList(order.getId()));
                 order.setOrderConfigList(orderConfigMapper.getList(order.getId()));
@@ -62,13 +64,14 @@ public class OrderService {
 
     /**
      * 获取指定订单
+     *
      * @param id
      * @return
      */
     public Order findOne(long id) {
         Order order = orderMapper.selectByPrimaryKey(id);
         if (order != null) {
-            for (OrderParty orderParty:order.getOrderPartyList()) {
+            for (OrderParty orderParty : order.getOrderPartyList()) {
                 orderParty.setParty(partyMapper.selectByPrimaryKey(id));
             }
         }
@@ -77,6 +80,7 @@ public class OrderService {
 
     /**
      * 创建订单
+     *
      * @param order
      * @return
      */
@@ -123,48 +127,57 @@ public class OrderService {
 
     /**
      * 更新订单
+     *
      * @param record
      * @return
      */
     @Transactional(readOnly = false)
-    public int update(Order record) {
+    public int update(Order record, OrderStatus status) {
 
-        List<OrderParty> partyList = record.getOrderPartyList();
+        if (status.equals(OrderStatus.UNCOMPLETED)) {
 
-        int failed = 0;
+            List<OrderParty> partyList = record.getOrderPartyList();
 
-        // 删除原有参与方
-        Order orderOld = orderMapper.selectByPrimaryKey(record.getId());
-        if (orderOld != null) {
-            for (OrderParty orderPartyOld : orderOld.getOrderPartyList()) {
-                orderPartyMapper.delete(orderPartyOld.getId());
-            }
-        }
+            int failed = 0;
 
-
-        // 插入参与方
-        if (partyList != null) {
-
-            for (OrderParty orderParty : partyList) {
-                orderParty.setOrderId(record.getId());
-                if (orderParty.getId() == null) {
-                    if (orderPartyMapper.insert(orderParty) != 1) {
-                        failed++;
-                    }
-                } else {
-                    if (orderPartyMapper.updateByPrimaryKeySelective(orderParty) != 1) {
-                        failed++;
-                    }
+            // 删除原有参与方
+            Order orderOld = orderMapper.selectByPrimaryKey(record.getId());
+            if (orderOld != null) {
+                for (OrderParty orderPartyOld : orderOld.getOrderPartyList()) {
+                    orderPartyMapper.delete(orderPartyOld.getId());
                 }
-
             }
-        }
 
-        if (failed > 0) {
+
+            // 插入参与方
+            if (partyList != null) {
+
+                for (OrderParty orderParty : partyList) {
+                    orderParty.setOrderId(record.getId());
+                    if (orderParty.getId() == null) {
+                        if (orderPartyMapper.insert(orderParty) != 1) {
+                            failed++;
+                        }
+                    } else {
+                        if (orderPartyMapper.updateByPrimaryKeySelective(orderParty) != 1) {
+                            failed++;
+                        }
+                    }
+
+                }
+            }
+
+            if (failed > 0) {
+                return 0;
+            }
+
+            return orderMapper.updateByPrimaryKeySelective(record);
+        } else if (status.equals(OrderStatus.COMPLETED)) {
+            return orderMapper.updateByPrimaryKeySelective(record);
+        } else {
             return 0;
         }
 
-        return orderMapper.updateByPrimaryKeySelective(record);
     }
 
     /**
@@ -184,6 +197,7 @@ public class OrderService {
 
     /**
      * ownerId是否拥有orderId
+     *
      * @param ownerId
      * @param orderId
      * @return
@@ -194,6 +208,7 @@ public class OrderService {
 
     /**
      * 逻辑删除
+     *
      * @param id
      * @return
      */
@@ -201,4 +216,6 @@ public class OrderService {
     public int delete(Long id) {
         return orderMapper.delete(id);
     }
+
+
 }
