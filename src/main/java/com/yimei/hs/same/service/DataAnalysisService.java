@@ -504,4 +504,8 @@ public class DataAnalysisService {
 
         return yingAnalysisDataMapper.findOneV1001(orderId, hsId).getTotalTradeGapFee();
     }
+
+    public AnalysisData findV1001(Long morderId, Long hsId) {
+        return yingAnalysisDataMapper.findOneV1001(morderId, hsId);
+    }
 }

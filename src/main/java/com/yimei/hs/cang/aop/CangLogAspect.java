@@ -49,10 +49,10 @@ public class CangLogAspect<T> {
         Object arg = (joinPoint.getArgs().length > 0 ? joinPoint.getArgs()[0] : null);
         if (arg instanceof CangRuku) {
             CangRuku cangRuku = (CangRuku) arg;
-            logService.create(cangRuku, EntityType.cangRuKuInsert);
+            logService.createLog(cangRuku, EntityType.cangRuKuInsert);
         } else if (arg instanceof CangChuku) {
             CangChuku cangChuku = (CangChuku) arg;
-            logService.create(cangChuku, EntityType.cangChuKuInsert);
+            logService.createLog(cangChuku, EntityType.cangChuKuInsert);
         }
 
 
@@ -66,10 +66,10 @@ public class CangLogAspect<T> {
         Object arg = (joinPoint.getArgs().length > 0 ? joinPoint.getArgs()[0] : null);
         if (arg instanceof CangRuku) {
             CangRuku cangRuku = (CangRuku) arg;
-            logService.create(cangRuku, EntityType.cangRuKuUpdate);
+            logService.createLog(cangRuku, EntityType.cangRuKuUpdate);
         } else if (arg instanceof CangChuku) {
             CangChuku cangChuku = (CangChuku) arg;
-            logService.create(cangChuku, EntityType.cangChuKuUpdate);
+            logService.createLog(cangChuku, EntityType.cangChuKuUpdate);
         }
 
     }
@@ -86,11 +86,11 @@ public class CangLogAspect<T> {
 
         if (fileName.equals(CangRukuService.class.getName())) {
             CangRuku cangRuku = cangRukuMapper.selectByPrimaryKeyDeleted(id);
-            logService.create(cangRuku, EntityType.cangRuKuDel);
+            logService.createLog(cangRuku, EntityType.cangRuKuDel);
 
         } else if (fileName.equals(CangChukuService.class.getName())) {
             CangChuku cangChuku = cangChukuMapper.selectByPrimaryKeyDeleted(id);
-            logService.create(cangChuku, EntityType.cangChuKuDel);
+            logService.createLog(cangChuku, EntityType.cangChuKuDel);
         }
 
     }

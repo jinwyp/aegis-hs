@@ -48,10 +48,10 @@ public class YingLogAspect<T> {
         Object arg = (joinPoint.getArgs().length > 0 ? joinPoint.getArgs()[0] : null);
         if (arg instanceof YingFayun) {
             YingFayun yingFayun = (YingFayun) arg;
-            logService.create( yingFayun, EntityType.yingFayunInsert);
+            logService.createLog( yingFayun, EntityType.yingFayunInsert);
         } else if (arg instanceof YingBail) {
             YingBail yingBail = (YingBail) arg;
-            logService.create(yingBail, EntityType.yingBailInsert);
+            logService.createLog(yingBail, EntityType.yingBailInsert);
         }
         return;
 
@@ -65,10 +65,10 @@ public class YingLogAspect<T> {
         Object arg = (joinPoint.getArgs().length > 0 ? joinPoint.getArgs()[0] : null);
         if (arg instanceof YingFayun) {
             YingFayun yingFayun = (YingFayun) arg;
-            logService.create(yingFayun, EntityType.yingFayunUpdate);
+            logService.createLog(yingFayun, EntityType.yingFayunUpdate);
         } else if (arg instanceof YingBail) {
             YingBail yingFayun = (YingBail) arg;
-            logService.create(yingFayun, EntityType.yingBailUpdate);
+            logService.createLog(yingFayun, EntityType.yingBailUpdate);
         }
         return;
     }
@@ -83,11 +83,11 @@ public class YingLogAspect<T> {
         String fileName = joinPoint.getSignature().getDeclaringTypeName();
         if (fileName.equals(YingFayunService.class.getName())) {
             YingFayun yingFayun = yingFayunMapper.selectByPrimaryKeyDeleted(id);
-            logService.create(yingFayun, EntityType.yingFayunDel);
+            logService.createLog(yingFayun, EntityType.yingFayunDel);
 
         } else if (fileName.equals(YingBailService.class.getName())) {
             YingBail yingBail = yingBailMapper.selectByPrimaryKeyDeleted(id);
-            logService.create(yingBail, EntityType.yingFayunDel);
+            logService.createLog(yingBail, EntityType.yingFayunDel);
         }
 
     }

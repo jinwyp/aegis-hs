@@ -7,12 +7,14 @@ import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.cang.entity.CangAnalysisData;
 import com.yimei.hs.enums.BusinessType;
+import com.yimei.hs.enums.PaymentPurpose;
 import com.yimei.hs.same.dto.PageFukuanDTO;
 import com.yimei.hs.same.entity.Fukuan;
 import com.yimei.hs.same.entity.Order;
 import com.yimei.hs.same.service.DataAnalysisService;
 import com.yimei.hs.same.service.FukuanService;
 import com.yimei.hs.same.service.OrderService;
+import com.yimei.hs.same.service.SettleSellerService;
 import com.yimei.hs.ying.entity.AnalysisData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +46,9 @@ public class FukuanController {
 
     @Autowired
     private DataAnalysisService dataAnalysisService;
+
+    @Autowired
+    private SettleSellerService settleSellerService;
 
     /**
      * 获取付款-分页
@@ -117,6 +122,14 @@ public class FukuanController {
             purchaseCargoAmountofMoney = purchaseCargoAmountofMoney.add((dataAnalysisService.findPurchaseCargoAmountOfMoney(morderId, fukuan.getHsId(), BusinessType.cang)));
         }
 
+        //判断该核算月是否已经结算完成
+        if(settleSellerService.selectHsAndOrderId(morderId, fukuan.getHsId())){
+
+            //  上游结算完成后，可以添加付款，但添加的付款用途不能为“货款”或“运费”
+            if (fukuan.getPayUsage().equals(PaymentPurpose.PAYMENT_FOR_GOODS) || fukuan.getPayUsage().equals(PaymentPurpose.FREIGNHT ) ||fukuan.getPayUsage().equals(PaymentPurpose.DEPOSITECASH)) {
+                return Result.error(4001, "本月结算已经完成，不能录入货款与运费");
+            }
+        }
         if (purchaseCargoAmountofMoney != null) {
             // 付款的限制条件：付款总金额 < 当前计算出的采购货款总额
 //            if (purchaseCargoAmountofMoney.compareTo(totalPaymentMoney) == 1) {

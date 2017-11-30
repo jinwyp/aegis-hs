@@ -109,30 +109,25 @@ public class SettleSellerController {
             BigDecimal totalHuikuanPaymentMoney = new BigDecimal("0");
             BigDecimal totalPaymentAmount = new BigDecimal("0");
             totalHuikuanPaymentMoney = totalHuikuanPaymentMoney.add((dataAnalysisService.findTotalHuikuanPaymentMoney(morderId, settleSeller.getHsId())));
-            if (businessType.equals(BusinessType.ying)) {
-                totalPaymentAmount = totalPaymentAmount.add(dataAnalysisService.findPurchaseCargoAmountOfMoney(morderId, settleSeller.getHsId(),BusinessType.ying))
-                        .subtract(dataAnalysisService.findTotalTradeGapFee(morderId, settleSeller.getHsId()));
 
-            } else if (businessType.equals(BusinessType.cang)) {
-                totalPaymentAmount = totalPaymentAmount.add(dataAnalysisService.findPurchaseCargoAmountOfMoney(morderId, settleSeller.getHsId(),BusinessType.cang))
-                        .subtract(dataAnalysisService.findTotalTradeGapFee(morderId, settleSeller.getHsId()));
-            }
+            AnalysisData analysisData = dataAnalysisService.findV1001(morderId, settleSeller.getHsId());
+            totalPaymentAmount = analysisData.getTotalPayGoodsFee().add(analysisData.getTotalPayTrafficFee());
 
             boolean exit = settleSellerService.selectHsAndOrderId(morderId, settleSeller.getHsId());
             if (exit) {
                 return Result.error(4001, "记录已存在");
             } else {
-                 //    上游结算的限制条件：汇总回款总额 > 除贸易差价外的付款总额；
+                //  该核算月汇总回款总额 > 付款用途为“货款”的金额 + 付款用途为“运费”的金额
                 if (totalHuikuanPaymentMoney.compareTo(totalPaymentAmount) == 1) {
 
-                    int rtn = settleSellerService.create(settleSeller);
-                    if (rtn != 1) {
-                        logger.error("创建失败: {}", settleSeller);
-                        return Result.error(4001, "创建失败");
-                    }
-                    return Result.ok(settleSeller);
+                int rtn = settleSellerService.create(settleSeller);
+                if (rtn != 1) {
+                    logger.error("创建失败: {}", settleSeller);
+                    return Result.error(4001, "创建失败");
+                }
+                return Result.ok(settleSeller);
                 } else {
-                    return Result.error(4001, "汇总回款总额要大于除贸易差价外的付款总额");
+                    return Result.error(4001, "汇总回款总额要大于除货款以及运费总额");
                 }
             }
 
@@ -196,13 +191,13 @@ public class SettleSellerController {
             @PathVariable("morderId") Long morderId
 
     ) {
-            SettleSellerInfo settleSellerInfo = settleSellerService.findSettleInfo(morderId,hsId,businessType,null);
-            if (settleSellerInfo == null) {
-                return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
-            } else {
-                return Result.ok(settleSellerInfo);
-            }
+        SettleSellerInfo settleSellerInfo = settleSellerService.findSettleInfo(morderId, hsId, businessType, null);
+        if (settleSellerInfo == null) {
+            return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
+        } else {
+            return Result.ok(settleSellerInfo);
         }
+    }
 
 
     @GetMapping("/{morderId}/settleseller/allinfo")
@@ -213,7 +208,7 @@ public class SettleSellerController {
     ) {
 
         List<SettleSellerInfo> settleSellerInfos = settleSellerService.findAllSettleInfo(morderId, businessType);
-        if (settleSellerInfos == null||settleSellerInfos.size()==0) {
+        if (settleSellerInfos == null || settleSellerInfos.size() == 0) {
             return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
         } else {
             return Result.ok(settleSellerInfos);
