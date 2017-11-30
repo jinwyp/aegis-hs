@@ -345,5 +345,16 @@ export class OrderDetailComponent implements OnInit {
         )
 
     }
+
+
+    finishedOrder () {
+        this.hsOrderService.finishOrder(this.businessType, this.currentOrderId).subscribe(
+            data => {
+                console.log('保存成功: ', data)
+                this.httpService.successHandler(data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
 }
 
