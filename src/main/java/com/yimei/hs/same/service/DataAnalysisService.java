@@ -395,7 +395,7 @@ public class DataAnalysisService {
             setUnInvoicedAmountofMoney(cangAnalysisDatav1052.getUnInvoicedAmountofMoney());
             setCangPrePayment(cangAnalysisDatav1054.getCangPrePayment());
             setSettleGrossProfileNum(cangAnalysisDatav3003.getTotalOutstorageNum());
-            setPurchaseIncludeTaxTotalAmount(cangAnalysisDatav1046.getPurchaseCargoAmountOfMoney());
+            setPurchaseIncludeTaxTotalAmount(cangAnalysisDatav1056.getPurchaseCargoAmountOfMoney());
 
             setSaleIncludeTaxTotalAmount(cangAnalysisDatav1057.getSaleIncludeTaxTotalAmount());
             setTradeCompanyAddMoney(cangAnalysisDatav1058.getTradeCompanyAddMoney());

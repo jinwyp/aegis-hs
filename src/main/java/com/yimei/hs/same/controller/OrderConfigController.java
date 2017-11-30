@@ -3,6 +3,7 @@ package com.yimei.hs.same.controller;
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.api.UpdateGroup;
+import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.OrderStatus;
@@ -10,6 +11,7 @@ import com.yimei.hs.same.dto.PageOrderConfigDTO;
 import com.yimei.hs.same.entity.OrderConfig;
 import com.yimei.hs.same.service.OrderConfigService;
 import com.yimei.hs.same.service.OrderService;
+import com.yimei.hs.user.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +60,7 @@ public class OrderConfigController {
      */
     @PostMapping("/{morderId}/units")
     public ResponseEntity<Result<OrderConfig>> create(
+            @CurrentUser User user,
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
             @RequestBody @Validated(CreateGroup.class) OrderConfig orderConfig) {
