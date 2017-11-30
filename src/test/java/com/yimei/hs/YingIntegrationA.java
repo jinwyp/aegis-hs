@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.apache.coyote.http11.Constants.a;
+
 /**
  * Created by hary on 2017/9/26.
  */
@@ -178,9 +180,9 @@ public class YingIntegrationA extends HsTestBase {
                     setHuikuanAmount(new BigDecimal("60"));
                 }}
         );
+        List<HuikuanMap> toAdd = getMappers(fukuanList, huikuanList, huikuanMaps);
 
-
-        List<HuikuanMap> toAdd = toCompare(huikuanMaps, fukuanList, huikuanList);
+//        List<HuikuanMap> toAdd = toCompare(huikuanMaps, fukuanList, huikuanList);
 
         for (HuikuanMap huikuanMap : toAdd) {
             System.out.println("huikuanId  " + huikuanMap.getHuikuanId() + "   fukuanId   :" + huikuanMap.getFukuanId() + "  amount :" + huikuanMap.getAmount());
@@ -219,7 +221,7 @@ public class YingIntegrationA extends HsTestBase {
      * @return
      */
     private List<HuikuanMap> toCompare(List<HuikuanMap> toAdd, List<Fukuan> unfinishedFukuan, List<Huikuan> unfinishedHuikuan) {
-        Fukuan[] fukuans =  unfinishedFukuan.toArray(new Fukuan[0]);
+        Fukuan[] fukuans = unfinishedFukuan.toArray(new Fukuan[0]);
         Huikuan[] huikuans = unfinishedHuikuan.toArray(new Huikuan[0]);
 
         int fpos = -1;
@@ -1402,4 +1404,52 @@ public class YingIntegrationA extends HsTestBase {
 //        }
         return false;
     }
+
+
+    //自动匹配方案二 递归
+    public static List<HuikuanMap> getMappers(List<Fukuan> pay, List<Huikuan> payback, List<HuikuanMap> accumulator) {
+
+        // todo
+        // 不断累积结果到accucumulator上。
+        // 不断取首部元素， 来抵消， 掉为0后， 移动到下一个元素。
+        Fukuan tempFukuan = pay.get(0);
+        Huikuan tempHuikuan = payback.get(0);
+
+        HuikuanMap record = new HuikuanMap();
+        record.setOrderId(tempHuikuan.getOrderId());
+        record.setHuikuanId(tempHuikuan.getId());
+        record.setFukuanId(tempFukuan.getId());
+
+        //付款大于回款
+        if (tempFukuan.getPayAmount().compareTo(tempHuikuan.getHuikuanAmount()) == 1) {
+
+            record.setAmount(payback.get(0).getHuikuanAmount());
+            accumulator.add(record);
+            payback.remove(0);
+            tempFukuan.setPayAmount(tempFukuan.getPayAmount().subtract(tempHuikuan.getHuikuanAmount()));
+            pay.set(0, tempFukuan);
+
+
+        } else if (tempFukuan.getPayAmount().compareTo(tempHuikuan.getHuikuanAmount()) == 0) {
+            record.setAmount(payback.get(0).getHuikuanAmount());
+            payback.remove(0);
+            pay.remove(0);
+            accumulator.add(record);
+        } else {
+            record.setAmount(tempFukuan.getPayAmount());
+            tempHuikuan.setHuikuanAmount(tempHuikuan.getHuikuanAmount().subtract(tempFukuan.getPayAmount()));
+            payback.set(0, tempHuikuan);
+            pay.remove(0);
+            accumulator.add(record);
+        }
+
+
+        if (pay.size() > 0 && payback.size() > 0) {
+            getMappers(pay, payback, accumulator);
+        }
+
+        return accumulator;
+    }
+
+
 }

@@ -9,7 +9,8 @@ public enum PaymentPurpose {
     TRADE_DEFICIT("贸易差价"),
     FIAL_PAYMENT("货款尾款"),
     DEPOSITECASH("保证金"),
-    FREIGNHT("运费");
+    FREIGNHT("运费"),
+    ORTHER("其他费用");
 
     public String value;
 
