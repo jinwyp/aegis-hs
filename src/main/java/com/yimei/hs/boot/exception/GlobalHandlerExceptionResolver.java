@@ -19,6 +19,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,10 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 
 /**
  * Created by hary on 2017/9/21.
@@ -45,6 +50,23 @@ public class GlobalHandlerExceptionResolver {
 
     private static final String adminUnAuth_flag = "adminUnauthorized";
 
+
+    @ExceptionHandler(value = { NoHandlerFoundException.class })
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void process404Error(HttpServletRequest request, HttpServletResponse response, Exception ex) throws IOException {
+
+        logger.error(" \n ==================== 404 Error : " +  ex.getMessage() + "\n" + stackTraceToString(ex, 5, ""));
+
+        response.setStatus(404);
+        if (!WebUtils.isAjaxRequest(request)) {
+            response.sendRedirect("/404");
+        }
+        response.setContentType("application/json; charset=UTF-8");
+
+        om.writeValue(response.getOutputStream(), new Result(404, "URL请求不存在"));
+    }
+
+
     @ExceptionHandler({
             BindException.class,
             TypeMismatchException.class,
@@ -53,17 +75,20 @@ public class GlobalHandlerExceptionResolver {
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void process400Error(HttpServletRequest request, HttpServletResponse response, Exception ex) throws IOException {
-        logger.error("400Exception:", ex);
+
+        logger.error("\n ==================== 400 Error : " +  ex.getMessage() + "\n" + stackTraceToString(ex, 0, "com.yimei.hs"));
+
+        response.setStatus(400);
         if (!WebUtils.isAjaxRequest(request)) {
-            response.setStatus(400);
             response.sendRedirect("/400");
         }
-        response.setStatus(400);
         response.setContentType("application/json; charset=UTF-8");
         if (ex instanceof MethodArgumentNotValidException) {
         }
         om.writeValue(response.getOutputStream(), new Result(4001, "客户端错误"));
     }
+
+
 
     @ExceptionHandler({
             SignatureException.class,
@@ -146,4 +171,73 @@ public class GlobalHandlerExceptionResolver {
     }
 
 
+
+
+
+
+
+    /**
+     * 只返回指定包中的异常堆栈信息
+     * https://github.com/0opslab/utils/blob/master/src/main/java/com/opslab/util/ExceptionUtil.java
+     * 可以通过使用我开源的工具包获取
+     *
+     * @param exceptionOriginal 异常信息
+     * @param packageName 只转换某个包下的信息
+     * @param showLines 只显示几行
+     * @return string
+     */
+
+    public static String stackTraceToString(Throwable exceptionOriginal, int showLines, String packageName) {
+        StringWriter sw = new StringWriter();
+        exceptionOriginal.printStackTrace(new PrintWriter(sw, true));
+
+        String tempString = sw.toString();
+
+        if (packageName == null) {
+            return tempString;
+        }
+
+        String[] arrs = tempString.split("\n");
+        StringBuffer sbuf = new StringBuffer();
+        sbuf.append(arrs[0] + "\n");
+
+        if (showLines > 0 ) {
+
+            if (showLines > arrs.length) {
+                showLines = arrs.length;
+            }
+
+            for (int i = 1; i < showLines; i++) {
+                String temp = arrs[i];
+                sbuf.append(temp + "\n");
+            }
+        } else {
+
+            if (packageName.isEmpty()) {
+                return tempString;
+            }
+
+            for (int i = 1; i < arrs.length; i++) {
+                String temp = arrs[i];
+                if (temp != null && temp.indexOf(packageName) > 0) {
+                    sbuf.append(temp + "\n");
+                }
+            }
+        }
+
+        return sbuf.toString();
+    }
+
+
+
+
+    /**
+     * https://stackoverflow.com/questions/1490821/whats-the-best-way-to-get-the-current-url-in-spring-mvc
+     *
+     * @param request
+     * @return
+     */
+    public static String makeUrl(HttpServletRequest request) {
+        return request.getRequestURL().toString() + "?" + request.getQueryString();
+    }
 }
