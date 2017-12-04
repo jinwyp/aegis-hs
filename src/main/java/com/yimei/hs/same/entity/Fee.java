@@ -34,7 +34,7 @@ public class Fee implements Serializable {
     private BigDecimal amount;
 
     @NotNull(groups = {CreateGroup.class,UpdateGroup.class}, message = "对方不能为空")
-    private Long ortherPartyId;
+    private Long otherPartyId;
 
     /**
      * 数量

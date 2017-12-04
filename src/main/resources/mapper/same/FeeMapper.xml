@@ -8,12 +8,12 @@
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="amount" jdbcType="DECIMAL" property="amount"/>
         <result column="quantity" jdbcType="DECIMAL" property="quantity"/>
-        <result column="ortherPartyId" jdbcType="BIGINT" property="ortherPartyId"/>
+        <result column="otherPartyId" jdbcType="BIGINT" property="otherPartyId"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, ortherPartyId,quantity,name, amount, tsc, tsu
+        id, orderId, hsId, otherPartyId,quantity,name, amount, tsc, tsu
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -32,7 +32,7 @@
             <if test="true">deleted = 0</if>
             <if test="orderId!=null">AND orderId = #{orderId, jdbcType=BIGINT}</if>
             <if test="quantity!=null">AND quantity = #{quantity, jdbcType=DECIMAL}</if>
-            <if test="ortherPartyId!=null">AND ortherPartyId = #{ortherPartyId, jdbcType=BIGINT}</if>
+            <if test="otherPartyId!=null">AND otherPartyId = #{otherPartyId, jdbcType=BIGINT}</if>
             <if test="hsId!=null">AND hsId = #{hsId, jdbcType=BIGINT}</if>
             <if test="name!=null">AND name = #{name, jdbcType=VARCHAR}</if>
             <if test="amount!=null">AND amount= #{amount, jdbcType=VARCHAR}</if>
@@ -64,7 +64,7 @@
             id,
             orderId,
             hsId,
-            ortherPartyId,
+            otherPartyId,
             quantity,
             name,
             amount,
@@ -74,7 +74,7 @@
             #{id,jdbcType=BIGINT},
             #{orderId,jdbcType=BIGINT},
             #{hsId,jdbcType=BIGINT},
-            #{ortherPartyId,jdbcType=BIGINT},
+            #{otherPartyId,jdbcType=BIGINT},
             #{quantity,jdbcType=DECIMAL},
             #{name,jdbcType=VARCHAR},
             #{amount,jdbcType=DECIMAL},
@@ -90,7 +90,7 @@
             <if test="orderId != null">orderId,</if>
             <if test="hsId != null">hsId,</if>
             <if test="name != null">name,</if>
-            <if test="ortherPartyId != null">ortherPartyId,</if>
+            <if test="otherPartyId != null">otherPartyId,</if>
             <if test="quantity != null">quantity,</if>
             <if test="amount != null">amount,</if>
             <if test="tsc != null">tsc,</if>
@@ -100,7 +100,7 @@
             <if test="orderId != null">#{orderId,jdbcType=BIGINT},</if>
             <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
             <if test="name != null">#{name,jdbcType=VARCHAR},</if>
-            <if test="ortherPartyId != null">#{ortherPartyId,jdbcType=BIGINT},</if>
+            <if test="otherPartyId != null">#{otherPartyId,jdbcType=BIGINT},</if>
             <if test="quantity != null">#{quantity,jdbcType=DECIMAL},</if>
             <if test="amount != null">#{amount,jdbcType=DECIMAL},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
@@ -114,7 +114,7 @@
             <if test="hsId != null">hsId = #{hsId,jdbcType=BIGINT},</if>
             <if test="name != null">name = #{name,jdbcType=VARCHAR},</if>
             <if test="amount != null">amount = #{amount,jdbcType=DECIMAL},</if>
-            <if test="ortherPartyId!= null">ortherPartyId = #{ortherPartyId,jdbcType=BIGINT},</if>
+            <if test="otherPartyId!= null">otherPartyId = #{otherPartyId,jdbcType=BIGINT},</if>
             <if test="quantity != null">quantity = #{quantity,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
             <if test="true">tsu = current_timestamp,</if>
@@ -128,7 +128,7 @@
             hsId    = #{hsId,jdbcType=BIGINT},
             name    = #{name,jdbcType=VARCHAR},
             amount  = #{amount,jdbcType=DECIMAL},
-            ortherPartyId= #{ortherPartyId,jdbcType=BIGINT},
+            otherPartyId= #{otherPartyId,jdbcType=BIGINT},
             quantity = #{quantity,jdbcType=DECIMAL},
             tsc     = #{tsc,jdbcType=TIMESTAMP},
             tsu     = current_timestamp

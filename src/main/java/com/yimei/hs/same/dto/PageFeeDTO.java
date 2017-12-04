@@ -26,5 +26,5 @@ public class PageFeeDTO extends BaseFilter<PageFeeDTO> {
 
     private BigDecimal quantity;
 
-    private Long ortherPartyId;
+    private Long otherPartyId;
 }
