@@ -4,6 +4,7 @@ create  view base as
 select
 orders.id as orderId,
 config.id as hsId,
+orders.upstreamId,
 config.hsMonth,
 config.contractBaseInterest,
 config.maxPrepayRate,
@@ -23,7 +24,8 @@ base.hsId,
 ROUND(sum(case when  payUsage= 'FREIGNHT' then IFNULL(payAmount,0.00) else 0 end),2)as totalPayTrafficFee,
 ROUND(sum(case when  payUsage= 'PAYMENT_FOR_GOODS' then IFNULL(payAmount,0.00) else 0 end),2)as totalPayGoodsFee,
 ROUND(sum(case when  payUsage= 'TRADE_DEFICIT' then IFNULL(payAmount,0.00) else 0 end ),2)as totalTradeGapFee,
-ROUND(sum(IFNULL(payAmount,0.00)), 2)as totalPaymentAmount
+ROUND(sum(IFNULL(payAmount,0.00)), 2)as totalPaymentAmount,
+ROUND(sum(case when  fukuan.receiveCompanyId=base.upstreamId then IFNULL(payAmount,0.00) else 0 end ),2)  as forCapitalPressure
 from base
 left join hs_same_fukuan fukuan on base.hsId=fukuan.hsId and   deleted=0
 group by  orderId, hsId;
@@ -154,7 +156,7 @@ create view v_1014 as
 select
 v_1001.orderId,
 v_1001.hsId,
-ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)-IFNULL(v_1001.totalPayTrafficFee,0.00)-IFNULL(v_1001.totalTradeGapFee,0.00),2) as payCargoAmount
+ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)-IFNULL(v_1001.totalTradeGapFee,0.00),2) as payCargoAmount
 from v_1001;
 
 --1015未回款金额
@@ -325,6 +327,7 @@ create view v_1027 as
 select
 base.orderId,
 base.hsId,
+hs_same_fee.otherPartyId,
 ROUND(sum(case when name='HELP_RECIVE_PAY_FEE' then IFNULL(amount ,0.00)else 0 end),2) as dsddFee,
 ROUND(sum(case when name='TAX_MOTRO_FREIGHT' then  IFNULL(amount ,0.00) else 0 end) ,2)as hsqyFee,
 ROUND(sum(case when name='TAX_SHIP_FREIGHT' then  IFNULL(amount ,0.00) else 0 end) ,2)as hssyFee,
@@ -332,7 +335,8 @@ ROUND(sum(case when name='TAX_RAIL_FREIGHT' then  IFNULL(amount ,0.00)else 0 end
 ROUND(sum(case when name='SERVICE_FEE' then  IFNULL(amount ,0.00) else 0 end) ,2)as serviceFee,
 ROUND(sum(case when name='SUPERVISE_FEE' then  IFNULL(amount ,0.00)  else 0 end),2) as superviseFee,
 ROUND(sum(case when name='BUSINESS_FEE' then  IFNULL(amount ,0.00)  else 0 end) ,2)as businessFee,
-ROUND(sum(case when name !='HELP_RECIVE_PAY_FEE' then  IFNULL(amount ,0.00)  else 0 end),2) as salesFeeAmount
+ROUND(sum(case when name !='HELP_RECIVE_PAY_FEE' then  IFNULL(amount ,0.00)  else 0 end),2) as salesFeeAmount,
+ROUND(sum(case when  hs_same_fee.otherPartyId=base.upstreamId then IFNULL(amount,0.00) else 0 end ),2)  as forCapitalPressure
 from base
 left join  hs_same_fee on  base.hsId=hs_same_fee.hsId and   deleted=0
 group by orderId,hsId;
@@ -374,13 +378,32 @@ create view v_1039 as
 select
 invoice.orderId,
 invoice.hsId,
-ROUND(sum(IFNULL(detail.cargoAmount,0.00)),2) as invoicedMoneyNum,
-ROUND(sum(IFNULL(detail.priceAndTax,0.00)) ,2)as invoicedMoneyAmount
+sum(
+case when  invoice.invoiceDirection='INCOME' 
+then detail.cargoAmount else 0 end 
+) as invoicedMoneyNum,
+sum(
+case when  invoice.invoiceDirection='INCOME' 
+then detail.priceAndTax else 0 end 
+
+) as invoicedMoneyAmount,
+
+sum(detail.cargoAmount) as forunInvoicedAmount
 from hs_same_invoice_detail detail
      inner join hs_same_invoice invoice on detail.invoiceId= invoice.id
      inner join hs_same_order orders on invoice.orderId=orders.id
-where detail.deleted =0 and invoice.invoiceDirection='INCOME' and invoice.openCompanyId=orders.upstreamId
+where detail.deleted =0 and   invoice.openCompanyId=orders.upstreamId
 group by  orderId,hsId;
+-- select
+-- invoice.orderId,
+-- invoice.hsId,
+-- ROUND(sum(IFNULL(detail.cargoAmount,0.00)),2) as invoicedMoneyNum,
+-- ROUND(sum(IFNULL(detail.priceAndTax,0.00)) ,2)as invoicedMoneyAmount
+-- from hs_same_invoice_detail detail
+--      inner join hs_same_invoice invoice on detail.invoiceId= invoice.id
+--      inner join hs_same_order orders on invoice.orderId=orders.id
+-- where detail.deleted =0 and invoice.invoiceDirection='INCOME' and invoice.openCompanyId=orders.upstreamId
+-- group by  orderId,hsId;
 
 
 --v_2001 已到场数量  未到场数量  发运总数量
@@ -425,6 +448,18 @@ from base
 left join  v_2004 on base.hsId=v_2004.hsId;
 
 
+-- 3014  不含税费用     【1028】含税汽运费/1.11+【1029】含税水运费/1.11+【1030】含税火运费/1.11+【1031】监管费/1.06+【1032】服务费/1.06      
+create view v_3014  as
+select
+base.orderId,
+base.hsId,
+ROUND((
+IFNULL(v_1027.hsqyFee,0.00)+IFNULL(v_1027.hssyFee,0.00)+IFNULL(v_1027.hshyFee,0.00))/1.11
++(IFNULL(v_1027.superviseFee,0.00)+IFNULL(v_1027.serviceFee,0.0))/1.06
+,2)
+as withoutTaxFee
+from base
+left join v_1027  on base.hsId=v_1027.hsId ;
 
 --出库入库相关
 --3001	入库总数量	totalInstorageNum	【入库】	备查账	汇总：入库数量
@@ -479,15 +514,77 @@ left join v_3003 on base.hsId=v_3003.hsId;
 
 
 
---3006	库存金额	totalStockMoney	计算	占压	【3004】入库单价 * 【3005】库存数量
+--3006	库存金额	totalStockMoney	  【3004】入库单价 * 【3005】库存数量 / 1.17 +【3005】库存数量 / 【3001】入库总数量*【3014】不含税费用
 create view v_3006  as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_3001.instorageUnitPrice ,0.00)*IFNULL(v_3005.totalStockNum ,0.00),2)as totalStockMoney
+ROUND(
+IFNULL(v_3001.instorageUnitPrice ,0.00)
+*IFNULL(v_3005.totalStockNum ,0.00)
+/1.17,2)
++
+ROUND(case when v_3001.totalInstorageNum !=0  then IFNULL(v_3005.totalStockNum ,0.00)/v_3001.totalInstorageNum * v_3014.withoutTaxFee
+else 0.00 end ,2)
+as totalStockMoney
 from  base
 left join v_3001 on base.hsId=v_3001.hsId
+left join v_3014 on base.hsId=v_3014.hsId
 left join v_3005 on v_3005.hsId=base.hsId;
+
+-- 3010  在途库存金额  【入库】  占压表 【3009】*【3004】入库单价 / 1.17 + 【3009】在途库存数量 / 【3001】入库总数量*【3014】不含税费用     
+create view v_3010 as
+select 
+base.orderId,
+base.hsId,
+ROUND(
+
+IFNULL(v_3001.totalInstorageTranitNum,0.00)*
+IFNULL(v_3001.instorageUnitPrice,0.00) /1.17
++
+case when 
+v_3001.totalInstorageNum !=0 
+then
+ IFNULL(v_3001.totalInstorageTranitNum,0.00)/
+ IFNULL(v_3001.totalInstorageNum,0.00) *IFNULL(v_3014.withoutTaxFee,0) 
+else 0.00 end 
+,2)
+as totalInstorageTranitPrice
+
+
+
+from base
+left join v_3001 on base.hsId=v_3001.hsId
+left join v_3014 on base.hsId=v_3014.hsId;
+
+
+
+create view v_3012 as
+select 
+base.orderId,
+base.hsId,
+IFNULL(v_3001.totalInstoragedNum,0.00)-IFNULL(v_3003.totalOutstorageNum,0.00) as totalInstorageRemainNum
+from base
+left join v_3001 on base.hsId=v_3001.hsId
+left join v_3003 on base.hsId=v_3003.hsId;
+
+
+-- 3013  剩余库存金额  计算  占压表 【3012】剩余库存数量*【3004】入库单价 / 1.17 +【3012】剩余库存数量 / 【3001】入库总数量*【3014】不含税费用      
+create view v_3013 as
+select 
+base.orderId,
+base.hsId,
+
+IFNULL(v_3012.totalInstorageRemainNum,0.00)*IFNULL(v_3001.instorageUnitPrice,0.00) /1.17
++IFNULL(v_3012.totalInstorageRemainNum,0.00)/IFNULL(v_3001.totalInstorageNum,0.00) *v_3014.withoutTaxFee
+
+
+as totalInstorageRemainPrice
+from base
+left join v_3012 on base.hsId=v_3012.hsId
+left join v_3001 on base.hsId=v_3001.hsId
+left join v_3014 on base.hsId=v_3014.hsId;
+
 
 
 
@@ -643,50 +740,33 @@ from base
      left join v_1047 on v_1001.hsId=v_1047.hsId; 
 
 
---1049  上游资金占压	upstreamCapitalPressure	计算	备查账／占压表	IF（本核算月卖方结算=null？（【1047】外部资金付款金额 + 【1048】自有资金付款金额 - 【1046】采购货款总额：
+--1049  上游资金占压(供应商)	upstreamCapitalPressure	计算	备查账／占压表	IF（本核算月卖方结算=null？（【1047】外部资金付款金额 + 【1048】自有资金付款金额 - 【1046】采购货款总额：
 --（【1047】外部资金付款金额 + 【1048】自有资金付款金额 - 【1046】采购货款总额-【1002】付贸易差价金额）-【1001】付运费金额）
 create view v_1049_ying as
 select
-DISTINCT
 base.orderId,
 base.hsId,
-case  when seller.orderId is not null and seller.hsId is not null
-then
-IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)
--IFNULL(v_1001.totalPayTrafficFee,0.00)
-
-else IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)
-      
-end
+IFNULL(v_1001.forCapitalPressure,0.00) -IFNULL(v_1046_ying.purchaseCargoAmountOfMoney,0.00)- IFNULL(v_1027.forCapitalPressure,0.00)
 as upstreamCapitalPressure
 from base 
-left join hs_same_settle_seller seller on base.hsId=seller.hsId and deleted=0
-left join v_1048_ying on base.hsId=v_1048_ying.hsId
 left join v_1046_ying on base.hsId= v_1046_ying.hsId
-left join v_1047  on base.hsId=v_1047.hsId
+left join v_1027  on base.hsId=v_1027.hsId
 left join v_1001  on base.hsId=v_1001.hsId ;
+
 
 
 
 create view v_1049_cang as
 select
-DISTINCT
 base.orderId,
 base.hsId,
-case  when seller.orderId is not null and seller.hsId is not null
-then
-IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)
--IFNULL(v_1001.totalPayTrafficFee,0.00)
-else IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)
-       
-end
+IFNULL(v_1001.forCapitalPressure,0.00) -IFNULL(v_1046_cang.purchaseCargoAmountOfMoney,0.00)- IFNULL(v_1027.forCapitalPressure,0.00)
 as upstreamCapitalPressure
-from base
-left join hs_same_settle_seller seller on base.hsId=seller.hsId and deleted=0
-left join v_1048_cang on base.hsId=v_1048_cang.hsId
+from base 
 left join v_1046_cang on base.hsId= v_1046_cang.hsId
-left join v_1047  on base.hsId=v_1047.hsId
+left join v_1027  on base.hsId=v_1027.hsId
 left join v_1001  on base.hsId=v_1001.hsId ;
+
 
 
 --1050 下游资金占压	downstreamCapitalPressure	计算	备查账／占压表	【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额
@@ -733,20 +813,20 @@ from base
      left join v_1041_cang on base.hsId=v_1041_cang.hsId
      left join v_1037 on v_1037.hsId=v_1041_cang.hsId;
 
---1052 CCS未收到进项金额	cssUninTypeMoney	     	【1046】采购货款总额 + 【1041】贸易公司加价 - 【1038】CCS已收进项金额 - 【1027】代收代垫运费
+--1052 CCS未收到进项金额	cssUninTypeMoney	     	【1046】采购货款总额 + 【1041】贸易公司加价 + 【1034】销售费用总额 - 【1038】CCS已收进项金额 - 【1027】代收代垫运费
 --1053	占压表未开票金额	unInvoicedAmountofMoney		【1046】采购货款总额 - 【1039】占压表已开票金额 - 【1027】代收代垫运费 
 create view v_1052_ying  as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1041_ying.tradingCompanyAddMoney,0.00)-IFNULL(v_1037.totalCCSIntypeMoney,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as cssUninTypeMoney,
-ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)-IFNULL(v_1039.invoicedMoneyAmount,0.00)- IFNULL(v_1027.dsddFee ,0.00),2) as unInvoicedAmountofMoney
+ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1027.salesFeeAmount,0.00)+IFNULL(v_1041_ying.tradingCompanyAddMoney,0.00)-IFNULL(v_1037.totalCCSIntypeMoney,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as cssUninTypeMoney,
+ROUND(IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)-IFNULL(v_1039.forunInvoicedAmount,0.00)-IFNULL(v_1027.forCapitalPressure ,0.00),2) as unInvoicedAmountofMoney
 from base
      left join v_1046_ying on base.hsId =v_1046_ying.hsId
-     left join v_1041_ying on v_1046_ying.hsId=v_1041_ying.hsId
-     left join v_1037 on v_1037.hsId=v_1046_ying.hsId
-     left join v_1027 on v_1027.hsId=v_1046_ying.hsId
-     left join v_1039 on v_1039.hsId=v_1046_ying.hsId;
+     left join v_1041_ying on base.hsId=v_1041_ying.hsId
+     left join v_1037 on v_1037.hsId=base.hsId
+     left join v_1027 on v_1027.hsId=base.hsId
+     left join v_1039 on v_1039.hsId=base.hsId;
 
 
 
@@ -754,14 +834,14 @@ create view v_1052_cang  as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1041_cang.tradingCompanyAddMoney,0.00)-IFNULL(v_1037.totalCCSIntypeMoney,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as cssUninTypeMoney,
-ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)-IFNULL(v_1039.invoicedMoneyAmount,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as unInvoicedAmountofMoney
+ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)+IFNULL(v_1027.salesFeeAmount,0.00)+IFNULL(v_1041_cang.tradingCompanyAddMoney,0.00)-IFNULL(v_1037.totalCCSIntypeMoney,0.00)-IFNULL(v_1027.dsddFee ,0.00),2)as cssUninTypeMoney,
+ROUND(IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)-IFNULL(v_1039.forunInvoicedAmount,0.00)-IFNULL(v_1027.forCapitalPressure ,0.00),2) as unInvoicedAmountofMoney
 from base
-     left join v_1046_cang on base.hsId=v_1046_cang.hsId
-     left join v_1041_cang on v_1046_cang.hsId=v_1041_cang.hsId
-     left join v_1037 on v_1037.hsId=v_1046_cang.hsId
-     left join v_1027 on v_1027.hsId=v_1046_cang.hsId
-     left join v_1039 on v_1039.hsId=v_1046_cang.hsId;
+     left join v_1046_cang on base.hsId =v_1046_cang.hsId
+     left join v_1041_cang on base.hsId=v_1041_cang.hsId
+     left join v_1037 on v_1037.hsId=base.hsId
+     left join v_1027 on v_1027.hsId=base.hsId
+     left join v_1039 on v_1039.hsId=base.hsId;
 
 
 --1054	预收款	yingPrePayment	计算	占压表	IF（【1013】已回款金额>=【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额
@@ -1011,50 +1091,38 @@ from base
      left join v_3003  on v_1064_cang.hsId=v_3003.hsId;
 
 
---1066	自有资金占压	ownerCapitalPressure	IF（本核算月卖方=null？【1048】自有资金付款金额-【1046】采购货款总额：（【1048】自有资金付款金额-【1046】采购货款总额-【1001】付运费金额）
+--1066	自有资金占压	ownerCapitalPressure	【1048】自有资金付款金额 - 【1046】采购货款总额 - 【1034】销售费用总额
 create view v_1066_cang as
 select
+DISTINCT
 base.orderId,
 base.hsId,
-
-case when seller.orderId is  null and seller.hsId is  null
-then
-ROUND(IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0.00),2)
-else 
 ROUND(IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)
 -IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0.00)
--IFNULL(v_1001.totalPayTrafficFee ,0.00)
+-IFNULL(v_1027.salesFeeAmount ,0.00)
 ,2)
-end 
 as ownerCapitalPressure
 from  base
-     left join v_1046_cang on base.hsId=v_1046_cang.hsId
-     left join hs_same_settle_seller seller on base.hsId=seller.hsId
-     left join v_1001 on base.hsId=v_1001.hsId
-     left join v_1048_cang on base.hsId=v_1048_cang.hsId;
+     left join v_1046_cang on base.hsId=v_1046_cang.hsId and base.orderId=v_1046_cang.orderId
+     left join v_1027 on base.hsId and v_1027.hsId  and base.orderId=v_1027.orderId
+     left join v_1048_cang on base.hsId=v_1048_cang.hsId and base.orderId=v_1048_cang.orderId;
 
 
 
 create view v_1066_ying as
 select
+DISTINCT
 base.orderId,
 base.hsId,
-
-case when seller.orderId is  null and seller.hsId is  null
-then
-ROUND(IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0.00),2)
-else 
 ROUND(IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)
 -IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0.00)
--IFNULL(v_1001.totalPayTrafficFee ,0.00)
+-IFNULL(v_1027.salesFeeAmount ,0.00)
 ,2)
-end 
 as ownerCapitalPressure
 from  base
-     left join v_1046_ying on base.hsId=v_1046_ying.hsId
-     left join hs_same_settle_seller seller on base.hsId=seller.hsId
-     left join v_1001 on base.hsId=v_1001.hsId
-     left join v_1048_ying on base.hsId=v_1048_ying.hsId;
+     left join v_1046_ying on base.hsId=v_1046_ying.hsId and base.orderId=v_1046_ying.orderId
+     left join v_1027 on base.hsId and v_1027.hsId  and base.orderId=v_1027.orderId
+     left join v_1048_ying on base.hsId=v_1048_ying.hsId and base.orderId=v_1048_ying.orderId;
 
 
 
@@ -1087,6 +1155,65 @@ from  base
      left join v_1054_ying on v_1054_ying.hsId=v_1050_ying.hsId;
 
 
+--  1075 【付款】汇总收款单位 = “参与方X”的付款金额  - 【费用】对方单位 = “上游供应商ID”的费用金额
+
+create view v_1075_fukuan as
+select 
+base.orderId,
+base.hsId,
+fukuan.receiveCompanyId,
+sum(fukuan.payAmount) as payAmount
+from base 
+left join hs_same_fukuan  fukuan on base.hsId=fukuan.hsId
+group by orderId, hsId, receiveCompanyId;
+
+
+create view v_1075_fee  as
+select
+base.orderId,
+base.hsId,
+hs_same_fee.otherPartyId,
+ROUND(sum(IFNULL(amount,0.00)),2)  as amount
+from base
+left join  hs_same_fee on  base.hsId=hs_same_fee.hsId and   deleted=0
+group by orderId,hsId, hs_same_fee.otherPartyId;
+
+-- 1075  资金占压（参与方X）      【付款】汇总收款单位 = “参与方X”的付款金额  - 【费用】对方单位 = “参与方X”的费用金额  同应收     
+create view v_1075 as
+select
+base.orderId,
+base.hsId,
+v_1075_fukuan.receiveCompanyId,
+v_1075_fee.otherPartyId,
+IFNULL(v_1075_fukuan.payAmount,0.00) - IFNULL(v_1075_fee.amount,0.00) as partiesCapitalPressure
+from base
+left join  v_1075_fukuan on  base.hsId=v_1075_fukuan.hsId 
+left join  v_1075_fee on  base.hsId=v_1075_fee.hsId  and v_1075_fukuan.receiveCompanyId=v_1075_fee.otherPartyId;
+
+
+
+create view v_1076_invoice as
+select
+invoice.orderId,
+invoice.hsId,
+invoice.openCompanyId,
+sum(IFNULL(detail.priceAndTax,0.00)) as unInvoicePrice
+from hs_same_invoice_detail detail
+     inner join hs_same_invoice invoice on detail.invoiceId= invoice.id
+     inner join hs_same_order orders on invoice.orderId=orders.id
+where detail.deleted =0 
+group by orderId,hsId,openCompanyId;
+
+
+create view v_1076 as 
+select
+base.orderId,
+base.hsId,
+v_1075_fee.otherPartyId,
+IFNULL(v_1075_fee.amount,0.00)- IFNULL(v_1076_invoice.unInvoicePrice,0.00) as  unInvoicePrice
+from base 
+left join v_1075_fee on base.hsId=v_1075_fee.hsId
+left join v_1076_invoice on  base.hsId=v_1076_invoice.hsId  and  v_1075_fee.otherPartyId=v_1076_invoice.openCompanyId;
 
 
 
