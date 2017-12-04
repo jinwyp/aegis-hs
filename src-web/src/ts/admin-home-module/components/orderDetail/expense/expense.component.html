@@ -5,6 +5,8 @@
 
             <bs-select formControlName ="name" [fc]="expenseForm.get('name')" [label]="'费用科目:'" [dirty]="ignoreDirty" [options]="expensePurposeList" [error]="expenseFormError.name"></bs-select>
             <bs-text-input formControlName="amount" [fc]="expenseForm.get('amount')" [type]="'number'" [label]="'金额(元):'" [dirty]="ignoreDirty" [error]="expenseFormError.amount"></bs-text-input>
+            <bs-text-input formControlName="quantity" [fc]="expenseForm.get('quantity')" [type]="'number'" [label]="'数量(吨):'" [dirty]="ignoreDirty" [error]="expenseFormError.quantity"></bs-text-input>
+            <bs-select formControlName ="otherPartyId" [fc]="expenseForm.get('otherPartyId')" [label]="'对方单位:'" [editable]="true" [dirty]="ignoreDirty" [options]="party.normal" [error]="expenseFormError.otherPartyId"></bs-select>
 
 
             <div class="form-group row">
@@ -32,8 +34,16 @@
                     <div class="col-6">
                         <bs-text-input formControlName="amount" [fc]="expenseSearchForm.get('amount')" [type]="'number'" [label]="'金额(元):'" ></bs-text-input>
                     </div>
+                    <div class="col-6">
+                        <bs-text-input formControlName="quantity" [fc]="expenseSearchForm.get('quantity')" [type]="'number'" [label]="'数量(吨):'" ></bs-text-input>
+                    </div>
                 </div>
 
+                <div class="form-row ">
+                    <div class="col-6">
+                        <bs-select formControlName ="otherPartyId" [fc]="expenseSearchForm.get('otherPartyId')" [label]="'对方单位:'" [options]="party.normal" [editable]="true" [addAllOptions]="true"></bs-select>
+                    </div>
+                </div>
 
                 <div class="form-group row">
                     <div class="col-11 ml-auto">
@@ -49,7 +59,9 @@
                     <th>核算月</th>
 
                     <th>费用科目</th>
-                    <th>金额</th>
+                    <th>金额(元)</th>
+                    <th>数量(吨)</th>
+                    <th>对方单位</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -60,6 +72,8 @@
 
                     <td> {{expense.name | findKey : expensePurposeList : 'name' }}</td>
                     <td> {{expense.amount  }}</td>
+                    <td> {{expense.quantity  }}</td>
+                    <td> {{expense.otherPartyId | findKey : party.norml : 'name' }}</td>
 
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, expense)"> 修改 </button>

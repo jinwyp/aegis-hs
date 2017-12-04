@@ -129,8 +129,10 @@ export class ExpenseComponent implements OnInit {
 
         this.expenseSearchForm = this.fb.group({
             'hsId'    : ['' ],
+            'name'    : ['' ],
             'amount'    : ['' ],
-            'name'    : ['' ]
+            'quantity'    : ['' ],
+            'otherPartyId'    : ['' ]
         } )
     }
 
@@ -139,12 +141,17 @@ export class ExpenseComponent implements OnInit {
         'hsId'  : {
             'required'      : '请选择核算月!'
         },
+        'name'  : {
+            'required'      : '请填写费用科目!'
+        },
         'amount'  : {
             'required'      : '请填写金额!'
         },
-        'name'  : {
-            'required'      : '请填写费用科目!'
+        'otherPartyId'  : {
+            'required'      : '请填写对方单位!'
         }
+
+
     }
 
     expenseFormInputChange(formInputData : any) {
@@ -156,7 +163,9 @@ export class ExpenseComponent implements OnInit {
         this.expenseForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
             'name'    : ['', [Validators.required ] ],
-            'amount'    : ['', [Validators.required ] ]
+            'amount'    : ['', [Validators.required ] ],
+            'quantity'    : ['' ],
+            'otherPartyId'    : ['', [Validators.required ] ]
         } )
 
 
@@ -227,7 +236,9 @@ export class ExpenseComponent implements OnInit {
             this.expenseForm.patchValue({
                 'hsId'    : '',
                 'name'    : '',
-                'amount'  : ''
+                'amount'  : '',
+                'quantity'    : '',
+                'otherPartyId'    : ''
             })
 
         } else {

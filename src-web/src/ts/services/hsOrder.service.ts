@@ -350,8 +350,11 @@ export class HSOrderService {
             .set('pageNo', query.pageNo)
 
         if (query.hsId) { params = params.append('hsId', query.hsId)}
-        if (query.amount) { params = params.append('amount', query.amount)}
         if (query.name) { params = params.append('name', query.name)}
+        if (query.amount) { params = params.append('amount', query.amount)}
+
+        if (query.quantity) { params = params.append('quantity', query.quantity)}
+        if (query.otherPartyId) { params = params.append('otherPartyId', query.otherPartyId)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fees', {params: params} )
     }
