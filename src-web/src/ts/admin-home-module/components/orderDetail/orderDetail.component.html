@@ -39,9 +39,9 @@
             <li class="nav-item">
                 <a class="nav-link" [class.active]="currentTabIndex === 22" (click)="changeTab(22)">下游结算管理</a>
             </li>
-            <li class="nav-item" >
-                <a class="nav-link" [class.active]="currentTabIndex === 23" (click)="changeTab(23)">运输方结算管理</a>
-            </li>
+            <!--<li class="nav-item" >-->
+                <!--<a class="nav-link" [class.active]="currentTabIndex === 23" (click)="changeTab(23)">运输方结算管理</a>-->
+            <!--</li>-->
 
             <li class="nav-item" *ngIf="businessType==='ying'">
                 <a class="nav-link" [class.active]="currentTabIndex === 25" (click)="changeTab(25)">保证金管理</a>
@@ -360,7 +360,7 @@
         <app-settle  *ngIf="currentTabIndex === 21 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlebuyerupstream'" [party]="partyObject"></app-settle>
         <app-settle  *ngIf="currentTabIndex === 22 && businessType==='cang'" [currentOrder]="currentOrder" [businessType]="businessType" [settleType]="'settlesellerdownstream'" [party]="partyObject"></app-settle>
 
-        <app-settletraffic  *ngIf="currentTabIndex === 23" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-settletraffic>
+        <!--<app-settletraffic  *ngIf="currentTabIndex === 23" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-settletraffic>-->
 
 
         <app-deposit  *ngIf="currentTabIndex === 25" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-deposit>
