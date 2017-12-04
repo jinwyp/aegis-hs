@@ -33,6 +33,14 @@ public class Fee implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "金额不能为空")
     private BigDecimal amount;
 
+    @NotNull(groups = {CreateGroup.class,UpdateGroup.class}, message = "对方不能为空")
+    private Long ortherPartyId;
+
+    /**
+     * 数量
+     */
+    private BigDecimal quantity;
+
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
 

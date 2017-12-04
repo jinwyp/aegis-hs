@@ -66,6 +66,8 @@ create table hs_same_fee (
   id bigint(20)              not null auto_increment,
   orderId bigint(20)         not null comment '订单id, 业务线id',
   hsId bigint(20)            not null comment '核算月id',
+  ortherPartyId bigint(20)            not null comment '对方单位',
+  quantity decimal(10, 2)    null  defalut 0 comment '数量 单位吨',
   name varchar(64)           not null comment '费用科目',
   amount decimal(10, 2)      not null comment '金额',
   deleted tinyint(1)         not null default 0 comment '逻辑删除',
