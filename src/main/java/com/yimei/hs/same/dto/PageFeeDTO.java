@@ -15,8 +15,16 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class PageFeeDTO extends BaseFilter<PageFeeDTO> {
+
     private Long orderId;
+
     private Long hsId;
+
     private FeeClass name;
+
     private BigDecimal amount;
+
+    private BigDecimal quantity;
+
+    private Long ortherPartyId;
 }
