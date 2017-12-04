@@ -134,7 +134,7 @@ export class UnitComponent implements OnInit {
 
                 'expectHKDays'    : ['', [Validators.required, isInt() ] ],
                 'tradeAddPrice'    : ['', [Validators.required ] ],
-                'weightedPrice'    : [0, [] ]
+                'weightedPrice'    : ['', [] ]
             } )
         }
 
@@ -203,7 +203,7 @@ export class UnitComponent implements OnInit {
 
                 'expectHKDays'    : '',
                 'tradeAddPrice'    : '',
-                'weightedPrice'    : 0
+                'weightedPrice'    : ''
             })
 
         } else {
