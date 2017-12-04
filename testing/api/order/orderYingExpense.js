@@ -54,6 +54,8 @@ describe('应收订单 费用单:', function () {
                     "hsId" : 2,
                     "name" : "HELP_RECIVE_PAY_FEE",
                     "amount" : "2000",
+                    "quantity" : "1000",
+                    "otherPartyId" : "2",
                     "orderId" : orderId
                 }
             )
@@ -80,6 +82,8 @@ describe('应收订单 费用单:', function () {
                     "hsId" : 2,
                     "name" : "TAX_MOTRO_FREIGHT",
                     "amount" : "10000",
+                    "quantity" : "1000",
+                    "otherPartyId" : "2",
                     "orderId" : orderId
                 }
             )
@@ -139,6 +143,8 @@ describe('应收订单 费用单:', function () {
                     "hsId" : 1,
                     "name" : "HELP_RECIVE_PAY_FEE",
                     "amount" : 20003333,
+                    "quantity" : "5000",
+                    "otherPartyId" : "3",
                     "orderId" : orderId,
                     "id" : expenseId
                 }
