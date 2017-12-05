@@ -273,29 +273,29 @@
                         </table>
 
 
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位">库存占压 - 在途库存数量: {{ unitStatistics?.totalInstorageTranitNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【3009】*【3004】入库单价 / 1.17 + 【3009】在途库存数量 / 【3001】入库总数量*【3014】不含税费用">库存占压 - 在途库存金额: {{ unitStatistics?.totalInstorageTranitPrice | number }}</p>
-                        </div>
+                        <table class="table table-bordered table-hover table-responsive" *ngIf="businessType==='cang'">
+                            <thead>
+                            <tr>
+                                <th>在途库存数量</th>
+                                <th>在途库存金额</th>
+                                <th>剩余库存数量</th>
+                                <th>剩余库存金额</th>
+                                <th>库存数量</th>
+                                <th>库存金额</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td> <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位"> {{ unitStatistics?.totalInstorageTranitNum | number }}</p> </td>
+                                <td> <p class="card-text" title="【3009】*【3004】入库单价 / 1.17 + 【3009】在途库存数量 / 【3001】入库总数量*【3014】不含税费用">{{ unitStatistics?.totalInstorageTranitPrice | number }}</p> </td>
+                                <td> <p class="card-text" title="【3011】已入库库存数量-【3003】已出库数量"> {{ unitStatistics?.totalInstorageRemainNum | number }}</p> </td>
+                                <td> <p class="card-text" title="【3012】剩余库存数量*【3004】入库单价 / 1.17 +【3012】剩余库存数量 / 【3001】入库总数量*【3014】不含税费用">{{ unitStatistics?.totalInstorageRemainPrice | number }}</p> </td>
+                                <td> <p class="card-text" title="【3001】入库总数量 - 【3003】已出库数量"> {{ unitStatistics?.totalStockNum | number }}</p> </td>
+                                <td> <p class="card-text" title="【3004】入库单价 * 【3005】库存数量 / 1.17 +【3005】库存数量 / 【3001】入库总数量*【3014】不含税费用"> {{ unitStatistics?.totalStockMoney | number }}</p> </td>
 
-
-                        <div class="col-3">
-                            <p class="card-text" title="【3011】已入库库存数量-【3003】已出库数量">剩余库存数量: {{ unitStatistics?.totalInstorageRemainNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【3012】剩余库存数量*【3004】入库单价 / 1.17 +【3012】剩余库存数量 / 【3001】入库总数量*【3014】不含税费用">剩余库存金额: {{ unitStatistics?.totalInstorageRemainPrice | number }}</p>
-                        </div>
-
-                        <div class="col-3">
-                            <p class="card-text" title="【3001】入库总数量 - 【3003】已出库数量">、库存数量: {{ unitStatistics?.totalStockNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【3004】入库单价 * 【3005】库存数量 / 1.17 +【3005】库存数量 / 【3001】入库总数量*【3014】不含税费用">库存金额: {{ unitStatistics?.totalStockMoney | number }}</p>
-                        </div>
-
-
+                            </tr>
+                            </tbody>
+                        </table>
 
                     </div>
 
