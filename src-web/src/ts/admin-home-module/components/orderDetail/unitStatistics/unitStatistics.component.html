@@ -9,13 +9,16 @@
 
                     <div class="row mt-4">
                         <div class="col-4">
-                            <p class="card-text" title="【2001】未到场数量 +【2002】已到场数量">发运信息 - 发运总数量: {{ unitStatistics?.totalFayunNum | number }}</p>
+                            <p class="card-text" title="【2001】未到场数量 +【2002】已到场数量" *ngIf="businessType==='ying'">发运信息 - 发运总数量: {{ unitStatistics?.totalFayunNum | number }}</p>
+                            <p class="card-text" title="汇总：入库数量" *ngIf="businessType==='cang'">发运信息 - 入库总数量: {{ unitStatistics?.totalInstorageNum | number }}</p>
                         </div>
                         <div class="col-4">
-                            <p class="card-text" title="汇总：到场状态 = “未到场”的发运数量">发运信息 - 已到场数量: {{ unitStatistics?.totalArriveNum | number }}</p>
+                            <p class="card-text" title="汇总：到场状态 = “未到场”的发运数量" *ngIf="businessType==='ying'">发运信息 - 已到场数量: {{ unitStatistics?.totalArriveNum | number }}</p>
+                            <p class="card-text" title="汇总：出库数量" *ngIf="businessType==='cang'">发运信息 - 已出库数量: {{ unitStatistics?.totalOutstorageNum | number }}</p>
                         </div>
                         <div class="col-4">
-                            <p class="card-text" title="汇总：到场状态 = “已到场”的发运数量">发运信息 - 未到场数量: {{ unitStatistics?.totalUnarriveNum | number }}</p>
+                            <p class="card-text" title="汇总：到场状态 = “已到场”的发运数量" *ngIf="businessType==='ying'">发运信息 - 未到场数量: {{ unitStatistics?.totalUnarriveNum | number }}</p>
+                            <p class="card-text" title="【3001】入库总数量 - 【3003】已出库数量" *ngIf="businessType==='cang'">发运信息 - 库存数量: {{ unitStatistics?.totalStockNum | number }}</p>
                         </div>
 
                         <div class="col-4">
@@ -104,32 +107,6 @@
 
 
 
-            <div class="card mt-4">
-                <div class="card-body" >
-
-                    <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 出入库</h5>
-
-                    <div class="row mt-4">
-
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：入库数量">入库总数量: {{ unitStatistics?.totalInstorageNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：入库金额">入库总金额: {{ unitStatistics?.totalInstorageAmount | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：出库数量">已出库数量: {{ unitStatistics?.totalOutstorageNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【3002】入库总金额 ／ 【3001】入库总数量">入库单价: {{ unitStatistics?.instorageUnitPrice | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总出库金额">已出库金额: {{ unitStatistics?.totalOutstorageMoney | number }}</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
 
 
 
@@ -474,19 +451,6 @@
 
                     <div class="row mt-4">
                         <div class="col-3">
-                            <p class="card-text" title="汇总：到场状态 = “已到场”的发运数量">备查账 - 未到场数量: {{ unitStatistics?.totalUnarriveNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：到场状态 = “未到场”的发运数量">备查账 - 已到场数量: {{ unitStatistics?.totalArriveNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【2001】未到场数量 +【2002】已到场数量">备查账 - 发运总数量: {{ unitStatistics?.totalFayunNum | number }}</p>
-                        </div>
-                    </div>
-
-
-                    <div class="row mt-4">
-                        <div class="col-3">
                             <p class="card-text" title="汇总： 保证金类型 = “收上游保证金”的保证金金额">收上游保证金: {{ unitStatistics?.totalUpstreamBail | number }}</p>
                         </div>
                         <div class="col-3">
@@ -510,16 +474,21 @@
                     </div>
 
 
+
                     <div class="row mt-4">
                         <div class="col-3">
-                            <p class="card-text" title="汇总：入库数量">备查账 - 入库总数量: {{ unitStatistics?.totalInstorageNum | number }}</p>
+                            <p class="card-text" title="汇总：入库数量">入库总数量: {{ unitStatistics?.totalInstorageNum | number }}</p>
                         </div>
                         <div class="col-3">
                             <p class="card-text" title="汇总：入库金额">入库总金额: {{ unitStatistics?.totalInstorageAmount | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：出库数量">备查账 - 已出库数量: {{ unitStatistics?.totalOutstorageNum | number }}</p>
+                            <p class="card-text" title="汇总：出库数量">已出库数量: {{ unitStatistics?.totalOutstorageNum | number }}</p>
                         </div>
+                        <div class="col-3">
+                            <p class="card-text" title="汇总：出库金额">已出库金额: {{ unitStatistics?.totalOutstorageMoney | number }}</p>
+                        </div>
+
                         <div class="col-3">
                             <p class="card-text" title="【3002】入库总金额 ／ 【3001】入库总数量">入库单价: {{ unitStatistics?.instorageUnitPrice | number }}</p>
                         </div>
@@ -530,9 +499,6 @@
                             <p class="card-text" title="【3004】入库单价 * 【3005】库存数量">占压表 - 库存金额: {{ unitStatistics?.totalStockMoney | number }}</p>
                         </div>
 
-                        <div class="col-3">
-                            <p class="card-text" title="汇总出库金额">已出库金额: {{ unitStatistics?.totalOutstorageMoney | number }}</p>
-                        </div>
 
 
                         <div class="col-3">
@@ -646,15 +612,6 @@
                         <div class="col-3">
                             <p class="card-text" title="【2001】未到场数量 +【2002】已到场数量">备查账 - 发运总数量: {{ unitStatistics?.totalFayunNum | number }}</p>
                         </div>
-
-
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：入库数量">备查账 - 入库总数量: {{ unitStatistics?.totalInstorageNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：出库数量">备查账 - 已出库数量: {{ unitStatistics?.totalOutstorageNum | number }}</p>
-                        </div>
-
 
                     </div>
 
