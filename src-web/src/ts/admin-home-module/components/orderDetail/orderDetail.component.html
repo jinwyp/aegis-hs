@@ -345,7 +345,7 @@
 
 
 
-        <app-unit  *ngIf="currentTabIndex === 2" [currentOrder]="currentOrder" [businessType]="businessType"></app-unit>
+        <app-unit  *ngIf="currentTabIndex === 2" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-unit>
         <app-shipping  *ngIf="currentTabIndex === 3 && businessType==='ying'" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-shipping>
         <app-invoice  *ngIf="currentTabIndex === 4" [currentOrder]="currentOrder" [businessType]="businessType" [party]="partyObject"></app-invoice>
 

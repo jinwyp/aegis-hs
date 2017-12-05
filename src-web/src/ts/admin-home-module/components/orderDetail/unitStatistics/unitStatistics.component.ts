@@ -23,6 +23,8 @@ export class UnitStatisticsComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
+    @Input() party : any = {}
+
     @Input() currentUnit : any
     @Output() back: any = new EventEmitter<boolean>()
 

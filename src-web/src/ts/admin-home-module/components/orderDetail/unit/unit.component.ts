@@ -23,6 +23,7 @@ export class UnitComponent implements OnInit {
 
     @Input() currentOrder : any
     @Input() businessType : string
+    @Input() party : any = {}
 
     currentOrderUnitId : number
     currentUnit : any

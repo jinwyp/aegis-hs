@@ -161,8 +161,8 @@ export class OrderDetailComponent implements OnInit {
                         tempTotal.totalFayunNum = tempTotal.totalFayunNum + unit.totalFayunNum || 0
                         tempTotal.totalArriveNum = tempTotal.totalArriveNum + unit.totalArriveNum || 0
                         tempTotal.totalUnarriveNum = tempTotal.totalUnarriveNum + unit.totalUnarriveNum || 0
-                        tempTotal.purchaseIncludeTaxTotalAmount = tempTotal.purchaseIncludeTaxTotalAmount + unit.purchaseIncludeTaxTotalAmount
-                        tempTotal.saleIncludeTaxTotalAmount = tempTotal.saleIncludeTaxTotalAmount + unit.saleIncludeTaxTotalAmount
+                        tempTotal.purchaseIncludeTaxTotalAmount = tempTotal.purchaseIncludeTaxTotalAmount + unit.purchaseIncludeTaxTotalAmount || 0
+                        tempTotal.saleIncludeTaxTotalAmount = tempTotal.saleIncludeTaxTotalAmount + unit.saleIncludeTaxTotalAmount || 0
 
                         tempTotal.tradingCompanyAddMoney = tempTotal.tradingCompanyAddMoney + unit.tradingCompanyAddMoney
                         tempTotal.salesFeeAmount = tempTotal.salesFeeAmount + unit.salesFeeAmount

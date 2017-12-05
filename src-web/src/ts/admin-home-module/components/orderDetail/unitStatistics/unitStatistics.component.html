@@ -216,64 +216,92 @@
                     <h5 class="card-title">核算月{{currentUnit?.hsMonth }} 占压表</h5>
 
                     <div class="row mt-4">
-                        <div class="col-3">
-                            <p class="card-text" title="【1047】外部资金付款金额 + 【1048】自有资金付款金额 - 【1046】采购货款总额 -【1002】付贸易差价金额">上游资金占压: {{ unitStatistics?.upstreamCapitalPressure | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1004】借款金额合计 - 【1007】还款本金合计  + 【1009】登记未还款本金">外部融资余额(外部资金付款金额): {{ unitStatistics?.externalCapitalPaymentAmount | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1048】自有资金付款金额-【1046】采购货款总额-【1002】付贸易差价金额">自有资金占压: {{ unitStatistics?.ownerCapitalPressure | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费">未开票金额: {{ unitStatistics?.unInvoicedAmountofMoney | number }}</p>
-                        </div>
+
+                        <table class="table table-bordered table-hover table-responsive">
+                            <thead>
+                            <tr>
+                                <th>公司名称</th>
+                                <th>占压金额</th>
+                                <th>外部融资余额</th>
+                                <th>自有资金占压</th>
+                                <th>未开票金额</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td> <p class="card-text" >上游供应商 {{currentOrder.upstreamId | findKey : party.normal : 'name' }}</p> </td>
+                                <td> <p class="card-text" title="【1047】外部资金付款金额 + 【1048】自有资金付款金额 - 【1046】采购货款总额 -【1002】付贸易差价金额"> {{ unitStatistics?.upstreamCapitalPressure | number }}</p> </td>
+                                <td> <p class="card-text" title="【1004】借款金额合计 - 【1007】还款本金合计  + 【1009】登记未还款本金">{{ unitStatistics?.externalCapitalPaymentAmount | number }}</p> </td>
+                                <td> <p class="card-text" title="【1048】自有资金付款金额-【1046】采购货款总额-【1002】付贸易差价金额">{{ unitStatistics?.ownerCapitalPressure | number }}</p> </td>
+                                <td> <p class="card-text" title="【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费"> {{ unitStatistics?.unInvoicedAmountofMoney | number }}</p> </td>
+                            </tr>
+
+                            <tr *ngFor="let company of unitStatistics?.capitalPressureList">
+                                <td> 参与方 {{company.receiveCompanyId | findKey : party.normal : 'name'}}</td>
+                                <td> {{company.partiesCapitalPressure | number}}</td>
+                                <td> -- </td>
+                                <td> -- </td>
+                                <td> {{company.unInvoicePrice | number}}</td>
+                            </tr>
+                            </tbody>
+
+                        </table>
 
 
-                        <div class="col-3">
-                            <p class="card-text" title="【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额">下游资金占压: {{ unitStatistics?.downstreamCapitalPressure | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款">已结算未回款金额: {{ unitStatistics?.settledDownstreamHuikuanMoneny | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【1042】买方未结算数量 * 【核算月配置】加权单价">下游未结算金额: {{ unitStatistics?.unsettlerBuyerMoneyAmount | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p *ngIf="businessType==='ying'" class="card-text" title="IF（【1013】已回款金额>【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额">预收款: {{ unitStatistics?.yingPrePayment | number }}</p>
-                            <p *ngIf="businessType==='cang'" class="card-text" title="IF（【1013】已回款金额>【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额">预收款: {{ unitStatistics?.cangPrePayment | number }}</p>
-                        </div>
+                        <table class="table table-bordered table-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>公司名称</th>
+                                    <th>下游占压金额</th>
+                                    <th>已结算未回款金额</th>
+                                    <th>未结算金额</th>
+                                    <th>预收款</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td> <p class="card-text" >下游客户 {{currentOrder.downstreamId | findKey : party.normal : 'name' }}</p> </td>
+                                    <td> <p class="card-text" title="【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额"> {{ unitStatistics?.downstreamCapitalPressure | number }}</p> </td>
+                                    <td> <p class="card-text" title="【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款">{{ unitStatistics?.settledDownstreamHuikuanMoneny | number }}</p> </td>
+                                    <td> <p class="card-text" title="【1042】买方未结算数量 * 【核算月配置】加权单价"> {{ unitStatistics?.unsettlerBuyerMoneyAmount | number }}</p> </td>
+                                    <td>
+                                        <p *ngIf="businessType==='ying'" class="card-text" title="IF（【1013】已回款金额>【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额">{{ unitStatistics?.yingPrePayment | number }}</p>
+                                        <p *ngIf="businessType==='cang'" class="card-text" title="IF（【1013】已回款金额>【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额">{{ unitStatistics?.cangPrePayment | number }}</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
 
                         <div class="col-3">
                             <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位">库存占压 - 在途库存数量: {{ unitStatistics?.totalInstorageTranitNum | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库金额">库存占压 - 在途库存金额: {{ unitStatistics?.totalInstorageTranitPrice | number }}</p>
+                            <p class="card-text" title="【3009】*【3004】入库单价 / 1.17 + 【3009】在途库存数量 / 【3001】入库总数量*【3014】不含税费用">库存占压 - 在途库存金额: {{ unitStatistics?.totalInstorageTranitPrice | number }}</p>
                         </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位">在途库存数量: {{ unitStatistics?.totalInstorageTranitNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位 【3009】*【3004】入库单价" >在途库存金额: {{ unitStatistics?.totalInstorageTranitPrice | number }}</p>
-                        </div>
+
+
                         <div class="col-3">
                             <p class="card-text" title="【3011】已入库库存数量-【3003】已出库数量">剩余库存数量: {{ unitStatistics?.totalInstorageRemainNum | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="【3012】剩余库存数量*【3004】入库单价">剩余库存金额: {{ unitStatistics?.totalInstorageRemainPrice | number }}</p>
+                            <p class="card-text" title="【3012】剩余库存数量*【3004】入库单价 / 1.17 +【3012】剩余库存数量 / 【3001】入库总数量*【3014】不含税费用">剩余库存金额: {{ unitStatistics?.totalInstorageRemainPrice | number }}</p>
                         </div>
+
+                        <div class="col-3">
+                            <p class="card-text" title="【3001】入库总数量 - 【3003】已出库数量">、库存数量: {{ unitStatistics?.totalStockNum | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【3004】入库单价 * 【3005】库存数量 / 1.17 +【3005】库存数量 / 【3001】入库总数量*【3014】不含税费用">库存金额: {{ unitStatistics?.totalStockMoney | number }}</p>
+                        </div>
+
+
+
                     </div>
 
                 </div>
 
             </div>
-
-
-
-
-
-
 
 
 
@@ -496,7 +524,7 @@
                             <p class="card-text" title="【3001】入库总数量 - 【3003】已出库数量">备查账/占压表 - 库存数量: {{ unitStatistics?.totalStockNum | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="【3004】入库单价 * 【3005】库存数量">占压表 - 库存金额: {{ unitStatistics?.totalStockMoney | number }}</p>
+                            <p class="card-text" title="【3004】入库单价 * 【3005】库存数量 / 1.17 +【3005】库存数量 / 【3001】入库总数量*【3014】不含税费用">占压表 - 库存金额: {{ unitStatistics?.totalStockMoney | number }}</p>
                         </div>
 
 
@@ -504,22 +532,26 @@
                         <div class="col-3">
                             <p class="card-text" title="IF【3001】=0 ？0:【3003】已出库数量/【3001】入库总数量">出库入库比: {{ unitStatistics?.inOutKuRate | percent }}</p>
                         </div>
+
+
                         <div class="col-3">
-                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位">在途库存数量: {{ unitStatistics?.totalInstorageTranitNum | number }}</p>
+                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位">库存占压 - 在途库存数量: {{ unitStatistics?.totalInstorageTranitNum | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="汇总：入库状态 = “运输中”的入库吨位 【3009】*【3004】入库单价" >在途库存金额: {{ unitStatistics?.totalInstorageTranitPrice | number }}</p>
+                            <p class="card-text" title="【3009】*【3004】入库单价 / 1.17 + 【3009】在途库存数量 / 【3001】入库总数量*【3014】不含税费用">库存占压 - 在途库存金额: {{ unitStatistics?.totalInstorageTranitPrice | number }}</p>
                         </div>
 
                         <div class="col-3">
                             <p class="card-text" title="汇总：入库状态 = “已入库”的入库数量" >已入库库存数量: {{ unitStatistics?.totalInstoragedNum | number }}</p>
                         </div>
+
                         <div class="col-3">
                             <p class="card-text" title="【3011】已入库库存数量-【3003】已出库数量">剩余库存数量: {{ unitStatistics?.totalInstorageRemainNum | number }}</p>
                         </div>
                         <div class="col-3">
-                            <p class="card-text" title="【3012】剩余库存数量*【3004】入库单价">剩余库存金额: {{ unitStatistics?.totalInstorageRemainPrice | number }}</p>
+                            <p class="card-text" title="【3012】剩余库存数量*【3004】入库单价 / 1.17 +【3012】剩余库存数量 / 【3001】入库总数量*【3014】不含税费用">剩余库存金额: {{ unitStatistics?.totalInstorageRemainPrice | number }}</p>
                         </div>
+
 
                     </div>
 
@@ -712,14 +744,6 @@
                         </div>
                         <div class="col-3">
                             <p class="card-text" title="【1028】含税汽运费*1.06+【1029】含税水运费*1.06+【1030】含税火运费*1.06+【1031】监管费*1.12+【1032】服务费*1.12">费用及补税: {{ unitStatistics?.feeAndAddTax | number }}</p>
-                        </div>
-
-
-                        <div class="col-3">
-                            <p class="card-text" title="【3001】入库总数量 - 【3003】已出库数量">备查账/占压表 - 库存数量: {{ unitStatistics?.totalStockNum | number }}</p>
-                        </div>
-                        <div class="col-3">
-                            <p class="card-text" title="【3004】入库单价 * 【3005】库存数量">占压表 - 库存金额: {{ unitStatistics?.totalStockMoney | number }}</p>
                         </div>
 
                     </div>

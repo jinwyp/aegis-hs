@@ -64,5 +64,5 @@
         <button type="button" class="btn btn-outline-info" *ngIf="!isShowForm && !isShowStat" (click)="showForm(true)">添加新核算月</button>
 
 
-        <app-statistics *ngIf="isShowStat" [currentOrder]="currentOrder" [businessType]="businessType" [currentUnit]="currentUnit" (back)="showStat()"></app-statistics>
+        <app-statistics *ngIf="isShowStat" [currentOrder]="currentOrder" [businessType]="businessType" [currentUnit]="currentUnit" [party]="party" (back)="showStat()"></app-statistics>
 
