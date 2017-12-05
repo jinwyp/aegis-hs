@@ -542,8 +542,21 @@ public class DataAnalysisService {
         List<CapitalPressure> capitalPressureList = new ArrayList<CapitalPressure>();
 
         for (Long id : partiesId) {
-            CapitalPressure capitalPressure = yingAnalysisDataMapper.findOneV1075(id, orderId, hsId);
-            capitalPressure.setUnInvoicePrice(yingAnalysisDataMapper.findOneV1076(id, orderId, hsId).getUnInvoicePrice());
+
+            CapitalPressure capitalPressure = new CapitalPressure();
+            BigDecimal capitalFee = yingAnalysisDataMapper.findOneV1075Fee(id, orderId, hsId);
+            BigDecimal capitalFukuan = yingAnalysisDataMapper.findOneV1075Fukuan(id, orderId, hsId);
+            BigDecimal unInvoice = yingAnalysisDataMapper.findOneV1076Uninvoice(id, orderId, hsId);
+            capitalPressure.setHsId(hsId);
+            capitalPressure.setReceiveCompanyId(id);
+            capitalPressure.setOrderId(orderId);
+            capitalPressure.setUnInvoicePrice(
+                    (unInvoice == null
+                            || unInvoice.compareTo(BigDecimal.ZERO)
+                            == 0 ? BigDecimal.ZERO : unInvoice).subtract(
+                                    (capitalFee == null ||
+                                            capitalFee.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : capitalFee)));
+            capitalPressure.setPartiesCapitalPressure((capitalFukuan == null || capitalFukuan.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : capitalFukuan).subtract((capitalFee == null || capitalFee.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : capitalFee)));
             capitalPressureList.add(capitalPressure);
         }
         return capitalPressureList;

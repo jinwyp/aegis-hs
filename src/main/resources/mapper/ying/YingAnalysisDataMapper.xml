@@ -1312,12 +1312,33 @@ left join v_1001  on base.hsId=v_1001.hsId
 
 
     <select id="findOneV3013" resultType="com.yimei.hs.ying.entity.AnalysisData">
-         select
+        select
         orderId,
         hsId,
         totalInstorageRemainPrice
         from v_3013
-        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT } and orderId=#{orderId,jdbcType=BIGINT }
+    </select>
+
+    <select id="findOneV1075Fee" resultType="java.math.BigDecimal">
+        select
+        amount
+        from v_1075_fee
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT } and v_1075_fee.otherPartyId = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findOneV1075Fukuan" resultType="java.math.BigDecimal">
+        select
+        payAmount
+        from v_1075_fukuan
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT } and v_1075_fukuan.receiveCompanyId = #{id,jdbcType=BIGINT}
+
+    </select>
+    <select id="findOneV1076Uninvoice" resultType="java.math.BigDecimal">
+        select
+        unInvoicePrice
+        from v_1076_invoice
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT } and v_1076_invoice.openCompanyId = #{id,jdbcType=BIGINT}
     </select>
 
 

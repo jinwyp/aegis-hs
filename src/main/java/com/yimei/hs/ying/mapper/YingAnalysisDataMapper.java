@@ -184,4 +184,10 @@ public interface YingAnalysisDataMapper {
     AnalysisData findOneV3010(@Param("orderId") Long orderId, @Param("hsId") long hsId);
 
     AnalysisData findOneV3013(@Param("orderId") Long orderId, @Param("hsId") long hsId);
+
+    BigDecimal findOneV1075Fee(@Param("id") long id,@Param("orderId") Long orderId, @Param("hsId") long hsId);
+
+    BigDecimal findOneV1075Fukuan(@Param("id") long id,@Param("orderId") Long orderId, @Param("hsId") long hsId);
+
+    BigDecimal findOneV1076Uninvoice(@Param("id") long id,@Param("orderId") Long orderId, @Param("hsId") long hsId);
 }
