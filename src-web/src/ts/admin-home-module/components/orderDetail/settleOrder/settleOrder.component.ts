@@ -572,8 +572,8 @@ export class SettleOrderComponent implements OnInit {
             if (this.unitListStatAdditionalInfoObject[event.id].hasSettled) {
                 this.settleForm.patchValue({
                     'settleDate'    : this.unitListStatAdditionalInfoObject[event.id].lastHuikuanDate,
-                    'amount'    : this.unitListStatAdditionalInfoObject[event.id].totalBuyerNums
-                    // 'money'    : this.unitListStatAdditionalInfoObject[event.id].purchaseCargoAmountOfMoney
+                    'amount'    : this.unitListStatAdditionalInfoObject[event.id].totalBuyerNums,
+                    'money'    : this.unitListStatAdditionalInfoObject[event.id].purchaseCargoAmountOfMoney
                 })
             }
 
