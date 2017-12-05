@@ -2,7 +2,11 @@ package com.yimei.hs.demo.controller;
 
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.cang.entity.ChukuInfo;
 import com.yimei.hs.enums.BusinessType;
+import com.yimei.hs.same.entity.CapitalPressure;
+import com.yimei.hs.ying.mapper.YingAnalysisDataMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,4 +67,5 @@ public class DemoController {
         page.setTotalRecord(100);
         return Result.ok(page);
     }
+
 }

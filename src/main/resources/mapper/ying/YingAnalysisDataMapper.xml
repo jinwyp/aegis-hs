@@ -435,7 +435,7 @@
     </select>
 
 
-  <select id="findOneV1009" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1009" resultType="com.yimei.hs.ying.entity.AnalysisData">
 
         select
         orderId,
@@ -447,7 +447,7 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-      <select id="findOneV1012" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1012" resultType="com.yimei.hs.ying.entity.AnalysisData">
 
         select
         orderId,
@@ -457,7 +457,7 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-   <select id="findOneV1013" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1013" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -485,7 +485,7 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-   <select id="findOneV1016" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1016" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -505,7 +505,6 @@
     </select>
 
 
-
     <select id="findOneV1018" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
@@ -516,7 +515,7 @@
     </select>
 
 
-   <select id="findOneV1019" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1019" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -526,7 +525,7 @@
     </select>
 
 
-   <select id="findOneV1020" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1020" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -536,8 +535,7 @@
     </select>
 
 
-
-   <select id="findOneV1021" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1021" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -546,7 +544,7 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-   <!-- 贴现息合计-->
+    <!-- 贴现息合计-->
     <select id="findOneV1023" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
@@ -556,7 +554,7 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-     <!-- 1024 买方结算   1024  1025 1026-->
+    <!-- 1024 买方结算   1024  1025 1026-->
     <select id="findOneV1024" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
@@ -569,14 +567,14 @@
     </select>
 
 
-<!-- 1027  代收代垫运费  dsddFee 【费用】  毛利表 汇总：费用科目 = “代收代垫运费”的费用金额
-1028  含税汽运费 hsqyFee 【费用】  毛利表 汇总：费用科目 = “含税汽运费”的费用金额
-1029  含税水运费 hssyFee 【费用】  毛利表 汇总：费用科目 = “含税水运费”的费用金额
-1030  含税火运费 hshyFee 【费用】  毛利表 汇总：费用科目 = “含税火运费”的费用金额
-1031  服务费 serviceFee  【费用】  毛利表 汇总：费用科目 = “监管费”的费用金额
-1032  管理费 superviseFee  【费用】  毛利表 汇总：费用科目 = “管理费”的费用金额
-1033  业务费 businessFee 【费用】  毛利表 汇总：费用科目 = “业务费”的费用金额
-1034  销售费用总额  salesFeeAmount  【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费 + 【1031】监管费 + 【1032】管理费 + 【1033】业务费-->
+    <!-- 1027  代收代垫运费  dsddFee 【费用】  毛利表 汇总：费用科目 = “代收代垫运费”的费用金额
+    1028  含税汽运费 hsqyFee 【费用】  毛利表 汇总：费用科目 = “含税汽运费”的费用金额
+    1029  含税水运费 hssyFee 【费用】  毛利表 汇总：费用科目 = “含税水运费”的费用金额
+    1030  含税火运费 hshyFee 【费用】  毛利表 汇总：费用科目 = “含税火运费”的费用金额
+    1031  服务费 serviceFee  【费用】  毛利表 汇总：费用科目 = “监管费”的费用金额
+    1032  管理费 superviseFee  【费用】  毛利表 汇总：费用科目 = “管理费”的费用金额
+    1033  业务费 businessFee 【费用】  毛利表 汇总：费用科目 = “业务费”的费用金额
+    1034  销售费用总额  salesFeeAmount  【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费 + 【1031】监管费 + 【1032】管理费 + 【1033】业务费-->
 
     <select id="findOneV1027" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
@@ -595,9 +593,8 @@
     </select>
 
 
-
-<!--发票相关 -->
-<!--1035 贸易公司已收到的进项数量 金额1035  1036 -->
+    <!--发票相关 -->
+    <!--1035 贸易公司已收到的进项数量 金额1035  1036 -->
     <select id="findOneV1035" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
@@ -608,8 +605,8 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!-- 1037Css已收到进项数量 -->
-<!-- 1038Css已收到进项金额 -->
+    <!-- 1037Css已收到进项数量 -->
+    <!-- 1038Css已收到进项金额 -->
     <select id="findOneV1037" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
@@ -620,8 +617,8 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!-- 1039 invoicedMoneyAmount 1039占压表已开票金额-->
-   <select id="findOneV1039" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <!-- 1039 invoicedMoneyAmount 1039占压表已开票金额-->
+    <select id="findOneV1039" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -632,10 +629,10 @@
     </select>
 
 
-   <!--v_2001 已到场数量  -->
-   <!-- 未到场数量 -->
-   <!-- 发运总数量-->
-  <select id="findOneV2001" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <!--v_2001 已到场数量  -->
+    <!-- 未到场数量 -->
+    <!-- 发运总数量-->
+    <select id="findOneV2001" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -646,12 +643,12 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!--2004  保证金相关-->
-<!--2004收上游保证金  totalUpstreamBail 【保证金】   汇总： 保证金类型 = “收上游保证金”的保证金金额
-2005退上游保证金  totalRefundUpBail 【保证金】   汇总： 保证金类型 = “退上游保证金”的保证金金额
-2006付下游保证金  totalPayDownBail  【保证金】   汇总： 保证金类型 = “付下游保证金”的保证金金额
-2007下游退保证金  totalRefundDownBail 【保证金】   汇总： 保证金类型 = “下游退保证金 ”的保证金金额-->
-  <select id="findOneV2004" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <!--2004  保证金相关-->
+    <!--2004收上游保证金  totalUpstreamBail 【保证金】   汇总： 保证金类型 = “收上游保证金”的保证金金额
+    2005退上游保证金  totalRefundUpBail 【保证金】   汇总： 保证金类型 = “退上游保证金”的保证金金额
+    2006付下游保证金  totalPayDownBail  【保证金】   汇总： 保证金类型 = “付下游保证金”的保证金金额
+    2007下游退保证金  totalRefundDownBail 【保证金】   汇总： 保证金类型 = “下游退保证金 ”的保证金金额-->
+    <select id="findOneV2004" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -664,9 +661,9 @@
     </select>
 
 
-   <!-- 2008  上游保证金余额 balanceUpstreamBail 计算    【2004】收上游保证金 - 【2005】退上游保证金
-        2009  下游保证金余额 balanceDownStreamBail 计算    【2006】付下游保证金 - 【2007】下游退保证金-->
-  <select id="findOneV2008" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <!-- 2008  上游保证金余额 balanceUpstreamBail 计算    【2004】收上游保证金 - 【2005】退上游保证金
+         2009  下游保证金余额 balanceDownStreamBail 计算    【2006】付下游保证金 - 【2007】下游退保证金-->
+    <select id="findOneV2008" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -676,12 +673,12 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!--出库入库相关
- 3001  入库总数量 totalInstorageNum 【入库】  备查账 汇总：入库数量
-3002  入库总金额 totalInstorageAmount  【入库】    汇总：入库金额
-3004  入库单价  instorageUnitPrice  计算    【3002】入库总金额 ／ 【3001】入库总数量-->
+    <!--出库入库相关
+     3001  入库总数量 totalInstorageNum 【入库】  备查账 汇总：入库数量
+    3002  入库总金额 totalInstorageAmount  【入库】    汇总：入库金额
+    3004  入库单价  instorageUnitPrice  计算    【3002】入库总金额 ／ 【3001】入库总数量-->
 
-  <select id="findOneV3001" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV3001" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -696,9 +693,9 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!--3003  已出库数量 totalOutstorageNum  【出库】  备查账 汇总：出库数量
-3007  已出库金额 totalOutstorageMoney  【出库】    汇总:出库金额-->
-  <select id="findOneV3003" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <!--3003  已出库数量 totalOutstorageNum  【出库】  备查账 汇总：出库数量
+    3007  已出库金额 totalOutstorageMoney  【出库】    汇总:出库金额-->
+    <select id="findOneV3003" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -707,8 +704,8 @@
         from v_3003
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
-<!--3005  库存数量  totalStockNum 计算  备查账/占压  【3001】入库总数量 - 【3003】已出库数量-->
-  <select id="findOneV3005" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <!--3005  库存数量  totalStockNum 计算  备查账/占压  【3001】入库总数量 - 【3003】已出库数量-->
+    <select id="findOneV3005" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -733,7 +730,7 @@
     1042  买方未结算数量 unsettlerBuyerNumber
     1043  卖方未结算金额 unsettlerBuyerMoneyAmount
     1044  销售货款总额  saleCargoAmountofMoney-->
-  <select id="findOneV1040ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1040ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -745,8 +742,8 @@
         from v_1041_ying
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
-<!-- 仓押-->
-      <select id="findOneV1040cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <!-- 仓押-->
+    <select id="findOneV1040cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -757,8 +754,8 @@
         from v_1041_cang
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
-<!--1044  仓押  销售货款总额  saleCargoAmountofMoney-->
-  <select id="findOneV1044cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <!--1044  仓押  销售货款总额  saleCargoAmountofMoney-->
+    <select id="findOneV1044cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -767,8 +764,8 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!--1045 瑞茂通总收益  【1021】合同利息收益 - 【1012】外部资金使用成本 + 【1023】贴现息合计-->
-  <select id="findOneV1045" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <!--1045 瑞茂通总收益  【1021】合同利息收益 - 【1012】外部资金使用成本 + 【1023】贴现息合计-->
+    <select id="findOneV1045" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -780,7 +777,7 @@
 
     <!--1046 采购货款总额 【1044】销售货款总额 - 【1045】瑞茂通总收益-->
 
-   <select id="findOneV1046ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1046ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -789,7 +786,7 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-   <select id="findOneV1046cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1046cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -798,10 +795,10 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!--1047 外部资金使用率  【1004】借款金额合计 - 【1007】还款本金合计  + 【1009】登记未还款本金-->
+    <!--1047 外部资金使用率  【1004】借款金额合计 - 【1007】还款本金合计  + 【1009】登记未还款本金-->
 
 
-     <select id="findOneV1047" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1047" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -811,11 +808,11 @@
     </select>
 
 
-<!--1048 ownerCapitalPaymentAmount 自由资金付款金额【1003】付款金额合计 - 【1047】外部资金付款金额 + 【1008】还款利息合计  -【1010】登记未还款利息 - 【2008】上游保证金余额
--->
+    <!--1048 ownerCapitalPaymentAmount 自由资金付款金额【1003】付款金额合计 - 【1047】外部资金付款金额 + 【1008】还款利息合计  -【1010】登记未还款利息 - 【2008】上游保证金余额
+    -->
 
 
-     <select id="findOneV1048ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1048ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -824,7 +821,7 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-         <select id="findOneV1048cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1048cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -833,11 +830,10 @@
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!--1049  上游资金占压  upstreamCapitalPressure 计算  备查账／占压表 【1047】外部资金付款金额 + 【1048】自有资金付款金额 - 【1046】采购货款总额-->
+    <!--1049  上游资金占压  upstreamCapitalPressure 计算  备查账／占压表 【1047】外部资金付款金额 + 【1048】自有资金付款金额 - 【1046】采购货款总额-->
 
 
-
-     <select id="findOneV1049ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1049ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
 DISTINCT
 base.orderId,
@@ -881,8 +877,8 @@ left join v_1001  on base.hsId=v_1001.hsId
         where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!--1050 下游资金占压 downstreamCapitalPressure 计算  备查账／占压表 【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额-->
-     <select id="findOneV1050ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <!--1050 下游资金占压 downstreamCapitalPressure 计算  备查账／占压表 【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额-->
+    <select id="findOneV1050ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -901,10 +897,9 @@ left join v_1001  on base.hsId=v_1001.hsId
     </select>
 
 
+    <!--1051 CCS未收到进项数量 cssUninTypeNum  计算  备查账 【1040】核算结算量 - 【1037】CCS已收进项数量-->
 
-<!--1051 CCS未收到进项数量 cssUninTypeNum  计算  备查账 【1040】核算结算量 - 【1037】CCS已收进项数量-->
-
-     <select id="findOneV1051ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1051ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -922,9 +917,9 @@ left join v_1001  on base.hsId=v_1001.hsId
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!--1052 CCS未收到进项金额 cssUninTypeMoney        【1046】采购货款总额 + 【1041】贸易公司加价 - 【1038】CCS已收进项金额 - 【1027】代收代垫运费
-     1053  占压表未开票金额  unInvoicedAmountofMoney   【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费 change to 【1046】采购货款总额  - 【1039】占压表已开票金额
--->
+    <!--1052 CCS未收到进项金额 cssUninTypeMoney        【1046】采购货款总额 + 【1041】贸易公司加价 - 【1038】CCS已收进项金额 - 【1027】代收代垫运费
+         1053  占压表未开票金额  unInvoicedAmountofMoney   【1046】采购货款总额 + 【1041】贸易公司加价 - 【1039】占压表已开票金额 - 【1027】代收代垫运费 change to 【1046】采购货款总额  - 【1039】占压表已开票金额
+    -->
     <select id="findOneV1052ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
@@ -946,10 +941,10 @@ left join v_1001  on base.hsId=v_1001.hsId
     </select>
 
 
-<!--1054  预收款 yingPrePayment  计算  占压表 IF（【1013】已回款金额>=【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额
-    1054  预收款 cangPrePayment  计算  占压表 IF（【1014】付货款金额 <= 【1013】已回款金额？【1014】付货款金额 - 【1013】已回款金额 ：0 ）-->
+    <!--1054  预收款 yingPrePayment  计算  占压表 IF（【1013】已回款金额>=【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额
+        1054  预收款 cangPrePayment  计算  占压表 IF（【1014】付货款金额 <= 【1013】已回款金额？【1014】付货款金额 - 【1013】已回款金额 ：0 ）-->
 
-     <select id="findOneV1054ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1054ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -968,10 +963,10 @@ left join v_1001  on base.hsId=v_1001.hsId
     </select>
 
 
-<!--1055 毛利结算量  settleGrossProfileNum 计算  毛利表 【1040】核算用结算量
-仓押毛利结算量 【3003】已出库数量-->
+    <!--1055 毛利结算量  settleGrossProfileNum 计算  毛利表 【1040】核算用结算量
+    仓押毛利结算量 【3003】已出库数量-->
 
-     <select id="findOneV1055ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1055ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -980,8 +975,8 @@ left join v_1001  on base.hsId=v_1001.hsId
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!--1056 yingshou采购含税总额 purchaseIncludeTaxTotalAmount 计算  毛利表 【1046】采购货款总额
-仓押采购含税总额   purchaseIncludeTaxTotalAmount【3004】入库单价 * 【1055】毛利结算量-->
+    <!--1056 yingshou采购含税总额 purchaseIncludeTaxTotalAmount 计算  毛利表 【1046】采购货款总额
+    仓押采购含税总额   purchaseIncludeTaxTotalAmount【3004】入库单价 * 【1055】毛利结算量-->
 
     <select id="findOneV1056ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
@@ -1002,10 +997,10 @@ left join v_1001  on base.hsId=v_1001.hsId
     </select>
 
 
-<!--1057  仓押销售含税总额  saleIncludeTaxTotalAmount 【1056】采购含税总额 + 【1045】瑞茂通总收益
-1057  应收 【1044】销售货款总额-->
+    <!--1057  仓押销售含税总额  saleIncludeTaxTotalAmount 【1056】采购含税总额 + 【1045】瑞茂通总收益
+    1057  应收 【1044】销售货款总额-->
 
-     <select id="findOneV1057cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
+    <select id="findOneV1057cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
         orderId,
         hsId,
@@ -1015,7 +1010,7 @@ left join v_1001  on base.hsId=v_1001.hsId
     </select>
 
 
-<!--1058  毛利贸易公司加价  tradeCompanyAddMoney  计算  毛利表 【1055】毛利结算量 * 【核算月配置】贸易公司加价-->
+    <!--1058  毛利贸易公司加价  tradeCompanyAddMoney  计算  毛利表 【1055】毛利结算量 * 【核算月配置】贸易公司加价-->
 
 
     <select id="findOneV1058ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
@@ -1037,7 +1032,7 @@ left join v_1001  on base.hsId=v_1001.hsId
     </select>
 
 
-<!--1059  不含税收入 withoutTaxIncome  计算  毛利表 （【1057】销售含税总额 - 【1027】代收代垫运费 ）／ 1.17-->
+    <!--1059  不含税收入 withoutTaxIncome  计算  毛利表 （【1057】销售含税总额 - 【1027】代收代垫运费 ）／ 1.17-->
 
 
     <select id="findOneV1059ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
@@ -1058,7 +1053,7 @@ left join v_1001  on base.hsId=v_1001.hsId
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!--1060  不含税成本 withoutTaxCost  计算  毛利表 （【1056】采购含税总额 - 【1027】代收代垫运费 + 【1058】毛利贸易公司加价）／1.17-->
+    <!--1060  不含税成本 withoutTaxCost  计算  毛利表 （【1056】采购含税总额 - 【1027】代收代垫运费 + 【1058】毛利贸易公司加价）／1.17-->
 
     <select id="findOneV1060ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
@@ -1078,8 +1073,8 @@ left join v_1001  on base.hsId=v_1001.hsId
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!--1061  应交增值税 vat 计算  毛利表 IF（【1059】不含税收入 <= 【1060】不含税成本？0 : （【1059】不含税收入 - 【1060】不含税成本）*0.17）
-   1062  税金及附加 additionalTax 计算  毛利表 【1061】应交增值税 * 0.12-->
+    <!--1061  应交增值税 vat 计算  毛利表 IF（【1059】不含税收入 <= 【1060】不含税成本？0 : （【1059】不含税收入 - 【1060】不含税成本）*0.17）
+       1062  税金及附加 additionalTax 计算  毛利表 【1061】应交增值税 * 0.12-->
 
 
     <select id="findOneV1061ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
@@ -1102,7 +1097,7 @@ left join v_1001  on base.hsId=v_1001.hsId
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!--1063  印花税 stampDuty 计算  毛利表 （【1057】销售含税总额 + 【1056】采购含税总额 + 【1058】毛利贸易公司加价 - 【1027】代收代垫运费 * 2 ） * 0.0003-->
+    <!--1063  印花税 stampDuty 计算  毛利表 （【1057】销售含税总额 + 【1056】采购含税总额 + 【1058】毛利贸易公司加价 - 【1027】代收代垫运费 * 2 ） * 0.0003-->
 
 
     <select id="findOneV1063ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
@@ -1124,7 +1119,7 @@ left join v_1001  on base.hsId=v_1001.hsId
     </select>
 
 
-<!--1064  经营毛利  opreationCrocsProfile 计算  -->
+    <!--1064  经营毛利  opreationCrocsProfile 计算  -->
 
     <select id="findOneV1064ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
@@ -1145,11 +1140,10 @@ left join v_1001  on base.hsId=v_1001.hsId
     </select>
 
 
+    <!--1065  单吨毛利  crossProfileATon  计算  毛利表 【1064】经营毛利 / 【1055】毛利结算量-->
+    <!-- jisuan-->
 
-<!--1065  单吨毛利  crossProfileATon  计算  毛利表 【1064】经营毛利 / 【1055】毛利结算量-->
-<!-- jisuan-->
-
-<!--1066  自有资金占压  ownerCapitalPressure  计算  占压表 【1048】自有资金付款金额-【1046】采购货款总额-->
+    <!--1066  自有资金占压  ownerCapitalPressure  计算  占压表 【1048】自有资金付款金额-【1046】采购货款总额-->
 
     <select id="findOneV1066ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
@@ -1169,8 +1163,7 @@ left join v_1001  on base.hsId=v_1001.hsId
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
-<!--2010  下游已结算未回款金额  settledDownstreamHuikuanMoneny  计算  占压表 【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款-->
-
+    <!--2010  下游已结算未回款金额  settledDownstreamHuikuanMoneny  计算  占压表 【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款-->
 
 
     <select id="findOneV2010ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
@@ -1271,8 +1264,60 @@ left join v_1001  on base.hsId=v_1001.hsId
         base.hsId
        from base
        left join hs_same_huikuan huikuan on huikuan.hsId=base.hsId
+
         where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
        group by orderId,hsId;
+    </select>
+
+    <select id="findOneV1075" resultType="com.yimei.hs.same.entity.CapitalPressure">
+        select
+        base.orderId,
+        base.hsId,
+        v_1075_fukuan.receiveCompanyId,
+        v_1075_fee.otherPartyId,
+        IFNULL(v_1075_fukuan.payAmount,0.00) - IFNULL(v_1075_fee.amount,0.00) as partiesCapitalPressure
+        from base
+        left join  v_1075_fukuan on  base.hsId=v_1075_fukuan.hsId and v_1075_fukuan.receiveCompanyId= #{id,jdbcType=BIGINT}
+        left join  v_1075_fee on  base.hsId=v_1075_fee.hsId  and v_1075_fee.otherPartyId = #{id,jdbcType=BIGINT}
+       where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
+    </select>
+    <select id="selectPartyId" resultType="java.lang.Long">
+      select fukuan.receiveCompanyId name from hs_same_fukuan fukuan where fukuan.receiveCompanyId  is not null and fukuan.hsId= #{hsId,jdbcType=BIGINT}
+      union
+      select fee.otherPartyId name from hs_same_fee  fee  where fee.otherPartyId is not null and fee.hsId= #{hsId,jdbcType=BIGINT}
+    </select>
+    <select id="findOneV1076" resultType="com.yimei.hs.same.entity.CapitalPressure">
+
+        select
+        base.orderId,
+        base.hsId,
+        v_1075_fee.otherPartyId,
+         IFNULL(v_1075_fee.amount,0.00)- IFNULL(v_1076_invoice.unInvoicePrice,0.00) as  unInvoicePrice
+        from base
+        left join v_1075_fee on base.hsId=v_1075_fee.hsId  and v_1075_fee.otherPartyId = #{id,jdbcType=BIGINT}
+        left join v_1076_invoice on  base.hsId=v_1076_invoice.hsId  and  v_1075_fee.otherPartyId= #{id,jdbcType=BIGINT}
+         where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
+    </select>
+
+
+    <select id="findOneV3010" resultType="com.yimei.hs.ying.entity.AnalysisData">
+        select
+        orderId,
+        hsId,
+        totalInstorageTranitPrice
+        from v_3010
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
+    </select>
+
+
+
+    <select id="findOneV3013" resultType="com.yimei.hs.ying.entity.AnalysisData">
+         select
+        orderId,
+        hsId,
+        totalInstorageRemainPrice
+        from v_3013
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
 

@@ -3,6 +3,7 @@ package com.yimei.hs.same.service;
 import com.yimei.hs.cang.entity.CangAnalysisData;
 import com.yimei.hs.cang.mapper.CangAnalysisDataMapper;
 import com.yimei.hs.enums.BusinessType;
+import com.yimei.hs.same.entity.CapitalPressure;
 import com.yimei.hs.same.entity.Jiekuan;
 import com.yimei.hs.same.entity.Order;
 import com.yimei.hs.same.entity.OrderConfig;
@@ -100,7 +101,7 @@ public class DataAnalysisService {
                 subtract(yingAnalysisDatav1063.getStampDuty()).
                 subtract(yingAnalysisDatav1027.getBusinessFee()).
                 subtract((yingAnalysisDatav1027.getHsqyFee().add(yingAnalysisDatav1027.getHssyFee()).add(yingAnalysisDatav1027.getHshyFee())).divide(new BigDecimal("1.11"), 2, BigDecimal.ROUND_HALF_UP)).
-                subtract((yingAnalysisDatav1027.getSuperviseFee().add(yingAnalysisDatav1027.getServiceFee())).divide(new BigDecimal("1.06"),2,BigDecimal.ROUND_HALF_UP));
+                subtract((yingAnalysisDatav1027.getSuperviseFee().add(yingAnalysisDatav1027.getServiceFee())).divide(new BigDecimal("1.06"), 2, BigDecimal.ROUND_HALF_UP));
 
         // 1039】占压表已开票金额+（（【2002】已到场数量 - 【1026】结算扣吨合计 - 【1024】买方已结算数量） * 【核算月配置】加权单价+【1025】买方已结算金额-【1039】占压表已开票金额/【核算月配置】最高预付款比例）*【核算月配置】未开票款付款比例-汇总：付款用途 = “货款”的付款金额-->
 
@@ -114,6 +115,9 @@ public class DataAnalysisService {
 //                ).subtract(yingAnalysisDatav1039.getInvoicedMoneyAmount().multiply(orderConfigBase.getMaxPrepayRate())).multiply(orderConfigBase.getUnInvoicedRate()
 //
 //                ).subtract(yingAnalysisDatav1001.getTotalPayGoodsFee());
+
+        //参与商占压表
+        List<CapitalPressure> capitalPressureList = this.utils(morderId, hsId);
 
         AnalysisData yingAnalysisData = new AnalysisData() {{
             setOrderId(orderConfigBase.getOrderId());
@@ -221,7 +225,7 @@ public class DataAnalysisService {
             setSuperviseCrossProfile(yingAnalysisDatav1027.getSuperviseFee());
             setServiceCrossProfile(yingAnalysisDatav1027.getServiceFee());
 
-
+            setCapitalPressureList(capitalPressureList);
         }};
 
         return yingAnalysisData;
@@ -279,6 +283,9 @@ public class DataAnalysisService {
         AnalysisData cangAnalysisDatav3003 = yingAnalysisDataMapper.findOneV3003(morderId, hsId);
         AnalysisData cangAnalysisDatav3005 = yingAnalysisDataMapper.findOneV3005(morderId, hsId);
         AnalysisData cangAnalysisDatav3006 = yingAnalysisDataMapper.findOneV3006(morderId, hsId);
+        AnalysisData cangAnalysisDatav3010 = yingAnalysisDataMapper.findOneV3010(morderId, hsId);
+        AnalysisData cangAnalysisDatav3013 = yingAnalysisDataMapper.findOneV3013(morderId, hsId);
+
         AnalysisData cangAnalysisDatav1041 = yingAnalysisDataMapper.findOneV1040cang(morderId, hsId);
         AnalysisData cangAnalysisDatav1044 = yingAnalysisDataMapper.findOneV1044cang(morderId, hsId);
         AnalysisData cangAnalysisDatav1045 = yingAnalysisDataMapper.findOneV1045(morderId, hsId);
@@ -306,8 +313,11 @@ public class DataAnalysisService {
         AnalysisData cangAnalysisDos1 = yingAnalysisDataMapper.findOneShowDos1cang(morderId, hsId);
         AnalysisData cangAnalysisDos3 = yingAnalysisDataMapper.findOneShowDos3(morderId);
 
+
+        //参与方占压表
+        List<CapitalPressure> capitalPressureList = this.utils(morderId, hsId);
 //        【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 -
-                         // （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06
+        // （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06
 // - 【1033】业务费
         BigDecimal opreationCrocsProfile = cangAnalysisDatav1059.getWithoutTaxIncome().
                 subtract(cangAnalysisDatav1060.getWithoutTaxCost()).
@@ -320,10 +330,10 @@ public class DataAnalysisService {
                                 cangAnalysisDatav1027.getHsqyFee().
                                         add(cangAnalysisDatav1027.getHssyFee()).
                                         add(cangAnalysisDatav1027.getHshyFee())
-                        ).divide(new BigDecimal("1.11"),2, BigDecimal.ROUND_HALF_UP)
-                      ).
-                subtract(cangAnalysisDatav1027.getSuperviseFee().divide(new BigDecimal("1.06"),2,BigDecimal.ROUND_HALF_UP)).
-                subtract(cangAnalysisDatav1027.getServiceFee().divide(new BigDecimal("1.06"),2,BigDecimal.ROUND_HALF_UP));
+                        ).divide(new BigDecimal("1.11"), 2, BigDecimal.ROUND_HALF_UP)
+                ).
+                subtract(cangAnalysisDatav1027.getSuperviseFee().divide(new BigDecimal("1.06"), 2, BigDecimal.ROUND_HALF_UP)).
+                subtract(cangAnalysisDatav1027.getServiceFee().divide(new BigDecimal("1.06"), 2, BigDecimal.ROUND_HALF_UP));
 
 
         AnalysisData cangAnalysisData = new AnalysisData() {{
@@ -406,8 +416,7 @@ public class DataAnalysisService {
             setStampDuty(cangAnalysisDatav1063.getStampDuty());
             setOpreationCrossProfile(opreationCrocsProfile);
             setCrossProfileATon((cangAnalysisDatav3003.getTotalOutstorageNum().compareTo(BigDecimal.ZERO) == 0 ? new BigDecimal("0.00") : opreationCrocsProfile.divide(cangAnalysisDatav3003.getTotalOutstorageNum(), 2, BigDecimal.ROUND_HALF_UP)));
-            setOwnerCapitalPressure(
-                    cangAnalysisDatav1066.getOwnerCapitalPressure());
+            setOwnerCapitalPressure(cangAnalysisDatav1066.getOwnerCapitalPressure());
             setSettledDownstreamHuikuanMoneny(cangAnalysisDatav2010.getSettledDownstreamHuikuanMoneny());
 
             setMaximumPaymentAmount(cangAnalysisDos1.getMaximumPaymentAmount());
@@ -416,11 +425,10 @@ public class DataAnalysisService {
             setAccumulativePaymentAmount(cangAnalysisDos3.getAccumulativePaymentAmount());
 
 
-
             //3009
             setTotalInstorageTranitNum(cangAnalysisDatav3001.getTotalInstorageTranitNum());
             //在途中剩余金额  3010
-            setTotalInstorageTranitPrice(cangAnalysisDatav3001.getTotalInstorageTranitNum().multiply(cangAnalysisDatav3001.getInstorageUnitPrice()));
+            setTotalInstorageTranitPrice(cangAnalysisDatav3010.getTotalInstorageTranitPrice());
             //3011
             setTotalInstoragedNum(cangAnalysisDatav3001.getTotalInstoragedNum());
 
@@ -428,10 +436,9 @@ public class DataAnalysisService {
             BigDecimal remaindInstorageNumber = cangAnalysisDatav3001.getTotalInstoragedNum().subtract(cangAnalysisDatav3003.getTotalOutstorageNum());
 
             setTotalInstorageRemainNum(remaindInstorageNumber);
-            //13 剩余库存金额=剩余库存数量*单价 2013
-            BigDecimal totalInstorageRemainPrice = remaindInstorageNumber.multiply(cangAnalysisDatav3001.getInstorageUnitPrice());
+            //13 剩余库存金额=剩余库存数量*单价 3013
 
-            setTotalInstorageRemainPrice(totalInstorageRemainPrice);
+            setTotalInstorageRemainPrice(cangAnalysisDatav3013.getTotalInstorageRemainPrice());
 
 
             BigDecimal inOutRate = cangAnalysisDatav3005.getInOutRate();
@@ -449,9 +456,10 @@ public class DataAnalysisService {
 //
 
 
-
             //借款需要字段
             setNonRepaymentLoanMoney(nonRepaymentLoanMoney);
+
+            setCapitalPressureList(capitalPressureList);
 
 
         }};
@@ -466,7 +474,7 @@ public class DataAnalysisService {
         List<OrderConfig> orderConfigs = orderConfigService.getList(morderId);
         List<AnalysisData> cangAnalysisDataList = new ArrayList<AnalysisData>();
         for (OrderConfig config : orderConfigs) {
-            cangAnalysisDataList.add(this.findOneCang( config.getId(),morderId ));
+            cangAnalysisDataList.add(this.findOneCang(config.getId(), morderId));
 
         }
         return cangAnalysisDataList;
@@ -522,6 +530,23 @@ public class DataAnalysisService {
     }
 
     public BigDecimal findHuikuanExceptBail(Long morderId, long hsId) {
-        return yingAnalysisDataMapper.findHuikuanExceptBail(morderId,hsId);
+        return yingAnalysisDataMapper.findHuikuanExceptBail(morderId, hsId);
     }
+
+    public List<CapitalPressure> utils(Long orderId, Long hsId) {
+
+        List<Long> partiesId = yingAnalysisDataMapper.selectPartyId(orderId, hsId);
+        if (partiesId == null || partiesId.size() == 0) {
+            return null;
+        }
+        List<CapitalPressure> capitalPressureList = new ArrayList<CapitalPressure>();
+
+        for (Long id : partiesId) {
+            CapitalPressure capitalPressure = yingAnalysisDataMapper.findOneV1075(id, orderId, hsId);
+            capitalPressure.setUnInvoicePrice(yingAnalysisDataMapper.findOneV1076(id, orderId, hsId).getUnInvoicePrice());
+            capitalPressureList.add(capitalPressure);
+        }
+        return capitalPressureList;
+    }
+
 }

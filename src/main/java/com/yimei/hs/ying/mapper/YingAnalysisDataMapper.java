@@ -1,5 +1,6 @@
 package com.yimei.hs.ying.mapper;
 
+import com.yimei.hs.same.entity.CapitalPressure;
 import com.yimei.hs.same.entity.InvoiceAnalysis;
 import com.yimei.hs.same.entity.Jiekuan;
 import com.yimei.hs.same.entity.OrderConfig;
@@ -169,4 +170,18 @@ public interface YingAnalysisDataMapper {
 
 
     BigDecimal findHuikuanExceptBail(@Param("orderId") Long orderId, @Param("hsId") long hsId);
+
+
+
+
+
+    CapitalPressure findOneV1075(@Param("id") long id,@Param("orderId") Long orderId, @Param("hsId") long hsId);
+
+    List<Long> selectPartyId(@Param("orderId") Long orderId, @Param("hsId") long hsId);
+
+    CapitalPressure findOneV1076(@Param("id") long id,@Param("orderId") Long orderId, @Param("hsId") long hsId);
+
+    AnalysisData findOneV3010(@Param("orderId") Long orderId, @Param("hsId") long hsId);
+
+    AnalysisData findOneV3013(@Param("orderId") Long orderId, @Param("hsId") long hsId);
 }

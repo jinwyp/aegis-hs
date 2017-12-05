@@ -10,9 +10,11 @@ import com.yimei.hs.cang.service.CangChukuService;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.cang.dto.PageCangChukuDTO;
 import com.yimei.hs.cang.entity.CangChuku;
+import com.yimei.hs.same.entity.CapitalPressure;
 import com.yimei.hs.same.entity.OrderConfig;
 import com.yimei.hs.same.service.DataAnalysisService;
 import com.yimei.hs.ying.entity.AnalysisData;
+import com.yimei.hs.ying.mapper.YingAnalysisDataMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by hary on 2017/9/15.

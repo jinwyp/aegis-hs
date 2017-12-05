@@ -1,11 +1,13 @@
 package com.yimei.hs.ying.entity;
 
+import com.yimei.hs.same.entity.CapitalPressure;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -245,6 +247,11 @@ public class AnalysisData implements Serializable {
      * 服务管理费
      */
     private BigDecimal serviceCrossProfile;
+
+    /**
+     * 参与方占压
+     */
+    List<CapitalPressure> capitalPressureList;
 
 
 }
