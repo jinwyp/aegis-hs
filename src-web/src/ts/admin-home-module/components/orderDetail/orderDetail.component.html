@@ -225,16 +225,28 @@
 
                         <tr >
                             <td rowspan="9">发运信息</td>
-                            <td>发运总数量</td>
-                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalFayunNum | number }}</td>
+                            <td *ngIf="businessType==='ying'">发运总数量 </td>
+                            <td *ngIf="businessType==='cang'">入库总数量 </td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn">
+                                <span *ngIf="businessType==='ying'" > {{unit.totalFayunNum | number }} </span>
+                                <span *ngIf="businessType==='cang'" > {{unit.totalInstorageNum | number }} </span>
+                            </td>
                         </tr>
                         <tr >
-                            <td>已到场数量</td>
-                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalArriveNum | number }}</td>
+                            <td *ngIf="businessType==='ying'">已到场数量</td>
+                            <td *ngIf="businessType==='cang'">已出库数量 </td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn">
+                                <span *ngIf="businessType==='ying'" > {{unit.totalArriveNum | number }} </span>
+                                <span *ngIf="businessType==='cang'" > {{unit.totalOutstorageNum | number }} </span>
+                            </td>
                         </tr>
                         <tr >
-                            <td>未到场数量</td>
-                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalUnarriveNum | number }}</td>
+                            <td *ngIf="businessType==='ying'">未到场数量</td>
+                            <td *ngIf="businessType==='cang'">库存数量</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn">
+                                <span *ngIf="businessType==='ying'" > {{unit.totalUnarriveNum | number }} </span>
+                                <span *ngIf="businessType==='cang'" > {{unit.totalStockNum | number }} </span>
+                            </td>
                         </tr>
                         <tr >
                             <td>采购含税总额</td>
@@ -265,19 +277,19 @@
 
                         <tr >
                             <td rowspan="4">结算信息</td>
-                            <td>结算信息 {{businessType==='ying' ? '下游':'上游'}}已结算数量</td>
+                            <td> {{businessType==='ying' ? '下游':'上游'}}已结算数量</td>
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalBuyerNums | number }}</td>
                         </tr>
                         <tr >
-                            <td>结算信息 {{businessType==='ying' ? '下游':'上游'}}已结算金额</td>
+                            <td> {{businessType==='ying' ? '下游':'上游'}}已结算金额</td>
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.totalBuyerMoney | number }}</td>
                         </tr>
                         <tr >
-                            <td>结算信息 {{businessType==='ying' ? '下游':'上游'}}未结算数量</td>
+                            <td> {{businessType==='ying' ? '下游':'上游'}}未结算数量</td>
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.unsettlerBuyerNumber | number }}</td>
                         </tr>
                         <tr >
-                            <td>结算信息 {{businessType==='ying' ? '下游':'上游'}}未结算金额</td>
+                            <td> {{businessType==='ying' ? '下游':'上游'}}未结算金额</td>
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.unsettlerBuyerMoneyAmount | number }}</td>
                         </tr>
 

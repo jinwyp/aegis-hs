@@ -120,9 +120,16 @@ export class OrderDetailComponent implements OnInit {
 
                 const tempTotal : any = {
                     hsMonth : '汇总',
+
+                    totalInstorageNum : 0,
+                    totalOutstorageNum : 0,
+                    totalStockNum : 0,
+
+
                     totalFayunNum : 0,
                     totalArriveNum : 0,
                     totalUnarriveNum : 0,
+
                     purchaseIncludeTaxTotalAmount : 0,
                     saleIncludeTaxTotalAmount : 0,
 
@@ -158,6 +165,10 @@ export class OrderDetailComponent implements OnInit {
 
                     data.data.forEach( unit => {
                         console.log(unit)
+                        tempTotal.totalInstorageNum = tempTotal.totalInstorageNum + unit.totalInstorageNum || 0
+                        tempTotal.totalOutstorageNum = tempTotal.totalOutstorageNum + unit.totalOutstorageNum || 0
+                        tempTotal.totalStockNum = tempTotal.totalStockNum + unit.totalStockNum || 0
+
                         tempTotal.totalFayunNum = tempTotal.totalFayunNum + unit.totalFayunNum || 0
                         tempTotal.totalArriveNum = tempTotal.totalArriveNum + unit.totalArriveNum || 0
                         tempTotal.totalUnarriveNum = tempTotal.totalUnarriveNum + unit.totalUnarriveNum || 0
