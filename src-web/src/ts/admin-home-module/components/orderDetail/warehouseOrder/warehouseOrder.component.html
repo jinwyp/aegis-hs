@@ -1,7 +1,18 @@
 
         <form [formGroup]="warehouseForm" (ngSubmit)="warehouseFormSubmit()" (keydown.enter)="$event.preventDefault()" *ngIf="isShowForm">
 
-            <bs-select formControlName="hsId" [fc]="warehouseForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="warehouseFormError.hsId"></bs-select>
+            <bs-select formControlName="hsId" [fc]="warehouseForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="warehouseFormError.hsId" (outputChange)="getWarehouseOutInfo($event)"></bs-select>
+
+            <div class="form-group row" >
+                <div class="col-10 ml-auto">
+                    <p *ngIf="warehouseForm.get('hsId').value">
+                        本月累计出库吨数: {{ warehouseOutInfo.totalOutstorageNum }} - 本月累计出库金额: {{ warehouseOutInfo.totalOutstorageMoney }} -
+                        本月未出库吨数: {{ warehouseOutInfo.unChukuTotalAmount }} - 本月未出库金额: {{ warehouseOutInfo.unChukuTotalPrice }} -
+                        本月可出库吨数: {{ warehouseOutInfo.canChukuAmount }} - 本月可出库金额: {{ warehouseOutInfo.canChukuPrice }}
+                    </p>
+                </div>
+            </div>
+
 
             <div [hidden]="warehouseType !== 'ruku'">
                 <bs-datepicker formControlName="rukuDate" [fc]="warehouseForm.get('rukuDate')" [label]="'入库日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="warehouseFormError.rukuDate" ></bs-datepicker>

@@ -447,7 +447,10 @@ export class HSOrderService {
     delWarehouseOut(businessType : string, orderId: number, warehouseId: number): Observable<any> {
         return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/chukus/' + warehouseId.toString())
     }
+    getWarehouseOutInfoByHsID(businessType : string, orderId: number, hsId: number): Observable<any> {
 
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/chukusInfo/' + hsId )
+    }
 
 }
 

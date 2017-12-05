@@ -37,6 +37,7 @@ export class WarehouseOrderComponent implements OnInit {
 
     warehouseInList : any[] = []
     warehouseOutList : any[] = []
+    warehouseOutInfo : any = {}
 
     unitList : any[] = []
 
@@ -133,6 +134,18 @@ export class WarehouseOrderComponent implements OnInit {
         }
     }
 
+    getWarehouseOutInfo (event : any) {
+        if (event.id) {
+            this.hsOrderService.getWarehouseOutInfoByHsID(this.businessType, this.currentOrder.id, event.id).subscribe(
+                data => {
+                    this.warehouseOutInfo = data.data
+                },
+                error => {this.httpService.errorHandler(error) }
+            )
+        }
+    }
+
+
     getOrderUnitList () {
         this.hsOrderService.getOrderUnitListByID(this.businessType, this.currentOrder.id).subscribe(
             data => {
@@ -152,6 +165,8 @@ export class WarehouseOrderComponent implements OnInit {
             error => {this.httpService.errorHandler(error) }
         )
     }
+
+
 
     createWarehouseSearchForm(): void {
 
