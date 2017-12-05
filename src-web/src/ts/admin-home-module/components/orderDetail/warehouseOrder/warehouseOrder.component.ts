@@ -40,6 +40,7 @@ export class WarehouseOrderComponent implements OnInit {
     warehouseOutInfo : any = {}
 
     unitList : any[] = []
+    unitListObject : any = {}
 
 
     totalRukuAmount : number = 0
@@ -157,6 +158,8 @@ export class WarehouseOrderComponent implements OnInit {
                     data.data.results.forEach( unit => {
                         unit.name = unit.hsMonth
                         tempArray.push(unit)
+
+                        this.unitListObject[unit.id] = unit
                     })
 
                     this.unitList = tempArray
@@ -166,6 +169,15 @@ export class WarehouseOrderComponent implements OnInit {
         )
     }
 
+    changeChukuPrice() {
+        if (this.warehouseForm.value.chukuAmount && this.warehouseForm.value.hsId) {
+            console.log(this.unitListObject[this.warehouseForm.value.hsId])
+
+            this.warehouseForm.patchValue({
+                chukuPrice : Number(this.warehouseForm.value.chukuAmount) * Number(this.unitListObject[this.warehouseForm.value.hsId].tradeAddPrice)
+            })
+        }
+    }
 
 
     createWarehouseSearchForm(): void {

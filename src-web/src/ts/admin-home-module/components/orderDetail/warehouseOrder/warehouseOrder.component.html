@@ -7,8 +7,9 @@
                 <div class="col-10 ml-auto">
                     <p *ngIf="warehouseForm.get('hsId').value">
                         本月累计出库吨数: {{ warehouseOutInfo.totalOutstorageNum }} - 本月累计出库金额: {{ warehouseOutInfo.totalOutstorageMoney }} -
-                        本月未出库吨数: {{ warehouseOutInfo.unChukuTotalAmount }} - 本月未出库金额: {{ warehouseOutInfo.unChukuTotalPrice }} -
-                        本月可出库吨数: {{ warehouseOutInfo.canChukuAmount }} - 本月可出库金额: {{ warehouseOutInfo.canChukuPrice }}
+                        本月未出库吨数: {{ warehouseOutInfo.unChukuTotalAmount }} - 本月未出库金额: {{ warehouseOutInfo.unChukuTotalPrice }}
+                        <br>
+                        本月可出库吨数: {{ warehouseOutInfo.canChukuAmount }} - 本月可出库金额: {{ warehouseOutInfo.canChukuPrice }} - 加权单价: {{this.unitListObject[this.warehouseForm.value.hsId].tradeAddPrice}}
                     </p>
                 </div>
             </div>
@@ -29,7 +30,7 @@
 
             <div [hidden]="warehouseType !== 'chuku'">
                 <bs-datepicker formControlName="chukuDate" [fc]="warehouseForm.get('chukuDate')" [label]="'出库日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="warehouseFormError.chukuDate" ></bs-datepicker>
-                <bs-text-input formControlName="chukuAmount" [fc]="warehouseForm.get('chukuAmount')" [type]="'number'" [label]="'出库吨数(吨):'" [dirty]="ignoreDirty" [error]="warehouseFormError.chukuAmount"></bs-text-input>
+                <bs-text-input formControlName="chukuAmount" [fc]="warehouseForm.get('chukuAmount')" [type]="'number'" [label]="'出库吨数(吨):'" [dirty]="ignoreDirty" [error]="warehouseFormError.chukuAmount" (focusout)="changeChukuPrice()"></bs-text-input>
                 <bs-text-input formControlName="chukuPrice" [fc]="warehouseForm.get('chukuPrice')" [type]="'number'" [label]="'出库金额(元):'" [dirty]="ignoreDirty" [error]="warehouseFormError.chukuPrice"></bs-text-input>
             </div>
 
