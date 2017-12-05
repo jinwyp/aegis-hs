@@ -6,6 +6,7 @@ import com.yimei.hs.same.entity.OrderConfig;
 import com.yimei.hs.ying.entity.AnalysisData;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface YingAnalysisDataMapper {
@@ -167,5 +168,5 @@ public interface YingAnalysisDataMapper {
     AnalysisData findOneShowDos3(@Param("orderId") Long orderId);
 
 
-
+    BigDecimal findHuikuanExceptBail(@Param("orderId") Long orderId, @Param("hsId") long hsId);
 }

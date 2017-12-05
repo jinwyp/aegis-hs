@@ -1258,6 +1258,22 @@ left join v_1001  on base.hsId=v_1001.hsId
         from base
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
+    <select id="findHuikuanExceptBail" resultType="java.math.BigDecimal">
+        select
+
+        sum(case when huikuan.huikuanMode != 'DEPOSITECASH'
+        then  IFNULL(huikuan.huikuanAmount,0)
+        else
+        0.00
+        end
+        ) as huikuanExceptPrice,
+         base.orderId,
+        base.hsId
+       from base
+       left join hs_same_huikuan huikuan on huikuan.hsId=base.hsId
+        where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
+       group by orderId,hsId;
+    </select>
 
 
 </mapper>

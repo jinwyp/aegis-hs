@@ -508,4 +508,20 @@ public class DataAnalysisService {
     public AnalysisData findV1001(Long morderId, Long hsId) {
         return yingAnalysisDataMapper.findOneV1001(morderId, hsId);
     }
+
+    public AnalysisData findV3001(Long morderId, long hsId) {
+        return yingAnalysisDataMapper.findOneV3001(morderId, hsId);
+    }
+
+    public AnalysisData findV3003(Long morderId, long hsId) {
+        return yingAnalysisDataMapper.findOneV3003(morderId, hsId);
+    }
+
+    public OrderConfig findBase(Long morderId, long hsId) {
+        return yingAnalysisDataMapper.findOneVBase(morderId, hsId);
+    }
+
+    public BigDecimal findHuikuanExceptBail(Long morderId, long hsId) {
+        return yingAnalysisDataMapper.findHuikuanExceptBail(morderId,hsId);
+    }
 }
