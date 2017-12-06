@@ -53,6 +53,7 @@ describe('应收订单 费用单:', function () {
                 {
                     "hsId" : 2,
                     "name" : "HELP_RECIVE_PAY_FEE",
+                    "settleDate" : "2017-07-10 00:00:00",
                     "amount" : "2000",
                     "quantity" : "1000",
                     "otherPartyId" : "2",
@@ -81,6 +82,7 @@ describe('应收订单 费用单:', function () {
                 {
                     "hsId" : 2,
                     "name" : "TAX_MOTRO_FREIGHT",
+                    "settleDate" : "2017-07-10 00:00:00",
                     "amount" : "10000",
                     "quantity" : "1000",
                     "otherPartyId" : "2",
@@ -142,6 +144,7 @@ describe('应收订单 费用单:', function () {
                 {
                     "hsId" : 1,
                     "name" : "HELP_RECIVE_PAY_FEE",
+                    "settleDate" : "2017-07-10 00:00:00",
                     "amount" : 20003333,
                     "quantity" : "5000",
                     "otherPartyId" : "3",

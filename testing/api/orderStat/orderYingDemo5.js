@@ -1096,6 +1096,7 @@ describe('应收订单 统计范例5 赵征提供 11.24', function () {
                 {
                     "hsId" : unitId,
                     "name" : "SERVICE_FEE",
+                    "settleDate" : "2017-10-15 00:00:00",
                     "amount" : "10000",
                     "quantity" : "0",
                     "otherPartyId" : "28",
