@@ -42,6 +42,12 @@
                 </div>
 
                 <div class="form-row ">
+                    <div class="col-3">
+                        <bs-datepicker formControlName="settleDateStart" [fc]="expenseSearchForm.get('settleDateStart')" [label]="'结算日期:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                    </div>
+                    <div class="col-3">
+                        <bs-datepicker formControlName="settleDateEnd" [fc]="expenseSearchForm.get('settleDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
+                    </div>
                     <div class="col-6">
                         <bs-select formControlName ="otherPartyId" [fc]="expenseSearchForm.get('otherPartyId')" [label]="'对方单位:'" [options]="party.normal" [editable]="true" [addAllOptions]="true"></bs-select>
                     </div>

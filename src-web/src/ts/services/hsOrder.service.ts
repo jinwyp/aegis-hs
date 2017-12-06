@@ -351,8 +351,10 @@ export class HSOrderService {
 
         if (query.hsId) { params = params.append('hsId', query.hsId)}
         if (query.name) { params = params.append('name', query.name)}
-        if (query.amount) { params = params.append('amount', query.amount)}
+        if (query.settleDateStart) { params = params.append('settleDateStart', query.settleDateStart)}
+        if (query.settleDateEnd) { params = params.append('settleDateEnd', query.settleDateEnd)}
 
+        if (query.amount) { params = params.append('amount', query.amount)}
         if (query.quantity) { params = params.append('quantity', query.quantity)}
         if (query.otherPartyId) { params = params.append('otherPartyId', query.otherPartyId)}
 
