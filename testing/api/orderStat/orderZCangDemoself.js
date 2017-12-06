@@ -18,10 +18,10 @@ const server = supertest(config.path.urlApi)
 describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
 
     let Authorization = ''
-    let orderId = 19
+    let orderId = 20
 
-    let unitId = 13
-    let borrowId = 26
+    let unitId = 14
+    let borrowId = 28
 
     before(function (done) {
 
@@ -48,13 +48,13 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
             .send(
                 {
                     "teamId" : 13,
-                    "line" : "广州鑫丰润 - 泰州立翔 - 嘉瑞 - 广州莲荷",
+                    "line" : "广州鑫丰润 - 泰州立翔 - 嘉瑞 - 广州莲荷12-06",
                     "cargoType" : "COAL",
                     "upstreamSettleMode" : "ONE_PAPER_SETTLE",
                     "downstreamSettleMode" : "ONE_PAPER_SETTLE",
                     "mainAccounting"       : 3,
                     "upstreamId"           : 27,
-                    "downstreamId"         : 28,
+                    "downstreamId"         : 29,
                     "businessType" : "cang",
                     "orderPartyList" : [
                         {
@@ -108,7 +108,7 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
                     "contractBaseInterest" : 0.15,
                     "expectHKDays" : 45,
                     "tradeAddPrice" : "2",
-                    "weightedPrice" : 595
+                    "weightedPrice" : 527.11
                 }
             )
             .expect('Content-Type', /json/)
@@ -155,7 +155,7 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
                 {
                     "hsId" : unitId,
                     "orderId" : orderId,
-                    "rukuDate" : "2017-07-10 00:00:00",
+                    "rukuDate" : "2017-06-29 00:00:00",
                     "rukuStatus" : "IN_STORAGE",
                     "rukuAmount" : "14475.4",
                     "rukuPrice" : "7508824.24",
@@ -194,8 +194,8 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
                     "orderId" : orderId,
                     "hsId" : unitId,
                     "locality" : "新沙港",
-                    "chukuDate" : "2017-07-14 00:00:00",
-                    "chukuAmount" : "3000",
+                    "chukuDate" : "2017-08-01 00:00:00",
+                    "chukuAmount" : "3035.42",
                     "chukuPrice" : "1600000"
                 }
             )
@@ -219,8 +219,8 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
                     "orderId" : orderId,
                     "hsId" : unitId,
                     "locality" : "新沙港",
-                    "chukuDate" : "2017-07-21 00:00:00",
-                    "chukuAmount" : "1900",
+                    "chukuDate" : "2017-08-02 00:00:00",
+                    "chukuAmount" : "1897.14",
                     "chukuPrice" : "1000000"
                 }
             )
@@ -245,8 +245,8 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
                     "orderId" : orderId,
                     "hsId" : unitId,
                     "locality" : "新沙港",
-                    "chukuDate" : "2017-07-25 00:00:00",
-                    "chukuAmount" : "9575.4",
+                    "chukuDate" : "2017-08-03 00:00:00",
+                    "chukuAmount" : "9542.84",
                     "chukuPrice" : "5030128.64"
                 }
             )
@@ -784,6 +784,8 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
                     "hsId" : unitId,
                     "name" : "TAX_MOTRO_FREIGHT",
                     "amount" : "100000",
+                    "quantity":'14475.4',
+                    "otherPartyId":'32',
                     "orderId" : orderId
                 }
             )
@@ -917,7 +919,7 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
                 expect(res.body.data.ownerCapitalPressure, '占压 - 自有资金占压数据不对').to.equal(0)
 
                 expect(res.body.data.downstreamCapitalPressure, '占压 - 下游资金占压数据不对').to.equal(0)
-                expect(res.body.data.cangPrePayment, '占压 - 预收款数据不对').to.equal(0)
+                expect(res.body.data.cangPrePayment, '占压 - 预收款数据不对').to.equal(100000.00 )
 
 
                 // expect(res.body.data.totalInstorageNum, '出入库 - 入库总数量数据不对').to.equal(10102.7)
