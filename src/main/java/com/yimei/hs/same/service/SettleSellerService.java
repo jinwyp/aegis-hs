@@ -1,5 +1,6 @@
 package com.yimei.hs.same.service;
 
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIGlobalBinding;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageSettleSellerDTO;
@@ -102,40 +103,53 @@ public class SettleSellerService {
         return settleSellerMapper.findByOrderIdAndHsId(orderId,hsId);
     }
 
-    public SettleSellerInfo findSettleInfo(long orderId, long hsId, BusinessType businessType, @Null  String hsMonth){
+    public SettleSellerInfo findSettleInfo(long orderId, long hsId,BusinessType businessType, @Null  String hsMonth){
         SettleSellerInfo settleSellerInfo = new SettleSellerInfo();
 
-         AnalysisData analysisDataPayCargoAmount = yingAnalysisDataMapper.findOneV1014(orderId, hsId);
-         AnalysisData analysisHuikuanAmount = yingAnalysisDataMapper.findOneV1013(orderId, hsId);
+        if (BusinessType.cang.equals(businessType)) {
+            //仓押的上游
+            BigDecimal totalBuyerNums= yingAnalysisDataMapper.findOneV1040cang(orderId, hsId).getFinalSettleAmount();
+            BigDecimal purchaseCargoAmountOfMoney=yingAnalysisDataMapper.findOneV1044cang(orderId, hsId).getSaleCargoAmountofMoney();
 
-        if (analysisDataPayCargoAmount==null ||analysisHuikuanAmount==null) {
-            return null;
-        }
-         BigDecimal payCargoAmount= analysisDataPayCargoAmount.getPayCargoAmount();
-         BigDecimal totalHuikuanPaymentMoney =analysisHuikuanAmount.getTotalHuikuanPaymentMoney();
-        if (totalHuikuanPaymentMoney.compareTo(payCargoAmount) != -1) {
             settleSellerInfo.setHasSettled(true);
             settleSellerInfo.setHsId(hsId);
             settleSellerInfo.setOrderId(orderId);
             settleSellerInfo.setHsMonth(hsMonth);
-            if (businessType.equals(BusinessType.ying)) {
-                settleSellerInfo.setPurchaseCargoAmountOfMoney(yingAnalysisDataMapper.findOneV1046ying(orderId, hsId).getPurchaseCargoAmountOfMoney());
-            } else if (businessType.equals(BusinessType.cang
-            )) {
-                settleSellerInfo.setPurchaseCargoAmountOfMoney(yingAnalysisDataMapper.findOneV1044cang(orderId, hsId).getSaleCargoAmountofMoney());
-            }
-            settleSellerInfo.setTotalBuyerNums(yingAnalysisDataMapper.findOneV1024(orderId, hsId).getTotalBuyerNums());
-            List<Huikuan> huikuans=huikuanMapper.loadAll(orderId);
-            if (huikuans != null && huikuans.size() > 0) {
-                settleSellerInfo.setLastHuikuanDate(huikuans.get(huikuans.size() - 1).getHuikuanDate());
-            }
+            settleSellerInfo.setTotalBuyerNums(totalBuyerNums);
+            settleSellerInfo.setPurchaseCargoAmountOfMoney(purchaseCargoAmountOfMoney);
+
         } else {
-            settleSellerInfo.setHasSettled(false);
-            settleSellerInfo.setTotalBuyerNums(BigDecimal.ZERO);
-            settleSellerInfo.setPurchaseCargoAmountOfMoney(BigDecimal.ZERO);
+// 应收的上游
+            AnalysisData analysisDataPayCargoAmount = yingAnalysisDataMapper.findOneV1014(orderId, hsId);
+
+            AnalysisData analysisHuikuanAmount = yingAnalysisDataMapper.findOneV1013(orderId, hsId);
+
+            if (analysisDataPayCargoAmount == null || analysisHuikuanAmount == null) {
+                return null;
+            }
+            BigDecimal payCargoAmount = analysisDataPayCargoAmount.getPayCargoAmount();
+            BigDecimal totalHuikuanPaymentMoney = analysisHuikuanAmount.getTotalHuikuanPaymentMoney();
+            if (totalHuikuanPaymentMoney.compareTo(payCargoAmount) != -1) {
+                settleSellerInfo.setHasSettled(true);
+                settleSellerInfo.setHsId(hsId);
+                settleSellerInfo.setOrderId(orderId);
+                settleSellerInfo.setHsMonth(hsMonth);
+
+                settleSellerInfo.setPurchaseCargoAmountOfMoney(yingAnalysisDataMapper.findOneV1046ying(orderId, hsId).getPurchaseCargoAmountOfMoney());
+
+                settleSellerInfo.setTotalBuyerNums(yingAnalysisDataMapper.findOneV1024(orderId, hsId).getTotalBuyerNums());
+                List<Huikuan> huikuans = huikuanMapper.loadAll(orderId);
+                if (huikuans != null && huikuans.size() > 0) {
+                    settleSellerInfo.setLastHuikuanDate(huikuans.get(huikuans.size() - 1).getHuikuanDate());
+                }
+            } else {
+                settleSellerInfo.setHasSettled(false);
+                settleSellerInfo.setTotalBuyerNums(BigDecimal.ZERO);
+                settleSellerInfo.setPurchaseCargoAmountOfMoney(BigDecimal.ZERO);
+            }
+
+
         }
-
-
 
         return settleSellerInfo;
     }
@@ -149,6 +163,10 @@ public class SettleSellerService {
         }
         return settleSellerInfos;
     }
+
+
+
+
     @Transactional(readOnly = false)
     public int deleteHsAndOrderId(Long morderId, Long hsId) {
         return settleSellerMapper.deleteHsAndOrderId(morderId, hsId);
