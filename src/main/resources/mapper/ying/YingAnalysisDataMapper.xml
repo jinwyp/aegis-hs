@@ -1320,6 +1320,14 @@ left join v_1001  on base.hsId=v_1001.hsId
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT } and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
+    <select id="findOneV3014" resultType="com.yimei.hs.ying.entity.AnalysisData">
+        select
+        orderId,
+        hsId,
+        withoutTaxFee
+        from v_3014
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT } and orderId=#{orderId,jdbcType=BIGINT }
+    </select>
     <select id="findOneV1075Fee" resultType="java.math.BigDecimal">
         select
         amount
@@ -1340,6 +1348,7 @@ left join v_1001  on base.hsId=v_1001.hsId
         from v_1076_invoice
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT } and v_1076_invoice.openCompanyId = #{id,jdbcType=BIGINT}
     </select>
+
 
 
 </mapper>

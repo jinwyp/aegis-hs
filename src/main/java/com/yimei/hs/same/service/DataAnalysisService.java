@@ -285,6 +285,7 @@ public class DataAnalysisService {
         AnalysisData cangAnalysisDatav3006 = yingAnalysisDataMapper.findOneV3006(morderId, hsId);
         AnalysisData cangAnalysisDatav3010 = yingAnalysisDataMapper.findOneV3010(morderId, hsId);
         AnalysisData cangAnalysisDatav3013 = yingAnalysisDataMapper.findOneV3013(morderId, hsId);
+        AnalysisData cangAnalysisDatav3014 = yingAnalysisDataMapper.findOneV3014(morderId, hsId);
 
         AnalysisData cangAnalysisDatav1041 = yingAnalysisDataMapper.findOneV1040cang(morderId, hsId);
         AnalysisData cangAnalysisDatav1044 = yingAnalysisDataMapper.findOneV1044cang(morderId, hsId);
@@ -405,7 +406,7 @@ public class DataAnalysisService {
             setUnInvoicedAmountofMoney(cangAnalysisDatav1052.getUnInvoicedAmountofMoney());
             setCangPrePayment(cangAnalysisDatav1054.getCangPrePayment());
             setSettleGrossProfileNum(cangAnalysisDatav3003.getTotalOutstorageNum());
-            setPurchaseIncludeTaxTotalAmount(cangAnalysisDatav1056.getPurchaseCargoAmountOfMoney());
+            setPurchaseIncludeTaxTotalAmount(cangAnalysisDatav1056.getPurchaseIncludeTaxTotalAmount());
 
             setSaleIncludeTaxTotalAmount(cangAnalysisDatav1057.getSaleIncludeTaxTotalAmount());
             setTradeCompanyAddMoney(cangAnalysisDatav1058.getTradeCompanyAddMoney());
@@ -460,6 +461,7 @@ public class DataAnalysisService {
             setNonRepaymentLoanMoney(nonRepaymentLoanMoney);
 
             setCapitalPressureList(capitalPressureList);
+            setWithoutTaxFee(cangAnalysisDatav3014.getWithoutTaxFee());
 
 
         }};
