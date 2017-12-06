@@ -44,6 +44,7 @@ public class Fee implements Serializable {
     /**
      * 结算日期
      */
+    @NotNull(groups = {CreateGroup.class}, message = "结算日期不能为空")
     private LocalDateTime settleDate;
 
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
