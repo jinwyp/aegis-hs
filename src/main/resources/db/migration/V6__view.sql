@@ -605,13 +605,15 @@ case when
 then ROUND(IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums ,0.00),2)
 else 0.00  end  as  unsettlerBuyerNumber,
 ROUND(IFNULL(v_3001.totalInstorageNum ,0.00) * IFNULL(config.tradeAddPrice ,0.00),2)as tradingCompanyAddMoney,
-ROUND((IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums,0.00)) * IFNULL(config.weightedPrice,0.00) ,2)as unsettlerBuyerMoneyAmount
+ROUND((IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums,0.00)) * IFNULL(v_3001.instorageUnitPrice,0.00) ,2)as unsettlerBuyerMoneyAmount
 from base
 left join  v_3001 on base.hsId =v_3001.hsId
 left join v_3003 on base.hsId=v_3003.hsId
 left join v_1013 on base.hsId=v_1013.hsId
      left join v_1024 on base.hsId=v_1024.hsId
      left join hs_same_order_config config on config.id=base.hsId;
+
+
 
 
 

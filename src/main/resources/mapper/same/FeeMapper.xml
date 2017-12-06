@@ -9,11 +9,12 @@
         <result column="amount" jdbcType="DECIMAL" property="amount"/>
         <result column="quantity" jdbcType="DECIMAL" property="quantity"/>
         <result column="otherPartyId" jdbcType="BIGINT" property="otherPartyId"/>
+        <result column="settleDate" jdbcType="TIMESTAMP" property="settleDate"/>
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, otherPartyId,quantity,name, amount, tsc, tsu
+        id, orderId, hsId, otherPartyId,quantity,name, amount,settleDate, tsc, tsu
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -35,6 +36,7 @@
             <if test="otherPartyId!=null">AND otherPartyId = #{otherPartyId, jdbcType=BIGINT}</if>
             <if test="hsId!=null">AND hsId = #{hsId, jdbcType=BIGINT}</if>
             <if test="name!=null">AND name = #{name, jdbcType=VARCHAR}</if>
+            <if test="settleDate!=null">AND settleDate = #{settleDate, jdbcType=TIMESTAMP}</if>
             <if test="amount!=null">AND amount= #{amount, jdbcType=VARCHAR}</if>
         </where>
     </select>
@@ -68,6 +70,7 @@
             quantity,
             name,
             amount,
+            settleDate,
             tsc
         )
         VALUES (
@@ -78,6 +81,7 @@
             #{quantity,jdbcType=DECIMAL},
             #{name,jdbcType=VARCHAR},
             #{amount,jdbcType=DECIMAL},
+            #{settleDate,jdbcType=TIMESTAMP},
             #{tsc,jdbcType=TIMESTAMP}
         )
     </insert>
@@ -94,6 +98,7 @@
             <if test="quantity != null">quantity,</if>
             <if test="amount != null">amount,</if>
             <if test="tsc != null">tsc,</if>
+            <if test="settleDate != null">settleDate,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id,jdbcType=BIGINT},</if>
@@ -104,6 +109,7 @@
             <if test="quantity != null">#{quantity,jdbcType=DECIMAL},</if>
             <if test="amount != null">#{amount,jdbcType=DECIMAL},</if>
             <if test="tsc != null">#{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="settleDate != null">#{settleDate,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
 
@@ -117,6 +123,7 @@
             <if test="otherPartyId!= null">otherPartyId = #{otherPartyId,jdbcType=BIGINT},</if>
             <if test="quantity != null">quantity = #{quantity,jdbcType=DECIMAL},</if>
             <if test="tsc != null">tsc = #{tsc,jdbcType=TIMESTAMP},</if>
+            <if test="settleDate != null">settleDate = #{settleDate,jdbcType=TIMESTAMP},</if>
             <if test="true">tsu = current_timestamp,</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
@@ -131,6 +138,7 @@
             otherPartyId= #{otherPartyId,jdbcType=BIGINT},
             quantity = #{quantity,jdbcType=DECIMAL},
             tsc     = #{tsc,jdbcType=TIMESTAMP},
+            settleDate     = #{settleDate,jdbcType=TIMESTAMP},
             tsu     = current_timestamp
         WHERE id = #{id,jdbcType=BIGINT}
     </update>

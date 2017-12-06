@@ -5,8 +5,10 @@ import com.yimei.hs.enums.FeeClass;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * Created by hary on 2017/9/21.
@@ -27,4 +29,8 @@ public class PageFeeDTO extends BaseFilter<PageFeeDTO> {
     private BigDecimal quantity;
 
     private Long otherPartyId;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate settleDate;
+
 }

@@ -41,6 +41,11 @@ public class Fee implements Serializable {
      */
     private BigDecimal quantity;
 
+    /**
+     * 结算日期
+     */
+    private LocalDateTime settleDate;
+
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
 
