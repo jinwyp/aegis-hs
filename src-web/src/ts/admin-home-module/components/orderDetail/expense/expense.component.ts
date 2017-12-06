@@ -144,6 +144,9 @@ export class ExpenseComponent implements OnInit {
         'name'  : {
             'required'      : '请填写费用科目!'
         },
+        'settleDate'  : {
+            'required'      : '请填写结算日期!'
+        },
         'amount'  : {
             'required'      : '请填写金额!'
         },
@@ -163,6 +166,7 @@ export class ExpenseComponent implements OnInit {
         this.expenseForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
             'name'    : ['', [Validators.required ] ],
+            'settleDate'    : [null, [Validators.required ] ],
             'amount'    : ['', [Validators.required ] ],
             'quantity'    : ['' ],
             'otherPartyId'    : ['', [Validators.required ] ]
@@ -236,6 +240,7 @@ export class ExpenseComponent implements OnInit {
             this.expenseForm.patchValue({
                 'hsId'    : '',
                 'name'    : '',
+                'settleDate'    : null,
                 'amount'  : '',
                 'quantity'    : '',
                 'otherPartyId'    : ''

@@ -285,7 +285,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             'principal'    : ['', [Validators.required ] ],
             'interest'    : ['', [Validators.required ] ],
             'fee'    : ['', [Validators.required ] ],
-            'ccsPay'    : ['', [Validators.required ] ]
+            'ccsPay'    : [false, [Validators.required ] ]
         } )
 
         this.borrowForm.valueChanges.subscribe(data => {
@@ -427,7 +427,7 @@ export class RepaymentHuanKuanComponent implements OnInit {
             'principal'    : '',
             'interest'    : '',
             'fee'    : '',
-            'ccsPay'    : ''
+            'ccsPay'    : false
         })
 
         this.ignoreDirtyBorrow = false

@@ -174,7 +174,7 @@ export class WarehouseOrderComponent implements OnInit {
             console.log(this.unitListObject[this.warehouseForm.value.hsId])
 
             this.warehouseForm.patchValue({
-                chukuPrice : Number(this.warehouseForm.value.chukuAmount) * Number(this.unitListObject[this.warehouseForm.value.hsId].tradeAddPrice)
+                chukuPrice : Number(this.warehouseForm.value.chukuAmount) * Number(this.unitListObject[this.warehouseForm.value.hsId].weightedPrice)
             })
         }
     }
