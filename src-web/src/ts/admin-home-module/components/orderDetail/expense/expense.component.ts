@@ -130,6 +130,8 @@ export class ExpenseComponent implements OnInit {
         this.expenseSearchForm = this.fb.group({
             'hsId'    : ['' ],
             'name'    : ['' ],
+            'settleDateStart'    : ['' ],
+            'settleDateEnd'    : ['' ],
             'amount'    : ['' ],
             'quantity'    : ['' ],
             'otherPartyId'    : ['' ]

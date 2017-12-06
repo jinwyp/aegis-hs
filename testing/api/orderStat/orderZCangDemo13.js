@@ -21,7 +21,7 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
     let orderId = 19
 
     let unitId = 13
-    let borrowId = 26
+    let borrowId = 25
 
     before(function (done) {
 
@@ -783,7 +783,10 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
                 {
                     "hsId" : unitId,
                     "name" : "TAX_MOTRO_FREIGHT",
+                    "settleDate" : "2017-07-10 00:00:00",
                     "amount" : "100000",
+                    "quantity" : "0",
+                    "otherPartyId" : "32",
                     "orderId" : orderId
                 }
             )

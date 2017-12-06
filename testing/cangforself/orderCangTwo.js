@@ -1,3 +1,11 @@
+/**
+ * Created by jin on 9/26/17.
+ */
+
+
+/**
+ * Created by jin on 9/18/17.
+ */
 
 
 //Require the dev-dependencies
@@ -35,143 +43,143 @@ describe('仓押订单', function () {
     })
 
 
-    // it('新建参与商 POST: /api/parties', function (done) {
-    //     server.post('/api/parties')
-    //         .set('Authorization', Authorization)
-    //         .set(config.headers)
-    //         .send({
-    //             name: '广州鑫丰润能源科技有限公司',
-    //             shortName : '广州鑫丰润能',
-    //             partyType : 3
-    //
-    //         })
-    //         .expect('Content-Type', /json/)
-    //         .expect(200)
-    //         .end(function(err, res) {
-    //             if (err) return done(err)
-    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-    //             expect(res.body.data.name).to.include('广州鑫丰润能')
-    //
-    //             partyId = res.body.data.id
-    //             done()
-    //         })
-    // })
-    //
-    //
-    // it('新建参与商 POST: /api/parties', function (done) {
-    //     server.post('/api/parties')
-    //         .set('Authorization', Authorization)
-    //         .set(config.headers)
-    //         .send({
-    //             name: '泰州立翔电力燃料有限公司',
-    //             shortName : '泰州立翔电',
-    //             partyType : 3
-    //
-    //         })
-    //         .expect('Content-Type', /json/)
-    //         .expect(200)
-    //         .end(function(err, res) {
-    //             if (err) return done(err)
-    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-    //             expect(res.body.data.name).to.include('泰州立翔电')
-    //
-    //             partyId = res.body.data.id
-    //             done()
-    //         })
-    // })
-    //
-    //
-    //
-    // it('新建参与商 POST: /api/parties', function (done) {
-    //     server.post('/api/parties')
-    //         .set('Authorization', Authorization)
-    //         .set(config.headers)
-    //         .send({
-    //             name: '广州莲荷能源科技有限责任公司',
-    //             shortName : '广州莲荷',
-    //             partyType : 3
-    //
-    //         })
-    //         .expect('Content-Type', /json/)
-    //         .expect(200)
-    //         .end(function(err, res) {
-    //             if (err) return done(err)
-    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-    //             expect(res.body.data.name).to.include('广州莲荷能')
-    //
-    //             partyId = res.body.data.id
-    //             done()
-    //         })
-    // })
-    //
-    // it('新建参与商 POST: /api/parties', function (done) {
-    //     server.post('/api/parties')
-    //         .set('Authorization', Authorization)
-    //         .set(config.headers)
-    //         .send({
-    //             name: '北京领先创融网络科技有限公司',
-    //             shortName : '中瑞财富',
-    //             partyType : 2
-    //
-    //         })
-    //         .expect('Content-Type', /json/)
-    //         .expect(200)
-    //         .end(function(err, res) {
-    //             if (err) return done(err)
-    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-    //             expect(res.body.data.name).to.include('北京领先创')
-    //
-    //             partyId = res.body.data.id
-    //             done()
-    //         })
-    // })
-    //
-    //
-    // it('仓押订单 - 新建仓押订单1 POST: /api/business/cangs', function (done) {
-    //     server.post('/api/business/cangs')
-    //         .set('Authorization', Authorization)
-    //         .set(config.headers)
-    //         .send(
-    //             {
-    //                 "teamId":13,
-    //                 "line":"广州鑫丰润-泰州立翔-嘉瑞-广州莲荷",
-    //                 "cargoType":"COAL",
-    //                 "upstreamSettleMode":"ONE_PAPER_SETTLE",
-    //                 "downstreamSettleMode":"ONE_PAPER_SETTLE",
-    //                 "mainAccounting" : 3,
-    //                 "upstreamId" : 30,
-    //                 "downstreamId" : 32,
-    //                 "businessType" : "cang",
-    //                 "orderPartyList" : [
-    //                     {
-    //                         "custType" : "TRAFFICKCER",
-    //                         "customerId" : 31,
-    //                         "position" : 1
-    //                     },
-    //                     {"custType" : "FUNDER", "customerId" : 33, "position" : 1}
-    //                 ]
-    //             }
-    //         )
-    //         .expect('Content-Type', /json/)
-    //         .expect(200)
-    //         .end(function(err, res) {
-    //             if (err) return done(err)
-    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-    //             expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-    //
-    //             orderId = res.body.data.id
-    //             done()
-    //         })
-    // })
+    it('新建参与商 POST: /api/parties', function (done) {
+        server.post('/api/parties')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                name: '广州鑫丰润能源科技有限公司',
+                shortName : '广州鑫丰润能',
+                partyType : 3
+
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.name).to.include('广州鑫丰润能')
+
+                partyId = res.body.data.id
+                done()
+            })
+    })
+
+
+    it('新建参与商 POST: /api/parties', function (done) {
+        server.post('/api/parties')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                name: '泰州立翔电力燃料有限公司',
+                shortName : '泰州立翔电',
+                partyType : 3
+
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.name).to.include('泰州立翔电')
+
+                partyId = res.body.data.id
+                done()
+            })
+    })
+
+
+
+    it('新建参与商 POST: /api/parties', function (done) {
+        server.post('/api/parties')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                name: '广州莲荷能源科技有限责任公司',
+                shortName : '广州莲荷',
+                partyType : 3
+
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.name).to.include('广州莲荷能')
+
+                partyId = res.body.data.id
+                done()
+            })
+    })
+
+    it('新建参与商 POST: /api/parties', function (done) {
+        server.post('/api/parties')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send({
+                name: '北京领先创融网络科技有限公司',
+                shortName : '中瑞财富',
+                partyType : 2
+
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.name).to.include('北京领先创')
+
+                partyId = res.body.data.id
+                done()
+            })
+    })
+
+
+    it('仓押订单 - 新建仓押订单1 POST: /api/business/cangs', function (done) {
+        server.post('/api/business/cangs')
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "teamId":13,
+                    "line":"广州鑫丰润-泰州立翔-嘉瑞-广州莲荷",
+                    "cargoType":"COAL",
+                    "upstreamSettleMode":"ONE_PAPER_SETTLE",
+                    "downstreamSettleMode":"ONE_PAPER_SETTLE",
+                    "mainAccounting" : 3,
+                    "upstreamId" : 30,
+                    "downstreamId" : 32,
+                    "businessType" : "cang",
+                    "orderPartyList" : [
+                        {
+                            "custType" : "TRAFFICKCER",
+                            "customerId" : 31,
+                            "position" : 1
+                        },
+                        {"custType" : "FUNDER", "customerId" : 33, "position" : 1}
+                    ]
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
+
+                orderId = res.body.data.id
+                done()
+            })
+    })
 
 
 
@@ -180,6 +188,7 @@ describe('仓押订单', function () {
             .set('Authorization', Authorization)
             .set(config.headers)
             .send({
+                'orderId':orderId,
                 "hsMonth"           : "201706",
                 "maxPrepayRate"        : "1.0",
                 "unInvoicedRate"       : "0.8",
@@ -339,8 +348,8 @@ describe('仓押订单', function () {
                     "huankuankDate" : "2017-07-26 00:00:00",
                     "huankuanMapList" : [
                         {
-                            "jiekuanId":"10",
-                            "principal" : "50000000",
+                            "jiekuanId":"1",
+                            "principal" : "5000000",
                             "interest" : "24427.16",
                             "fee" : "5483.33"
                         }
@@ -376,7 +385,7 @@ describe('仓押订单', function () {
                             "invoiceNumber" : "12346123",
                             "cargoAmount" : "10102.70",
                             "taxRate" : "0.17",
-                            "priceAndTax" : "6011106.30"
+                            "priceAndTax" : "6011106.50"
                         }
                     ]
                 }
@@ -521,7 +530,7 @@ describe('仓押订单', function () {
                     "huikuanDate":"2017-07-28 00:00:00",
                     "huikuanAmount":"1190000.00 ",
                     "huikuanUsage":"PAYMENT_FOR_GOODS",
-                    "huikuanMode":"DEPOSITECASH",
+                    "huikuanMode":"ELEC_REMITTANCE",
                     "huikuanBankPaper":"",
                     "huikuanBankPaperDate":"",
                     "huikuanBankDiscount":"",
@@ -584,7 +593,7 @@ describe('仓押订单', function () {
             })
     })
 
-    it(`回款单 - 新建回款单2 POST: /api/business/ying/${orderId}/huikuans`, function (done) {
+    it(`回款单 - 新建回款单3 POST: /api/business/ying/${orderId}/huikuans`, function (done) {
         server.post(`/api/business/ying/${orderId}/huikuans`)
             .set('Authorization', Authorization)
             .set(config.headers)
