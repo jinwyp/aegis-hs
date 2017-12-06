@@ -54,7 +54,7 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
                     "downstreamSettleMode" : "ONE_PAPER_SETTLE",
                     "mainAccounting"       : 3,
                     "upstreamId"           : 27,
-                    "downstreamId"         : 28,
+                    "downstreamId"         : 29,
                     "businessType" : "cang",
                     "orderPartyList" : [
                         {

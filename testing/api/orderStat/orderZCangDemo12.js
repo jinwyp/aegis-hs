@@ -15,7 +15,7 @@ const server = supertest(config.path.urlApi)
 
 
 
-describe('仓押订单 统计范例12', function () {
+describe('仓押订单 统计范例12 赵征提供 12.05日', function () {
 
     let Authorization = ''
     let orderId = 18
@@ -54,7 +54,7 @@ describe('仓押订单 统计范例12', function () {
                     "downstreamSettleMode" : "ONE_PAPER_SETTLE",
                     "mainAccounting"       : 3,
                     "upstreamId"           : 27,
-                    "downstreamId"         : 28,
+                    "downstreamId"         : 29,
                     "businessType" : "cang",
                     "orderPartyList" : [
                         {
@@ -102,13 +102,13 @@ describe('仓押订单 统计范例12', function () {
             .send(
                 {
                     "orderId" : orderId,
-                    "hsMonth" : "201707",
+                    "hsMonth" : "201706",
                     "maxPrepayRate" : 1,
-                    "unInvoicedRate" : 0.8,
+                    "unInvoicedRate" : 1,
                     "contractBaseInterest" : 0.15,
                     "expectHKDays" : 45,
                     "tradeAddPrice" : "2",
-                    "weightedPrice" : 0
+                    "weightedPrice" : 595
                 }
             )
             .expect('Content-Type', /json/)
@@ -118,7 +118,7 @@ describe('仓押订单 统计范例12', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.hsMonth, '返回的数据data对象的hsMonth属性错误').to.include('201707')
+                expect(res.body.data.hsMonth, '返回的数据data对象的hsMonth属性错误').to.include('201706')
 
                 unitId = res.body.data.id
                 done()
@@ -136,7 +136,7 @@ describe('仓押订单 统计范例12', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据data对象里面没有id字段').to.be.a('number')
-                expect(res.body.data.hsMonth, '返回的数据data对象的hsMonth属性错误').to.include('201707')
+                expect(res.body.data.hsMonth, '返回的数据data对象的hsMonth属性错误').to.include('201706')
                 done()
             })
     })
@@ -155,15 +155,15 @@ describe('仓押订单 统计范例12', function () {
                 {
                     "hsId" : unitId,
                     "orderId" : orderId,
-                    "rukuDate" : "2017-07-02 00:00:00",
+                    "rukuDate" : "2017-06-29 00:00:00",
                     "rukuStatus" : "IN_STORAGE",
-                    "rukuAmount" : "14475.4",
-                    "rukuPrice" : "7508824.24",
+                    "rukuAmount" : "5000",
+                    "rukuPrice" : "2975000",
                     "trafficMode" : "MOTOR",
-                    "cars" : "366",
+                    "cars" : "",
                     "jhh" : "",
                     "ship" : "",
-                    "locality" : "立翔",
+                    "locality" : "新沙港",
                     "chukuDate" : "2099-12-30 00:00:00",
                     "chukuAmount" : 99999999,
                     "chukuPrice" : 99999999
@@ -181,7 +181,40 @@ describe('仓押订单 统计范例12', function () {
                 done()
             })
     })
+    it(`入库单 - 新建入库单2 POST: /api/business/cang/${orderId}/rukus`, function (done) {
+        server.post(`/api/business/cang/${orderId}/rukus`)
+            .set('Authorization', Authorization)
+            .set(config.headers)
+            .send(
+                {
+                    "hsId" : unitId,
+                    "orderId" : orderId,
+                    "rukuDate" : "2017-07-05 00:00:00",
+                    "rukuStatus" : "IN_STORAGE",
+                    "rukuAmount" : "5102.70",
+                    "rukuPrice" : "3036106.5",
+                    "trafficMode" : "MOTOR",
+                    "cars" : "",
+                    "jhh" : "",
+                    "ship" : "",
+                    "locality" : "新沙港",
+                    "chukuDate" : "2099-12-30 00:00:00",
+                    "chukuAmount" : 99999999,
+                    "chukuPrice" : 99999999
+                }
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err)
+                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+                expect(res.body.data.rukuStatus).to.include('IN_STORAGE')
 
+                done()
+            })
+    })
 
 
 
