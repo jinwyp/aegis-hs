@@ -163,7 +163,7 @@ public class SettleBuyerController {
             @PathVariable("id") long id
     ) {
         if (isValidReq(pos, businessType)) {
-      git      int rtn = settleBuyeService.delete(id);
+           int rtn = settleBuyeService.delete(id);
             if (rtn != 1) {
                 return Result.error(4001, "删除失败", HttpStatus.BAD_REQUEST);
             }
