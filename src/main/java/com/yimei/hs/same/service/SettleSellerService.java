@@ -1,6 +1,6 @@
 package com.yimei.hs.same.service;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIGlobalBinding;
+
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.dto.PageSettleSellerDTO;
