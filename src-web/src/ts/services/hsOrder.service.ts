@@ -234,8 +234,8 @@ export class HSOrderService {
 
 
 
-    getSettleUpstreamAdditionalInfo(businessType : string, orderId: number): Observable<any> {
-        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/settleseller/allinfo')
+    getSettleUpstreamAdditionalInfo(businessType : string, orderId: number, position: string): Observable<any> {
+        return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/' + position + '/allinfo')
     }
     getSettleUpstreamListByID(businessType : string, settleType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {
         let params = new HttpParams()

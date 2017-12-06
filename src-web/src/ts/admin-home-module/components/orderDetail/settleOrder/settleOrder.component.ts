@@ -175,7 +175,7 @@ export class SettleOrderComponent implements OnInit {
     }
 
     getAdditionalInfo () {
-        this.hsOrderService.getSettleUpstreamAdditionalInfo(this.businessType, this.currentOrder.id).subscribe(
+        this.hsOrderService.getSettleUpstreamAdditionalInfo(this.businessType, this.currentOrder.id, this.settleType).subscribe(
             data => {
 
                 if (Array.isArray(data.data)) {
@@ -506,7 +506,7 @@ export class SettleOrderComponent implements OnInit {
             this.settleForm.patchValue(settle)
         }
 
-        this.getAdditionalInfo()
+        this.getAdditionalInfo(this.settleType)
 
         this.isShowForm = !this.isShowForm
     }
