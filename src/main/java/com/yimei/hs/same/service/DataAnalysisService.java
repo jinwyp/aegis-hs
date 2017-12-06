@@ -553,11 +553,10 @@ public class DataAnalysisService {
             capitalPressure.setReceiveCompanyId(id);
             capitalPressure.setOrderId(orderId);
             capitalPressure.setUnInvoicePrice(
-                    (unInvoice == null
-                            || unInvoice.compareTo(BigDecimal.ZERO)
-                            == 0 ? BigDecimal.ZERO : unInvoice).subtract(
                                     (capitalFee == null ||
-                                            capitalFee.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : capitalFee)));
+                                            capitalFee.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : capitalFee).subtract( (unInvoice == null
+                                            || unInvoice.compareTo(BigDecimal.ZERO)
+                                            == 0 ? BigDecimal.ZERO : unInvoice)));
             capitalPressure.setPartiesCapitalPressure((capitalFukuan == null || capitalFukuan.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : capitalFukuan).subtract((capitalFee == null || capitalFee.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : capitalFee)));
             capitalPressureList.add(capitalPressure);
         }
