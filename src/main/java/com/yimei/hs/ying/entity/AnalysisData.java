@@ -209,6 +209,8 @@ public class AnalysisData implements Serializable {
 
     private BigDecimal totalPayGoodsFee;
 
+    private BigDecimal withoutTaxFee;
+
 
     //入库在途中数量
     private BigDecimal totalInstorageTranitNum;
