@@ -807,18 +807,19 @@ describe('仓押订单 统计范例12', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
 
-                expect(res.body.data.saleIncludeTaxTotalAmount, '销售含税总额数据不对').to.equal(7523503.64)
-                expect(res.body.data.purchaseIncludeTaxTotalAmount, '采购含税总额数据不对').to.equal(7508824.24)
+                expect(res.body.data.saleIncludeTaxTotalAmount, '毛利 - 销售含税总额数据不对').to.equal(7523503.64)
+                expect(res.body.data.purchaseIncludeTaxTotalAmount, '毛利 - 采购含税总额数据不对').to.equal(7508824.24)
 
-                expect(res.body.data.tradeCompanyAddMoney, '毛利贸易公司加价数据不对').to.equal(28950.80)
-                expect(res.body.data.withoutTaxIncome, '不含税收入数据不对').to.equal(6430344.99)
-                expect(res.body.data.withoutTaxCost, '不含税成本数据不对').to.equal(6442542.77)
+                expect(res.body.data.tradeCompanyAddMoney, '毛利 - 毛利贸易公司加价数据不对').to.equal(28950.80)
+                expect(res.body.data.vat, '毛利 - 应交增值税数据不对').to.equal(0)
+                expect(res.body.data.withoutTaxIncome, '毛利 - 不含税收入数据不对').to.equal(6430344.99)
+                expect(res.body.data.withoutTaxCost, '毛利 - 不含税成本数据不对').to.equal(6442542.77)
 
-                expect(res.body.data.vat, '应交增值税数据不对').to.equal(0)
-                expect(res.body.data.additionalTax, '税金及附加数据不对').to.equal(0)
-                expect(res.body.data.stampDuty, '印花税数据不对').to.equal(4518.38)
-                expect(res.body.data.opreationCrossProfile, '经营毛利数据不对').to.equal(-16716.16)
-                expect(res.body.data.crossProfileATon, '单吨毛利数据不对').to.equal(-1.15)
+
+                expect(res.body.data.additionalTax, '毛利 - 税金及附加数据不对').to.equal(0)
+                expect(res.body.data.stampDuty, '毛利 - 印花税数据不对').to.equal(4518.38)
+                expect(res.body.data.opreationCrossProfile, '毛利 - 经营毛利数据不对').to.equal(-16716.16)
+                expect(res.body.data.crossProfileATon, '毛利 - 单吨毛利数据不对').to.equal(-1.15)
 
 
                 expect(res.body.data.upstreamCapitalPressure, '占压 - 上游资金占压数据不对').to.equal(0)
