@@ -4,6 +4,8 @@
             <bs-select formControlName="hsId" [fc]="expenseForm.get('hsId')" [label]="'核算月:'" [dirty]="ignoreDirty"  [options]="unitList" [error]="expenseFormError.hsId"></bs-select>
 
             <bs-select formControlName ="name" [fc]="expenseForm.get('name')" [label]="'费用科目:'" [dirty]="ignoreDirty" [options]="expensePurposeList" [error]="expenseFormError.name"></bs-select>
+            <bs-datepicker formControlName="settleDate" [fc]="expenseForm.get('settleDate')" [label]="'结算日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="expenseFormError.settleDate" ></bs-datepicker>
+
             <bs-text-input formControlName="amount" [fc]="expenseForm.get('amount')" [type]="'number'" [label]="'金额(元):'" [dirty]="ignoreDirty" [error]="expenseFormError.amount"></bs-text-input>
             <bs-text-input formControlName="quantity" [fc]="expenseForm.get('quantity')" [type]="'number'" [label]="'数量(吨):'" [dirty]="ignoreDirty" [error]="expenseFormError.quantity"></bs-text-input>
             <bs-select formControlName ="otherPartyId" [fc]="expenseForm.get('otherPartyId')" [label]="'对方单位:'" [editable]="true" [dirty]="ignoreDirty" [options]="party.normal" [error]="expenseFormError.otherPartyId"></bs-select>
@@ -59,6 +61,7 @@
                     <th>核算月</th>
 
                     <th>费用科目</th>
+                    <th>结算日期</th>
                     <th>金额(元)</th>
                     <th>数量(吨)</th>
                     <th>对方单位</th>
@@ -71,6 +74,7 @@
                     <td> {{expense.hsId | findKey : unitList : 'name'}}</td>
 
                     <td> {{expense.name | findKey : expensePurposeList : 'name' }}</td>
+                    <td> {{expense.settleDate | slice : 0 : 10  }}</td>
                     <td> {{expense.amount  }}</td>
                     <td> {{expense.quantity  }}</td>
                     <td> {{expense.otherPartyId | findKey : party.normal : 'name' }}</td>
@@ -80,7 +84,7 @@
                         <button class="btn btn-link btn-sm" (click)="deleteItem(expense)"> 删除 </button>
                     </td>
                 </tr>
-                <tr> <td colspan="7"> 累计金额: {{totalAmount.toFixed(2)}}</tr>
+                <tr> <td colspan="8"> 累计金额: {{totalAmount.toFixed(2)}}</tr>
 
                 </tbody>
             </table>
