@@ -119,7 +119,7 @@ public class SettleSellerController {
             } else {
                 //  该核算月汇总回款总额 > 付款用途为“货款”的金额 + 付款用途为“运费”的金额
                 if (totalHuikuanPaymentMoney.compareTo(totalPaymentAmount) == 1) {
-
+                  settleSellerService.deleteHsAndOrderId(morderId, settleSeller.getHsId());
                 int rtn = settleSellerService.create(settleSeller);
                 if (rtn != 1) {
                     logger.error("创建失败: {}", settleSeller);

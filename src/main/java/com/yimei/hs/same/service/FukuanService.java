@@ -1,6 +1,7 @@
 package com.yimei.hs.same.service;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.PaymentPurpose;
 import com.yimei.hs.same.dto.PageFukuanDTO;
 import com.yimei.hs.same.entity.*;
 import com.yimei.hs.same.mapper.*;
@@ -204,17 +205,27 @@ public class FukuanService {
      */
     @Transactional(readOnly = false)
     public int delete(long id, Long orderId) {
+        int rtn = 0;
 
-        // 1. 删除订单的所有 回款-付款 映射
-        huikuanMapMapper.deleteByOrderId(orderId);
+        Fukuan fukuan= fukuanMapper.selectByPrimaryKey(id);
+        if (fukuan.getPayUsage().equals(PaymentPurpose.FREIGNHT) || fukuan.getPayUsage().equals(PaymentPurpose.PAYMENT_FOR_GOODS)) {
 
-        jiekuanMapper.deleteByFukuanId(id);
+            // 1. 删除订单的所有 回款-付款 映射
+            huikuanMapMapper.deleteByOrderId(orderId);
 
-        // 2. 删除付款
-        int rtn = fukuanMapper.delete(id);
+            jiekuanMapper.deleteByFukuanId(id);
 
-        // 3. 重建回款付款映射
-        huikuanService.createMapping(orderId);
+            // 2. 删除付款
+            rtn = fukuanMapper.delete(id);
+
+            // 3. 重建回款付款映射
+            huikuanService.createMapping(orderId);
+        } else {
+            // 2. 删除付款
+            rtn = fukuanMapper.delete(id);
+
+        }
+
 
         return rtn;
     }

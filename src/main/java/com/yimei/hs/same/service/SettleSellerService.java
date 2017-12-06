@@ -149,4 +149,8 @@ public class SettleSellerService {
         }
         return settleSellerInfos;
     }
+    @Transactional(readOnly = false)
+    public int deleteHsAndOrderId(Long morderId, Long hsId) {
+        return settleSellerMapper.deleteHsAndOrderId(morderId, hsId);
+    }
 }

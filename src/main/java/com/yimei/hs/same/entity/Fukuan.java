@@ -35,7 +35,7 @@ public class Fukuan implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "收款公司不能为空")
     private Long receiveCompanyId;
 
-    @NotNull(groups = {CreateGroup.class}, message = "付款用途不能为空")
+    @NotNull(groups = {CreateGroup.class,UpdateGroup.class}, message = "付款用途不能为空")
     private PaymentPurpose payUsage;
 
     @Null(groups = {UpdateGroup.class}, message = "付款金额不能更新")

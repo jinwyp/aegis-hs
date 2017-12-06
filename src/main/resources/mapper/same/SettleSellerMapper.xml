@@ -106,13 +106,20 @@
                  SELECT
                  <include refid="Base_Column_List"/>
         FROM hs_same_settle_seller
-        WHERE hsId=#{hsId ,jdbcType=BIGINT} and deleted= 1
+        WHERE id=#{id ,jdbcType=BIGINT}
     </select>
 
     <!-- 物理删除 -->
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long"  >
         DELETE FROM hs_same_settle_seller
         WHERE id = #{id,jdbcType=BIGINT} and deleted =0
+    </delete>
+
+    <delete id="deleteHsAndOrderId" parameterType="java.lang.Long" >
+
+        DELETE FROM hs_same_settle_seller
+        WHERE hsId=#{hsId ,jdbcType=BIGINT} and orderId=#{orderId ,jdbcType=BIGINT}
+
     </delete>
 
     <!-- 逻辑删除 -->

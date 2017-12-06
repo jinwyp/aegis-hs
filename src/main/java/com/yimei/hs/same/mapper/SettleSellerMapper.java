@@ -29,4 +29,6 @@ public interface SettleSellerMapper {
     int delete(long id);
 
     Boolean findByOrderIdAndHsId(@Param("orderId") Long orderId, @Param("hsId") Long hsId);
+
+    int deleteHsAndOrderId(@Param("orderId") Long orderId, @Param("hsId") Long hsId);
 }
