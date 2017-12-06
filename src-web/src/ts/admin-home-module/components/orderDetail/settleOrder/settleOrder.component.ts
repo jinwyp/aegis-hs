@@ -183,7 +183,7 @@ export class SettleOrderComponent implements OnInit {
                 position = 'settleseller'
             }
             if (this.settleType === 'settlebuyerdownstream') {
-                position = 'settlesbuyer'
+                position = 'settlebuyer'
             }
         } else {
             if (this.settleType === 'settlebuyerupstream') {

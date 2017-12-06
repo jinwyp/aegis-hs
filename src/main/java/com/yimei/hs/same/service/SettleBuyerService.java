@@ -112,34 +112,16 @@ public class SettleBuyerService {
             settleSellerInfo.setPurchaseCargoAmountOfMoney(analysisData.getSaleCargoAmountofMoney());
 
         } else {
+            BigDecimal totalBuyerNums= yingAnalysisDataMapper.findOneV1040cang(orderId, hsId).getFinalSettleAmount();
+            BigDecimal purchaseCargoAmountOfMoney=yingAnalysisDataMapper.findOneV1044cang(orderId, hsId).getSaleCargoAmountofMoney();
 
-            AnalysisData analysisDataPayCargoAmount = yingAnalysisDataMapper.findOneV1014(orderId, hsId);
+            settleSellerInfo.setHasSettled(true);
+            settleSellerInfo.setHsId(hsId);
+            settleSellerInfo.setOrderId(orderId);
+            settleSellerInfo.setHsMonth(hsMonth);
+            settleSellerInfo.setTotalBuyerNums(totalBuyerNums);
+            settleSellerInfo.setPurchaseCargoAmountOfMoney(purchaseCargoAmountOfMoney);
 
-
-            AnalysisData analysisHuikuanAmount = yingAnalysisDataMapper.findOneV1013(orderId, hsId);
-
-            if (analysisDataPayCargoAmount == null || analysisHuikuanAmount == null) {
-                return null;
-            }
-            BigDecimal payCargoAmount = analysisDataPayCargoAmount.getPayCargoAmount();
-            BigDecimal totalHuikuanPaymentMoney = analysisHuikuanAmount.getTotalHuikuanPaymentMoney();
-            if (totalHuikuanPaymentMoney.compareTo(payCargoAmount) != -1) {
-                settleSellerInfo.setHasSettled(true);
-                settleSellerInfo.setHsId(hsId);
-                settleSellerInfo.setOrderId(orderId);
-                settleSellerInfo.setHsMonth(hsMonth);
-
-                settleSellerInfo.setPurchaseCargoAmountOfMoney(yingAnalysisDataMapper.findOneV1044cang(orderId, hsId).getSaleCargoAmountofMoney());
-                settleSellerInfo.setTotalBuyerNums(yingAnalysisDataMapper.findOneV1024(orderId, hsId).getTotalBuyerNums());
-                List<Huikuan> huikuans = huikuanMapper.loadAll(orderId);
-                if (huikuans != null && huikuans.size() > 0) {
-                    settleSellerInfo.setLastHuikuanDate(huikuans.get(huikuans.size() - 1).getHuikuanDate());
-                }
-            } else {
-                settleSellerInfo.setHasSettled(false);
-                settleSellerInfo.setTotalBuyerNums(BigDecimal.ZERO);
-                settleSellerInfo.setPurchaseCargoAmountOfMoney(BigDecimal.ZERO);
-            }
 
 
         }

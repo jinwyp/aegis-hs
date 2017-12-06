@@ -163,7 +163,7 @@ public class SettleBuyerController {
             @PathVariable("id") long id
     ) {
         if (isValidReq(pos, businessType)) {
-            int rtn = settleBuyeService.delete(id);
+      git      int rtn = settleBuyeService.delete(id);
             if (rtn != 1) {
                 return Result.error(4001, "删除失败", HttpStatus.BAD_REQUEST);
             }
@@ -190,7 +190,7 @@ public class SettleBuyerController {
     }
 
 
-    @GetMapping("/{morderId}/settlesbuyer/allinfo")
+    @GetMapping("/{morderId}/settlebuyer/allinfo")
     public ResponseEntity<Result<List<SettleSellerInfo>>> findAllSettleInfo(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId
