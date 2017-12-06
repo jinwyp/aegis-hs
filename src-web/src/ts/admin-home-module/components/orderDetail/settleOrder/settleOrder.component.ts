@@ -175,7 +175,26 @@ export class SettleOrderComponent implements OnInit {
     }
 
     getAdditionalInfo () {
-        this.hsOrderService.getSettleUpstreamAdditionalInfo(this.businessType, this.currentOrder.id, this.settleType).subscribe(
+
+        let position: string = ''
+
+        if (this.businessType === 'ying') {
+            if (this.settleType === 'settlesellerupstream') {
+                position = 'settleseller'
+            }
+            if (this.settleType === 'settlebuyerdownstream') {
+                position = 'settlesbuyer'
+            }
+        } else {
+            if (this.settleType === 'settlebuyerupstream') {
+                position = 'settlebuyer'
+            }
+            if (this.settleType === 'settlesellerdownstream') {
+                position = 'settleseller'
+            }
+        }
+
+        this.hsOrderService.getSettleUpstreamAdditionalInfo(this.businessType, this.currentOrder.id, position).subscribe(
             data => {
 
                 if (Array.isArray(data.data)) {
