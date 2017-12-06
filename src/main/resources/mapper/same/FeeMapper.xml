@@ -38,6 +38,8 @@
             <if test="name!=null">AND name = #{name, jdbcType=VARCHAR}</if>
             <if test="settleDate!=null">AND settleDate = #{settleDate, jdbcType=TIMESTAMP}</if>
             <if test="amount!=null">AND amount= #{amount, jdbcType=VARCHAR}</if>
+            <if test="settleDateStart!=null">  <![CDATA[   AND DATE_FORMAT(tsc, '%Y-%m-%d')>=  DATE_FORMAT(#{settleDateStart}, '%Y-%m-%d')   ]]></if>
+            <if test="settleDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(tsc, '%Y-%m-%d') <= DATE_FORMAT(#{settleDateEnd}, '%Y-%m-%d')]]></if>
         </where>
     </select>
     <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.Fee">

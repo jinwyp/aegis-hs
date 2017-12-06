@@ -33,4 +33,11 @@ public class PageFeeDTO extends BaseFilter<PageFeeDTO> {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate settleDate;
 
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate settleDateEnd;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate settleDateStart;
+
 }
