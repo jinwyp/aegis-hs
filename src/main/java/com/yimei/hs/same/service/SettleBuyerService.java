@@ -103,17 +103,18 @@ public class SettleBuyerService {
         if (BusinessType.ying.equals(businessType)) {
 
             AnalysisData analysisData = yingAnalysisDataMapper.findOneV1040ying(orderId, hsId);
+            AnalysisData analysisDataPru = yingAnalysisDataMapper.findOneV1040ying(orderId, hsId);
 
             settleSellerInfo.setHasSettled(true);
             settleSellerInfo.setHsId(hsId);
             settleSellerInfo.setOrderId(orderId);
             settleSellerInfo.setHsMonth(hsMonth);
             settleSellerInfo.setTotalBuyerNums(analysisData.getFinalSettleAmount());
-            settleSellerInfo.setPurchaseCargoAmountOfMoney(analysisData.getSaleCargoAmountofMoney());
+            settleSellerInfo.setPurchaseCargoAmountOfMoney(analysisDataPru.getPurchaseCargoAmountOfMoney());
 
         } else {
             BigDecimal totalBuyerNums= yingAnalysisDataMapper.findOneV1040cang(orderId, hsId).getFinalSettleAmount();
-            BigDecimal purchaseCargoAmountOfMoney=yingAnalysisDataMapper.findOneV1044cang(orderId, hsId).getSaleCargoAmountofMoney();
+            BigDecimal purchaseCargoAmountOfMoney=yingAnalysisDataMapper.findOneV3001(orderId, hsId).getTotalInstorageAmount();
 
             settleSellerInfo.setHasSettled(true);
             settleSellerInfo.setHsId(hsId);

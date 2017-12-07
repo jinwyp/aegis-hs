@@ -156,7 +156,7 @@ public class CangChukuController {
         BigDecimal unchukuTotalAmount = analysisData3001.getTotalInstoragedNum().subtract(analysisData3003.getTotalOutstorageNum());
         chukuInfo.setUnChukuTotalAmount(unchukuTotalAmount);
 //        "本月未出库金额" = "本月未出库吨数" * 【核算月信息】下游预估加权单价
-        BigDecimal unChukuPrice = analysisDataBase.getTradeAddPrice().multiply(unchukuTotalAmount);
+        BigDecimal unChukuPrice = analysisDataBase.getWeightedPrice().multiply(unchukuTotalAmount);
         chukuInfo.setUnChukuTotalPrice(unChukuPrice);
 
         //汇总回款用途 不等于"保证金"的回款金额
@@ -164,11 +164,13 @@ public class CangChukuController {
 
 
 //        本月可出库金额
+//        "本月可出库金额" = 汇总回款用途 不等于"保证金"的回款金额 - "本月累计出库金额"
         BigDecimal canChukuPrice = (totalHuikuanExceptBail == null ? new BigDecimal("0.00") : totalHuikuanExceptBail.subtract(totalOutStorageMoney));
 
         chukuInfo.setCanChukuPrice((canChukuPrice.compareTo(BigDecimal.ZERO) == -1 ? new BigDecimal("0.00"): canChukuPrice));
 
-        chukuInfo.setCanChukuAmount((canChukuPrice.compareTo(BigDecimal.ZERO)==-1?new BigDecimal("0.00"):canChukuPrice.divide(analysisDataBase.getTradeAddPrice(),2,BigDecimal.ROUND_HALF_UP)));
+
+        chukuInfo.setCanChukuAmount((canChukuPrice.compareTo(BigDecimal.ZERO)==-1?new BigDecimal("0.00"):canChukuPrice.divide(analysisDataBase.getWeightedPrice(),2,BigDecimal.ROUND_HALF_UP)));
         if (chukuInfo == null) {
 
             return Result.error(4001, "记录不存在", HttpStatus.BAD_REQUEST);
