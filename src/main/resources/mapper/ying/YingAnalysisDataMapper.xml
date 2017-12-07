@@ -1282,9 +1282,18 @@ left join v_1001  on base.hsId=v_1001.hsId
        where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
     </select>
     <select id="selectPartyId" resultType="java.lang.Long">
-      select fukuan.receiveCompanyId name from hs_same_fukuan fukuan where fukuan.receiveCompanyId  is not null and fukuan.hsId= #{hsId,jdbcType=BIGINT}
-      union
-      select fee.otherPartyId name from hs_same_fee  fee  where fee.otherPartyId is not null and fee.hsId= #{hsId,jdbcType=BIGINT}
+
+    select tt.name from (select fukuan.receiveCompanyId name from hs_same_fukuan fukuan where fukuan.receiveCompanyId  is not null and fukuan.hsId= #{hsId,jdbcType=BIGINT}
+        union
+    select fee.otherPartyId name from hs_same_fee  fee  where fee.otherPartyId is not null and fee.hsId= #{hsId,jdbcType=BIGINT}) tt
+
+   where name not in(
+
+       select orders.upstreamId name from  hs_same_order orders where  orders.id= #{orderId,jdbcType=BIGINT})
+
+   and name not in(
+
+     select orders.downstreamId name from  hs_same_order orders where  orders.id= #{orderId,jdbcType=BIGINT})
     </select>
     <select id="findOneV1076" resultType="com.yimei.hs.same.entity.CapitalPressure">
 
@@ -1308,7 +1317,6 @@ left join v_1001  on base.hsId=v_1001.hsId
         from v_3010
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
-
 
 
     <select id="findOneV3013" resultType="com.yimei.hs.ying.entity.AnalysisData">
@@ -1348,7 +1356,6 @@ left join v_1001  on base.hsId=v_1001.hsId
         from v_1076_invoice
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT } and v_1076_invoice.openCompanyId = #{id,jdbcType=BIGINT}
     </select>
-
 
 
 </mapper>
