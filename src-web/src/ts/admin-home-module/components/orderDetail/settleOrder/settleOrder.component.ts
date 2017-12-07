@@ -524,8 +524,8 @@ export class SettleOrderComponent implements OnInit {
 
             this.settleForm.patchValue(settle)
         }
-
-        this.getAdditionalInfo(this.settleType)
+        // this.getAdditionalInfo(this.settleType)
+        this.getAdditionalInfo()
 
         this.isShowForm = !this.isShowForm
     }
