@@ -835,46 +835,20 @@
 
     <select id="findOneV1049ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
         select
-DISTINCT
-base.orderId,
-base.hsId,
-case  when seller.orderId is not null and seller.hsId is not null
-then
-IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)
--IFNULL(v_1001.totalPayTrafficFee,0.00)
-else IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_ying.purchaseCargoAmountofMoney,0.00)
-
-end
-as upstreamCapitalPressure
-from base
-left join hs_same_settle_seller seller on base.hsId=seller.hsId and deleted=0
-left join v_1048_ying on base.hsId=v_1048_ying.hsId
-left join v_1046_ying on base.hsId= v_1046_ying.hsId
-left join v_1047  on base.hsId=v_1047.hsId
-left join v_1001  on base.hsId=v_1001.hsId
+        orderId,
+        hsId,
+        upstreamCapitalPressure
+        from v_1049_ying
         where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
     <select id="findOneV1049cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
-               select
-DISTINCT
-base.orderId,
-base.hsId,
-case  when seller.orderId is not null and seller.hsId is not null
-then
-IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)
-- IFNULL(v_1001.totalPayTrafficFee,0.00)
-else IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+  IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)-  IFNULL(v_1046_cang.purchaseCargoAmountofMoney,0.00)
-
-end
-as upstreamCapitalPressure
-from base
-left join hs_same_settle_seller seller on base.hsId=seller.hsId and deleted=0
-left join v_1048_cang on base.hsId=v_1048_cang.hsId
-left join v_1046_cang on base.hsId= v_1046_cang.hsId
-left join v_1047  on base.hsId=v_1047.hsId
-left join v_1001  on base.hsId=v_1001.hsId
-        where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
+        select
+        orderId,
+        hsId,
+        upstreamCapitalPressure
+        from v_1049_cang
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
     <!--1050 下游资金占压 downstreamCapitalPressure 计算  备查账／占压表 【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额-->
