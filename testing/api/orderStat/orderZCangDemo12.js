@@ -887,8 +887,8 @@ describe('仓押订单 统计范例12 赵征提供 12.08日', function () {
                 expect(res.body.data.cssUninTypeMoney, '进项票信息 - CCS未收到进项金额数据不对').to.equal(100000.00)
 
 
-                expect(res.body.data.purchaseIncludeTaxTotalAmount, '毛利 - 采购含税总额数据不对').to.equal(7508824.24)
-                expect(res.body.data.saleIncludeTaxTotalAmount, '毛利 - 销售含税总额数据不对').to.equal(7630128.64)
+                expect(res.body.data.purchaseCargoAmountOfMoney, '毛利 - 采购货款总额数据不对').to.equal(7508824.24)
+                expect(res.body.data.saleCargoAmountOfMoney, '毛利 - 销售货款总额数据不对').to.equal(7630128.64)
 
 
                 expect(res.body.data.tradeCompanyAddMoney, '毛利 - 毛利贸易公司加价数据不对').to.equal(28950.80)
