@@ -309,6 +309,8 @@ public class DataAnalysisService {
 
         AnalysisData cangAnalysisDatav1066 = yingAnalysisDataMapper.findOneV1066cang(morderId, hsId);
         AnalysisData cangAnalysisDatav2010 = yingAnalysisDataMapper.findOneV2010cang(morderId, hsId);
+        AnalysisData cangAnalysisDatav1078 = yingAnalysisDataMapper.findOneV1078cang(morderId, hsId);
+
 
 
         AnalysisData cangAnalysisDos1 = yingAnalysisDataMapper.findOneShowDos1cang(morderId, hsId);
@@ -463,6 +465,9 @@ public class DataAnalysisService {
             setCapitalPressureList(capitalPressureList);
             setWithoutTaxFee(cangAnalysisDatav3014.getWithoutTaxFee());
 
+            //
+
+            setUnsettleSellerMoneyAmount(cangAnalysisDatav1078.getUnsettleSellerMoneyAmount());
 
         }};
 

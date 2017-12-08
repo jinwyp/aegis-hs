@@ -192,4 +192,6 @@ public interface YingAnalysisDataMapper {
     BigDecimal findOneV1076Uninvoice(@Param("id") long id,@Param("orderId") Long orderId, @Param("hsId") long hsId);
 
     AnalysisData findOneV3014(@Param("orderId") Long orderId, @Param("hsId") long hsId);
+
+    AnalysisData findOneV1078cang(@Param("orderId") Long orderId, @Param("hsId") long hsId);
 }
