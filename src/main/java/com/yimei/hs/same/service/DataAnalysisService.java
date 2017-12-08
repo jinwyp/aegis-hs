@@ -322,21 +322,29 @@ public class DataAnalysisService {
 //        【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 -
         // （【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费）／1.11 - 【1031】监管费 ／1.06 - 【1031】服务费 ／1.06
 // - 【1033】业务费
+
+
+//【1059】不含税收入 - 【1060】不含税成本 - 【1062】税金及附加 - 【1063】印花税 -
+//（【1069】毛利含税汽运费 + 【1070】毛利含税水运费 + 【1071】毛利含税火运费）／1.11 - 【1072】毛利监管费 ／1.06 - 【1073】毛利服务费 ／1.06 - 【1074】
+
+
+
         BigDecimal opreationCrocsProfile = cangAnalysisDatav1059.getWithoutTaxIncome().
                 subtract(cangAnalysisDatav1060.getWithoutTaxCost()).
                 subtract(cangAnalysisDatav1061.getAdditionalTax()).
                 subtract(cangAnalysisDatav1063.getStampDuty()).
-                subtract(cangAnalysisDatav1027.getBusinessFee()).
+                subtract(cangAnalysisDatav1027.getBusinessFee().multiply(cangAnalysisDatav3005.getInOutRate())).
 
                 subtract(
                         (
-                                cangAnalysisDatav1027.getHsqyFee().
+                                cangAnalysisDatav3005.getInOutRate().multiply(cangAnalysisDatav1027.getHsqyFee().
                                         add(cangAnalysisDatav1027.getHssyFee()).
-                                        add(cangAnalysisDatav1027.getHshyFee())
+                                        add(cangAnalysisDatav1027.getHshyFee()))
                         ).divide(new BigDecimal("1.11"), 2, BigDecimal.ROUND_HALF_UP)
                 ).
-                subtract(cangAnalysisDatav1027.getSuperviseFee().divide(new BigDecimal("1.06"), 2, BigDecimal.ROUND_HALF_UP)).
-                subtract(cangAnalysisDatav1027.getServiceFee().divide(new BigDecimal("1.06"), 2, BigDecimal.ROUND_HALF_UP));
+                subtract(cangAnalysisDatav1027.getSuperviseFee().multiply(cangAnalysisDatav3005.getInOutRate()).divide(new BigDecimal("1.06"), 2, BigDecimal.ROUND_HALF_UP)).
+                subtract(cangAnalysisDatav1027.getServiceFee().multiply(cangAnalysisDatav3005.getInOutRate()).divide(new BigDecimal("1.06"), 2, BigDecimal.ROUND_HALF_UP))
+                ;
 
 
         AnalysisData cangAnalysisData = new AnalysisData() {{
