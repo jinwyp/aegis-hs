@@ -136,6 +136,9 @@ export class OrderDetailComponent implements OnInit {
                     purchaseIncludeTaxTotalAmount : 0,
                     saleIncludeTaxTotalAmount : 0,
 
+                    purchaseCargoAmountofMoney : 0,
+                    saleCargoAmountofMoney : 0,
+
                     tradingCompanyAddMoney : 0,
                     salesFeeAmount : 0,
                     dsddFee : 0,
@@ -181,6 +184,10 @@ export class OrderDetailComponent implements OnInit {
                         tempTotal.totalUnarriveNum = tempTotal.totalUnarriveNum + unit.totalUnarriveNum || 0
                         tempTotal.purchaseIncludeTaxTotalAmount = tempTotal.purchaseIncludeTaxTotalAmount + unit.purchaseIncludeTaxTotalAmount || 0
                         tempTotal.saleIncludeTaxTotalAmount = tempTotal.saleIncludeTaxTotalAmount + unit.saleIncludeTaxTotalAmount || 0
+
+
+                        tempTotal.purchaseCargoAmountofMoney = tempTotal.purchaseCargoAmountofMoney + unit.purchaseCargoAmountofMoney || 0
+                        tempTotal.saleCargoAmountofMoney = tempTotal.saleCargoAmountofMoney + unit.saleCargoAmountofMoney || 0
 
                         tempTotal.tradingCompanyAddMoney = tempTotal.tradingCompanyAddMoney + unit.tradingCompanyAddMoney
                         tempTotal.salesFeeAmount = tempTotal.salesFeeAmount + unit.salesFeeAmount

@@ -250,11 +250,11 @@
                         </tr>
                         <tr >
                             <td>采购货款总额</td>
-                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.purchaseIncludeTaxTotalAmount | number }}</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.purchaseCargoAmountofMoney | number }}</td>
                         </tr>
                         <tr >
                             <td>销售货款总额</td>
-                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.saleIncludeTaxTotalAmount | number }}</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.saleCargoAmountofMoney | number }}</td>
                         </tr>
 
                         <tr >
