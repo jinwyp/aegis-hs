@@ -823,12 +823,7 @@ create view v_1050_cang as
 select
 base.orderId,
 base.hsId,
-case when IFNULL(v_3003.totalOutstorageMoney,0.00)>IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)
-then
 ROUND(IFNULL(v_3003.totalOutstorageMoney,0.00)-IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00),2)
-else
-0.00
-end
 as downstreamCapitalPressure
 from base
      left join v_3003 on base.hsId =v_3003.hsId
