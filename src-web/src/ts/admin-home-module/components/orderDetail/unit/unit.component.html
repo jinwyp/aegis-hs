@@ -9,7 +9,7 @@
             <bs-text-input formControlName="expectHKDays" [fc]="orderUnitForm.get('expectHKDays')" [type]="'number'" [label]="'预计回款天数:'" [dirty]="ignoreDirty" [error]="orderUnitFormError.expectHKDays"></bs-text-input>
             <bs-text-input formControlName="tradeAddPrice" [fc]="orderUnitForm.get('tradeAddPrice')" [type]="'number'" [label]="'贸易公司加价(元/吨):'" [dirty]="ignoreDirty" [error]="orderUnitFormError.tradeAddPrice"></bs-text-input>
 
-            <bs-text-input formControlName="weightedPrice" [fc]="orderUnitForm.get('weightedPrice')" [type]="'number'" [label]="'加权单价(元/吨):'" [dirty]="ignoreDirty" [error]="orderUnitFormError.weightedPrice" ></bs-text-input>
+            <bs-text-input formControlName="weightedPrice" [fc]="orderUnitForm.get('weightedPrice')" [type]="'number'" [label]="'下游预估加权单价(元/吨):'" [dirty]="ignoreDirty" [error]="orderUnitFormError.weightedPrice" ></bs-text-input>
 
 
             <div class="form-group row">
@@ -33,7 +33,7 @@
                     <th>预计回款天数</th>
 
                     <th>贸易公司加价(元/吨)</th>
-                    <th>加权单价(元/吨)</th>
+                    <th>下游预估加权单价(元/吨)</th>
                     <th></th>
                 </tr>
                 </thead>
