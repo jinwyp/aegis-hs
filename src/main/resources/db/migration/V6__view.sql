@@ -760,15 +760,14 @@ create view v_1048_cang as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)+
-IFNULL(v_1077.ccsExternalCapitalCost,0.00)
+ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)
 -IFNULL(v_1047.externalCapitalPaymentAmount ,0.00)
 -IFNULL(v_1001.totalTradeGapFee,0.00),2)
 as ownerCapitalPaymentAmount
 from base
      left join v_1001 on base.hsId=v_1001.hsId
-     left join v_1047 on base.hsId=v_1047.hsId 
-     left join v_1077 on base.hsId=v_1077.hsId;
+     left join v_1047 on base.hsId=v_1047.hsId ;
+
 
 --1049  【付款】汇总收款单位 = “上游供应商ID”的付款金额  +【1077】CCS付外部资金成本 - 【1046】采购货款总额 - 【费用】对方单位 = “上游供应商ID”的费用金额  - 【2008】上游保证金余额
 create view v_1049_ying as
