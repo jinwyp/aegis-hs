@@ -794,16 +794,14 @@ create view v_1049_cang as
 select
 base.orderId,
 base.hsId,
-IFNULL(v_1001.forCapitalPressure,0.00) +
-IFNULL(v_1077.ccsExternalCapitalCost,0.00)-
+IFNULL(v_1001.forCapitalPressure,0.00) -
 IFNULL(v_1046_cang.purchaseCargoAmountOfMoney,0.00)- 
 IFNULL(v_1027.forCapitalPressure,0.00)
 as upstreamCapitalPressure
 from base 
 left join v_1046_cang on base.hsId= v_1046_cang.hsId
 left join v_1027  on base.hsId=v_1027.hsId
-left join v_1001  on base.hsId=v_1001.hsId 
-left join v_1077 on base.hsId=v_1077.hsId;
+left join v_1001  on base.hsId=v_1001.hsId;
 
 
 --1050 下游资金占压	downstreamCapitalPressure	计算	备查账／占压表	【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额
