@@ -1330,6 +1330,14 @@
         from v_1076_invoice
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT } and v_1076_invoice.openCompanyId = #{id,jdbcType=BIGINT}
     </select>
+    <select id="findOneV1078cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
+        select
+        orderId,
+        hsId,
+        unsettleSellerMoneyAmount
+        from v_1078
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
+    </select>
 
 
 </mapper>

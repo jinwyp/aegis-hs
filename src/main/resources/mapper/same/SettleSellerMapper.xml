@@ -38,10 +38,9 @@
             seller.discountAmount,
             seller.tsc,
             seller.tsu,
-            sum(buyer.amount),
-            sum(buyer.money)
+            seller.amount,
+            seller.money
         FROM hs_same_settle_seller seller
-            LEFT JOIN hs_same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
         WHERE seller.id = #{id,jdbcType=BIGINT} AND seller.deleted = 0
         GROUP BY seller.orderId
     </select>
@@ -59,13 +58,11 @@
             seller.discountAmount,
             seller.tsc,
             seller.tsu,
-            sum(buyer.amount),
-            sum(buyer.money)
+            seller.amount,
+            seller.money
         FROM hs_same_settle_seller
              seller
-            LEFT JOIN hs.same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
         WHERE seller.orderId = #{orderId,jdbcType=BIGINT} AND seller.deleted = 0
-        GROUP BY seller.orderId
     </select>
 
     <!-- 获取一页数据, 一笔订单只有一笔seller结算 -->
@@ -81,10 +78,9 @@
         seller.discountAmount,
         seller.tsc,
         seller.tsu,
-        sum(buyer.amount),
-        sum(buyer.money)
+        seller.amount,
+        seller.money
         FROM hs_same_settle_seller seller
-        LEFT JOIN hs_same_settle_buyer buyer ON seller.hsId = buyer.hsId AND seller.orderId = buyer.orderId
         <where>
             <if test="orderId != null">AND seller.orderId=#{orderId,jdbcType=BIGINT}</if>
             <if test="hsId != null">AND seller.hsId= #{hsId,jdbcType=BIGINT}</if>
@@ -94,7 +90,6 @@
             <if test="settleDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(seller.settleDate, '%Y-%m-%d') <= DATE_FORMAT(#{settleDateEnd}, '%Y-%m-%d')]]></if>
             <if test="true">AND seller.deleted = 0</if>
         </where>
-        group by seller.orderId, seller.hsId
     </select>
     <select id="findByOrderIdAndHsId" parameterType="java.lang.Long" resultType="java.lang.Boolean">
          SELECT
@@ -135,6 +130,8 @@
             id,
             orderId,
             hsId,
+            amount,
+            money,
             settleDate,
             discountType,
             discountInterest,
@@ -145,6 +142,8 @@
             #{id,jdbcType=BIGINT},
             #{orderId,jdbcType=BIGINT},
             #{hsId,jdbcType=BIGINT},
+            #{amount,jdbcType=DECIMAL},
+            #{money,jdbcType=DECIMAL},
             #{settleDate,jdbcType=DATE},
             #{discountType,jdbcType=VARCHAR},
             #{discountInterest,jdbcType=DECIMAL},
@@ -163,6 +162,8 @@
             <if test="hsId != null">hsId,</if>
             <if test="settleDate != null">settleDate,</if>
             <if test="discountType != null">discountType,</if>
+            <if test="amount != null">amount,</if>
+            <if test="money != null">money,</if>
             <if test="discountInterest != null">discountInterest,</if>
             <if test="discountDays != null">discountDays,</if>
             <if test="discountAmount != null">discountAmount,</if>
@@ -174,6 +175,8 @@
             <if test="hsId != null">#{hsId,jdbcType=BIGINT},</if>
             <if test="settleDate != null">#{settleDate,jdbcType=DATE},</if>
             <if test="discountType != null">#{discountType,jdbcType=VARCHAR},</if>
+            <if test="amount != null">#{amount,jdbcType=DECIMAL},</if>
+            <if test="money != null">#{money,jdbcType=DECIMAL},</if>
             <if test="discountInterest != null">#{discountInterest,jdbcType=DECIMAL},</if>
             <if test="discountDays != null">#{discountDays,jdbcType=INTEGER},</if>
             <if test="discountAmount != null">#{discountAmount,jdbcType=DECIMAL},</if>

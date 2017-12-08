@@ -219,8 +219,8 @@ public class AnalysisData implements Serializable {
     private BigDecimal totalInstorageTranitPrice;
 
     private BigDecimal totalInstoragedNum;
-
-
+    // 卖方未结算金额
+    private BigDecimal unsettleSellerMoneyAmount;
     private BigDecimal totalInstoragedNumMoney;
 
     private BigDecimal totalInstorageRemainNum;//剩余库存数量

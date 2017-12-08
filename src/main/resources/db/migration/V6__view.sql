@@ -98,7 +98,9 @@ group by  orderId, hsId;
 --1007	还款本金合计	totalRepaymentPrincipeAmount	【还款】		汇总：还款本金
 --1008	还款利息合计	totalrepaymentInterest	【还款】		汇总：还款利息
 --1011	还款服务费合计	totalServiceCharge	【还款】		汇总：还款服务费
---10  还款瑞茂通服务费合计 totalccsPayServiceCharge  【还款】    汇总：还款服务费
+--10  瑞茂通服务费合计 totalccsPayServiceCharge  【还款】    汇总：还款服务费
+--10  瑞茂通服务费待还状态 totalccsPayUnpromiseServiceCharge  
+
 
 create view v_1007 as
 select
@@ -107,7 +109,8 @@ base.hsId,
 ROUND(sum(IFNULL(map.principal,0.00)),2) as totalRepaymentPrincipeAmount,
 ROUND(sum(IFNULL(map.interest,0.00)),2) as  totalRepaymentInterest,
 ROUND(sum(IFNULL(map.fee,0.00)),2) as  totalServiceCharge,
-ROUND(sum(case when map.ccsPay=1 then map.fee else 0 end) ,2)  as  totalccsPayServiceCharge
+ROUND(sum(case when map.ccsPay=1 then map.fee else 0 end) ,2)  as  totalccsPayServiceCharge,
+ROUND(sum(case when map.ccsPay=1 and huankuan.promise=false  then map.fee else 0 end) ,2)  as  totalccsPayUnpromiseServiceCharge
 from base
      left join hs_same_huankuan huankuan on base.hsId=huankuan.hsId and huankuan.deleted=0
      left join hs_same_huankuan_map map on huankuan.id= map.huankuanId and  map.deleted=0
@@ -323,6 +326,7 @@ group by orderId,hsId;
 --1032	监管费	superviseFee	【费用】	毛利表	汇总：费用科目 = “监管费”的费用金额
 --1033	业务费	businessFee	【费用】	毛利表	汇总：费用科目 = “业务费”的费用金额
 --1034	销售费用总额	salesFeeAmount	【1028】含税汽运费 + 【1029】含税水运费 + 【1030】含税火运费 + 【1031】监管费 + 【1032】管理费 + 【1033】业务费
+--  forCapitalPressure  【费用】对方单位 = “上游供应商ID”的费用金额
 create view v_1027 as
 select
 base.orderId,
@@ -423,6 +427,7 @@ group by OrderId,hsId;
 --2005退上游保证金	totalRefundUpBail	【保证金】		汇总： 保证金类型 = “退上游保证金”的保证金金额
 --2006付下游保证金	totalPayDownBail	【保证金】		汇总： 保证金类型 = “付下游保证金”的保证金金额
 --2007下游退保证金	totalRefundDownBail	【保证金】		汇总： 保证金类型 = “下游退保证金”的保证金金额
+
 create view v_2004 as
 select
 base.orderId,
@@ -722,67 +727,83 @@ from base
      left join v_1007 on base.hsId=v_1007.hsId
      left join v_1009 on base.hsId=v_1009.hsId;
 
+-- 1077  CCS付外部资金成本      【1008】还款利息合计 + 汇总：客户/ccs还服务费= “ccs还服务费”的服务费  -【1010】登记未还款利息 -汇总：客户/ccs还服务费= “ccs还服务费”且还款状态=“未还款”的服务费  0     
+create view v_1077 as
+select 
+base.orderId,
+base.hsId,
+v_1007.totalRepaymentInterest  + v_1007.totalccsPayServiceCharge 
+- v_1009.totalUnpayInterest
+- v_1007.totalccsPayUnpromiseServiceCharge  as  ccsExternalCapitalCost
+from  base
+left join v_1007 on base.hsId=v_1007.hsId
+left join v_1009 on base.hsId=v_1009.hsId;
 
-
---1048 ownerCapitalPaymentAmount 自由资金付款金额【1003】付款金额合计 - 【1047】外部资金付款金额 + 【1008】还款利息合计（——ccs支付服务费）  -【1010】登记未还款利息 - 【2008】上游保证金余额-【1002】付贸易差价金额
+--1048 ownerCapitalPaymentAmount 自由资金付款金额【1003】付款金额合计 - 【1047】外部资金付款金额 + 【1077】CCS付外部资金成本 + 【1008】还款利息合计（——ccs支付服务费）  -【1010】登记未还款利息 - 【2008】上游保证金余额-【1002】付贸易差价金额
 create view v_1048_ying as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)-
-IFNULL(v_1047.externalCapitalPaymentAmount,0.00)+
-IFNULL(v_1007.totalRepaymentInterest,0.00)+
-IFNULL(v_1007.totalccsPayServiceCharge,0.00)+
-IFNULL(v_1009.totalUnpayInterest,0.00)-
-IFNULL(v_2008.balanceUpstreamBail ,0.00)-
-IFNULL(v_1001.totalTradeGapFee ,0.00)
- ,2)as ownerCapitalPaymentAmount
-from base 
+ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)+
+IFNULL(v_1077.ccsExternalCapitalCost,0.00)
+-IFNULL(v_1047.externalCapitalPaymentAmount ,0.00)
+-IFNULL(v_1001.totalTradeGapFee,0.00),2)
+as ownerCapitalPaymentAmount
+from base
      left join v_1001 on base.hsId=v_1001.hsId
-     left join v_1047 on base.hsId=v_1047.hsId
-     left join v_1007 on base.hsId=v_1007.hsId
-     left join v_1009 on base.hsId=v_1009.hsId
-     left join v_2008 on base.hsId=v_2008.hsId;
+     left join v_1047 on base.hsId=v_1047.hsId 
+     left join v_1077 on base.hsId=v_1077.hsId;
 
 
---1048【1003】付款金额合计 - 【1047】外部资金付款金额-1002付贸易逆差
+--1048【1003】付款金额合计  + 【1077】CCS付外部资金成本 - 【1047】外部资金付款金额-1002付贸易逆差
 create view v_1048_cang as
 select
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)-IFNULL(v_1047.externalCapitalPaymentAmount ,0.00)-IFNULL(v_1001.totalTradeGapFee,0.00),2)as ownerCapitalPaymentAmount
+ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)+
+IFNULL(v_1077.ccsExternalCapitalCost,0.00)
+-IFNULL(v_1047.externalCapitalPaymentAmount ,0.00)
+-IFNULL(v_1001.totalTradeGapFee,0.00),2)
+as ownerCapitalPaymentAmount
 from base
      left join v_1001 on base.hsId=v_1001.hsId
-     left join v_1047 on v_1001.hsId=v_1047.hsId; 
+     left join v_1047 on base.hsId=v_1047.hsId 
+     left join v_1077 on base.hsId=v_1077.hsId;
 
-
---1049  上游资金占压(供应商)	upstreamCapitalPressure	计算	备查账／占压表	IF（本核算月卖方结算=null？（【1047】外部资金付款金额 + 【1048】自有资金付款金额 - 【1046】采购货款总额：
---（【1047】外部资金付款金额 + 【1048】自有资金付款金额 - 【1046】采购货款总额-【1002】付贸易差价金额）-【1001】付运费金额）
+--1049  【付款】汇总收款单位 = “上游供应商ID”的付款金额  +【1077】CCS付外部资金成本 - 【1046】采购货款总额 - 【费用】对方单位 = “上游供应商ID”的费用金额  - 【2008】上游保证金余额
 create view v_1049_ying as
 select
 base.orderId,
 base.hsId,
-IFNULL(v_1001.forCapitalPressure,0.00) -IFNULL(v_1046_ying.purchaseCargoAmountOfMoney,0.00)- IFNULL(v_1027.forCapitalPressure,0.00)
+IFNULL(v_1001.forCapitalPressure,0.00)+
+IFNULL(v_1077.ccsExternalCapitalCost,0.00)-
+IFNULL(v_1046_ying.purchaseCargoAmountOfMoney,0.00)-
+IFNULL(v_1027.forCapitalPressure,0.00)-
+IFNULL(v_2008.balanceUpstreamBail,0.00)
 as upstreamCapitalPressure
 from base 
 left join v_1046_ying on base.hsId= v_1046_ying.hsId
 left join v_1027  on base.hsId=v_1027.hsId
-left join v_1001  on base.hsId=v_1001.hsId ;
+left join v_1001  on base.hsId=v_1001.hsId 
+left join v_2008  on base.hsId=v_2008.hsId 
+left join v_1077 on base.hsId=v_1077.hsId;
 
 
-
-
+-- 【付款】汇总收款单位 = “上游供应商ID”的付款金额  +【1077】CCS付外部资金成本 - 【1046】采购货款总额 - 【费用】对方单位 = “上游供应商ID”的费用金额
 create view v_1049_cang as
 select
 base.orderId,
 base.hsId,
-IFNULL(v_1001.forCapitalPressure,0.00) -IFNULL(v_1046_cang.purchaseCargoAmountOfMoney,0.00)- IFNULL(v_1027.forCapitalPressure,0.00)
+IFNULL(v_1001.forCapitalPressure,0.00) +
+IFNULL(v_1077.ccsExternalCapitalCost,0.00)-
+IFNULL(v_1046_cang.purchaseCargoAmountOfMoney,0.00)- 
+IFNULL(v_1027.forCapitalPressure,0.00)
 as upstreamCapitalPressure
 from base 
 left join v_1046_cang on base.hsId= v_1046_cang.hsId
 left join v_1027  on base.hsId=v_1027.hsId
-left join v_1001  on base.hsId=v_1001.hsId ;
-
+left join v_1001  on base.hsId=v_1001.hsId 
+left join v_1077 on base.hsId=v_1077.hsId;
 
 
 --1050 下游资金占压	downstreamCapitalPressure	计算	备查账／占压表	【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额
@@ -1113,56 +1134,48 @@ from base
      left join v_3003  on v_1064_cang.hsId=v_3003.hsId;
 
 
---1066	自有资金占压	ownerCapitalPressure	【1048】自有资金付款金额 - 【1046】采购货款总额 - 【1034】销售费用总额
+--1066	自有资金占压	ownerCapitalPressure	【1049】资金占压（供应商）- 【1047】外部资金付款金额
 create view v_1066_cang as
 select
-DISTINCT
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1048_cang.ownerCapitalPaymentAmount,0.00)
--IFNULL(v_1046_cang.purchaseCargoAmountofMoney ,0.00)
--IFNULL(v_1027.salesFeeAmount ,0.00)
-,2)
+IFNULL(v_1049_cang.upstreamCapitalPressure,0.00)-
+IFNULL(v_1047.externalCapitalPaymentAmount,0.00)
 as ownerCapitalPressure
 from  base
-     left join v_1046_cang on base.hsId=v_1046_cang.hsId and base.orderId=v_1046_cang.orderId
-     left join v_1027 on base.hsId and v_1027.hsId  and base.orderId=v_1027.orderId
-     left join v_1048_cang on base.hsId=v_1048_cang.hsId and base.orderId=v_1048_cang.orderId;
+     left join v_1049_cang on base.hsId=v_1049_cang.hsId and base.orderId=v_1049_cang.orderId
+     left join v_1047 on base.hsId=v_1047.hsId and base.orderId=v_1047.orderId;
 
 
 
 create view v_1066_ying as
 select
-DISTINCT
 base.orderId,
 base.hsId,
-ROUND(IFNULL(v_1048_ying.ownerCapitalPaymentAmount,0.00)
--IFNULL(v_1046_ying.purchaseCargoAmountofMoney ,0.00)
--IFNULL(v_1027.salesFeeAmount ,0.00)
-,2)
+IFNULL(v_1049_ying.upstreamCapitalPressure,0.00)-
+IFNULL(v_1047.externalCapitalPaymentAmount,0.00)
 as ownerCapitalPressure
 from  base
-     left join v_1046_ying on base.hsId=v_1046_ying.hsId and base.orderId=v_1046_ying.orderId
-     left join v_1027 on base.hsId and v_1027.hsId  and base.orderId=v_1027.orderId
-     left join v_1048_ying on base.hsId=v_1048_ying.hsId and base.orderId=v_1048_ying.orderId;
+     left join v_1049_ying on base.hsId=v_1049_ying.hsId and base.orderId=v_1049_ying.orderId
+     left join v_1047 on base.hsId=v_1047.hsId and base.orderId=v_1047.orderId;
 
 
 
 --1067	下游已结算未回款金额	settledDownstreamHuikuanMoneny	计算	占压表	【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款
+-- IF（汇总：【卖方（下游）结算】结算金额>【1013】已回款金额？【卖方（下游）结算】结算金额-【1013】已回款金额：0）
 create view v_2010_cang as
 select
 base.orderId,
 base.hsId,
 case when
-v_1024.totalBuyerMoney>v_1013.totalHuikuanPaymentMoney 
-THEN
-ROUND(IFNULL(v_1024.totalBuyerMoney ,0.00)-IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00),2)
+seller.orderId is not null and seller.hsId is not null and seller.amount>v_1013.totalHuikuanPaymentMoney 
+ then seller.amount-v_1013.totalHuikuanPaymentMoney 
 else
 0.00
 end
 as settledDownstreamHuikuanMoneny
 from base 
-     left join v_1024 on base.hsId=v_1024.hsId
+     left join hs_same_settle_seller seller on base.hsId=seller.Id
      left join v_1013 on base.hsId=v_1013.hsId;
 
 -- 【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款
@@ -1236,6 +1249,22 @@ IFNULL(v_1075_fee.amount,0.00)- IFNULL(v_1076_invoice.unInvoicePrice,0.00) as  u
 from base 
 left join v_1075_fee on base.hsId=v_1075_fee.hsId
 left join v_1076_invoice on  base.hsId=v_1076_invoice.hsId  and  v_1075_fee.otherPartyId=v_1076_invoice.openCompanyId;
+
+
+
+-- IF（【3007】已出库金额>【1013】已回款金额？【3007】已出库金额-【1013】已回款金额：0）
+create view v_1078 as
+select
+base.orderId,
+base.hsId,
+case when
+ v_3003.totalOutstorageMoney > v_1013.totalHuikuanPaymentMoney 
+then v_3003.totalOutstorageMoney-v_1013.totalHuikuanPaymentMoney
+else  0
+end  as  unsettleSellerMoneyAmount
+from base 
+left join v_3003 on  base.hsId= v_3003.hsId
+left join v_1013 on  base.hsId= v_1013.hsId ;
 
 
 
