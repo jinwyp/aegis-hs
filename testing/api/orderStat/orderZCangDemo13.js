@@ -108,7 +108,7 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
                     "contractBaseInterest" : 0.15,
                     "expectHKDays" : 45,
                     "tradeAddPrice" : "2",
-                    "weightedPrice" : 595
+                    "weightedPrice" : 527.110038053065
                 }
             )
             .expect('Content-Type', /json/)
@@ -746,32 +746,32 @@ describe('仓押订单 统计范例13 赵征提供 11.24日', function () {
             })
     })
 
-    it(`运输方结算单 - 新建运输方结算单1 POST: /api/business/cang/${orderId}/settletraffic`, function (done) {
-        server.post(`/api/business/cang/${orderId}/settletraffic`)
-            .set('Authorization', Authorization)
-            .set(config.headers)
-            .send(
-                {
-                    "hsId" : unitId,
-                    "settleDate" : "2017-07-10 00:00:00",
-                    "amount" : "14475.4",
-                    "money" : "100000",
-                    "trafficCompanyId" : 32,
-                    "orderId" : orderId
-                }
-            )
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) return done(err)
-                expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
-                expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
-                expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.settleDate).to.include('2017')
-
-                done()
-            })
-    })
+    // it(`运输方结算单 - 新建运输方结算单1 POST: /api/business/cang/${orderId}/settletraffic`, function (done) {
+    //     server.post(`/api/business/cang/${orderId}/settletraffic`)
+    //         .set('Authorization', Authorization)
+    //         .set(config.headers)
+    //         .send(
+    //             {
+    //                 "hsId" : unitId,
+    //                 "settleDate" : "2017-07-10 00:00:00",
+    //                 "amount" : "14475.4",
+    //                 "money" : "100000",
+    //                 "trafficCompanyId" : 32,
+    //                 "orderId" : orderId
+    //             }
+    //         )
+    //         .expect('Content-Type', /json/)
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //             if (err) return done(err)
+    //             expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
+    //             expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
+    //             expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
+    //             expect(res.body.data.settleDate).to.include('2017')
+    //
+    //             done()
+    //         })
+    // })
 
 
 
