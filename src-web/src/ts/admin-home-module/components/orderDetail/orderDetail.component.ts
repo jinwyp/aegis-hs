@@ -50,6 +50,7 @@ export class OrderDetailComponent implements OnInit {
 
     userList : any[] = []
     unitListStat : any[] = []
+    partyCompanyStat : any[] = []
 
 
     pagination: any = {
@@ -119,6 +120,8 @@ export class OrderDetailComponent implements OnInit {
                 this.unitListStat = data.data
 
                 const tempTotal : any = {
+                    partyList : [],
+
                     hsMonth : '汇总',
 
                     totalInstorageNum : 0,
@@ -147,6 +150,7 @@ export class OrderDetailComponent implements OnInit {
                     upstreamCapitalPressure : 0,
                     downstreamCapitalPressure : 0,
 
+                    totalStockMoney : 0,
 
                     tradingCompanyInTypeNum : 0,
                     tradingCompanyInTpeMoneyAmount : 0,
@@ -161,6 +165,8 @@ export class OrderDetailComponent implements OnInit {
                     totalHuikuanPaymentMoney : 0
                 }
 
+                const tempObject : any = {}
+
                 if (Array.isArray(data.data)) {
 
                     data.data.forEach( unit => {
@@ -168,6 +174,7 @@ export class OrderDetailComponent implements OnInit {
                         tempTotal.totalInstorageNum = tempTotal.totalInstorageNum + unit.totalInstorageNum || 0
                         tempTotal.totalOutstorageNum = tempTotal.totalOutstorageNum + unit.totalOutstorageNum || 0
                         tempTotal.totalStockNum = tempTotal.totalStockNum + unit.totalStockNum || 0
+                        tempTotal.totalStockMoney = tempTotal.totalStockMoney + unit.totalStockMoney || 0
 
                         tempTotal.totalFayunNum = tempTotal.totalFayunNum + unit.totalFayunNum || 0
                         tempTotal.totalArriveNum = tempTotal.totalArriveNum + unit.totalArriveNum || 0
@@ -202,11 +209,46 @@ export class OrderDetailComponent implements OnInit {
                         tempTotal.ownerCapitalPaymentAmount = tempTotal.ownerCapitalPaymentAmount + unit.ownerCapitalPaymentAmount
                         tempTotal.totalHuikuanPaymentMoney = tempTotal.totalHuikuanPaymentMoney + unit.totalHuikuanPaymentMoney
 
+
+                        // 处理参与方
+
+                        if (Array.isArray(unit.capitalPressureList)) {
+                            unit.capitalPressureList.forEach( (company, index) => {
+
+                                if (typeof tempObject['party' + company.receiveCompanyId] === 'undefined') {
+                                    tempObject['party' + company.receiveCompanyId] = {
+                                        id : company.receiveCompanyId,
+                                        partiesCapitalPressure : Number(company.partiesCapitalPressure) || 0,
+                                        partyList : [company]
+                                    }
+
+
+                                } else {
+                                    tempObject['party' + company.receiveCompanyId].partiesCapitalPressure = tempObject['party' + company.receiveCompanyId].partiesCapitalPressure + Number(company.partiesCapitalPressure) || 0
+                                    tempObject['party' + company.receiveCompanyId].partyList.push(company)
+                                }
+                            })
+                        }
+
+
                     })
 
                 }
 
                 this.unitListStat.push(tempTotal)
+
+
+                console.log('tempObject', tempObject)
+
+                for (const prop in tempObject) {
+                    if (tempObject.hasOwnProperty(prop)) {
+                        tempObject[prop].partyList.push({
+                            partiesCapitalPressure : tempObject[prop].partiesCapitalPressure
+                        })
+                        this.partyCompanyStat.push(tempObject[prop])
+
+                    }
+                }
             },
             error => {this.httpService.errorHandler(error) }
         )
