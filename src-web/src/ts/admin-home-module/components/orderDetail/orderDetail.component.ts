@@ -51,7 +51,7 @@ export class OrderDetailComponent implements OnInit {
     userList : any[] = []
     unitListStat : any[] = []
     partyCompanyStat : any[] = []
-
+    rowspan : number = 4
 
     pagination: any = {
         pageSize : 20,
@@ -255,6 +255,8 @@ export class OrderDetailComponent implements OnInit {
 
                     }
                 }
+
+                this.rowspan = this.rowspan + this.partyCompanyStat.length
             },
             error => {this.httpService.errorHandler(error) }
         )

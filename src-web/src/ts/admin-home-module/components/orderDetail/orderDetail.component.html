@@ -295,10 +295,16 @@
 
 
                         <tr >
-                            <td rowspan="4">资金占压信息</td>
+                            <td [attr.rowspan]="rowspan">资金占压信息</td>
                             <td>上游资金占压</td>
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.upstreamCapitalPressure | number }}</td>
                         </tr>
+
+                        <tr *ngFor="let party of partyCompanyStat; trackBy: trackByFn">
+                            <td>参与方 {{party.id | findKey : partyObject.normal : 'name' }} 资金占压</td>
+                            <td *ngFor="let company of party.partyList; trackBy: trackByFn"> {{company.partiesCapitalPressure | number }}</td>
+                        </tr>
+
                         <tr >
                             <td>下游资金占压</td>
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.downstreamCapitalPressure | number }}</td>
@@ -311,11 +317,11 @@
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> <span *ngIf="businessType==='cang'"> {{unit.totalStockMoney | number }} </span></td>
                         </tr>
 
-                        <tr *ngFor="let party of partyCompanyStat; trackBy: trackByFn">
-                            <td>资金占压信息</td>
-                            <td>参与方 {{party.id | findKey : partyObject.normal : 'name' }} 资金占压</td>
-                            <td *ngFor="let company of party.partyList; trackBy: trackByFn"> {{company.partiesCapitalPressure | number }}</td>
-                        </tr>
+                        <!--<tr *ngFor="let party of partyCompanyStat; trackBy: trackByFn">-->
+                            <!--<td>资金占压信息</td>-->
+                            <!--<td>参与方 {{party.id | findKey : partyObject.normal : 'name' }} 资金占压</td>-->
+                            <!--<td *ngFor="let company of party.partyList; trackBy: trackByFn"> {{company.partiesCapitalPressure | number }}</td>-->
+                        <!--</tr>-->
 
                         <tr >
                             <td rowspan="6">进项票信息</td>
