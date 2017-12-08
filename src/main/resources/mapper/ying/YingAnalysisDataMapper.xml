@@ -839,7 +839,7 @@
         hsId,
         upstreamCapitalPressure
         from v_1049_ying
-        where base.hsId= #{hsId,jdbcType=BIGINT} and base.orderId=#{orderId,jdbcType=BIGINT }
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
     <select id="findOneV1049cang" resultType="com.yimei.hs.ying.entity.AnalysisData">

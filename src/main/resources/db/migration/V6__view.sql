@@ -690,15 +690,21 @@ from base
 left join v_3001 on base.hsId =v_3001.hsId;
 
 
+-- IF（【3002】入库总金额>0?【1046】采购货款总额 + 【1045】瑞茂通总收益+【1068】费用及补税 : 0）
 create view v_1044_cang as
 select
 base.orderId,
 base.hsId,
-v_1046_cang.purchaseCargoAmountOfMoney+v_1045.ccsProfile +v_1068.feeAndAddTax as saleCargoAmountofMoney
+case when  v_3001.totalInstorageAmount>0
+then v_1046_cang.purchaseCargoAmountOfMoney+v_1045.ccsProfile +v_1068.feeAndAddTax
+else  0.00
+end
+as saleCargoAmountofMoney
 from base
      left join v_1045      on base.hsId=v_1045.hsId
      left join v_1046_cang on base.hsId=v_1046_cang.hsId
-     left join v_1068 on base.hsId=v_1068.hsId;
+     left join v_1068 on base.hsId=v_1068.hsId
+     left join v_3001 on base.hsId=v_3001.hsId;
 
 
 
