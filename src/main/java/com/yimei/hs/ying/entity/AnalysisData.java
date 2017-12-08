@@ -100,7 +100,7 @@ public class AnalysisData implements Serializable {
 
     private BigDecimal finalSettleAmount;
 
-    private BigDecimal saleCargoAmountofMoney;
+    private BigDecimal saleCargoAmountOfMoney;
 
     private BigDecimal tradingCompanyAddMoney;
 

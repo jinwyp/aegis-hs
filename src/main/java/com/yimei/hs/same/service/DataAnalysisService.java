@@ -177,7 +177,7 @@ public class DataAnalysisService {
             setUnsettlerBuyerMoneyAmount(yingAnalysisDatav1041.getUnsettlerBuyerMoneyAmount());
             setUnsettlerBuyerNumber(yingAnalysisDatav1041.getUnsettlerBuyerNumber());
             setTradingCompanyAddMoney(yingAnalysisDatav1041.getTradingCompanyAddMoney());
-            setSaleCargoAmountofMoney(yingAnalysisDatav1041.getSaleCargoAmountofMoney());
+            setSaleCargoAmountOfMoney(yingAnalysisDatav1041.getSaleCargoAmountOfMoney());
             setCcsProfile(yingAnalysisDatav1045.getCcsProfile());
             setPurchaseCargoAmountOfMoney(yingAnalysisDatav1046.getPurchaseCargoAmountOfMoney());
             setExternalCapitalPaymentAmount(yingAnalysisDatav1047.getExternalCapitalPaymentAmount());
@@ -190,7 +190,7 @@ public class DataAnalysisService {
             setUnInvoicedAmountofMoney(yingAnalysisDatav1052.getUnInvoicedAmountofMoney());
             setYingPrePayment(yingAnalysisDatav1054.getYingPrePayment());
             setSettleGrossProfileNum(yingAnalysisDatav1041.getFinalSettleAmount());
-            setSaleIncludeTaxTotalAmount(yingAnalysisDatav1041.getSaleCargoAmountofMoney());
+            setSaleIncludeTaxTotalAmount(yingAnalysisDatav1041.getSaleCargoAmountOfMoney());
             setTradeCompanyAddMoney(yingAnalysisDatav1058.getTradeCompanyAddMoney());
             setWithoutTaxIncome(yingAnalysisDatav1059.getWithoutTaxIncome());
             setWithoutTaxCost(yingAnalysisDatav1060.getWithoutTaxCost());
@@ -396,7 +396,7 @@ public class DataAnalysisService {
             setUnsettlerBuyerMoneyAmount(cangAnalysisDatav1041.getUnsettlerBuyerMoneyAmount());
             setUnsettlerBuyerNumber(cangAnalysisDatav1041.getUnsettlerBuyerNumber());
             setTradingCompanyAddMoney(cangAnalysisDatav1041.getTradingCompanyAddMoney());
-            setSaleCargoAmountofMoney(cangAnalysisDatav1044.getSaleCargoAmountofMoney());
+            setSaleCargoAmountOfMoney(cangAnalysisDatav1044.getSaleCargoAmountOfMoney());
             setCcsProfile(cangAnalysisDatav1045.getCcsProfile());
             setPurchaseCargoAmountOfMoney(cangAnalysisDatav1046.getPurchaseCargoAmountOfMoney());
             setExternalCapitalPaymentAmount(cangAnalysisDatav1047.getExternalCapitalPaymentAmount());

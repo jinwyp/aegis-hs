@@ -125,7 +125,7 @@ public class SettleSellerService {
                 settleSellerInfo.setOrderId(orderId);
                 settleSellerInfo.setHsMonth(hsMonth);
 
-                settleSellerInfo.setPurchaseCargoAmountOfMoney(yingAnalysisDataMapper.findOneV1044cang(orderId, hsId).getSaleCargoAmountofMoney());
+                settleSellerInfo.setPurchaseCargoAmountOfMoney(yingAnalysisDataMapper.findOneV1044cang(orderId, hsId).getSaleCargoAmountOfMoney());
                 settleSellerInfo.setTotalBuyerNums(yingAnalysisDataMapper.findOneV1024(orderId, hsId).getTotalBuyerNums());
                 List<Huikuan> huikuans = huikuanMapper.loadAll(orderId);
                 if (huikuans != null && huikuans.size() > 0) {
