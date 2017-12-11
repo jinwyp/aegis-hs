@@ -392,7 +392,7 @@ then detail.priceAndTax else 0 end
 
 ) as invoicedMoneyAmount,
 
-sum(detail.cargoAmount) as forunInvoicedAmount
+sum(detail.priceAndTax) as forunInvoicedAmount
 from hs_same_invoice_detail detail
      inner join hs_same_invoice invoice on detail.invoiceId= invoice.id
      inner join hs_same_order orders on invoice.orderId=orders.id
@@ -598,33 +598,22 @@ left join v_3014 on base.hsId=v_3014.hsId;
 --1040 核算结算量  finalSettleAmount
 --1041	贸易公司加价	tradingCompanyAddMoney
 --1042	买方未结算数量	unsettlerBuyerNumber
---1043	卖方未结算金额	unsettlerBuyerMoneyAmount
+--1043	买方未结算金额	unsettlerBuyerMoneyAmount
 --1044	销售货款总额	saleCargoAmountofMoney
 create view v_1041_cang as
 select
 base.orderId,
 base.hsId,
 ROUND(IFNULL(v_3001.totalInstorageNum ,0.00),2)as finalSettleAmount,
-
-case when 
-        IFNULL(v_3001.totalInstorageNum ,0.00)>IFNULL(v_1024.totalBuyerNums ,0.00)
-then ROUND(IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums ,0.00),2)
-else 0.00  
-end  as  unsettlerBuyerNumber,
-
 ROUND(IFNULL(v_3001.totalInstorageNum ,0.00) * IFNULL(config.tradeAddPrice ,0.00),2)as tradingCompanyAddMoney,
-
-case when IFNULL(v_3003.totalOutstorageMoney,0.00)>IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00)
-then
-ROUND(IFNULL(v_3003.totalOutstorageMoney,0.00)-IFNULL(v_1013.totalHuikuanPaymentMoney ,0.00),2)
-else 0.00
-end as unsettlerBuyerMoneyAmount
+ROUND(IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums ,0.00),2) as  unsettlerBuyerNumber,
+ROUND( ROUND(IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums ,0.00),2)* IFNULL(config.weightedPrice,0.00),2)  as unsettlerBuyerMoneyAmount
 from base
 left join  v_3001 on base.hsId =v_3001.hsId
 left join v_3003 on base.hsId=v_3003.hsId
 left join v_1013 on base.hsId=v_1013.hsId
-     left join v_1024 on base.hsId=v_1024.hsId
-     left join hs_same_order_config config on config.id=base.hsId;
+left join v_1024 on base.hsId=v_1024.hsId
+left join hs_same_order_config config on config.id=base.hsId;
 
 
 
