@@ -173,7 +173,7 @@ export class OrderDetailComponent implements OnInit {
                 if (Array.isArray(data.data)) {
 
                     data.data.forEach( unit => {
-                        console.log(unit)
+
                         tempTotal.totalInstorageNum = tempTotal.totalInstorageNum + unit.totalInstorageNum || 0
                         tempTotal.totalOutstorageNum = tempTotal.totalOutstorageNum + unit.totalOutstorageNum || 0
                         tempTotal.totalStockNum = tempTotal.totalStockNum + unit.totalStockNum || 0
@@ -243,8 +243,6 @@ export class OrderDetailComponent implements OnInit {
 
                 this.unitListStat.push(tempTotal)
 
-
-                console.log('tempObject', tempObject)
 
                 for (const prop in tempObject) {
                     if (tempObject.hasOwnProperty(prop)) {
