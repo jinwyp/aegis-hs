@@ -163,7 +163,7 @@ public class HuikuanService {
         List<Huikuan> unfinished = getALl(orderId);
 //        huikuanMapper.getUnfinshedByOrderId(orderId);
 
-        Iterator<Fukuan> it = unfinishedFukuan.iterator();
+//        Iterator<Fukuan> it = unfinishedFukuan.iterator();
 
         toAdd= toCompare(toAdd, unfinishedFukuan, unfinished);
 //        Fukuan last = null;

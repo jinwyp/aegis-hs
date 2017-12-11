@@ -607,7 +607,7 @@ base.hsId,
 ROUND(IFNULL(v_3001.totalInstorageNum ,0.00),2)as finalSettleAmount,
 ROUND(IFNULL(v_3001.totalInstorageNum ,0.00) * IFNULL(config.tradeAddPrice ,0.00),2)as tradingCompanyAddMoney,
 ROUND(IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums ,0.00),2) as  unsettlerBuyerNumber,
-ROUND( ROUND(IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums ,0.00),2)* IFNULL(config.weightedPrice,0.00),2)  as unsettlerBuyerMoneyAmount
+ROUND( ROUND(IFNULL(v_3001.totalInstorageNum ,0.00)-IFNULL(v_1024.totalBuyerNums ,0.00),2)* IFNULL(v_3001.instorageUnitPrice,0.00),2)  as unsettlerBuyerMoneyAmount
 from base
 left join  v_3001 on base.hsId =v_3001.hsId
 left join v_3003 on base.hsId=v_3003.hsId
