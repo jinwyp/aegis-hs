@@ -270,8 +270,8 @@
                                     <td> <p class="card-text" title="【1044】销售货款总额 - 【1013】已回款金额 +【2009】下游保证金余额"> {{ unitStatistics?.downstreamCapitalPressure | number }}</p> </td>
                                     <td> <p class="card-text" title="【1050】下游占压总额-【1043】买方未结算金额+【1054】预收款">{{ unitStatistics?.settledDownstreamHuikuanMoneny | number }}</p> </td>
                                     <td>
-                                        <p class="card-text" title="【1042】买方未结算数量 * 【核算月配置】加权单价"> {{ unitStatistics?.unsettlerBuyerMoneyAmount | number }}</p>
-                                        <p class="card-text" title="IF（【3007】已出库金额>【1013】已回款金额？【3007】已出库金额-【1013】已回款金额：0）"> {{ unitStatistics?.unsettleSellerMoneyAmount | number }}</p>
+                                        <p *ngIf="businessType==='ying'" class="card-text" title="【1042】买方未结算数量 * 【核算月配置】加权单价"> {{ unitStatistics?.unsettlerBuyerMoneyAmount | number }}</p>
+                                        <p *ngIf="businessType==='cang'" class="card-text" title="IF（【3007】已出库金额>【1013】已回款金额？【3007】已出库金额-【1013】已回款金额：0）"> {{ unitStatistics?.unsettleSellerMoneyAmount | number }}</p>
                                     </td>
                                     <td>
                                         <p *ngIf="businessType==='ying'" class="card-text" title="IF（【1013】已回款金额>【1025】买方已结算金额 ）？【1013】已回款金额 -【1025】买方已结算金额-【2009】下游保证金余额：0 -【2009】下游保证金余额">{{ unitStatistics?.yingPrePayment | number }}</p>
