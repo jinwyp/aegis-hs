@@ -374,6 +374,7 @@ export class InvoiceComponent implements OnInit {
             formValid = false
         }
 
+
         if (this.invoiceDetailFormType === 2) {
             if (!this.invoiceDetailForm.value.invoiceNumber) {
                 this.invoiceDetailFormError.invoiceNumber = this.invoiceDetailFormValidationMessages.invoiceNumber.required
@@ -395,7 +396,7 @@ export class InvoiceComponent implements OnInit {
                 formValid = false
             }
 
-            if (Number(this.invoiceDetailForm.value.amount) + Number(this.invoiceDetailForm.value.taxAmount) !== Number(this.invoiceDetailForm.value.priceAndTax)) {
+            if (this.accAdd(Number(this.invoiceDetailForm.value.amount), Number(this.invoiceDetailForm.value.taxAmount)) !== Number(this.invoiceDetailForm.value.priceAndTax)) {
                 this.invoiceDetailFormError.priceAndTax = this.invoiceDetailFormValidationMessages.priceAndTax.wrong
                 formValid = false
             }
@@ -417,6 +418,7 @@ export class InvoiceComponent implements OnInit {
                 this.invoiceDetailFormError.sheetAmount = this.invoiceDetailFormValidationMessages.sheetAmount.required
                 formValid = false
             }
+
 
             if (this.accAdd(Number(this.invoiceDetailForm.value.amount), Number(this.invoiceDetailForm.value.taxAmount)) !== Number(this.invoiceDetailForm.value.priceAndTax)) {
                 this.invoiceDetailFormError.priceAndTax = this.invoiceDetailFormValidationMessages.priceAndTax.wrong
