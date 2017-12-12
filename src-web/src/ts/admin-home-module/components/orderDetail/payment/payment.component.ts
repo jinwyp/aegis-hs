@@ -174,7 +174,9 @@ export class PaymentComponent implements OnInit {
             'payDateStart'    : [null ],
             'payDateEnd'    : [null ],
             'receiveCompanyId'    : ['' ],
+            'capitalId'    : ['' ],
             'payUsage'    : ['' ],
+            'payMode'    : ['' ],
             'payAmount'    : ['' ]
         } )
     }
@@ -232,6 +234,7 @@ export class PaymentComponent implements OnInit {
             'receiveCompanyId' : [this.currentOrder.upstreamId, [Validators.required]],
 
             'payUsage'  : ['', [Validators.required]],
+            'payMode'    : ['', [Validators.required ] ],
             'payAmount' : ['', [Validators.required]],
 
             'amount'      : ['', [Validators.required]],
@@ -334,6 +337,7 @@ export class PaymentComponent implements OnInit {
                 'receiveCompanyId'    : this.currentOrder.upstreamId,
 
                 'payUsage'    : '',
+                'payMode'    : '',
                 'payAmount'    : '',
 
                 'amount'    : '',

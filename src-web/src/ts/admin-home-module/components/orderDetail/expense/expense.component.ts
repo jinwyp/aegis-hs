@@ -168,7 +168,7 @@ export class ExpenseComponent implements OnInit {
         this.expenseForm = this.fb.group({
             'hsId'    : ['', [Validators.required ] ],
             'name'    : ['', [Validators.required ] ],
-            'settleDate'    : [null, [Validators.required ] ],
+            'settleDate'    : [null ],
             'amount'    : ['', [Validators.required ] ],
             'quantity'    : ['' ],
             'otherPartyId'    : ['', [Validators.required ] ]
