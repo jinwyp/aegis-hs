@@ -2,6 +2,7 @@ package com.yimei.hs.same.entity;
 
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
+import com.yimei.hs.enums.PayMode;
 import com.yimei.hs.enums.PaymentPurpose;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,6 +38,9 @@ public class Fukuan implements Serializable {
 
     @NotNull(groups = {CreateGroup.class,UpdateGroup.class}, message = "付款用途不能为空")
     private PaymentPurpose payUsage;
+
+    @NotNull(groups = {CreateGroup.class}, message = "付款方式不能为空")
+    private PayMode payMode;
 
     @Null(groups = {UpdateGroup.class}, message = "付款金额不能更新")
     private BigDecimal payAmount;

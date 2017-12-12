@@ -1,6 +1,7 @@
 package com.yimei.hs.same.dto;
 
 import com.yimei.hs.boot.persistence.BaseFilter;
+import com.yimei.hs.enums.PayMode;
 import com.yimei.hs.enums.PaymentPurpose;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +25,7 @@ public class PageFukuanDTO extends BaseFilter<PageFukuanDTO> {
     private LocalDateTime payDate;
     private Long receiveCompanyId;
     private PaymentPurpose payUsage;
+    private PayMode payMode;
     private BigDecimal payAmount;
 
     // 回款是否完成

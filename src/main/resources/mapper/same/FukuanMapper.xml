@@ -97,6 +97,7 @@
         t1.payDate,
         t1.receiveCompanyId,
         t1.payUsage,
+        t1.payMode,
         t1.payAmount,
         t1.tsc,
         t1.tsu
@@ -108,6 +109,7 @@
             <if test="payDate!=null">and t1.payDate = #{payDate, jdbcType=TIMESTAMP}</if>
             <if test="receiveCompanyId!=null">and t1.receiveCompanyId = #{receiveCompanyId, jdbcType=BIGINT}</if>
             <if test="payUsage!=null">and t1.payUsage = #{payUsage, jdbcType=VARCHAR}</if>
+            <if test="payMode!=null">and t1.payMode = #{payMode, jdbcType=VARCHAR}</if>
             <if test="payAmount!=null">and t1.payAmount = #{payAmount, jdbcType=BIGINT}</if>
             <if test="payDateStart!=null">  <![CDATA[   AND DATE_FORMAT(t1.payDate, '%Y-%m-%d')>=  DATE_FORMAT(#{payDateStart}, '%Y-%m-%d')   ]]></if>
             <if test="payDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(t1.payDate, '%Y-%m-%d') <= DATE_FORMAT(#{payDateEnd}, '%Y-%m-%d')]]></if>
@@ -157,6 +159,7 @@
             payDate,
             receiveCompanyId,
             payUsage,
+            payMode,
             payAmount,
             tsc,
             tsu
@@ -168,6 +171,7 @@
             #{payDate,jdbcType=TIMESTAMP},
             #{receiveCompanyId,jdbcType=BIGINT},
             #{payUsage,jdbcType=VARCHAR},
+            #{payMode,jdbcType=VARCHAR},
             #{payAmount,jdbcType=DECIMAL},
             #{tsc,jdbcType=TIMESTAMP},
             current_timestamp

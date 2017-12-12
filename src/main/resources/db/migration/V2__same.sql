@@ -138,6 +138,7 @@ create table hs_same_fukuan (
   payDate datetime               not null comment '付款日期yyyy-mm-dd',
   receiveCompanyId bigint(20)    not null comment '收款单位id',
   payUsage varchar(32)           not null comment '付款用途: 货款, 贸易差价, 尾款, 运费, 保证金',
+  payMode  varchar(32)           not null comment '付款方式',
   payAmount decimal(10, 2)       not null comment '付款金额',
   deleted tinyint(1)               not null default 0 comment '是否删除',
   tsc timestamp                  not null default current_timestamp,
