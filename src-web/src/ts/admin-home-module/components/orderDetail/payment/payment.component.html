@@ -20,8 +20,9 @@
 
                 <bs-select formControlName ="receiveCompanyId" [fc]="paymentForm.get('receiveCompanyId')" [label]="'收款单位:'" [editable]="true" [dirty]="ignoreDirty" [options]="party.normal" [error]="paymentFormError.receiveCompanyId"></bs-select>
                 <bs-select formControlName="payUsage" [fc]="paymentForm.get('payUsage')" [label]="'付款用途:'" [dirty]="ignoreDirty"  [options]="purposeList" [error]="paymentFormError.payUsage"></bs-select>
+                <bs-select formControlName="payMode" [fc]="paymentForm.get('payMode')" [label]="'付款方式:'" [dirty]="ignoreDirty"  [options]="payModeList" [error]="paymentFormError.payMode"></bs-select>
+
                 <bs-text-input formControlName="payAmount" [fc]="paymentForm.get('payAmount')" [type]="'number'" [label]="'付款金额(元):'" [dirty]="ignoreDirty" [error]="paymentFormError.payAmount" (change)="changePayAmount()"></bs-text-input>
-                <!--<bs-select formControlName="payMode" [fc]="paymentForm.get('payMode')" [label]="'付款方式:'" [dirty]="ignoreDirty"  [options]="payModeList" [error]="paymentFormError.payMode"></bs-select>-->
 
                 <bs-select formControlName ="capitalId" [fc]="paymentForm.get('capitalId')" [label]="'资金方:'" [dirty]="ignoreDirty"  [options]="party.capital" [error]="paymentFormError.capitalId" [hidden]="!isAddNew"></bs-select>
 
@@ -71,6 +72,9 @@
 
                     <div class="form-row ">
                         <div class="col-6">
+                            <bs-select formControlName="payMode" [fc]="paymentSearchForm.get('payMode')" [label]="'付款方式:'" [addAllOptions]="true" [options]="payModeList"></bs-select>
+                        </div>
+                        <div class="col-6">
                             <bs-text-input formControlName="payAmount" [fc]="paymentSearchForm.get('payAmount')" [type]="'number'" [label]="'付款金额(元):'" ></bs-text-input>
                         </div>
                     </div>
@@ -94,7 +98,7 @@
                         <th>收款单位</th>
                         <th>付款用途</th>
                         <th>付款金额</th>
-                        <!--<th>付款方式</th>-->
+                        <th>付款方式</th>
 
                         <!--<th>资金方</th>-->
                         <!--<th>外部资金使用利率/天数</th>-->
@@ -111,7 +115,7 @@
                         <td> {{payment.receiveCompanyId | findKey : party.normal : 'name' }}</td>
                         <td> {{payment.payUsage | findKey : purposeList : 'name' }}</td>
                         <td> {{payment.payAmount  }}</td>
-                        <!--<td> {{payment.payMode | findKey : payModeList : 'name' }}</td>-->
+                        <td> {{payment.payMode | findKey : payModeList : 'name' }}</td>
 
                         <!--<td> {{payment.capitalId | findKey : party.normal : 'name'}}</td>-->
                         <!--<td> {{payment.useInterest }} / {{payment.useDays }} </td>-->
