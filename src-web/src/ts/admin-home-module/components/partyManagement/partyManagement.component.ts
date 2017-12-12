@@ -31,7 +31,8 @@ export class PartyManagementComponent implements OnInit {
     partyType : any [] = [
         { id : 1 , name : 'ccs账务公司'},
         { id : 2 , name : '资金方'},
-        { id : 3 , name : '外部'}
+        { id : 3 , name : '外部'},
+        { id : 4 , name : '贸易商公司'}
     ]
 
     pagination: any = {
