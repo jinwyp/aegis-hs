@@ -40,7 +40,7 @@ alter table hs_team add foreign key(deptId) references hs_dept(id);
 -- 外部客户: 上游、下游、贸易商, 运输方, 资金方, ccs账务公司
 create table hs_party (
   id bigint(20)          not null auto_increment,
-  partyType int       not null comment '1: ccs账务公司, 2: 资金方, 3: 外部',
+  partyType int       not null comment '1: ccs账务公司, 2: 资金方, 3: 外部 ,4: 贸易公司'  ,
   name varchar(128)      not null comment '客户名称',
   shortName varchar(128) not null comment '客户简称',
   PRIMARY KEY (id)
