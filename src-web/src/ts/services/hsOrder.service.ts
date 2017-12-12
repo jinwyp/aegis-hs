@@ -166,7 +166,9 @@ export class HSOrderService {
         if (query.payDateStart) { params = params.append('payDateStart', query.payDateStart)}
         if (query.payDateEnd) { params = params.append('payDateEnd', query.payDateEnd)}
         if (query.receiveCompanyId) { params = params.append('receiveCompanyId', query.receiveCompanyId)}
+        if (query.capitalId) { params = params.append('capitalId', query.capitalId)}
         if (query.payUsage) { params = params.append('payUsage', query.payUsage)}
+        if (query.payMode) { params = params.append('payMode', query.payMode)}
         if (query.payAmount) { params = params.append('payAmount', query.payAmount)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/fukuans', {params: params} )

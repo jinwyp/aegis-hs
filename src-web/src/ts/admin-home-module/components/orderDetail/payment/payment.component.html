@@ -53,24 +53,30 @@
                         <div class="col-6">
                             <bs-select formControlName="hsId" [fc]="paymentSearchForm.get('hsId')" [label]="'核算月:'" [addAllOptions]="true" [options]="unitList"></bs-select>
                         </div>
-                        <div class="col-6">
-                            <bs-select formControlName="payUsage" [fc]="paymentSearchForm.get('payUsage')" [label]="'付款用途:'" [addAllOptions]="true" [options]="purposeList"></bs-select>
-                        </div>
-                    </div>
-
-                    <div class="form-row ">
                         <div class="col-3">
                             <bs-datepicker formControlName="payDateStart" [fc]="paymentSearchForm.get('payDateStart')" [label]="'付款日期:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
                         </div>
                         <div class="col-3">
                             <bs-datepicker formControlName="payDateEnd" [fc]="paymentSearchForm.get('payDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd'"></bs-datepicker>
                         </div>
+
+                    </div>
+
+                    <div class="form-row ">
+
                         <div class="col-6">
                             <bs-select formControlName="receiveCompanyId" [fc]="paymentSearchForm.get('receiveCompanyId')" [label]="'收款单位:'" [addAllOptions]="true" [options]="party.orderIncluded"></bs-select>
+                        </div>
+                        <div class="col-6">
+                            <bs-select formControlName="capitalId" [fc]="paymentSearchForm.get('capitalId')" [label]="'资金方:'" [addAllOptions]="true" [options]="party.normal"></bs-select>
                         </div>
                     </div>
 
                     <div class="form-row ">
+
+                        <div class="col-6">
+                            <bs-select formControlName="payUsage" [fc]="paymentSearchForm.get('payUsage')" [label]="'付款用途:'" [addAllOptions]="true" [options]="purposeList"></bs-select>
+                        </div>
                         <div class="col-6">
                             <bs-select formControlName="payMode" [fc]="paymentSearchForm.get('payMode')" [label]="'付款方式:'" [addAllOptions]="true" [options]="payModeList"></bs-select>
                         </div>
@@ -100,7 +106,7 @@
                         <th>付款金额</th>
                         <th>付款方式</th>
 
-                        <!--<th>资金方</th>-->
+                        <th>资金方</th>
                         <!--<th>外部资金使用利率/天数</th>-->
 
                         <th></th>
@@ -117,7 +123,7 @@
                         <td> {{payment.payAmount  }}</td>
                         <td> {{payment.payMode | findKey : payModeList : 'name' }}</td>
 
-                        <!--<td> {{payment.capitalId | findKey : party.normal : 'name'}}</td>-->
+                        <td> {{payment.capitalId | findKey : party.normal : 'name'}}</td>
                         <!--<td> {{payment.useInterest }} / {{payment.useDays }} </td>-->
 
                         <td>

@@ -174,6 +174,7 @@ export class PaymentComponent implements OnInit {
             'payDateStart'    : [null ],
             'payDateEnd'    : [null ],
             'receiveCompanyId'    : ['' ],
+            'capitalId'    : ['' ],
             'payUsage'    : ['' ],
             'payMode'    : ['' ],
             'payAmount'    : ['' ]
