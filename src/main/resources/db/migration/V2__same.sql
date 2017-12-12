@@ -134,6 +134,7 @@ alter table hs_same_transfer add foreign key(orderId) references hs_same_order(i
 create table hs_same_fukuan (
   id bigint(20)                  not null auto_increment,
   orderId bigint(20)             not null comment '订单id, 业务线id',
+  capitalId bigint(20)           not null comment '资金方id',
   hsId bigint(20)                not null comment '核算月id',
   payDate datetime               not null comment '付款日期yyyy-mm-dd',
   receiveCompanyId bigint(20)    not null comment '收款单位id',

@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 public class PageFukuanDTO extends BaseFilter<PageFukuanDTO> {
     private Long orderId;
     private Long hsId;
+    private Long capitalId;
 
     private LocalDateTime payDate;
     private Long receiveCompanyId;
