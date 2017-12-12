@@ -159,20 +159,22 @@ create view v_1014 as
 select
 v_1001.orderId,
 v_1001.hsId,
-ROUND(IFNULL(v_1001.totalPaymentAmount,0.00)-IFNULL(v_1001.totalTradeGapFee,0.00),2) as payCargoAmount
+ROUND(IFNULL(v_1001.totalPayGoodsFee,0.00),2) as payCargoAmount
 from v_1001;
 
 --1015未回款金额
 
 create view v_1015 as
 select
-v_1014.orderId,
-v_1014.hsId,
-case  when IFNULL(v_1014.payCargoAmount,0.00) > IFNULL(v_1013.totalHuikuanPaymentMoney,0.00)
-THEN  ROUND(IFNULL(v_1014.payCargoAmount,0.00) - IFNULL(v_1013.totalHuikuanPaymentMoney,0.00),2)
-ELSE 0 end  as unpaymentMoney
-from v_1014
-     left JOIN v_1013  on v_1014.hsId = v_1013.hsId;
+base.orderId,
+base.hsId,
+case  when IFNULL(v_1001.totalPayGoodsFee,0.00)+ IFNULL(v_1001.totalPayTrafficFee,0.00)> IFNULL(v_1013.totalHuikuanPaymentMoney,0.00)
+THEN  ROUND(
+  IFNULL(v_1001.totalPayGoodsFee,0.00)+ IFNULL(v_1001.totalPayTrafficFee,0.00) -IFNULL(v_1013.totalHuikuanPaymentMoney,0.00),2)
+ELSE 0.00 end  as unpaymentMoney
+from base
+left join v_1001 on base.hsId=v_1001.hsId
+left JOIN v_1013  on base.hsId = v_1013.hsId;
 
 --1016 未回款金额预估收益
 
@@ -1180,7 +1182,7 @@ base.hsId,
 fukuan.receiveCompanyId,
 sum(fukuan.payAmount) as payAmount
 from base 
-left join hs_same_fukuan  fukuan on base.hsId=fukuan.hsId
+left join hs_same_fukuan  fukuan on base.hsId=fukuan.hsId and  fukuan.deleted=0
 group by orderId, hsId, receiveCompanyId;
 
 
@@ -1215,9 +1217,9 @@ invoice.hsId,
 invoice.openCompanyId,
 sum(IFNULL(detail.priceAndTax,0.00)) as unInvoicePrice
 from hs_same_invoice_detail detail
-     inner join hs_same_invoice invoice on detail.invoiceId= invoice.id
+     inner join hs_same_invoice invoice on detail.invoiceId= invoice.id 
      inner join hs_same_order orders on invoice.orderId=orders.id
-where detail.deleted =0 
+where detail.deleted =0  and  invoice.deleted=0
 group by orderId,hsId,openCompanyId;
 
 
