@@ -1261,10 +1261,11 @@
         union
     select fee.otherPartyId name from hs_same_fee  fee  where fee.deleted=0 and fee.otherPartyId is not null and fee.hsId= #{hsId,jdbcType=BIGINT}) tt
 
-   where name not in(
-
+   where
+   name not in
+      (select  id name  from  hs_party where partyType=4 )  and
+   name not in(
        select orders.upstreamId name from  hs_same_order orders where  orders.id= #{orderId,jdbcType=BIGINT})
-
    and name not in(
 
      select orders.downstreamId name from  hs_same_order orders where  orders.id= #{orderId,jdbcType=BIGINT})
