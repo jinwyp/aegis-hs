@@ -50,6 +50,7 @@ export class OrderListComponent implements OnInit {
 
     partyListZhangWu : any[] = []
     partyListOther : any[] = []
+    partyListMaoYi : any[] = []
     partyListFilterOther : any[] = []
     partyListObject : any = {}
 
@@ -63,7 +64,8 @@ export class OrderListComponent implements OnInit {
     // customerType : any[] = getEnum('CustomerType')
     customerType : any[] = [
         {id: 'TRAFFICKCER', name: '贸易公司'},
-        {id: 'ACCOUNTING_COMPANY', name: '账务公司'}
+        {id: 'ACCOUNTING_COMPANY', name: '账务公司'},
+        {id: 'WAIBU', name: '外部'}
     ]
 
     positionList : any[] = [
@@ -196,8 +198,11 @@ export class OrderListComponent implements OnInit {
                         if (company.partyType === 1) {
                             tempArray.push(company)
                         }
-                        if (company.partyType === 4) {
+                        if (company.partyType === 3) {
                             tempArray2.push(company)
+                        }
+                        if (company.partyType === 4) {
+                            tempArray3.push(company)
                         }
 
                     })
@@ -206,6 +211,7 @@ export class OrderListComponent implements OnInit {
                     this.partyListUpstreamAndDownstream = tempArray2
                     this.partyListZhangWu = tempArray.slice()
                     this.partyListOther = tempArray2.slice()
+                    this.partyListMaoYi = tempArray3.slice()
 
                 }
             },
@@ -526,10 +532,14 @@ export class OrderListComponent implements OnInit {
             this.partyListFilterOther = this.partyListZhangWu.slice()
         }
 
-        if (this.orderOtherPartyForm.value.custType === 'TRAFFICKCER') {
+        if (this.orderOtherPartyForm.value.custType === 'WAIBU') {
             this.partyListFilterOther = this.partyListOther.slice()
         }
-        
+
+        if (this.orderOtherPartyForm.value.custType === 'TRAFFICKCER') {
+            this.partyListFilterOther = this.partyListMaoYi.slice()
+        }
+
 
         this.partyList.forEach( (company => {
 
