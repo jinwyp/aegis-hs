@@ -71,7 +71,7 @@ create table hs_same_fee (
   name varchar(64)           not null comment '费用科目',
   amount decimal(10, 2)      not null comment '金额',
   deleted tinyint(1)         not null default 0 comment '逻辑删除',
-  settleDate datetime        not null default current_timestamp comment '结算日期 yyyy-mm-dd',
+  settleDate datetime        default current_timestamp comment '结算日期 yyyy-mm-dd',
   tsc timestamp              not null default current_timestamp,
   tsu timestamp not null default current_timestamp,
   primary key (id)
