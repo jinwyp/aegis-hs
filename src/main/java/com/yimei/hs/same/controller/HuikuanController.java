@@ -81,7 +81,7 @@ public class HuikuanController {
             @RequestBody @Validated(CreateGroup.class) Huikuan huikuan
     ) {
 
-        if (huikuan.getHuikuanAmount().compareTo(BigDecimal.ZERO) == 1 && huikuan.getHuikuanAmount().compareTo(new BigDecimal("99999999.99")) <= 0) {
+        if ( huikuan.getHuikuanAmount().compareTo(new BigDecimal("99999999.99")) <= 0) {
 
             if (huikuan.getHuikuanMode().equals(PayMode.BANK_ACCEPTANCE) && huikuan.getHuikuanBankPaper() == true) {
 
