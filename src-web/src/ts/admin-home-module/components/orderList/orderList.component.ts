@@ -227,7 +227,7 @@ export class OrderListComponent implements OnInit {
                 if (data.data && data.data.results) {
 
                     if (data.data.results.length > 0) {
-                        this.isShowEditOrderButton = false
+                        // this.isShowEditOrderButton = false
                     }
                 }
             },
@@ -422,7 +422,7 @@ export class OrderListComponent implements OnInit {
                 })
             }
 
-            this.getPaymentList()
+            // this.getPaymentList()
         }
 
         this.isShowForm = !this.isShowForm
