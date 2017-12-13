@@ -236,6 +236,7 @@ describe('应收订单 统计范例2', function () {
                     "payDate" : "2017-07-06 00:00:00",
                     "receiveCompanyId" : 23,
                     "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "510000",
                     "capitalId" : 17,
                     "jiekuan" : {
@@ -270,6 +271,7 @@ describe('应收订单 统计范例2', function () {
                     "payDate" : "2017-08-10 00:00:00",
                     "receiveCompanyId" : 23,
                     "payUsage" : "FIAL_PAYMENT",
+                    "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "54294.93",
                     "orderId" : orderId,
                     "capitalId" : 1,

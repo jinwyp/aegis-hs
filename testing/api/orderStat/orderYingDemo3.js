@@ -241,6 +241,7 @@ describe('应收订单 统计范例3', function () {
                     "payDate" : "2017-04-14 00:00:00",
                     "receiveCompanyId" : 25,
                     "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "540000",
                     "capitalId" : 3,
                     "jiekuan" : {
@@ -276,6 +277,7 @@ describe('应收订单 统计范例3', function () {
                     "payDate" : "2017-04-25 00:00:00",
                     "receiveCompanyId" : 25,
                     "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "480000",
                     "capitalId" : 3,
                     "jiekuan" : {
@@ -311,6 +313,7 @@ describe('应收订单 统计范例3', function () {
                     "payDate" : "2017-05-03 00:00:00",
                     "receiveCompanyId" : 25,
                     "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "640000",
                     "capitalId" : 3,
                     "jiekuan" : {
@@ -346,6 +349,7 @@ describe('应收订单 统计范例3', function () {
                     "payDate" : "2017-05-24 00:00:00",
                     "receiveCompanyId" : 25,
                     "payUsage" : "FIAL_PAYMENT",
+                    "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "170899.52",
                     "capitalId" : 3,
                     "jiekuan" : {
@@ -383,6 +387,7 @@ describe('应收订单 统计范例3', function () {
                     "payDate" : "2017-05-24 00:00:00",
                     "receiveCompanyId" : 25,
                     "payUsage" : "TRADE_DEFICIT",
+                    "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "8910",
                     "capitalId" : 3,
                     "jiekuan" : {

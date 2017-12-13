@@ -291,6 +291,7 @@ describe('仓押订单 统计范例11 赵征提供 11.21日', function () {
                     "payDate" : "2017-06-29 00:00:00",
                     "receiveCompanyId" : 27,
                     "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "4207000",
                     "capitalId" : 3,
                     "jiekuan" : {
@@ -326,6 +327,7 @@ describe('仓押订单 统计范例11 赵征提供 11.21日', function () {
                     "payDate" : "2017-07-05 00:00:00",
                     "receiveCompanyId" : 27,
                     "payUsage" : "PAYMENT_FOR_GOODS",
+                    "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "1804106.5",
                     "capitalId" : 3,
                     "jiekuan" : {
@@ -361,6 +363,7 @@ describe('仓押订单 统计范例11 赵征提供 11.21日', function () {
                     "payDate" : "2017-07-05 00:00:00",
                     "receiveCompanyId" : 27,
                     "payUsage" : "TRADE_DEFICIT",
+                    "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "20205.4",
                     "capitalId" : 3,
                     "jiekuan" : {
