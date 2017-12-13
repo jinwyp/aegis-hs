@@ -164,7 +164,7 @@
                         <a class="btn btn-link btn-sm" *ngIf="businessType==='ying'" [routerLink]="['/yingorders', order.id]" role="button"> {{order.line}} </a>
                         <a class="btn btn-link btn-sm" *ngIf="businessType==='cang'" [routerLink]="['/cangorders', order.id]" role="button"> {{order.line}} </a>
                     </td>
-                    <td> {{order?.deptId | findKey : departmentList : 'name'}}</td>
+                    <td> {{order.deptId | findKey : departmentList : 'name'}}</td>
                     <td> {{order.teamId | findKey : teamList : 'name'}}</td>
 
                     <td> {{order.cargoType | findKey : cargoTypeList : 'name'}}</td>
