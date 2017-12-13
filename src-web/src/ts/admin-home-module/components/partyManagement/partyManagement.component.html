@@ -43,6 +43,7 @@
                         <span *ngIf="party.partyType === 1"> ccs账务公司 </span>
                         <span *ngIf="party.partyType === 2"> 资金方 </span>
                         <span *ngIf="party.partyType === 3"> 外部 </span>
+                        <span *ngIf="party.partyType === 4"> 贸易公司 </span>
                     </td>
                     <td> <button class="btn btn-info btn-sm" (click)="showForm(false, party)"> 修改 </button></td>
                 </tr>
