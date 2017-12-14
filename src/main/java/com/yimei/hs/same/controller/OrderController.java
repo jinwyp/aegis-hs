@@ -148,6 +148,17 @@ public class OrderController {
                 return Result.error(4001, "更新失败");
             }
             return Result.ok(1);
+        } else if (fukuans != null) {
+
+            Order orderUpdate = new Order();
+            orderUpdate.setId(id);
+            orderUpdate.setTeamId(order.getTeamId());
+            int rtn = orderService.update(order,OrderStatus.COMPLETED);
+
+            if (rtn != 1) {
+                return Result.error(4001, "更新失败");
+            }
+            return Result.ok(1);
         } else {
             return Result.error(4001, "订单已经生效，不能修改");
         }
