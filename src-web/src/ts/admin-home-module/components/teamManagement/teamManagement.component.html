@@ -12,6 +12,8 @@
 
             <bs-select formControlName ="deptId" [fc]="teamForm.get('deptId')" [label]="'部门:'" [readOnly]="sessionUser.isAdmin ==='DEPT_ADMIN'" [dirty]="ignoreDirty" [options]="departmentList" [error]="teamFormError.deptId"></bs-select>
 
+            <bs-multi-select formControlName ="userIdList" [fc]="teamForm.get('userIdList')" [label]="'分配核算人员:'" [key]="'id'" [dirty]="ignoreDirty" [options]="userList" [error]="teamFormError.userIdList"></bs-multi-select>
+
 
             <div class="form-group row">
                 <div class="col-10 ml-auto">

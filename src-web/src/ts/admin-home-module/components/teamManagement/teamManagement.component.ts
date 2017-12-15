@@ -27,6 +27,7 @@ export class TeamManagementComponent implements OnInit {
     isAddNew: boolean = true
 
     teamList : any[] = []
+    userList : any[] = []
     departmentList : any[] = []
 
     pagination: any = {
@@ -53,6 +54,7 @@ export class TeamManagementComponent implements OnInit {
         this.getSessionUserInfo()
         this.createTeamForm()
         this.getTeamList()
+        this.getUserList()
     }
 
     trackByFn(index: any, item: any) {
@@ -101,6 +103,23 @@ export class TeamManagementComponent implements OnInit {
         )
     }
 
+    getUserList () {
+
+        this.hsUserService.getUserList().subscribe(
+            data => {
+                this.userList = data.data.results
+
+                if (Array.isArray(data.data.results)) {
+
+                    data.data.results.forEach(user => {
+                        user.name = user.username + ' - ' + user.phone
+                    })
+
+                }
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+    }
 
     teamFormError : any = {}
     teamFormValidationMessages: any = {
@@ -109,6 +128,9 @@ export class TeamManagementComponent implements OnInit {
         },
         'deptId'  : {
             'required'      : '请选择事业部门!'
+        },
+        'userIdList'  : {
+            'required'      : '请选择核算人员!'
         }
     }
 
@@ -120,7 +142,8 @@ export class TeamManagementComponent implements OnInit {
 
         this.teamForm = this.fb.group({
             'name'    : ['', [Validators.required] ],
-            'deptId'    : ['', [Validators.required ] ]
+            'deptId'    : ['', [Validators.required ] ],
+            'userIdList'    : ['', [Validators.required ] ]
         } )
 
         this.teamForm.valueChanges.subscribe(data => {
@@ -143,6 +166,8 @@ export class TeamManagementComponent implements OnInit {
         const postData = this.teamForm.value
 
         if (this.isAddNew) {
+            
+
             this.hsUserService.createNewTeam(postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
@@ -169,6 +194,9 @@ export class TeamManagementComponent implements OnInit {
         }
 
     }
+
+
+
 
 
     showForm(isAddNew : boolean = true, team?: any ) {
