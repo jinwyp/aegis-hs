@@ -219,14 +219,26 @@ export class UserManagementComponent implements OnInit {
         if (isAddNew) {
             this.isAddNew = true
 
-            this.userForm.patchValue({
-                'phone'    : '',
-                'password'    : '',
-                'username'    : '',
-                'deptId'    : '',
-                'isAdmin'    : '',
-                'isActive'    : 2
-            })
+            if (this.sessionUser.isAdmin === 'DEPT_ADMIN') {
+                this.userForm.patchValue({
+                    'phone'    : '',
+                    'password'    : '',
+                    'username'    : '',
+                    'deptId'    : this.sessionUser.deptId,
+                    'isAdmin'    : '',
+                    'isActive'    : 2
+                })
+            } else {
+                this.userForm.patchValue({
+                    'phone'    : '',
+                    'password'    : '',
+                    'username'    : '',
+                    'deptId'    : '',
+                    'isAdmin'    : '',
+                    'isActive'    : 2
+                })
+            }
+
 
         } else {
             this.isAddNew = false

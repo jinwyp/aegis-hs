@@ -12,7 +12,7 @@
             <bs-text-input formControlName="username" [fc]="userForm.get('username')" [type]="'text'" [label]="'姓名:'" [readOnly]="!isAddNew" [dirty]="ignoreDirty" [error]="userFormError.username"></bs-text-input>
             <bs-text-input formControlName ="password" [fc]="userForm.get('password')" [type]="'text'" [label]="'密码:'" [dirty]="ignoreDirty" [error]="userFormError.password"></bs-text-input>
 
-            <bs-select formControlName ="deptId" [options]="departmentList" [label]="'部门:'" [dirty]="ignoreDirty" [error]="userFormError.deptId"></bs-select>
+            <bs-select formControlName ="deptId" [readOnly]="sessionUser.isAdmin ==='DEPT_ADMIN' " [options]="departmentList" [label]="'部门:'" [dirty]="ignoreDirty" [error]="userFormError.deptId"></bs-select>
 
             <bs-select formControlName ="isAdmin" [options]="dataRoleList" [label]="'是否为管理员:'" [dirty]="ignoreDirty" [error]="userFormError.isAdmin"></bs-select>
             <!--<bs-radio formControlName ="isAdmin" [sourceList]="dataIsAdmin" [label]="'是否为管理员:'" [dirty]="ignoreDirty" [error]="userFormError.isAdmin"></bs-radio>-->
