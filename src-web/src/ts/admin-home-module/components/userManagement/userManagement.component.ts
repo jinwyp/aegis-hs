@@ -29,6 +29,12 @@ export class UserManagementComponent implements OnInit {
     userList : any[] = []
     departmentList : any[] = []
 
+    dataRoleList : any[] = [
+        { id : 1 , name : '超级管理员'},
+        { id : 2 , name : '部门管理员'},
+        { id : 3 , name : '核算会计'}
+    ]
+
     dataIsAdmin : any [] = [
         { id : 2 , name : '是'},
         { id : 1 , name : '否'}
@@ -142,7 +148,7 @@ export class UserManagementComponent implements OnInit {
             'password'    : ['', [Validators.required] ],
             'username'    : ['', [Validators.required] ],
             'deptId'    : ['', [Validators.required ] ],
-            'isAdmin'    : [1, [Validators.required] ],
+            'isAdmin'    : ['', [Validators.required] ],
             'isActive'    : [2, [Validators.required ]]
         } )
 
@@ -165,10 +171,12 @@ export class UserManagementComponent implements OnInit {
 
         const postData = this.userForm.value
 
-        if (postData.isAdmin === 2) {
-            postData.isAdmin = true
-        } else {
-            postData.isAdmin = false
+        if (postData.isAdmin === 1) {
+            postData.isAdmin = 'SUPRER_ADMIN'
+        } else if(postData.isAdmin === 2) {
+            postData.isAdmin = 'DEPT_ADMIN'
+        }else if(postData.isAdmin === 3) {
+            postData.isAdmin = 'ACSH_AT'
         }
 
         if (postData.isActive === 2) {
@@ -216,7 +224,7 @@ export class UserManagementComponent implements OnInit {
                 'password'    : '',
                 'username'    : '',
                 'deptId'    : '',
-                'isAdmin'    : 1,
+                'isAdmin'    : '',
                 'isActive'    : 2
             })
 
@@ -224,11 +232,14 @@ export class UserManagementComponent implements OnInit {
             this.isAddNew = false
             this.currentUserId = user.id
 
-            if (user.isAdmin === true) {
-                user.isAdmin = 2
-            } else {
+            if (user.isAdmin === 'SUPRER_ADMIN') {
                 user.isAdmin = 1
+            } else if (user.isAdmin === 'DEPT_ADMIN'){
+                user.isAdmin = 2
+            }else if (user.isAdmin === 'ACSH_AT'){
+                user.isAdmin = 3
             }
+
 
             if (user.isActive === true) {
                 user.isActive = 2
