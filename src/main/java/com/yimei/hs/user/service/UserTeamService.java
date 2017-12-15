@@ -89,6 +89,12 @@ public class UserTeamService {
         return userTeamMapper.deleteByUserId(userId);
     }
 
+    //删除与该用户有关的团队
+    @Transactional(readOnly = false)
+    public int deleteByTeamId(Long teamId) {
+        return userTeamMapper.deleteByTeamId(teamId);
+    }
+
 
     @Transactional(readOnly = false)
     public int deleteTeamInDepart(long departId) {

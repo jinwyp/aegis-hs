@@ -117,6 +117,9 @@ public class TeamController {
     public ResponseEntity<Result<Integer>> delete(@PathVariable("id") long id) {
 
         int rtn = teamService.delete(id);
+
+        userTeamService.deleteByTeamId(id);
+
         if (rtn != 1) {
             return Result.error(4001, "删除失败", HttpStatus.BAD_REQUEST);
         }

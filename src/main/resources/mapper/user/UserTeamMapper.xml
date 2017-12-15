@@ -56,6 +56,12 @@
         SET deleted = 1, tsu = current_timestamp
         where userId = #{id,jdbcType=BIGINT} and deleted=0
     </update>
+
+    <update id="deleteByTeamId"  parameterType="java.lang.Long">
+        UPDATE hs_user_team_map
+        SET deleted = 1, tsu = current_timestamp
+        where teamId = #{id,jdbcType=BIGINT} and deleted=0
+    </update>
     <update id="deleteByIdandUserId">
         UPDATE hs_user_team_map
         SET deleted = 1, tsu = current_timestamp

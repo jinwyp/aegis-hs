@@ -35,6 +35,7 @@ public interface UserTeamMapper {
 
 
     int deleteByUserId(Long id);
+    int deleteByTeamId(Long id);
 
     int deleteByIdandUserId(@Param("id") Long id,@Param("userId") Long userId);
 }
