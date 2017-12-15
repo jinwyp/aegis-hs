@@ -1,4 +1,5 @@
 package com.yimei.hs.user.entity;
+import java.util.List;
 
 import com.yimei.hs.boot.api.CreateGroup;
 import com.yimei.hs.boot.api.UpdateGroup;
@@ -18,6 +19,8 @@ public class Team implements Serializable {
 
     @NotEmpty(groups = {CreateGroup.class}, message = "部门不能为空")
     private Long deptId;
+
+    private List<Long> userIdList;
 
     private boolean delete;
 

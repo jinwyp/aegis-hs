@@ -27,7 +27,7 @@ public interface UserTeamMapper {
 
     Page<UserTeamMap> getPage(PageUserTeamMapDTO pageTeamDTO);
 
-    boolean checkTeamExsit(@Param("tid") long tid, @Param("userId") long userId);
+    boolean checkTeamExist(@Param("tid") long tid, @Param("userId") long userId);
 
     int delete(long id);
 

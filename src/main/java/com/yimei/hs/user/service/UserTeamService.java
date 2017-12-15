@@ -62,7 +62,7 @@ public class UserTeamService {
     }
 
     public boolean checkTeamExist(long tid, long userId) {
-        return userTeamMapper.checkTeamExsit(tid, userId);
+        return userTeamMapper.checkTeamExist(tid, userId);
     }
 
 

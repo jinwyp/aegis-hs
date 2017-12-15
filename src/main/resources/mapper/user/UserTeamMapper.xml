@@ -33,7 +33,7 @@
     </select>
 
 
-    <select id="checkTeamExsit" resultType="java.lang.Boolean">
+    <select id="checkTeamExist" resultType="java.lang.Boolean">
         select
         count(id)
         from hs_user_team_map

@@ -6,8 +6,10 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.user.dto.PageTeamDTO;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
+import com.yimei.hs.user.entity.UserTeamMap;
 import com.yimei.hs.user.service.DeptService;
 import com.yimei.hs.user.service.TeamService;
+import com.yimei.hs.user.service.UserTeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class TeamController {
     @Autowired
     private DeptService deptService;
 
+    @Autowired
+    private UserTeamService userTeamService;
+
 
     /**
      * @param pageTeamDTO
@@ -57,6 +62,14 @@ public class TeamController {
 
         if (deptService.checkDeptExist(team.getDeptId())) {
             teamService.create(team);
+            List<UserTeamMap> userList;
+            for(Long userId : team.getUserIdList()) {
+                UserTeamMap userTeamMap =new UserTeamMap(userId,team.getId());
+                userTeamService.create(userTeamMap);
+            }
+
+
+
             return Result.ok(team);
         } else {
             return Result.error(5001, "添加失败");

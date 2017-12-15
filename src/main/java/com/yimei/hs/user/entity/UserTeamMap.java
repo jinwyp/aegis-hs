@@ -25,4 +25,9 @@ public class UserTeamMap {
 
     private LocalDateTime tsc;
 
+
+    public UserTeamMap(Long userId, Long teamId) {
+        this.userId = userId;
+        this.teamId = teamId;
+    }
 }
