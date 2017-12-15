@@ -52,7 +52,7 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
             User user = jwtSupport.doJwt(request);
 
             if (isAdmin) {
-                if (user.getIsAdmin() == null || !user.getIsAdmin().equals(RoleType.ACSH_AT)) {
+                if (user.getIsAdmin() == null || user.getIsAdmin().equals(RoleType.ACSH_AT)) {
                     response.setStatus(400);
                     response.setContentType("application/json;charset=UTF-8");
                     om.writeValue(response.getOutputStream(), new Result(4001, "管理员才能访问"));
