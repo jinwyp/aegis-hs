@@ -176,10 +176,18 @@ export class TeamManagementComponent implements OnInit {
         if (isAddNew) {
             this.isAddNew = true
 
-            this.teamForm.patchValue({
-                'name'    : '',
-                'deptId'    : ''
-            })
+            if (this.sessionUser.isAdmin === 'DEPT_ADMIN') {
+                this.teamForm.patchValue({
+                    'name'    : '',
+                    'deptId'    : this.sessionUser.deptId
+                })
+            } else {
+                this.teamForm.patchValue({
+                    'name'    : '',
+                    'deptId'    : ''
+                })
+            }
+
 
         } else {
             this.isAddNew = false
