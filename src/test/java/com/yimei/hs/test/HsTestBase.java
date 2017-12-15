@@ -6,6 +6,7 @@ import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.cang.entity.CangChuku;
 import com.yimei.hs.cang.entity.CangRuku;
+import com.yimei.hs.enums.RoleType;
 import com.yimei.hs.same.entity.*;
 import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Party;
@@ -147,7 +148,7 @@ abstract public class HsTestBase {
         byte[] hashPassword = Digests.sha1(user.getPassword().getBytes(), passwordSalt, HASH_INTERATIONS);
 
         user.setIsActive(true);
-        user.setIsAdmin(false);
+        user.setIsAdmin(RoleType.ACSH_AT);
         user.setPassword(Encodes.encodeHex(hashPassword));
         user.setPasswordSalt(Encodes.encodeHex(passwordSalt));
         user.setCreateDate(LocalDateTime.now());

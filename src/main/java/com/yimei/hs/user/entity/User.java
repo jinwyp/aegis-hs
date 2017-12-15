@@ -1,6 +1,7 @@
 package com.yimei.hs.user.entity;
 
 import com.yimei.hs.boot.api.CreateGroup;
+import com.yimei.hs.enums.RoleType;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -30,7 +31,8 @@ public class User implements Serializable {
 
     private String createBy;
 
-    private Boolean isAdmin;
+    @NotEmpty(groups = {CreateGroup.class}, message="用户类型不能为空")
+    private RoleType isAdmin;
     
     private Boolean isActive;
 

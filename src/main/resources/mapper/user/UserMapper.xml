@@ -10,7 +10,7 @@
         <result column="passwordSalt" jdbcType="VARCHAR" property="passwordSalt"/>
         <result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="createBy" jdbcType="VARCHAR" property="createBy"/>
-        <result column="isAdmin" jdbcType="BIT" property="isAdmin"/>
+        <result column="isAdmin" jdbcType="VARCHAR" property="isAdmin"/>
         <result column="isActive" jdbcType="BIT" property="isActive"/>
     </resultMap>
 
@@ -31,7 +31,7 @@
         <include refid="Base_Column_List"/>
         from hs_user
         <where>
-            <if test="isAdmin != null">AND isAdmin = #{isAdmin, jdbcType=TINYINT}</if>
+            <if test="isAdmin != null">AND isAdmin = #{isAdmin, jdbcType=VARCHAR}</if>
             <if test="isActive != null">AND isActive = #{isActive, jdbcType=TINYINT}</if>
             <if test="deptId != null">AND deptId = #{deptId, jdbcType=BIGINT}</if>
         </where>
@@ -56,6 +56,16 @@
         WHERE
             deptId = #{deptId, jdbcType=BIGINT}
         AND id != #{id, jdbcType=BIGINT}
+    </select>
+    <select id="getUsersOfSameDeptByDepart" resultType="com.yimei.hs.user.entity.User">
+          SELECT
+            id,
+            phone,
+            username
+        FROM
+            hs_user
+        WHERE
+            deptId = #{deptId, jdbcType=BIGINT}
     </select>
 
     <!-- 依据用户主键删除 -->
@@ -87,7 +97,7 @@
             #{passwordSalt,jdbcType=VARCHAR},
             #{createDate,jdbcType=TIMESTAMP},
             #{createBy,jdbcType=VARCHAR},
-            #{isAdmin,jdbcType=BIT},
+            #{isAdmin,jdbcType=VARCHAR},
             #{isActive,jdbcType=BIT}
         )
     </insert>
@@ -116,7 +126,7 @@
             <if test="passwordSalt != null">#{passwordSalt,jdbcType=VARCHAR},</if>
             <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
             <if test="createBy != null">#{createBy,jdbcType=VARCHAR},</if>
-            <if test="isAdmin != null">#{isAdmin,jdbcType=BIT},</if>
+            <if test="isAdmin != null">#{isAdmin,jdbcType=VARCHAR},</if>
             <if test="isActive != null">#{isActive,jdbcType=BIT},</if>
         </trim>
     </insert>
@@ -132,7 +142,7 @@
             <if test="passwordSalt != null">passwordSalt = #{passwordSalt,jdbcType=VARCHAR},</if>
             <if test="createDate != null">createDate = #{createDate,jdbcType=TIMESTAMP},</if>
             <if test="createBy != null">createBy = #{createBy,jdbcType=VARCHAR},</if>
-            <if test="isAdmin != null">isAdmin = #{isAdmin,jdbcType=BIT},</if>
+            <if test="isAdmin != null">isAdmin = #{isAdmin,jdbcType=VARCHAR},</if>
             <if test="isActive != null">isActive = #{isActive,jdbcType=BIT},</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
@@ -148,7 +158,7 @@
             passwordSalt = #{passwordSalt,jdbcType=VARCHAR},
             createDate   = #{createDate,jdbcType=TIMESTAMP},
             createBy     = #{createBy,jdbcType=VARCHAR},
-            isAdmin      = #{isAdmin,jdbcType=BIT},
+            isAdmin      = #{isAdmin,jdbcType=VARCHAR},
             isActive     = #{isActive,jdbcType=BIT}
         WHERE id = #{id,jdbcType=BIGINT}
     </update>

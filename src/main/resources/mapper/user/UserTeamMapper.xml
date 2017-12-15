@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yimei.hs.user.mapper.UserTeamMapper">
+
+    <resultMap id="BaseResultMap" type="com.yimei.hs.user.entity.UserTeamMap">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="userId" jdbcType="VARCHAR" property="userId"/>
+        <result column="teamId" jdbcType="BIGINT" property="teamId"/>
+        <result column="deleted" jdbcType="BIGINT" property="deleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, userId, teamId,deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hs_user_team_map
+        where id = #{id,jdbcType=BIGINT}  and deleted=0
+    </select>
+    <select id="getAllTeams" resultType="com.yimei.hs.user.entity.UserTeamMap">
+        SELECT * from hs_user_team_map
+    </select>
+
+
+    <select id="getPage" resultType="com.yimei.hs.user.entity.UserTeamMap">
+        SELECT * from hs_user_team_map
+        <where>
+            <if test="id !=null"> id=#{id,jdbcType=BIGINT}= </if>
+            <if test="teamId!=null"> id=#{teamId,jdbcType=BIGINT}= </if>
+            <if test="userId !=null"> id=#{userId,jdbcType=BIGINT}= </if>
+            <if test="true">deleted=0</if>
+        </where>
+    </select>
+
+
+    <select id="checkTeamExsit" resultType="java.lang.Boolean">
+        select
+        count(id)
+        from hs_user_team_map
+        where teamId = #{tid,jdbcType=BIGINT} and userId=#{userId ,jdbcType=BIGINT} and deleted=0
+    </select>
+
+
+    <select id="getListUserId" resultType="com.yimei.hs.user.entity.UserTeamMap">
+        SELECT <include refid="Base_Column_List" />
+        from hs_user_team_map
+        WHERE   userId = #{userId,jdbcType=BIGINT} and deleted=0
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from hs_user_team_map
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="deleteByUserId"  parameterType="java.lang.Long">
+        UPDATE hs_user_team_map
+        SET deleted = 1, tsu = current_timestamp
+        where userId = #{id,jdbcType=BIGINT} and deleted=0
+    </update>
+    <update id="deleteByIdandUserId">
+        UPDATE hs_user_team_map
+        SET deleted = 1, tsu = current_timestamp
+        where userId = #{userId,jdbcType=BIGINT} and  id=#{id,jdbcType=BIGINT} and deleted=0
+    </update>
+
+    <!-- 逻辑删除 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE hs_user_team_map
+        SET deleted = 1, tsu = current_timestamp
+        WHERE id = #{id,jdbcType=BIGINT} and deleted=0
+    </update>
+    <insert id="insert" parameterType="com.yimei.hs.user.entity.UserTeamMap" useGeneratedKeys="true" keyProperty="id">
+        insert into hs_user_team_map (id, userId, teamId
+        )
+        values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{teamId,jdbcType=BIGINT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.yimei.hs.user.entity.UserTeamMap">
+        insert into hs_user_team_map
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                userId,
+            </if>
+            <if test="deptId != null">
+                teamId,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="deptId != null">
+                #{teamId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimei.hs.user.entity.UserTeamMap">
+        update hs_user_team_map
+        <set>
+            <if test="name != null">
+                name = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="deptId != null">
+                deptId = #{teamId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yimei.hs.user.entity.UserTeamMap">
+        update hs_user_team_map
+        set userId = #{userId,jdbcType=BIGINT},
+        teamId = #{teamId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

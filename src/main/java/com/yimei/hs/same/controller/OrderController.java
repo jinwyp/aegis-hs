@@ -8,6 +8,7 @@ import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.enums.OrderStatus;
+import com.yimei.hs.enums.RoleType;
 import com.yimei.hs.same.dto.PageFukuanDTO;
 import com.yimei.hs.same.dto.PageOrderDTO;
 import com.yimei.hs.same.entity.Fukuan;
@@ -63,7 +64,7 @@ public class OrderController {
     ) {
         // 如果不是管理员， 就只展示自己的订单
         logger.debug("获取订单分页: {}, {}", user, pageOrderDTO);
-        if (!user.getIsAdmin()) {
+        if (RoleType.ACSH_AT.equals(user.getIsAdmin())) {
             pageOrderDTO.setOwnerId(user.getId());
         }
 

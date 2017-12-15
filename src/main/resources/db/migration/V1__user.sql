@@ -10,7 +10,7 @@ create table hs_user (
   passwordSalt varchar(40) not null comment '密码盐',
   createDate datetime      not null comment '创建时间',
   createBy varchar(45)     not null comment '创建人',
-  isAdmin tinyint(1)       not null comment '是否为管理员, 2 是 1 否',
+  isAdmin varchar(128)       not null comment '三个角色  超级管理员, 部门管理员, 核算会计',
   isActive tinyint(1) default '2'   comment '2 可用 1 禁用',
   PRIMARY KEY (id),
   UNIQUE KEY name_UNIQUE (phone)
@@ -26,16 +26,29 @@ create table hs_dept (
 
 -- 团队表
 create table hs_team (
-  id bigint(20)     not null auto_increment,
-  name varchar(64)  not null comment '团队名称',
-  deptId bigint(20) not null comment '所属部门',
-  deleted tinyint(1)             not null default 0 comment '是否删除',
+  id bigint(20)      not null auto_increment,
+  name varchar(64)   not null comment '团队名称',
+  deptId bigint(20)  not null comment '所属部门',
+  deleted tinyint(1) not null default 0 comment '是否删除',
   tsu timestamp,
   PRIMARY KEY (id)
 )engine=InnoDB default charset=utf8;
 
 alter table hs_team add foreign key(deptId) references hs_dept(id);
 
+-- 团队用户对应表
+create table hs_user_team_map(
+  id bigint(20)     not null auto_increment,
+  userId   bigint(20)     not null comment '用户Id',
+  teamId   bigint(20)     not null comment '团队Id',
+  deleted tinyint(1) not null default 0 comment '是否删除',
+  tsc timestamp                    not null default current_timestamp,
+  tsu timestamp not null default current_timestamp,
+  PRIMARY KEY (id)
+)engine=InnoDB default charset=utf8;
+
+alter table hs_user_team_map add foreign key(userId) references hs_user(id);
+alter table hs_user_team_map add foreign key(teamId) references hs_team(id);
 
 -- 外部客户: 上游、下游、贸易商, 运输方, 资金方, ccs账务公司
 create table hs_party (

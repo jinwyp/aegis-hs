@@ -1,6 +1,7 @@
 package com.yimei.hs.user.service;
 
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.RoleType;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.user.dto.PageUserDTO;
 import com.yimei.hs.user.mapper.UserMapper;
@@ -54,7 +55,7 @@ public class UserService {
             byte[] hashPassword = Digests.sha1(user.getPassword().getBytes(), passwordSalt, HASH_INTERATIONS);
 
             user.setIsActive(true);
-            user.setIsAdmin(false);
+            user.setIsAdmin(user.getIsAdmin());
             user.setPassword(Encodes.encodeHex(hashPassword));
             user.setPasswordSalt(Encodes.encodeHex(passwordSalt));
             user.setCreateDate(LocalDateTime.now());

@@ -2,9 +2,9 @@
 create table hs_same_order (
   id bigint(20)                    not null auto_increment,
   businessType varchar(32)         not null comment '业务线类型',
-  deptId bigint(20)                not null comment '所属事业部',
   teamId bigint(20)                not null comment '所属团队',
   creatorId bigint(20)             not null comment '创建人id',
+  deptId bigint(20)                not null comment '部门id',
   ownerId bigint(20)               not null comment '当前所有者id',
   mainAccounting bigint            not null comment '主账务公司 - 与下有接触的',
   line varchar(256)                not null comment '业务线名称: 由参与方公司简称组成',

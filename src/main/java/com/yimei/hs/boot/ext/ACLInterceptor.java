@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.enums.BusinessType;
+import com.yimei.hs.enums.RoleType;
 import com.yimei.hs.same.service.OrderService;
 import com.yimei.hs.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
             User user = jwtSupport.doJwt(request);
 
             if (isAdmin) {
-                if (user.getIsAdmin() == null || user.getIsAdmin() == false) {
+                if (user.getIsAdmin() == null || !user.getIsAdmin().equals(RoleType.ACSH_AT)) {
                     response.setStatus(400);
                     response.setContentType("application/json;charset=UTF-8");
                     om.writeValue(response.getOutputStream(), new Result(4001, "管理员才能访问"));
@@ -74,7 +75,7 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
                     long orderId = Long.parseLong(m.group(2));
 
                     // 不是admin的情况下, 才判断业务线主人的问题
-                    if (!user.getIsAdmin() && !orderService.hasOrder(user.getId(), type, orderId)) {
+                    if (RoleType.ACSH_AT.equals(user.getIsAdmin()) && !orderService.hasOrder(user.getId(), type, orderId)) {
                         response.setStatus(400);
                         response.setContentType("application/json;charset=UTF-8");
                         om.writeValue(response.getOutputStream(), new Result(4001, "你不是这条业务线的主人"));

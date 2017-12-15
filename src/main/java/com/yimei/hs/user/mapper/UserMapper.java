@@ -25,4 +25,6 @@ public interface UserMapper {
     User loadByPhone(String phone);
 
     List<User> getUsersOfSameDept(User user);
+
+    List<User> getUsersOfSameDeptByDepart(long departId);
 }
