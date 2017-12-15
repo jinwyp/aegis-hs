@@ -173,9 +173,9 @@ export class UserManagementComponent implements OnInit {
 
         if (postData.isAdmin === 1) {
             postData.isAdmin = 'SUPRER_ADMIN'
-        } else if(postData.isAdmin === 2) {
+        } else if ( postData.isAdmin === 2) {
             postData.isAdmin = 'DEPT_ADMIN'
-        }else if(postData.isAdmin === 3) {
+        } else if ( postData.isAdmin === 3) {
             postData.isAdmin = 'ACSH_AT'
         }
 
@@ -234,9 +234,9 @@ export class UserManagementComponent implements OnInit {
 
             if (user.isAdmin === 'SUPRER_ADMIN') {
                 user.isAdmin = 1
-            } else if (user.isAdmin === 'DEPT_ADMIN'){
+            } else if (user.isAdmin === 'DEPT_ADMIN') {
                 user.isAdmin = 2
-            }else if (user.isAdmin === 'ACSH_AT'){
+            } else if (user.isAdmin === 'ACSH_AT') {
                 user.isAdmin = 3
             }
 
