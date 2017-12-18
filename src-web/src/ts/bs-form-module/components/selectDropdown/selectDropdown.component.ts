@@ -104,12 +104,12 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
     filterOptions(event: KeyboardEvent) {
 
-        if (event.keyCode !== 13 && event.keyCode !== 38 && event.keyCode !== 40)  {
+        if (this.editable && event.keyCode !== 13 && event.keyCode !== 38 && event.keyCode !== 40)  {
+
             this.isShowSelectOptionList = true
 
             const inputText: string = (<HTMLInputElement>event.target).value
             const tempOptions: any[] = this.optionListTemp.slice()
-
 
             if (inputText.trim()) {
 
@@ -170,9 +170,9 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
     //select 键盘事件
     onKeyboardSelectOption(event: any) {
-        console.log(11)
+
         if ( this.isShowSelectOptionList) {
-            console.log(222, this.filterOptionList.length)
+
             const optionsLength = this.filterOptionList.length
 
             if ( event.keyCode === 40) {
