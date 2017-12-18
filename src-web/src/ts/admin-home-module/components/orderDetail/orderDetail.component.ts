@@ -433,7 +433,7 @@ export class OrderDetailComponent implements OnInit {
 
         if (this.currentUser.isAdmin === 'ACSH_AT') {
             this.transferForm.patchValue({
-                'deptId'    : '999999'
+                'teamId'    : '999999'
             })
         }
 
@@ -445,14 +445,24 @@ export class OrderDetailComponent implements OnInit {
             return
         }
 
+        if (this.currentUser.isAdmin === 'ACSH_AT') {
+            this.hsOrderService.transferOrder(this.businessType, this.currentOrderId, this.transferForm.value.userId).subscribe(
+                data => {
+                    console.log('保存成功: ', data)
+                    this.httpService.successHandler(data)
+                },
+                error => {this.httpService.errorHandler(error) }
+            )
+        } else {
+            this.hsOrderService.transferOrderAdmin(this.businessType, this.currentOrderId, this.transferForm.value.userId, this.transferForm.value.teamId).subscribe(
+                data => {
+                    console.log('保存成功: ', data)
+                    this.httpService.successHandler(data)
+                },
+                error => {this.httpService.errorHandler(error) }
+            )
+        }
 
-        this.hsOrderService.transferOrder(this.businessType, this.currentOrderId, this.transferForm.value.userId).subscribe(
-            data => {
-                console.log('保存成功: ', data)
-                this.httpService.successHandler(data)
-            },
-            error => {this.httpService.errorHandler(error) }
-        )
 
     }
 

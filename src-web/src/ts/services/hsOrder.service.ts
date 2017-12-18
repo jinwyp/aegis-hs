@@ -70,6 +70,9 @@ export class HSOrderService {
     transferOrder(businessType : string, orderId: number, userId: number): Observable<any> {
         return this.http.post(apiPath.hsGetOrderList + '/' + businessType + 's/' + orderId + '/to/' + userId, {} )
     }
+    transferOrderAdmin(businessType : string, orderId: number, userId: number, teamId: number): Observable<any> {
+        return this.http.post(apiPath.hsGetOrderList + '/' + businessType + 's/' + orderId + '/admin', {userId, teamId} )
+    }
     finishOrder(businessType : string, orderId: number): Observable<any> {
         return this.http.put(apiPath.hsGetOrderList + '/' + businessType + 's/status/' + orderId, {} )
     }

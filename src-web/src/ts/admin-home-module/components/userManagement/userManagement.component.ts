@@ -168,14 +168,6 @@ export class UserManagementComponent implements OnInit {
 
         const postData = this.userForm.value
 
-        if (postData.isAdmin === 1) {
-            postData.isAdmin = 'SUPRER_ADMIN'
-        } else if ( postData.isAdmin === 2) {
-            postData.isAdmin = 'DEPT_ADMIN'
-        } else if ( postData.isAdmin === 3) {
-            postData.isAdmin = 'ACSH_AT'
-        }
-
         if (postData.isActive === 2) {
             postData.isActive = true
         } else {
@@ -240,14 +232,6 @@ export class UserManagementComponent implements OnInit {
         } else {
             this.isAddNew = false
             this.currentUserId = user.id
-
-            if (user.isAdmin === 'SUPRER_ADMIN') {
-                user.isAdmin = 1
-            } else if (user.isAdmin === 'DEPT_ADMIN') {
-                user.isAdmin = 2
-            } else if (user.isAdmin === 'ACSH_AT') {
-                user.isAdmin = 3
-            }
 
 
             if (user.isActive === true) {
