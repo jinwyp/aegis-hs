@@ -1,9 +1,11 @@
 package com.yimei.hs.user.service;
 
+import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.dto.PageTeamDTO;
+import com.yimei.hs.user.entity.User;
 import com.yimei.hs.user.entity.UserTeamMap;
 import com.yimei.hs.user.mapper.TeamMapper;
 import com.yimei.hs.user.mapper.UserTeamMapper;
@@ -51,6 +53,11 @@ public class TeamService {
     @Transactional(readOnly = false)
     public int update(Team team){
 
+        userTeamMapper.deleteByTeamId(team.getId());
+        for(Long userId : team.getUserIdList()) {
+            UserTeamMap userTeamMap =new UserTeamMap(userId,team.getId());
+            userTeamMapper.insert(userTeamMap);
+        }
         return teamMapper.updateByPrimaryKeySelective(team);
     }
 

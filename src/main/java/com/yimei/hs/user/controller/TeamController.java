@@ -106,12 +106,12 @@ public class TeamController {
      * @return
      */
     @PutMapping("/teams/{id}")
-    public ResponseEntity<Result<Integer>> update(
+    public ResponseEntity<Result<Integer>> update(@CurrentUser User user,
             @PathVariable("id") Long id,
             @RequestBody Team team) {
         team.setId(id);
 
-        
+
         int status = teamService.update(team);
         if (status == 1) {
             return Result.ok(1);
@@ -125,7 +125,7 @@ public class TeamController {
      * 删除某个Team
      */
     @DeleteMapping("/teams/{id}")
-    public ResponseEntity<Result<Integer>> delete(@PathVariable("id") long id) {
+    public ResponseEntity<Result<Integer>> delete(@PathVariable("id") long id,@CurrentUser User user) {
 
         int rtn = teamService.delete(id);
 

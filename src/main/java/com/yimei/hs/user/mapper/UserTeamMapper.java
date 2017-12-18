@@ -1,9 +1,7 @@
 package com.yimei.hs.user.mapper;
 
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.user.dto.PageTeamDTO;
 import com.yimei.hs.user.dto.PageUserTeamMapDTO;
-import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.UserTeamMap;
 import org.apache.ibatis.annotations.Param;
 
@@ -35,7 +33,7 @@ public interface UserTeamMapper {
 
 
     int deleteByUserId(Long id);
-    int deleteByTeamId(Long id);
+    int deleteByTeamId(@Param("teamId") Long teamId);
 
     int deleteByIdandUserId(@Param("id") Long id,@Param("userId") Long userId);
 

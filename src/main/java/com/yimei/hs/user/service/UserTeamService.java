@@ -1,9 +1,7 @@
 package com.yimei.hs.user.service;
 
 import com.yimei.hs.boot.persistence.Page;
-import com.yimei.hs.user.dto.PageTeamDTO;
 import com.yimei.hs.user.dto.PageUserTeamMapDTO;
-import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.user.entity.UserTeamMap;
 import com.yimei.hs.user.mapper.DeptMapper;
