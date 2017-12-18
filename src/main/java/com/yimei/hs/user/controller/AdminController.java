@@ -4,6 +4,7 @@ import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.ext.annotation.Logined;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.RoleType;
 import com.yimei.hs.user.dto.PageUserDTO;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.user.service.UserService;
@@ -58,9 +59,18 @@ public class AdminController {
      */
     @GetMapping("/users")
     public ResponseEntity<Result<Page<User>>> list(
+            @CurrentUser User user,
             PageUserDTO pageUserDTO
     ) {
-        return Result.ok(userService.getPage(pageUserDTO));
+
+        if (RoleType.SUPRER_ADMIN.equals(user.getIsAdmin())) {
+
+            return Result.ok(userService.getPage(pageUserDTO));
+        } else {
+            pageUserDTO.setDeptId(user.getDeptId());
+            return Result.ok(userService.getPage(pageUserDTO));
+        }
+
     }
 
 
