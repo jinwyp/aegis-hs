@@ -52,7 +52,7 @@
                         <button class="btn btn-link btn-sm" (click)="showForm(false, unit)"> 修改 </button>
                         <button class="btn btn-link btn-sm" (click)="deleteItem(unit)"> 删除 </button>
                         <button class="btn btn-link btn-sm" (click)="showStat(unit)"> 统计 </button>
-                        <a class="btn btn-link btn-sm" target="_blank" href="/business/analysis/exportExcel/{{currentOrder?.id}}/{{unit.id}}"> 导出 </a>
+                        <a class="btn btn-link btn-sm" target="_blank" href="/api/business/{{businessType}}/analysis/exportExcel/{{currentOrder?.id}}/{{unit.id}}"> 导出 </a>
                     </td>
                 </tr>
                 </tbody>
