@@ -194,15 +194,20 @@ export class MultiSelectComponent implements OnInit, OnChanges, ControlValueAcce
         }
 
         if ( event.keyCode === 8 && this.inputEl.nativeElement.value === '' && this.inputEl.nativeElement === document.activeElement) {
-            const tempOptions = this.interValueCurrentSelected.splice(this.interValueCurrentSelected.length - 1, 1)
 
-            this.filterOptionList.forEach( option => {
-                if ( option.id === tempOptions[0].id) {
-                    option.selected = false
-                }
-            })
+            if (this.interValueCurrentSelected.length > 0) {
+                const tempOptions = this.interValueCurrentSelected.splice(this.interValueCurrentSelected.length - 1, 1)
 
-            console.log('index: ', tempOptions, this.currentSelectIndexByKeyboard)
+                this.filterOptionList.forEach( option => {
+
+                    if ( option.id === tempOptions[0].id) {
+                        option.selected = false
+                    }
+                })
+
+                // console.log('index: ', tempOptions, this.currentSelectIndexByKeyboard)
+            }
+
         }
     }
 

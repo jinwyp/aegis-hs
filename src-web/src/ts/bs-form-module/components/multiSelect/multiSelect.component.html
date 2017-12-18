@@ -18,7 +18,7 @@
             <li *ngFor="let option of filterOptionList; let i = index" class="list-group-item" [class.selected]="option.selected" [class.active]="i === currentSelectIndexByKeyboard" (click)="clickOption(option)">{{option.name}}</li>
         </ul>
 
-        <div class="invalid-feedback" *ngIf="error && (currentFormControl.dirty || dirty)">
+        <div class="invalid-feedback d-block" *ngIf="error && (currentFormControl.dirty || dirty)">
             <span *ngIf="error"> {{error}} </span>
             <span *ngIf="!error">
                 <span *ngIf="currentFormControl.hasError('required')"> 该项是必填项！</span>
