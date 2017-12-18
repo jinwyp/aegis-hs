@@ -52,9 +52,9 @@ describe('应收订单', function () {
                 "cargoType":"COAL",
                 "upstreamSettleMode":"ONE_PAPER_SETTLE",
                 "downstreamSettleMode":"ONE_PAPER_SETTLE",
-                "mainAccounting":1,
-                "upstreamId":2,
-                "downstreamId":3
+                "mainAccounting":3,
+                "upstreamId":4,
+                "downstreamId":5
             })
             .expect('Content-Type', /json/)
             .expect(200)
@@ -81,11 +81,11 @@ describe('应收订单', function () {
                 "cargoType":"COAL",
                 "upstreamSettleMode":"ONE_PAPER_SETTLE",
                 "downstreamSettleMode":"ONE_PAPER_SETTLE",
-                "mainAccounting":1,
-                "upstreamId":2,
-                "downstreamId":3,
+                "mainAccounting":3,
+                "upstreamId":4,
+                "downstreamId":5,
                 "orderPartyList":[
-                    {"custType":"TRAFFICKCER","customerId":7, "customerPosition":1},
+                    {"custType":"TRAFFICKCER","customerId":9, "customerPosition":1},
                     {"custType":"ACCOUNTING_COMPANY","customerId":16, "customerPosition":1}
                 ]
             })
@@ -181,8 +181,8 @@ describe('应收订单', function () {
                     "upstreamId" : 99999,
                     "downstreamId" : 99999,
                     "orderPartyList" : [
-                        { "custType" : "UPSTREAM", "customerId" : 1},
-                        { "custType" : "DOWNSTREAM", "customerId" : 2}
+                        { "custType" : "UPSTREAM", "customerId" : 1, "customerPosition":1},
+                        { "custType" : "DOWNSTREAM", "customerId" : 2, "customerPosition":1}
                     ]
                 }
             )
@@ -212,10 +212,10 @@ describe('应收订单', function () {
                     "upstreamId" : 3,
                     "downstreamId" : 4,
                     "orderPartyList" : [
-                        { "custType" : "UPSTREAM", "customerId" : 9999},
-                        { "custType" : "DOWNSTREAM", "customerId" : 9999},
-                        { "custType" : "TRAFFICKCER", "customerId":9999},
-                        { "custType" : "ACCOUNTING_COMPANY", "customerId":9999}
+                        { "custType" : "UPSTREAM", "customerId" : 9999, "customerPosition":1},
+                        { "custType" : "DOWNSTREAM", "customerId" : 9999, "customerPosition":1},
+                        { "custType" : "TRAFFICKCER", "customerId":9999, "customerPosition":1},
+                        { "custType" : "ACCOUNTING_COMPANY", "customerId":9999, "customerPosition":1}
                     ]
                 }
             )
@@ -262,7 +262,7 @@ describe('应收订单', function () {
             })
     })
 
-    it(`应收订单 - 非法数据 修改某个ID的应收订单 PUT: /api/business/yings/${orderId}`, function (done) {
+    it(`应收订单 - 非法数据customerId 修改某个ID的应收订单 PUT: /api/business/yings/${orderId}`, function (done) {
         server.put(`/api/business/yings/${orderId}`)
             .set('Authorization', Authorization)
             .set(config.headers)
@@ -278,10 +278,10 @@ describe('应收订单', function () {
                 "upstreamId":2,
                 "downstreamId":3,
                 "orderPartyList" : [
-                    { "custType" : "UPSTREAM", "customerId" : 9999},
-                    { "custType" : "DOWNSTREAM", "customerId" : 9999},
-                    { "custType" : "TRAFFICKCER", "customerId":9999},
-                    { "custType" : "ACCOUNTING_COMPANY", "customerId":9999}
+                    { "custType" : "UPSTREAM", "customerId" : 9999, "customerPosition":1},
+                    { "custType" : "DOWNSTREAM", "customerId" : 9999, "customerPosition":1},
+                    { "custType" : "TRAFFICKCER", "customerId":9999, "customerPosition":1},
+                    { "custType" : "ACCOUNTING_COMPANY", "customerId":9999, "customerPosition":1}
                 ]
             })
             .expect('Content-Type', /json/)

@@ -247,7 +247,7 @@ export class MultiSelectComponent implements OnInit, OnChanges, ControlValueAcce
     }
 
     writeValue(value: any): void {
-        console.log('WriteValue: ', value)
+        // console.log('WriteValue: ', value)
 
         if ( value && Array.isArray(value) && Array.isArray(this.filterOptionList) && this.filterOptionList.length > 0) {
 

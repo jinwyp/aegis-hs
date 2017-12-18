@@ -7,6 +7,7 @@ import { formErrorHandler, isMobilePhone, isMatched, checkFieldIsExist } from '.
 import { UserInfoService } from '../../../services/userInfo.service'
 import { HSUserService } from '../../../services/hsUser.service'
 
+import {getEnum} from '../../../services/localStorage'
 
 
 
@@ -29,11 +30,7 @@ export class UserManagementComponent implements OnInit {
     userList : any[] = []
     departmentList : any[] = []
 
-    dataRoleList : any[] = [
-        { id : 1 , name : '超级管理员'},
-        { id : 2 , name : '部门管理员'},
-        { id : 3 , name : '核算会计'}
-    ]
+    dataRoleList : any[] = getEnum('RoleType')
 
     dataIsAdmin : any [] = [
         { id : 2 , name : '是'},

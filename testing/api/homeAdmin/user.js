@@ -51,7 +51,7 @@ describe('管理用户', function () {
                 username : '13564568304',
                 deptId : 2,
                 isActive  :  true,
-                isAdmin  : false
+                isAdmin  : 'DEPT_ADMIN'
             })
             .expect('Content-Type', /json/)
             .expect(200)
@@ -76,7 +76,7 @@ describe('管理用户', function () {
                 username : '13564568301',
                 deptId : 2,
                 isActive  :  false,
-                isAdmin  : false
+                isAdmin  : 'DEPT_ADMIN'
             })
             .expect('Content-Type', /json/)
             .expect(200)
@@ -103,7 +103,7 @@ describe('管理用户', function () {
                 username : '13564568302',
                 deptId : 2,
                 isActive  :  true,
-                isAdmin  : false
+                isAdmin  : 'DEPT_ADMIN'
             })
             .expect('Content-Type', /json/)
             .expect(200)
@@ -128,7 +128,7 @@ describe('管理用户', function () {
                 username : '13564568303',
                 deptId : 2,
                 isActive  :  true,
-                isAdmin  : false
+                isAdmin  : 'DEPT_ADMIN'
             })
             .expect('Content-Type', /json/)
             .expect(200)
@@ -155,7 +155,7 @@ describe('管理用户', function () {
                 username : '13564568304',
                 deptId : 2,
                 isActive  :  2,
-                isAdmin  : 1
+                isAdmin  : 'DEPT_ADMIN'
             })
             .expect('Content-Type', /json/)
             .expect(400)

@@ -86,6 +86,13 @@ export class AdminHomeComponent implements OnInit {
 
     getDictionary () {
 
+        this.orderService.getEnumList('RoleType').subscribe(
+            data => {
+                saveEnum('RoleType', data.data)
+            },
+            error => {this.httpService.errorHandler(error) }
+        )
+
 
         this.orderService.getEnumList('OrderStatus').subscribe(
             data => {

@@ -20,6 +20,7 @@ public class Team implements Serializable {
     @NotEmpty(groups = {CreateGroup.class}, message = "部门不能为空")
     private Long deptId;
 
+    @NotEmpty(groups = {CreateGroup.class}, message = "分配核算人员不能为空")
     private List<Long> userIdList;
 
     private boolean delete;

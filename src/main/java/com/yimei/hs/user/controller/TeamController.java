@@ -72,11 +72,14 @@ public class TeamController {
         if (deptService.checkDeptExist(team.getDeptId())) {
             teamService.create(team);
 
-            for(Long userId : team.getUserIdList()) {
-                UserTeamMap userTeamMap =new UserTeamMap(userId,team.getId());
-                userTeamService.create(userTeamMap);
+            if (team.getUserIdList() != null ) {
+                for(Long userId : team.getUserIdList()) {
+                    if (userId != null) {
+                        UserTeamMap userTeamMap =new UserTeamMap(userId, team.getId());
+                        userTeamService.create(userTeamMap);
+                    }
+                }
             }
-
 
 
             return Result.ok(team);

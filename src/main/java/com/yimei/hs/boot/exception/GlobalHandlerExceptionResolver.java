@@ -118,6 +118,8 @@ public class GlobalHandlerExceptionResolver {
         response.setStatus(409);
         response.setContentType("application/json; charset=UTF-8");
 
+        logger.error("\n ==================== 409 Error : " +  ex.getMessage() + "\n" + stackTraceToString(ex, 0, "com.yimei.hs"));
+
         String errMsg = ex.getMessage();
         if (errMsg == null) {
             errMsg = "系统错误";
@@ -125,6 +127,23 @@ public class GlobalHandlerExceptionResolver {
         response.setStatus(400);
         om.writeValue(response.getOutputStream(), new Result(5001, errMsg));
     }
+
+
+    @ExceptionHandler(value = { Exception.class })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public void unknownException(HttpServletRequest request, HttpServletResponse response, Exception ex) throws IOException, ServletException {
+        response.setStatus(500);
+        response.setContentType("application/json; charset=UTF-8");
+
+        logger.error(" \n ==================== 500 API Error : " + ex.getMessage() + "\n ===== Request Url: " + makeUrl(request) + "\n" + stackTraceToString(ex, 20, ""));
+
+        String errMsg = ex.getMessage();
+        if (errMsg == null) {
+            errMsg = "系统错误";
+        }
+        om.writeValue(response.getOutputStream(), new Result(5001, errMsg));
+    }
+
 
 
     @Async

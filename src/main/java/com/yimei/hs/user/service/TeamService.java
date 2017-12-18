@@ -54,10 +54,14 @@ public class TeamService {
     public int update(Team team){
 
         userTeamMapper.deleteByTeamId(team.getId());
-        for(Long userId : team.getUserIdList()) {
-            UserTeamMap userTeamMap =new UserTeamMap(userId,team.getId());
-            userTeamMapper.insert(userTeamMap);
+
+        if (team.getUserIdList() != null ) {
+            for(Long userId : team.getUserIdList()) {
+                UserTeamMap userTeamMap =new UserTeamMap(userId,team.getId());
+                userTeamMapper.insert(userTeamMap);
+            }
         }
+
         return teamMapper.updateByPrimaryKeySelective(team);
     }
 

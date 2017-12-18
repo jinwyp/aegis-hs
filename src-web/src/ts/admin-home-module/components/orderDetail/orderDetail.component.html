@@ -113,7 +113,6 @@
                         </div>
                     </div>
 
-
                 </div>
             </div>
 
@@ -121,21 +120,27 @@
             <div class="card mt-3">
                 <div class="card-body">
 
-                    <form  [formGroup]="transferForm" (ngSubmit)="transferFormSubmit()" (keydown.enter)="$event.preventDefault()" >
+                    <form  [formGroup]="transferForm" (keydown.enter)="$event.preventDefault()" >
 
                         <div class="form-row">
-                            <div class="col-6">
-                                <bs-select formControlName="userId" [fc]="transferForm.get('userId')" [label]="'订单权限移交给:'" [labelclass]="'col-4'" [inputclass]="'col-6'" [dirty]="ignoreDirty" [options]="userList" [error]="transferFormError.userId"></bs-select>
+                            <div class="col-5">
+                                <bs-select formControlName="userId" [fc]="transferForm.get('userId')" [label]="'订单权限移交给:'" [labelclass]="'col-3'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [options]="userList" [error]="transferFormError.userId"></bs-select>
+                            </div>
+
+                            <div class="col-3" [hidden]="currentUser.isAdmin === 'ACSH_AT' ">
+                                <bs-select formControlName="teamId" [fc]="transferForm.get('teamId')" [label]="''" [labelclass]="'col-0'" [inputclass]="'col-12'" [dirty]="ignoreDirty" [options]="teamList" [error]="transferFormError.teamId"></bs-select>
                             </div>
 
                             <div class="col-2">
-                                <button type="submit" class="btn btn-info" >保存</button>
+                                <button type="submit" class="btn btn-info" (click)="transferFormSubmit()" >保存</button>
                             </div>
                         </div>
                     </form>
 
                 </div>
             </div>
+
+
 
 
 <!--

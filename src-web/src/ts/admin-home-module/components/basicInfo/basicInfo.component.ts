@@ -9,6 +9,7 @@ import { UserInfoService } from '../../../services/userInfo.service'
 import { HSUserService } from '../../../services/hsUser.service'
 
 
+import {getEnum} from '../../../services/localStorage'
 
 
 @Component({
@@ -24,6 +25,8 @@ export class BasicInfoComponent implements OnInit {
     currentUser : any
 
     departmentList : any[] = []
+
+    dataRoleList : any[] = getEnum('RoleType')
 
     constructor(
         private fb: FormBuilder,

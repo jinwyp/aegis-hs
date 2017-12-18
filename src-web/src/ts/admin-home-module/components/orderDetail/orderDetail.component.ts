@@ -29,7 +29,7 @@ export class OrderDetailComponent implements OnInit {
 
     currentOrder : any
     currentOrderId : number
-
+    currentUser : any
 
     transferForm: FormGroup
     ignoreDirty: boolean = false
@@ -65,6 +65,7 @@ export class OrderDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private httpService: HttpService,
         private fb: FormBuilder,
+        private userService: UserInfoService,
         private hsUserService: HSUserService,
         private hsOrderService: HSOrderService
 
@@ -95,7 +96,8 @@ export class OrderDetailComponent implements OnInit {
 
         this.getDepartmentList()
         this.getTeamList()
-        this.getUserList()
+        this.getCurrentUserInfo()
+
 
         this.createTransferForm()
     }
@@ -326,33 +328,75 @@ export class OrderDetailComponent implements OnInit {
         )
     }
 
-
-    getUserList () {
-        this.hsUserService.getUserListDepartment().subscribe(
+    getCurrentUserInfo () {
+        this.userService.sessionUserInfo().subscribe(
             data => {
-
-                const tempResult : any[] = []
-
-                if (data.data && Array.isArray(data.data)) {
-                    data.data.forEach( user => {
-                        tempResult.push ({
-                            id : user.id,
-                            name : user.phone + ' ' + user.username
-                        })
-                    })
+                if (data) {
+                    this.currentUser = data
+                    this.getUserList()
                 }
-
-                this.userList = tempResult
 
             },
             error => {this.httpService.errorHandler(error) }
         )
     }
 
+
+    getUserList () {
+
+        if (this.currentUser.isAdmin === 'SUPRER_ADMIN') {
+
+            this.hsUserService.getUserList().subscribe(
+                data => {
+
+                    const tempResult : any[] = []
+
+                    if (data.data && Array.isArray(data.data)) {
+                        data.data.forEach( user => {
+                            tempResult.push ({
+                                id : user.id,
+                                name : user.username + ' - ' + user.phone
+                            })
+                        })
+                    }
+
+                    this.userList = tempResult
+
+                },
+                error => {this.httpService.errorHandler(error) }
+            )
+
+        } else {
+            this.hsUserService.getUserListDepartment().subscribe(
+                data => {
+
+                    const tempResult : any[] = []
+
+                    if (data.data && Array.isArray(data.data)) {
+                        data.data.forEach( user => {
+                            tempResult.push ({
+                                id : user.id,
+                                name : user.username + ' - ' + user.phone
+                            })
+                        })
+                    }
+
+                    this.userList = tempResult
+
+                },
+                error => {this.httpService.errorHandler(error) }
+            )
+        }
+
+    }
+
     transferFormError : any = {}
     transferFormValidationMessages: any = {
         'userId'  : {
             'required'      : '请选择财务人员!'
+        },
+        'teamId'  : {
+            'required'      : '请选择团队!'
         }
     }
 
@@ -375,7 +419,8 @@ export class OrderDetailComponent implements OnInit {
     createTransferForm(): void {
 
         this.transferForm = this.fb.group({
-            'userId'    : ['', [Validators.required ] ]
+            'userId'    : ['', [Validators.required ] ],
+            'teamId'    : ['', [Validators.required ] ]
         } )
 
         this.transferForm.valueChanges.subscribe(data => {
@@ -385,6 +430,12 @@ export class OrderDetailComponent implements OnInit {
     }
 
     transferFormSubmit() {
+
+        if (this.currentUser.isAdmin === 'ACSH_AT') {
+            this.transferForm.patchValue({
+                'deptId'    : '999999'
+            })
+        }
 
         if (this.transferForm.invalid) {
             this.transferFormInputChange(this.transferForm.value)

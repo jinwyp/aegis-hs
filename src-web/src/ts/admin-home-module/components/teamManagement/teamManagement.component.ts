@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core'
+import { Component, OnInit} from '@angular/core'
 import { FormBuilder, FormGroup, Validators} from '@angular/forms'
 
 import { HttpService } from '../../../bs-form-module/services/http.service'
@@ -155,6 +155,7 @@ export class TeamManagementComponent implements OnInit {
 
     teamFormSubmit() {
 
+
         if (this.teamForm.invalid) {
             this.teamFormInputChange(this.teamForm.value)
             this.ignoreDirty = true
@@ -166,7 +167,7 @@ export class TeamManagementComponent implements OnInit {
         const postData = this.teamForm.value
 
         if (this.isAddNew) {
-            
+
 
             this.hsUserService.createNewTeam(postData).subscribe(
                 data => {

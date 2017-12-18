@@ -29,6 +29,13 @@
                 </div>
             </div>
 
+            <div class="form-group row">
+                <label class="col-2 col-form-label">角色:</label>
+                <div class="col-6">
+                    <input type="text" readonly class="form-control-plaintext form-input-readonly" value="{{currentUser?.isAdmin | findKey: dataRoleList : 'name' }}">
+                </div>
+            </div>
+
 <!--
 
             <div class="form-group row">
