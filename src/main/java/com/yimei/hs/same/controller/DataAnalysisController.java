@@ -183,7 +183,7 @@ public class DataAnalysisController {
         for (int i = 0; i < exportExcelDateList.size(); i++) {
             row = sheet.createRow(i + 1);
             ExportExcelDate exportExcelDate = exportExcelDateList.get(i);
-            row.createCell(0).setCellValue((exportExcelDate.getPayDate() == null ? "" : exportExcelDate.getPayDate().format(formatter)));
+            row.createCell(0).setCellValue((exportExcelDate.getFukuanDate() == null ? "" : exportExcelDate.getFukuanDate().format(formatter)));
             row.createCell(1).setCellValue((exportExcelDate.getFukuanAmount() == null ? "" : exportExcelDate.getFukuanAmount().toString()));
             row.createCell(2).setCellValue((exportExcelDate.getAmount() == null ? "" : exportExcelDate.getAmount().toString()));
             row.createCell(3).setCellValue((exportExcelDate.getPayDate() == null ? "" : exportExcelDate.getPayDate().format(formatter)));

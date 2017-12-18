@@ -3,6 +3,7 @@ package com.yimei.hs.same.service;
 import com.yimei.hs.cang.entity.CangAnalysisData;
 import com.yimei.hs.cang.mapper.CangAnalysisDataMapper;
 import com.yimei.hs.enums.BusinessType;
+import com.yimei.hs.enums.PayMode;
 import com.yimei.hs.same.dto.PageHuankuanDTO;
 import com.yimei.hs.same.dto.PageHuikuanDTO;
 import com.yimei.hs.same.entity.*;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -624,23 +626,38 @@ public class DataAnalysisService {
                 }
 
                 exportExcelDate.setAmount(analysisDatas.get(i).getMapAmount());
-                exportExcelDate.setFukuanDate(analysisDatas.get(i).getPayDate());
+                exportExcelDate.setPayDate(analysisDatas.get(i).getPayDate());
                 exportExcelDate.setHuikuanDate(analysisDatas.get(i).getHuikuanDate());
                 exportExcelDate.setTime(analysisDatas.get(i).getTime());
                 exportExcelDate.setRate(analysisDatas.get(i).getRate());
 
                 if (i<huikuanListSize) {
-                    exportExcelDate.setHuikuanTime(huikuanList.get(i).getHuikuanDate());
-                    exportExcelDate.setHuikuanAmount(huikuanList.get(i).getHuikuanAmount());
-                    exportExcelDate.setHuikuanMode(huikuanList.get(i).getHuikuanMode());
+
+                    Huikuan huikuan=huikuanList.get(i);
+                    exportExcelDate.setHuikuanTime(huikuan.getHuikuanDate());
+                    exportExcelDate.setHuikuanAmount(huikuan.getHuikuanAmount());
+                    exportExcelDate.setHuikuanMode(huikuan.getHuikuanMode());
                     //todo
-                    exportExcelDate.setTieRate(BigDecimal.ZERO);
+                    if (huikuan.getHuikuanMode().equals(PayMode.BANK_ACCEPTANCE)) {
+                        Long durTime = Duration.between(huikuan.getHuikuanBusinessPaperExpire(), huikuan.getHuikuanBankPaperDate()).toDays();
+                        BigDecimal rate = huikuan.getHuikuanBankDiscountRate().multiply(new BigDecimal(durTime)).multiply(huikuan.getHuikuanAmount()).multiply(new BigDecimal("1.17")).divide(new BigDecimal("360"),2,BigDecimal.ROUND_UP);
+                        exportExcelDate.setTieRate(rate);
+                    }
                 }
+
 
                 if (i<huankuansSize) {
                     Huankuan huikuan = huankuans.get(i);
-                    exportExcelDate.setHuankuanInterest(huikuan.getHuankuanMapList().stream().map(m -> m.getInterest()).reduce(BigDecimal.ZERO, BigDecimal::add));
-                    exportExcelDate.setHuankuanServiceFee(huikuan.getHuankuanMapList().stream().map(m -> m.getFee()).reduce(BigDecimal.ZERO, BigDecimal::add));
+                    if (huikuan.getHuankuanMapList() == null) {
+                        exportExcelDate.setHuankuanInterest(BigDecimal.ZERO);
+                    } else {
+                        exportExcelDate.setHuankuanInterest(huikuan.getHuankuanMapList().stream().map(m -> m.getInterest()).reduce(BigDecimal.ZERO, BigDecimal::add));
+                    }
+                    if (huikuan.getHuankuanMapList() == null) {
+                        exportExcelDate.setHuankuanServiceFee(BigDecimal.ZERO);
+                    } else {
+                        exportExcelDate.setHuankuanServiceFee(huikuan.getHuankuanMapList().stream().map(m -> m.getFee()).reduce(BigDecimal.ZERO, BigDecimal::add));
+                    }
                     exportExcelDate.setCcs(huikuan.getPromise());
                 }
 
