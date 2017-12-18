@@ -124,11 +124,11 @@
 
                         <div class="form-row">
                             <div class="col-5">
-                                <bs-select formControlName="userId" [fc]="transferForm.get('userId')" [label]="'订单权限移交给:'" [labelclass]="'col-3'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [options]="userList" [error]="transferFormError.userId"></bs-select>
+                                <bs-select formControlName="userId" [fc]="transferForm.get('userId')" [label]="'订单权限移交给:'" [labelclass]="'col-3'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [options]="userList" [error]="transferFormError.userId" (outputChange)="filterTeam($event)"></bs-select>
                             </div>
 
                             <div class="col-3" [hidden]="currentUser?.isAdmin === 'ACSH_AT' ">
-                                <bs-select formControlName="teamId" [fc]="transferForm.get('teamId')" [label]="''" [labelclass]="'col-0'" [inputclass]="'col-12'" [dirty]="ignoreDirty" [options]="teamList" [error]="transferFormError.teamId"></bs-select>
+                                <bs-select formControlName="teamId" [fc]="transferForm.get('teamId')" [label]="''" [labelclass]="'col-0'" [inputclass]="'col-12'" [dirty]="ignoreDirty" [options]="teamFilterList" [error]="transferFormError.teamId"></bs-select>
                             </div>
 
                             <div class="col-2">

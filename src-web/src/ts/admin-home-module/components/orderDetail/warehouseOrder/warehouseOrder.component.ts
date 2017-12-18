@@ -136,7 +136,7 @@ export class WarehouseOrderComponent implements OnInit {
     }
 
     getWarehouseOutInfo (event : any) {
-        if (event.id && event.id !== -1) {
+        if (event && event.id && event.id !== -1) {
             this.hsOrderService.getWarehouseOutInfoByHsID(this.businessType, this.currentOrder.id, event.id).subscribe(
                 data => {
                     this.warehouseOutInfo = data.data

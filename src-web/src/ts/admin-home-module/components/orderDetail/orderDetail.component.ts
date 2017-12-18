@@ -38,6 +38,7 @@ export class OrderDetailComponent implements OnInit {
 
     departmentList : any[] = []
     teamList : any[] = []
+    teamFilterList : any[] = []
 
 
     partyObject : any = {
@@ -276,6 +277,7 @@ export class OrderDetailComponent implements OnInit {
         this.hsUserService.getTeamList().subscribe(
             data => {
                 this.teamList = data.data.results
+                this.teamFilterList = data.data.results.slice()
 
             },
             error => {this.httpService.errorHandler(error) }
@@ -475,6 +477,22 @@ export class OrderDetailComponent implements OnInit {
             },
             error => {this.httpService.errorHandler(error) }
         )
+    }
+
+
+    filterTeam (event : any) {
+        if (event && event.id && event.id !== -1) {
+            const tempTeamList : any[] = []
+
+            this.teamList.forEach( (team) => {
+                if (team.userIdList.indexOf(event.id) > -1) {
+                    tempTeamList.push(team)
+                }
+            })
+
+            this.teamFilterList = tempTeamList
+
+        }
     }
 }
 
