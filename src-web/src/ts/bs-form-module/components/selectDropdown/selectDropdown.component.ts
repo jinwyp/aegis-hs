@@ -170,9 +170,9 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
     //select 键盘事件
     onKeyboardSelectOption(event: any) {
-
+        console.log(11)
         if ( this.isShowSelectOptionList) {
-
+            console.log(222, this.filterOptionList.length)
             const optionsLength = this.filterOptionList.length
 
             if ( event.keyCode === 40) {
