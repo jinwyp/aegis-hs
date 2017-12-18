@@ -3,6 +3,7 @@ package com.yimei.hs.user.controller;
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.ext.annotation.CurrentUser;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.RoleType;
 import com.yimei.hs.user.dto.PageTeamDTO;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
@@ -45,9 +46,15 @@ public class TeamController {
      * @return
      */
     @GetMapping("/teams")
-    public ResponseEntity<Result<Page<Team>>> list(PageTeamDTO pageTeamDTO) {
-        logger.info("get teams: {}", pageTeamDTO);
-        return Result.ok(teamService.getPage(pageTeamDTO));
+    public ResponseEntity<Result<Page<Team>>> list(@CurrentUser User user,PageTeamDTO pageTeamDTO) {
+
+
+        if (RoleType.SUPRER_ADMIN.equals(user.getIsAdmin())) {
+            return Result.ok(teamService.getPage(pageTeamDTO));
+        } else{
+            pageTeamDTO.setDeptId(user.getDeptId());
+            return Result.ok(teamService.getPage(pageTeamDTO));
+        }
     }
 
 
@@ -57,8 +64,10 @@ public class TeamController {
      * @return
      */
     @PostMapping("/teams")
-    public ResponseEntity<Result<Team>> create(@RequestBody Team team) {
-        ResponseEntity teamResponseEntity;
+    public ResponseEntity<Result<Team>> create(@RequestBody Team team,@CurrentUser User user) {
+
+
+        assert (team.getDeptId().equals(user.getDeptId()));
 
         if (deptService.checkDeptExist(team.getDeptId())) {
             teamService.create(team);
