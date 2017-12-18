@@ -71,7 +71,7 @@ public class TeamController {
 
         if (deptService.checkDeptExist(team.getDeptId())) {
             teamService.create(team);
-            List<UserTeamMap> userList;
+
             for(Long userId : team.getUserIdList()) {
                 UserTeamMap userTeamMap =new UserTeamMap(userId,team.getId());
                 userTeamService.create(userTeamMap);
@@ -110,6 +110,8 @@ public class TeamController {
             @PathVariable("id") Long id,
             @RequestBody Team team) {
         team.setId(id);
+
+        
         int status = teamService.update(team);
         if (status == 1) {
             return Result.ok(1);
