@@ -519,6 +519,10 @@
         select
         orderId,
         hsId,
+        mapAmount,
+        payDate,
+        huikuanDate,
+        time,
         rate
         from v_1019
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }

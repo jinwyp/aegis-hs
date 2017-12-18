@@ -3,10 +3,12 @@ package com.yimei.hs.same.service;
 import com.yimei.hs.cang.entity.CangAnalysisData;
 import com.yimei.hs.cang.mapper.CangAnalysisDataMapper;
 import com.yimei.hs.enums.BusinessType;
-import com.yimei.hs.same.entity.CapitalPressure;
-import com.yimei.hs.same.entity.Jiekuan;
-import com.yimei.hs.same.entity.Order;
-import com.yimei.hs.same.entity.OrderConfig;
+import com.yimei.hs.same.dto.PageHuankuanDTO;
+import com.yimei.hs.same.dto.PageHuikuanDTO;
+import com.yimei.hs.same.entity.*;
+import com.yimei.hs.same.mapper.FukuanMapper;
+import com.yimei.hs.same.mapper.HuankuanMapper;
+import com.yimei.hs.same.mapper.HuikuanMapper;
 import com.yimei.hs.ying.entity.AnalysisData;
 import com.yimei.hs.ying.mapper.YingAnalysisDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -574,6 +576,83 @@ public class DataAnalysisService {
             capitalPressureList.add(capitalPressure);
         }
         return capitalPressureList;
+    }
+
+    //  付款列表
+    @Autowired
+    FukuanMapper fukuanMapper;
+    //回款付款列表
+
+    //还款
+    @Autowired
+    HuankuanMapper huankuanMapper;
+    //回款
+    @Autowired
+    HuikuanMapper huikuanMapper;
+
+
+    public List<ExportExcelDate> exportExcel(Long orderId,Long hsId) {
+
+       List<Fukuan>  fukuanList=fukuanMapper.getListByOrderIdAndHsId(orderId, hsId);
+       List<AnalysisData> analysisDatas = yingAnalysisDataMapper.findOneV1019(orderId, hsId);
+
+
+        List<Huikuan> huikuanList = huikuanMapper.gelistByhsIdAndOrderId(orderId, hsId);
+
+        PageHuankuanDTO pageHuankuanDTO = new PageHuankuanDTO();
+        pageHuankuanDTO.setPageNo(1);
+        pageHuankuanDTO.setPageSize(10000);
+        pageHuankuanDTO.setOrderId(orderId);
+        pageHuankuanDTO.setHsId(hsId);
+
+        List<Huankuan> huankuans = huankuanMapper.getPage(pageHuankuanDTO).getResults();
+
+        List<ExportExcelDate> exportExcelDates = new ArrayList<ExportExcelDate>();
+
+        if (analysisDatas!=null) {
+
+            int analysisiDataSize = analysisDatas.size();
+            int fukuanListSize = fukuanList.size();
+            int huikuanListSize = fukuanList.size();
+            int huankuansSize = huankuans.size();
+            for (int i=0;i<analysisiDataSize;i++) {
+                ExportExcelDate exportExcelDate = new ExportExcelDate();
+
+                if (i <fukuanListSize) {
+                    exportExcelDate.setFukuanDate(fukuanList.get(i).getPayDate());
+                    exportExcelDate.setFukuanAmount(fukuanList.get(i).getPayAmount());
+                }
+
+                exportExcelDate.setAmount(analysisDatas.get(i).getMapAmount());
+                exportExcelDate.setFukuanDate(analysisDatas.get(i).getPayDate());
+                exportExcelDate.setHuikuanDate(analysisDatas.get(i).getHuikuanDate());
+                exportExcelDate.setTime(analysisDatas.get(i).getTime());
+                exportExcelDate.setRate(analysisDatas.get(i).getRate());
+
+                if (i<huikuanListSize) {
+                    exportExcelDate.setHuikuanTime(huikuanList.get(i).getHuikuanDate());
+                    exportExcelDate.setHuikuanAmount(huikuanList.get(i).getHuikuanAmount());
+                    exportExcelDate.setHuikuanMode(huikuanList.get(i).getHuikuanMode());
+                    //todo
+                    exportExcelDate.setTieRate(BigDecimal.ZERO);
+                }
+
+                if (i<huankuansSize) {
+                    Huankuan huikuan = huankuans.get(i);
+                    exportExcelDate.setHuankuanInterest(huikuan.getHuankuanMapList().stream().map(m -> m.getInterest()).reduce(BigDecimal.ZERO, BigDecimal::add));
+                    exportExcelDate.setHuankuanServiceFee(huikuan.getHuankuanMapList().stream().map(m -> m.getFee()).reduce(BigDecimal.ZERO, BigDecimal::add));
+                    exportExcelDate.setCcs(huikuan.getPromise());
+                }
+
+                exportExcelDates.add(exportExcelDate);
+
+            }
+
+        }else {
+            return null;
+        }
+            return exportExcelDates;
+
     }
 
 }

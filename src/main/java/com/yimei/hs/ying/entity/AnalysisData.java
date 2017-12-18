@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -254,6 +255,14 @@ public class AnalysisData implements Serializable {
      * 参与方占压
      */
     List<CapitalPressure> capitalPressureList;
+
+
+    //excel 表格
+    BigDecimal mapAmount;
+    LocalDateTime payDate;
+    LocalDateTime huikuanDate;
+    BigDecimal time;
+
 
 
 }

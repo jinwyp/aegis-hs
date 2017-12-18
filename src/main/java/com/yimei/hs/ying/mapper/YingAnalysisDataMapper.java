@@ -51,7 +51,7 @@ public interface YingAnalysisDataMapper {
 
     AnalysisData findOneV1018(@Param("orderId") Long orderId, @Param("hsId")long hsId);
 
-    AnalysisData findOneV1019(@Param("orderId") Long orderId, @Param("hsId")long hsId);
+    List<AnalysisData> findOneV1019(@Param("orderId") Long orderId, @Param("hsId")long hsId);
 
     AnalysisData findOneV1020(@Param("orderId") Long orderId, @Param("hsId")long hsId);
 
