@@ -217,5 +217,19 @@ public class OrderService {
         return orderMapper.delete(id);
     }
 
+    /**
+     * 订单跨不部门转移
+     * @param orderId  订单编号
+     * @param ownerId
+     * @param teamId
+     * @param deptId
+     * @return
+     */
+    @Transactional(readOnly = false)
+    public int updateTransferToOtherDept(Long orderId, Long ownerId, Long teamId, Long deptId) {
 
+
+
+        return orderMapper.updateTransferToOtherDept(orderId, ownerId, teamId, deptId);
+    }
 }

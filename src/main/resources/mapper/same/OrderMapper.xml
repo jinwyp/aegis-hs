@@ -285,5 +285,17 @@
             id = #{id, jdbcType=BIGINT}
             AND ownerId = #{from,jdbcType=BIGINT}
     </update>
+    <update id="updateTransferToOtherDept">
+         UPDATE
+            hs_same_order
+        SET
+            ownerId = #{ownerId,jdbcType=BIGINT},
+            teamId = #{teamId,jdbcType=BIGINT},
+            deptId = #{deptId,jdbcType=BIGINT},
+            tsu     = current_timestamp
+        WHERE
+            id = #{orderId, jdbcType=BIGINT}
+
+    </update>
 
 </mapper>

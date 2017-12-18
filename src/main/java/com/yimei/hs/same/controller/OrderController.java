@@ -19,6 +19,7 @@ import com.yimei.hs.same.service.OrderConfigService;
 import com.yimei.hs.same.service.OrderService;
 import com.yimei.hs.same.service.SettleSellerService;
 import com.yimei.hs.user.entity.User;
+import com.yimei.hs.user.entity.UserTeamMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -242,6 +243,25 @@ public class OrderController {
             @PathVariable("id") Long id
     ) {
         int rtn = orderService.delete(id);
+        return Result.ok(1);
+    }
+
+
+    @PostMapping("/{morderId}/admin")
+    @Logined(isAdmin = true)
+    public ResponseEntity<Result<Integer>> transferToOtherDept(
+            @CurrentUser User user,
+            @PathVariable("businessType") BusinessType businessType,
+            @PathVariable("morderId") Long morderId,
+            @RequestBody  @Validated(CreateGroup.class) UserTeamMap userTeamMap
+
+    ) {
+
+
+        int cnt = orderService.updateTransferToOtherDept(morderId, user.getId(),userTeamMap.getTeamId(),user.getDeptId());
+        if (cnt != 1) {
+            return Result.error(4001, "转移失败", HttpStatus.BAD_REQUEST);
+        }
         return Result.ok(1);
     }
 

@@ -34,4 +34,5 @@ public interface OrderMapper {
     boolean selectOrderListByDepartId(@Param("deptId") String deptId);
 
 
+    int updateTransferToOtherDept(@Param("orderId") Long orderId,@Param("ownerId") Long ownerId,@Param("teamId") Long teamId,  @Param("deptId")Long deptId);
 }
