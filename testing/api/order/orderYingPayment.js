@@ -52,11 +52,11 @@ describe('应收订单 付款:', function () {
                 {
                     "hsId" : 1,
                     "payDate" : "2017-09-10 00:00:00",
-                    "receiveCompanyId" : 2,
+                    "receiveCompanyId" : 4,
                     "payUsage" : "TRADE_DEFICIT",
                     "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "122",
-                    "capitalId" : 1,
+                    "capitalId" : 3,
                     "useInterest" : "",
                     "useDays" : "",
                     "orderId" : orderId,
@@ -65,7 +65,7 @@ describe('应收订单 付款:', function () {
                         "hsId" : 1,
                         "jiekuanDate" : "2299-12-30 00:00:00",
                         "amount" : "99999999",
-                        "capitalId" : 1,
+                        "capitalId" : 3,
                         "useInterest" : "",
                         "useDays" : ""
                     }
@@ -93,11 +93,11 @@ describe('应收订单 付款:', function () {
                 {
                     "hsId" : 1,
                     "payDate" : "2017-10-12 00:00:00",
-                    "receiveCompanyId" : 2,
+                    "receiveCompanyId" : 4,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "122",
-                    "capitalId" : 1,
+                    "capitalId" : 3,
                     "orderId" : orderId,
                 }
             )
@@ -121,11 +121,11 @@ describe('应收订单 付款:', function () {
                 {
                     "hsId" : 1,
                     "payDate" : "2017-11-17 00:00:00",
-                    "receiveCompanyId" : 2,
+                    "receiveCompanyId" : 4,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "122",
-                    "capitalId" : 1,
+                    "capitalId" : 3,
                     "orderId" : orderId,
                 }
             )
@@ -151,11 +151,11 @@ describe('应收订单 付款:', function () {
                 {
                     "hsId" : 1,
                     "payDate" : "2017-09-01 00:00:00",
-                    "receiveCompanyId" : 1,
+                    "receiveCompanyId" : 3,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payAmount" : "2200",
                     "payMode" : "ELEC_REMITTANCE",
-                    "capitalId" : 2,
+                    "capitalId" : 4,
                     "useInterest" : "",
                     "useDays" : "",
                     "orderId" : 1
@@ -213,10 +213,10 @@ describe('应收订单 付款:', function () {
                 {
                     "id" : paymentId,
                     "hsId" : 1,
-                    "receiveCompanyId" : 3,
+                    "receiveCompanyId" : 5,
                     "payUsage" : "DEPOSITECASH",
                     "payMode" : "CASH",
-                    "capitalId" : 5,
+                    "capitalId" : 7,
                     "useInterest" : "0.4",
                     "useDays" : "60",
                     "orderId" : orderId
