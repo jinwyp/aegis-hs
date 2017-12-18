@@ -4,7 +4,9 @@ import com.yimei.hs.boot.persistence.Page;
 import com.yimei.hs.user.entity.Dept;
 import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.dto.PageTeamDTO;
+import com.yimei.hs.user.entity.UserTeamMap;
 import com.yimei.hs.user.mapper.TeamMapper;
+import com.yimei.hs.user.mapper.UserTeamMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class TeamService {
 
     @Autowired
     private TeamMapper teamMapper;
+    @Autowired
+    private UserTeamMapper userTeamMapper;
 
     /**
      * 根据id查 团队
@@ -51,7 +55,15 @@ public class TeamService {
     }
 
     public Page<Team> getPage(PageTeamDTO pageTeamDTO) {
-      return   teamMapper.getPage(pageTeamDTO);
+
+        Page<Team> page = teamMapper.getPage(pageTeamDTO);
+        List<Team> teams = page.getResults();
+        for (Team team:teams) {
+           List<Long> teamList= userTeamMapper.selectByTeamId(team.getId());
+           team.setUserIdList(teamList);
+        }
+
+      return  page;
     }
 
     public boolean checkTeamExist(long tid) {

@@ -46,6 +46,11 @@
         from hs_user_team_map
         WHERE   userId = #{userId,jdbcType=BIGINT} and deleted=0
     </select>
+    <select id="selectByTeamId" resultType="java.lang.Long">
+        SELECT  userId
+        from hs_user_team_map
+        WHERE   teamId = #{teamId,jdbcType=BIGINT} and deleted=0
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from hs_user_team_map
         where id = #{id,jdbcType=BIGINT}
