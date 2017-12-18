@@ -353,8 +353,8 @@ export class OrderDetailComponent implements OnInit {
 
                     const tempResult : any[] = []
 
-                    if (data.data && Array.isArray(data.data)) {
-                        data.data.forEach( user => {
+                    if (data.data && Array.isArray(data.data.results)) {
+                        data.data.results.forEach( user => {
                             tempResult.push ({
                                 id : user.id,
                                 name : user.username + ' - ' + user.phone
