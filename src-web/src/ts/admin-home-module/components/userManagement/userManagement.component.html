@@ -41,7 +41,7 @@
                     <th>部门</th>
                     <th>创建时间</th>
                     <th>创建人</th>
-                    <th>是否为管理员</th>
+                    <th>用户角色</th>
                     <th>是否启用</th>
                     <th></th>
                 </tr>
@@ -54,7 +54,11 @@
                     <td> {{user.deptId | findKey : departmentList : 'name'}}</td>
                     <td> {{user.createDate | slice : 0 : 10}}</td>
                     <td> {{user.createBy}}</td>
-                    <td> {{user.isAdmin === 'SUPRER_ADMIN' ? '是' : '否'}} </td>
+                    <td>
+                        <span *ngIf="user.isAdmin === 'SUPRER_ADMIN'"> 超级管理员 </span>
+                        <span *ngIf="user.isAdmin === 'DEPT_ADMIN'"> 部门管理员 </span>
+                        <span *ngIf="user.isAdmin === 'ACSH_AT'"> 核算会计 </span>
+                    </td>
                     <td> {{user.isActive === true ? '是' : '否'}}</td>
                     <td> <button class="btn btn-info btn-sm" (click)="showForm(false, user)"> 修改 </button></td>
                 </tr>
