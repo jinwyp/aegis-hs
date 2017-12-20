@@ -24,8 +24,8 @@
     <select id="getPage" resultType="com.yimei.hs.user.entity.Team">
         SELECT * from hs_team
         <where>
-            <if test="deptId !=null"> deptId=#{deptId,jdbcType=BIGINT}= </if>
-            <if test="true">deleted=0</if>
+            <if test="deptId !=null"> deptId=#{deptId,jdbcType=BIGINT} </if>
+            <if test="true">and deleted=0</if>
         </where>
     </select>
 

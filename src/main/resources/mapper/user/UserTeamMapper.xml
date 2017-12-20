@@ -25,9 +25,9 @@
     <select id="getPage" resultType="com.yimei.hs.user.entity.UserTeamMap">
         SELECT * from hs_user_team_map
         <where>
-            <if test="id !=null"> id=#{id,jdbcType=BIGINT}= </if>
-            <if test="teamId!=null"> id=#{teamId,jdbcType=BIGINT}= </if>
-            <if test="userId !=null"> id=#{userId,jdbcType=BIGINT}= </if>
+            <if test="id !=null"> id=#{id,jdbcType=BIGINT} </if>
+            <if test="teamId!=null"> and teamId=#{teamId,jdbcType=BIGINT} </if>
+            <if test="userId !=null"> and userId=#{userId,jdbcType=BIGINT}= </if>
             <if test="true">deleted=0</if>
         </where>
     </select>

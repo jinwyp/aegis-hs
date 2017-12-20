@@ -79,6 +79,8 @@ public class OrderController {
         logger.debug("获取订单分页: {}, {}", user, pageOrderDTO);
         if (RoleType.ACSH_AT.equals(user.getIsAdmin())) {
             pageOrderDTO.setOwnerId(user.getId());
+        } else if(RoleType.DEPT_ADMIN.equals(user.getIsAdmin())){
+            pageOrderDTO.setDeptId(user.getDeptId());
         }
 
         return Result.ok(orderService.getPage(pageOrderDTO));
