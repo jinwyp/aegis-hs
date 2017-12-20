@@ -220,9 +220,9 @@ public class OrderService {
     /**
      * 订单跨不部门转移
      * @param orderId  订单编号
-     * @param ownerId
-     * @param teamId
-     * @param deptId
+     * @param ownerId  订单属于谁
+     * @param teamId   订单所属团队
+     * @param deptId   订单所属部门
      * @return
      */
     @Transactional(readOnly = false)

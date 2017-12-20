@@ -69,6 +69,8 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
                     if ( business.equals("cangs")) {
                         business = "cang";
                     }
+//                    if (business.equals("")) {
+//                    }
 
                     BusinessType type = BusinessType.valueOf(business);
 

@@ -18,8 +18,12 @@ import com.yimei.hs.same.service.FukuanService;
 import com.yimei.hs.same.service.OrderConfigService;
 import com.yimei.hs.same.service.OrderService;
 import com.yimei.hs.same.service.SettleSellerService;
+import com.yimei.hs.user.entity.Team;
 import com.yimei.hs.user.entity.User;
 import com.yimei.hs.user.entity.UserTeamMap;
+import com.yimei.hs.user.mapper.DeptMapper;
+import com.yimei.hs.user.mapper.TeamMapper;
+import com.yimei.hs.user.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +56,14 @@ public class OrderController {
     @Autowired
     private SettleSellerService settleSellerService;
 
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private DeptMapper deptMapper;
+
+    @Autowired
+    private TeamMapper teamMapper;
     /**
      * 获取订单分页数据
      *
@@ -140,11 +152,11 @@ public class OrderController {
         PageFukuanDTO pageFukuanDTO = new PageFukuanDTO();
         pageFukuanDTO.setOrderId(order.getId());
 
-        List<Fukuan> fukuans=fukuanService.getPage(pageFukuanDTO).getResults();
+        List<Fukuan> fukuans = fukuanService.getPage(pageFukuanDTO).getResults();
         if (fukuans == null || fukuans.size() == 0) {
             order.setId(id);
             order.setBusinessType(businessType);
-            int rtn = orderService.update(order,OrderStatus.UNCOMPLETED);
+            int rtn = orderService.update(order, OrderStatus.UNCOMPLETED);
 
             if (rtn != 1) {
                 return Result.error(4001, "更新失败");
@@ -155,7 +167,7 @@ public class OrderController {
             Order orderUpdate = new Order();
             orderUpdate.setId(id);
             orderUpdate.setTeamId(order.getTeamId());
-            int rtn = orderService.update(order,OrderStatus.COMPLETED);
+            int rtn = orderService.update(order, OrderStatus.COMPLETED);
 
             if (rtn != 1) {
                 return Result.error(4001, "更新失败");
@@ -184,9 +196,9 @@ public class OrderController {
         boolean setAble = true;
         List<OrderConfig> orderConfigs = orderConfigService.getList(id);
 
-        for (OrderConfig orderConfig :orderConfigs) {
+        for (OrderConfig orderConfig : orderConfigs) {
             setAble = settleSellerService.selectHsAndOrderId(id, orderConfig.getId());
-            if (setAble==false) {
+            if (setAble == false) {
                 break;
             }
         }
@@ -197,7 +209,7 @@ public class OrderController {
             order.setBusinessType(businessType);
             order.setStatus(OrderStatus.COMPLETED);
 
-            int rtn = orderService.update(order,OrderStatus.COMPLETED);
+            int rtn = orderService.update(order, OrderStatus.COMPLETED);
 
             if (rtn != 1) {
                 return Result.error(4001, "更新失败");
@@ -209,6 +221,7 @@ public class OrderController {
 
 
     }
+
     /**
      * 将order转移
      *
@@ -253,15 +266,36 @@ public class OrderController {
             @CurrentUser User user,
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
-            @RequestBody  @Validated(CreateGroup.class) UserTeamMap userTeamMap
+            @RequestBody @Validated(CreateGroup.class) UserTeamMap userTeamMap
 
     ) {
+        //获取转移订单
+        Order order = orderService.findOne(morderId);
+        //获取转移用户
+        User orderUser = userMapper.selectByPrimaryKey(userTeamMap.getUserId());
+
+        Team team = teamMapper.selectByPrimaryKey(userTeamMap.getTeamId());
+//        //查看部门是否切换
+//        if (order.getDeptId() != orderUser.getDeptId()) {
+//            if (team.getDeptId() == orderUser.getDeptId()) {
+//                int cnt = orderService.updateTransferToOtherDept(morderId, userTeamMap.getUserId(), userTeamMap.getTeamId(), orderUser.getDeptId());
+//                if (cnt != 1) {
+//                    return Result.error(4001, "转移失败", HttpStatus.BAD_REQUEST);
+//                }
+//            } else {
+//                   return Result.error(4001, "转移失败", HttpStatus.BAD_REQUEST);
+//            }
+//        } else {
+
+                int cnt = orderService.updateTransferToOtherDept(morderId, userTeamMap.getUserId(), userTeamMap.getTeamId(), orderUser.getDeptId());
+                if (cnt != 1) {
+                    return Result.error(4001, "转移失败", HttpStatus.BAD_REQUEST);
+                }
+
+//        }
 
 
-        int cnt = orderService.updateTransferToOtherDept(morderId, user.getId(),userTeamMap.getTeamId(),user.getDeptId());
-        if (cnt != 1) {
-            return Result.error(4001, "转移失败", HttpStatus.BAD_REQUEST);
-        }
+
         return Result.ok(1);
     }
 
