@@ -42,6 +42,9 @@ public class PageOrderDTO extends BaseFilter<PageOrderDTO> {
     private OrderStatus status;
 
 
+    private String line;
+
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate createDateStart;
 

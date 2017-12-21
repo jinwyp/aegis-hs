@@ -44,17 +44,24 @@ public class JiekuanService {
 
         for (Jiekuan jiekuan : page.getResults()) {
             // 1. 关联借款对应的还款
-            jiekuan.setHuankuanList(huankuanMapper.getListByJiekuanId(jiekuan.getId()));
+
+      List<Huankuan> huankuanList=      huankuanMapper.getListByJiekuanId(jiekuan.getId());
+
+            jiekuan.setHuankuanList(huankuanList);
             // 2. 关联借款对应的还款明细
             jiekuan.setHuankuanMapList(huankuanMapMapper.getListByJiekuanId(jiekuan.getId()));
-            if (jiekuan.getHuankuanMapList() != null&&jiekuan.getHuankuanMapList().size()>0){
-                jiekuan.setLoanStatus(
-                        (jiekuan.getAmount().compareTo(jiekuan.getHuankuanMapList().stream()
-                                .map(HuankuanMap::getPrincipal)
-                                .reduce(BigDecimal.ZERO, BigDecimal::add)) == 1 ? "部分已还" : " 已还"));
-            } else {
-                jiekuan.setLoanStatus("未还");
-            }
+
+            jiekuan.setLoanStatus(huankuanList!=null&&
+                    huankuanList.size()>0&&
+                    huankuanList.get(0).getPromise()==true?"已还":"未还");
+//            if (jiekuan.getHuankuanMapList() != null&&jiekuan.getHuankuanMapList().size()>0){
+//                jiekuan.setLoanStatus(
+//                        (jiekuan.getAmount().compareTo(jiekuan.getHuankuanMapList().stream()
+//                                .map(HuankuanMap::getPrincipal)
+//                                .reduce(BigDecimal.ZERO, BigDecimal::add)) == 1 ? "部分已还" : " 已还"));
+//            } else {
+//                jiekuan.setLoanStatus("未还");
+//            }
 
         }
 
