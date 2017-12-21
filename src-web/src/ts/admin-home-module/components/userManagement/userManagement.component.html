@@ -14,7 +14,7 @@
 
             <bs-select formControlName ="deptId" [readOnly]="sessionUser.isAdmin ==='DEPT_ADMIN'" [options]="departmentList" [label]="'部门:'" [dirty]="ignoreDirty" [error]="userFormError.deptId"></bs-select>
 
-            <bs-select formControlName ="isAdmin" [options]="dataRoleList" [label]="'角色:'" [dirty]="ignoreDirty" [error]="userFormError.isAdmin"></bs-select>
+            <bs-select formControlName ="isAdmin" [options]="dataRoleList2" [label]="'角色:'" [dirty]="ignoreDirty" [error]="userFormError.isAdmin"></bs-select>
 
             <bs-radio formControlName ="isActive" [sourceList]="dataIsAdmin" [label]="'是否启用:'" [dirty]="ignoreDirty" [error]="userFormError.isActive"></bs-radio>
 

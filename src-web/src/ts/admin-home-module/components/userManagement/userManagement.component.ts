@@ -31,6 +31,11 @@ export class UserManagementComponent implements OnInit {
     departmentList : any[] = []
 
     dataRoleList : any[] = getEnum('RoleType')
+    dataRoleList2 : any[] = [
+        // {id: 'SUPRER_ADMIN', name: '超级管理员'} ,
+        {id: 'DEPT_ADMIN', name: '部门管理员'},
+        {id: 'ACSH_AT', name: '核算会计'}
+    ]
 
     dataIsAdmin : any [] = [
         { id : 2 , name : '是'},
