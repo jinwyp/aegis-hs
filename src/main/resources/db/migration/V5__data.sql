@@ -3,31 +3,51 @@ use hsdb;
 -- 部门
 insert into hs_dept(name) values
   ('管理部'),
-  ('金融产品事业部');
+  ('金融产品事业部'),
+  ('国内事业部');
 
 -- 团队
 insert into hs_team(name, deptId) values
-  ('赵善文团队', 2),
-  ('张培栓团队', 2),
-  ('魏靖团队',2),
-  ('卢昆团队', 2),
-  ('赵悝团队', 2),
-  ('余东升团队', 2),
-  ('孔光明团队', 2),
-  ('张超超团队', 2),
-  ('宁夏自营分公司', 2),
-  ('钢材金融分公司',2),
-  ('赵孟晓团队', 2),
-  ('陈璐团队', 2),
-  ('杨邓团队', 2),
-  ('田雪冬团队', 2),
-  ('冷链团队', 2);
+  ('赵善文团队', 3),
+  ('张培栓团队', 3),
+  ('魏靖团队',3),
+  ('卢昆团队', 3),
+  ('赵悝团队', 3),
+  ('余东升团队', 3),
+  ('孔光明团队', 3),
+  ('张超超团队', 3),
+  ('宁夏自营分公司', 3),
+  ('钢材金融分公司',3),
+  ('赵孟晓团队', 3),
+  ('陈璐团队', 3),
+  ('杨邓团队', 3),
+  ('田雪冬团队', 3),
+  ('冷链团队', 3);
 
 -- 用户
 insert into hs_user(deptId, phone, username,password, passwordSalt, createDate, createBy, isAdmin) values
- (1, '13022117050', 'hary','c9ca4cc1ce82a2c7c21feb41df67ebdd12a471f5', 'd379e428ee88629f', '2017-01-01', 'hary', "SUPRER_ADMIN");
-insert into hs_user(deptId, phone,username, password, passwordSalt, createDate, createBy, isAdmin) values
-                                                                                          (2, '18321805753', 'lubiao','c9ca4cc1ce82a2c7c21feb41df67ebdd12a471f5', 'd379e428ee88629f', '2017-01-01', 'hary', 'ACSH_AT');
+ (1, '15093080576', '张珍','c9ca4cc1ce82a2c7c21feb41df67ebdd12a471f5', 'd379e428ee88629f', '2017-12-21', 'sys', "SUPRER_ADMIN");
+
+ -- 用户
+insert into hs_user(deptId, phone, username,password, passwordSalt, createDate, createBy, isAdmin) values
+ (3, '15936202303', '孙艳红','c9ca4cc1ce82a2c7c21feb41df67ebdd12a471f5', 'd379e428ee88629f', '2017-12-21', 'sys', "DEPT_ADMIN");
+
+ insert into hs_user(deptId, phone, username,password, passwordSalt, createDate, createBy, isAdmin) values
+ (3, '18625590030', '赵征','c9ca4cc1ce82a2c7c21feb41df67ebdd12a471f5', 'd379e428ee88629f', '2017-12-21', 'sys', "DEPT_ADMIN");
+
+
+ insert into hs_user(deptId, phone, username,password, passwordSalt, createDate, createBy, isAdmin) values
+ (3, '13103819809', '贾梦阳','c9ca4cc1ce82a2c7c21feb41df67ebdd12a471f5', 'd379e428ee88629f', '2017-12-21', 'sys', "ACSH_AT");
+
+ insert into hs_user(deptId, phone, username,password, passwordSalt, createDate, createBy, isAdmin) values
+ (3, '18236924368', '马小丽','c9ca4cc1ce82a2c7c21feb41df67ebdd12a471f5', 'd379e428ee88629f', '2017-12-21', 'sys', "ACSH_AT");
+
+
+ insert into hs_user(deptId, phone, username,password, passwordSalt, createDate, createBy, isAdmin) values
+ (3, '18317714507', '唐晓珊','c9ca4cc1ce82a2c7c21feb41df67ebdd12a471f5', 'd379e428ee88629f', '2017-12-21', 'sys', "ACSH_AT");
+
+-- insert into hs_user(deptId, phone,username, password, passwordSalt, createDate, createBy, isAdmin) values
+                                                                                          -- (2, '18321805753', 'lubiao','c9ca4cc1ce82a2c7c21feb41df67ebdd12a471f5', 'd379e428ee88629f', '2017-01-01', 'hary', 'ACSH_AT');
 
 -- 参与方
 insert into hs_party(partyType, name, shortName) values

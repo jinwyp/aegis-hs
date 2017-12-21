@@ -41,7 +41,9 @@ public class AdminController {
             @CurrentUser User admin,
             @RequestBody @Validated User user
     ) {
-
+        if (user.getIsAdmin().equals(RoleType.SUPRER_ADMIN)) {
+            return Result.error(4001, "角色选择错误");
+        }
         int rtn = userService.create(user, admin);
         if (rtn != 1) {
             logger.error("创建用户失败: {}", user);
@@ -103,6 +105,9 @@ public class AdminController {
             @RequestBody User user
     ) {
         user.setId(id);
+        if (user.getIsAdmin()!=null&&user.getIsAdmin().equals(RoleType.SUPRER_ADMIN)) {
+            return Result.error(4001, "角色选择错误");
+        }
         userService.update(user);
         return Result.ok(1);
     }
