@@ -587,7 +587,7 @@ public class DataAnalysisService {
 
     //还款
     @Autowired
-    HuankuanMapper huankuanMapper;
+    HuankuanService huankuanMapper;
     //回款
     @Autowired
     HuikuanMapper huikuanMapper;
@@ -615,9 +615,17 @@ public class DataAnalysisService {
 
             int analysisiDataSize = analysisDatas.size();
             int fukuanListSize = fukuanList.size();
-            int huikuanListSize = fukuanList.size();
+            int huikuanListSize = huikuanList.size();
             int huankuansSize = huankuans.size();
-            for (int i=0;i<analysisiDataSize;i++) {
+            List<Integer> listSize = new ArrayList<Integer>();
+
+            listSize.add(analysisiDataSize);
+            listSize.add(fukuanListSize);
+            listSize.add(huikuanListSize);
+            listSize.add(huankuansSize);
+            int maxSize = listSize.stream().mapToInt((x) -> x).max().getAsInt();
+
+            for (int i=0;i<maxSize;i++) {
                 ExportExcelDate exportExcelDate = new ExportExcelDate();
 
                 if (i <fukuanListSize) {
@@ -625,19 +633,21 @@ public class DataAnalysisService {
                     exportExcelDate.setFukuanAmount(fukuanList.get(i).getPayAmount());
                 }
 
-                exportExcelDate.setAmount(analysisDatas.get(i).getMapAmount());
-                exportExcelDate.setPayDate(analysisDatas.get(i).getPayDate());
-                exportExcelDate.setHuikuanDate(analysisDatas.get(i).getHuikuanDate());
-                exportExcelDate.setTime(analysisDatas.get(i).getTime());
-                exportExcelDate.setRate(analysisDatas.get(i).getRate());
+                if (i <analysisiDataSize) {
 
+                    exportExcelDate.setAmount(analysisDatas.get(i).getMapAmount());
+                    exportExcelDate.setPayDate(analysisDatas.get(i).getPayDate());
+                    exportExcelDate.setHuikuanDate(analysisDatas.get(i).getHuikuanDate());
+                    exportExcelDate.setTime(analysisDatas.get(i).getTime());
+                    exportExcelDate.setRate(analysisDatas.get(i).getRate());
+                }
                 if (i<huikuanListSize) {
 
                     Huikuan huikuan=huikuanList.get(i);
                     exportExcelDate.setHuikuanTime(huikuan.getHuikuanDate());
                     exportExcelDate.setHuikuanAmount(huikuan.getHuikuanAmount());
                     exportExcelDate.setHuikuanMode(huikuan.getHuikuanMode());
-                    //todo
+
                     if (huikuan.getHuikuanMode().equals(PayMode.BANK_ACCEPTANCE)) {
                         Long durTime = Duration.between(huikuan.getHuikuanBusinessPaperExpire(), huikuan.getHuikuanBankPaperDate()).toDays();
                         BigDecimal rate = huikuan.getHuikuanBankDiscountRate().multiply(new BigDecimal(durTime)).multiply(huikuan.getHuikuanAmount()).multiply(new BigDecimal("1.17")).divide(new BigDecimal("360"),2,BigDecimal.ROUND_UP);
