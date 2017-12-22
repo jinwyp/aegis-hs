@@ -160,6 +160,10 @@ export class OrderDetailComponent implements OnInit {
 
                     tradingCompanyInTypeNum : 0,
                     tradingCompanyInTpeMoneyAmount : 0,
+                    upstreamUninvoiceAmount : 0,
+                    upstreamUninvoicePrice : 0,
+
+
                     totalCSSIntypeNumber : 0,
                     totalCCSIntypeMoney : 0,
                     cssUninTypeNum : 0,
@@ -208,6 +212,9 @@ export class OrderDetailComponent implements OnInit {
 
                         tempTotal.tradingCompanyInTypeNum = tempTotal.tradingCompanyInTypeNum + unit.tradingCompanyInTypeNum
                         tempTotal.tradingCompanyInTpeMoneyAmount = tempTotal.tradingCompanyInTpeMoneyAmount + unit.tradingCompanyInTpeMoneyAmount
+                        tempTotal.upstreamUninvoiceAmount = tempTotal.upstreamUninvoiceAmount + unit.upstreamUninvoiceAmount
+                        tempTotal.upstreamUninvoicePrice = tempTotal.upstreamUninvoicePrice + unit.upstreamUninvoicePrice
+
                         tempTotal.totalCSSIntypeNumber = tempTotal.totalCSSIntypeNumber + unit.totalCSSIntypeNumber || 0
                         tempTotal.totalCCSIntypeMoney = tempTotal.totalCCSIntypeMoney + unit.totalCCSIntypeMoney || 0
                         tempTotal.cssUninTypeNum = tempTotal.cssUninTypeNum + unit.cssUninTypeNum || 0

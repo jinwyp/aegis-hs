@@ -329,13 +329,22 @@
                         <!--</tr>-->
 
                         <tr >
-                            <td rowspan="6">进项票信息</td>
+                            <td rowspan="8">进项票信息</td>
                             <td>贸易公司已收到进项数量</td>
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.tradingCompanyInTypeNum | number }}</td>
                         </tr>
                         <tr >
                             <td>贸易公司已收到进项金额</td>
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.tradingCompanyInTpeMoneyAmount | number }}</td>
+                        </tr>
+                        <tr >
+                            <td >进项票信息</td>
+                            <td>上游供应商未开票吨位</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.upstreamUninvoiceAmount | number }}</td>
+                        </tr>
+                        <tr >
+                            <td>上游供应商未开票金额</td>
+                            <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.upstreamUninvoicePrice | number }}</td>
                         </tr>
                         <tr >
                             <td>CCS已收到进项数量</td>
