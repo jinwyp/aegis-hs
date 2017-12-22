@@ -154,6 +154,7 @@ public class OrderController {
         PageFukuanDTO pageFukuanDTO = new PageFukuanDTO();
         pageFukuanDTO.setOrderId(order.getId());
 
+
         List<Fukuan> fukuans = fukuanService.getPage(pageFukuanDTO).getResults();
         if (fukuans == null || fukuans.size() == 0) {
             order.setId(id);
@@ -168,6 +169,7 @@ public class OrderController {
 
             Order orderUpdate = new Order();
             orderUpdate.setId(id);
+            order.setBusinessType(businessType);
             orderUpdate.setTeamId(order.getTeamId());
             int rtn = orderService.update(order, OrderStatus.COMPLETED);
 
