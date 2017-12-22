@@ -10,6 +10,10 @@
             </div>
 
 
+            <bs-text-input formControlName="amount" [fc]="settleForm.get('amount')" [type]="'number'" [label]="'结算数量(吨):'" [dirty]="ignoreDirty" [error]="settleFormError.amount"></bs-text-input>
+            <bs-text-input formControlName="money" [fc]="settleForm.get('money')" [type]="'number'" [label]="'结算金额(元):'" [dirty]="ignoreDirty" [error]="settleFormError.money"></bs-text-input>
+
+
             <bs-datepicker formControlName="settleDate" [fc]="settleForm.get('settleDate')" [label]="'结算日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty" [error]="settleFormError.settleDate" ></bs-datepicker>
 
             <div [hidden]="settleType !== 'settlesellerupstream' && settleType !== 'settlesellerdownstream'">
@@ -20,8 +24,6 @@
             </div>
 
             <div [hidden]="settleType !== 'settlebuyerdownstream' && settleType !== 'settlebuyerupstream'">
-                <bs-text-input formControlName="amount" [fc]="settleForm.get('amount')" [type]="'number'" [label]="'结算数量(吨):'" [dirty]="ignoreDirty" [error]="settleFormError.amount"></bs-text-input>
-                <bs-text-input formControlName="money" [fc]="settleForm.get('money')" [type]="'number'" [label]="'结算金额(元):'" [dirty]="ignoreDirty" [error]="settleFormError.money"></bs-text-input>
 
                 <bs-text-input formControlName="settleGap" [fc]="settleForm.get('settleGap')" [type]="'number'" [label]="'结算扣吨(吨):'" [dirty]="ignoreDirty" [error]="settleFormError.settleGap"></bs-text-input>
             </div>
@@ -88,8 +90,8 @@
                     <th>结算ID</th>
                     <th>核算月</th>
                     <th>结算日期</th>
-                    <!--<th>结算数量(吨)</th>-->
-                    <!--<th>结算金额</th>-->
+                    <th>结算数量(吨)</th>
+                    <th>结算金额(元)</th>
 
                     <th>折扣类型</th>
                     <th>利率折扣</th>
@@ -105,8 +107,8 @@
                     <td> {{settle.hsId | findKey : unitList : 'name'}}</td>
 
                     <td> {{settle.settleDate | slice : 0 : 10 }}</td>
-                    <!--<td> {{settle.amount }}</td>-->
-                    <!--<td> {{settle.money }}</td>-->
+                    <td> {{settle.amount }}</td>
+                    <td> {{settle.money }}</td>
 
 
                     <td> {{settle?.discountType | findKey : settleDiscountModeList : 'name' }}</td>

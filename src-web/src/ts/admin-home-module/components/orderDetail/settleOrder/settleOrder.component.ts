@@ -337,12 +337,12 @@ export class SettleOrderComponent implements OnInit {
     settleFormSubmit() {
 
         if (this.settleType === 'settlesellerupstream' || this.settleType === 'settlesellerdownstream') {
-            if (!this.settleForm.value.amount) {
-                this.settleForm.patchValue({amount : 99999999})
-            }
-            if (!this.settleForm.value.money) {
-                this.settleForm.patchValue({money : 99999999})
-            }
+            // if (!this.settleForm.value.amount) {
+            //     this.settleForm.patchValue({amount : 99999999})
+            // }
+            // if (!this.settleForm.value.money) {
+            //     this.settleForm.patchValue({money : 99999999})
+            // }
             if (!this.settleForm.value.settleGap) {
                 this.settleForm.patchValue({settleGap : 99999999})
             }
