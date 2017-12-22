@@ -5,8 +5,8 @@
 .delete-prompt {
     position: absolute;
     top: -58px;
-    left: -62px;
-    width: 170px;
+    left: -36px;
+    width: 116px;
     padding: 8px;
     background-color: white;
 
@@ -17,7 +17,7 @@
 
 .delete-prompt:before {
     position: absolute;
-    left: 72px;
+    left: 40%;
     top: 47px;
     content:"\A";
     width: 0;
