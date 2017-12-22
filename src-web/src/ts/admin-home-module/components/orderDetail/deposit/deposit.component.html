@@ -6,6 +6,7 @@
             <bs-datepicker formControlName="bailDate" [fc]="depositForm.get('bailDate')" [label]="'交纳日期:'" [format]="'yyyy-mm-dd hh:MM:ss'" [dirty]="ignoreDirty"  [error]="depositFormError.bailDate" ></bs-datepicker>
             <bs-select formControlName ="bailType" [fc]="depositForm.get('bailType')" [label]="'保证金类型:'" [dirty]="ignoreDirty" [options]="depositTypeList" [error]="depositFormError.bailType"></bs-select>
             <bs-text-input formControlName="bailAmount" [fc]="depositForm.get('bailAmount')" [type]="'number'" [label]="'保证金金额(元):'" [dirty]="ignoreDirty" [error]="depositFormError.bailAmount" [hidden]="!isAddNew"></bs-text-input>
+            <bs-text-input formControlName="memo" [fc]="depositForm.get('memo')" [type]="'textarea'" [label]="'备注:'"  [dirty]="ignoreDirty" [error]="depositFormError.memo" ></bs-text-input>
 
             <bs-select formControlName ="openCompanyId" [fc]="depositForm.get('openCompanyId')" [label]="'付款单位:'" [dirty]="ignoreDirty" [editable]="true" [options]="party.normal" [error]="depositFormError.openCompanyId" ></bs-select>
             <bs-select formControlName ="receiverId" [fc]="depositForm.get('receiverId')" [label]="'收款单位:'" [dirty]="ignoreDirty" [options]="party.orderIncluded" [error]="depositFormError.receiverId" ></bs-select>
@@ -73,6 +74,7 @@
                     <th>保证金金额(元)</th>
                     <th>付款单位</th>
                     <th>收款单位</th>
+                    <th>备注</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -86,6 +88,7 @@
                     <td> {{deposit.bailAmount  }}</td>
                     <td> {{deposit.openCompanyId | findKey : party.normal : 'name' }}</td>
                     <td> {{deposit.receiverId | findKey : party.normal : 'name' }}</td>
+                    <td> {{deposit.memo }}</td>
 
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, deposit)"> 修改 </button>

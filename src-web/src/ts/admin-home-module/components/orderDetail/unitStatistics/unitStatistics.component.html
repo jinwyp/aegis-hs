@@ -81,6 +81,13 @@
                             <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “上游供应商ID”且收票单位 = “贸易公司ID”的价税合计">进项票信息 - 贸易公司已收到进项金额: {{ unitStatistics?.tradingCompanyInTpeMoneyAmount | number }}</p>
                         </div>
                         <div class="col-3">
+                            <p class="card-text" title="【1040】核算结算量-汇总：进项或销项=”进项发票“且发票类型 = “货款发票”且开票单位 = “上游供应商ID”的票面数量">进项票信息 - 上游供应商未开票吨位: {{ unitStatistics?.upstreamUninvoiceAmount | number }}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text" title="【1046】采购货款总额 - 汇总：进项或销项=”进项发票“且发票类型 = “货款发票”且开票单位 = “上游供应商ID”的票面金额">进项票信息 - 上游供应商未开票金额: {{ unitStatistics?.upstreamUninvoicePrice | number }}</p>
+                        </div>
+
+                        <div class="col-3">
                             <p class="card-text" title="汇总：发票类型 = “进项发票”且开票单位 = “主账务公司ID”的票面数量">进项票信息 - CCS已收到进项数量: {{ unitStatistics?.totalCSSIntypeNumber | number }}</p>
                         </div>
                         <div class="col-3">
