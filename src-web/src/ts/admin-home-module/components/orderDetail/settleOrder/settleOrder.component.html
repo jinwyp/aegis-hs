@@ -106,7 +106,6 @@
                 <tr *ngFor="let settle of settleYingUpstreamList; trackBy: trackByFn">
                     <td> {{settle.id}}</td>
                     <td> {{settle.hsId | findKey : unitList : 'name'}}</td>
-
                     <td> {{settle.settleDate | slice : 0 : 10 }}</td>
                     <td> {{settle.amount }}</td>
                     <td> {{settle.money }}</td>
@@ -128,8 +127,8 @@
                     <td> {{settle.hsId | findKey : unitList : 'name'}}</td>
 
                     <td> {{settle.settleDate | slice : 0 : 10 }}</td>
-                    <!--<td> {{settle.amount }}</td>-->
-                    <!--<td> {{settle.money }}</td>-->
+                    <td> {{settle.amount }}</td>
+                    <td> {{settle.money }}</td>
 
 
                     <td> {{settle?.discountType | findKey : settleDiscountModeList : 'name' }}</td>
@@ -139,7 +138,7 @@
 
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, settle)"> 修改 </button>
-                        <button class="btn btn-link btn-sm" (click)="deleteItem(settle)"> 删除 </button>
+                        <bs-delete-prompt (confirmDel)="deleteItem(settle)">删除</bs-delete-prompt>
                     </td>
                 </tr>
                 </tbody>

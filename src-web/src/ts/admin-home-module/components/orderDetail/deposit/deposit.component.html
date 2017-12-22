@@ -92,7 +92,7 @@
 
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, deposit)"> 修改 </button>
-                        <button class="btn btn-link btn-sm" (click)="deleteItem(deposit)"> 删除 </button>
+                        <bs-delete-prompt (confirmDel)="deleteItem(deposit)">删除</bs-delete-prompt>
                     </td>
                 </tr>
                 <tr> <td colspan="8"> 累计保证金金额: {{totalBailAmount.toFixed(2)}}</tr>
