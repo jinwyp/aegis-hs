@@ -11,6 +11,7 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, 
 export class BSDeletePrompt implements OnInit {
 
     @Input() item : any = {}
+    @Input() class : string = 'btn-link '
 
     @Output() confirmDel: any = new EventEmitter<number>()
 
