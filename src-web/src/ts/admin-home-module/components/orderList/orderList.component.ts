@@ -244,7 +244,8 @@ export class OrderListComponent implements OnInit {
             'mainAccounting'    : ['' ],
             'createDateStart'    : [null ],
             'createDateEnd'    : [null ],
-            'status'    : ['' ]
+            'status'    : ['' ],
+            'line'    : ['' ]
         } )
     }
 

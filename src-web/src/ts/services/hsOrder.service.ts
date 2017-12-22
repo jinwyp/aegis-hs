@@ -50,6 +50,7 @@ export class HSOrderService {
         if (query.createDateStart) { params = params.append('createDateStart', query.createDateStart)}
         if (query.createDateEnd) { params = params.append('createDateEnd', query.createDateEnd)}
         if (query.status) { params = params.append('status', query.status)}
+        if (query.line) { params = params.append('line', query.line)}
 
         return this.http.get(apiPath.hsGetOrderList + '/' + businessType + 's', {params: params})
     }

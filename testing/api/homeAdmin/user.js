@@ -19,7 +19,7 @@ describe('管理用户', function () {
 
     let Authorization = ''
 
-    let userId = 3
+    let userId = 8
     let delUserId = 6
 
     before(function (done) {
@@ -60,7 +60,7 @@ describe('管理用户', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.createBy).to.include('13022117050')
+                expect(res.body.data.createBy).to.include(config.user.admin.phone)
                 expect(res.body.data.phone).to.include('13564568304')
                 done()
             })
@@ -85,7 +85,7 @@ describe('管理用户', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.createBy).to.include('13022117050')
+                expect(res.body.data.createBy).to.include(config.user.admin.phone)
                 expect(res.body.data.phone).to.include('13564568301')
 
                 userId = res.body.data.id
@@ -112,7 +112,7 @@ describe('管理用户', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.createBy).to.include('13022117050')
+                expect(res.body.data.createBy).to.include(config.user.admin.phone)
                 expect(res.body.data.phone).to.include('13564568302')
                 done()
             })
@@ -137,7 +137,7 @@ describe('管理用户', function () {
                 expect(res.body.success, 'success属性值应该是true 但实际不是true').to.equal(true)
                 expect(res.body.data, '返回的数据data对象应该不为null 但实际是null或undefined').to.not.equal(null)
                 expect(res.body.data.id, '返回的数据里面没有id字段').to.be.a('number')
-                expect(res.body.data.createBy).to.include('13022117050')
+                expect(res.body.data.createBy).to.include(config.user.admin.phone)
                 expect(res.body.data.phone).to.include('13564568303')
                 done()
             })

@@ -15,7 +15,7 @@ exports.headers = {
 
 exports.user = {
     admin : {
-        phone: "13022117050",
+        phone: "15093080576",
         password: "123456"
     },
     user10 : {
