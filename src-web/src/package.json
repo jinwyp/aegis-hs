@@ -18,22 +18,21 @@
   "author": "JinWYP",
   "license": "MIT",
   "dependencies": {
-    "@angular/animations": "^4.4.2",
-    "@angular/common": "^4.4.2",
-    "@angular/compiler": "^4.4.2",
-    "@angular/compiler-cli": "^4.4.2",
-    "@angular/core": "^4.4.2",
-    "@angular/forms": "^4.4.2",
-    "@angular/http": "^4.4.2",
-    "@angular/platform-browser": "^4.4.2",
-    "@angular/platform-browser-dynamic": "^4.4.2",
-    "@angular/router": "^4.4.2",
-    "core-js": "^2.5.1",
-    "rxjs": "^5.4.3",
-    "zone.js": "^0.8.17"
+    "@angular/animations": "^4.4.6",
+    "@angular/common": "^4.4.6",
+    "@angular/compiler": "^4.4.6",
+    "@angular/core": "^4.4.6",
+    "@angular/forms": "^4.4.6",
+    "@angular/http": "^4.4.6",
+    "@angular/platform-browser": "^4.4.6",
+    "@angular/platform-browser-dynamic": "^4.4.6",
+    "@angular/router": "^4.4.6",
+    "core-js": "^2.5.3",
+    "rxjs": "^5.5.6",
+    "zone.js": "^0.8.18"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "^4.4.2",
+    "@angular/compiler-cli": "^4.4.6",
     "@ngtools/webpack": "^1.6.2",
     "@types/jasmine": "^2.5.54",
     "@types/jquery": "^3.2.12",
@@ -55,10 +54,10 @@
     "optimize-js-plugin": "0.0.4",
     "raw-loader": "^0.5.1",
     "require-dir": "^0.3.2",
-    "tslint": "^5.7.0",
-    "typescript": "^2.5.2",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.8.2",
-    "webpack-merge": "^4.1.0"
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7",
+    "webpack-merge": "^4.1.1"
   }
 }
