@@ -52,9 +52,9 @@ describe('仓押订单', function () {
                     "cargoType":"COAL",
                     "upstreamSettleMode":"ONE_PAPER_SETTLE",
                     "downstreamSettleMode":"TWO_PAPER_SETTLE",
-                    "mainAccounting" : 2,
-                    "upstreamId" : 4,
-                    "downstreamId" : 5,
+                    "mainAccounting" : 4,
+                    "upstreamId" : 6,
+                    "downstreamId" : 7,
                     "businessType" : "cang"
                 }
             )
@@ -83,9 +83,9 @@ describe('仓押订单', function () {
                     "cargoType" : "STEELS",
                     "upstreamSettleMode" : "TWO_PAPER_SETTLE",
                     "downstreamSettleMode" : "ONE_PAPER_SETTLE",
-                    "mainAccounting" : 5,
-                    "upstreamId" : 10,
-                    "downstreamId" : 12,
+                    "mainAccounting" : 7,
+                    "upstreamId" : 12,
+                    "downstreamId" : 14,
                     "businessType" : "cang",
                     "orderPartyList" : [
                         {"custType" : "UPSTREAM", "customerId" : 4 , "customerPosition":1},
@@ -120,9 +120,9 @@ describe('仓押订单', function () {
                 "cargoType":"COAL",
                 "upstreamSettleMode":"ONE_PAPER_SETTLE",
                 "downstreamSettleMode":"ONE_PAPER_SETTLE",
-                "mainAccounting":1,
-                "upstreamId":2,
-                "downstreamId":3,
+                "mainAccounting":3,
+                "upstreamId":4,
+                "downstreamId":5,
                 "orderPartyList" : [
                     { "custType" : "UPSTREAM", "customerId" : 1, "customerPosition":1},
                     { "custType" : "DOWNSTREAM", "customerId" : 2, "customerPosition":1}
@@ -188,9 +188,9 @@ describe('仓押订单', function () {
                 "cargoType":"COAL",
                 "upstreamSettleMode":"ONE_PAPER_SETTLE",
                 "downstreamSettleMode":"ONE_PAPER_SETTLE",
-                "mainAccounting":1,
-                "upstreamId":2,
-                "downstreamId":3,
+                "mainAccounting":3,
+                "upstreamId":4,
+                "downstreamId":5,
                 "orderPartyList" : [
                     { "custType" : "UPSTREAM", "customerId" : 9999, "customerPosition":1},
                     { "custType" : "DOWNSTREAM", "customerId" : 9999, "customerPosition":1},

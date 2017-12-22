@@ -135,7 +135,7 @@
 
                         <td>
                             <button class="btn btn-link btn-sm" (click)="showForm(false, repaymentHK)"> 修改 </button>
-                            <button class="btn btn-link btn-sm" (click)="deleteItem(repaymentHK)"> 删除 </button>
+                            <bs-delete-prompt (confirmDel)="deleteItem(repaymentHK)"></bs-delete-prompt>
                         </td>
                     </tr>
 

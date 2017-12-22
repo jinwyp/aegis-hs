@@ -87,7 +87,7 @@
 
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, expense)"> 修改 </button>
-                        <button class="btn btn-link btn-sm" (click)="deleteItem(expense)"> 删除 </button>
+                        <bs-delete-prompt (confirmDel)="deleteItem(expense)"></bs-delete-prompt>
                     </td>
                 </tr>
                 <tr> <td colspan="8"> 累计金额: {{totalAmount.toFixed(2)}}</tr>
