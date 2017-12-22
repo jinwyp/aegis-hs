@@ -109,7 +109,8 @@
 
                     <div class="row mt-4">
                         <div class="col-2">
-                            <button type="submit" class="btn btn-info" (click)="finishedOrder()">订单完结</button>
+                            <!--<button type="submit" class="btn btn-info" (click)="finishedOrder()">订单完结</button>-->
+                            <bs-delete-prompt [class]="'btn-info'" [leftPosition]="'-48px'" [topPosition]="'-64px'"  (confirmDel)="finishedOrder()">订单完结</bs-delete-prompt>
                         </div>
                     </div>
 

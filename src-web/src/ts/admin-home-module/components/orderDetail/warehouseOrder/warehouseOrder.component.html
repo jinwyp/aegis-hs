@@ -182,7 +182,7 @@
 
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, warehouse)"> 修改 </button>
-                        <bs-delete-prompt (confirmDel)="deleteItem(warehouse)"></bs-delete-prompt>
+                        <bs-delete-prompt (confirmDel)="deleteItem(warehouse)">删除</bs-delete-prompt>
                     </td>
                 </tr>
                 <tr> <td colspan="7"> 累计出库吨数: {{totalChukuAmount.toFixed(2)}} - 累计出库金额: {{totalChukuPrice.toFixed(2)}}</tr>

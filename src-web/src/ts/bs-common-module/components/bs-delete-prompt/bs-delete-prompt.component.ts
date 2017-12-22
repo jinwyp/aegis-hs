@@ -12,6 +12,8 @@ export class BSDeletePrompt implements OnInit {
 
     @Input() item : any = {}
     @Input() class : string = 'btn-link '
+    @Input() leftPosition : string = ''
+    @Input() topPosition : string = ''
 
     @Output() confirmDel: any = new EventEmitter<number>()
 

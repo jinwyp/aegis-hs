@@ -116,7 +116,7 @@
                         </td>
                         <td>
                             <button class="btn btn-link btn-sm" (click)="showForm(false, shipping)"> 修改 </button>
-                            <bs-delete-prompt (confirmDel)="deleteItem(shipping)"></bs-delete-prompt>
+                            <bs-delete-prompt (confirmDel)="deleteItem(shipping)">删除</bs-delete-prompt>
                         </td>
                     </tr>
                     <tr> <td colspan="10">  累计发运吨数: {{totalAmount.toFixed(2) }}  </tr>

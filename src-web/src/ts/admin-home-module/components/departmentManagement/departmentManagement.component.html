@@ -35,7 +35,7 @@
                     <td> {{department.name}}</td>
                     <td>
                         <button class="btn btn-info btn-sm" (click)="showForm(false, department)"> 修改 </button>
-                        <bs-delete-prompt [class]="'btn-danger'" (confirmDel)="deleteItem(department)"></bs-delete-prompt>
+                        <bs-delete-prompt [class]="'btn-danger'" (confirmDel)="deleteItem(department)">删除</bs-delete-prompt>
                     </td>
                 </tr>
                 </tbody>

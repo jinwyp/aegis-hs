@@ -152,7 +152,7 @@
 
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, invoice)"> 修改 </button>
-                        <bs-delete-prompt (confirmDel)="deleteItem(invoice)"></bs-delete-prompt>
+                        <bs-delete-prompt (confirmDel)="deleteItem(invoice)">删除</bs-delete-prompt>
                     </td>
                 </tr>
                 <tr> <td colspan="10">  累计价税合计: {{totalAllPriceAndTax.toFixed(2)}} - 累计已开票吨位: {{totalAllCargoAmount.toFixed(2)}} </tr>
