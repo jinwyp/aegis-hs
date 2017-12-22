@@ -52,14 +52,14 @@ describe('仓押订单 统计范例12 赵征提供 12.08日', function () {
                     "cargoType" : "COAL",
                     "upstreamSettleMode" : "ONE_PAPER_SETTLE",
                     "downstreamSettleMode" : "ONE_PAPER_SETTLE",
-                    "mainAccounting"       : 3,
-                    "upstreamId"           : 27,
-                    "downstreamId"         : 29,
+                    "mainAccounting"       : 5,
+                    "upstreamId"           : 123,
+                    "downstreamId"         : 122,
                     "businessType" : "cang",
                     "orderPartyList" : [
                         {
                             "custType" : "TRAFFICKCER",
-                            "customerId" : 22,
+                            "customerId" : 31,
                             "customerPosition" : 1
                         }
                     ]
