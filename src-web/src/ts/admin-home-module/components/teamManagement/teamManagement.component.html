@@ -48,7 +48,8 @@
                     </td>
                     <td>
                         <button class="btn btn-info btn-sm" (click)="showForm(false, team)"> 修改 </button>
-                        <button class="btn btn-danger btn-sm" (click)="deleteItem(team)"> 删除 </button></td>
+                        <bs-delete-prompt [class]="'btn-danger'" (confirmDel)="deleteItem(team)"></bs-delete-prompt>
+                    </td>
                 </tr>
                 </tbody>
             </table>

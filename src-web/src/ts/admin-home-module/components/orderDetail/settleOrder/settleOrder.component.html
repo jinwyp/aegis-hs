@@ -116,7 +116,7 @@
 
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, settle)"> 修改 </button>
-                        <button class="btn btn-link btn-sm" (click)="deleteItem(settle)"> 删除 </button>
+                        <bs-delete-prompt (confirmDel)="deleteItem(settle)"></bs-delete-prompt>
                     </td>
                 </tr>
 
@@ -183,7 +183,7 @@
 
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, settle)"> 修改 </button>
-                        <button class="btn btn-link btn-sm" (click)="deleteItem(settle)"> 删除 </button>
+                        <bs-delete-prompt (confirmDel)="deleteItem(settle)"></bs-delete-prompt>
                     </td>
                 </tr>
 
