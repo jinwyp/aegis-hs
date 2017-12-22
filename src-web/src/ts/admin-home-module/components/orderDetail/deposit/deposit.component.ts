@@ -179,7 +179,8 @@ export class DepositComponent implements OnInit {
             'bailType'    : ['', [Validators.required ] ],
             'bailAmount'    : ['', [Validators.required ] ],
             'openCompanyId'    : ['', [Validators.required ] ],
-            'receiverId'    : ['', [Validators.required ] ]
+            'receiverId'    : ['', [Validators.required ] ],
+            'memo'    : ['' ]
         } )
 
 
