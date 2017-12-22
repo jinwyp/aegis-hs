@@ -43,6 +43,10 @@ public class YingBail implements Serializable {
     @NotNull(groups = {CreateGroup.class}, message = "收票单位不能为空")
     private Long receiverId;
 
+    /**
+     * 对保证金描叙
+     */
+    private String description;
 
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;
