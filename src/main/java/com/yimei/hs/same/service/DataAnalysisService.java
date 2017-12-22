@@ -94,6 +94,7 @@ public class DataAnalysisService {
         AnalysisData yingAnalysisDatav1061 = yingAnalysisDataMapper.findOneV1061ying(morderId, hsId);
         AnalysisData yingAnalysisDatav1063 = yingAnalysisDataMapper.findOneV1063ying(morderId, hsId);
         AnalysisData yingAnalysisDatav1066 = yingAnalysisDataMapper.findOneV1066ying(morderId, hsId);
+        AnalysisData yingAnalysisDatav1079 = yingAnalysisDataMapper.findOneV1079ying(morderId, hsId);
         AnalysisData yingAnalysisDatav2010 = yingAnalysisDataMapper.findOneV2010ying(morderId, hsId);
         AnalysisData yingAnalysisDos1 = yingAnalysisDataMapper.findOneShowDos1ying(morderId, hsId);
         AnalysisData yingAnalysisDos2 = yingAnalysisDataMapper.findOneShowDos2(morderId, hsId);
@@ -230,6 +231,10 @@ public class DataAnalysisService {
             setServiceCrossProfile(yingAnalysisDatav1027.getServiceFee());
 
             setCapitalPressureList(capitalPressureList);
+
+
+            setUpstreamUninvoiceAmount(yingAnalysisDatav1079.getUpstreamUninvoiceAmount());
+            setUpstreamUninvoicePrice(yingAnalysisDatav1079.getUpstreamUninvoicePrice());
         }};
 
         return yingAnalysisData;
@@ -314,7 +319,7 @@ public class DataAnalysisService {
         AnalysisData cangAnalysisDatav1066 = yingAnalysisDataMapper.findOneV1066cang(morderId, hsId);
         AnalysisData cangAnalysisDatav2010 = yingAnalysisDataMapper.findOneV2010cang(morderId, hsId);
         AnalysisData cangAnalysisDatav1078 = yingAnalysisDataMapper.findOneV1078cang(morderId, hsId);
-
+        AnalysisData cangAnalysisDatav1079 = yingAnalysisDataMapper.findOneV1079cang(morderId, hsId);
 
 
         AnalysisData cangAnalysisDos1 = yingAnalysisDataMapper.findOneShowDos1cang(morderId, hsId);
@@ -347,8 +352,7 @@ public class DataAnalysisService {
                         ).divide(new BigDecimal("1.11"), 2, BigDecimal.ROUND_HALF_UP)
                 ).
                 subtract(cangAnalysisDatav1027.getSuperviseFee().multiply(cangAnalysisDatav3005.getInOutRate()).divide(new BigDecimal("1.06"), 2, BigDecimal.ROUND_HALF_UP)).
-                subtract(cangAnalysisDatav1027.getServiceFee().multiply(cangAnalysisDatav3005.getInOutRate()).divide(new BigDecimal("1.06"), 2, BigDecimal.ROUND_HALF_UP))
-                ;
+                subtract(cangAnalysisDatav1027.getServiceFee().multiply(cangAnalysisDatav3005.getInOutRate()).divide(new BigDecimal("1.06"), 2, BigDecimal.ROUND_HALF_UP));
 
 
         AnalysisData cangAnalysisData = new AnalysisData() {{
@@ -480,6 +484,9 @@ public class DataAnalysisService {
             //
 
             setUnsettleSellerMoneyAmount(cangAnalysisDatav1078.getUnsettleSellerMoneyAmount());
+
+            setUpstreamUninvoiceAmount(cangAnalysisDatav1079.getUpstreamUninvoiceAmount());
+            setUpstreamUninvoicePrice(cangAnalysisDatav1079.getUpstreamUninvoicePrice());
 
         }};
 

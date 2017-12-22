@@ -1343,6 +1343,24 @@
         from v_1078
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
+    <select id="findOneV1079ying" resultType="com.yimei.hs.ying.entity.AnalysisData">
+        select
+        orderId,
+        hsId,
+        upstreamUnInvoiceAmount,
+        upstreamUnInvoicePrice
+        from v_1079_ying
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
+    </select>
+    <select id="findOneV1079cang" resultType="com.yimei.hs.ying.entity.AnalysisData">
+        select
+        orderId,
+        hsId,
+        upstreamUnInvoiceAmount,
+        upstreamUnInvoicePrice
+        from v_1079_cang
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
+    </select>
 
 
 </mapper>

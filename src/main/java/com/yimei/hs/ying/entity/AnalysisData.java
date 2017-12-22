@@ -264,5 +264,17 @@ public class AnalysisData implements Serializable {
     BigDecimal time;
 
 
+    /**
+     * 上游供应商未开票吨位
+     */
+
+    private BigDecimal upstreamUninvoiceAmount;
+
+    /**
+     *  上游供应商未开票金额
+     */
+
+    private BigDecimal upstreamUninvoicePrice;
+
 
 }
