@@ -1,5 +1,6 @@
 use hsdb;
 
+alter table hs_ying_bail add memo varchar(256);
 -- 【1079】上游供应商未开票吨位=【1040】核算结算量-汇总：进项或销项=”进项发票“且发票类型 = “货款发票”且开票单位 = “上游供应商ID”的票面数量
 create view v_1079_temp as
 select

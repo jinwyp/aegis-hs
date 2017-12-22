@@ -11,13 +11,13 @@
         <result column="tsc" jdbcType="TIMESTAMP" property="tsc"/>
         <result column="tsu" jdbcType="TIMESTAMP" property="tsu"/>
         <result column="receiverId" jdbcType="BIGINT" property="receiverId"/>
-        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="memo" jdbcType="VARCHAR" property="memo"/>
         <result column="openCompanyId" jdbcType="BIGINT" property="openCompanyId"/>
     </resultMap>
 
 
     <sql id="Base_Column_List">
-        id, orderId, hsId, bailDate, bailAmount,description, bailType, receiverId,openCompanyId,bailAmount, tsc, tsu
+        id, orderId, hsId, bailDate, bailAmount,memo, bailType, receiverId,openCompanyId,bailAmount, tsc, tsu
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -29,7 +29,7 @@
             bailAmount,
             bailType,
             receiverId,
-            description,
+            memo,
             openCompanyId,
             tsc,
             tsu
@@ -48,7 +48,7 @@
         bailAmount,
         bailType,
         receiverId,
-        description,
+        memo,
         openCompanyId,
         tsc,
         tsu
@@ -57,7 +57,6 @@
             <if test="true">and deleted = 0</if>
             <if test="orderId!=null">and orderId = #{orderId,jdbcType=BIGINT}</if>
             <if test="bailDate!=null">and bailDate = #{bailDate, jdbcType=TIMESTAMP}</if>
-            <if test="bailType!=null">and bailType= #{bailType, jdbcType=VARCHAR}</if>
             <if test="bailAmount!=null">and bailAmount= #{bailAmount, jdbcType=DECIMAL}</if>
             <if test="hsId!=null">and hsId = #{hsId, jdbcType=VARCHAR}</if>
             <if test="receiverId!=null">and receiverId= #{receiverId, jdbcType=BIGINT}</if>
@@ -103,7 +102,7 @@
             bailDate,
             bailAmount,
             receiverId,
-            description,
+            memo,
             openCompanyId,
             bailType
         )
@@ -114,7 +113,7 @@
             #{bailDate,jdbcType=DATE},
             #{bailAmount,jdbcType=DECIMAL},
             #{receiverId,jdbcType=BIGINT},
-            #{description,jdbcType=VARCHAR},
+            #{memo,jdbcType=VARCHAR},
             #{openCompanyId,jdbcType=BIGINT},
             #{bailType,jdbcType=VARCHAR}
         )
@@ -131,7 +130,7 @@
             <if test="bailAmount != null">bailAmount,</if>
             <if test="bailType != null">bailType,</if>
             <if test="openCompanyId != null">bailAmount,</if>
-            <if test="description != null">description,</if>
+            <if test="memo != null">memo,</if>
             <if test="receiverId != null">bailType,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -141,7 +140,7 @@
             <if test="bailAmount != null">#{bailAmount,jdbcType=DECIMAL},</if>
             <if test="bailType != null">#{bailType,jdbcType=VARCHAR},</if>
             <if test="openCompanyId != null">#{openCompanyId,jdbcType=BIGINT},</if>
-            <if test="description != null">#{description,jdbcType=VARCHAR},</if>
+            <if test="memo != null">#{memo,jdbcType=VARCHAR},</if>
             <if test="receiverId!= null">#{receiverId,jdbcType=BIGINT},</if>
         </trim>
     </insert>
@@ -154,7 +153,7 @@
             <if test="bailDate != null">bailDate = #{bailDate,jdbcType=DATE},</if>
             <if test="bailAmount != null">bailAmount = #{bailAmount,jdbcType=DECIMAL},</if>
             <if test="bailType != null">bailType = #{bailType,jdbcType=VARCHAR},</if>
-            <if test="description != null">bailType = #{description,jdbcType=VARCHAR},</if>
+            <if test="memo != null">memo = #{memo,jdbcType=VARCHAR},</if>
             <if test="receiverId != null">receiverId= #{receiverId,jdbcType=BIGINT},</if>
             <if test="openCompanyId!= null">openCompanyId= #{openCompanyId,jdbcType=BIGINT},</if>
             <if test="true">tsu = current_timestamp,</if>
@@ -169,7 +168,7 @@
             bailDate   = #{bailDate,jdbcType=DATE},
             bailAmount = #{bailAmount,jdbcType=DECIMAL},
             bailType   = #{bailType,jdbcType=VARCHAR},
-            description   = #{description,jdbcType=VARCHAR},
+            memo   = #{memo,jdbcType=VARCHAR},
             tsc        = #{tsc,jdbcType=TIMESTAMP},
             openCompanyId   = #{openCompanyId,jdbcType=BIGINT},
             receiverId= #{receiverId,jdbcType=BIGINT},

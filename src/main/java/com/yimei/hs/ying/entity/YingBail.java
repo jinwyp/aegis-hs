@@ -46,7 +46,7 @@ public class YingBail implements Serializable {
     /**
      * 对保证金描叙
      */
-    private String description;
+    private String memo;
 
     @Null(groups = {CreateGroup.class, UpdateGroup.class}, message = "创建时间由数据库决定")
     private LocalDateTime tsc;

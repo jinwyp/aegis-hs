@@ -22,7 +22,8 @@ public class PageYingBailDTO extends BaseFilter<PageYingBailDTO>{
     private Long hsId;
     private LocalDateTime bailDate;
     private BigDecimal bailAmount;
-    private BailType bailType;
+//    private BailType bailType;
+//    private String memo;
     private Long openCompanyId;
     private Long receiverId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
