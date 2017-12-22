@@ -44,16 +44,16 @@
                                 <bs-text-input formControlName="priceAndTax" [fc]="invoiceDetailForm.get('priceAndTax')" [type]="'number'" [label]="'价税合计:'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.priceAndTax"></bs-text-input>
                             </div>
 
-                            <div class="col-4" [hidden]="invoiceDetailFormType === 1">
+                            <div class="col-4" >
                                 <bs-text-input formControlName="amount" [fc]="invoiceDetailForm.get('amount')" [type]="'number'" [label]="'金额:'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.amount"></bs-text-input>
                             </div>
-                            <div class="col-4" [hidden]="invoiceDetailFormType === 1">
+                            <div class="col-4" >
                                 <bs-text-input formControlName="taxAmount" [fc]="invoiceDetailForm.get('taxAmount')" [type]="'number'" [label]="'税额:'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.taxAmount"></bs-text-input>
                             </div>
-                            <div class="col-4" [hidden]="invoiceDetailFormType === 1">
+                            <div class="col-4" >
                                 <bs-text-input formControlName="sheetAmount" [fc]="invoiceDetailForm.get('sheetAmount')" [type]="'number'" [label]="'张数:'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.sheetAmount"></bs-text-input>
                             </div>
-                            <div class="col-4" [hidden]="invoiceDetailFormType === 1">
+                            <div class="col-4" >
                                 <bs-text-input formControlName="cargoType" [fc]="invoiceDetailForm.get('cargoType')" [type]="'text'" [label]="'货物种类:'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.cargoType"></bs-text-input>
                             </div>
 

@@ -110,7 +110,7 @@
                     <div class="row mt-4">
                         <div class="col-2">
                             <!--<button type="submit" class="btn btn-info" (click)="finishedOrder()">订单完结</button>-->
-                            <bs-delete-prompt [class]="'btn-info'" [leftPosition]="'-48px'" [topPosition]="'-64px'"  (confirmDel)="finishedOrder()">订单完结</bs-delete-prompt>
+                            <bs-delete-prompt [class]="'btn-info'" [leftPosition]="'-20px'" [topPosition]="'-64px'"  (confirmDel)="finishedOrder()">订单完结</bs-delete-prompt>
                         </div>
                     </div>
 
@@ -339,7 +339,6 @@
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.tradingCompanyInTpeMoneyAmount | number }}</td>
                         </tr>
                         <tr >
-                            <td >进项票信息</td>
                             <td>上游供应商未开票吨位</td>
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.upstreamUninvoiceAmount | number }}</td>
                         </tr>
