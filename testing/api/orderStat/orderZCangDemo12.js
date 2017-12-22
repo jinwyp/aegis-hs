@@ -277,17 +277,17 @@ describe('仓押订单 统计范例12 赵征提供 12.08日', function () {
                     "orderId" : orderId,
                     "hsId" : unitId,
                     "payDate" : "2017-06-29 00:00:00",
-                    "receiveCompanyId" : 27,
+                    "receiveCompanyId" : 123,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "5238000",
-                    "capitalId" : 3,
+                    "capitalId" : 5,
                     "jiekuan" : {
                         "orderId" : orderId,
                         "hsId" : unitId,
                         "jiekuanDate" : "2017-06-29 00:00:00",
                         "amount" : "999999",
-                        "capitalId" : 3,
+                        "capitalId" : 5,
                         "useInterest" : 99999999,
                         "useDays" : "99999999"
                     }
@@ -313,17 +313,17 @@ describe('仓押订单 统计范例12 赵征提供 12.08日', function () {
                     "orderId" : orderId,
                     "hsId" : unitId,
                     "payDate" : "2017-07-10 00:00:00",
-                    "receiveCompanyId" : 27,
+                    "receiveCompanyId" : 123,
                     "payUsage" : "PAYMENT_FOR_GOODS",
                     "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "2270824.24",
-                    "capitalId" : 3,
+                    "capitalId" : 5,
                     "jiekuan" : {
                         "orderId" : orderId,
                         "hsId" : unitId,
                         "jiekuanDate" : "2017-07-10 00:00:00",
                         "amount" : "999999",
-                        "capitalId" : 3,
+                        "capitalId" : 5,
                         "useInterest" : 99999999,
                         "useDays" : "99999999"
                     }
@@ -349,17 +349,17 @@ describe('仓押订单 统计范例12 赵征提供 12.08日', function () {
                     "orderId" : orderId,
                     "hsId" : unitId,
                     "payDate" : "2017-07-10 00:00:00",
-                    "receiveCompanyId" : 22,
+                    "receiveCompanyId" : 31,
                     "payUsage" : "TRADE_DEFICIT",
                     "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "28950.8",
-                    "capitalId" : 3,
+                    "capitalId" : 5,
                     "jiekuan" : {
                         "orderId" : orderId,
                         "hsId" : unitId,
                         "jiekuanDate" : "2017-07-10 00:00:00",
                         "amount" : "999999",
-                        "capitalId" : 3,
+                        "capitalId" : 5,
                         "useInterest" : 99999999,
                         "useDays" : "99999999"
                     }
@@ -389,13 +389,13 @@ describe('仓押订单 统计范例12 赵征提供 12.08日', function () {
                     "payUsage" : "FREIGNHT",
                     "payMode"  : "ELEC_REMITTANCE",
                     "payAmount" : "100000",
-                    "capitalId" : 3,
+                    "capitalId" : 5,
                     "jiekuan" : {
                         "orderId" : orderId,
                         "hsId" : unitId,
                         "jiekuanDate" : "2017-07-10 00:00:00",
                         "amount" : "999999",
-                        "capitalId" : 3,
+                        "capitalId" : 5,
                         "useInterest" : 99999999,
                         "useDays" : "99999999"
                     }
@@ -805,8 +805,8 @@ describe('仓押订单 统计范例12 赵征提供 12.08日', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-07-07 00:00:00",
-                    "openCompanyId" : 27,
-                    "receiverId" : 22,
+                    "openCompanyId" : 123,
+                    "receiverId" : 31,
                     "details" : [
                         {
                             "invoiceNumber" : "43211238",
@@ -839,8 +839,8 @@ describe('仓押订单 统计范例12 赵征提供 12.08日', function () {
                     "invoiceDirection" : "INCOME",
                     "invoiceType" : "GOODS_INVOICE",
                     "openDate" : "2017-07-14 00:00:00",
-                    "openCompanyId" : 22,
-                    "receiverId" : 3,
+                    "openCompanyId" : 31,
+                    "receiverId" : 5,
                     "details" : [
                         {
                             "invoiceNumber" : "43211239",
