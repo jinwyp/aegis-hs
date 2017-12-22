@@ -179,7 +179,7 @@
                     <td> {{order.tsc }}</td>
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, order)"> 修改 </button>
-                        <button class="btn btn-link btn-sm" (click)="deleteItem(order)"> 删除 </button>
+                        <bs-delete-prompt (confirmDel)="deleteItem(order)"></bs-delete-prompt>
                     </td>
                 </tr>
                 </tbody>

@@ -429,8 +429,8 @@ export class OrderListComponent implements OnInit {
         this.isShowForm = !this.isShowForm
     }
 
-    deleteItem (order : any) {
-
+    deleteItem (order : any ) {
+        
         this.hsOrderService.delOrder(this.businessType, order.id).subscribe(
             data => {
                 console.log('保存成功: ', data)

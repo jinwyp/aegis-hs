@@ -9,6 +9,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { BSModalComponent } from '../bs-common-module/components/bs-modal/bs-modal.component'
 import { BSPaginationComponent } from '../bs-common-module/components/bs-pagination/bs-pagination.component'
+import { BSDeletePrompt } from '../bs-common-module/components/bs-delete-prompt/bs-delete-prompt.component'
 import { SimpleNotificationsComponent } from '../bs-common-module/components/simple-notifications/simple-notifications.component'
 import { SimpleNotificationComponent } from '../bs-common-module/components/simple-notification/simple-notification.component'
 
@@ -27,6 +28,8 @@ import {NotificationService} from './services/notification.service'
         BSPaginationComponent,
 
         BSModalComponent,
+        BSDeletePrompt,
+
         SimpleNotificationComponent,
         SimpleNotificationsComponent
     ],
@@ -46,6 +49,7 @@ import {NotificationService} from './services/notification.service'
 
         BSModalComponent,
         BSPaginationComponent,
+        BSDeletePrompt,
         SimpleNotificationsComponent
 
     ],

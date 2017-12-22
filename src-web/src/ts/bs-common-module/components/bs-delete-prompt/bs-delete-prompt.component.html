@@ -1,0 +1,6 @@
+<button class="btn btn-link btn-sm" (click)="showDeleteButton()"> 删除 </button>
+
+<div class="delete-prompt" *ngIf="isShowButton">
+    <button type="button" class="btn btn-danger btn-sm" (click)="confirmDelete()">确定删除</button>
+    <button type="button" class="btn btn-secondary btn-sm" (click)="showDeleteButton()">取消删除</button>
+</div>
