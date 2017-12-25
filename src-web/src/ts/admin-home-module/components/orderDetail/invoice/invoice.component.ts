@@ -35,6 +35,9 @@ export class InvoiceComponent implements OnInit {
     isShowForm: boolean = false
     isAddNew: boolean = true
 
+    isShowDeletePrompt: boolean = false
+    isShowDeletePromptIndex: number = -1
+
     invoiceList : any[] = []
     invoiceDetailList : any[] = []
 
@@ -425,10 +428,41 @@ export class InvoiceComponent implements OnInit {
 
     }
 
+
+    showDeletePrompt (index : number) {
+        this.isShowDeletePromptIndex = index
+        this.isShowDeletePrompt = !this.isShowDeletePrompt
+    }
+
     delInvoiceDetail (detailInvoice: any) {
+        console.log(detailInvoice)
 
         const index = this.invoiceDetailList.indexOf(detailInvoice)
-        this.invoiceDetailList.splice(index, 1)
+
+        if (detailInvoice.id) {
+
+            this.hsOrderService.delInvoiceDetail(this.businessType, this.currentOrder.id, detailInvoice.id).subscribe(
+                data => {
+                    console.log('保存成功: ', data)
+                    this.invoiceDetailList.splice(index, 1)
+
+                    this.httpService.successHandler(data)
+
+                    this.getInvoiceList()
+                },
+                error => {this.httpService.errorHandler(error) }
+            )
+
+
+
+        } else {
+
+            this.invoiceDetailList.splice(index, 1)
+
+        }
+
+        this.isShowDeletePrompt = false
+        this.isShowDeletePromptIndex = -1
     }
 
 
