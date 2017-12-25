@@ -35,6 +35,9 @@ export class InvoiceComponent implements OnInit {
     isShowForm: boolean = false
     isAddNew: boolean = true
 
+    isShowDeletePrompt: boolean = false
+    isShowDeletePromptIndex: number = -1
+
     invoiceList : any[] = []
     invoiceDetailList : any[] = []
 
@@ -402,34 +405,6 @@ export class InvoiceComponent implements OnInit {
             }
         }
 
-        if (this.invoiceDetailFormType === 3) {
-
-            if (!this.invoiceDetailForm.value.amount) {
-                this.invoiceDetailFormError.amount = this.invoiceDetailFormValidationMessages.amount.required
-                formValid = false
-            }
-
-            if (!this.invoiceDetailForm.value.taxAmount) {
-                this.invoiceDetailFormError.taxAmount = this.invoiceDetailFormValidationMessages.taxAmount.required
-                formValid = false
-            }
-
-            if (!this.invoiceDetailForm.value.sheetAmount) {
-                this.invoiceDetailFormError.sheetAmount = this.invoiceDetailFormValidationMessages.sheetAmount.required
-                formValid = false
-            }
-
-
-            if (this.accAdd(Number(this.invoiceDetailForm.value.amount), Number(this.invoiceDetailForm.value.taxAmount)) !== Number(this.invoiceDetailForm.value.priceAndTax)) {
-                this.invoiceDetailFormError.priceAndTax = this.invoiceDetailFormValidationMessages.priceAndTax.wrong
-                formValid = false
-            }
-
-        }
-
-
-
-
 
         if (!formValid) {
             this.ignoreDirty = true
@@ -453,49 +428,73 @@ export class InvoiceComponent implements OnInit {
 
     }
 
+
+    showDeletePrompt (index : number) {
+        this.isShowDeletePromptIndex = index
+        this.isShowDeletePrompt = !this.isShowDeletePrompt
+    }
+
     delInvoiceDetail (detailInvoice: any) {
+        console.log(detailInvoice)
 
         const index = this.invoiceDetailList.indexOf(detailInvoice)
-        this.invoiceDetailList.splice(index, 1)
+
+        if (detailInvoice.id) {
+
+            this.hsOrderService.delInvoiceDetail(this.businessType, this.currentOrder.id, detailInvoice.id).subscribe(
+                data => {
+                    console.log('保存成功: ', data)
+                    this.invoiceDetailList.splice(index, 1)
+
+                    this.httpService.successHandler(data)
+
+                    this.getInvoiceList()
+                },
+                error => {this.httpService.errorHandler(error) }
+            )
+
+
+
+        } else {
+
+            this.invoiceDetailList.splice(index, 1)
+
+        }
+
+        this.isShowDeletePrompt = false
+        this.isShowDeletePromptIndex = -1
     }
 
 
 
     getBillingCompany (event : any) {
-        console.log(event)
+        // console.log(event)
         this.billingCompany = event
         this.changInvoiceDetailForm()
     }
 
     getBillToCompany (event : any) {
-        console.log(event)
+        // console.log(event)
         this.billToCompany = event
         this.changInvoiceDetailForm()
     }
 
     changInvoiceDetailForm () {
+        this.invoiceDetailFormType = 1 // 2、当开票单位是或收票单位都不是css账务公司1：
 
-        if (this.billingCompany && this.billToCompany) {
-            // console.log('11: ', this.invoiceDetailFormType, this.billingCompany)
-            if (this.billingCompany.partyType === 3 ) {
-                // console.log('22: ', this.invoiceDetailFormType, this.billingCompany, this.billToCompany)
-                if (this.billToCompany.partyType === 3) {
-                    this.invoiceDetailFormType = 1 // 1 当开票单位是外部3，收票单位是外部3时：
+        // 1 当开票单位是或收票单位有一个是css账务公司1：
 
 
-                } else if (this.billToCompany.partyType === 1) {
-                    this.invoiceDetailFormType = 2 // 2 当开票单位是外部3，收票单位是CCS账务公司1时：：
-                }
-
-
-            } else if (this.billingCompany.partyType === 1) {
-                this.invoiceDetailFormType = 3 // 3、当开票单位是ccs账务公司1时：
-
-            }
-
+        if (this.billingCompany && this.billingCompany.partyType === 1) {
+            this.invoiceDetailFormType = 2
         }
 
-        // console.log('invoiceDetailFormType: ', this.invoiceDetailFormType)
+        if (this.billToCompany && this.billToCompany.partyType === 1) {
+            this.invoiceDetailFormType = 2
+        }
+
+
+        console.log('invoiceDetailFormType: ', this.invoiceDetailFormType, this.billingCompany, this.billToCompany)
 
     }
 

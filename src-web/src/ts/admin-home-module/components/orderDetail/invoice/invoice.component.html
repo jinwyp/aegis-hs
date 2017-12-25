@@ -18,12 +18,14 @@
                     <form [formGroup]="invoiceDetailForm"  (keydown.enter)="$event.preventDefault()">
 
                         <div class="form-row ">
-                            <div class="col-8" >
+                            <div class="col-10" >
 
                                 <ul class="list-group" >
-                                    <li class="list-group-item mb-2" *ngFor=" let detailInvoice of invoiceDetailList">
-                                        票号:{{detailInvoice.invoiceNumber }} | 货物数量:{{detailInvoice.cargoAmount}} | 税率:{{detailInvoice.taxRate | percent:'1.0-2'}} | 价税合计:{{detailInvoice.priceAndTax }} |
-                                        <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delInvoiceDetail(detailInvoice)"> x </button>
+                                    <li class="list-group-item mb-2" *ngFor=" let detailInvoice of invoiceDetailList; let i=index">
+                                        票号:{{detailInvoice.invoiceNumber }} | 货物数量:{{detailInvoice.cargoAmount}} | 税率:{{detailInvoice.taxRate | percent:'1.0-2'}} | 价税合计:{{detailInvoice.priceAndTax }}
+                                        <button type="button" class="ml-4 btn btn-outline-danger btn-sm" *ngIf="!isShowDeletePrompt" (click)="showDeletePrompt(i)"> x </button>
+                                        <button type="button" class="ml-4 btn btn-outline-danger btn-sm" *ngIf="isShowDeletePrompt && isShowDeletePromptIndex === i" (click)="delInvoiceDetail(detailInvoice)"> 删除 </button>
+                                        <button type="button" class="btn btn-outline-info btn-sm" *ngIf="isShowDeletePrompt && isShowDeletePromptIndex === i" (click)="showDeletePrompt(i)"> 取消</button>
                                     </li>
                                 </ul>
                             </div>
@@ -44,16 +46,16 @@
                                 <bs-text-input formControlName="priceAndTax" [fc]="invoiceDetailForm.get('priceAndTax')" [type]="'number'" [label]="'价税合计:'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.priceAndTax"></bs-text-input>
                             </div>
 
-                            <div class="col-4" >
+                            <div class="col-4" [hidden]="invoiceDetailFormType === 1">
                                 <bs-text-input formControlName="amount" [fc]="invoiceDetailForm.get('amount')" [type]="'number'" [label]="'金额:'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.amount"></bs-text-input>
                             </div>
-                            <div class="col-4" >
+                            <div class="col-4" [hidden]="invoiceDetailFormType === 1">
                                 <bs-text-input formControlName="taxAmount" [fc]="invoiceDetailForm.get('taxAmount')" [type]="'number'" [label]="'税额:'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.taxAmount"></bs-text-input>
                             </div>
-                            <div class="col-4" >
+                            <div class="col-4" [hidden]="invoiceDetailFormType === 1">
                                 <bs-text-input formControlName="sheetAmount" [fc]="invoiceDetailForm.get('sheetAmount')" [type]="'number'" [label]="'张数:'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.sheetAmount"></bs-text-input>
                             </div>
-                            <div class="col-4" >
+                            <div class="col-4" [hidden]="invoiceDetailFormType === 1">
                                 <bs-text-input formControlName="cargoType" [fc]="invoiceDetailForm.get('cargoType')" [type]="'text'" [label]="'货物种类:'" [labelclass]="'col-4'" [inputclass]="'col-8'" [dirty]="ignoreDirty" [error]="invoiceDetailFormError.cargoType"></bs-text-input>
                             </div>
 

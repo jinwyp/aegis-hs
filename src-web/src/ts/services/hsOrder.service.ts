@@ -402,7 +402,9 @@ export class HSOrderService {
     delInvoice(businessType : string, orderId: number, invoiceId: number): Observable<any> {
         return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/invoices/' + invoiceId.toString())
     }
-
+    delInvoiceDetail(businessType : string, orderId: number, invoicesDetailId: number): Observable<any> {
+        return this.http.delete(apiPath.hsGetOrderList + '/' + businessType + '/' + orderId + '/invoicesDetail/' + invoicesDetailId.toString())
+    }
 
 
     getWarehouseInListByID(businessType : string, orderId: number, query: any = {pageSize: 10000, pageNo: 1}): Observable<any> {

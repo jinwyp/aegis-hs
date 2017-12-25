@@ -114,6 +114,8 @@ public class InvoiceService {
         List<InvoiceDetail> invoiceDetails = yingInvoice.getDetails();
         for (InvoiceDetail invoiceDetail : invoiceDetails) {
             if (invoiceDetail.getId() == null) {
+
+                invoiceDetail.setInvoiceId(yingInvoice.getId());
                 invoiceDetailMapper.insert(invoiceDetail);
             } else {
                 invoiceDetailMapper.updateByPrimaryKeySelective(invoiceDetail);
