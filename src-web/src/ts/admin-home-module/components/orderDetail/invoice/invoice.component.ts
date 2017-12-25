@@ -434,33 +434,33 @@ export class InvoiceComponent implements OnInit {
 
 
     getBillingCompany (event : any) {
-        console.log(event)
+        // console.log(event)
         this.billingCompany = event
         this.changInvoiceDetailForm()
     }
 
     getBillToCompany (event : any) {
-        console.log(event)
+        // console.log(event)
         this.billToCompany = event
         this.changInvoiceDetailForm()
     }
 
     changInvoiceDetailForm () {
+        this.invoiceDetailFormType = 1 // 2、当开票单位是或收票单位都不是css账务公司1：
 
-        if (this.billingCompany && this.billToCompany) {
-            // console.log('11: ', this.invoiceDetailFormType, this.billingCompany)
-            if (this.billingCompany.partyType === 1 ||  this.billToCompany.partyType === 1) {
-                // console.log('22: ', this.invoiceDetailFormType, this.billingCompany, this.billToCompany)
-                this.invoiceDetailFormType = 2 // 1 当开票单位是或收票单位有一个是css账务公司1：
+        // 1 当开票单位是或收票单位有一个是css账务公司1：
 
 
-            } else  {
-                this.invoiceDetailFormType = 1 // 2、当开票单位是或收票单位都不是css账务公司1：
-            }
-
+        if (this.billingCompany && this.billingCompany.partyType === 1) {
+            this.invoiceDetailFormType = 2
         }
 
-        // console.log('invoiceDetailFormType: ', this.invoiceDetailFormType)
+        if (this.billToCompany && this.billToCompany.partyType === 1) {
+            this.invoiceDetailFormType = 2
+        }
+
+
+        console.log('invoiceDetailFormType: ', this.invoiceDetailFormType, this.billingCompany, this.billToCompany)
 
     }
 
