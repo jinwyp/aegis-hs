@@ -402,34 +402,6 @@ export class InvoiceComponent implements OnInit {
             }
         }
 
-        if (this.invoiceDetailFormType === 3) {
-
-            if (!this.invoiceDetailForm.value.amount) {
-                this.invoiceDetailFormError.amount = this.invoiceDetailFormValidationMessages.amount.required
-                formValid = false
-            }
-
-            if (!this.invoiceDetailForm.value.taxAmount) {
-                this.invoiceDetailFormError.taxAmount = this.invoiceDetailFormValidationMessages.taxAmount.required
-                formValid = false
-            }
-
-            if (!this.invoiceDetailForm.value.sheetAmount) {
-                this.invoiceDetailFormError.sheetAmount = this.invoiceDetailFormValidationMessages.sheetAmount.required
-                formValid = false
-            }
-
-
-            if (this.accAdd(Number(this.invoiceDetailForm.value.amount), Number(this.invoiceDetailForm.value.taxAmount)) !== Number(this.invoiceDetailForm.value.priceAndTax)) {
-                this.invoiceDetailFormError.priceAndTax = this.invoiceDetailFormValidationMessages.priceAndTax.wrong
-                formValid = false
-            }
-
-        }
-
-
-
-
 
         if (!formValid) {
             this.ignoreDirty = true
@@ -477,20 +449,13 @@ export class InvoiceComponent implements OnInit {
 
         if (this.billingCompany && this.billToCompany) {
             // console.log('11: ', this.invoiceDetailFormType, this.billingCompany)
-            if (this.billingCompany.partyType === 3 ) {
+            if (this.billingCompany.partyType === 1 ||  this.billToCompany.partyType === 1) {
                 // console.log('22: ', this.invoiceDetailFormType, this.billingCompany, this.billToCompany)
-                if (this.billToCompany.partyType === 3) {
-                    this.invoiceDetailFormType = 1 // 1 当开票单位是外部3，收票单位是外部3时：
+                this.invoiceDetailFormType = 2 // 1 当开票单位是或收票单位有一个是css账务公司1：
 
 
-                } else if (this.billToCompany.partyType === 1) {
-                    this.invoiceDetailFormType = 2 // 2 当开票单位是外部3，收票单位是CCS账务公司1时：：
-                }
-
-
-            } else if (this.billingCompany.partyType === 1) {
-                this.invoiceDetailFormType = 3 // 3、当开票单位是ccs账务公司1时：
-
+            } else  {
+                this.invoiceDetailFormType = 1 // 2、当开票单位是或收票单位都不是css账务公司1：
             }
 
         }
