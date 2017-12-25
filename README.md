@@ -29,3 +29,4 @@ genmapper.sh 重新生成所有mybatis的mapper dao entity
 
 1. testing 环境地址 [https://hs-test.yimei180.com/web/login](https://hs-test.yimei180.com/web/login) , 用户名 15093080576, 密码 123456
 2. staging 环境地址 [https://hs-staging.yimei180.com/web/login](https://hs-staging.yimei180.com/web/login) , 用户名 15093080576, 密码 123456
+2. 正式环境地址 [https://hs.yimei180.com/web/login ](https://hs.yimei180.com/web/login ) , 用户名 15093080576, 密码 123456
