@@ -172,7 +172,7 @@ public class FukuanController {
      *
      * @return
      */
-    @PutMapping("/{morderId}/fukuans/{id}")
+//    @PutMapping("/{morderId}/fukuans/{id}")
     public ResponseEntity<Result<Integer>> update(
             @PathVariable("businessType") BusinessType businessType,
             @PathVariable("morderId") Long morderId,
