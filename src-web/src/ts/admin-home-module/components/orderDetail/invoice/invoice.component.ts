@@ -343,10 +343,14 @@ export class InvoiceComponent implements OnInit {
 
             this.invoiceForm.patchValue(invoice)
             this.invoiceDetailList = invoice.details
+
+            this.getInvoiceList()
         }
 
 
         this.isShowForm = !this.isShowForm
+
+
     }
 
 
