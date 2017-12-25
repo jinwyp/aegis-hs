@@ -109,7 +109,8 @@
             <if test="downstreamId!=null">AND downstreamId = #{downstreamId, jdbcType=BIGINT}</if>
             <if test="mainAccounting!=null">AND mainAccounting = #{mainAccounting, jdbcType=BIGINT}</if>
             <if test="status!=null">AND status = #{status, jdbcType=VARCHAR}</if>
-            <if test="line!=null">AND line = #{line, jdbcType=VARCHAR}</if>
+            <if test="line!=null">
+                AND line LIKE CONCAT(CONCAT('%',#{line}),'%')</if>
             <if test="createDateStart!=null">  <![CDATA[   AND DATE_FORMAT(tsc, '%Y-%m-%d')>=  DATE_FORMAT(#{createDateStart}, '%Y-%m-%d')   ]]></if>
             <if test="createDateEnd!=null">    <![CDATA[  AND DATE_FORMAT(tsc, '%Y-%m-%d') <= DATE_FORMAT(#{createDateEnd}, '%Y-%m-%d')]]></if>
         </where>

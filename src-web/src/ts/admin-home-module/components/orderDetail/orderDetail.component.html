@@ -1,5 +1,4 @@
 
-
         <h3>
             {{businessType === 'ying' ? '应收单' : '仓押单'}}详情  ID:{{currentOrderId}} - 业务线: {{currentOrder?.line}}
 
@@ -316,10 +315,10 @@
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> {{unit.downstreamCapitalPressure | number }}</td>
                         </tr>
                         <tr >
-                            <td>{{businessType==='cang' ? '库存数量':''}}</td>
+                            <td>{{businessType==='cang' ? '库存数量':'-'}}</td>
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> <span *ngIf="businessType==='cang'"> {{unit.totalStockNum | number }} </span></td>
                         </tr><tr >
-                            <td>{{businessType==='cang' ? '库存金额':''}} </td>
+                            <td>{{businessType==='cang' ? '库存金额':'-'}} </td>
                             <td *ngFor="let unit of unitListStat; trackBy: trackByFn"> <span *ngIf="businessType==='cang'"> {{unit.totalStockMoney | number }} </span></td>
                         </tr>
 
