@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class InvoiceDetailService {
     @Autowired
     private InvoiceDetailMapper invoiceDetailMapper;
-
+    @Transactional(readOnly = false)
     public int delete(long id) {
         return invoiceDetailMapper.delete(id);
     }
