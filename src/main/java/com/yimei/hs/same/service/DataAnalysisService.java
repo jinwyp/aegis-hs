@@ -656,7 +656,7 @@ public class DataAnalysisService {
                     exportExcelDate.setHuikuanMode(huikuan.getHuikuanMode());
 
                     if (huikuan.getHuikuanMode().equals(PayMode.BANK_ACCEPTANCE)) {
-                        Long durTime = Duration.between(huikuan.getHuikuanBusinessPaperExpire(), huikuan.getHuikuanBankPaperDate()).toDays();
+                        Long durTime = Duration.between(huikuan.getHuikuanBankPaperDate(),huikuan.getHuikuanBankPaperExpire()).toDays();
                         BigDecimal rate = huikuan.getHuikuanBankDiscountRate().multiply(new BigDecimal(durTime)).multiply(huikuan.getHuikuanAmount()).multiply(new BigDecimal("1.17")).divide(new BigDecimal("360"),2,BigDecimal.ROUND_UP);
                         exportExcelDate.setTieRate(rate);
                     }
