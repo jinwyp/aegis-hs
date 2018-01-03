@@ -217,7 +217,16 @@ public class DataAnalysisController {
     }
 
 
-    @RequestMapping("/{businessType}/analysis/exportExcel/{orderId}/{hsId}")
+    /**
+     *  获取上游占压
+     * @param orderId
+     * @param hsId
+     * @param businessType
+     * @param response
+     * @param request
+     * @throws IOException
+     */
+    @RequestMapping("/{businessType}/analysis/exportExcelUpstreamPressure/{orderId}/{hsId}")
     public void doExportUpstreamPressureToExcel(@PathVariable(value = "orderId") long orderId,
                                            @PathVariable(value = "hsId") long hsId,
                                            @PathVariable(value = "businessType") BusinessType businessType,
@@ -293,6 +302,85 @@ public class DataAnalysisController {
         out.close();
     }
 
+    /**
+     *  获取下游
+     * @param orderId
+     * @param hsId
+     * @param businessType
+     * @param response
+     * @param request
+     * @throws IOException
+     */
+    @RequestMapping("/{businessType}/analysis/exportExcel/{orderId}/{hsId}")
+    public void doExportBuyyerPressureToExcel(@PathVariable(value = "orderId") long orderId,
+                                                @PathVariable(value = "hsId") long hsId,
+                                                @PathVariable(value = "businessType") BusinessType businessType,
+                                                HttpServletResponse response,
+                                                HttpServletRequest request) throws IOException {
+
+
+        HSSFWorkbook wb = new HSSFWorkbook();
+        String filename = "上游资金占压";
+        HSSFSheet sheet = wb.createSheet(filename);
+        HSSFRow row = sheet.createRow(0);
+        CellStyle style = wb.createCellStyle();
+        style.setAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        sheet.setVerticallyCenter(true);
+        sheet.setHorizontallyCenter(true);
+        sheet.setColumnWidth(0, 3000);
+        sheet.setColumnWidth(1, 3000);
+        sheet.setColumnWidth(2, 4000);
+        sheet.setColumnWidth(3, 8000);
+        sheet.setColumnWidth(4, 8000);
+        sheet.setColumnWidth(5, 8500);
+        sheet.setColumnWidth(6, 4500);
+        sheet.setColumnWidth(7, 8000);
+        sheet.setColumnWidth(8, 2500);
+        sheet.setColumnWidth(9, 2000);
+        sheet.setColumnWidth(10, 8000);
+        sheet.setColumnWidth(11, 8000);
+        sheet.setColumnWidth(12, 2500);
+        sheet.setColumnWidth(13, 2500);
+        sheet.setColumnWidth(14, 10000);
+        String[] excelHeader = {"事业部", "Broker团队", "业务类型", "账务公司", "一级客户名称", "二级客户名称","终端", "船名", "资金占压总额", "已结算未回款", "未结算", "预付款", "备注", "备注","业务线"};
+        for (int i = 0; i < excelHeader.length; i++) {
+            HSSFCell cell = row.createCell(i);
+            cell.setCellValue(excelHeader[i]);
+            cell.setCellStyle(style);
+        }
+     ExportExcelUpstreamPressure exportExcelUpstreamPressure = dataAnalysisService.exportDwonstreamPressureToExcel(orderId, hsId,businessType);
+
+            row = sheet.createRow(  1);
+            row.createCell(0).setCellValue((exportExcelUpstreamPressure.getDeptName() == null ? "" : exportExcelUpstreamPressure.getDeptName()));
+            row.createCell(1).setCellValue((exportExcelUpstreamPressure.getTeamName() == null ? "" : exportExcelUpstreamPressure.getTeamName()));
+            row.createCell(2).setCellValue((exportExcelUpstreamPressure.getBusinessType() == null ? "" : exportExcelUpstreamPressure.getBusinessType().value));
+            row.createCell(3).setCellValue((exportExcelUpstreamPressure.getAccoutCompanyName() == null ? "" : exportExcelUpstreamPressure.getAccoutCompanyName()));
+            row.createCell(4).setCellValue((exportExcelUpstreamPressure.getDwonStreamPartyName() == null ? "" : exportExcelUpstreamPressure.getDwonStreamPartyName()));
+            row.createCell(5).setCellValue((exportExcelUpstreamPressure.getPartName() == null ? "" : exportExcelUpstreamPressure.getPartName()));
+            row.createCell(6).setCellValue((exportExcelUpstreamPressure.getTerminalClientName() == null ? "" : exportExcelUpstreamPressure.getTerminalClientName()));
+            row.createCell(7).setCellValue((exportExcelUpstreamPressure.getShipName() == null ? "" : exportExcelUpstreamPressure.getShipName()));
+            row.createCell(8).setCellValue((exportExcelUpstreamPressure.getPressureAmountOfPrice() == null ? "" : exportExcelUpstreamPressure.getPressureAmountOfPrice().toString()));
+            row.createCell(9).setCellValue(exportExcelUpstreamPressure.getSettledDownstreamHuikuanMoneny() == null ? "" : exportExcelUpstreamPressure.getSettledDownstreamHuikuanMoneny().toString());
+            row.createCell(10).setCellValue((exportExcelUpstreamPressure.getUnsettleSellerMoneyAmount() == null ? "" : exportExcelUpstreamPressure.getUnsettleSellerMoneyAmount().toString()));
+            row.createCell(11).setCellValue((exportExcelUpstreamPressure.getPrePayment()== null ? "" : exportExcelUpstreamPressure.getPrePayment().toString()));
+            row.createCell(12).setCellValue((exportExcelUpstreamPressure.getMemo1() == null ? "" : exportExcelUpstreamPressure.getMemo1()));
+            row.createCell(13).setCellValue((exportExcelUpstreamPressure.getMemo2() == null ? "" : exportExcelUpstreamPressure.getMemo2()));
+            row.createCell(14).setCellValue((exportExcelUpstreamPressure.getLine() == null ? "" : exportExcelUpstreamPressure.getLine()));
+
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/x-download");
+        filename += LocalDate.now() + ".xls";
+        if (request.getHeader("user-agent").toLowerCase().contains("firefox")) {
+            filename = new String(filename.getBytes("UTF-8"), "ISO-8859-1");
+        } else {
+            filename = URLEncoder.encode(filename, "UTF-8");
+        }
+        response.addHeader("Content-Disposition", "attachment;filename=" + filename);
+        OutputStream out = response.getOutputStream();
+        wb.write(out);
+        out.close();
+    }
 
 
 

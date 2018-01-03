@@ -7,10 +7,7 @@ import com.yimei.hs.enums.PayMode;
 import com.yimei.hs.same.dto.PageHuankuanDTO;
 import com.yimei.hs.same.dto.PageHuikuanDTO;
 import com.yimei.hs.same.entity.*;
-import com.yimei.hs.same.mapper.FukuanMapper;
-import com.yimei.hs.same.mapper.HuankuanMapper;
-import com.yimei.hs.same.mapper.HuikuanMapper;
-import com.yimei.hs.same.mapper.OrderPartyMapper;
+import com.yimei.hs.same.mapper.*;
 import com.yimei.hs.user.mapper.DeptMapper;
 import com.yimei.hs.user.mapper.PartyMapper;
 import com.yimei.hs.user.mapper.TeamMapper;
@@ -49,6 +46,9 @@ public class DataAnalysisService {
     OrderPartyMapper orderPartyMapper;
 
     @Autowired
+    OrderConfigMapper orderConfigMapper;
+
+    @Autowired
     DeptMapper deptMapper;
 
     @Autowired
@@ -56,7 +56,6 @@ public class DataAnalysisService {
 
     @Autowired
     PartyMapper partyMapper;
-
 
 
     public AnalysisData findOneYing(Long morderId, long hsId) {
@@ -715,7 +714,7 @@ public class DataAnalysisService {
      * @param hsId
      * @return
      */
-    public List<ExportExcelUpstreamPressure> exportUpstreamPressureToExcel(long orderId, long hsId,BusinessType businessType) {
+    public List<ExportExcelUpstreamPressure> exportUpstreamPressureToExcel(long orderId, long hsId, BusinessType businessType) {
         List<ExportExcelUpstreamPressure> exportExcelUpstreamPressureList = new ArrayList<ExportExcelUpstreamPressure>();
         Order order = orderService.findOne(orderId);
         List<OrderParty> orderPartyList = orderPartyMapper.findByPositionAndOrderId(1, orderId);
@@ -737,7 +736,7 @@ public class DataAnalysisService {
             if (orderPartyList.size() == 1) {
                 partsName.append(partyMapper.selectByPrimaryKey(orderParty.getCustomerId()).getName());
             } else {
-                partsName.append(partyMapper.selectByPrimaryKey(orderParty.getCustomerId()).getName()+"  ");
+                partsName.append(partyMapper.selectByPrimaryKey(orderParty.getCustomerId()).getName() + "  ");
             }
         }
         exportExcelUpstreamPressure.setPartName(partsName.toString());
@@ -748,19 +747,19 @@ public class DataAnalysisService {
         if (BusinessType.ying.equals(businessType)) {
 //            占压
             exportExcelUpstreamPressure.setPressureAmountOfPrice(yingAnalysisDataMapper.findOneV1049ying(orderId, hsId).getUpstreamCapitalPressure());
-            exportExcelUpstreamPressure.setOwnerCapitalPressure(yingAnalysisDataMapper.findOneV1066ying(orderId,hsId).getOwnerCapitalPressure());
-            exportExcelUpstreamPressure.setUnInvoicePrice(yingAnalysisDataMapper.findOneV1052ying(orderId,hsId).getUnInvoicedAmountofMoney());
+            exportExcelUpstreamPressure.setOwnerCapitalPressure(yingAnalysisDataMapper.findOneV1066ying(orderId, hsId).getOwnerCapitalPressure());
+            exportExcelUpstreamPressure.setUnInvoicePrice(yingAnalysisDataMapper.findOneV1052ying(orderId, hsId).getUnInvoicedAmountofMoney());
         } else if (BusinessType.cang.equals(businessType)) {
             exportExcelUpstreamPressure.setPressureAmountOfPrice(yingAnalysisDataMapper.findOneV1049cang(orderId, hsId).getUpstreamCapitalPressure());
-            exportExcelUpstreamPressure.setOwnerCapitalPressure(yingAnalysisDataMapper.findOneV1066cang(orderId,hsId).getOwnerCapitalPressure());
-            exportExcelUpstreamPressure.setUnInvoicePrice(yingAnalysisDataMapper.findOneV1052cang(orderId,hsId).getUnInvoicedAmountofMoney());
+            exportExcelUpstreamPressure.setOwnerCapitalPressure(yingAnalysisDataMapper.findOneV1066cang(orderId, hsId).getOwnerCapitalPressure());
+            exportExcelUpstreamPressure.setUnInvoicePrice(yingAnalysisDataMapper.findOneV1052cang(orderId, hsId).getUnInvoicedAmountofMoney());
         }
 
         exportExcelUpstreamPressureList.add(exportExcelUpstreamPressure);
 
 
         List<CapitalPressure> utils = utils(orderId, hsId);
-        if (utils !=null) {
+        if (utils != null) {
             int maxSize = utils.size();
             for (int i = 0; i < maxSize; i++) {
                 ExportExcelUpstreamPressure temp = new ExportExcelUpstreamPressure();
@@ -778,5 +777,59 @@ public class DataAnalysisService {
         }
 
         return exportExcelUpstreamPressureList;
+    }
+
+    /**
+     * @param orderId
+     * @param hsId
+     * @param businessType
+     * @return
+     */
+    public ExportExcelUpstreamPressure exportDwonstreamPressureToExcel(long orderId, long hsId, BusinessType businessType) {
+        List<ExportExcelUpstreamPressure> exportExcelUpstreamPressureList = new ArrayList<ExportExcelUpstreamPressure>();
+        Order order = orderService.findOne(orderId);
+
+
+        ExportExcelUpstreamPressure exportExcelUpstreamPressure = new ExportExcelUpstreamPressure();
+        exportExcelUpstreamPressure.setLine(order.getLine());
+        exportExcelUpstreamPressure.setDeptName(deptMapper.selectByPrimaryKey(order.getDeptId()).getName());
+        exportExcelUpstreamPressure.setDeptId(order.getDeptId());
+        exportExcelUpstreamPressure.setTeamName(teamMapper.selectByPrimaryKey(order.getTeamId()).getName());
+        exportExcelUpstreamPressure.setTeamId(order.getTeamId());
+        exportExcelUpstreamPressure.setBusinessType(order.getBusinessType());
+        exportExcelUpstreamPressure.setDwonStreamPartyName(partyMapper.selectByPrimaryKey(order.getDownstreamId()).getName());
+        exportExcelUpstreamPressure.setAccoutCompanyName(partyMapper.selectByPrimaryKey(order.getMainAccounting()).getName());
+        exportExcelUpstreamPressure.setTerminalClientName((order.getTerminalClientId() == null ? "" : partyMapper.selectByPrimaryKey(order.getTerminalClientId()).getName()));
+
+        List<OrderConfig> orderConfigs = orderConfigMapper.getList(orderId);
+        for (OrderConfig orderConfig : orderConfigs) {
+
+
+            ExportExcelUpstreamPressure temp = new ExportExcelUpstreamPressure();
+
+            //终端客户
+
+            if (BusinessType.ying.equals(businessType)) {
+//            占压
+                temp.setPressureAmountOfPrice(yingAnalysisDataMapper.findOneV1050ying(orderId, orderConfig.getId()).getDownstreamCapitalPressure());
+                temp.setSettledDownstreamHuikuanMoneny(yingAnalysisDataMapper.findOneV2010ying(orderId, orderConfig.getId()).getSettledDownstreamHuikuanMoneny());
+                temp.setUnsettleSellerMoneyAmount(yingAnalysisDataMapper.findOneV1040ying(orderId, orderConfig.getId()).getUnsettlerBuyerMoneyAmount());
+                temp.setPrePayment(yingAnalysisDataMapper.findOneV1054ying(orderId, orderConfig.getId()).getYingPrePayment());
+            } else if (BusinessType.cang.equals(businessType)) {
+                temp.setPressureAmountOfPrice(yingAnalysisDataMapper.findOneV1050cang(orderId, orderConfig.getId()).getDownstreamCapitalPressure());
+                temp.setSettledDownstreamHuikuanMoneny(yingAnalysisDataMapper.findOneV2010cang(orderId, orderConfig.getId()).getSettledDownstreamHuikuanMoneny());
+                temp.setUnsettleSellerMoneyAmount(yingAnalysisDataMapper.findOneV1078cang(orderId, orderConfig.getId()).getUnsettleSellerMoneyAmount());
+                temp.setPrePayment(yingAnalysisDataMapper.findOneV1054cang(orderId, orderConfig.getId()).getCangPrePayment());
+            }
+
+            exportExcelUpstreamPressureList.add(temp);
+
+
+        }
+        exportExcelUpstreamPressure.setPressureAmountOfPrice(exportExcelUpstreamPressureList.stream().map(m -> m.getPressureAmountOfPrice()).reduce(BigDecimal.ZERO,BigDecimal::add));
+        exportExcelUpstreamPressure.setSettledDownstreamHuikuanMoneny(exportExcelUpstreamPressureList.stream().map(m -> m.getSettledDownstreamHuikuanMoneny()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        exportExcelUpstreamPressure.setUnsettleSellerMoneyAmount(exportExcelUpstreamPressureList.stream().map(m -> m.getUnsettleSellerMoneyAmount()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        exportExcelUpstreamPressure.setPrePayment(exportExcelUpstreamPressureList.stream().map(m->m.getPrePayment()).reduce(BigDecimal.ZERO,BigDecimal::add));
+        return exportExcelUpstreamPressure;
     }
 }

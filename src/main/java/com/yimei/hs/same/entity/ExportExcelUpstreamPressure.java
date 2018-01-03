@@ -23,6 +23,8 @@ public class ExportExcelUpstreamPressure extends Order implements Serializable {
     // 业务类型
     // 一级客户 上游Id |参与商Id
     private String upStreamPartyName;
+
+    private String dwonStreamPartyName;
     //    二级客户  上游与主账户公司之间-其他参与方
     private String partName;
     //船名
@@ -48,4 +50,10 @@ public class ExportExcelUpstreamPressure extends Order implements Serializable {
     private String AccoutCompanyName;
     //终端客户名称
     private String terminalClientName;
+    //已结算未回款
+    private BigDecimal settledDownstreamHuikuanMoneny;
+    //    未结算
+    private BigDecimal unsettleSellerMoneyAmount;
+    //    预收款
+    private BigDecimal prePayment;
 }
