@@ -25,4 +25,6 @@ public class CapitalPressure {
      * 未开票金额
      */
     private BigDecimal partiesCapitalPressure;
+
+    private Long id;
 }

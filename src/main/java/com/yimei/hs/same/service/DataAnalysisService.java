@@ -10,6 +10,10 @@ import com.yimei.hs.same.entity.*;
 import com.yimei.hs.same.mapper.FukuanMapper;
 import com.yimei.hs.same.mapper.HuankuanMapper;
 import com.yimei.hs.same.mapper.HuikuanMapper;
+import com.yimei.hs.same.mapper.OrderPartyMapper;
+import com.yimei.hs.user.mapper.DeptMapper;
+import com.yimei.hs.user.mapper.PartyMapper;
+import com.yimei.hs.user.mapper.TeamMapper;
 import com.yimei.hs.ying.entity.AnalysisData;
 import com.yimei.hs.ying.mapper.YingAnalysisDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +44,19 @@ public class DataAnalysisService {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    OrderPartyMapper orderPartyMapper;
+
+    @Autowired
+    DeptMapper deptMapper;
+
+    @Autowired
+    TeamMapper teamMapper;
+
+    @Autowired
+    PartyMapper partyMapper;
+
 
 
     public AnalysisData findOneYing(Long morderId, long hsId) {
@@ -337,7 +354,6 @@ public class DataAnalysisService {
 //（【1069】毛利含税汽运费 + 【1070】毛利含税水运费 + 【1071】毛利含税火运费）／1.11 - 【1072】毛利监管费 ／1.06 - 【1073】毛利服务费 ／1.06 - 【1074】
 
 
-
         BigDecimal opreationCrocsProfile = cangAnalysisDatav1059.getWithoutTaxIncome().
                 subtract(cangAnalysisDatav1060.getWithoutTaxCost()).
                 subtract(cangAnalysisDatav1061.getAdditionalTax()).
@@ -570,6 +586,7 @@ public class DataAnalysisService {
         for (Long id : partiesId) {
 
             CapitalPressure capitalPressure = new CapitalPressure();
+            capitalPressure.setId(id);
             BigDecimal capitalFee = yingAnalysisDataMapper.findOneV1075Fee(id, orderId, hsId);
             BigDecimal capitalFukuan = yingAnalysisDataMapper.findOneV1075Fukuan(id, orderId, hsId);
             BigDecimal unInvoice = yingAnalysisDataMapper.findOneV1076Uninvoice(id, orderId, hsId);
@@ -577,10 +594,10 @@ public class DataAnalysisService {
             capitalPressure.setReceiveCompanyId(id);
             capitalPressure.setOrderId(orderId);
             capitalPressure.setUnInvoicePrice(
-                                    (capitalFee == null ||
-                                            capitalFee.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : capitalFee).subtract( (unInvoice == null
-                                            || unInvoice.compareTo(BigDecimal.ZERO)
-                                            == 0 ? BigDecimal.ZERO : unInvoice)));
+                    (capitalFee == null ||
+                            capitalFee.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : capitalFee).subtract((unInvoice == null
+                            || unInvoice.compareTo(BigDecimal.ZERO)
+                            == 0 ? BigDecimal.ZERO : unInvoice)));
             capitalPressure.setPartiesCapitalPressure((capitalFukuan == null || capitalFukuan.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : capitalFukuan).subtract((capitalFee == null || capitalFee.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : capitalFee)));
             capitalPressureList.add(capitalPressure);
         }
@@ -600,10 +617,10 @@ public class DataAnalysisService {
     HuikuanMapper huikuanMapper;
 
 
-    public List<ExportExcelDate> exportExcel(Long orderId,Long hsId) {
+    public List<ExportExcelDate> exportExcel(Long orderId, Long hsId) {
 
-       List<Fukuan>  fukuanList=fukuanMapper.getListByOrderIdAndHsId(orderId, hsId);
-       List<AnalysisData> analysisDatas = yingAnalysisDataMapper.findOneV1019(orderId, hsId);
+        List<Fukuan> fukuanList = fukuanMapper.getListByOrderIdAndHsId(orderId, hsId);
+        List<AnalysisData> analysisDatas = yingAnalysisDataMapper.findOneV1019(orderId, hsId);
 
 
         List<Huikuan> huikuanList = huikuanMapper.gelistByhsIdAndOrderId(orderId, hsId);
@@ -618,7 +635,7 @@ public class DataAnalysisService {
 
         List<ExportExcelDate> exportExcelDates = new ArrayList<ExportExcelDate>();
 
-        if (analysisDatas!=null) {
+        if (analysisDatas != null) {
 
             int analysisiDataSize = analysisDatas.size();
             int fukuanListSize = fukuanList.size();
@@ -632,15 +649,15 @@ public class DataAnalysisService {
             listSize.add(huankuansSize);
             int maxSize = listSize.stream().mapToInt((x) -> x).max().getAsInt();
 
-            for (int i=0;i<maxSize;i++) {
+            for (int i = 0; i < maxSize; i++) {
                 ExportExcelDate exportExcelDate = new ExportExcelDate();
 
-                if (i <fukuanListSize) {
+                if (i < fukuanListSize) {
                     exportExcelDate.setFukuanDate(fukuanList.get(i).getPayDate());
                     exportExcelDate.setFukuanAmount(fukuanList.get(i).getPayAmount());
                 }
 
-                if (i <analysisiDataSize) {
+                if (i < analysisiDataSize) {
 
                     exportExcelDate.setAmount(analysisDatas.get(i).getMapAmount());
                     exportExcelDate.setPayDate(analysisDatas.get(i).getPayDate());
@@ -648,9 +665,9 @@ public class DataAnalysisService {
                     exportExcelDate.setTime(analysisDatas.get(i).getTime());
                     exportExcelDate.setRate(analysisDatas.get(i).getRate());
                 }
-                if (i<huikuanListSize) {
+                if (i < huikuanListSize) {
 
-                    Huikuan huikuan=huikuanList.get(i);
+                    Huikuan huikuan = huikuanList.get(i);
                     exportExcelDate.setHuikuanTime(huikuan.getHuikuanDate());
                     exportExcelDate.setHuikuanAmount(huikuan.getHuikuanAmount());
                     exportExcelDate.setHuikuanMode(huikuan.getHuikuanMode());
@@ -665,7 +682,7 @@ public class DataAnalysisService {
                 }
 
 
-                if (i<huankuansSize) {
+                if (i < huankuansSize) {
                     Huankuan huikuan = huankuans.get(i);
                     if (huikuan.getHuankuanMapList() == null) {
                         exportExcelDate.setHuankuanInterest(BigDecimal.ZERO);
@@ -684,11 +701,82 @@ public class DataAnalysisService {
 
             }
 
-        }else {
+        } else {
             return null;
         }
-            return exportExcelDates;
+        return exportExcelDates;
 
     }
 
+    /**
+     * 导出该核算月 上游资金占压数据  表格一
+     *
+     * @param orderId
+     * @param hsId
+     * @return
+     */
+    public List<ExportExcelUpstreamPressure> exportUpstreamPressureToExcel(long orderId, long hsId,BusinessType businessType) {
+        List<ExportExcelUpstreamPressure> exportExcelUpstreamPressureList = new ArrayList<ExportExcelUpstreamPressure>();
+        Order order = orderService.findOne(orderId);
+        List<OrderParty> orderPartyList = orderPartyMapper.findByPositionAndOrderId(1, orderId);
+
+        ExportExcelUpstreamPressure exportExcelUpstreamPressure = new ExportExcelUpstreamPressure();
+        exportExcelUpstreamPressure.setLine(order.getLine());
+        exportExcelUpstreamPressure.setDeptName(deptMapper.selectByPrimaryKey(order.getDeptId()).getName());
+        exportExcelUpstreamPressure.setDeptId(order.getDeptId());
+        exportExcelUpstreamPressure.setTeamName(teamMapper.selectByPrimaryKey(order.getTeamId()).getName());
+        exportExcelUpstreamPressure.setTeamId(order.getTeamId());
+        exportExcelUpstreamPressure.setBusinessType(order.getBusinessType());
+        exportExcelUpstreamPressure.setUpStreamPartyName(partyMapper.selectByPrimaryKey(order.getUpstreamId()).getName());
+        exportExcelUpstreamPressure.setAccoutCompanyName(partyMapper.selectByPrimaryKey(order.getMainAccounting()).getName());
+        //二级客户
+
+        StringBuffer partsName = new StringBuffer();
+        for (OrderParty orderParty : orderPartyList) {
+
+            if (orderPartyList.size() == 1) {
+                partsName.append(partyMapper.selectByPrimaryKey(orderParty.getCustomerId()).getName());
+            } else {
+                partsName.append(partyMapper.selectByPrimaryKey(orderParty.getCustomerId()).getName()+"  ");
+            }
+        }
+        exportExcelUpstreamPressure.setPartName(partsName.toString());
+
+        //终端客户
+        exportExcelUpstreamPressure.setTerminalClientName((order.getTerminalClientId() == null ? "" : partyMapper.selectByPrimaryKey(order.getTerminalClientId()).getName()));
+        exportExcelUpstreamPressure.setBankDebtPrice(yingAnalysisDataMapper.findOneV1047(orderId, hsId).getExternalCapitalPaymentAmount());
+        if (BusinessType.ying.equals(businessType)) {
+//            占压
+            exportExcelUpstreamPressure.setPressureAmountOfPrice(yingAnalysisDataMapper.findOneV1049ying(orderId, hsId).getUpstreamCapitalPressure());
+            exportExcelUpstreamPressure.setOwnerCapitalPressure(yingAnalysisDataMapper.findOneV1066ying(orderId,hsId).getOwnerCapitalPressure());
+            exportExcelUpstreamPressure.setUnInvoicePrice(yingAnalysisDataMapper.findOneV1052ying(orderId,hsId).getUnInvoicedAmountofMoney());
+        } else if (BusinessType.cang.equals(businessType)) {
+            exportExcelUpstreamPressure.setPressureAmountOfPrice(yingAnalysisDataMapper.findOneV1049cang(orderId, hsId).getUpstreamCapitalPressure());
+            exportExcelUpstreamPressure.setOwnerCapitalPressure(yingAnalysisDataMapper.findOneV1066cang(orderId,hsId).getOwnerCapitalPressure());
+            exportExcelUpstreamPressure.setUnInvoicePrice(yingAnalysisDataMapper.findOneV1052cang(orderId,hsId).getUnInvoicedAmountofMoney());
+        }
+
+        exportExcelUpstreamPressureList.add(exportExcelUpstreamPressure);
+
+
+        List<CapitalPressure> utils = utils(orderId, hsId);
+        if (utils !=null) {
+            int maxSize = utils.size();
+            for (int i = 0; i < maxSize; i++) {
+                ExportExcelUpstreamPressure temp = new ExportExcelUpstreamPressure();
+                temp.setLine(order.getLine());
+                temp.setDeptName(deptMapper.selectByPrimaryKey(order.getDeptId()).getName());
+                temp.setTeamName(teamMapper.selectByPrimaryKey(order.getTeamId()).getName());
+                temp.setBusinessType(order.getBusinessType());
+                temp.setAccoutCompanyName(partyMapper.selectByPrimaryKey(order.getMainAccounting()).getName());
+                temp.setUpStreamPartyName(partyMapper.selectByPrimaryKey(utils.get(i).getId()).getName());
+                temp.setPressureAmountOfPrice(utils.get(i).getPartiesCapitalPressure());
+                temp.setUnInvoicePrice(utils.get(i).getUnInvoicePrice());
+
+                exportExcelUpstreamPressureList.add(temp);
+            }
+        }
+
+        return exportExcelUpstreamPressureList;
+    }
 }
