@@ -145,7 +145,7 @@ public class DataAnalysisController {
 
     protected DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-//    @RequestMapping("/{businessType}/analysis/exportExcel/{orderId}/{hsId}")
+    @RequestMapping("/{businessType}/analysis/exportExcel/{orderId}/{hsId}")
     public void doExportTradeListExcel(@PathVariable(value = "orderId") long orderId,
                                            @PathVariable(value = "hsId") long hsId,
                                            @PathVariable(value = "businessType") BusinessType businessType,
@@ -227,9 +227,8 @@ public class DataAnalysisController {
      * @param request
      * @throws IOException
      */
-    @RequestMapping("/{businessType}/analysis/exportExcelUpstreamPressure/{orderId}/{hsId}")
+    @RequestMapping("/{businessType}/analysis/exportExcelSeller/{orderId}")
     public void doExportUpstreamPressureToExcel(@PathVariable(value = "orderId") long orderId,
-                                           @PathVariable(value = "hsId") long hsId,
                                            @PathVariable(value = "businessType") BusinessType businessType,
                                            HttpServletResponse response,
                                            HttpServletRequest request) throws IOException {
@@ -312,9 +311,8 @@ public class DataAnalysisController {
      * @param request
      * @throws IOException
      */
-//    @RequestMapping("/{businessType}/analysis/exportExcel/{orderId}/{hsId}")
+    @RequestMapping("/{businessType}/analysis/exportExcelBuyer/{orderId}")
     public void doExportBuyyerPressureToExcel(@PathVariable(value = "orderId") long orderId,
-                                                @PathVariable(value = "hsId") long hsId,
                                                 @PathVariable(value = "businessType") BusinessType businessType,
                                                 HttpServletResponse response,
                                                 HttpServletRequest request) throws IOException {
@@ -393,9 +391,8 @@ public class DataAnalysisController {
      * @param request
      * @throws IOException
      */
-    @RequestMapping("/{businessType}/analysis/exportExcel/{orderId}/{hsId}")
+    @RequestMapping("/{businessType}/analysis/exportExcelInstorage/{orderId}")
     public void doExportInstoragePressureToExcel(@PathVariable(value = "orderId") long orderId,
-                                              @PathVariable(value = "hsId") long hsId,
                                               @PathVariable(value = "businessType") BusinessType businessType,
                                               HttpServletResponse response,
                                               HttpServletRequest request) throws IOException {
