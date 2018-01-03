@@ -801,7 +801,7 @@ public class DataAnalysisService {
      * @param businessType
      * @return
      */
-    public ExportExcelUpstreamPressure exportDwonstreamPressureToExcel(long orderId, long hsId, BusinessType businessType) {
+    public ExportExcelUpstreamPressure exportDwonstreamPressureToExcel(long orderId, BusinessType businessType) {
         List<ExportExcelUpstreamPressure> exportExcelUpstreamPressureList = new ArrayList<ExportExcelUpstreamPressure>();
         Order order = orderService.findOne(orderId);
 

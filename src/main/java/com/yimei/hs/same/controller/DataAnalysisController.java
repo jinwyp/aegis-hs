@@ -221,7 +221,6 @@ public class DataAnalysisController {
     /**
      *  获取上游占压
      * @param orderId
-     * @param hsId
      * @param businessType
      * @param response
      * @param request
@@ -305,7 +304,7 @@ public class DataAnalysisController {
     /**
      *  获取下游
      * @param orderId
-     * @param hsId
+
      * @param businessType
      * @param response
      * @param request
@@ -348,7 +347,7 @@ public class DataAnalysisController {
             cell.setCellValue(excelHeader[i]);
             cell.setCellStyle(style);
         }
-     ExportExcelUpstreamPressure exportExcelUpstreamPressure = dataAnalysisService.exportDwonstreamPressureToExcel(orderId, hsId,businessType);
+     ExportExcelUpstreamPressure exportExcelUpstreamPressure = dataAnalysisService.exportDwonstreamPressureToExcel(orderId,businessType);
 
             row = sheet.createRow(  1);
             row.createCell(0).setCellValue((exportExcelUpstreamPressure.getDeptName() == null ? "" : exportExcelUpstreamPressure.getDeptName()));
@@ -385,7 +384,6 @@ public class DataAnalysisController {
     /**
      *  获取下游
      * @param orderId
-     * @param hsId
      * @param businessType
      * @param response
      * @param request
