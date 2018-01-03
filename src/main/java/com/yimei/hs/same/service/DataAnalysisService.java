@@ -714,10 +714,9 @@ public class DataAnalysisService {
      * 导出该核算月 上游资金占压数据  表格一
      *
      * @param orderId
-     * @param hsId
      * @return
      */
-    public List<ExportExcelUpstreamPressure> exportUpstreamPressureToExcel(long orderId, long hsId, BusinessType businessType) {
+    public List<ExportExcelUpstreamPressure> exportUpstreamPressureToExcel(long orderId, BusinessType businessType) {
         List<ExportExcelUpstreamPressure> exportExcelUpstreamPressureList = new ArrayList<ExportExcelUpstreamPressure>();
         Order order = orderService.findOne(orderId);
         List<OrderParty> orderPartyList = orderPartyMapper.findByPositionAndOrderId(1, orderId);
@@ -764,31 +763,32 @@ public class DataAnalysisService {
             }
             tempList.add(temp);
         }
-        exportExcelUpstreamPressure.setBankDebtPrice(tempList.stream().map(m->m.getBankDebtPrice()).reduce(BigDecimal.ZERO,BigDecimal::add));
-        exportExcelUpstreamPressure.setPressureAmountOfPrice(tempList.stream().map(m->m.getPressureAmountOfPrice()).reduce(BigDecimal.ZERO,BigDecimal::add));
-        exportExcelUpstreamPressure.setOwnerCapitalPressure(tempList.stream().map(m->m.getOwnerCapitalPressure()).reduce(BigDecimal.ZERO,BigDecimal::add));
-        exportExcelUpstreamPressure.setUnInvoicePrice(tempList.stream().map(m->m.getUnInvoicePrice()).reduce(BigDecimal.ZERO,BigDecimal::add));
+        exportExcelUpstreamPressure.setBankDebtPrice(tempList.stream().map(m -> m.getBankDebtPrice()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        exportExcelUpstreamPressure.setPressureAmountOfPrice(tempList.stream().map(m -> m.getPressureAmountOfPrice()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        exportExcelUpstreamPressure.setOwnerCapitalPressure(tempList.stream().map(m -> m.getOwnerCapitalPressure()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        exportExcelUpstreamPressure.setUnInvoicePrice(tempList.stream().map(m -> m.getUnInvoicePrice()).reduce(BigDecimal.ZERO, BigDecimal::add));
         exportExcelUpstreamPressureList.add(exportExcelUpstreamPressure);
+        for (OrderConfig orderConfig : orderConfigs) {
+            List<CapitalPressure> utils = utils(orderId, orderConfig.getId());
+            if (utils != null) {
+                int maxSize = utils.size();
+                Map<Long, List<CapitalPressure>> collect = utils.stream().collect(groupingBy(CapitalPressure::getId));
 
-        List<CapitalPressure> utils = utils(orderId, hsId);
-        if (utils != null) {
-            int maxSize = utils.size();
-            Map<Long, List<CapitalPressure>> collect = utils.stream().collect(groupingBy(CapitalPressure::getId));
+                for (Long id : collect.keySet()) {
 
-            for (Long id:collect.keySet()) {
+                    ExportExcelUpstreamPressure tempCapital = new ExportExcelUpstreamPressure();
+                    tempCapital.setLine(order.getLine());
+                    tempCapital.setDeptName(deptMapper.selectByPrimaryKey(order.getDeptId()).getName());
+                    tempCapital.setTeamName(teamMapper.selectByPrimaryKey(order.getTeamId()).getName());
+                    tempCapital.setBusinessType(order.getBusinessType());
+                    tempCapital.setAccoutCompanyName(partyMapper.selectByPrimaryKey(order.getMainAccounting()).getName());
+                    tempCapital.setUpStreamPartyName(partyMapper.selectByPrimaryKey(id).getName());
 
-                ExportExcelUpstreamPressure tempCapital = new ExportExcelUpstreamPressure();
-                tempCapital.setLine(order.getLine());
-                tempCapital.setDeptName(deptMapper.selectByPrimaryKey(order.getDeptId()).getName());
-                tempCapital.setTeamName(teamMapper.selectByPrimaryKey(order.getTeamId()).getName());
-                tempCapital.setBusinessType(order.getBusinessType());
-                tempCapital.setAccoutCompanyName(partyMapper.selectByPrimaryKey(order.getMainAccounting()).getName());
-                tempCapital.setUpStreamPartyName(partyMapper.selectByPrimaryKey(id).getName());
+                    tempCapital.setPressureAmountOfPrice(collect.get(id).stream().map(m -> m.getPartiesCapitalPressure()).reduce(BigDecimal.ZERO, BigDecimal::add));
+                    tempCapital.setUnInvoicePrice(collect.get(id).stream().map(m -> m.getUnInvoicePrice()).reduce(BigDecimal.ZERO, BigDecimal::add));
 
-                tempCapital.setPressureAmountOfPrice(collect.get(id).stream().map(m -> m.getPartiesCapitalPressure()).reduce(BigDecimal.ZERO, BigDecimal::add));
-                tempCapital.setUnInvoicePrice(collect.get(id).stream().map(m -> m.getUnInvoicePrice()).reduce(BigDecimal.ZERO, BigDecimal::add));
-
-                exportExcelUpstreamPressureList.add(tempCapital);
+                    exportExcelUpstreamPressureList.add(tempCapital);
+                }
             }
         }
 
@@ -797,7 +797,6 @@ public class DataAnalysisService {
 
     /**
      * @param orderId
-     * @param hsId
      * @param businessType
      * @return
      */
@@ -870,18 +869,18 @@ public class DataAnalysisService {
             temp.setTotalInstorageTranitNum(yingAnalysisDataMapper.findOneV3001(orderId, orderConfig.getId()).getTotalInstorageTranitNum());
             temp.setTotalInstorageTranitPrice(yingAnalysisDataMapper.findOneV3010(orderId, orderConfig.getId()).getTotalInstorageTranitPrice());
             temp.setTotalInstorageNum(yingAnalysisDataMapper.findOneV3012(orderId, orderConfig.getId()).getTotalInstorageRemainNum());
-            temp.setTotalInstoragePrice(yingAnalysisDataMapper.findOneV3013(orderId, orderConfig.getId()).getTotalInstorageRemainPrice().setScale(2,BigDecimal.ROUND_HALF_UP));
+            temp.setTotalInstoragePrice(yingAnalysisDataMapper.findOneV3013(orderId, orderConfig.getId()).getTotalInstorageRemainPrice().setScale(2, BigDecimal.ROUND_HALF_UP));
             temp.setTotalNum(yingAnalysisDataMapper.findOneV3005(orderId, orderConfig.getId()).getTotalStockNum());
             temp.setTotalPrice(yingAnalysisDataMapper.findOneV3006(orderId, orderConfig.getId()).getTotalStockMoney());
             excelInstoragePressureList.add(temp);
         }
 
         exportExcelInstoragePressure.setTotalInstorageTranitNum(excelInstoragePressureList.stream().map(m -> m.getTotalInstorageTranitNum()).reduce(BigDecimal.ZERO, BigDecimal::add));
-        exportExcelInstoragePressure.setTotalInstorageTranitPrice(excelInstoragePressureList.stream().map(m -> m.getTotalInstorageTranitPrice()).reduce(BigDecimal.ZERO,BigDecimal::add));
-        exportExcelInstoragePressure.setTotalInstorageNum(excelInstoragePressureList.stream().map(m -> m.getTotalInstorageNum()).reduce(BigDecimal.ZERO,BigDecimal::add));
-        exportExcelInstoragePressure.setTotalInstoragePrice(excelInstoragePressureList.stream().map(m -> m.getTotalInstoragePrice()).reduce(BigDecimal.ZERO,BigDecimal::add));
-        exportExcelInstoragePressure.setTotalNum(excelInstoragePressureList.stream().map(m -> m.getTotalNum()).reduce(BigDecimal.ZERO,BigDecimal::add));
-        exportExcelInstoragePressure.setTotalPrice(excelInstoragePressureList.stream().map(m -> m.getTotalPrice()).reduce(BigDecimal.ZERO,BigDecimal::add));
+        exportExcelInstoragePressure.setTotalInstorageTranitPrice(excelInstoragePressureList.stream().map(m -> m.getTotalInstorageTranitPrice()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        exportExcelInstoragePressure.setTotalInstorageNum(excelInstoragePressureList.stream().map(m -> m.getTotalInstorageNum()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        exportExcelInstoragePressure.setTotalInstoragePrice(excelInstoragePressureList.stream().map(m -> m.getTotalInstoragePrice()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        exportExcelInstoragePressure.setTotalNum(excelInstoragePressureList.stream().map(m -> m.getTotalNum()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        exportExcelInstoragePressure.setTotalPrice(excelInstoragePressureList.stream().map(m -> m.getTotalPrice()).reduce(BigDecimal.ZERO, BigDecimal::add));
 
         return exportExcelInstoragePressure;
     }

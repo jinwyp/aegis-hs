@@ -263,7 +263,7 @@ public class DataAnalysisController {
             cell.setCellValue(excelHeader[i]);
             cell.setCellStyle(style);
         }
-        List<ExportExcelUpstreamPressure> exportExcelDateList = dataAnalysisService.exportUpstreamPressureToExcel(orderId, hsId,businessType);
+        List<ExportExcelUpstreamPressure> exportExcelDateList = dataAnalysisService.exportUpstreamPressureToExcel(orderId,businessType);
 
 
         for (int i = 0; i < exportExcelDateList.size(); i++) {
