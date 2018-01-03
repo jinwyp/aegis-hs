@@ -826,10 +826,47 @@ public class DataAnalysisService {
 
 
         }
-        exportExcelUpstreamPressure.setPressureAmountOfPrice(exportExcelUpstreamPressureList.stream().map(m -> m.getPressureAmountOfPrice()).reduce(BigDecimal.ZERO,BigDecimal::add));
+        exportExcelUpstreamPressure.setPressureAmountOfPrice(exportExcelUpstreamPressureList.stream().map(m -> m.getPressureAmountOfPrice()).reduce(BigDecimal.ZERO, BigDecimal::add));
         exportExcelUpstreamPressure.setSettledDownstreamHuikuanMoneny(exportExcelUpstreamPressureList.stream().map(m -> m.getSettledDownstreamHuikuanMoneny()).reduce(BigDecimal.ZERO, BigDecimal::add));
         exportExcelUpstreamPressure.setUnsettleSellerMoneyAmount(exportExcelUpstreamPressureList.stream().map(m -> m.getUnsettleSellerMoneyAmount()).reduce(BigDecimal.ZERO, BigDecimal::add));
-        exportExcelUpstreamPressure.setPrePayment(exportExcelUpstreamPressureList.stream().map(m->m.getPrePayment()).reduce(BigDecimal.ZERO,BigDecimal::add));
+        exportExcelUpstreamPressure.setPrePayment(exportExcelUpstreamPressureList.stream().map(m -> m.getPrePayment()).reduce(BigDecimal.ZERO, BigDecimal::add));
         return exportExcelUpstreamPressure;
+    }
+
+    public ExportExcelInstoragePressure exportInstoragePressureToExcel(long orderId) {
+        ExportExcelInstoragePressure exportExcelInstoragePressure = new ExportExcelInstoragePressure();
+        List<ExportExcelInstoragePressure> excelInstoragePressureList = new ArrayList<ExportExcelInstoragePressure>();
+        Order order = orderService.findOne(orderId);
+        exportExcelInstoragePressure.setCargoType(order.getCargoType());
+        exportExcelInstoragePressure.setLine(order.getLine());
+        exportExcelInstoragePressure.setDeptName(deptMapper.selectByPrimaryKey(order.getDeptId()).getName());
+        exportExcelInstoragePressure.setDeptId(order.getDeptId());
+        exportExcelInstoragePressure.setTeamName(teamMapper.selectByPrimaryKey(order.getTeamId()).getName());
+        exportExcelInstoragePressure.setTeamId(order.getTeamId());
+        exportExcelInstoragePressure.setBusinessType(order.getBusinessType());
+
+        exportExcelInstoragePressure.setAccoutCompanyName(partyMapper.selectByPrimaryKey(order.getMainAccounting()).getName());
+
+
+        List<OrderConfig> orderConfigs = orderConfigMapper.getList(orderId);
+        for (OrderConfig orderConfig : orderConfigs) {
+            ExportExcelInstoragePressure temp = new ExportExcelInstoragePressure();
+            temp.setTotalInstorageTranitNum(yingAnalysisDataMapper.findOneV3001(orderId, orderConfig.getId()).getTotalInstorageTranitNum());
+            temp.setTotalInstorageTranitPrice(yingAnalysisDataMapper.findOneV3010(orderId, orderConfig.getId()).getTotalInstorageTranitPrice());
+            temp.setTotalInstorageNum(yingAnalysisDataMapper.findOneV3012(orderId, orderConfig.getId()).getTotalInstorageRemainNum());
+            temp.setTotalInstoragePrice(yingAnalysisDataMapper.findOneV3013(orderId, orderConfig.getId()).getTotalInstorageRemainPrice().setScale(2,BigDecimal.ROUND_HALF_UP));
+            temp.setTotalNum(yingAnalysisDataMapper.findOneV3005(orderId, orderConfig.getId()).getTotalStockNum());
+            temp.setTotalPrice(yingAnalysisDataMapper.findOneV3006(orderId, orderConfig.getId()).getTotalStockMoney());
+            excelInstoragePressureList.add(temp);
+        }
+
+        exportExcelInstoragePressure.setTotalInstorageTranitNum(excelInstoragePressureList.stream().map(m -> m.getTotalInstorageTranitNum()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        exportExcelInstoragePressure.setTotalInstorageTranitPrice(excelInstoragePressureList.stream().map(m -> m.getTotalInstorageTranitPrice()).reduce(BigDecimal.ZERO,BigDecimal::add));
+        exportExcelInstoragePressure.setTotalInstorageNum(excelInstoragePressureList.stream().map(m -> m.getTotalInstorageNum()).reduce(BigDecimal.ZERO,BigDecimal::add));
+        exportExcelInstoragePressure.setTotalInstoragePrice(excelInstoragePressureList.stream().map(m -> m.getTotalInstoragePrice()).reduce(BigDecimal.ZERO,BigDecimal::add));
+        exportExcelInstoragePressure.setTotalNum(excelInstoragePressureList.stream().map(m -> m.getTotalNum()).reduce(BigDecimal.ZERO,BigDecimal::add));
+        exportExcelInstoragePressure.setTotalPrice(excelInstoragePressureList.stream().map(m -> m.getTotalPrice()).reduce(BigDecimal.ZERO,BigDecimal::add));
+
+        return exportExcelInstoragePressure;
     }
 }

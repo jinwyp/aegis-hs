@@ -6,6 +6,7 @@ import com.yimei.hs.boot.support.LocalDateSerializer;
 import com.yimei.hs.cang.entity.CangAnalysisData;
 import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.same.entity.ExportExcelDate;
+import com.yimei.hs.same.entity.ExportExcelInstoragePressure;
 import com.yimei.hs.same.entity.ExportExcelUpstreamPressure;
 import com.yimei.hs.ying.entity.AnalysisData;
 import com.yimei.hs.same.service.DataAnalysisService;
@@ -311,7 +312,7 @@ public class DataAnalysisController {
      * @param request
      * @throws IOException
      */
-    @RequestMapping("/{businessType}/analysis/exportExcel/{orderId}/{hsId}")
+//    @RequestMapping("/{businessType}/analysis/exportExcel/{orderId}/{hsId}")
     public void doExportBuyyerPressureToExcel(@PathVariable(value = "orderId") long orderId,
                                                 @PathVariable(value = "hsId") long hsId,
                                                 @PathVariable(value = "businessType") BusinessType businessType,
@@ -382,6 +383,86 @@ public class DataAnalysisController {
         out.close();
     }
 
+
+    /**
+     *  获取下游
+     * @param orderId
+     * @param hsId
+     * @param businessType
+     * @param response
+     * @param request
+     * @throws IOException
+     */
+    @RequestMapping("/{businessType}/analysis/exportExcel/{orderId}/{hsId}")
+    public void doExportInstoragePressureToExcel(@PathVariable(value = "orderId") long orderId,
+                                              @PathVariable(value = "hsId") long hsId,
+                                              @PathVariable(value = "businessType") BusinessType businessType,
+                                              HttpServletResponse response,
+                                              HttpServletRequest request) throws IOException {
+
+
+        HSSFWorkbook wb = new HSSFWorkbook();
+        String filename = "库存占压";
+        HSSFSheet sheet = wb.createSheet(filename);
+        HSSFRow row = sheet.createRow(0);
+        CellStyle style = wb.createCellStyle();
+        style.setAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        sheet.setVerticallyCenter(true);
+        sheet.setHorizontallyCenter(true);
+        sheet.setColumnWidth(0, 3000);
+        sheet.setColumnWidth(1, 3000);
+        sheet.setColumnWidth(2, 4000);
+        sheet.setColumnWidth(3, 8000);
+        sheet.setColumnWidth(4, 8000);
+        sheet.setColumnWidth(5, 8500);
+        sheet.setColumnWidth(6, 4500);
+        sheet.setColumnWidth(7, 8000);
+        sheet.setColumnWidth(8, 2500);
+        sheet.setColumnWidth(9, 2000);
+        sheet.setColumnWidth(10, 8000);
+        sheet.setColumnWidth(11, 8000);
+        sheet.setColumnWidth(12, 2500);
+        sheet.setColumnWidth(13, 2500);
+        sheet.setColumnWidth(14, 10000);
+        String[] excelHeader = {"品类","事业部", "Broker团队", "业务类型", "账务公司", "场库", "在途数量","在途金额", "到港数量", "到港金额", "合计数量", "合计金额", "具体形成时间", "备注", "业务线"};
+        for (int i = 0; i < excelHeader.length; i++) {
+            HSSFCell cell = row.createCell(i);
+            cell.setCellValue(excelHeader[i]);
+            cell.setCellStyle(style);
+        }
+        ExportExcelInstoragePressure exportExcelUpstreamPressure  = dataAnalysisService.exportInstoragePressureToExcel(orderId);
+
+        row = sheet.createRow(  1);
+        row.createCell(0).setCellValue((exportExcelUpstreamPressure.getCargoType() == null ? "" : exportExcelUpstreamPressure.getCargoType().value));
+        row.createCell(1).setCellValue((exportExcelUpstreamPressure.getDeptName() == null ? "" : exportExcelUpstreamPressure.getDeptName()));
+        row.createCell(2).setCellValue((exportExcelUpstreamPressure.getTeamName() == null ? "" : exportExcelUpstreamPressure.getTeamName()));
+        row.createCell(3).setCellValue((exportExcelUpstreamPressure.getBusinessType() == null ? "" : exportExcelUpstreamPressure.getBusinessType().value));
+        row.createCell(4).setCellValue((exportExcelUpstreamPressure.getAccoutCompanyName() == null ? "" : exportExcelUpstreamPressure.getAccoutCompanyName()));
+        row.createCell(5).setCellValue((exportExcelUpstreamPressure.getArriveAddress() == null ? "" : exportExcelUpstreamPressure.getArriveAddress()));
+        row.createCell(6).setCellValue((exportExcelUpstreamPressure.getTotalInstorageTranitNum() == null ? "" : exportExcelUpstreamPressure.getTotalInstorageTranitNum().toString()));
+        row.createCell(7).setCellValue((exportExcelUpstreamPressure.getTotalInstorageTranitPrice() == null ? "" : exportExcelUpstreamPressure.getTotalInstorageTranitPrice().toString()));
+        row.createCell(8).setCellValue((exportExcelUpstreamPressure.getTotalInstorageNum() == null ? "" : exportExcelUpstreamPressure.getTotalInstorageNum().toString()));
+        row.createCell(9).setCellValue((exportExcelUpstreamPressure.getTotalInstoragePrice() == null ? "" : exportExcelUpstreamPressure.getTotalInstoragePrice().toString()));
+        row.createCell(10).setCellValue((exportExcelUpstreamPressure.getTotalNum() == null ? "" : exportExcelUpstreamPressure.getTotalNum().toString()));
+        row.createCell(11).setCellValue(exportExcelUpstreamPressure.getTotalPrice() == null ? "" : exportExcelUpstreamPressure.getTotalPrice().toString());
+        row.createCell(12).setCellValue((exportExcelUpstreamPressure.getTime() == null ? "" : exportExcelUpstreamPressure.getTime().toString()));
+        row.createCell(13).setCellValue((exportExcelUpstreamPressure.getMemo()== null ? "" : exportExcelUpstreamPressure.getMemo()));
+        row.createCell(14).setCellValue((exportExcelUpstreamPressure.getLine() == null ? "" : exportExcelUpstreamPressure.getLine()));
+
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/x-download");
+        filename += LocalDate.now() + ".xls";
+        if (request.getHeader("user-agent").toLowerCase().contains("firefox")) {
+            filename = new String(filename.getBytes("UTF-8"), "ISO-8859-1");
+        } else {
+            filename = URLEncoder.encode(filename, "UTF-8");
+        }
+        response.addHeader("Content-Disposition", "attachment;filename=" + filename);
+        OutputStream out = response.getOutputStream();
+        wb.write(out);
+        out.close();
+    }
 
 
 }

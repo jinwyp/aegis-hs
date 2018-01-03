@@ -1361,6 +1361,14 @@
         from v_1079_cang
         where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
+    <select id="findOneV3012" resultType="com.yimei.hs.ying.entity.AnalysisData">
+        select
+        orderId,
+        hsId,
+        totalInstorageRemainNum
+        from v_3012
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
+    </select>
 
 
 </mapper>

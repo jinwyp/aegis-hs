@@ -6,7 +6,7 @@ import java.util.List;
 public enum CargoType {
     COAL("煤炭"),
     STEELS("钢材");
-    private String value;
+    public String value;
 
     CargoType(String value) {
         this.value = value;
