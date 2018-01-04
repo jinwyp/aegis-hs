@@ -318,7 +318,7 @@ public class DataAnalysisController {
 
 
         HSSFWorkbook wb = new HSSFWorkbook();
-        String filename = "上游资金占压";
+        String filename = "下游资金占压";
         HSSFSheet sheet = wb.createSheet(filename);
         HSSFRow row = sheet.createRow(0);
         CellStyle style = wb.createCellStyle();
@@ -382,7 +382,7 @@ public class DataAnalysisController {
 
 
     /**
-     *  获取下游
+     *  获取库存占压
      * @param orderId
      * @param businessType
      * @param response
