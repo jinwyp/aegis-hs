@@ -1304,7 +1304,7 @@
         hsId,
         totalInstorageRemainPrice
         from v_3013
-        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT } and orderId=#{orderId,jdbcType=BIGINT }
+        where hsId= #{hsId,jdbcType=BIGINT} and orderId=#{orderId,jdbcType=BIGINT }
     </select>
 
     <select id="findOneV3014" resultType="com.yimei.hs.ying.entity.AnalysisData">
