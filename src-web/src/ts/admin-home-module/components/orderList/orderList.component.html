@@ -180,6 +180,13 @@
                     <td>
                         <button class="btn btn-link btn-sm" (click)="showForm(false, order)"> 修改 </button>
                         <bs-delete-prompt (confirmDel)="deleteItem(order)">删除</bs-delete-prompt>
+
+                        <br>
+
+                        <a class="btn btn-link btn-sm" target="_blank" href="/api/business/{{businessType}}/analysis/exportExcelSeller/{{order.id}}"> 上游占压 </a>
+                        <a class="btn btn-link btn-sm" target="_blank" href="/api/business/{{businessType}}/analysis/exportExcelBuyer/{{order.id}}"> 下游占压 </a>
+                        <a class="btn btn-link btn-sm" target="_blank" href="/api/business/{{businessType}}/analysis/exportExcelInstorage/{{order.id}}" *ngIf="businessType==='cang'"> 库存占压 </a>
+
                     </td>
                 </tr>
                 </tbody>
