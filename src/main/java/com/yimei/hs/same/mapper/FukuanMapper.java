@@ -25,7 +25,7 @@ public interface FukuanMapper {
 
     Page<Fukuan> getPage(PageFukuanDTO pageFukuanDTO);
 
-    List<Fukuan> getunTradeDeficittlist(Long orderId);
+    List<Fukuan> getunTradeDeficittlist(@Param("orderId") Long orderId, @Param("hsId") Long hsId);
 
     List<Fukuan> getListByOrderIdAndHsId(@Param("orderId") Long orderId, @Param("hsId") Long hsId);
 }

@@ -124,7 +124,8 @@
         select
         <include refid="Base_Column_List"/>
         from hs_same_fukuan
-        where orderId = #{orderId,jdbcType=BIGINT} and deleted = 0 and payUsage !='TRADE_DEFICIT' and payUsage !='ORTHER' and  payUsage !='FIAL_PAYMENT'
+        where orderId = #{orderId,jdbcType=BIGINT}  and deleted = 0 and payUsage !='TRADE_DEFICIT' and payUsage !='ORTHER' and  payUsage !='FIAL_PAYMENT'
+        <if test="hsId!=0" >  and hsId=#{hsId,jdbcType=BIGINT}  </if>
         order by payDate asc
     </select>
     <select id="selectByPrimaryKeyDeleted" resultType="com.yimei.hs.same.entity.Fukuan">

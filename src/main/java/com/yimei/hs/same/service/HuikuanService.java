@@ -75,14 +75,18 @@ public class HuikuanService {
     @Transactional(readOnly = false)
     public int update(Huikuan huikuan) {
 
-        // 1. 删除回款明细
-        huikuanMapMapper.deleteByOrderId(huikuan.getOrderId());
+        List<Huikuan> huikuanList = huikuanMapper.gelistByhsIdAndOrderId(huikuan.getOrderId(), huikuan.getHsId());
+        for (Huikuan huikuanDel:huikuanList) {
+            huikuanMapMapper.deleteByHuikuanId(huikuanDel.getId());
+        }
+//        // todo 1. 删除回款明细
+//        huikuanMapMapper.deleteByOrderId(huikuan.getOrderId(), huikuan.getHsId());
 
         // 2. 更新回款
         int rtn = huikuanMapper.updateByPrimaryKeySelective(huikuan);
 
         // 3. 重建回款明细
-        this.createMapping(huikuan.getOrderId());
+        this.createMapping(huikuan.getOrderId(), huikuan.getHsId());
 
         return rtn;
     }
@@ -107,14 +111,15 @@ public class HuikuanService {
 
         if (isNull != null && isNull.size() > 0) {
 
-            // 1. 删除回款明细
-            huikuanMapMapper.deleteByOrderId(huikuan.getOrderId());
+            for (Huikuan huikuanDel:huikuanList) {
+                huikuanMapMapper.deleteByHuikuanId(huikuanDel.getId());
+            }
 
         }
         // 1. 插入回款记录
         rtn = huikuanMapper.insert(huikuan);
         // 2. 触发建立 回款-还款映射
-        this.createMapping(huikuan.getOrderId());
+        this.createMapping(huikuan.getOrderId(), huikuan.getHsId());
 
 
         return rtn;
@@ -128,15 +133,20 @@ public class HuikuanService {
      */
     @Transactional(readOnly = false)
     public int delete(long id, long orderId) {
+        Huikuan huikuan = huikuanMapper.selectByPrimaryKey(id);
+//        // todo  1. 删除所有的回款对应明细
+//        huikuanMapMapper.deleteByOrderId(orderId, huikuan.getHsId());
 
-        // 1. 删除所有的回款对应明细
-        huikuanMapMapper.deleteByOrderId(orderId);
 
+        List<Huikuan> huikuanList = huikuanMapper.gelistByhsIdAndOrderId(huikuan.getOrderId(), huikuan.getHsId());
+        for (Huikuan huikuanDel:huikuanList) {
+            huikuanMapMapper.deleteByHuikuanId(huikuanDel.getId());
+        }
         // 2. 删除回款
         int rtn = huikuanMapper.delete(id);
 
         // 3. 重新
-        this.createMapping(orderId);
+        this.createMapping(orderId, huikuan.getHsId());
 
         return rtn;
     }
@@ -146,10 +156,10 @@ public class HuikuanService {
      *
      * @param orderId
      */
-    public void createMapping(Long orderId) {
+    public void createMapping(Long orderId, Long hsId) {
 
         // 1. 找出付款尚未完成回款对应的付款记录
-        List<Fukuan> unfinishedFukuan = fukuanService.huikuanUnfinished(orderId);
+        List<Fukuan> unfinishedFukuan = fukuanService.huikuanUnfinished( hsId,orderId);
 
         // 2. 如果所有付款都已经回款完
         if (unfinishedFukuan.size() == 0) {
@@ -160,12 +170,12 @@ public class HuikuanService {
         List<HuikuanMap> toAdd = new ArrayList<>();
 
         // 1.  找出订单的回款记录 - 尚有未对应完的余额,  也就是回款还有余额
-        List<Huikuan> unfinished = getALl(orderId);
+        List<Huikuan> unfinished = getALl(orderId,hsId);
 //        huikuanMapper.getUnfinshedByOrderId(orderId);
 
 //        Iterator<Fukuan> it = unfinishedFukuan.iterator();
 
-        toAdd= toCompare(toAdd, unfinishedFukuan, unfinished);
+        toAdd = toCompare(toAdd, unfinishedFukuan, unfinished);
 //        Fukuan last = null;
 //        BigDecimal lastValue = null;
 //        for (Huikuan huikuan : unfinished) {
@@ -234,7 +244,7 @@ public class HuikuanService {
     }
 
     private List<HuikuanMap> toCompare(List<HuikuanMap> toAdd, List<Fukuan> unfinishedFukuan, List<Huikuan> unfinishedHuikuan) {
-        Fukuan[] fukuans =  unfinishedFukuan.toArray(new Fukuan[0]);
+        Fukuan[] fukuans = unfinishedFukuan.toArray(new Fukuan[0]);
         Huikuan[] huikuans = unfinishedHuikuan.toArray(new Huikuan[0]);
 
         int fpos = -1;
@@ -250,7 +260,7 @@ public class HuikuanService {
                     break;
                 }
                 Fukuan tempFukuan = fukuans[fpos];
-                lastFukuan  = tempFukuan.getPayAmount().subtract(tempFukuan.getHuikuanTotal());
+                lastFukuan = tempFukuan.getPayAmount().subtract(tempFukuan.getHuikuanTotal());
 
             }
 
@@ -260,7 +270,7 @@ public class HuikuanService {
                     break;
                 }
                 Huikuan tempHuikuan = huikuans[hpos];
-                lastHuikuan  = tempHuikuan.getHuikuanAmount().subtract(tempHuikuan.getFukuanTotal());
+                lastHuikuan = tempHuikuan.getHuikuanAmount().subtract(tempHuikuan.getFukuanTotal());
             }
 
             HuikuanMap record = new HuikuanMap();
@@ -301,15 +311,15 @@ public class HuikuanService {
 //    找出订单的回款记录 - 尚有未对应完的余额,  也就是回款还有余额
     //1 找出所有回款记录
 
-    public List<Huikuan> getALl(Long orderId) {
+    public List<Huikuan> getALl(Long orderId,Long hsId) {
 
         PageHuikuanDTO dto = new PageHuikuanDTO();
         dto.setPageSize(100000000);
         dto.setPageNo(1);
+        dto.setHsId(hsId);
         dto.setOrderId(orderId);
         List<Huikuan> list = this.getPage(dto).getResults();
-        for (Huikuan huikuan : list) {
-        }
+
         return this.getHuikuanUnifished(list);
     }
     //2 过滤已经对应完全的记录

@@ -1,6 +1,7 @@
 package com.yimei.hs.same.mapper;
 
 import com.yimei.hs.same.entity.HuikuanMap;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface HuikuanMapMapper {
      * @param orderId
      * @return
      */
-    int deleteByOrderId(long orderId);
+    int deleteByOrderId(@Param("orderId") long orderId, @Param("hsId") long hsId);
 
     int insertSelective(HuikuanMap record);
 
@@ -31,4 +32,8 @@ public interface HuikuanMapMapper {
     List<HuikuanMap> getListByFukuanId(Long fukuanId);
 
     List<HuikuanMap> getListByHuikuanId(Long huikuanId);
+
+    int deleteByFukuanId(Long fukuanId);
+
+    int deleteByHuikuanId(Long huikuanId);
 }

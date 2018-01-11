@@ -77,7 +77,8 @@ public class FukuanService {
      * @return
      */
     public List<Fukuan> getListUnfinished(long orderId) {
-        List<Fukuan> fukuans = fukuanMapper.getunTradeDeficittlist((orderId));
+        long hsId = 0;
+        List<Fukuan> fukuans = fukuanMapper.getunTradeDeficittlist(orderId, hsId);
 
         // 2. 对每一笔付款， 关联回款列表, 回款map明细
         for (Fukuan fukuan : fukuans) {
@@ -99,13 +100,15 @@ public class FukuanService {
     /**
      * 找出当前订单的付款列表: (条件为: 回款尚未回完的付款)
      *
+     *
+     * @param hsId
      * @param orderId
      * @return
      */
-    public List<Fukuan> huikuanUnfinished(long orderId) {
+    public List<Fukuan> huikuanUnfinished(Long hsId, long orderId) {
 
         // 1. 获取订单的所有付款
-        List<Fukuan> all = fukuanMapper.getunTradeDeficittlist(orderId);
+        List<Fukuan> all = fukuanMapper.getunTradeDeficittlist(orderId,hsId);
 
         for (Fukuan fukuan : all) {
             // 设置付款所关联的回款明细
@@ -166,8 +169,13 @@ public class FukuanService {
         // 1. 插入付款记录
         int rtn = fukuanMapper.insert(fukuan);
         if (isNull != null && isNull.size() > 0) {
-            // 1. 删除订单的所有 回款-付款 映射
-            huikuanMapMapper.deleteByOrderId(fukuan.getOrderId());
+            // 1. 删除订单的所有 回款-付款 映射 todo删除当月回款
+            // 一 查找 mapperid
+            List<Fukuan> fukuanListDels = fukuanMapper.getListByOrderIdAndHsId(fukuan.getOrderId(), fukuan.getHsId());
+            for (Fukuan fukuanMapDel : fukuanListDels) {
+                huikuanMapMapper.deleteByFukuanId(fukuanMapDel.getId());
+            }
+//                huikuanMapMapper.deleteByOrderId(fukuan.getOrderId(), fukuan.getHsId());
         }
 
 
@@ -175,7 +183,7 @@ public class FukuanService {
         fukuan.setHuikuanTotal(BigDecimal.ZERO);
 
         // 3. 触发回款明细的创建
-        huikuanService.createMapping(fukuan.getOrderId());
+        huikuanService.createMapping(fukuan.getOrderId(),fukuan.getHsId());
 
         // 4. 当资金方不为自有资金时 触发借款记录
         Order order = orderMapper.selectByPrimaryKey(fukuan.getOrderId());
@@ -211,7 +219,11 @@ public class FukuanService {
         if (fukuan.getPayUsage().equals(PaymentPurpose.FREIGNHT) || fukuan.getPayUsage().equals(PaymentPurpose.PAYMENT_FOR_GOODS)) {
 
             // 1. 删除订单的所有 回款-付款 映射
-            huikuanMapMapper.deleteByOrderId(orderId);
+//            huikuanMapMapper.deleteByOrderId(orderId,fukuan.getHsId());
+            List<Fukuan> fukuanListDels = fukuanMapper.getListByOrderIdAndHsId(fukuan.getOrderId(), fukuan.getHsId());
+            for (Fukuan fukuanMapDel : fukuanListDels) {
+                huikuanMapMapper.deleteByFukuanId(fukuanMapDel.getId());
+            }
 
             jiekuanMapper.deleteByFukuanId(id);
 
@@ -219,7 +231,7 @@ public class FukuanService {
             rtn = fukuanMapper.delete(id);
 
             // 3. 重建回款付款映射
-            huikuanService.createMapping(orderId);
+            huikuanService.createMapping(orderId,fukuan.getHsId());
         } else {
             // 2. 删除付款
             rtn = fukuanMapper.delete(id);
