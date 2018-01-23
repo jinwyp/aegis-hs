@@ -3,12 +3,14 @@ package com.yimei.hs.user.controller;
 
 import com.yimei.hs.boot.api.Result;
 import com.yimei.hs.boot.persistence.Page;
+import com.yimei.hs.enums.BusinessType;
 import com.yimei.hs.user.dto.PagePartyDTO;
 import com.yimei.hs.user.entity.Party;
 import com.yimei.hs.user.service.PartyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -57,12 +59,17 @@ public class PartyController {
     @PostMapping("/parties")
     @Transactional(readOnly = false)
     public ResponseEntity<Result<Party>> create(@RequestBody Party party) {
-        int rtn = partyService.create(party);
-        if (rtn != 1) {
-            logger.error("创建party失败: {}", party);
-            return Result.error(4001, "创建参与方失败");
+        if (!partyService.existSameName(party.getName().trim())) {
+
+            int rtn = partyService.create(party);
+            if (rtn != 1) {
+                logger.error("创建party失败: {}", party);
+                return Result.error(4001, "创建参与方失败");
+            }
+            return Result.ok(party);
+        } else {
+            return Result.error(4001, "参与方不能重复添加");
         }
-        return Result.ok(party);
     }
 
     /**
@@ -84,4 +91,25 @@ public class PartyController {
             return Result.error(5003, "更新失败");
         }
     }
+
+
+    /**
+     * 逻辑删除
+     */
+    @DeleteMapping("/parties/{id}")
+    public ResponseEntity<Result<Integer>> delete(
+            @PathVariable("id") Long id
+    ) {
+
+        int status = partyService.delete(id);
+        if (status == 1) {
+            return Result.ok(1);
+        } else {
+            return Result.error(5003, "操作失败", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+
+
 }

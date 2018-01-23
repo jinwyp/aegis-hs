@@ -18,4 +18,6 @@ public interface PartyMapper {
     int updateByPrimaryKey(Party record);
 
     Page<Party> getPage(PagePartyDTO pagePartyDTO);
+
+    boolean existSameName(String name);
 }

@@ -36,4 +36,13 @@ public class PartyService {
         return partyMapper.updateByPrimaryKeySelective(party);
     }
 
+    @Transactional(readOnly = false)
+    public int delete(Long id) {
+        return partyMapper.deleteByPrimaryKey(id);
+    }
+
+    public boolean existSameName(String name) {
+
+        return partyMapper.existSameName(name);
+    }
 }
