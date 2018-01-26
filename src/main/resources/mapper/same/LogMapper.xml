@@ -43,8 +43,8 @@
         left join hs_same_order_config config on config.id=log.hsId
         left join hs_user user on user.id=log.editorId
         <where>
-            <if test="orderId">AND orderId = #{orderId, jdbcType=BIGINT}</if>
-            <if test="hsId">AND hsId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="orderId">AND log.orderId = #{orderId, jdbcType=BIGINT}</if>
+            <if test="hsId">AND log.hsId = #{orderId, jdbcType=BIGINT}</if>
             <if test="editorId">AND editorId = #{editorId, jdbcType=BIGINT}</if>
             <if test="entityType">AND entityType = #{entityType, jdbcType=VARCHAR}</if>
         </where>
